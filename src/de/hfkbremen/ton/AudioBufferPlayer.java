@@ -80,7 +80,7 @@ public class AudioBufferPlayer extends Thread {
             mSampleRenderer.render(mBuffers);
             for (int i = 0; i < mSampleBufferSize; i++) {
                 for (int j = 0; j < mNumOutputChannels; j++) {
-                    writeSample(mBuffers[j][i], i * 2 + j);
+                    writeSample(mBuffers[j][i], i * mNumOutputChannels + j);
                 }
             }
             mOutputLine.write(mByteBuffer, 0, mByteBuffer.length);

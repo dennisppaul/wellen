@@ -40,11 +40,19 @@ public class SketchExampleBasics05DigitalSignalProcessing extends PApplet {
     }
 
     public void audioblock(float[] pSamplesLeft, float[] pSamplesRight) {
-        float mDetune = map(mouseY, 0, height, 0.9f, 1.1f);
+        float mDetune = map(mouseY, 0, height, 1.0f, 1.5f);
         for (int i = 0; i < pSamplesLeft.length; i++) {
             mCounter++;
             pSamplesLeft[i] = 0.5f * sin(2 * PI * mFreq * mCounter / DSP.sample_rate());
             pSamplesRight[i] = 0.5f * sin(2 * PI * mFreq * mDetune * mCounter / DSP.sample_rate());
+        }
+    }
+
+    public void audioblock(float[] pSamplesLeft) {
+        float mDetune = map(mouseY, 0, height, 1.0f, 1.5f);
+        for (int i = 0; i < pSamplesLeft.length; i++) {
+            mCounter++;
+            pSamplesLeft[i] = 0.5f * sin(2 * PI * mFreq * mCounter / DSP.sample_rate());
         }
     }
 

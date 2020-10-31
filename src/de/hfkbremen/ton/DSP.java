@@ -15,23 +15,35 @@ public class DSP implements AudioBufferRenderer {
     private static AudioBufferPlayer mAudioPlayer;
     private static DSP mInstance = null;
     private final PApplet mPApplet;
+    private final int mNumberOfChannels;
     private Method mMethod = null;
     private float[] mCurrentBufferLeft;
     private float[] mCurrentBufferRight;
 
-    public DSP(PApplet pPApplet) {
+    public DSP(PApplet pPApplet, int pNumberOfChannels) {
         mPApplet = pPApplet;
+        mNumberOfChannels = pNumberOfChannels;
         try {
-            mMethod = pPApplet.getClass().getDeclaredMethod(METHOD_NAME, float[].class, float[].class);
+            if (mNumberOfChannels == 1) {
+                mMethod = pPApplet.getClass().getDeclaredMethod(METHOD_NAME, float[].class);
+            } else if (mNumberOfChannels == 2) {
+                mMethod = pPApplet.getClass().getDeclaredMethod(METHOD_NAME, float[].class, float[].class);
+            } else {
+                mMethod = pPApplet.getClass().getDeclaredMethod(METHOD_NAME, float[][].class);
+            }
         } catch (NoSuchMethodException | SecurityException ex) {
             ex.printStackTrace();
         }
     }
 
     public static DSP start(PApplet pPApplet) {
+        return start(pPApplet, 2);
+    }
+
+    public static DSP start(PApplet pPApplet, int pNumberOfChannels) {
         if (mInstance == null) {
-            mInstance = new DSP(pPApplet);
-            mAudioPlayer = new AudioBufferPlayer(mInstance);
+            mInstance = new DSP(pPApplet, pNumberOfChannels);
+            mAudioPlayer = new AudioBufferPlayer(mInstance, 44100, 512, 16, pNumberOfChannels);
         }
         return mInstance;
     }
@@ -54,9 +66,16 @@ public class DSP implements AudioBufferRenderer {
 
     public void render(float[][] pSamples) {
         try {
-            mMethod.invoke(mPApplet, pSamples[0], pSamples[1]);
-            mCurrentBufferLeft = pSamples[0];
-            mCurrentBufferRight = pSamples[1];
+            if (mNumberOfChannels == 1) {
+                mMethod.invoke(mPApplet, pSamples[0]);
+                mCurrentBufferLeft = pSamples[0];
+            } else if (mNumberOfChannels == 2) {
+                mMethod.invoke(mPApplet, pSamples[0], pSamples[1]);
+                mCurrentBufferLeft = pSamples[0];
+                mCurrentBufferRight = pSamples[1];
+            } else {
+                mMethod.invoke(mPApplet, pSamples);
+            }
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
             ex.printStackTrace();
         }
