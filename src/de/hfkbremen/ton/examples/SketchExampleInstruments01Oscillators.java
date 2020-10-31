@@ -7,8 +7,8 @@ import de.hfkbremen.ton.Ton;
 import processing.core.PApplet;
 
 /**
- * this examples shows how to use different oscillators in an instrument. note that this only works with some
- * tone engines e.g `jsyn` or `minim`
+ * this examples shows how to use different oscillators in an instrument. note that this only works with some tone
+ * engines e.g `jsyn` or `minim`
  */
 public class SketchExampleInstruments01Oscillators extends PApplet {
 

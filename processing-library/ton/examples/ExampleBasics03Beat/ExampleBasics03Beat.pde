@@ -10,6 +10,7 @@ void settings() {
     size(640, 480);
 }
 void setup() {
+    /* it is advised to start at the very end of the `step` method */
     Beat.start(this, 120);
 }
 void draw() {

@@ -6,8 +6,8 @@ import de.hfkbremen.ton.Ton;
 import processing.core.PApplet;
 
 /**
- * this examples shows how to use a beat. once instantiated the beat object calls the `beat(int)` at a defined *beats
- * per minute* (bpm).
+ * this examples shows how to use a beat. once started the method `beat(int)` is called at a defined speed defined in
+ * *beats per minute* (bpm).
  */
 public class SketchExampleBasics03Beat extends PApplet {
 
@@ -19,6 +19,7 @@ public class SketchExampleBasics03Beat extends PApplet {
     }
 
     public void setup() {
+        /* it is advised to start at the very end of the `step` method */
         Beat.start(this, 120);
     }
 

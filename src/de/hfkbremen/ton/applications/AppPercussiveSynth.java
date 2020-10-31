@@ -15,9 +15,8 @@ public class AppPercussiveSynth extends PApplet {
     private static final int SNARE = 1;
     private static final int HIHAT = 2;
     private static final int NUMBER_OF_INSTRUMENTS = 3;
-    private ToneEngine mSynth;
-    private Beat mBeat;
     private final int[][] mSteps = new int[NUMBER_OF_INSTRUMENTS][];
+    private ToneEngine mSynth;
 
     public void settings() {
         size(640, 480);
@@ -61,12 +60,11 @@ public class AppPercussiveSynth extends PApplet {
 
         ToneEngine.createInstrumentsGUI(this, mSynth, BASS, SNARE, HIHAT);
 
-        mBeat = new Beat(this);
-        mBeat.bpm(130 * 4);
+        Beat.start(this, 130 * 4);
     }
 
     public void draw() {
-        background(127);
+        background(50);
     }
 
     public void beat(int pBeat) {
@@ -75,7 +73,7 @@ public class AppPercussiveSynth extends PApplet {
             int mStep = mSteps[i][pBeat % mSteps[i].length];
             if (mStep == I) {
                 int mNote = Scale.note(Scale.HALF_TONE, Note.NOTE_C3, mStep);
-                mSynth.noteOn(mNote, 127);
+                mSynth.noteOn(mNote, 100);
             } else {
                 mSynth.noteOff();
             }
@@ -83,7 +81,6 @@ public class AppPercussiveSynth extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main(AppPercussiveSynth.class
-                .getName());
+        PApplet.main(AppPercussiveSynth.class.getName());
     }
 }

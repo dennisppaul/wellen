@@ -8,7 +8,7 @@ void settings() {
     size(640, 480);
 }
 void setup() {
-    TonUtil.dumpMidiOutputDevices();
+    Ton.dumpMidiOutputDevices();
     /* ton enginges can be selected with `init`. in this case MIDI engine is selected with the first argument.
     the second argument selects the MIDI bus. note `init` must be the first call to `Ton` otherwise a default
      enginge is automatically selected. */

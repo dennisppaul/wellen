@@ -11,7 +11,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import static de.hfkbremen.ton.Note.note_to_frequency;
-import static de.hfkbremen.ton.TonUtil.clamp127;
+import static de.hfkbremen.ton.Ton.clamp127;
+import static de.hfkbremen.ton.Ton.dumpAudioDeviceInfo;
 import static processing.core.PApplet.constrain;
 
 public class ToneEngineJSyn extends ToneEngine {
@@ -71,7 +72,7 @@ public class ToneEngineJSyn extends ToneEngine {
         mInstrumentID = 0;
 
         final JavaSoundAudioDevice mDevice = new JavaSoundAudioDevice();
-        TonUtil.dumpAudioDeviceInfo(mDevice);
+        dumpAudioDeviceInfo(mDevice);
         mSynth.start(pSamplingRate, pInputDeviceID, pInputChannels, pOutputDeviceID, pOutputChannels);
         mTimer = new Timer();
     }

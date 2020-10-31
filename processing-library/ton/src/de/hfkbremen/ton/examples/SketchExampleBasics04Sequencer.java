@@ -8,7 +8,7 @@ import de.hfkbremen.ton.Ton;
 import processing.core.PApplet;
 
 /**
- * this examples shows how to use the sequencer to repeatedly play a pattern..
+ * this examples shows how to use the sequencer to repeatedly play a predefined pattern.
  */
 public class SketchExampleBasics04Sequencer extends PApplet {
 

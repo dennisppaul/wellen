@@ -8,15 +8,40 @@ import java.util.ArrayList;
 
 public class InstrumentController {
 
-    private final Instrument mInstrument;
-    private final ControlP5 mControlP5;
     @ControlElement(x = 0, y = -10, properties = {"type=textlabel"})
     public String name;
+    private final Instrument mInstrument;
+    private final ControlP5 mControlP5;
 
     public InstrumentController(ControlP5 pControlP5, Instrument pInstrument) {
         mControlP5 = pControlP5;
         mInstrument = pInstrument;
         name = "TONE" + PApplet.nf(mInstrument.ID(), 2);
+    }
+
+    public static ArrayList<InstrumentController> setup(ControlP5 pControlP5, ToneEngine pToneEngine, int mX, int mY) {
+        ArrayList<InstrumentController> mInstrumentControllers = new ArrayList<>();
+        final int mColumnSpace = 400;
+        final int mRowSpace = 75;
+        final int mElementsPerRow = pToneEngine.instruments().size() / 2;
+        for (int i = 0; i < pToneEngine.instruments().size(); i++) {
+            final int mOffset = i / mElementsPerRow;
+            final Instrument mInstrument = pToneEngine.instruments().get(i);
+            final InstrumentController mController = new InstrumentController(pControlP5, mInstrument);
+            pControlP5.addControllersFor("instrument " + PApplet.nf(i, 2), mController)
+                      .setPosition(mOffset * mColumnSpace + mX, (i % mElementsPerRow) * mRowSpace + mY, mController);
+            mInstrumentControllers.add(mController);
+            mController.update();
+        }
+        return mInstrumentControllers;
+    }
+
+    public static void update(ControlP5 pControlP5, InstrumentController ic) {
+        pControlP5.get(ic, "attack").setValue(ic.get_attack());
+        pControlP5.get(ic, "decay").setValue(ic.get_decay());
+        pControlP5.get(ic, "sustain").setValue(ic.get_sustain());
+        pControlP5.get(ic, "release").setValue(ic.get_release());
+        pControlP5.get(ic, "osc").setValue(ic.get_osc());
     }
 
     @ControlElement(x = 0, y = 0, label = "attack", properties = {"min=0",
@@ -100,30 +125,5 @@ public class InstrumentController {
 
     public void update() {
         update(mControlP5, this);
-    }
-
-    public static ArrayList<InstrumentController> setup(ControlP5 pControlP5, ToneEngine pToneEngine, int mX, int mY) {
-        ArrayList<InstrumentController> mInstrumentControllers = new ArrayList<>();
-        final int mColumnSpace = 400;
-        final int mRowSpace = 75;
-        final int mElementsPerRow = pToneEngine.instruments().size() / 2;
-        for (int i = 0; i < pToneEngine.instruments().size(); i++) {
-            final int mOffset = i / mElementsPerRow;
-            final Instrument mInstrument = pToneEngine.instruments().get(i);
-            final InstrumentController mController = new InstrumentController(pControlP5, mInstrument);
-            pControlP5.addControllersFor("instrument " + PApplet.nf(i, 2), mController)
-                      .setPosition(mOffset * mColumnSpace + mX, (i % mElementsPerRow) * mRowSpace + mY, mController);
-            mInstrumentControllers.add(mController);
-            mController.update();
-        }
-        return mInstrumentControllers;
-    }
-
-    public static void update(ControlP5 pControlP5, InstrumentController ic) {
-        pControlP5.get(ic, "attack").setValue(ic.get_attack());
-        pControlP5.get(ic, "decay").setValue(ic.get_decay());
-        pControlP5.get(ic, "sustain").setValue(ic.get_sustain());
-        pControlP5.get(ic, "release").setValue(ic.get_release());
-        pControlP5.get(ic, "osc").setValue(ic.get_osc());
     }
 }

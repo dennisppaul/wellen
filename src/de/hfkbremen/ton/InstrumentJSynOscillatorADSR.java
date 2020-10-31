@@ -24,49 +24,11 @@ public class InstrumentJSynOscillatorADSR extends InstrumentJSynOscillator {
         super(mSynthesizerJSyn, pID);
     }
 
-    public void update_freq() {
-        if (mOsc instanceof UnitOscillator) {
-            UnitOscillator uo = (UnitOscillator) mOsc;
-            uo.frequency.set(mFreq + mFreqOffset);
-        }
-    }
-
-    public void amplitude(float pAmp) {
-        mAmp = pAmp;
-        if (mOsc instanceof UnitOscillator) {
-            UnitOscillator uo = (UnitOscillator) mOsc;
-            uo.amplitude.set(pAmp);
-        } else if (mOsc instanceof WhiteNoise) {
-            WhiteNoise uo = (WhiteNoise) mOsc;
-            uo.amplitude.set(pAmp);
-        }
-    }
-
-    public void frequency(float freq) {
-        mFreq = freq;
-        update_freq();
-    }
-
-    public void noteOff() {
-        mEnvPlayer.dataQueue.queueOff(mEnvData, true, new TimeStamp(mSynth.getCurrentTime()));
-    }
-
-    public void noteOn(float pFreq, float pAmp) {
-        update_env_data();
-        mEnvData.setSustainBegin(2);
-        mEnvData.setSustainEnd(2);
-        mFreq = pFreq;
-        update_freq();
-        TimeStamp mTimeStamp = new TimeStamp(mSynth.getCurrentTime());
-        mEnvPlayer.amplitude.set(pAmp, mTimeStamp);
-        mEnvPlayer.dataQueue.queueOn(mEnvData, mTimeStamp);
-    }
-
     @ControlElement(properties = {"min=0.0",
-            "max=" + (NUMBER_OF_OSCILLATORS - 1),
-            "type=knob",
-            "radius=20",
-            "resolution=" + (NUMBER_OF_OSCILLATORS - 1)}, x = 200, y = 0)
+                                  "max=" + (NUMBER_OF_OSCILLATORS - 1),
+                                  "type=knob",
+                                  "radius=20",
+                                  "resolution=" + (NUMBER_OF_OSCILLATORS - 1)}, x = 200, y = 0)
     public void osc_type(int pOsc) {
         disconnectModules(mOsc);
         /*
@@ -169,6 +131,37 @@ public class InstrumentJSynOscillatorADSR extends InstrumentJSynOscillator {
         update_freq();
     }
 
+    public void amplitude(float pAmp) {
+        mAmp = pAmp;
+        if (mOsc instanceof UnitOscillator) {
+            UnitOscillator uo = (UnitOscillator) mOsc;
+            uo.amplitude.set(pAmp);
+        } else if (mOsc instanceof WhiteNoise) {
+            WhiteNoise uo = (WhiteNoise) mOsc;
+            uo.amplitude.set(pAmp);
+        }
+    }
+
+    public void frequency(float freq) {
+        mFreq = freq;
+        update_freq();
+    }
+
+    public void noteOff() {
+        mEnvPlayer.dataQueue.queueOff(mEnvData, true, new TimeStamp(mSynth.getCurrentTime()));
+    }
+
+    public void noteOn(float pFreq, float pAmp) {
+        update_env_data();
+        mEnvData.setSustainBegin(2);
+        mEnvData.setSustainEnd(2);
+        mFreq = pFreq;
+        update_freq();
+        TimeStamp mTimeStamp = new TimeStamp(mSynth.getCurrentTime());
+        mEnvPlayer.amplitude.set(pAmp, mTimeStamp);
+        mEnvPlayer.dataQueue.queueOn(mEnvData, mTimeStamp);
+    }
+
     @ControlElement(properties = {"min=0.0", "max=2.0", "type=knob", "radius=20", "resolution=1000"}, x = 0, y = 0)
     public void attack(float pAttack) {
         super.attack(pAttack);
@@ -187,25 +180,6 @@ public class InstrumentJSynOscillatorADSR extends InstrumentJSynOscillator {
     @ControlElement(properties = {"min=0.0", "max=2.0", "type=knob", "radius=20", "resolution=1000"}, x = 150, y = 0)
     public void release(float pRelease) {
         super.release(pRelease);
-    }
-
-    public void trigger() {
-        mEnvPlayer.dataQueue.clear();
-        update_env_data();
-        mEnvPlayer.dataQueue.queue(mEnvData, 0, mEnvData.getNumFrames());
-    }
-
-    VariableRateMonoReader env() {
-        return mEnvPlayer;
-    }
-
-    protected void setupModules() {
-        if (mEnvPlayer == null) {
-            update_env_data();
-            mEnvPlayer = new VariableRateMonoReader();
-            mSynth.add(mEnvPlayer);
-            mEnvPlayer.start();
-        }
     }
 
     protected void connectModules(UnitGenerator o) {
@@ -245,12 +219,38 @@ public class InstrumentJSynOscillatorADSR extends InstrumentJSynOscillator {
         mSynth.remove(o);
     }
 
+    public void update_freq() {
+        if (mOsc instanceof UnitOscillator) {
+            UnitOscillator uo = (UnitOscillator) mOsc;
+            uo.frequency.set(mFreq + mFreqOffset);
+        }
+    }
+
+    public void trigger() {
+        mEnvPlayer.dataQueue.clear();
+        update_env_data();
+        mEnvPlayer.dataQueue.queue(mEnvData, 0, mEnvData.getNumFrames());
+    }
+
+    protected void setupModules() {
+        if (mEnvPlayer == null) {
+            update_env_data();
+            mEnvPlayer = new VariableRateMonoReader();
+            mSynth.add(mEnvPlayer);
+            mEnvPlayer.start();
+        }
+    }
+
     protected void update_env_data() {
         double[] mData = {mAttack, 1.0 * mAmp, // get_attack
-                mDecay, // get_decay
-                mSustain * mAmp, // get_sustain
-                mRelease, 0.0, // get_release
+                          mDecay, // get_decay
+                          mSustain * mAmp, // get_sustain
+                          mRelease, 0.0, // get_release
         };
         mEnvData = new SegmentedEnvelope(mData);
+    }
+
+    VariableRateMonoReader env() {
+        return mEnvPlayer;
     }
 }

@@ -1,12 +1,11 @@
 package de.hfkbremen.ton.examples;
 
 import de.hfkbremen.ton.Ton;
-import de.hfkbremen.ton.TonUtil;
 import processing.core.PApplet;
 
 /**
- * this examples shows how to control a midi instrument. make sure to set up the midi configuration properly in system
- * control.
+ * this examples shows how to control a MIDI instrument. note make sure to set up the MIDI configuration properly in
+ * system control.
  */
 public class SketchExampleBasics06MidiSynth extends PApplet {
 
@@ -15,7 +14,7 @@ public class SketchExampleBasics06MidiSynth extends PApplet {
     }
 
     public void setup() {
-        TonUtil.dumpMidiOutputDevices();
+        Ton.dumpMidiOutputDevices();
         /* ton enginges can be selected with `init`. in this case MIDI engine is selected with the first argument.
         the second argument selects the MIDI bus. note `init` must be the first call to `Ton` otherwise a default
          enginge is automatically selected. */

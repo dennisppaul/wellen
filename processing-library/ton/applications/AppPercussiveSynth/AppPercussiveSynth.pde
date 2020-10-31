@@ -10,9 +10,8 @@ static final int BASS = 0;
 static final int SNARE = 1;
 static final int HIHAT = 2;
 static final int NUMBER_OF_INSTRUMENTS = 3;
-ToneEngine mSynth;
-Beat mBeat;
 final int[][] mSteps = new int[NUMBER_OF_INSTRUMENTS][];
+ToneEngine mSynth;
 void settings() {
     size(640, 480);
 }
@@ -49,11 +48,10 @@ void setup() {
             I, O, I, O,
             I, I, I, I,};
     ToneEngine.createInstrumentsGUI(this, mSynth, BASS, SNARE, HIHAT);
-    mBeat = new Beat(this);
-    mBeat.bpm(130 * 4);
+    Beat.start(this, 130 * 4);
 }
 void draw() {
-    background(127);
+    background(50);
 }
 void beat(int pBeat) {
     for (int i = 0; i < NUMBER_OF_INSTRUMENTS; i++) {
@@ -61,7 +59,7 @@ void beat(int pBeat) {
         int mStep = mSteps[i][pBeat % mSteps[i].length];
         if (mStep == I) {
             int mNote = Scale.note(Scale.HALF_TONE, Note.NOTE_C3, mStep);
-            mSynth.noteOn(mNote, 127);
+            mSynth.noteOn(mNote, 100);
         } else {
             mSynth.noteOff();
         }

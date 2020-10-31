@@ -6,7 +6,6 @@ import com.jsyn.unitgen.*;
 
 final int[] mSequence = new int[16];
 int mBeatCount = 0;
-Beat mBeat = new Beat(this, 240);
 void settings() {
     size(1280, 720);
 }
@@ -15,6 +14,7 @@ void setup() {
     for (int i = 0; i < mSequence.length; i++) {
         mSequence[i] = Note.NOTE_C3 + i * 3;
     }
+    Beat.start(this, 240);
 }
 void draw() {
     background(50);

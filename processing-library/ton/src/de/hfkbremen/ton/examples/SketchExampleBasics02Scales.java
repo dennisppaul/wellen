@@ -6,8 +6,8 @@ import de.hfkbremen.ton.Ton;
 import processing.core.PApplet;
 
 /**
- * this examples shows how to use musical scales. there are a selection of predefined scales but custom ones can also be
- * created.
+ * this examples shows how to use musical scales. a selection of predefined scales is available, however custom scales
+ * can also be created.
  */
 public class SketchExampleBasics02Scales extends PApplet {
 

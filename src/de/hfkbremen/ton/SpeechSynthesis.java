@@ -23,6 +23,30 @@ public class SpeechSynthesis {
         mRemoveSpecialChars = remove_special_characters;
     }
 
+    public static String[] list() {
+        String[] mCommand = new String[]{"say", "-v", "?"};
+        final Process p;
+        try {
+            p = Runtime.getRuntime().exec(mCommand);
+            int mExit = p.waitFor();
+            BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            BufferedReader error = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+
+            ArrayList<String> mVoices = new ArrayList<>();
+            String s;
+            while ((s = stdInput.readLine()) != null) {
+                String[] mNames = s.split(" ");
+                mVoices.add(mNames[0]);
+            }
+            String[] mVoiceNames = new String[mVoices.size()];
+            mVoices.toArray(mVoiceNames);
+            return mVoiceNames;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new String[]{};
+    }
+
     public void say(String pVoice, String pMessage, boolean pBlocking, int pWordsPerMinute, String pFileName) {
         if (mVerbose) {
             System.out.println("### saying: " + pMessage);
@@ -85,30 +109,6 @@ public class SpeechSynthesis {
         say(voice, message, mBlocking, mWordsPerMinute, mFileName);
     }
 
-    public static String[] list() {
-        String[] mCommand = new String[]{"say", "-v", "?"};
-        final Process p;
-        try {
-            p = Runtime.getRuntime().exec(mCommand);
-            int mExit = p.waitFor();
-            BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            BufferedReader error = new BufferedReader(new InputStreamReader(p.getErrorStream()));
-
-            ArrayList<String> mVoices = new ArrayList<>();
-            String s;
-            while ((s = stdInput.readLine()) != null) {
-                String[] mNames = s.split(" ");
-                mVoices.add(mNames[0]);
-            }
-            String[] mVoiceNames = new String[mVoices.size()];
-            mVoices.toArray(mVoiceNames);
-            return mVoiceNames;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return new String[]{};
-    }
-
     /*
      * use `man say` to get a full description of the say tool.
      *
@@ -135,7 +135,8 @@ public class SpeechSynthesis {
      *     Laura               sk_SK    # Ahoj. Volám sa Laura . Som hlas v slovenskom jazyku.
      *     Lekha               hi_IN    # नमस्कार, मेरा नाम लेखा है.Lekha मै हिंदी मे बोलने वाली आवाज़ हूँ.
      *     Luca                it_IT    # Salve, mi chiamo Luca e sono una voce italiana.
-     *     Luciana             pt_BR    # Olá, o meu nome é Luciana e a minha voz corresponde ao português que é falado no Brasil
+     *     Luciana             pt_BR    # Olá, o meu nome é Luciana e a minha voz corresponde ao português que é
+     * falado no Brasil
      *     Maged               ar_SA    # مرحبًا اسمي Maged. أنا عربي من السعودية.
      *     Mariska             hu_HU    # Üdvözlöm! Mariska vagyok. Én vagyok a magyar hang.
      *     Mei-Jia             zh_TW    # 您好，我叫美佳。我說國語。

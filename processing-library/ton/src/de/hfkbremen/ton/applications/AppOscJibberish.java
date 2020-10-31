@@ -3,8 +3,8 @@ package de.hfkbremen.ton.applications;
 import com.jsyn.unitgen.MixerMono;
 import com.jsyn.unitgen.SawtoothOscillator;
 import com.jsyn.unitgen.UnitOscillator;
-import de.hfkbremen.ton.ToneEngineJSyn;
 import de.hfkbremen.ton.ToneEngine;
+import de.hfkbremen.ton.ToneEngineJSyn;
 import processing.core.PApplet;
 import processing.core.PVector;
 
@@ -17,14 +17,6 @@ public class AppOscJibberish extends PApplet {
     }
 
     public void setup() {
-        size(640, 480);
-        frameRate(60);
-        noFill();
-        rectMode(CENTER);
-        ellipseMode(CENTER);
-        smooth();
-
-        /* start jsyn */
         ToneEngineJSyn mSynth = new ToneEngineJSyn(ToneEngine.INSTRUMENT_EMPTY);
 
         MixerMono mMixerMono = new MixerMono(1);
@@ -41,28 +33,31 @@ public class AppOscJibberish extends PApplet {
         /* compute */
         if (mousePressed) {
             if (mouseX > mJibberer.position().x - 30
-                    && mouseX < mJibberer.position().x + 30
-                    && mouseY > mJibberer.position().y - 30
-                    && mouseY < mJibberer.position().y + 30) {
+                && mouseX < mJibberer.position().x + 30
+                && mouseY > mJibberer.position().y - 30
+                && mouseY < mJibberer.position().y + 30) {
                 mJibberer.position().set(mouseX, mouseY, 0);
             }
         }
-
         mJibberer.update();
 
         /* draw */
         background(255);
+        noFill();
         stroke(0, 32);
         line(mJibberer.triggerposition().x, mJibberer.triggerposition().y,
-                mJibberer.position().x, mJibberer.position().y);
-        stroke(255, 127, 0, 127);
-        ellipse(mJibberer.position().x, mJibberer.position().y, 20, 20);
+             mJibberer.position().x, mJibberer.position().y);
         stroke(0, 127);
-        ellipse(mJibberer.triggerposition().x, mJibberer.triggerposition().y,
-                mJibberer.mMaxDistance * 2, mJibberer.mMaxDistance * 2);
+        ellipse(mJibberer.triggerposition().x,
+                mJibberer.triggerposition().y,
+                mJibberer.mMaxDistance * 2,
+                mJibberer.mMaxDistance * 2);
+        fill(0);
+        noStroke();
+        ellipse(mJibberer.position().x, mJibberer.position().y, 20, 20);
     }
 
-    public class Jibberer {
+    private class Jibberer {
 
         private final UnitOscillator mOsc;
 
@@ -101,12 +96,12 @@ public class AppOscJibberish extends PApplet {
         }
 
         void update() {
-            float myDistanceRatio = (1 - min(1, myPosition.dist(mTriggerPosition) / mMaxDistance));
+            float mDistanceRatio = (1 - min(1, myPosition.dist(mTriggerPosition) / mMaxDistance));
 
             mAmpPointer += 0.65f;
             float mAmp = noise(mAmpPointer) * noise(mAmpPointer * 1.3f);
             if (noise(mAmpPointer * 0.45f) > 0.5f) {
-                mOsc.amplitude.set(myDistanceRatio * mAmp);
+                mOsc.amplitude.set(mDistanceRatio * mAmp);
             } else {
                 mOsc.amplitude.set(0);
             }

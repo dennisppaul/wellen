@@ -8,7 +8,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import static de.hfkbremen.ton.Note.note_to_frequency;
-import static de.hfkbremen.ton.TonUtil.clamp127;
+import static de.hfkbremen.ton.Ton.clamp127;
 
 public class ToneEngineMinim extends ToneEngine {
 
@@ -26,7 +26,7 @@ public class ToneEngineMinim extends ToneEngine {
         mInstruments = new ArrayList<>();
         for (int i = 0; i < NUMBERS_OF_INSTRUMENTS; i++) {
             mInstruments.add(new InstrumentMinim(mMinim, i));
-            ((InstrumentMinim) mInstruments.get(i)).amplitude(1.0f);
+            mInstruments.get(i).amplitude(1.0f);
         }
     }
 

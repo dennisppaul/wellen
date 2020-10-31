@@ -1,6 +1,5 @@
 package de.hfkbremen.ton;
 
-
 import java.util.TimerTask;
 
 public class MidiTimerNoteOffTask extends TimerTask {

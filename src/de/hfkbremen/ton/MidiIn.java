@@ -10,7 +10,7 @@ import javax.sound.midi.Transmitter;
 import javax.swing.*;
 import java.util.ArrayList;
 
-import static de.hfkbremen.ton.TonUtil.dumpMidiInputDevices;
+import static de.hfkbremen.ton.Ton.dumpMidiInputDevices;
 
 public class MidiIn implements Receiver {
 
@@ -35,32 +35,29 @@ public class MidiIn implements Receiver {
         mListener = new ArrayList<>();
     }
 
+    public static String[] availableInputs() {
+        ArrayList<String> mMidiInputs = new ArrayList<>();
+        MidiDevice.Info[] mInfos = MidiSystem.getMidiDeviceInfo();
+        for (MidiDevice.Info mInfo : mInfos) {
+            try {
+                MidiDevice mDevice = MidiSystem.getMidiDevice(mInfo);
+                if (mDevice.getMaxTransmitters() != 0) {
+                    mMidiInputs.add(mInfo.getName());
+                }
+            } catch (MidiUnavailableException e) {
+                e.printStackTrace();
+            }
+        }
+        String[] mMidiOutputsStr = new String[mMidiInputs.size()];
+        return mMidiInputs.toArray(mMidiOutputsStr);
+    }
+
     public void addListener(MidiInListener pMidiInListener) {
         mListener.add(pMidiInListener);
     }
 
     public void removeListener(MidiInListener pMidiInListener) {
         mListener.remove(pMidiInListener);
-    }
-
-    private Transmitter find(String pMidiOutputDevice) {
-        MidiDevice.Info[] mInfos = MidiSystem.getMidiDeviceInfo();
-        for (MidiDevice.Info mInfo : mInfos) {
-            try {
-                MidiDevice mDevice = MidiSystem.getMidiDevice(mInfo);
-                if (mDevice.getMaxTransmitters() != 0) {
-                    if (pMidiOutputDevice.equals(mInfo.getName())) {
-                        if (!mDevice.isOpen()) {
-                            mDevice.open();
-                        }
-                        return mDevice.getTransmitter();
-                    }
-                }
-            } catch (MidiUnavailableException e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
     }
 
     @Override
@@ -100,6 +97,26 @@ public class MidiIn implements Receiver {
     public void close() {
     }
 
+    private Transmitter find(String pMidiOutputDevice) {
+        MidiDevice.Info[] mInfos = MidiSystem.getMidiDeviceInfo();
+        for (MidiDevice.Info mInfo : mInfos) {
+            try {
+                MidiDevice mDevice = MidiSystem.getMidiDevice(mInfo);
+                if (mDevice.getMaxTransmitters() != 0) {
+                    if (pMidiOutputDevice.equals(mInfo.getName())) {
+                        if (!mDevice.isOpen()) {
+                            mDevice.open();
+                        }
+                        return mDevice.getTransmitter();
+                    }
+                }
+            } catch (MidiUnavailableException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
     private void receiveProgramChange(int channel, int number, int value) {
         for (MidiInListener m : mListener) {
             m.receiveProgramChange(channel, number, value);
@@ -122,23 +139,6 @@ public class MidiIn implements Receiver {
         for (MidiInListener m : mListener) {
             m.receiveNoteOn(channel, pitch, velocity);
         }
-    }
-
-    public static String[] availableInputs() {
-        ArrayList<String> mMidiInputs = new ArrayList<>();
-        MidiDevice.Info[] mInfos = MidiSystem.getMidiDeviceInfo();
-        for (MidiDevice.Info mInfo : mInfos) {
-            try {
-                MidiDevice mDevice = MidiSystem.getMidiDevice(mInfo);
-                if (mDevice.getMaxTransmitters() != 0) {
-                    mMidiInputs.add(mInfo.getName());
-                }
-            } catch (MidiUnavailableException e) {
-                e.printStackTrace();
-            }
-        }
-        String[] mMidiOutputsStr = new String[mMidiInputs.size()];
-        return mMidiInputs.toArray(mMidiOutputsStr);
     }
 
     private static class TestMidiIn implements MidiInListener {

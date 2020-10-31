@@ -19,28 +19,21 @@ public class MidiOut {
         mMidiOut = find(pMidiOutputDevice);
     }
 
-    private Receiver find(String pMidiOutputDevice) {
+    public static String[] availableOutputs() {
+        ArrayList<String> mMidiOutputs = new ArrayList<>();
         MidiDevice.Info[] mInfos = MidiSystem.getMidiDeviceInfo();
         for (MidiDevice.Info mInfo : mInfos) {
             try {
                 MidiDevice mDevice = MidiSystem.getMidiDevice(mInfo);
                 if (mDevice.getMaxReceivers() != 0) {
-                    if (pMidiOutputDevice.equals(mInfo.getName())) {
-                        if (!mDevice.isOpen()) {
-                            mDevice.open();
-                        }
-                        return mDevice.getReceiver();
-                    }
+                    mMidiOutputs.add(mInfo.getName());
                 }
             } catch (MidiUnavailableException e) {
                 e.printStackTrace();
             }
         }
-        return null;
-    }
-
-    private synchronized void sendMessage(MidiMessage message) {
-        mMidiOut.send(message, 0);
+        String[] mMidiOutputsStr = new String[mMidiOutputs.size()];
+        return mMidiOutputs.toArray(mMidiOutputsStr);
     }
 
     public void sendNoteOn(int channel, int pitch, int velocity) {
@@ -101,21 +94,28 @@ public class MidiOut {
         mMidiOut.close();
     }
 
-    public static String[] availableOutputs() {
-        ArrayList<String> mMidiOutputs = new ArrayList<>();
+    private Receiver find(String pMidiOutputDevice) {
         MidiDevice.Info[] mInfos = MidiSystem.getMidiDeviceInfo();
         for (MidiDevice.Info mInfo : mInfos) {
             try {
                 MidiDevice mDevice = MidiSystem.getMidiDevice(mInfo);
                 if (mDevice.getMaxReceivers() != 0) {
-                    mMidiOutputs.add(mInfo.getName());
+                    if (pMidiOutputDevice.equals(mInfo.getName())) {
+                        if (!mDevice.isOpen()) {
+                            mDevice.open();
+                        }
+                        return mDevice.getReceiver();
+                    }
                 }
             } catch (MidiUnavailableException e) {
                 e.printStackTrace();
             }
         }
-        String[] mMidiOutputsStr = new String[mMidiOutputs.size()];
-        return mMidiOutputs.toArray(mMidiOutputsStr);
+        return null;
+    }
+
+    private synchronized void sendMessage(MidiMessage message) {
+        mMidiOut.send(message, 0);
     }
 
 }
