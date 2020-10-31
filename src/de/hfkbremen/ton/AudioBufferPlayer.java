@@ -1,10 +1,7 @@
 package de.hfkbremen.ton;
 
-import processing.core.PApplet;
-
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.DataLine;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 
@@ -15,6 +12,8 @@ public class AudioBufferPlayer extends Thread {
      * - @TODO(add stereo)
      * - @REF([Java Sound Resources: FAQ: Audio Programming](http://jsresources.sourceforge.net/faq_audio
      * .html#sync_playback_recording))
+     * - SOURCE == output
+     * - TAARGET == input
      */
 
     //    public static final int SAMPLE_RATE = 44100;
@@ -31,12 +30,13 @@ public class AudioBufferPlayer extends Thread {
     private final AudioBufferRenderer mSampleRenderer;
     private final int mSampleRate;
     private final int mSampleBufferSize;
+    private final int mNumOutputChannels;
     private SourceDataLine mOutputLine;
     private byte[] mByteBuffer;
     private boolean mRunBuffer = true;
 
     public AudioBufferPlayer(AudioBufferRenderer pSampleRenderer) {
-        this(pSampleRenderer, 44100, 512, 16, MONO);
+        this(pSampleRenderer, 44100, 512, 16, STEREO);
     }
 
     public AudioBufferPlayer(AudioBufferRenderer pSampleRenderer,
@@ -47,50 +47,24 @@ public class AudioBufferPlayer extends Thread {
         mSampleRenderer = pSampleRenderer;
         mSampleRate = pSampleRate;
         mSampleBufferSize = pSampleBufferSize;
+        mNumOutputChannels = pNumOutputChannels;
 
         try {
             // 44,100 Hz, 16-bit audio, mono, signed PCM, little endian
-            AudioFormat mFormat = new AudioFormat(pSampleRate,
-                                                  pBitsPerSample,
-                                                  pNumOutputChannels,
-                                                  SIGNED,
-                                                  LITTLE_ENDIAN);
-            DataLine.Info mInfo = new DataLine.Info(SourceDataLine.class, mFormat);
-
+            final AudioFormat mFormat = new AudioFormat(pSampleRate,
+                                                        pBitsPerSample,
+                                                        pNumOutputChannels,
+                                                        SIGNED,
+                                                        LITTLE_ENDIAN);
+            mOutputLine = AudioSystem.getSourceDataLine(mFormat);
             final int BYTES_PER_SAMPLE = 2; // @TODO this probably needs to be adjusted … e.g `pBitsPerSample / 8`
-
-            mOutputLine = (SourceDataLine) AudioSystem.getLine(mInfo);
-            mOutputLine.open(mFormat, mSampleBufferSize * BYTES_PER_SAMPLE);
-
-            mByteBuffer = new byte[mSampleBufferSize * BYTES_PER_SAMPLE];
+            mByteBuffer = new byte[mSampleBufferSize * BYTES_PER_SAMPLE * pNumOutputChannels];
+            mOutputLine.open(mFormat, mByteBuffer.length);
         } catch (LineUnavailableException e) {
             System.err.println(e.getMessage());
         }
-
         mOutputLine.start();
         start();
-    }
-
-    public static float clamp(float pValue, float pMin, float pMax) {
-        if (pValue > pMax) {
-            return pMax;
-        } else if (pValue < pMin) {
-            return pMin;
-        } else {
-            return pValue;
-        }
-    }
-
-    public static float flip(float pValue) {
-        float pMin = -1.0f;
-        float pMax = 1.0f;
-        if (pValue > pMax) {
-            return pValue - PApplet.floor(pValue);
-        } else if (pValue < pMin) {
-            return -PApplet.ceil(pValue) + pValue;
-        } else {
-            return pValue;
-        }
     }
 
     public int sample_rate() {
@@ -99,20 +73,22 @@ public class AudioBufferPlayer extends Thread {
 
     public void run() {
         while (mRunBuffer) {
-            final float[] mBuffer = new float[mSampleBufferSize];
-            mSampleRenderer.render(mBuffer);
-            for (int i = 0; i < mBuffer.length; i++) {
-                writeSample(mBuffer[i], i);
+            float[][] mBuffers = new float[mNumOutputChannels][];
+            for (int j = 0; j < mNumOutputChannels; j++) {
+                mBuffers[j] = new float[mSampleBufferSize];
+            }
+            mSampleRenderer.render(mBuffers);
+            for (int i = 0; i < mSampleBufferSize; i++) {
+                for (int j = 0; j < mNumOutputChannels; j++) {
+                    writeSample(mBuffers[j][i], i * 2 + j);
+                }
             }
             mOutputLine.write(mByteBuffer, 0, mByteBuffer.length);
         }
     }
 
-    public void close() {
-        mRunBuffer = false;
-        mOutputLine.drain();
-        mOutputLine.stop();
-        mOutputLine.close();
+    public int buffer_size() {
+        return mSampleBufferSize;
     }
 
     private void writeSample(final float sample, final int i) {

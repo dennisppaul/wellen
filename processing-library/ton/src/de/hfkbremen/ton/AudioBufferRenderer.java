@@ -2,5 +2,5 @@ package de.hfkbremen.ton;
 
 public interface AudioBufferRenderer {
 
-    void render(float[] pSamples);
+    void render(float[][] pSamples);
 }
