@@ -64,11 +64,11 @@ void beat(int pBeat) {
     mLastNote = mNote;
 }
 class ImageSampler {
+    final int ID;
     int x = 0;
     int y = 0;
     int radius = 16;
     boolean active = false;
-    final int ID;
     float mBrightnessNorm = 0;
     int mSampleRed = 0;
     int mSampleGreen = 0;

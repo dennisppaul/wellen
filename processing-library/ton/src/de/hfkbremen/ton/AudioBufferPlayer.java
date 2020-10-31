@@ -17,11 +17,10 @@ public class AudioBufferPlayer extends Thread {
      * .html#sync_playback_recording))
      */
 
-    public static final int SAMPLE_RATE = 44100;
-    public static final int BYTES_PER_SAMPLE = 2;       // 16-bit audio
-    public static final int BITS_PER_SAMPLE = 16;       // 16-bit audio
+    //    public static final int SAMPLE_RATE = 44100;
+    //    public static final int BYTES_PER_SAMPLE = 2;       // 16-bit audio
+    //    public static final int BITS_PER_SAMPLE = 16;       // 16-bit audio
     public static final double MAX_16_BIT = 32768;
-    public static final int SAMPLE_BUFFER_SIZE = 4096;
 
     public static final int MONO = 1;
     public static final int STEREO = 2;
@@ -29,28 +28,46 @@ public class AudioBufferPlayer extends Thread {
     public static final boolean BIG_ENDIAN = true;
     public static final boolean SIGNED = true;
     public static final boolean UNSIGNED = false;
-    private final AudioBufferRenderer mSamplerRenderer;
-    private SourceDataLine line;
-    private byte[] buffer;
+    private final AudioBufferRenderer mSampleRenderer;
+    private final int mSampleRate;
+    private final int mSampleBufferSize;
+    private SourceDataLine mOutputLine;
+    private byte[] mByteBuffer;
     private boolean mRunBuffer = true;
 
-    public AudioBufferPlayer(AudioBufferRenderer pSamplerRenderer) {
-        mSamplerRenderer = pSamplerRenderer;
+    public AudioBufferPlayer(AudioBufferRenderer pSampleRenderer) {
+        this(pSampleRenderer, 44100, 512, 16, MONO);
+    }
+
+    public AudioBufferPlayer(AudioBufferRenderer pSampleRenderer,
+                             int pSampleRate,
+                             int pSampleBufferSize,
+                             int pBitsPerSample,
+                             int pNumOutputChannels) {
+        mSampleRenderer = pSampleRenderer;
+        mSampleRate = pSampleRate;
+        mSampleBufferSize = pSampleBufferSize;
 
         try {
             // 44,100 Hz, 16-bit audio, mono, signed PCM, little endian
-            AudioFormat format = new AudioFormat(SAMPLE_RATE, BITS_PER_SAMPLE, MONO, SIGNED, LITTLE_ENDIAN);
-            DataLine.Info info = new DataLine.Info(SourceDataLine.class, format);
+            AudioFormat mFormat = new AudioFormat(pSampleRate,
+                                                  pBitsPerSample,
+                                                  pNumOutputChannels,
+                                                  SIGNED,
+                                                  LITTLE_ENDIAN);
+            DataLine.Info mInfo = new DataLine.Info(SourceDataLine.class, mFormat);
 
-            line = (SourceDataLine) AudioSystem.getLine(info);
-            line.open(format, SAMPLE_BUFFER_SIZE * BYTES_PER_SAMPLE);
+            final int BYTES_PER_SAMPLE = 2; // @TODO this probably needs to be adjusted … e.g `pBitsPerSample / 8`
 
-            buffer = new byte[SAMPLE_BUFFER_SIZE * BYTES_PER_SAMPLE];
+            mOutputLine = (SourceDataLine) AudioSystem.getLine(mInfo);
+            mOutputLine.open(mFormat, mSampleBufferSize * BYTES_PER_SAMPLE);
+
+            mByteBuffer = new byte[mSampleBufferSize * BYTES_PER_SAMPLE];
         } catch (LineUnavailableException e) {
             System.err.println(e.getMessage());
         }
 
-        line.start();
+        mOutputLine.start();
         start();
     }
 
@@ -76,22 +93,26 @@ public class AudioBufferPlayer extends Thread {
         }
     }
 
+    public int sample_rate() {
+        return mSampleRate;
+    }
+
     public void run() {
         while (mRunBuffer) {
-            final float[] mBuffer = new float[SAMPLE_BUFFER_SIZE];
-            mSamplerRenderer.render(mBuffer);
+            final float[] mBuffer = new float[mSampleBufferSize];
+            mSampleRenderer.render(mBuffer);
             for (int i = 0; i < mBuffer.length; i++) {
                 writeSample(mBuffer[i], i);
             }
-            line.write(buffer, 0, buffer.length);
+            mOutputLine.write(mByteBuffer, 0, mByteBuffer.length);
         }
     }
 
     public void close() {
         mRunBuffer = false;
-        line.drain();
-        line.stop();
-        line.close();
+        mOutputLine.drain();
+        mOutputLine.stop();
+        mOutputLine.close();
     }
 
     private void writeSample(final float sample, final int i) {
@@ -99,7 +120,7 @@ public class AudioBufferPlayer extends Thread {
         if (sample == 1.0) {
             s = Short.MAX_VALUE; // special case since 32768 not a short
         }
-        buffer[i * 2 + 0] = (byte) s;
-        buffer[i * 2 + 1] = (byte) (s >> 8); // little endian
+        mByteBuffer[i * 2 + 0] = (byte) s;
+        mByteBuffer[i * 2 + 1] = (byte) (s >> 8); // little endian
     }
 }

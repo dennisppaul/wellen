@@ -59,6 +59,7 @@ public class AppAlgorithmicCompositionLoops extends PApplet {
     }
 
     private static class Loop implements BeatListener {
+
         final int note;
         final int instrument;
         boolean playing;

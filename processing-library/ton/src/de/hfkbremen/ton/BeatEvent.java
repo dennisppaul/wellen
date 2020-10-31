@@ -10,11 +10,11 @@ import java.util.TimerTask;
 public class BeatEvent {
 
     private static BeatPool instance;
+    private final Timer mTimer;
+    private final ArrayList<BeatListener> pListeners;
     private int mBeat = -1;
     private boolean mFlagged = false;
-    private final Timer mTimer;
     private TimerTask mTask;
-    private final ArrayList<BeatListener> pListeners;
 
     private BeatEvent(int pBPM) {
         this();
@@ -24,6 +24,12 @@ public class BeatEvent {
     private BeatEvent() {
         pListeners = new ArrayList<>();
         mTimer = new Timer();
+    }
+
+    public static BeatEvent create(int pBPM) {
+        BeatEvent mBeatEvent = new BeatEvent(pBPM);
+        BeatPool.instance().pool.add(mBeatEvent);
+        return mBeatEvent;
     }
 
     public void add(BeatListener pListener) {
@@ -39,16 +45,19 @@ public class BeatEvent {
         mTimer.scheduleAtFixedRate(mTask, 1000, mPeriod);
     }
 
-    public static BeatEvent create(int pBPM) {
-        BeatEvent mBeatEvent = new BeatEvent(pBPM);
-        BeatPool.instance().pool.add(mBeatEvent);
-        return mBeatEvent;
-    }
-
     private static class BeatPool extends Thread {
+
         private static BeatPool instance = null;
         final List<BeatEvent> pool = Collections.synchronizedList(new ArrayList<>());
         private boolean mActive = true;
+
+        public static BeatPool instance() {
+            if (instance == null) {
+                instance = new BeatPool();
+                instance.start();
+            }
+            return instance;
+        }
 
         public void end() {
             mActive = false;
@@ -75,17 +84,10 @@ public class BeatEvent {
                 }
             }
         }
-
-        public static BeatPool instance() {
-            if (instance == null) {
-                instance = new BeatPool();
-                instance.start();
-            }
-            return instance;
-        }
     }
 
     private class BeatTimerTask extends TimerTask {
+
         @Override
         public void run() {
             mBeat++;

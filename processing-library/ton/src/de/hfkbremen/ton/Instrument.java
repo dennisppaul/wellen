@@ -21,14 +21,11 @@ public abstract class Instrument {
     protected final float DEFAULT_RELEASE = 0.1f;
     private final int mID;
     /**
-     * time parameter defining the time it takes for the set_amp to reach maximum
-     * level.
+     * time parameter defining the time it takes for the set_amp to reach maximum level.
      */
     protected float mAttack = DEFAULT_ATTACK;
     /**
-     * time parameter defining the time it takes to go from maximum to
-     * get_sustain
-     * level.
+     * time parameter defining the time it takes to go from maximum to get_sustain level.
      */
     protected float mDecay = DEFAULT_DECAY;
     /**
@@ -36,8 +33,7 @@ public abstract class Instrument {
      */
     protected float mSustain = DEFAULT_SUSTAIN;
     /**
-     * time parameter defining the time it takes for the set_amp to reach zero after
-     * note is off.
+     * time parameter defining the time it takes for the set_amp to reach zero after note is off.
      */
     protected float mRelease = DEFAULT_RELEASE;
 

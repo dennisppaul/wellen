@@ -85,19 +85,13 @@ public class AppImageScannerSequencer extends PApplet {
         mLastNote = mNote;
     }
 
-    public static void main(String[] args) {
-        PApplet.main(AppImageScannerSequencer.class.getName());
-    }
-
     class ImageSampler {
 
+        final int ID;
         int x = 0;
         int y = 0;
         int radius = 16;
         boolean active = false;
-
-        final int ID;
-
         private float mBrightnessNorm = 0;
         private int mSampleRed = 0;
         private int mSampleGreen = 0;
@@ -150,5 +144,9 @@ public class AppImageScannerSequencer extends PApplet {
             g.ellipse(x, y, radius * 2, radius * 2);
 
         }
+    }
+
+    public static void main(String[] args) {
+        PApplet.main(AppImageScannerSequencer.class.getName());
     }
 }

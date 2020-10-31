@@ -14,9 +14,6 @@ import processing.core.PApplet;
 public class SketchExampleInstruments05InstrumentWithGUI extends PApplet {
 
     private static final int NO = -1;
-    private ToneEngine mToneEngine;
-    private controlP5.ControlP5 cp5;
-
     private final int[] mSteps = {
             0, NO, 12, NO,
             0, NO, 12, NO,
@@ -27,6 +24,8 @@ public class SketchExampleInstruments05InstrumentWithGUI extends PApplet {
             5, 5, 17, 17,
             5, 5, 17, 17
     };
+    private ToneEngine mToneEngine;
+    private controlP5.ControlP5 cp5;
 
     public void settings() {
         size(640, 480);

@@ -24,73 +24,6 @@ public class InstrumentJSynOscillator extends InstrumentJSyn {
         connectModules(mOsc);
     }
 
-    protected void connectModules(UnitGenerator o) {
-        mSynth.add(o);
-        if (o instanceof UnitOscillator) {
-            UnitOscillator uo = (UnitOscillator) o;
-            uo.amplitude.set(0);
-            uo.frequency.set(220);
-            uo.output.connect(0, mLineOut.input, 0);
-            uo.output.connect(0, mLineOut.input, 1);
-        } else if (o instanceof WhiteNoise) {
-            WhiteNoise uo = (WhiteNoise) o;
-            uo.amplitude.set(0);
-            uo.output.connect(0, mLineOut.input, 0);
-            uo.output.connect(0, mLineOut.input, 1);
-        }
-    }
-
-    protected void disconnectModules(UnitGenerator o) {
-        o.stop();
-        if (o instanceof UnitOscillator) {
-            UnitOscillator uo = (UnitOscillator) o;
-            uo.amplitude.set(0);
-            uo.output.disconnect(mLineOut.input);
-            uo.output.disconnectAll();
-        } else if (o instanceof WhiteNoise) {
-            WhiteNoise uo = (WhiteNoise) o;
-            uo.amplitude.set(0);
-            uo.output.disconnect(mLineOut.input);
-            uo.output.disconnectAll();
-        }
-        mSynth.remove(o);
-    }
-
-    protected void update_freq() {
-        if (mOsc instanceof UnitOscillator) {
-            UnitOscillator uo = (UnitOscillator) mOsc;
-            uo.frequency.set(mFreq + mFreqOffset);
-        }
-    }
-
-    public void amplitude(float pAmp) {
-        System.out.println("set_amp");
-        mAmp = pAmp;
-        if (mOsc instanceof UnitOscillator) {
-            UnitOscillator uo = (UnitOscillator) mOsc;
-            uo.amplitude.set(mAmp);
-        } else if (mOsc instanceof WhiteNoise) {
-            WhiteNoise uo = (WhiteNoise) mOsc;
-            uo.amplitude.set(mAmp);
-        }
-    }
-
-    public void frequency(float freq) {
-        mFreq = freq;
-        update_freq();
-    }
-
-    public void noteOff() {
-        amplitude(0);
-    }
-
-    public void noteOn(float pFreq, float pAmp) {
-        TimeStamp mTimeStamp = new TimeStamp(mSynth.getCurrentTime());
-        mFreq = pFreq;
-        update_freq();
-        amplitude(1);
-    }
-
     @ControlElement(properties = {"min=0.0",
                                   "max=" + (NUMBER_OF_OSCILLATORS - 1),
                                   "type=knob",
@@ -174,6 +107,34 @@ public class InstrumentJSynOscillator extends InstrumentJSyn {
         update_freq();
     }
 
+    public void amplitude(float pAmp) {
+        System.out.println("set_amp");
+        mAmp = pAmp;
+        if (mOsc instanceof UnitOscillator) {
+            UnitOscillator uo = (UnitOscillator) mOsc;
+            uo.amplitude.set(mAmp);
+        } else if (mOsc instanceof WhiteNoise) {
+            WhiteNoise uo = (WhiteNoise) mOsc;
+            uo.amplitude.set(mAmp);
+        }
+    }
+
+    public void frequency(float freq) {
+        mFreq = freq;
+        update_freq();
+    }
+
+    public void noteOff() {
+        amplitude(0);
+    }
+
+    public void noteOn(float pFreq, float pAmp) {
+        TimeStamp mTimeStamp = new TimeStamp(mSynth.getCurrentTime());
+        mFreq = pFreq;
+        update_freq();
+        amplitude(1);
+    }
+
     public void attack(float pAttack) {
         super.attack(pAttack);
     }
@@ -188,6 +149,45 @@ public class InstrumentJSynOscillator extends InstrumentJSyn {
 
     public void release(float pRelease) {
         super.release(pRelease);
+    }
+
+    protected void connectModules(UnitGenerator o) {
+        mSynth.add(o);
+        if (o instanceof UnitOscillator) {
+            UnitOscillator uo = (UnitOscillator) o;
+            uo.amplitude.set(0);
+            uo.frequency.set(220);
+            uo.output.connect(0, mLineOut.input, 0);
+            uo.output.connect(0, mLineOut.input, 1);
+        } else if (o instanceof WhiteNoise) {
+            WhiteNoise uo = (WhiteNoise) o;
+            uo.amplitude.set(0);
+            uo.output.connect(0, mLineOut.input, 0);
+            uo.output.connect(0, mLineOut.input, 1);
+        }
+    }
+
+    protected void disconnectModules(UnitGenerator o) {
+        o.stop();
+        if (o instanceof UnitOscillator) {
+            UnitOscillator uo = (UnitOscillator) o;
+            uo.amplitude.set(0);
+            uo.output.disconnect(mLineOut.input);
+            uo.output.disconnectAll();
+        } else if (o instanceof WhiteNoise) {
+            WhiteNoise uo = (WhiteNoise) o;
+            uo.amplitude.set(0);
+            uo.output.disconnect(mLineOut.input);
+            uo.output.disconnectAll();
+        }
+        mSynth.remove(o);
+    }
+
+    protected void update_freq() {
+        if (mOsc instanceof UnitOscillator) {
+            UnitOscillator uo = (UnitOscillator) mOsc;
+            uo.frequency.set(mFreq + mFreqOffset);
+        }
     }
 
 }

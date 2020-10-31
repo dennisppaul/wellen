@@ -19,27 +19,40 @@ public class InstrumentJSynOscillatorADSRFilterLFO extends InstrumentJSynOscilla
         super(mSynthesizerJSyn, pID);
     }
 
-    protected void setupModules() {
-        if (mLowPassFilter == null) {
-            mLowPassFilter = new FilterLowPass();
-            mLowPassFilter.output.connect(0, mLineOut.input, 0);
-            mLowPassFilter.output.connect(0, mLineOut.input, 1);
-            mLowPassFilter.frequency.set(2000);
-            mLowPassFilter.Q.set(1);
-            mSynth.add(mLowPassFilter);
-        }
-        if (mLFO == null) {
-            mLFO = new SineOscillator();
-            mLFO.amplitude.set(3);
-            mLFO.frequency.set(10.0f);
-            mSynth.add(mLFO);
-        }
-        if (mAddUnit == null) {
-            mAddUnit = new Add();
-            mAddUnit.inputA.set(220);
-            mLFO.output.connect(mAddUnit.inputB);
-            mSynth.add(mAddUnit);
-        }
+    @ControlElement(properties = {"min=0.0", "max=100.0", "type=knob", "radius=20", "resolution=1000"}, x = 250, y = 0)
+    public void lfo_amp(float pLFOAmp) {
+        mLFO.amplitude.set(pLFOAmp);
+    }
+
+    public float get_lfo_amp() {
+        return (float) mLFO.amplitude.get();
+    }
+
+    @ControlElement(properties = {"min=0.0", "max=100.0", "type=knob", "radius=20", "resolution=1000"}, x = 300, y = 0)
+    public void lfo_freq(float pLFOFreq) {
+        mLFO.frequency.set(pLFOFreq);
+    }
+
+    public float get_lfo_freq() {
+        return (float) mLFO.frequency.get();
+    }
+
+    @ControlElement(properties = {"min=0.0", "max=5", "type=knob", "radius=20", "resolution=100"}, x = 350, y = 0)
+    public void filter_q(float pQ) {
+        mLowPassFilter.Q.set(pQ);
+    }
+
+    public float get_filter_q() {
+        return (float) mLowPassFilter.Q.get();
+    }
+
+    @ControlElement(properties = {"min=0.0", "max=30000", "type=knob", "radius=20", "resolution=300"}, x = 400, y = 0)
+    public void filter_freq(float pFreq) {
+        mLowPassFilter.frequency.set(pFreq);
+    }
+
+    public float get_filter_freq() {
+        return (float) mLowPassFilter.frequency.get();
     }
 
     protected void connectModules(UnitGenerator o) {
@@ -82,40 +95,27 @@ public class InstrumentJSynOscillatorADSRFilterLFO extends InstrumentJSynOscilla
         mAddUnit.inputA.set(mFreq + mFreqOffset);
     }
 
-    @ControlElement(properties = {"min=0.0", "max=100.0", "type=knob", "radius=20", "resolution=1000"}, x = 250, y = 0)
-    public void lfo_amp(float pLFOAmp) {
-        mLFO.amplitude.set(pLFOAmp);
-    }
-
-    public float get_lfo_amp() {
-        return (float) mLFO.amplitude.get();
-    }
-
-    @ControlElement(properties = {"min=0.0", "max=100.0", "type=knob", "radius=20", "resolution=1000"}, x = 300, y = 0)
-    public void lfo_freq(float pLFOFreq) {
-        mLFO.frequency.set(pLFOFreq);
-    }
-
-    public float get_lfo_freq() {
-        return (float) mLFO.frequency.get();
-    }
-
-    @ControlElement(properties = {"min=0.0", "max=5", "type=knob", "radius=20", "resolution=100"}, x = 350, y = 0)
-    public void filter_q(float pQ) {
-        mLowPassFilter.Q.set(pQ);
-    }
-
-    public float get_filter_q() {
-        return (float) mLowPassFilter.Q.get();
-    }
-
-    @ControlElement(properties = {"min=0.0", "max=30000", "type=knob", "radius=20", "resolution=300"}, x = 400, y = 0)
-    public void filter_freq(float pFreq) {
-        mLowPassFilter.frequency.set(pFreq);
-    }
-
-    public float get_filter_freq() {
-        return (float) mLowPassFilter.frequency.get();
+    protected void setupModules() {
+        if (mLowPassFilter == null) {
+            mLowPassFilter = new FilterLowPass();
+            mLowPassFilter.output.connect(0, mLineOut.input, 0);
+            mLowPassFilter.output.connect(0, mLineOut.input, 1);
+            mLowPassFilter.frequency.set(2000);
+            mLowPassFilter.Q.set(1);
+            mSynth.add(mLowPassFilter);
+        }
+        if (mLFO == null) {
+            mLFO = new SineOscillator();
+            mLFO.amplitude.set(3);
+            mLFO.frequency.set(10.0f);
+            mSynth.add(mLFO);
+        }
+        if (mAddUnit == null) {
+            mAddUnit = new Add();
+            mAddUnit.inputA.set(220);
+            mLFO.output.connect(mAddUnit.inputB);
+            mSynth.add(mAddUnit);
+        }
     }
 
     VariableRateMonoReader env() {
