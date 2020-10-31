@@ -1,0 +1,6 @@
+LIB_NAME=ton
+IO_EXAMPLE_PATHS=( examples applications tools )
+PROJECT_PACKAGE=de.hfkbremen.ton
+SKETCH_IMPORTS=( controlP5.* ddf.minim.* com.jsyn.unitgen.* )
+BASE_COLOR=59
+ADDITIONAL_LIBS=( jsyn.jar )
