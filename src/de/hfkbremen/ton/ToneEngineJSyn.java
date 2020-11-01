@@ -64,7 +64,7 @@ public class ToneEngineJSyn extends ToneEngine {
                     mInstrumentJSyn = new InstrumentJSynOscillatorADSRFilterLFO(this, i);
                     mInstrumentJSyn.amplitude(mDefaultAmp);
                     break;
-                default: /* implies `INSTRUMENT_WITH_OSCILLATOR_ADSR` */
+                default: /* default implies `INSTRUMENT_WITH_OSCILLATOR_ADSR` */
                     mInstrumentJSyn = new InstrumentJSynOscillatorADSR(this, i);
                     mInstrumentJSyn.amplitude(mDefaultAmp);
             }

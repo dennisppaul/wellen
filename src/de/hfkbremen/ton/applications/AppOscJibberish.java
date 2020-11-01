@@ -60,15 +60,10 @@ public class AppOscJibberish extends PApplet {
     private class Jibberer {
 
         private final UnitOscillator mOsc;
-
         private final PVector myPosition;
-
         private final PVector mTriggerPosition;
-
         private final float mMaxDistance = 100;
-
         private float mFreqPointer = 0;
-
         private float mAmpPointer = 0;
 
         public Jibberer(ToneEngineJSyn pSynth, MixerMono pMixerMono, int pMixerChannel) {

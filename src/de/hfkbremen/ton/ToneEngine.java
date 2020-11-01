@@ -61,8 +61,9 @@ public abstract class ToneEngine {
                     return new ToneEngineOSC(pName[1]);
                 } else if (pName.length == 3) {
                     try {
+                        final String mIPTransmit = pName[1];
                         final int mPortTransmit = Integer.parseInt(pName[2]);
-                        return new ToneEngineOSC(pName[1], mPortTransmit);
+                        return new ToneEngineOSC(mIPTransmit, mPortTransmit);
                     } catch (NumberFormatException e) {
                         System.err.println("+++ could not parse ports");
                     }
