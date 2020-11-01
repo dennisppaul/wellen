@@ -81,7 +81,7 @@
 <ul class="blockList">
 <li class="blockList">
 <table class="constantsSummary" border="0" cellpadding="3" cellspacing="0" summary="Constant Field Values table, listing constant fields, and values">
-<caption><span>de.hfkbremen.ton.<a href="de/hfkbremen/ton/AudioBufferPlayer.html" title="class in de.hfkbremen.ton">AudioBufferPlayer</a></span><span class="tabEnd">&nbsp;</span></caption>
+<caption><span>de.hfkbremen.ton.<a href="de/hfkbremen/ton/AudioBufferManager.html" title="class in de.hfkbremen.ton">AudioBufferManager</a></span><span class="tabEnd">&nbsp;</span></caption>
 <tr>
 <th class="colFirst" scope="col">Modifier and Type</th>
 <th scope="col">Constant Field</th>
@@ -89,52 +89,66 @@
 </tr>
 <tbody>
 <tr class="altColor">
-<td class="colFirst"><a name="de.hfkbremen.ton.AudioBufferPlayer.BIG_ENDIAN">
+<td class="colFirst"><a name="de.hfkbremen.ton.AudioBufferManager.BIG_ENDIAN">
 <!--   -->
 </a><code>public&nbsp;static&nbsp;final&nbsp;boolean</code></td>
-<td><code><a href="de/hfkbremen/ton/AudioBufferPlayer.html#BIG_ENDIAN">BIG_ENDIAN</a></code></td>
+<td><code><a href="de/hfkbremen/ton/AudioBufferManager.html#BIG_ENDIAN">BIG_ENDIAN</a></code></td>
 <td class="colLast"><code>true</code></td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a name="de.hfkbremen.ton.AudioBufferPlayer.LITTLE_ENDIAN">
+<td class="colFirst"><a name="de.hfkbremen.ton.AudioBufferManager.BITS_PER_SAMPLE">
+<!--   -->
+</a><code>public&nbsp;static&nbsp;final&nbsp;int</code></td>
+<td><code><a href="de/hfkbremen/ton/AudioBufferManager.html#BITS_PER_SAMPLE">BITS_PER_SAMPLE</a></code></td>
+<td class="colLast"><code>16</code></td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><a name="de.hfkbremen.ton.AudioBufferManager.DEFAULT">
+<!--   -->
+</a><code>public&nbsp;static&nbsp;final&nbsp;int</code></td>
+<td><code><a href="de/hfkbremen/ton/AudioBufferManager.html#DEFAULT">DEFAULT</a></code></td>
+<td class="colLast"><code>-1</code></td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><a name="de.hfkbremen.ton.AudioBufferManager.LITTLE_ENDIAN">
 <!--   -->
 </a><code>public&nbsp;static&nbsp;final&nbsp;boolean</code></td>
-<td><code><a href="de/hfkbremen/ton/AudioBufferPlayer.html#LITTLE_ENDIAN">LITTLE_ENDIAN</a></code></td>
+<td><code><a href="de/hfkbremen/ton/AudioBufferManager.html#LITTLE_ENDIAN">LITTLE_ENDIAN</a></code></td>
 <td class="colLast"><code>false</code></td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a name="de.hfkbremen.ton.AudioBufferPlayer.MAX_16_BIT">
+<td class="colFirst"><a name="de.hfkbremen.ton.AudioBufferManager.MAX_16_BIT">
 <!--   -->
-</a><code>public&nbsp;static&nbsp;final&nbsp;double</code></td>
-<td><code><a href="de/hfkbremen/ton/AudioBufferPlayer.html#MAX_16_BIT">MAX_16_BIT</a></code></td>
-<td class="colLast"><code>32768.0</code></td>
+</a><code>public&nbsp;static&nbsp;final&nbsp;float</code></td>
+<td><code><a href="de/hfkbremen/ton/AudioBufferManager.html#MAX_16_BIT">MAX_16_BIT</a></code></td>
+<td class="colLast"><code>32768.0f</code></td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a name="de.hfkbremen.ton.AudioBufferPlayer.MONO">
+<td class="colFirst"><a name="de.hfkbremen.ton.AudioBufferManager.MONO">
 <!--   -->
 </a><code>public&nbsp;static&nbsp;final&nbsp;int</code></td>
-<td><code><a href="de/hfkbremen/ton/AudioBufferPlayer.html#MONO">MONO</a></code></td>
+<td><code><a href="de/hfkbremen/ton/AudioBufferManager.html#MONO">MONO</a></code></td>
 <td class="colLast"><code>1</code></td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a name="de.hfkbremen.ton.AudioBufferPlayer.SIGNED">
+<td class="colFirst"><a name="de.hfkbremen.ton.AudioBufferManager.SIGNED">
 <!--   -->
 </a><code>public&nbsp;static&nbsp;final&nbsp;boolean</code></td>
-<td><code><a href="de/hfkbremen/ton/AudioBufferPlayer.html#SIGNED">SIGNED</a></code></td>
+<td><code><a href="de/hfkbremen/ton/AudioBufferManager.html#SIGNED">SIGNED</a></code></td>
 <td class="colLast"><code>true</code></td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><a name="de.hfkbremen.ton.AudioBufferPlayer.STEREO">
+<td class="colFirst"><a name="de.hfkbremen.ton.AudioBufferManager.STEREO">
 <!--   -->
 </a><code>public&nbsp;static&nbsp;final&nbsp;int</code></td>
-<td><code><a href="de/hfkbremen/ton/AudioBufferPlayer.html#STEREO">STEREO</a></code></td>
+<td><code><a href="de/hfkbremen/ton/AudioBufferManager.html#STEREO">STEREO</a></code></td>
 <td class="colLast"><code>2</code></td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><a name="de.hfkbremen.ton.AudioBufferPlayer.UNSIGNED">
+<td class="colFirst"><a name="de.hfkbremen.ton.AudioBufferManager.UNSIGNED">
 <!--   -->
 </a><code>public&nbsp;static&nbsp;final&nbsp;boolean</code></td>
-<td><code><a href="de/hfkbremen/ton/AudioBufferPlayer.html#UNSIGNED">UNSIGNED</a></code></td>
+<td><code><a href="de/hfkbremen/ton/AudioBufferManager.html#UNSIGNED">UNSIGNED</a></code></td>
 <td class="colLast"><code>false</code></td>
 </tr>
 </tbody>

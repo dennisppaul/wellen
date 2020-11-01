@@ -66,7 +66,7 @@ public abstract class Ton {
     public static void dumpMidiOutputDevices() {
         final String[] mOutputNames = MidiOut.availableOutputs();
         System.out.println("+-------------------------------------------------------+");
-        System.out.println("+ Midi Output Devices ( aka Ports or Buses )");
+        System.out.println("+ MIDI OUTPUT DEVICES ( aka Ports or Buses )");
         System.out.println("+-------------------------------------------------------+");
         for (String mOutputName : mOutputNames) {
             System.out.println("+ " + mOutputName);
@@ -76,15 +76,18 @@ public abstract class Ton {
 
     public static void dumpMidiInputDevices() {
         final String[] mInputNames = MidiIn.availableInputs();
-        System.out.println("### Midi Input Devices\n");
+        System.out.println("+-------------------------------------------------------+");
+        System.out.println("+ MIDI INPUT DEVICES");
+        System.out.println("+-------------------------------------------------------+");
         for (String mOutputName : mInputNames) {
             System.out.println("  - " + mOutputName);
         }
     }
 
-    public static void dumpAudioDeviceInfo(final JavaSoundAudioDevice mDevice) {
+    public static void dumpAudioDevices() {
+        final JavaSoundAudioDevice mDevice = new JavaSoundAudioDevice();
         System.out.println("+-------------------------------------------------------+");
-        System.out.println("AUDIO DEVICE INFO");
+        System.out.println("AUDIO DEVICES ( Java Sound )");
         System.out.println("+-------------------------------------------------------+");
         for (int i = 0; i < mDevice.getDeviceCount(); i++) {
             System.out.println("+ " + "ID ................ : " + i);

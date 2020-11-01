@@ -14,33 +14,22 @@ void setup() {
 }
 void draw() {
     background(255);
-    fill(0);
-    noStroke();
-    final float mScale = mFreq / 440.f * width * 0.25f;
-    ellipse(width * 0.5f, height * 0.5f, mScale, mScale);
     stroke(0);
-    final int mBufferSize = DSP.buffer_size();
-    for (int i = 0; i < mBufferSize; i++) {
-        final float x = map(i, 0, mBufferSize, 0, width);
-        point(x, map(DSP.buffer_left()[i], -1, 1, 0, height * 0.5f));
-        point(x, map(DSP.buffer_right()[i], -1, 1, height * 0.5f, height));
+    if (DSP.buffer() != null) {
+        final int mBufferSize = DSP.buffer_size();
+        for (int i = 0; i < mBufferSize; i++) {
+            final float x = map(i, 0, mBufferSize, 0, width);
+            point(x, map(DSP.buffer()[i], -1, 1, 0, height));
+        }
     }
 }
 void mouseMoved() {
     mFreq = map(mouseX, 0, width, 55, 440);
 }
-void audioblock(float[] pSamplesLeft, float[] pSamplesRight) {
+void audioblock(float[] pSamples) {
     float mDetune = map(mouseY, 0, height, 1.0f, 1.5f);
-    for (int i = 0; i < pSamplesLeft.length; i++) {
+    for (int i = 0; i < pSamples.length; i++) {
         mCounter++;
-        pSamplesLeft[i] = 0.5f * sin(2 * PI * mFreq * mCounter / DSP.sample_rate());
-        pSamplesRight[i] = 0.5f * sin(2 * PI * mFreq * mDetune * mCounter / DSP.sample_rate());
-    }
-}
-void audioblock(float[] pSamplesLeft) {
-    float mDetune = map(mouseY, 0, height, 1.0f, 1.5f);
-    for (int i = 0; i < pSamplesLeft.length; i++) {
-        mCounter++;
-        pSamplesLeft[i] = 0.5f * sin(2 * PI * mFreq * mCounter / DSP.sample_rate());
+        pSamples[i] = 0.5f * sin(2 * PI * mFreq * mCounter / DSP.sample_rate());
     }
 }

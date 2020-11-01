@@ -1,6 +1,5 @@
 package de.hfkbremen.ton;
 
-import com.jsyn.devices.javasound.JavaSoundAudioDevice;
 import com.jsyn.engine.SynthesisEngine;
 import com.jsyn.unitgen.LineOut;
 import com.jsyn.unitgen.UnitOscillator;
@@ -12,7 +11,6 @@ import java.util.TimerTask;
 
 import static de.hfkbremen.ton.Note.note_to_frequency;
 import static de.hfkbremen.ton.Ton.clamp127;
-import static de.hfkbremen.ton.Ton.dumpAudioDeviceInfo;
 import static processing.core.PApplet.constrain;
 
 public class ToneEngineJSyn extends ToneEngine {
@@ -70,9 +68,6 @@ public class ToneEngineJSyn extends ToneEngine {
             mInstruments.add(mInstrumentJSyn);
         }
         mInstrumentID = 0;
-
-        final JavaSoundAudioDevice mDevice = new JavaSoundAudioDevice();
-        dumpAudioDeviceInfo(mDevice);
         mSynth.start(pSamplingRate, pInputDeviceID, pInputChannels, pOutputDeviceID, pOutputChannels);
         mTimer = new Timer();
     }
