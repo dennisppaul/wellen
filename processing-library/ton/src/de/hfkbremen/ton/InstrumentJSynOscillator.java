@@ -108,7 +108,6 @@ public class InstrumentJSynOscillator extends InstrumentJSyn {
     }
 
     public void amplitude(float pAmp) {
-        System.out.println("set_amp");
         mAmp = pAmp;
         if (mOsc instanceof UnitOscillator) {
             UnitOscillator uo = (UnitOscillator) mOsc;

@@ -17,7 +17,7 @@ public class ToneEngineOSC extends ToneEngine {
     private boolean mIsPlaying = false;
 
     public ToneEngineOSC(String pTransmitIP, int pPortTransmit) {
-        final int pPortReceive = 8009;
+        final int pPortReceive = 8009; // @TODO do we need to supply a *listening port* although it is never used?
         mOscP5 = new OscP5(this, pPortReceive);
         mRemoteLocation = new NetAddress(pTransmitIP, pPortTransmit);
         mTimer = new Timer();

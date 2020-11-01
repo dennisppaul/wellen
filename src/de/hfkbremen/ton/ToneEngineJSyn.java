@@ -46,6 +46,7 @@ public class ToneEngineJSyn extends ToneEngine {
         mLineOut.start();
 
         mInstruments = new ArrayList<>();
+        final float mDefaultAmp = 0.75f;
         for (int i = 0; i < NUMBERS_OF_INSTRUMENTS; i++) {
             final InstrumentJSyn mInstrumentJSyn;
             switch (pDefaultInstrumentType) {
@@ -54,22 +55,30 @@ public class ToneEngineJSyn extends ToneEngine {
                     break;
                 case INSTRUMENT_WITH_OSCILLATOR:
                     mInstrumentJSyn = new InstrumentJSynOscillator(this, i);
+                    mInstrumentJSyn.amplitude(0.0f);
                     break;
-                case INSTRUMENT_WITH_OSCILLATOR_ADSR:
-                    mInstrumentJSyn = new InstrumentJSynOscillatorADSR(this, i);
-                    break;
+//                case INSTRUMENT_WITH_OSCILLATOR_ADSR:
+//                    mInstrumentJSyn = new InstrumentJSynOscillatorADSR(this, i);
+//                    break;
                 case INSTRUMENT_WITH_OSCILLATOR_ADSR_FILTER_LFO:
                     mInstrumentJSyn = new InstrumentJSynOscillatorADSRFilterLFO(this, i);
+                    mInstrumentJSyn.amplitude(mDefaultAmp);
                     break;
-                default:
+                default: /* implies `INSTRUMENT_WITH_OSCILLATOR_ADSR` */
                     mInstrumentJSyn = new InstrumentJSynOscillatorADSR(this, i);
+                    mInstrumentJSyn.amplitude(mDefaultAmp);
             }
-            mInstrumentJSyn.amplitude(0.75f);
             mInstruments.add(mInstrumentJSyn);
         }
         mInstrumentID = 0;
         mSynth.start(pSamplingRate, pInputDeviceID, pInputChannels, pOutputDeviceID, pOutputChannels);
         mTimer = new Timer();
+    }
+
+    public void mute() {
+        for (Instrument i : instruments()) {
+            i.amplitude(0.0f);
+        }
     }
 
     public SynthesisEngine synth() {

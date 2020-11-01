@@ -4,10 +4,10 @@ import de.hfkbremen.ton.Ton;
 import processing.core.PApplet;
 
 /**
- * this examples shows how to control a MIDI instrument. note make sure to set up the MIDI configuration properly in
- * system control.
+ * this examples shows how to use the MIDI tone engine to control a MIDI instrument. make sure to set up the MIDI
+ * configuration properly in system control.
  */
-public class SketchExampleBasics06MidiSynth extends PApplet {
+public class SketchExampleBasics06MIDI extends PApplet {
 
     public void settings() {
         size(640, 480);
@@ -26,9 +26,9 @@ public class SketchExampleBasics06MidiSynth extends PApplet {
     }
 
     public void mousePressed() {
-        /* `instrument` in this context is equivalent to *MIDI channels*. this also means that sound characteristics
+        /* `instrument` in this context is equivalent to a *MIDI channel* ID. this also means that sound characteristics
         ( e.g `osc_type` ) are not available. */
-        Ton.instrument(mouseX > width / 2.0 ? 1 : 0);
+        Ton.instrument(mouseX > width / 2.0 ? 1 : 2);
         int mNote = 45 + (int) random(0, 12);
         Ton.noteOn(mNote, 127);
     }
@@ -38,7 +38,6 @@ public class SketchExampleBasics06MidiSynth extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main(SketchExampleBasics06MidiSynth.class.getName());
+        PApplet.main(SketchExampleBasics06MIDI.class.getName());
     }
-
 }
