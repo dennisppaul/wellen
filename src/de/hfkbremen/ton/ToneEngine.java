@@ -55,15 +55,14 @@ public abstract class ToneEngine {
             } else if (pName[0].equalsIgnoreCase("jsyn-filter+lfo")) {
                 return new ToneEngineJSyn(INSTRUMENT_WITH_OSCILLATOR_ADSR_FILTER_LFO);
             } else if (pName[0].equalsIgnoreCase("midi") && pName.length >= 2) {
-                return new ToneEngineMidi(pName[1]);
+                return new ToneEngineMIDI(pName[1]);
             } else if (pName[0].equalsIgnoreCase("osc") && pName.length >= 2) {
                 if (pName.length == 2) {
                     return new ToneEngineOSC(pName[1]);
-                } else if (pName.length == 4) {
+                } else if (pName.length == 3) {
                     try {
-                        final int mPortReceive = Integer.parseInt(pName[2]);
-                        final int mPortTransmit = Integer.parseInt(pName[3]);
-                        return new ToneEngineOSC(pName[1], mPortReceive, mPortTransmit);
+                        final int mPortTransmit = Integer.parseInt(pName[2]);
+                        return new ToneEngineOSC(pName[1], mPortTransmit);
                     } catch (NumberFormatException e) {
                         System.err.println("+++ could not parse ports");
                     }

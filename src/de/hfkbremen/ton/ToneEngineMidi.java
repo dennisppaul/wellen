@@ -5,7 +5,7 @@ import java.util.Timer;
 
 import static processing.core.PApplet.constrain;
 
-public class ToneEngineMidi extends ToneEngine {
+public class ToneEngineMIDI extends ToneEngine {
 
     public static final int CC_MODULATION = 1;
     public final MidiOut mMidiOut;
@@ -13,7 +13,7 @@ public class ToneEngineMidi extends ToneEngine {
     private int mLastPlayedNote = -1;
     private int mChannel;
 
-    public ToneEngineMidi(String pMidiOutputDeviceName) {
+    public ToneEngineMIDI(String pMidiOutputDeviceName) {
         mTimer = new Timer();
         mMidiOut = new MidiOut(getProperDeviceName(pMidiOutputDeviceName));
         prepareExitHandler();

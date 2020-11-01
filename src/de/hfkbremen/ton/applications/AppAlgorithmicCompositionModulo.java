@@ -8,8 +8,6 @@ import processing.core.PApplet;
 
 public class AppAlgorithmicCompositionModulo extends PApplet {
 
-    private int mBeatCounter = 0;
-
     private boolean mPlaying = false;
 
     public void settings() {
@@ -44,21 +42,16 @@ public class AppAlgorithmicCompositionModulo extends PApplet {
     }
 
     public void beat(int pBeat) {
-        mBeatCounter++;
-        play();
-    }
-
-    public void play() {
         mPlaying = true;
-        if (mBeatCounter % 32 == 0) {
+        if (pBeat % 32 == 0) {
             Ton.noteOn(Note.NOTE_A4, 80);
-        } else if (mBeatCounter % 8 == 0) {
+        } else if (pBeat % 8 == 0) {
             Ton.noteOn(Note.NOTE_A3, 100);
-        } else if (mBeatCounter % 2 == 0) {
-            Ton.noteOn(Note.NOTE_A2 + (mBeatCounter % 4) * 3, 120);
-        } else if (mBeatCounter % 11 == 0) {
+        } else if (pBeat % 2 == 0) {
+            Ton.noteOn(Note.NOTE_A2 + (pBeat % 4) * 3, 120);
+        } else if (pBeat % 11 == 0) {
             Ton.noteOn(Note.NOTE_C4, 100);
-        } else if (mBeatCounter % 13 == 0) {
+        } else if (pBeat % 13 == 0) {
             Ton.noteOn(Note.NOTE_C5, 100);
         } else {
             mPlaying = false;

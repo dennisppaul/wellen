@@ -22,12 +22,16 @@ public class SketchExampleInstruments03SettingFreqAndAmp extends PApplet {
     }
 
     public void draw() {
-        float mFreq = 110 + 330 * mouseX / (float) width;
+        float mFreq = map(mouseX, 0, width, 110, 440);
         float mAmp = mouseY / (float) height;
         mInstrument.frequency(mFreq);
         mInstrument.amplitude(mAmp);
 
-        background(mAmp * 255);
+        background(255);
+        noStroke();
+        fill(255 - 255 * mAmp);
+        float mScale = map(mFreq, 110, 440, 0.2f, 0.5f);
+        ellipse(width * 0.5f, height * 0.5f, width * mScale, width * mScale);
     }
 
     public static void main(String[] args) {

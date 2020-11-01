@@ -175,7 +175,6 @@ public class ToneEngineJSyn extends ToneEngine {
     private void prepareExitHandler() {
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
             public void run() {
-                System.out.println("### shutting down JSyn");
                 mSynth.stop();
             }
         }));

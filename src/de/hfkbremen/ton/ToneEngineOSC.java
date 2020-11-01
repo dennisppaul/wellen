@@ -16,14 +16,15 @@ public class ToneEngineOSC extends ToneEngine {
     private int mChannel;
     private boolean mIsPlaying = false;
 
-    public ToneEngineOSC(String pHostIP, int pPortReceive, int pPortTransmit) {
+    public ToneEngineOSC(String pTransmitIP, int pPortTransmit) {
+        final int pPortReceive = 8009;
         mOscP5 = new OscP5(this, pPortReceive);
-        mRemoteLocation = new NetAddress(pHostIP, pPortTransmit);
+        mRemoteLocation = new NetAddress(pTransmitIP, pPortTransmit);
         mTimer = new Timer();
     }
 
     public ToneEngineOSC(String pHostIP) {
-        this(pHostIP, 12000, 7400);
+        this(pHostIP, 8001);
     }
 
     public ToneEngineOSC() {
