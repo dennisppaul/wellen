@@ -11,7 +11,7 @@ import processing.core.PApplet;
  * is very similar to the jsyn library ) note: if running this sketch from processing PDE add `import ddf.minim.*;` to
  * the imports.
  */
-public class SketchExampleInstruments07MinimToneEngine extends PApplet {
+public class SketchExampleInstruments08MinimToneEngine extends PApplet {
 
     private ToneEngineMinim mToneEngine;
 
@@ -81,6 +81,6 @@ public class SketchExampleInstruments07MinimToneEngine extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main(SketchExampleInstruments07MinimToneEngine.class.getName());
+        PApplet.main(SketchExampleInstruments08MinimToneEngine.class.getName());
     }
 }

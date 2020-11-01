@@ -10,7 +10,7 @@ void settings() {
     size(1280, 720);
 }
 void setup() {
-    textFont(createFont("Helvetica", 11));
+    textFont(createFont("Roboto Mono", 11));
     for (int i = 0; i < mSequence.length; i++) {
         mSequence[i] = Note.NOTE_C3 + i * 3;
     }

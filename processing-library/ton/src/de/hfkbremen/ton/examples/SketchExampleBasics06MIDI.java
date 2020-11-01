@@ -28,7 +28,7 @@ public class SketchExampleBasics06MIDI extends PApplet {
     public void mousePressed() {
         /* `instrument` in this context is equivalent to a *MIDI channel* ID. this also means that sound characteristics
         ( e.g `osc_type` ) are not available. */
-        Ton.instrument(mouseX > width / 2.0 ? 1 : 2);
+        Ton.instrument(mouseX < width / 2.0 ? 0 : 1);
         int mNote = 45 + (int) random(0, 12);
         Ton.noteOn(mNote, 127);
     }

@@ -4,6 +4,7 @@ import ddf.minim.*;
 import com.jsyn.unitgen.*; 
 
 
+// @TODO update visual representation of ADSR
 Instrument mInstrument;
 boolean mIsPlaying = false;
 int mNote;

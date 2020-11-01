@@ -14,7 +14,6 @@ public class SketchExampleInstruments03FrequencyAndAmplitude extends PApplet {
     }
 
     public void setup() {
-        background(255);
         mToneEngine.mute();
         mToneEngine.instrument().osc_type(Instrument.SAWTOOTH);
     }

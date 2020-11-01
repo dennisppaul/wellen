@@ -9,7 +9,6 @@ void settings() {
     size(640, 480);
 }
 void setup() {
-    background(255);
     mToneEngine.mute();
     mToneEngine.instrument().osc_type(Instrument.SAWTOOTH);
 }

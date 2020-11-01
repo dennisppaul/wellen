@@ -19,7 +19,6 @@ public class AppImageScannerSequencer extends PApplet {
     private final ArrayList<ImageSampler> mSamplers = new ArrayList<>();
     private Capture mCapture;
     private int mCurrentSampler = 0;
-    private Beat mBeat;
     private int mLastNote = -1;
 
     public void settings() {
@@ -41,7 +40,6 @@ public class AppImageScannerSequencer extends PApplet {
         mInstrument.sustain(0.0f);
         mInstrument.release(0.01f);
         mInstrument.osc_type(Instrument.SAWTOOTH);
-//        mInstrument.get_osc_type(Instrument.NOISE);
 
         final int mSpacing = 48;
         final int NUMBER_OF_SAMPLERS = 16;
@@ -51,7 +49,7 @@ public class AppImageScannerSequencer extends PApplet {
             mSamplers.get(i).y = height / 2;
         }
 
-        mBeat = new Beat(this, 120 * 4);
+        Beat.start(this, 120 * 4);
     }
 
     public void draw() {
@@ -142,7 +140,6 @@ public class AppImageScannerSequencer extends PApplet {
             g.fill(mSampleRed, mSampleGreen, mSampleBlue);
             g.stroke(0, 127);
             g.ellipse(x, y, radius * 2, radius * 2);
-
         }
     }
 

@@ -24,8 +24,7 @@ public class AppNeuralNetworkSequencer extends PApplet {
         Ton.instrument().osc_type(Instrument.SINE);
 
         mRoot = node(width / 2.0f, height / 2.0f, mNodes.size());
-        Beat mBeat = new Beat(this);
-        mBeat.bpm(120 * 2);
+        Beat.start(this, 120 * 2);
     }
 
     public void draw() {

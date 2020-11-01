@@ -8,7 +8,6 @@ final ToneEngine mSynth = new ToneEngineJSyn();
 final ArrayList<ImageSampler> mSamplers = new ArrayList();
 Capture mCapture;
 int mCurrentSampler = 0;
-Beat mBeat;
 int mLastNote = -1;
 void settings() {
     size(1280, 720);
@@ -26,7 +25,6 @@ void setup() {
     mInstrument.sustain(0.0f);
     mInstrument.release(0.01f);
     mInstrument.osc_type(Instrument.SAWTOOTH);
-//    mInstrument.get_osc_type(Instrument.NOISE);
     final int mSpacing = 48;
     final int NUMBER_OF_SAMPLERS = 16;
     for (int i = 0; i < NUMBER_OF_SAMPLERS; i++) {
@@ -34,7 +32,7 @@ void setup() {
         mSamplers.get(i).x = width / 2 + (i - NUMBER_OF_SAMPLERS / 2) * mSpacing;
         mSamplers.get(i).y = height / 2;
     }
-    mBeat = new Beat(this, 120 * 4);
+    Beat.start(this, 120 * 4);
 }
 void draw() {
     background(255);

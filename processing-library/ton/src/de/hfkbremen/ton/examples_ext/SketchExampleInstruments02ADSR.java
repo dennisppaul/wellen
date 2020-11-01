@@ -10,6 +10,7 @@ import processing.core.PApplet;
  * this examples shows how to use an instrument with an amplitude envelope ( ADSR ).
  */
 public class SketchExampleInstruments02ADSR extends PApplet {
+// @TODO update visual representation of ADSR
 
     private Instrument mInstrument;
     private boolean mIsPlaying = false;
