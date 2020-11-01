@@ -14,6 +14,7 @@ public class ToneEngineOSC extends ToneEngine {
     public static final String OSC_ADDR_PATTERN_NOTE_OFF = "/note_off";
     public static final String OSC_ADDR_PATTERN_CONTROLCHANGE = "/controlchange";
     public static final String OSC_ADDR_PATTERN_PITCHBAND = "/pitchbend";
+    public static final String OSC_ADDR_PATTERN_PROGRAMCHANGE = "/programchange";
     private static final int DEFAULT_TRANSMIT_PORT = 7001;
     private final OscP5 mOscP5;
     private final NetAddress mRemoteLocation;

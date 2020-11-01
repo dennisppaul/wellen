@@ -73,13 +73,13 @@ var activeTableTab = "activeTableTab";
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
-<li><a href="#fields.inherited.from.class.de.hfkbremen.ton.ToneEngine">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
@@ -145,6 +145,33 @@ extends <a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.h
 <!--   -->
 </a>
 <h3>Field Summary</h3>
+<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
+<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Field and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngineOSC.html#OSC_ADDR_PATTERN_CONTROLCHANGE">OSC_ADDR_PATTERN_CONTROLCHANGE</a></span></code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngineOSC.html#OSC_ADDR_PATTERN_NOTE_OFF">OSC_ADDR_PATTERN_NOTE_OFF</a></span></code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngineOSC.html#OSC_ADDR_PATTERN_NOTE_ON">OSC_ADDR_PATTERN_NOTE_ON</a></span></code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngineOSC.html#OSC_ADDR_PATTERN_PITCHBAND">OSC_ADDR_PATTERN_PITCHBAND</a></span></code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngineOSC.html#OSC_ADDR_PATTERN_PROGRAMCHANGE">OSC_ADDR_PATTERN_PROGRAMCHANGE</a></span></code>&nbsp;</td>
+</tr>
+</table>
 <ul class="blockList">
 <li class="blockList"><a name="fields.inherited.from.class.de.hfkbremen.ton.ToneEngine">
 <!--   -->
@@ -172,8 +199,7 @@ extends <a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.h
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngineOSC.html#ToneEngineOSC-java.lang.String-">ToneEngineOSC</a></span>(java.lang.String&nbsp;pHostIP)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngineOSC.html#ToneEngineOSC-java.lang.String-int-int-">ToneEngineOSC</a></span>(java.lang.String&nbsp;pHostIP,
-             int&nbsp;pPortReceive,
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngineOSC.html#ToneEngineOSC-java.lang.String-int-">ToneEngineOSC</a></span>(java.lang.String&nbsp;pTransmitIP,
              int&nbsp;pPortTransmit)</code>&nbsp;</td>
 </tr>
 </table>
@@ -266,20 +292,92 @@ extends <a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.h
 <div class="details">
 <ul class="blockList">
 <li class="blockList">
+<!-- ============ FIELD DETAIL =========== -->
+<ul class="blockList">
+<li class="blockList"><a name="field.detail">
+<!--   -->
+</a>
+<h3>Field Detail</h3>
+<a name="OSC_ADDR_PATTERN_NOTE_ON">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>OSC_ADDR_PATTERN_NOTE_ON</h4>
+<pre>public static final&nbsp;java.lang.String OSC_ADDR_PATTERN_NOTE_ON</pre>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../constant-values.html#de.hfkbremen.ton.ToneEngineOSC.OSC_ADDR_PATTERN_NOTE_ON">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
+<a name="OSC_ADDR_PATTERN_NOTE_OFF">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>OSC_ADDR_PATTERN_NOTE_OFF</h4>
+<pre>public static final&nbsp;java.lang.String OSC_ADDR_PATTERN_NOTE_OFF</pre>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../constant-values.html#de.hfkbremen.ton.ToneEngineOSC.OSC_ADDR_PATTERN_NOTE_OFF">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
+<a name="OSC_ADDR_PATTERN_CONTROLCHANGE">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>OSC_ADDR_PATTERN_CONTROLCHANGE</h4>
+<pre>public static final&nbsp;java.lang.String OSC_ADDR_PATTERN_CONTROLCHANGE</pre>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../constant-values.html#de.hfkbremen.ton.ToneEngineOSC.OSC_ADDR_PATTERN_CONTROLCHANGE">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
+<a name="OSC_ADDR_PATTERN_PITCHBAND">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>OSC_ADDR_PATTERN_PITCHBAND</h4>
+<pre>public static final&nbsp;java.lang.String OSC_ADDR_PATTERN_PITCHBAND</pre>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../constant-values.html#de.hfkbremen.ton.ToneEngineOSC.OSC_ADDR_PATTERN_PITCHBAND">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
+<a name="OSC_ADDR_PATTERN_PROGRAMCHANGE">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>OSC_ADDR_PATTERN_PROGRAMCHANGE</h4>
+<pre>public static final&nbsp;java.lang.String OSC_ADDR_PATTERN_PROGRAMCHANGE</pre>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../constant-values.html#de.hfkbremen.ton.ToneEngineOSC.OSC_ADDR_PATTERN_PROGRAMCHANGE">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
+</li>
+</ul>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <ul class="blockList">
 <li class="blockList"><a name="constructor.detail">
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="ToneEngineOSC-java.lang.String-int-int-">
+<a name="ToneEngineOSC-java.lang.String-int-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>ToneEngineOSC</h4>
-<pre>public&nbsp;ToneEngineOSC(java.lang.String&nbsp;pHostIP,
-                     int&nbsp;pPortReceive,
+<pre>public&nbsp;ToneEngineOSC(java.lang.String&nbsp;pTransmitIP,
                      int&nbsp;pPortTransmit)</pre>
 </li>
 </ul>
@@ -513,13 +611,13 @@ extends <a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.h
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
-<li><a href="#fields.inherited.from.class.de.hfkbremen.ton.ToneEngine">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>

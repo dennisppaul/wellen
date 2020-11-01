@@ -20,7 +20,7 @@ public class MidiIn implements Receiver {
     private static final int NOTE_ON = 0x90;
     private static final int CONTROL_CHANGE = 0xB0;
     private static final int PROGRAM_CHANGE = 0xC0;
-    private static boolean DUMP_MESSAGES = false;
+    private static final boolean DUMP_MESSAGES = false;
     private final ArrayList<MidiInListener> mListener;
 
     public MidiIn(String pMidiOutputDevice) {
