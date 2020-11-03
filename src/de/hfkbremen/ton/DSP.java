@@ -31,26 +31,50 @@ public class DSP implements AudioBufferRenderer {
         try {
             if (mNumberOutputChannels == 2 && mNumberInputChannels == 2) {
                 mMethod = pPApplet.getClass().getDeclaredMethod(METHOD_NAME,
-                                                                float[].class,
-                                                                float[].class,
-                                                                float[].class,
-                                                                float[].class);
+                        float[].class,
+                        float[].class,
+                        float[].class,
+                        float[].class);
             } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 0) {
                 mMethod = pPApplet.getClass().getDeclaredMethod(METHOD_NAME,
-                                                                float[].class,
-                                                                float[].class);
+                        float[].class,
+                        float[].class);
             } else if (mNumberOutputChannels == 1 && mNumberInputChannels == 1) {
                 mMethod = pPApplet.getClass().getDeclaredMethod(METHOD_NAME,
-                                                                float[].class,
-                                                                float[].class);
+                        float[].class,
+                        float[].class);
             } else if (mNumberOutputChannels == 1 && mNumberInputChannels == 0) {
                 mMethod = pPApplet.getClass().getDeclaredMethod(METHOD_NAME,
-                                                                float[].class);
+                        float[].class);
             } else {
                 mMethod = pPApplet.getClass().getDeclaredMethod(METHOD_NAME,
-                                                                float[][].class);
+                        float[][].class);
             }
         } catch (NoSuchMethodException | SecurityException ex) {
+            System.err.println("+++ @DSP / could not find callback `" + METHOD_NAME + "()`. hint: check the callback method paramters, they must match the sum of input and ouput channels. default is `" + METHOD_NAME + "(float[])` ( = MONO OUTPUT ).");
+        }
+    }
+
+    public void audioblock(float[][] pOutputSamples, float[][] pInputSamples) {
+        try {
+            if (mNumberOutputChannels == 1 && mNumberInputChannels == 0) {
+                mMethod.invoke(mPApplet, pOutputSamples[0]);
+                mCurrentBufferLeft = pOutputSamples[0];
+            } else if (mNumberOutputChannels == 1 && mNumberInputChannels == 1) {
+                mMethod.invoke(mPApplet, pOutputSamples[0], pInputSamples[0]);
+                mCurrentBufferLeft = pOutputSamples[0];
+            } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 0) {
+                mMethod.invoke(mPApplet, pOutputSamples[0], pOutputSamples[1]);
+                mCurrentBufferLeft = pOutputSamples[0];
+                mCurrentBufferRight = pOutputSamples[1];
+            } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 2) {
+                mMethod.invoke(mPApplet, pOutputSamples[0], pOutputSamples[1], pInputSamples[0], pInputSamples[1]);
+                mCurrentBufferLeft = pOutputSamples[0];
+                mCurrentBufferRight = pOutputSamples[1];
+            } else {
+                mMethod.invoke(mPApplet, pOutputSamples);
+            }
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
             ex.printStackTrace();
         }
     }
@@ -68,19 +92,19 @@ public class DSP implements AudioBufferRenderer {
     }
 
     public static DSP start(PApplet pPApplet,
-                            int pOutputDevice,
-                            int pNumberOutputChannels,
-                            int pInputDevice,
-                            int pNumberInputChannels) {
+            int pOutputDevice,
+            int pNumberOutputChannels,
+            int pInputDevice,
+            int pNumberInputChannels) {
         if (mInstance == null) {
             mInstance = new DSP(pPApplet, pNumberOutputChannels, pNumberInputChannels);
             mAudioPlayer = new AudioBufferManager(mInstance,
-                                                  44100,
-                                                  512,
-                                                  pOutputDevice,
-                                                  pNumberOutputChannels,
-                                                  pInputDevice,
-                                                  pNumberInputChannels);
+                    44100,
+                    512,
+                    pOutputDevice,
+                    pNumberOutputChannels,
+                    pInputDevice,
+                    pNumberInputChannels);
         }
         return mInstance;
     }
@@ -115,27 +139,25 @@ public class DSP implements AudioBufferRenderer {
         System.out.println("+-------------------------------------------------------+");
     }
 
-    public void audioblock(float[][] pOutputSamples, float[][] pInputSamples) {
-        try {
-            if (mNumberOutputChannels == 1 && mNumberInputChannels == 0) {
-                mMethod.invoke(mPApplet, pOutputSamples[0]);
-                mCurrentBufferLeft = pOutputSamples[0];
-            } else if (mNumberOutputChannels == 1 && mNumberInputChannels == 1) {
-                mMethod.invoke(mPApplet, pOutputSamples[0], pInputSamples[0]);
-                mCurrentBufferLeft = pOutputSamples[0];
-            } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 0) {
-                mMethod.invoke(mPApplet, pOutputSamples[0], pOutputSamples[1]);
-                mCurrentBufferLeft = pOutputSamples[0];
-                mCurrentBufferRight = pOutputSamples[1];
-            } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 2) {
-                mMethod.invoke(mPApplet, pOutputSamples[0], pOutputSamples[1], pInputSamples[0], pInputSamples[1]);
-                mCurrentBufferLeft = pOutputSamples[0];
-                mCurrentBufferRight = pOutputSamples[1];
-            } else {
-                mMethod.invoke(mPApplet, pOutputSamples);
-            }
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-            ex.printStackTrace();
+    public static float clamp(float pValue, float pMin, float pMax) {
+        if (pValue > pMax) {
+            return pMax;
+        } else if (pValue < pMin) {
+            return pMin;
+        } else {
+            return pValue;
+        }
+    }
+
+    public static float flip(float pValue) {
+        float pMin = -1.0f;
+        float pMax = 1.0f;
+        if (pValue > pMax) {
+            return pValue - PApplet.floor(pValue);
+        } else if (pValue < pMin) {
+            return -PApplet.ceil(pValue) + pValue;
+        } else {
+            return pValue;
         }
     }
 }

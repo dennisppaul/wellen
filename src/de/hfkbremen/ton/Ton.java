@@ -102,10 +102,10 @@ public abstract class Ton {
         final int mListWidth = 300, mListHeight = 300;
 
         DropdownList dl = controls.addDropdownList("Please select MIDI Device",
-                                                   (controls.papplet.width - mListWidth) / 2,
-                                                   (controls.papplet.height - mListHeight) / 2,
-                                                   mListWidth,
-                                                   mListHeight);
+                (controls.papplet.width - mListWidth) / 2,
+                (controls.papplet.height - mListHeight) / 2,
+                mListWidth,
+                mListHeight);
 
         //        dl.toUpperCase(true);
         dl.setItemHeight(16);
@@ -134,6 +134,8 @@ public abstract class Ton {
         mArgs = PApplet.concat(mArgs, new String[]{T.getName()});
         PApplet.main(mArgs);
     }
+
+
 
     private static ToneEngine instance() {
         if (instance == null) {

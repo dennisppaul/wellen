@@ -9,6 +9,7 @@ import java.util.TimerTask;
 
 public class Beat {
 
+    private static final String METHOD_NAME = "beat";
     private final PApplet mPApplet;
     private final Timer mTimer;
     private int mBeat = -1;
@@ -23,19 +24,11 @@ public class Beat {
     public Beat(PApplet pPApplet) {
         mPApplet = pPApplet;
         try {
-            mMethod = pPApplet.getClass().getDeclaredMethod("beat", Integer.TYPE);
+            mMethod = pPApplet.getClass().getDeclaredMethod(METHOD_NAME, Integer.TYPE);
         } catch (NoSuchMethodException | SecurityException ex) {
             ex.printStackTrace();
         }
         mTimer = new Timer();
-    }
-
-    public static Beat start(PApplet pPApplet, int pBPM) {
-        return new Beat(pPApplet, pBPM);
-    }
-
-    public static Beat start(PApplet pPApplet) {
-        return new Beat(pPApplet);
     }
 
     public void bpm(float pBPM) {
@@ -45,6 +38,14 @@ public class Beat {
         }
         mTask = new BeatTimerTaskP5();
         mTimer.scheduleAtFixedRate(mTask, 1000, mPeriod);
+    }
+
+    public static Beat start(PApplet pPApplet, int pBPM) {
+        return new Beat(pPApplet, pBPM);
+    }
+
+    public static Beat start(PApplet pPApplet) {
+        return new Beat(pPApplet);
     }
 
     private class BeatTimerTaskP5 extends TimerTask {

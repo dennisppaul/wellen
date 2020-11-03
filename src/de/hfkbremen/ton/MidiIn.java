@@ -7,9 +7,12 @@ import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Receiver;
 import javax.sound.midi.ShortMessage;
 import javax.sound.midi.Transmitter;
-import javax.swing.*;
 import java.util.ArrayList;
 
+import static de.hfkbremen.ton.MIDI.MIDI_CLOCK_CONTINUE;
+import static de.hfkbremen.ton.MIDI.MIDI_CLOCK_START;
+import static de.hfkbremen.ton.MIDI.MIDI_CLOCK_STOP;
+import static de.hfkbremen.ton.MIDI.MIDI_CLOCK_TICK;
 import static de.hfkbremen.ton.Ton.dumpMidiInputDevices;
 
 public class MidiIn implements Receiver {
@@ -20,7 +23,9 @@ public class MidiIn implements Receiver {
     private static final int NOTE_ON = 0x90;
     private static final int CONTROL_CHANGE = 0xB0;
     private static final int PROGRAM_CHANGE = 0xC0;
-    private static final boolean DUMP_MESSAGES = false;
+    private static final int SYSTEM_REALTIME_MESSAGE = 0xF0;
+    private static final boolean DUMP_MESSAGES = true;
+
     private final ArrayList<MidiInListener> mListener;
 
     public MidiIn(String pMidiOutputDevice) {
@@ -35,23 +40,6 @@ public class MidiIn implements Receiver {
         mListener = new ArrayList<>();
     }
 
-    public static String[] availableInputs() {
-        ArrayList<String> mMidiInputs = new ArrayList<>();
-        MidiDevice.Info[] mInfos = MidiSystem.getMidiDeviceInfo();
-        for (MidiDevice.Info mInfo : mInfos) {
-            try {
-                MidiDevice mDevice = MidiSystem.getMidiDevice(mInfo);
-                if (mDevice.getMaxTransmitters() != 0) {
-                    mMidiInputs.add(mInfo.getName());
-                }
-            } catch (MidiUnavailableException e) {
-                e.printStackTrace();
-            }
-        }
-        String[] mMidiOutputsStr = new String[mMidiInputs.size()];
-        return mMidiInputs.toArray(mMidiOutputsStr);
-    }
-
     public void addListener(MidiInListener pMidiInListener) {
         mListener.add(pMidiInListener);
     }
@@ -61,9 +49,9 @@ public class MidiIn implements Receiver {
     }
 
     @Override
-    public void send(MidiMessage message, long timeStamp) {
-        if (message instanceof ShortMessage) {
-            ShortMessage mShortMessage = (ShortMessage) message;
+    public void send(MidiMessage pMessage, long pTimeStamp) {
+        if (pMessage instanceof ShortMessage) {
+            ShortMessage mShortMessage = (ShortMessage) pMessage;
             final int mChannel = mShortMessage.getChannel();
             final int midiData1 = mShortMessage.getData1();
             final int midiData2 = mShortMessage.getData2();
@@ -81,20 +69,76 @@ public class MidiIn implements Receiver {
                 case PROGRAM_CHANGE:
                     receiveProgramChange(mChannel, midiData1, midiData2);
                     break;
+                case SYSTEM_REALTIME_MESSAGE:
+                    parseSystemMessage(mShortMessage);
+                    break;
                 default:
                     if (DUMP_MESSAGES) {
-                        System.err.println("### MidiIn / could not parse midi message: " + mShortMessage);
+                        // int POLY_PRESSURE = 0xA0; // Polyphonic Key Pressure (Aftertouch)
+                        System.err.println("### MidiIn / could not parse command: " + mShortMessage.getCommand() + " : " + mShortMessage);
                     }
             }
         } else {
             if (DUMP_MESSAGES) {
-                System.err.println("### MidiIn / could not parse midi message: " + message);
+                System.err.println("### MidiIn / could not parse midi message as `ShortMessage`: " + pMessage);
             }
         }
     }
 
     @Override
     public void close() {
+    }
+
+    private void parseSystemMessage(ShortMessage mShortMessage) {
+        if (mShortMessage.getLength() == 1) {
+            final int mClockMessage = parse_byte(mShortMessage.getMessage()[0]);
+            switch (mClockMessage) {
+                case MIDI_CLOCK_TICK:
+                    clock_tick();
+                    break;
+                case MIDI_CLOCK_START:
+                    clock_start();
+                    break;
+                case MIDI_CLOCK_CONTINUE:
+                    clock_continue();
+                    break;
+                case MIDI_CLOCK_STOP:
+                    clock_stop();
+                    break;
+            }
+        } else {
+            if (DUMP_MESSAGES) {
+                System.err.println("### MidiIn / unrecognized system message: " + mShortMessage + " (" + mShortMessage.getLength() + ")");
+            }
+        }
+    }
+
+    private void clock_stop() {
+        for (MidiInListener m : mListener) {
+            m.clock_stop();
+        }
+    }
+
+    private void clock_continue() {
+        for (MidiInListener m : mListener) {
+            m.clock_continue();
+        }
+    }
+
+    private void clock_start() {
+        for (MidiInListener m : mListener) {
+            m.clock_start();
+        }
+    }
+
+    private void clock_tick() {
+        for (MidiInListener m : mListener) {
+            m.clock_tick();
+        }
+    }
+
+    private int parse_byte(byte b) {
+        return (b & 0xFF);
     }
 
     private Transmitter find(String pMidiOutputDevice) {
@@ -141,29 +185,20 @@ public class MidiIn implements Receiver {
         }
     }
 
-    private static class TestMidiIn implements MidiInListener {
-
-        public void receiveProgramChange(int channel, int number, int value) {
-            System.out.println("programChange: " + channel + " / " + number + " + " + value);
+    public static String[] availableInputs() {
+        ArrayList<String> mMidiInputs = new ArrayList<>();
+        MidiDevice.Info[] mInfos = MidiSystem.getMidiDeviceInfo();
+        for (MidiDevice.Info mInfo : mInfos) {
+            try {
+                MidiDevice mDevice = MidiSystem.getMidiDevice(mInfo);
+                if (mDevice.getMaxTransmitters() != 0) {
+                    mMidiInputs.add(mInfo.getName());
+                }
+            } catch (MidiUnavailableException e) {
+                e.printStackTrace();
+            }
         }
-
-        public void receiveControlChange(int channel, int number, int value) {
-            System.out.println("controlChange: " + channel + " / " + number + " + " + value);
-        }
-
-        public void receiveNoteOff(int channel, int pitch) {
-            System.out.println("noteOff      : " + channel + " / " + pitch);
-        }
-
-        public void receiveNoteOn(int channel, int pitch, int velocity) {
-            System.out.println("noteOn       : " + channel + " / " + pitch + " + " + velocity);
-        }
-
-    }
-
-    public static void main(String[] args) {
-        MidiIn mMidiIn = new MidiIn("IAC-Driver");
-        mMidiIn.addListener(new TestMidiIn());
-        new JFrame().setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        String[] mMidiOutputsStr = new String[mMidiInputs.size()];
+        return mMidiInputs.toArray(mMidiOutputsStr);
     }
 }
