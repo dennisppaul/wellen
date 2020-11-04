@@ -2,7 +2,7 @@
 
 *ton* is a framework for exploring and teaching generative music making and algorithmic compositions. it facilitates simple ways of playing musical notes, facilitates easy access to low-level digital signal processing (DSP) and supplies rhythm and timing as well as some *standard* muscial mechanics. the library acts as a simple adapter to various sound in- and outputs like JSyn, MIDI, OSC, or analog audio.
 
-the library can be installed as a [Processing library](https://processing.org/reference/libraries/). a step-by-step introduction to the library can be found under `examples` and extended applications of the libray can be found in `examples_ext` and `applications`.
+the library can be installed as a [Processing library](https://processing.org/reference/libraries/) by unpacking the `ton.zip` archive in the Processing library folder. a step-by-step introduction to the library can be found under `examples` and extended applications of the libray can be found in `examples_ext` and `applications`.
 
 ## concepts
 
