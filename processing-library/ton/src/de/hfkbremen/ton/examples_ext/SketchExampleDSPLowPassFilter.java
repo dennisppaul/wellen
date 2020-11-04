@@ -4,7 +4,7 @@ import de.hfkbremen.ton.DSP;
 import processing.core.PApplet;
 
 
-public class SketchExampleDSPButterworthLowPassFilter extends PApplet {
+public class SketchExampleDSPLowPassFilter extends PApplet {
 
     private final SecondOrderLowPassFilter mLPFilter = new SecondOrderLowPassFilter();
     private final ButterworthLowPassFilter mButterworthLowPassFilter = new ButterworthLowPassFilter();
@@ -164,6 +164,6 @@ public class SketchExampleDSPButterworthLowPassFilter extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main(SketchExampleDSPButterworthLowPassFilter.class.getName());
+        PApplet.main(SketchExampleDSPLowPassFilter.class.getName());
     }
 }

@@ -30,7 +30,6 @@ public class SketchExampleBasics04Sequencer extends PApplet {
     }
 
     public void setup() {
-        textFont(createFont("Roboto Mono", 11));
         Beat.start(this, 120 * 4);
     }
 
@@ -38,10 +37,9 @@ public class SketchExampleBasics04Sequencer extends PApplet {
         background(255);
         noStroke();
         fill(0);
-        text(nf(mSequence.current(), 2), 10, 20);
         if (mSequence.current() != OFF) {
-            float mScale = (mSequence.current() - 18) / 36.0f + 0.1f;
-            ellipse(width * 0.5f, height * 0.5f, width * mScale, width * mScale);
+            float mNote = (mSequence.current() - 18) / 36.0f + 0.1f;
+            ellipse(width * 0.5f, height * 0.5f, width * mNote, width * mNote);
         }
     }
 

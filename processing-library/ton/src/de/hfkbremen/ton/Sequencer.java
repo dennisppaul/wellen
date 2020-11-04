@@ -19,7 +19,9 @@ public class Sequencer<T> {
         reset();
     }
 
-    public T[] data() { return mSequence; }
+    public T[] data() {
+        return mSequence;
+    }
 
     public T step() {
         final T mValue = mSequence[mStep];
@@ -32,13 +34,27 @@ public class Sequencer<T> {
         return mSequence[mStep];
     }
 
+    public void set(int pStep, T pValue) {
+        if (pStep >= 0 && pStep < mSequence.length) {
+            mSequence[pStep] = pValue;
+        }
+    }
+
+    public void set(T pValue) {
+        set(mStep, pValue);
+    }
+
     public void reset() {
         mStep = 0;
     }
 
-    public T at(int pIndex) {
-        if (pIndex >= 0 && pIndex < mSequence.length) {
-            return mSequence[pIndex];
+    public int position() {
+        return mStep;
+    }
+
+    public T at(int pStep) {
+        if (pStep >= 0 && pStep < mSequence.length) {
+            return mSequence[pStep];
         } else {
             return mSequence[0];
         }
