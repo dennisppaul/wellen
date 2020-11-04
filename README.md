@@ -1,6 +1,6 @@
 # ton
 
-a library that acts as a simple adapter to various outputs like JSyn, MIDI, or OSC.
+ton is a framework for exploring and teaching generative music making and algorithmic compositions. it facilitates simple ways of playing musical notes and facilitates easy access to low-level digital signal processing (DSP). the library acts as a simple adapter to various sound outputs like JSyn, MIDI, or OSC. 
 
 ## dependencies
 
