@@ -1,4 +1,4 @@
-package de.hfkbremen.ton.examples;
+package de.hfkbremen.ton.examples_ext;
 
 import de.hfkbremen.ton.Beat;
 import de.hfkbremen.ton.SpeechSynthesis;
@@ -7,7 +7,7 @@ import processing.core.PApplet;
 /**
  * this examples shows how to use the built in speech synthesis engine ( MacOS only )
  */
-public class SketchExampleBasics07SpeechSynthesis extends PApplet {
+public class SketchExampleSpeechSynthesis extends PApplet {
 
     private SpeechSynthesis mSpeech;
 
@@ -43,6 +43,6 @@ public class SketchExampleBasics07SpeechSynthesis extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main(SketchExampleBasics07SpeechSynthesis.class.getName());
+        PApplet.main(SketchExampleSpeechSynthesis.class.getName());
     }
 }

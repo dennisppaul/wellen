@@ -12,7 +12,8 @@ public class SketchExampleBasics01Notes extends PApplet {
         size(640, 480);
     }
 
-    public void setup() {}
+    public void setup() {
+    }
 
     public void draw() {
         background(Ton.isPlaying() ? 255 : 0);

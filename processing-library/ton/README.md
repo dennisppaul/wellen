@@ -4,9 +4,13 @@
 
 the library can be installed as a [Processing library](https://processing.org/reference/libraries/). a step-by-step introduction to the library can be found under `examples` and extended applications of the libray can be found in `examples_ext` and `applications`.
 
-## using ton
+## concepts
 
 ### `Ton`
+
+muscial notes can be played with a single call to `Ton.noteOn(int, int)` and ended with `Ton.noteOff()` ( see `ExampleBasics01Notes` ). each node is characterized by two parameters `pitch` and `velocity`. the value range conforms to MIDI standards.
+
+by default a software-based synthesizer is used to produce the sound. however, there are quite a few options to change the sound characteristics ( see `ExampleInstruments01Oscillators` ff ). there are also options to use external sound sources via MIDI ( see `ExampleBasics06MIDI` ) or OSC ( see `ExampleInstruments07OSCToneEngine` ).
 
 ### `DSP`
 
@@ -19,6 +23,18 @@ see `ExampleBasics05DigitalSignalProcessing` for a simple implementation of a *s
 additionally DSP can also be started with a different paramter set to either run with stereo output ( see `ExampleDSPStereoOutput` ), mono in- and output ( see `ExampleDSPPassThrough` ) or stereo in- and output.
 
 ### `Beat`
+
+*ton* has a continues trigger mechanism to create a beat. the method `Beat.start(PApplet, int)` starts a beat at a specified *beats per minute* (BPM) ( see `ExampleBasics03Beat` ). 
+
+a beat can also be trigger by an external MIDI clock ( see `ExampleEventBeatMIDIClock` ) to synchronize with other applications.
+
+### other *muscial mechanics*
+
+with the `Scale` class values can be transformed into intervals based on musical scales ( see `ExampleBasics02Scales` ).
+
+the `Sequencer` class supplies a simple structure to facilitate the recording and recalling of note sequences ( see `ExampleBasics04Sequencer` ).
+
+*ton* can receiver events from other applications or machines with the classes `EventReceiverMIDI` via MIDI and `EventReceiverOSC` via OSC ( see `ExampleEventReceive` ).
 
 ## dependencies
 

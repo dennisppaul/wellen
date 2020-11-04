@@ -4,7 +4,7 @@ import de.hfkbremen.ton.BeatMIDI;
 import de.hfkbremen.ton.Ton;
 import processing.core.PApplet;
 
-public class SketchExampleEventMIDIClock extends PApplet {
+public class SketchExampleEventBeatMIDIClock extends PApplet {
 
     private int mColor;
 
@@ -33,6 +33,6 @@ public class SketchExampleEventMIDIClock extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main(SketchExampleEventMIDIClock.class.getName());
+        PApplet.main(SketchExampleEventBeatMIDIClock.class.getName());
     }
 }

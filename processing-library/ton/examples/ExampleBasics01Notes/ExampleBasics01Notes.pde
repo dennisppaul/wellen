@@ -7,7 +7,8 @@ import com.jsyn.unitgen.*;
 void settings() {
     size(640, 480);
 }
-void setup() {}
+void setup() {
+}
 void draw() {
     background(Ton.isPlaying() ? 255 : 0);
 }
