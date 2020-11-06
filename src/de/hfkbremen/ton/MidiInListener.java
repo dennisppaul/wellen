@@ -9,4 +9,5 @@ public interface MidiInListener {
     void clock_start();
     void clock_continue();
     void clock_stop();
+    void clock_song_position_pointer(int pOffset16th);
 }

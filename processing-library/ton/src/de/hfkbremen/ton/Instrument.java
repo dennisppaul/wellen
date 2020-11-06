@@ -17,8 +17,8 @@ public abstract class Instrument {
                                               + "    [A   ][D][S   ][R]\n";
     protected final float DEFAULT_ATTACK = 0.001f;
     protected final float DEFAULT_DECAY = 0.0f;
-    protected final float DEFAULT_SUSTAIN = 1.0f;
-    protected final float DEFAULT_RELEASE = 0.1f;
+    protected final float DEFAULT_SUSTAIN = 0.75f;
+    protected final float DEFAULT_RELEASE = 0.075f;
     private final int mID;
     /**
      * time parameter defining the time it takes for the set_amp to reach maximum level.

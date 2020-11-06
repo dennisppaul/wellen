@@ -24,11 +24,16 @@ public class SketchExampleEventBeatMIDIClock extends PApplet {
     }
 
     public void beat(int pBeat) {
-        if (pBeat % 24 == 0) {
-            System.out.println("beat");
+        /* MIDI clock runs at 24 pulses per quarter note (PPQ). `pBeat % 12` is there for 0 every eigth note. */
+        if (pBeat % 12 == 0) {
             mColor = color(random(127, 255),
                     random(127, 255),
                     random(127, 255));
+            int mOffset = 4 * ((pBeat / 24) % 8);
+            Ton.noteOn(36 + mOffset, 90);
+            System.out.println(mBeatMIDI.bpm());
+        } else {
+            Ton.noteOff();
         }
     }
 

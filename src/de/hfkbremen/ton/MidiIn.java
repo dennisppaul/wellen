@@ -10,6 +10,7 @@ import javax.sound.midi.Transmitter;
 import java.util.ArrayList;
 
 import static de.hfkbremen.ton.MIDI.MIDI_CLOCK_CONTINUE;
+import static de.hfkbremen.ton.MIDI.MIDI_SONG_POSITION_POINTER;
 import static de.hfkbremen.ton.MIDI.MIDI_CLOCK_START;
 import static de.hfkbremen.ton.MIDI.MIDI_CLOCK_STOP;
 import static de.hfkbremen.ton.MIDI.MIDI_CLOCK_TICK;
@@ -24,7 +25,7 @@ public class MidiIn implements Receiver {
     private static final int CONTROL_CHANGE = 0xB0;
     private static final int PROGRAM_CHANGE = 0xC0;
     private static final int SYSTEM_REALTIME_MESSAGE = 0xF0;
-    private static final boolean DUMP_MESSAGES = true;
+    public static boolean VERBOSE = false;
 
     private final ArrayList<MidiInListener> mListener;
 
@@ -73,13 +74,13 @@ public class MidiIn implements Receiver {
                     parseSystemMessage(mShortMessage);
                     break;
                 default:
-                    if (DUMP_MESSAGES) {
+                    if (VERBOSE) {
                         // int POLY_PRESSURE = 0xA0; // Polyphonic Key Pressure (Aftertouch)
                         System.err.println("### MidiIn / could not parse command: " + mShortMessage.getCommand() + " : " + mShortMessage);
                     }
             }
         } else {
-            if (DUMP_MESSAGES) {
+            if (VERBOSE) {
                 System.err.println("### MidiIn / could not parse midi message as `ShortMessage`: " + pMessage);
             }
         }
@@ -106,10 +107,25 @@ public class MidiIn implements Receiver {
                     clock_stop();
                     break;
             }
+        } else if (mShortMessage.getLength() == 3) {
+            final int mClockMessage = parse_byte(mShortMessage.getMessage()[0]);
+            if (mClockMessage == MIDI_SONG_POSITION_POINTER) {
+                final int mOffset16th = mShortMessage.getMessage()[1] + mShortMessage.getMessage()[2] * 128;
+                if (VERBOSE) {
+                    System.out.println("SONG_POSITION_POINTER: " + mOffset16th);
+                }
+                    clock_song_position_pointer(mOffset16th);
+            }
         } else {
-            if (DUMP_MESSAGES) {
+            if (VERBOSE) {
                 System.err.println("### MidiIn / unrecognized system message: " + mShortMessage + " (" + mShortMessage.getLength() + ")");
             }
+        }
+    }
+
+    private void clock_song_position_pointer(int pOffset16th) {
+        for (MidiInListener m : mListener) {
+            m.clock_song_position_pointer(pOffset16th);
         }
     }
 

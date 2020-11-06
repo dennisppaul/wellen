@@ -7,12 +7,17 @@ import java.lang.reflect.Method;
 
 public class BeatMIDI implements MidiInListener {
 
-    private static final boolean VERBOSE = true;
+    private static final String METHOD_NAME = "beat";
+    private static final int BPM_SAMPLER_SIZE = 12;
+    public static boolean VERBOSE = false;
     private final PApplet mPApplet;
     private Method mMethod = null;
-    private int mTickCounter = 0;
+    private int mTickPPQNCounter = 0;
     private boolean mIsRunning = false;
-    private static final String METHOD_NAME = "beat";
+    private float mBPMEstimate = 0;
+    private long mBPMMeasure;
+    private final float[] mBPMSampler = new float[BPM_SAMPLER_SIZE];
+    private int mBPMSamplerCounter = 0;
 
     public BeatMIDI(PApplet pPApplet, int pBPM) {
         this(pPApplet);
@@ -25,6 +30,8 @@ public class BeatMIDI implements MidiInListener {
         } catch (NoSuchMethodException | SecurityException ex) {
             ex.printStackTrace();
         }
+        mBPMMeasure = _timer();
+        start();
     }
 
     public boolean running() {
@@ -32,15 +39,27 @@ public class BeatMIDI implements MidiInListener {
     }
 
     public int beat_count() {
-        return mTickCounter;
+        return mTickPPQNCounter;
+    }
+
+    /**
+     * returns an estimate of the current BPM deduced from the duration between two ticks ( or pulses )
+     *
+     * @return
+     */
+    public float bpm() {
+        return mBPMEstimate;
     }
 
     public void invoke() {
         if (mIsRunning) {
             try {
-                mMethod.invoke(mPApplet, mTickCounter);
+                mMethod.invoke(mPApplet, mTickPPQNCounter);
             } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+                System.err.println("### @BeatMIDI / problem calling `" + METHOD_NAME + "`");
                 ex.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
@@ -64,9 +83,21 @@ public class BeatMIDI implements MidiInListener {
     @Override
     public void clock_tick() {
         if (mIsRunning) {
-            mTickCounter++;
+            mTickPPQNCounter++;
+            estimate_bpm();
             invoke();
         }
+    }
+
+    public void stop() {
+        mIsRunning = false;
+    }
+
+    public void start() {
+        mIsRunning = true;
+        mBPMMeasure = System.currentTimeMillis();
+//        mBPMSamplerCounter = 0;
+//        Arrays.fill(mBPMSampler, 0.0f);
     }
 
     @Override
@@ -74,8 +105,8 @@ public class BeatMIDI implements MidiInListener {
         if (VERBOSE) {
             System.out.println("clock_start");
         }
-        mTickCounter = 0;
-        mIsRunning = true;
+        mTickPPQNCounter = 0;
+        start();
 //        invoke();
     }
 
@@ -84,7 +115,7 @@ public class BeatMIDI implements MidiInListener {
         if (VERBOSE) {
             System.out.println("clock_continue");
         }
-        mIsRunning = true;
+        start();
 //        clock_tick();
     }
 
@@ -97,7 +128,28 @@ public class BeatMIDI implements MidiInListener {
 //            // @TODO(check if this is desired behavior)
 //            mTickCounter++;
 //        }
-        mIsRunning = false;
+        stop();
+    }
+
+    @Override
+    public void clock_song_position_pointer(int pOffset16th) {
+        final int mPPQN = pOffset16th / 4 * 24;
+        mTickPPQNCounter = mPPQN;
+        if (VERBOSE) {
+            System.out.println("clock_song_position_pointer: " + mTickPPQNCounter + "(" + pOffset16th + ")");
+        }
+    }
+
+    private void estimate_bpm() {
+        float mBPMEstimateFragment = 60 / ((float) ((_timer() - mBPMMeasure) / _timer_divider()) * 24); // 24 PPQN * 4 QN * 60 SEC
+        mBPMSampler[mBPMSamplerCounter % BPM_SAMPLER_SIZE] = mBPMEstimateFragment;
+        mBPMSamplerCounter++;
+        mBPMEstimate = 0;
+        for (float mBPMSample : mBPMSampler) {
+            mBPMEstimate += mBPMSample;
+        }
+        mBPMEstimate /= BPM_SAMPLER_SIZE;
+        mBPMMeasure = _timer();
     }
 
     public static BeatMIDI start(PApplet pPApplet, String pMidiInput) {
@@ -105,5 +157,13 @@ public class BeatMIDI implements MidiInListener {
         MidiIn mMidiIn = new MidiIn(pMidiInput);
         mMidiIn.addListener(mBeatMIDI);
         return mBeatMIDI;
+    }
+
+    private static long _timer() {
+        return System.nanoTime();
+    }
+
+    private static double _timer_divider() {
+        return 1000000000;
     }
 }

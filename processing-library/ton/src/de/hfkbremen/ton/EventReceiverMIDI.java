@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import static de.hfkbremen.ton.MIDI.MIDI_CLOCK_CONTINUE;
+import static de.hfkbremen.ton.MIDI.MIDI_SONG_POSITION_POINTER;
 import static de.hfkbremen.ton.MIDI.MIDI_CLOCK_START;
 import static de.hfkbremen.ton.MIDI.MIDI_CLOCK_STOP;
 import static de.hfkbremen.ton.MIDI.MIDI_CLOCK_TICK;
@@ -72,6 +73,11 @@ public class EventReceiverMIDI implements MidiInListener {
     @Override
     public void clock_stop() {
         sendEvent(MIDI_CLOCK_STOP, new float[]{});
+    }
+
+    @Override
+    public void clock_song_position_pointer(int pOffset16th) {
+        sendEvent(MIDI_SONG_POSITION_POINTER, new float[]{pOffset16th});
     }
 
     private void sendEvent(int pEvent, float[] pData) {
