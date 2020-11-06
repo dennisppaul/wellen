@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":9,"i2":10,"i3":9,"i4":10,"i5":10};
+var methods = {"i0":10,"i1":9,"i2":10,"i3":10,"i4":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -47,7 +47,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../de/hfkbremen/ton/InstrumentMinim.html" title="class in de.hfkbremen.ton"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../de/hfkbremen/ton/MIDI.html" title="interface in de.hfkbremen.ton"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../de/hfkbremen/ton/MidiInListener.html" title="interface in de.hfkbremen.ton"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -73,13 +73,13 @@ var activeTableTab = "activeTableTab";
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
@@ -120,6 +120,25 @@ implements javax.sound.midi.Receiver</pre>
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- =========== FIELD SUMMARY =========== -->
+<ul class="blockList">
+<li class="blockList"><a name="field.summary">
+<!--   -->
+</a>
+<h3>Field Summary</h3>
+<table class="memberSummary" border="0" cellpadding="3" cellspacing="0" summary="Field Summary table, listing fields, and an explanation">
+<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colLast" scope="col">Field and Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/MidiIn.html#VERBOSE">VERBOSE</a></span></code>&nbsp;</td>
+</tr>
+</table>
+</li>
+</ul>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <ul class="blockList">
 <li class="blockList"><a name="constructor.summary">
@@ -162,17 +181,13 @@ implements javax.sound.midi.Receiver</pre>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/MidiIn.html#close--">close</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/MidiIn.html#main-java.lang.String:A-">main</a></span>(java.lang.String[]&nbsp;args)</code>&nbsp;</td>
-</tr>
-<tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/MidiIn.html#removeListener-de.hfkbremen.ton.MidiInListener-">removeListener</a></span>(<a href="../../../de/hfkbremen/ton/MidiInListener.html" title="interface in de.hfkbremen.ton">MidiInListener</a>&nbsp;pMidiInListener)</code>&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/MidiIn.html#send-javax.sound.midi.MidiMessage-long-">send</a></span>(javax.sound.midi.MidiMessage&nbsp;message,
-    long&nbsp;timeStamp)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/MidiIn.html#send-javax.sound.midi.MidiMessage-long-">send</a></span>(javax.sound.midi.MidiMessage&nbsp;pMessage,
+    long&nbsp;pTimeStamp)</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -190,6 +205,23 @@ implements javax.sound.midi.Receiver</pre>
 <div class="details">
 <ul class="blockList">
 <li class="blockList">
+<!-- ============ FIELD DETAIL =========== -->
+<ul class="blockList">
+<li class="blockList"><a name="field.detail">
+<!--   -->
+</a>
+<h3>Field Detail</h3>
+<a name="VERBOSE">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>VERBOSE</h4>
+<pre>public static&nbsp;boolean VERBOSE</pre>
+</li>
+</ul>
+</li>
+</ul>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <ul class="blockList">
 <li class="blockList"><a name="constructor.detail">
@@ -213,15 +245,6 @@ implements javax.sound.midi.Receiver</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="availableInputs--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>availableInputs</h4>
-<pre>public static&nbsp;java.lang.String[]&nbsp;availableInputs()</pre>
-</li>
-</ul>
 <a name="addListener-de.hfkbremen.ton.MidiInListener-">
 <!--   -->
 </a>
@@ -246,8 +269,8 @@ implements javax.sound.midi.Receiver</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>send</h4>
-<pre>public&nbsp;void&nbsp;send(javax.sound.midi.MidiMessage&nbsp;message,
-                 long&nbsp;timeStamp)</pre>
+<pre>public&nbsp;void&nbsp;send(javax.sound.midi.MidiMessage&nbsp;pMessage,
+                 long&nbsp;pTimeStamp)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>send</code>&nbsp;in interface&nbsp;<code>javax.sound.midi.Receiver</code></dd>
@@ -269,13 +292,13 @@ implements javax.sound.midi.Receiver</pre>
 </dl>
 </li>
 </ul>
-<a name="main-java.lang.String:A-">
+<a name="availableInputs--">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>main</h4>
-<pre>public static&nbsp;void&nbsp;main(java.lang.String[]&nbsp;args)</pre>
+<h4>availableInputs</h4>
+<pre>public static&nbsp;java.lang.String[]&nbsp;availableInputs()</pre>
 </li>
 </ul>
 </li>
@@ -305,7 +328,7 @@ implements javax.sound.midi.Receiver</pre>
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../de/hfkbremen/ton/InstrumentMinim.html" title="class in de.hfkbremen.ton"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../de/hfkbremen/ton/MIDI.html" title="interface in de.hfkbremen.ton"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../de/hfkbremen/ton/MidiInListener.html" title="interface in de.hfkbremen.ton"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -331,13 +354,13 @@ implements javax.sound.midi.Receiver</pre>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>

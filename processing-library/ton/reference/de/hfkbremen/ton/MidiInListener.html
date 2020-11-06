@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":6,"i2":6,"i3":6};
+var methods = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -99,7 +99,7 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>All Known Implementing Classes:</dt>
-<dd><a href="../../../de/hfkbremen/ton/EventReceiverMIDI.html" title="class in de.hfkbremen.ton">EventReceiverMIDI</a></dd>
+<dd><a href="../../../de/hfkbremen/ton/BeatMIDI.html" title="class in de.hfkbremen.ton">BeatMIDI</a>, <a href="../../../de/hfkbremen/ton/EventReceiverMIDI.html" title="class in de.hfkbremen.ton">EventReceiverMIDI</a></dd>
 </dl>
 <hr>
 <br>
@@ -124,22 +124,42 @@ var activeTableTab = "activeTableTab";
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/MidiInListener.html#clock_continue--">clock_continue</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/MidiInListener.html#clock_song_position_pointer-int-">clock_song_position_pointer</a></span>(int&nbsp;pOffset16th)</code>&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/MidiInListener.html#clock_start--">clock_start</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/MidiInListener.html#clock_stop--">clock_stop</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/MidiInListener.html#clock_tick--">clock_tick</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/MidiInListener.html#receiveControlChange-int-int-int-">receiveControlChange</a></span>(int&nbsp;channel,
                     int&nbsp;number,
                     int&nbsp;value)</code>&nbsp;</td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/MidiInListener.html#receiveNoteOff-int-int-">receiveNoteOff</a></span>(int&nbsp;channel,
               int&nbsp;pitch)</code>&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/MidiInListener.html#receiveNoteOn-int-int-int-">receiveNoteOn</a></span>(int&nbsp;channel,
              int&nbsp;pitch,
              int&nbsp;velocity)</code>&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/MidiInListener.html#receiveProgramChange-int-int-int-">receiveProgramChange</a></span>(int&nbsp;channel,
                     int&nbsp;number,
@@ -195,12 +215,57 @@ var activeTableTab = "activeTableTab";
 <a name="receiveNoteOn-int-int-int-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>receiveNoteOn</h4>
 <pre>void&nbsp;receiveNoteOn(int&nbsp;channel,
                    int&nbsp;pitch,
                    int&nbsp;velocity)</pre>
+</li>
+</ul>
+<a name="clock_tick--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clock_tick</h4>
+<pre>void&nbsp;clock_tick()</pre>
+</li>
+</ul>
+<a name="clock_start--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clock_start</h4>
+<pre>void&nbsp;clock_start()</pre>
+</li>
+</ul>
+<a name="clock_continue--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clock_continue</h4>
+<pre>void&nbsp;clock_continue()</pre>
+</li>
+</ul>
+<a name="clock_stop--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clock_stop</h4>
+<pre>void&nbsp;clock_stop()</pre>
+</li>
+</ul>
+<a name="clock_song_position_pointer-int-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>clock_song_position_pointer</h4>
+<pre>void&nbsp;clock_song_position_pointer(int&nbsp;pOffset16th)</pre>
 </li>
 </ul>
 </li>

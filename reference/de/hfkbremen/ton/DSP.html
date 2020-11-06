@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9};
+var methods = {"i0":10,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -47,7 +47,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../de/hfkbremen/ton/BeatListener.html" title="interface in de.hfkbremen.ton"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../de/hfkbremen/ton/BeatMIDI.html" title="class in de.hfkbremen.ton"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../de/hfkbremen/ton/EventReceiverMIDI.html" title="class in de.hfkbremen.ton"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -173,29 +173,39 @@ implements <a href="../../../de/hfkbremen/ton/AudioBufferRenderer.html" title="i
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/DSP.html#buffer--">buffer</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
+<td class="colFirst"><code>static float</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/DSP.html#clamp-float-float-float-">clamp</a></span>(float&nbsp;pValue,
+     float&nbsp;pMin,
+     float&nbsp;pMax)</code>&nbsp;</td>
+</tr>
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/DSP.html#dumpAudioDevices--">dumpAudioDevices</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>static float</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/DSP.html#flip-float-">flip</a></span>(float&nbsp;pValue)</code>&nbsp;</td>
+</tr>
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>static int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/DSP.html#sample_rate--">sample_rate</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>static <a href="../../../de/hfkbremen/ton/DSP.html" title="class in de.hfkbremen.ton">DSP</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/DSP.html#start-processing.core.PApplet-">start</a></span>(processing.core.PApplet&nbsp;pPApplet)</code>&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>static <a href="../../../de/hfkbremen/ton/DSP.html" title="class in de.hfkbremen.ton">DSP</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/DSP.html#start-processing.core.PApplet-int-">start</a></span>(processing.core.PApplet&nbsp;pPApplet,
      int&nbsp;pNumberOutputChannels)</code>&nbsp;</td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>static <a href="../../../de/hfkbremen/ton/DSP.html" title="class in de.hfkbremen.ton">DSP</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/DSP.html#start-processing.core.PApplet-int-int-">start</a></span>(processing.core.PApplet&nbsp;pPApplet,
      int&nbsp;pNumberOutputChannels,
      int&nbsp;pNumberInputChannels)</code>&nbsp;</td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>static <a href="../../../de/hfkbremen/ton/DSP.html" title="class in de.hfkbremen.ton">DSP</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/DSP.html#start-processing.core.PApplet-int-int-int-int-">start</a></span>(processing.core.PApplet&nbsp;pPApplet,
      int&nbsp;pOutputDevice,
@@ -244,6 +254,20 @@ implements <a href="../../../de/hfkbremen/ton/AudioBufferRenderer.html" title="i
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a name="audioblock-float:A:A-float:A:A-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>audioblock</h4>
+<pre>public&nbsp;void&nbsp;audioblock(float[][]&nbsp;pOutputSamples,
+                       float[][]&nbsp;pInputSamples)</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../de/hfkbremen/ton/AudioBufferRenderer.html#audioblock-float:A:A-float:A:A-">audioblock</a></code>&nbsp;in interface&nbsp;<code><a href="../../../de/hfkbremen/ton/AudioBufferRenderer.html" title="interface in de.hfkbremen.ton">AudioBufferRenderer</a></code></dd>
+</dl>
+</li>
+</ul>
 <a name="start-processing.core.PApplet-">
 <!--   -->
 </a>
@@ -341,18 +365,24 @@ implements <a href="../../../de/hfkbremen/ton/AudioBufferRenderer.html" title="i
 <pre>public static&nbsp;void&nbsp;dumpAudioDevices()</pre>
 </li>
 </ul>
-<a name="audioblock-float:A:A-float:A:A-">
+<a name="clamp-float-float-float-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clamp</h4>
+<pre>public static&nbsp;float&nbsp;clamp(float&nbsp;pValue,
+                          float&nbsp;pMin,
+                          float&nbsp;pMax)</pre>
+</li>
+</ul>
+<a name="flip-float-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>audioblock</h4>
-<pre>public&nbsp;void&nbsp;audioblock(float[][]&nbsp;pOutputSamples,
-                       float[][]&nbsp;pInputSamples)</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../de/hfkbremen/ton/AudioBufferRenderer.html#audioblock-float:A:A-float:A:A-">audioblock</a></code>&nbsp;in interface&nbsp;<code><a href="../../../de/hfkbremen/ton/AudioBufferRenderer.html" title="interface in de.hfkbremen.ton">AudioBufferRenderer</a></code></dd>
-</dl>
+<h4>flip</h4>
+<pre>public static&nbsp;float&nbsp;flip(float&nbsp;pValue)</pre>
 </li>
 </ul>
 </li>
@@ -382,7 +412,7 @@ implements <a href="../../../de/hfkbremen/ton/AudioBufferRenderer.html" title="i
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../de/hfkbremen/ton/BeatListener.html" title="interface in de.hfkbremen.ton"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../de/hfkbremen/ton/BeatMIDI.html" title="class in de.hfkbremen.ton"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../de/hfkbremen/ton/EventReceiverMIDI.html" title="class in de.hfkbremen.ton"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">

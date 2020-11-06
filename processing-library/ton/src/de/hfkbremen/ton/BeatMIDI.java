@@ -45,7 +45,7 @@ public class BeatMIDI implements MidiInListener {
     /**
      * returns an estimate of the current BPM deduced from the duration between two ticks ( or pulses )
      *
-     * @return
+     * @return estimated BPM ( might be imprecise in the first few beats )
      */
     public float bpm() {
         return mBPMEstimate;

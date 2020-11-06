@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":9};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -190,28 +190,48 @@ implements <a href="../../../de/hfkbremen/ton/MidiInListener.html" title="interf
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/EventReceiverMIDI.html#clock_continue--">clock_continue</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/EventReceiverMIDI.html#clock_song_position_pointer-int-">clock_song_position_pointer</a></span>(int&nbsp;pOffset16th)</code>&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/EventReceiverMIDI.html#clock_start--">clock_start</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/EventReceiverMIDI.html#clock_stop--">clock_stop</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/EventReceiverMIDI.html#clock_tick--">clock_tick</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/EventReceiverMIDI.html#receiveControlChange-int-int-int-">receiveControlChange</a></span>(int&nbsp;channel,
                     int&nbsp;number,
                     int&nbsp;value)</code>&nbsp;</td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/EventReceiverMIDI.html#receiveNoteOff-int-int-">receiveNoteOff</a></span>(int&nbsp;channel,
               int&nbsp;pitch)</code>&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/EventReceiverMIDI.html#receiveNoteOn-int-int-int-">receiveNoteOn</a></span>(int&nbsp;channel,
              int&nbsp;pitch,
              int&nbsp;velocity)</code>&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/EventReceiverMIDI.html#receiveProgramChange-int-int-int-">receiveProgramChange</a></span>(int&nbsp;channel,
                     int&nbsp;number,
                     int&nbsp;value)</code>&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>static <a href="../../../de/hfkbremen/ton/EventReceiverMIDI.html" title="class in de.hfkbremen.ton">EventReceiverMIDI</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/EventReceiverMIDI.html#start-java.lang.Object-java.lang.String-">start</a></span>(java.lang.Object&nbsp;pParent,
      java.lang.String&nbsp;pMidiInputDevice)</code>&nbsp;</td>
@@ -341,16 +361,6 @@ implements <a href="../../../de/hfkbremen/ton/MidiInListener.html" title="interf
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="start-java.lang.Object-java.lang.String-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>start</h4>
-<pre>public static&nbsp;<a href="../../../de/hfkbremen/ton/EventReceiverMIDI.html" title="class in de.hfkbremen.ton">EventReceiverMIDI</a>&nbsp;start(java.lang.Object&nbsp;pParent,
-                                      java.lang.String&nbsp;pMidiInputDevice)</pre>
-</li>
-</ul>
 <a name="receiveProgramChange-int-int-int-">
 <!--   -->
 </a>
@@ -398,7 +408,7 @@ implements <a href="../../../de/hfkbremen/ton/MidiInListener.html" title="interf
 <a name="receiveNoteOn-int-int-int-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>receiveNoteOn</h4>
 <pre>public&nbsp;void&nbsp;receiveNoteOn(int&nbsp;channel,
@@ -408,6 +418,81 @@ implements <a href="../../../de/hfkbremen/ton/MidiInListener.html" title="interf
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../de/hfkbremen/ton/MidiInListener.html#receiveNoteOn-int-int-int-">receiveNoteOn</a></code>&nbsp;in interface&nbsp;<code><a href="../../../de/hfkbremen/ton/MidiInListener.html" title="interface in de.hfkbremen.ton">MidiInListener</a></code></dd>
 </dl>
+</li>
+</ul>
+<a name="clock_tick--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clock_tick</h4>
+<pre>public&nbsp;void&nbsp;clock_tick()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../de/hfkbremen/ton/MidiInListener.html#clock_tick--">clock_tick</a></code>&nbsp;in interface&nbsp;<code><a href="../../../de/hfkbremen/ton/MidiInListener.html" title="interface in de.hfkbremen.ton">MidiInListener</a></code></dd>
+</dl>
+</li>
+</ul>
+<a name="clock_start--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clock_start</h4>
+<pre>public&nbsp;void&nbsp;clock_start()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../de/hfkbremen/ton/MidiInListener.html#clock_start--">clock_start</a></code>&nbsp;in interface&nbsp;<code><a href="../../../de/hfkbremen/ton/MidiInListener.html" title="interface in de.hfkbremen.ton">MidiInListener</a></code></dd>
+</dl>
+</li>
+</ul>
+<a name="clock_continue--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clock_continue</h4>
+<pre>public&nbsp;void&nbsp;clock_continue()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../de/hfkbremen/ton/MidiInListener.html#clock_continue--">clock_continue</a></code>&nbsp;in interface&nbsp;<code><a href="../../../de/hfkbremen/ton/MidiInListener.html" title="interface in de.hfkbremen.ton">MidiInListener</a></code></dd>
+</dl>
+</li>
+</ul>
+<a name="clock_stop--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clock_stop</h4>
+<pre>public&nbsp;void&nbsp;clock_stop()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../de/hfkbremen/ton/MidiInListener.html#clock_stop--">clock_stop</a></code>&nbsp;in interface&nbsp;<code><a href="../../../de/hfkbremen/ton/MidiInListener.html" title="interface in de.hfkbremen.ton">MidiInListener</a></code></dd>
+</dl>
+</li>
+</ul>
+<a name="clock_song_position_pointer-int-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clock_song_position_pointer</h4>
+<pre>public&nbsp;void&nbsp;clock_song_position_pointer(int&nbsp;pOffset16th)</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../de/hfkbremen/ton/MidiInListener.html#clock_song_position_pointer-int-">clock_song_position_pointer</a></code>&nbsp;in interface&nbsp;<code><a href="../../../de/hfkbremen/ton/MidiInListener.html" title="interface in de.hfkbremen.ton">MidiInListener</a></code></dd>
+</dl>
+</li>
+</ul>
+<a name="start-java.lang.Object-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>start</h4>
+<pre>public static&nbsp;<a href="../../../de/hfkbremen/ton/EventReceiverMIDI.html" title="class in de.hfkbremen.ton">EventReceiverMIDI</a>&nbsp;start(java.lang.Object&nbsp;pParent,
+                                      java.lang.String&nbsp;pMidiInputDevice)</pre>
 </li>
 </ul>
 </li>

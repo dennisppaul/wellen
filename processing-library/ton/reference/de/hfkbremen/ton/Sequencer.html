@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -149,7 +149,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code><a href="../../../de/hfkbremen/ton/Sequencer.html" title="type parameter in Sequencer">T</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Sequencer.html#at-int-">at</a></span>(int&nbsp;pIndex)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Sequencer.html#at-int-">at</a></span>(int&nbsp;pStep)</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="../../../de/hfkbremen/ton/Sequencer.html" title="type parameter in Sequencer">T</a></code></td>
@@ -160,10 +160,23 @@ extends java.lang.Object</pre>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Sequencer.html#data--">data</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Sequencer.html#position--">position</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Sequencer.html#reset--">reset</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Sequencer.html#set-int-T-">set</a></span>(int&nbsp;pStep,
+   <a href="../../../de/hfkbremen/ton/Sequencer.html" title="type parameter in Sequencer">T</a>&nbsp;pValue)</code>&nbsp;</td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Sequencer.html#set-T-">set</a></span>(<a href="../../../de/hfkbremen/ton/Sequencer.html" title="type parameter in Sequencer">T</a>&nbsp;pValue)</code>&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="../../../de/hfkbremen/ton/Sequencer.html" title="type parameter in Sequencer">T</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Sequencer.html#step--">step</a></span>()</code>&nbsp;</td>
 </tr>
@@ -245,6 +258,29 @@ public&nbsp;Sequencer(<a href="../../../de/hfkbremen/ton/Sequencer.html" title="
 <pre>public&nbsp;<a href="../../../de/hfkbremen/ton/Sequencer.html" title="type parameter in Sequencer">T</a>&nbsp;current()</pre>
 </li>
 </ul>
+<a name="set-int-java.lang.Object-">
+<!--   -->
+</a><a name="set-int-T-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>set</h4>
+<pre>public&nbsp;void&nbsp;set(int&nbsp;pStep,
+                <a href="../../../de/hfkbremen/ton/Sequencer.html" title="type parameter in Sequencer">T</a>&nbsp;pValue)</pre>
+</li>
+</ul>
+<a name="set-java.lang.Object-">
+<!--   -->
+</a><a name="set-T-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>set</h4>
+<pre>public&nbsp;void&nbsp;set(<a href="../../../de/hfkbremen/ton/Sequencer.html" title="type parameter in Sequencer">T</a>&nbsp;pValue)</pre>
+</li>
+</ul>
 <a name="reset--">
 <!--   -->
 </a>
@@ -254,13 +290,22 @@ public&nbsp;Sequencer(<a href="../../../de/hfkbremen/ton/Sequencer.html" title="
 <pre>public&nbsp;void&nbsp;reset()</pre>
 </li>
 </ul>
+<a name="position--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>position</h4>
+<pre>public&nbsp;int&nbsp;position()</pre>
+</li>
+</ul>
 <a name="at-int-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>at</h4>
-<pre>public&nbsp;<a href="../../../de/hfkbremen/ton/Sequencer.html" title="type parameter in Sequencer">T</a>&nbsp;at(int&nbsp;pIndex)</pre>
+<pre>public&nbsp;<a href="../../../de/hfkbremen/ton/Sequencer.html" title="type parameter in Sequencer">T</a>&nbsp;at(int&nbsp;pStep)</pre>
 </li>
 </ul>
 </li>
