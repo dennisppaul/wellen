@@ -96,8 +96,6 @@ public class BeatMIDI implements MidiInListener {
     public void start() {
         mIsRunning = true;
         mBPMMeasure = System.currentTimeMillis();
-//        mBPMSamplerCounter = 0;
-//        Arrays.fill(mBPMSampler, 0.0f);
     }
 
     @Override
