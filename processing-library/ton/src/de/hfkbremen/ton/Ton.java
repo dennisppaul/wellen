@@ -137,7 +137,7 @@ public abstract class Ton {
 
 
 
-    private static ToneEngine instance() {
+    public static ToneEngine instance() {
         if (instance == null) {
             instance = ToneEngine.createEngine();
         }

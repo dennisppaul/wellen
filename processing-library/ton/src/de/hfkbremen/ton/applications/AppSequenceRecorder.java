@@ -10,7 +10,6 @@ public class AppSequenceRecorder extends PApplet {
 
     private static final int OFF = -1;
     private static final int NO_INPUT = -2;
-
     private final Sequencer<Integer> mSequence = new Sequencer<>(
             OFF, OFF, OFF, OFF,
             OFF, OFF, OFF, OFF,
