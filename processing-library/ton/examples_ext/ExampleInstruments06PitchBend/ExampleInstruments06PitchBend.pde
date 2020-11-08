@@ -15,10 +15,10 @@ void draw() {
 }
 void mousePressed() {
     int mNote = Scale.note(Scale.MAJOR_CHORD_7, Note.NOTE_A3, (int) random(0, 10));
-    Ton.noteOn(mNote, 127);
+    Ton.note_on(mNote, 127);
 }
 void mouseReleased() {
-    Ton.noteOff();
+    Ton.note_off();
     Ton.pitch_bend(8192);
 }
 void mouseDragged() {

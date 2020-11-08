@@ -41,10 +41,10 @@ void draw() {
 void beat(Loop pLoop, int pBeatCount) {
     Ton.instrument(pLoop.instrument);
     if (pBeatCount % 4 == 0) {
-        Ton.noteOn(pLoop.note, 63);
+        Ton.note_on(pLoop.note, 63);
         pLoop.playing = true;
     } else if (pBeatCount % 4 == 1) {
-        Ton.noteOff(pLoop.note);
+        Ton.note_off(pLoop.note);
         pLoop.playing = false;
     }
 }
@@ -60,10 +60,10 @@ static class Loop implements BeatListener {
     void beat(int pBeatCount) {
         Ton.instrument(instrument);
         if (pBeatCount % 2 == 0) {
-            Ton.noteOn(note, 50);
+            Ton.note_on(note, 50);
             playing = true;
         } else if (pBeatCount % 2 == 1) {
-            Ton.noteOff(note);
+            Ton.note_off(note);
             playing = false;
         }
     }

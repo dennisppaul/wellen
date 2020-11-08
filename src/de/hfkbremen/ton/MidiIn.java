@@ -10,10 +10,10 @@ import javax.sound.midi.Transmitter;
 import java.util.ArrayList;
 
 import static de.hfkbremen.ton.MIDI.MIDI_CLOCK_CONTINUE;
-import static de.hfkbremen.ton.MIDI.MIDI_SONG_POSITION_POINTER;
 import static de.hfkbremen.ton.MIDI.MIDI_CLOCK_START;
 import static de.hfkbremen.ton.MIDI.MIDI_CLOCK_STOP;
 import static de.hfkbremen.ton.MIDI.MIDI_CLOCK_TICK;
+import static de.hfkbremen.ton.MIDI.MIDI_SONG_POSITION_POINTER;
 import static de.hfkbremen.ton.Ton.dumpMidiInputDevices;
 
 public class MidiIn implements Receiver {
@@ -39,6 +39,23 @@ public class MidiIn implements Receiver {
             dumpMidiInputDevices();
         }
         mListener = new ArrayList<>();
+    }
+
+    public static String[] availableInputs() {
+        ArrayList<String> mMidiInputs = new ArrayList<>();
+        MidiDevice.Info[] mInfos = MidiSystem.getMidiDeviceInfo();
+        for (MidiDevice.Info mInfo : mInfos) {
+            try {
+                MidiDevice mDevice = MidiSystem.getMidiDevice(mInfo);
+                if (mDevice.getMaxTransmitters() != 0) {
+                    mMidiInputs.add(mInfo.getName());
+                }
+            } catch (MidiUnavailableException e) {
+                e.printStackTrace();
+            }
+        }
+        String[] mMidiOutputsStr = new String[mMidiInputs.size()];
+        return mMidiInputs.toArray(mMidiOutputsStr);
     }
 
     public void addListener(MidiInListener pMidiInListener) {
@@ -76,7 +93,8 @@ public class MidiIn implements Receiver {
                 default:
                     if (VERBOSE) {
                         // int POLY_PRESSURE = 0xA0; // Polyphonic Key Pressure (Aftertouch)
-                        System.err.println("### MidiIn / could not parse command: " + mShortMessage.getCommand() + " : " + mShortMessage);
+                        System.err.println("### MidiIn / could not parse command: " + mShortMessage.getCommand() + " " +
+                                           ": " + mShortMessage);
                     }
             }
         } else {
@@ -114,7 +132,7 @@ public class MidiIn implements Receiver {
                 if (VERBOSE) {
                     System.out.println("SONG_POSITION_POINTER: " + mOffset16th);
                 }
-                    clock_song_position_pointer(mOffset16th);
+                clock_song_position_pointer(mOffset16th);
             }
         } else {
             if (VERBOSE) {
@@ -199,22 +217,5 @@ public class MidiIn implements Receiver {
         for (MidiInListener m : mListener) {
             m.receiveNoteOn(channel, pitch, velocity);
         }
-    }
-
-    public static String[] availableInputs() {
-        ArrayList<String> mMidiInputs = new ArrayList<>();
-        MidiDevice.Info[] mInfos = MidiSystem.getMidiDeviceInfo();
-        for (MidiDevice.Info mInfo : mInfos) {
-            try {
-                MidiDevice mDevice = MidiSystem.getMidiDevice(mInfo);
-                if (mDevice.getMaxTransmitters() != 0) {
-                    mMidiInputs.add(mInfo.getName());
-                }
-            } catch (MidiUnavailableException e) {
-                e.printStackTrace();
-            }
-        }
-        String[] mMidiOutputsStr = new String[mMidiInputs.size()];
-        return mMidiInputs.toArray(mMidiOutputsStr);
     }
 }

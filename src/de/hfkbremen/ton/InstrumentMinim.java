@@ -178,12 +178,12 @@ public class InstrumentMinim extends Instrument {
     }
 
     @Override
-    public void noteOff() {
+    public void note_off() {
         adsr.noteOff();
     }
 
     @Override
-    public void noteOn(float pFrequency, float pAmplitude) {
+    public void note_on(float pFrequency, float pAmplitude) {
         frequency(pFrequency);
         amplitude(pAmplitude);
         setADSR();

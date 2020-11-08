@@ -3,6 +3,10 @@ package de.hfkbremen.ton.examples_ext;
 import de.hfkbremen.ton.DSP;
 import processing.core.PApplet;
 
+/**
+ * this examples demonstrates how to receive audio data from the input device and pass it through to the output device.
+ * this is somewhat the *hello world* of DSP.
+ */
 public class SketchExampleDSP02PassThrough extends PApplet {
 
     public void settings() {

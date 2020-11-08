@@ -30,13 +30,13 @@ public class ToneEngineMinim extends ToneEngine {
         }
     }
 
-    public void noteOn(int note, int velocity, float duration) {
-        noteOn(note, velocity);
+    public void note_on(int note, int velocity, float duration) {
+        note_on(note, velocity);
         TimerTask mTask = new NoteOffTask();
         mTimer.schedule(mTask, (long) (duration * 1000));
     }
 
-    public void noteOn(int note, int velocity) {
+    public void note_on(int note, int velocity) {
         mIsPlaying = true;
         final float mFreq = note_to_frequency(clamp127(note));
         float mAmp = clamp127(velocity) / 127.0f;
@@ -45,18 +45,18 @@ public class ToneEngineMinim extends ToneEngine {
         }
         if (mInstruments.get(getInstrumentID()) instanceof InstrumentMinim) {
             InstrumentMinim mInstrument = (InstrumentMinim) mInstruments.get(getInstrumentID());
-            mInstrument.noteOn(mFreq, mAmp);
+            mInstrument.note_on(mFreq, mAmp);
         }
     }
 
-    public void noteOff(int note) {
-        noteOff();
+    public void note_off(int note) {
+        note_off();
     }
 
-    public void noteOff() {
+    public void note_off() {
         if (mInstruments.get(getInstrumentID()) instanceof InstrumentMinim) {
             InstrumentMinim mInstrument = (InstrumentMinim) mInstruments.get(getInstrumentID());
-            mInstrument.noteOff();
+            mInstrument.note_off();
             mIsPlaying = false;
         }
     }
@@ -91,7 +91,7 @@ public class ToneEngineMinim extends ToneEngine {
     public class NoteOffTask extends TimerTask {
 
         public void run() {
-            noteOff();
+            note_off();
         }
     }
 }

@@ -16,7 +16,7 @@ public class AppOscJibberish extends PApplet {
     }
 
     public void setup() {
-        Ton.init("jsyn-minimal");
+        Ton.start("jsyn-minimal");
         for (int i = 0; i < 3; i++) {
             Jibberer mJibberer = new Jibberer(i);
             mJibberer.triggerposition().set(width / 2.0f, height / 2.0f);

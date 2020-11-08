@@ -3,8 +3,11 @@ package de.hfkbremen.ton.examples_ext;
 import de.hfkbremen.ton.BeatMIDI;
 import de.hfkbremen.ton.Ton;
 import processing.core.PApplet;
+/**
+ * this examples demonstrates
+ */
 
-public class SketchExampleEvent02BeatMIDIClock extends PApplet {
+public class SketchExampleEvent02MIDIClock extends PApplet {
 
     private int mColor;
 
@@ -16,7 +19,7 @@ public class SketchExampleEvent02BeatMIDIClock extends PApplet {
 
     public void setup() {
         Ton.dumpMidiInputDevices();
-        mBeatMIDI = BeatMIDI.start(this, "Bus 1");
+        mBeatMIDI = BeatMIDI.start(this, "Arturia KeyStep 37");
     }
 
     public void draw() {
@@ -30,14 +33,14 @@ public class SketchExampleEvent02BeatMIDIClock extends PApplet {
                     random(127, 255),
                     random(127, 255));
             int mOffset = 4 * ((pBeat / 24) % 8);
-            Ton.noteOn(36 + mOffset, 90);
+            Ton.note_on(36 + mOffset, 90);
             System.out.println(mBeatMIDI.bpm());
         } else {
-            Ton.noteOff();
+            Ton.note_off();
         }
     }
 
     public static void main(String[] args) {
-        PApplet.main(SketchExampleEvent02BeatMIDIClock.class.getName());
+        PApplet.main(SketchExampleEvent02MIDIClock.class.getName());
     }
 }

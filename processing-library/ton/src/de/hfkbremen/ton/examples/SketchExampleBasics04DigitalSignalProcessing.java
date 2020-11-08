@@ -4,7 +4,8 @@ import de.hfkbremen.ton.DSP;
 import processing.core.PApplet;
 
 /**
- * this example demonstrates how to perform digital signal processing (DSP) by directly writing to an audio buffer.
+ * this example demonstrates how to perform digital signal processing (DSP) by continously writing to an audio buffer
+ * directly.
  */
 public class SketchExampleBasics04DigitalSignalProcessing extends PApplet {
 

@@ -14,8 +14,8 @@ void draw() {
 }
 void mousePressed() {
     int mNote = 45 + (int) random(0, 12);
-    Ton.noteOn(mNote, 100);
+    Ton.note_on(mNote, 100);
 }
 void mouseReleased() {
-    Ton.noteOff();
+    Ton.note_off();
 }

@@ -3,6 +3,9 @@ package de.hfkbremen.ton.examples_ext;
 import de.hfkbremen.ton.DSP;
 import processing.core.PApplet;
 
+/**
+ * this examples demonstrates how to implement a basic echo effect in DSP.
+ */
 public class SketchExampleDSP03Echo extends PApplet {
 
     float[] mDelayBuffer = new float[4096];

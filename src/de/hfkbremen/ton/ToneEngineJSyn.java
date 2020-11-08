@@ -32,6 +32,10 @@ public class ToneEngineJSyn extends ToneEngine {
         this(pDefaultInstrumentType, 44100, DEFAULT_DEVICE, 1, DEFAULT_DEVICE, 2);
     }
 
+    public ToneEngineJSyn(int pDefaultInstrumentType, int pOutputDeviceID, int pOutputChannels) {
+        this(pDefaultInstrumentType, 44100, DEFAULT_DEVICE, 1, pOutputDeviceID, pOutputChannels);
+    }
+
     public ToneEngineJSyn(int pDefaultInstrumentType,
                           int pSamplingRate,
                           int pInputDeviceID,
@@ -93,7 +97,7 @@ public class ToneEngineJSyn extends ToneEngine {
         return mLineOut;
     }
 
-    public void noteOn(int note, int velocity, float duration) {
+    public void note_on(int note, int velocity, float duration) {
         TimerTask mTask = new NoteOffTask();
         mTimer.schedule(mTask, (long) (duration * 1000));
         mIsPlaying = true;
@@ -115,23 +119,23 @@ public class ToneEngineJSyn extends ToneEngine {
         }
     }
 
-    public void noteOn(int note, int velocity) {
+    public void note_on(int note, int velocity) {
         mIsPlaying = true;
         final float mFreq = note_to_frequency(clamp127(note));
         float mAmp = clamp127(velocity) / 127.0f;
         if (USE_AMP_FRACTION) {
             mAmp /= (float) NUMBERS_OF_INSTRUMENTS;
         }
-        getInstrument(getInstrumentID()).noteOn(mFreq, mAmp);
+        getInstrument(getInstrumentID()).note_on(mFreq, mAmp);
     }
 
-    public void noteOff(int note) {
-        noteOff();
+    public void note_off(int note) {
+        note_off();
     }
 
-    public void noteOff() {
+    public void note_off() {
         mIsPlaying = false;
-        getInstrument(getInstrumentID()).noteOff();
+        getInstrument(getInstrumentID()).note_off();
     }
 
     public void control_change(int pCC, int pValue) {

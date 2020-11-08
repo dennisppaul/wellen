@@ -107,7 +107,7 @@ public abstract class Instrument {
 
     public abstract float get_frequency();
 
-    public abstract void noteOff();
+    public abstract void note_off();
 
-    public abstract void noteOn(float pFreq, float pAmp);
+    public abstract void note_on(float pFreq, float pAmp);
 }

@@ -53,9 +53,9 @@ public class AppSixteenStepSequencer extends PApplet {
         int mIndex = mBeatCount % mSequence.length;
         int mNote = mSequence[mIndex];
         if (mNote != OFF) {
-            Ton.noteOn(mNote, 100);
+            Ton.note_on(mNote, 100);
         } else {
-            Ton.noteOff();
+            Ton.note_off();
         }
     }
 

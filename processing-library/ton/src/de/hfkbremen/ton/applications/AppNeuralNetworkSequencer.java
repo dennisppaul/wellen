@@ -145,7 +145,7 @@ public class AppNeuralNetworkSequencer extends PApplet {
             if (trigger) {
                 trigger = false;
                 playing = true;
-                Ton.noteOn(note, 32);
+                Ton.note_on(note, 32);
 
                 /* activate child */
                 if (children.size() > 0) {
@@ -154,7 +154,7 @@ public class AppNeuralNetworkSequencer extends PApplet {
                 }
             } else {
                 playing = false;
-                Ton.noteOff();
+                Ton.note_off();
             }
         }
 

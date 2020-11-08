@@ -3,28 +3,22 @@ package de.hfkbremen.ton;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+import static de.hfkbremen.ton.Event.EVENT_CONTROLCHANGE;
+import static de.hfkbremen.ton.Event.EVENT_NOTE_OFF;
+import static de.hfkbremen.ton.Event.EVENT_NOTE_ON;
+import static de.hfkbremen.ton.Event.EVENT_PROGRAMCHANGE;
 import static de.hfkbremen.ton.MIDI.MIDI_CLOCK_CONTINUE;
-import static de.hfkbremen.ton.MIDI.MIDI_SONG_POSITION_POINTER;
 import static de.hfkbremen.ton.MIDI.MIDI_CLOCK_START;
 import static de.hfkbremen.ton.MIDI.MIDI_CLOCK_STOP;
 import static de.hfkbremen.ton.MIDI.MIDI_CLOCK_TICK;
-
+import static de.hfkbremen.ton.MIDI.MIDI_SONG_POSITION_POINTER;
 
 public class EventReceiverMIDI implements MidiInListener {
-
-    public static final int EVENT_UNDEFINED = -1;
-    public static final int EVENT_NOTE_ON = 0;
-    public static final int EVENT_NOTE_OFF = 1;
-    public static final int EVENT_CONTROLCHANGE = 2;
-    public static final int EVENT_PITCHBAND = 3;
-    public static final int EVENT_PROGRAMCHANGE = 4;
 
     private static final String METHOD_NAME = "event_receive";
     private static EventReceiverMIDI mInstance = null;
     private final Object mParent;
     private Method mMethod = null;
-
-    //    virtual void event_receive(const EVENT_TYPE event, const float* data) {}
 
     public EventReceiverMIDI(Object pPApplet) {
         mParent = pPApplet;
@@ -33,6 +27,15 @@ public class EventReceiverMIDI implements MidiInListener {
         } catch (NoSuchMethodException | SecurityException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public static EventReceiverMIDI start(Object pParent, String pMidiInputDevice) {
+        if (mInstance == null) {
+            mInstance = new EventReceiverMIDI(pParent);
+            MidiIn mMidiIn = new MidiIn(pMidiInputDevice);
+            mMidiIn.addListener(mInstance);
+        }
+        return mInstance;
     }
 
     @Override
@@ -85,15 +88,8 @@ public class EventReceiverMIDI implements MidiInListener {
             mMethod.invoke(mParent, pEvent, pData);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
             ex.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    }
-
-    public static EventReceiverMIDI start(Object pParent, String pMidiInputDevice) {
-        if (mInstance == null) {
-            mInstance = new EventReceiverMIDI(pParent);
-            MidiIn mMidiIn = new MidiIn(pMidiInputDevice);
-            mMidiIn.addListener(mInstance);
-        }
-        return mInstance;
     }
 }

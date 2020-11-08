@@ -37,10 +37,10 @@ void draw() {
 void keyPressed() {
     if (key == ' ') {
         if (mIsPlaying) {
-            mToneEngine.noteOff();
+            mToneEngine.note_off();
         } else {
             mNote = Scale.note(Scale.MAJOR_CHORD_7, Note.NOTE_A2, (int) random(0, 10));
-            mToneEngine.noteOn(mNote, 127);
+            mToneEngine.note_on(mNote, 127);
         }
         mIsPlaying = !mIsPlaying;
     }

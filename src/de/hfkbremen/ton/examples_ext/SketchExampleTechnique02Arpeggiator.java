@@ -7,6 +7,10 @@ import de.hfkbremen.ton.Scale;
 import de.hfkbremen.ton.Ton;
 import processing.core.PApplet;
 
+/**
+ * this examples demonstrates how to use the [arpeggiator](https://en.wikipedia.org/wiki/Synthesizer#Arpeggiator). the
+ * method `play` prepares a series of notes defined by the *pattern* to be played sequentially.
+ */
 public class SketchExampleTechnique02Arpeggiator extends PApplet {
 
     private int mColor;
@@ -63,9 +67,9 @@ public class SketchExampleTechnique02Arpeggiator extends PApplet {
         /* step through the arpeggiator at clock speed i.e 24 steps ( or pulses ) per quarter note */
         if (mArpeggiator.step()) {
             int mNote = Scale.note(Scale.MINOR_PENTATONIC, Note.NOTE_C3, mArpeggiator.note());
-            Ton.noteOn(mNote, mArpeggiator.velocity());
+            Ton.note_on(mNote, mArpeggiator.velocity());
         } else {
-            Ton.noteOff();
+            Ton.note_off();
         }
     }
 

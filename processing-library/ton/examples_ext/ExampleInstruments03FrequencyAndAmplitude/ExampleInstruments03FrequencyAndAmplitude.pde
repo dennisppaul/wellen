@@ -8,7 +8,7 @@ void settings() {
     size(640, 480);
 }
 void setup() {
-    Ton.init("jsyn-minimal");
+    Ton.start("jsyn-minimal");
     Ton.instrument().osc_type(Instrument.SAWTOOTH);
 }
 void draw() {

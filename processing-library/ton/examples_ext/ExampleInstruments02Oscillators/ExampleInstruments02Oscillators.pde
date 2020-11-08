@@ -26,10 +26,10 @@ void draw() {
 void keyPressed() {
     if (key == ' ') {
         if (mIsPlaying) {
-            Ton.noteOff();
+            Ton.note_off();
         } else {
             mNote = Scale.note(Scale.MAJOR_CHORD_7, Note.NOTE_A2, (int) random(0, 10));
-            Ton.noteOn(mNote, 127);
+            Ton.note_on(mNote, 127);
         }
         mIsPlaying = !mIsPlaying;
     }

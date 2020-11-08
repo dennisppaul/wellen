@@ -183,6 +183,11 @@ extends <a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.h
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngineJSyn.html#ToneEngineJSyn-int-">ToneEngineJSyn</a></span>(int&nbsp;pDefaultInstrumentType)</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngineJSyn.html#ToneEngineJSyn-int-int-int-">ToneEngineJSyn</a></span>(int&nbsp;pDefaultInstrumentType,
+              int&nbsp;pOutputDeviceID,
+              int&nbsp;pOutputChannels)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngineJSyn.html#ToneEngineJSyn-int-int-int-int-int-int-">ToneEngineJSyn</a></span>(int&nbsp;pDefaultInstrumentType,
               int&nbsp;pSamplingRate,
               int&nbsp;pInputDeviceID,
@@ -252,28 +257,28 @@ extends <a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.h
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngineJSyn.html#noteOff--">noteOff</a></span>()</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngineJSyn.html#note_off--">note_off</a></span>()</code>
 <div class="block">turns off the last played note.</div>
 </td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngineJSyn.html#noteOff-int-">noteOff</a></span>(int&nbsp;note)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngineJSyn.html#note_off-int-">note_off</a></span>(int&nbsp;note)</code>
 <div class="block">turn off a note</div>
 </td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngineJSyn.html#noteOn-int-int-">noteOn</a></span>(int&nbsp;note,
-      int&nbsp;velocity)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngineJSyn.html#note_on-int-int-">note_on</a></span>(int&nbsp;note,
+       int&nbsp;velocity)</code>
 <div class="block">play a note</div>
 </td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngineJSyn.html#noteOn-int-int-float-">noteOn</a></span>(int&nbsp;note,
-      int&nbsp;velocity,
-      float&nbsp;duration)</code>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngineJSyn.html#note_on-int-int-float-">note_on</a></span>(int&nbsp;note,
+       int&nbsp;velocity,
+       float&nbsp;duration)</code>
 <div class="block">play a note</div>
 </td>
 </tr>
@@ -353,6 +358,17 @@ extends <a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.h
 <pre>public&nbsp;ToneEngineJSyn(int&nbsp;pDefaultInstrumentType)</pre>
 </li>
 </ul>
+<a name="ToneEngineJSyn-int-int-int-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ToneEngineJSyn</h4>
+<pre>public&nbsp;ToneEngineJSyn(int&nbsp;pDefaultInstrumentType,
+                      int&nbsp;pOutputDeviceID,
+                      int&nbsp;pOutputChannels)</pre>
+</li>
+</ul>
 <a name="ToneEngineJSyn-int-int-int-int-int-int-">
 <!--   -->
 </a>
@@ -411,75 +427,75 @@ extends <a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.h
 <pre>public&nbsp;com.jsyn.unitgen.LineOut&nbsp;line_out()</pre>
 </li>
 </ul>
-<a name="noteOn-int-int-float-">
+<a name="note_on-int-int-float-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>noteOn</h4>
-<pre>public&nbsp;void&nbsp;noteOn(int&nbsp;note,
-                   int&nbsp;velocity,
-                   float&nbsp;duration)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../de/hfkbremen/ton/ToneEngine.html#noteOn-int-int-float-">ToneEngine</a></code></span></div>
+<h4>note_on</h4>
+<pre>public&nbsp;void&nbsp;note_on(int&nbsp;note,
+                    int&nbsp;velocity,
+                    float&nbsp;duration)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../de/hfkbremen/ton/ToneEngine.html#note_on-int-int-float-">ToneEngine</a></code></span></div>
 <div class="block">play a note</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../de/hfkbremen/ton/ToneEngine.html#noteOn-int-int-float-">noteOn</a></code>&nbsp;in class&nbsp;<code><a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.hfkbremen.ton">ToneEngine</a></code></dd>
+<dd><code><a href="../../../de/hfkbremen/ton/ToneEngine.html#note_on-int-int-float-">note_on</a></code>&nbsp;in class&nbsp;<code><a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.hfkbremen.ton">ToneEngine</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>note</code> - pitch of note ranging from 0 to 127</dd>
 <dd><code>velocity</code> - volume of note ranging from 0 to 127</dd>
-<dd><code>duration</code> - duration in seconds before the note is turned off ( noteOff() ) again</dd>
+<dd><code>duration</code> - duration in seconds before the note is turned off again</dd>
 </dl>
 </li>
 </ul>
-<a name="noteOn-int-int-">
+<a name="note_on-int-int-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>noteOn</h4>
-<pre>public&nbsp;void&nbsp;noteOn(int&nbsp;note,
-                   int&nbsp;velocity)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../de/hfkbremen/ton/ToneEngine.html#noteOn-int-int-">ToneEngine</a></code></span></div>
+<h4>note_on</h4>
+<pre>public&nbsp;void&nbsp;note_on(int&nbsp;note,
+                    int&nbsp;velocity)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../de/hfkbremen/ton/ToneEngine.html#note_on-int-int-">ToneEngine</a></code></span></div>
 <div class="block">play a note</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../de/hfkbremen/ton/ToneEngine.html#noteOn-int-int-">noteOn</a></code>&nbsp;in class&nbsp;<code><a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.hfkbremen.ton">ToneEngine</a></code></dd>
+<dd><code><a href="../../../de/hfkbremen/ton/ToneEngine.html#note_on-int-int-">note_on</a></code>&nbsp;in class&nbsp;<code><a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.hfkbremen.ton">ToneEngine</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>note</code> - pitch of note ranging from 0 to 127</dd>
 <dd><code>velocity</code> - volume of note ranging from 0 to 127</dd>
 </dl>
 </li>
 </ul>
-<a name="noteOff-int-">
+<a name="note_off-int-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>noteOff</h4>
-<pre>public&nbsp;void&nbsp;noteOff(int&nbsp;note)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../de/hfkbremen/ton/ToneEngine.html#noteOff-int-">ToneEngine</a></code></span></div>
+<h4>note_off</h4>
+<pre>public&nbsp;void&nbsp;note_off(int&nbsp;note)</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../de/hfkbremen/ton/ToneEngine.html#note_off-int-">ToneEngine</a></code></span></div>
 <div class="block">turn off a note</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../de/hfkbremen/ton/ToneEngine.html#noteOff-int-">noteOff</a></code>&nbsp;in class&nbsp;<code><a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.hfkbremen.ton">ToneEngine</a></code></dd>
+<dd><code><a href="../../../de/hfkbremen/ton/ToneEngine.html#note_off-int-">note_off</a></code>&nbsp;in class&nbsp;<code><a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.hfkbremen.ton">ToneEngine</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>note</code> - pitch of note to turn off</dd>
 </dl>
 </li>
 </ul>
-<a name="noteOff--">
+<a name="note_off--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>noteOff</h4>
-<pre>public&nbsp;void&nbsp;noteOff()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../de/hfkbremen/ton/ToneEngine.html#noteOff--">ToneEngine</a></code></span></div>
+<h4>note_off</h4>
+<pre>public&nbsp;void&nbsp;note_off()</pre>
+<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../de/hfkbremen/ton/ToneEngine.html#note_off--">ToneEngine</a></code></span></div>
 <div class="block">turns off the last played note.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../de/hfkbremen/ton/ToneEngine.html#noteOff--">noteOff</a></code>&nbsp;in class&nbsp;<code><a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.hfkbremen.ton">ToneEngine</a></code></dd>
+<dd><code><a href="../../../de/hfkbremen/ton/ToneEngine.html#note_off--">note_off</a></code>&nbsp;in class&nbsp;<code><a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.hfkbremen.ton">ToneEngine</a></code></dd>
 </dl>
 </li>
 </ul>

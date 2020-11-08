@@ -7,7 +7,19 @@ import de.hfkbremen.ton.Ton;
 import processing.core.PApplet;
 
 /**
- * this examples shows how to use an instrument with an amplitude envelope ( ADSR ).
+ * this examples shows how to use an instrument with an amplitude envelope ( ADSR ). the envelope controls the amplitude
+ * of a tone over time. it is started by calling the `note_on()` method and released by calling the `note_off()` method.
+ */
+/*
+ * schematic of the (A)ttack, (D)ecay, (S)ustain and (R)elease envelope:
+ *
+ *     ^    /\
+ *     |   /  \
+ *     |  /    \______
+ *     | /            \
+ *     |/              \
+ *     +---------------------->
+ *     [A   ][D][S   ][R]
  */
 public class SketchExampleInstruments01ADSR extends PApplet {
 // @TODO update visual representation of ADSR
@@ -39,6 +51,7 @@ public class SketchExampleInstruments01ADSR extends PApplet {
         }
 
         /* adjust ADSR */
+        // @TODO(use `map()` instead)
         if (keyPressed) {
             if (key == '1') {
                 final float mAttack = 3.0f * (float) mouseX / width;
@@ -83,12 +96,12 @@ public class SketchExampleInstruments01ADSR extends PApplet {
 
     public void mousePressed() {
         mNote = Scale.note(Scale.MAJOR_CHORD_7, Note.NOTE_A2, (int) random(0, 10));
-        Ton.noteOn(mNote, 127);
+        Ton.note_on(mNote, 127);
         mIsPlaying = true;
     }
 
     public void mouseReleased() {
-        Ton.noteOff();
+        Ton.note_off();
         mIsPlaying = false;
     }
 

@@ -4,6 +4,10 @@ import de.hfkbremen.ton.DSP;
 import processing.core.PApplet;
 
 
+/**
+ * this examples demonstrates how to implement basic filters in DSP.
+ */
+
 public class SketchExampleDSP04LowPassFilter extends PApplet {
 
     private final SecondOrderLowPassFilter mLPFilter = new SecondOrderLowPassFilter();

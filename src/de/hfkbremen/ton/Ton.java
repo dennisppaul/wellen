@@ -8,6 +8,8 @@ import processing.core.PConstants;
 
 import java.util.ArrayList;
 
+import static de.hfkbremen.ton.ToneEngine.INSTRUMENT_WITH_OSCILLATOR_ADSR;
+
 public abstract class Ton {
 
     private static ToneEngine instance = null;
@@ -15,24 +17,37 @@ public abstract class Ton {
     private Ton() {
     }
 
-    public static void init(String... pName) {
+    public static void start(String... pName) {
         if (instance != null) {
             System.err.println(
-                    "+++ @init / tone engine already initialized. make sure that `init` is the first call to `Ton`.");
+                    "+++ @start / tone engine already initialized. make sure that `start` is the first call to `Ton`.");
         }
         instance = ToneEngine.createEngine(pName);
     }
 
-    public static void noteOn(int note, int velocity) {
-        instance().noteOn(note, velocity);
+    public static void start(String pName, int pParameterA, int pParameterB) {
+        if (instance != null) {
+            System.err.println(
+                    "+++ @start / tone engine already initialized. make sure that `start` is the first call to `Ton`.");
+        }
+        if (pName.equalsIgnoreCase("jsyn")) {
+            /* specify output device */
+            instance = new ToneEngineJSyn(INSTRUMENT_WITH_OSCILLATOR_ADSR, pParameterA, pParameterB);
+        } else {
+            instance = ToneEngine.createEngine(pName);
+        }
     }
 
-    public static void noteOff(int note) {
-        instance().noteOff(note);
+    public static void note_on(int note, int velocity) {
+        instance().note_on(note, velocity);
     }
 
-    public static void noteOff() {
-        instance().noteOff();
+    public static void note_off(int note) {
+        instance().note_off(note);
+    }
+
+    public static void note_off() {
+        instance().note_off();
     }
 
     public static void control_change(int pCC, int pValue) {
@@ -102,10 +117,10 @@ public abstract class Ton {
         final int mListWidth = 300, mListHeight = 300;
 
         DropdownList dl = controls.addDropdownList("Please select MIDI Device",
-                (controls.papplet.width - mListWidth) / 2,
-                (controls.papplet.height - mListHeight) / 2,
-                mListWidth,
-                mListHeight);
+                                                   (controls.papplet.width - mListWidth) / 2,
+                                                   (controls.papplet.height - mListHeight) / 2,
+                                                   mListWidth,
+                                                   mListHeight);
 
         //        dl.toUpperCase(true);
         dl.setItemHeight(16);
@@ -130,12 +145,11 @@ public abstract class Ton {
 
     public static void run(Class<? extends PApplet> T, String... pArgs) {
         String[] mArgs;
-        mArgs = PApplet.concat(new String[]{"--sketch-path=" + System.getProperty("user.dir") + "/simulator"}, pArgs);
+        mArgs = PApplet.concat(new String[]{"--sketch-path=" + System.getProperty("user.dir") + "/simulator"},
+                               pArgs);
         mArgs = PApplet.concat(mArgs, new String[]{T.getName()});
         PApplet.main(mArgs);
     }
-
-
 
     public static ToneEngine instance() {
         if (instance == null) {

@@ -54,9 +54,9 @@ void beat(int pBeat) {
         int mStep = mSteps[i][pBeat % mSteps[i].length];
         if (mStep == I) {
             int mNote = Scale.note(Scale.HALF_TONE, Note.NOTE_C3, mStep);
-            Ton.noteOn(mNote, 100);
+            Ton.note_on(mNote, 100);
         } else {
-            Ton.noteOff();
+            Ton.note_off();
         }
     }
 }

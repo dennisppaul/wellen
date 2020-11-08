@@ -92,12 +92,12 @@ public class InstrumentJSyn extends Instrument {
     }
 
     @Override
-    public void noteOff() {
+    public void note_off() {
         amplitude(0);
     }
 
     @Override
-    public void noteOn(float pFreq, float pAmp) {
+    public void note_on(float pFreq, float pAmp) {
         amplitude(pAmp);
         frequency(pFreq);
     }

@@ -147,11 +147,11 @@ public class InstrumentJSynOscillatorADSR extends InstrumentJSynOscillator {
         update_freq();
     }
 
-    public void noteOff() {
+    public void note_off() {
         mEnvPlayer.dataQueue.queueOff(mEnvData, true, new TimeStamp(mSynth.getCurrentTime()));
     }
 
-    public void noteOn(float pFreq, float pAmp) {
+    public void note_on(float pFreq, float pAmp) {
         update_env_data();
         mEnvData.setSustainBegin(2);
         mEnvData.setSustainEnd(2);

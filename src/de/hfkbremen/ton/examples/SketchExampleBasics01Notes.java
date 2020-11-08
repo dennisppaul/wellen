@@ -21,11 +21,11 @@ public class SketchExampleBasics01Notes extends PApplet {
 
     public void mousePressed() {
         int mNote = 45 + (int) random(0, 12);
-        Ton.noteOn(mNote, 100);
+        Ton.note_on(mNote, 100);
     }
 
     public void mouseReleased() {
-        Ton.noteOff();
+        Ton.note_off();
     }
 
     public static void main(String[] args) {

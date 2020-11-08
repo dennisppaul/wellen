@@ -44,15 +44,15 @@ public class AppAlgorithmicCompositionModulo extends PApplet {
     public void beat(int pBeat) {
         mPlaying = true;
         if (pBeat % 32 == 0) {
-            Ton.noteOn(Note.NOTE_A4, 80);
+            Ton.note_on(Note.NOTE_A4, 80);
         } else if (pBeat % 8 == 0) {
-            Ton.noteOn(Note.NOTE_A3, 100);
+            Ton.note_on(Note.NOTE_A3, 100);
         } else if (pBeat % 2 == 0) {
-            Ton.noteOn(Note.NOTE_A2 + (pBeat % 4) * 3, 120);
+            Ton.note_on(Note.NOTE_A2 + (pBeat % 4) * 3, 120);
         } else if (pBeat % 11 == 0) {
-            Ton.noteOn(Note.NOTE_C4, 100);
+            Ton.note_on(Note.NOTE_C4, 100);
         } else if (pBeat % 13 == 0) {
-            Ton.noteOn(Note.NOTE_C5, 100);
+            Ton.note_on(Note.NOTE_C5, 100);
         } else {
             mPlaying = false;
         }

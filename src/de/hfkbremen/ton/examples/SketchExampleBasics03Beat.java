@@ -6,8 +6,8 @@ import de.hfkbremen.ton.Ton;
 import processing.core.PApplet;
 
 /**
- * this examples shows how to use a beat. once started the method `beat(int)` is called at a defined speed defined in
- * *beats per minute* (bpm).
+ * this examples shows how to use a beat. once started the method `beat(int)` is called at a speed defined in *beats per
+ * minute* (bpm) ( i.e quartner notes per minute ).
  */
 public class SketchExampleBasics03Beat extends PApplet {
 
@@ -34,7 +34,7 @@ public class SketchExampleBasics03Beat extends PApplet {
     public void beat(int pBeatCount) {
         mBeatCount = pBeatCount;
         int mNote = mNotes[mBeatCount % mNotes.length];
-        Ton.noteOn(mNote, 100);
+        Ton.note_on(mNote, 100);
     }
 
     public static void main(String[] args) {

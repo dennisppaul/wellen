@@ -30,23 +30,23 @@ public class ToneEngineMIDI extends ToneEngine {
         return null;
     }
 
-    public void noteOn(int note, int velocity, float duration) {
+    public void note_on(int note, int velocity, float duration) {
         mTimer.schedule(new MidiTimerNoteOffTask(mMidiOut, mChannel, note, velocity), (long) duration * 1000);
-        noteOn(note, velocity);
+        note_on(note, velocity);
     }
 
-    public void noteOn(int note, int velocity) {
+    public void note_on(int note, int velocity) {
         mMidiOut.sendNoteOn(mChannel, note, velocity);
         mLastPlayedNote = note;
     }
 
-    public void noteOff(int note) {
+    public void note_off(int note) {
         mMidiOut.sendNoteOff(mChannel, note, 0);
         mLastPlayedNote = -1;
     }
 
-    public void noteOff() {
-        noteOff(mLastPlayedNote);
+    public void note_off() {
+        note_off(mLastPlayedNote);
     }
 
     public void control_change(int pCC, int pValue) {

@@ -27,6 +27,7 @@ void draw() {
         background(0);
     }
     /* adjust ADSR */
+    // @TODO(use `map()` instead)
     if (keyPressed) {
         if (key == '1') {
             final float mAttack = 3.0f * (float) mouseX / width;
@@ -69,10 +70,10 @@ void draw() {
 }
 void mousePressed() {
     mNote = Scale.note(Scale.MAJOR_CHORD_7, Note.NOTE_A2, (int) random(0, 10));
-    Ton.noteOn(mNote, 127);
+    Ton.note_on(mNote, 127);
     mIsPlaying = true;
 }
 void mouseReleased() {
-    Ton.noteOff();
+    Ton.note_off();
     mIsPlaying = false;
 }

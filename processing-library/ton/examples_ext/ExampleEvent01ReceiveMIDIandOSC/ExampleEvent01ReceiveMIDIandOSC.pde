@@ -22,15 +22,17 @@ void draw() {
     text(mEventReceived, 11, 22);
 }
 void event_receive(int pEvent, float[] pData) {
-    mEventReceived += "EVENT ( ";
-    mEventReceived += "TYPE: " + pEvent;
-    mEventReceived += " DATA: ";
+    String mEventReceivedStr = "[" + nf(mEventCounter, 2) + "] ";
+    mEventReceivedStr += "EVENT ( ";
+    mEventReceivedStr += "TYPE: " + pEvent;
+    mEventReceivedStr += " DATA: ";
     for (float pDatum : pData) {
-        mEventReceived += pDatum;
-        mEventReceived += " ";
+        mEventReceivedStr += pDatum;
+        mEventReceivedStr += " ";
     }
-    mEventReceived += ")\n";
-    println(mEventReceived);
+    mEventReceivedStr += ")";
+    mEventReceived += mEventReceivedStr + "\n";
+    println(mEventReceivedStr);
     mEventCounter++;
     if (mEventCounter > 23) {
         mEventCounter = 0;

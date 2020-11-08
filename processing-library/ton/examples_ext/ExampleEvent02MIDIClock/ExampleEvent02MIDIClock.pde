@@ -11,7 +11,7 @@ void settings() {
 }
 void setup() {
     Ton.dumpMidiInputDevices();
-    mBeatMIDI = BeatMIDI.start(this, "Bus 1");
+    mBeatMIDI = BeatMIDI.start(this, "Arturia KeyStep 37");
 }
 void draw() {
     background(mBeatMIDI.running() ? mColor : 0);
@@ -23,9 +23,9 @@ void beat(int pBeat) {
                 random(127, 255),
                 random(127, 255));
         int mOffset = 4 * ((pBeat / 24) % 8);
-        Ton.noteOn(36 + mOffset, 90);
+        Ton.note_on(36 + mOffset, 90);
         System.out.println(mBeatMIDI.bpm());
     } else {
-        Ton.noteOff();
+        Ton.note_off();
     }
 }

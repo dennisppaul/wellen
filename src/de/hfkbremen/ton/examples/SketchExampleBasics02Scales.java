@@ -6,12 +6,11 @@ import de.hfkbremen.ton.Ton;
 import processing.core.PApplet;
 
 /**
- * this examples shows how to use musical scales. a selection of predefined scales is available, however custom scales
- * can also be created.
+ * this examples shows how to use musical scales. a selection of predefined scales is available in `Scale`, however
+ * custom scales can also be created.
  */
 public class SketchExampleBasics02Scales extends PApplet {
 
-    private static final int NO = -1;
     private int mNote;
     private int mStep;
     private int[] mScale;
@@ -22,27 +21,31 @@ public class SketchExampleBasics02Scales extends PApplet {
 
     public void setup() {
         mScale = Scale.HALF_TONE;
+        mNote = Note.NOTE_C4;
+        fill(0);
     }
 
     public void draw() {
-        background(mNote * 2);
+        background(255);
+        float mScale = map(mNote, Note.NOTE_C4, Note.NOTE_C5, height * 0.1f, height * 0.8f);
+        ellipse(width * 0.5f, height * 0.5f, mScale, mScale);
     }
 
     public void keyPressed() {
         if (key == ' ') {
             mStep++;
-            mStep %= 12;
-            mNote = Scale.note(mScale, Note.NOTE_C3, mStep);
-            Ton.noteOn(mNote, 100);
+            mStep %= mScale.length + 1;
+            mNote = Scale.note(mScale, Note.NOTE_C4, mStep);
+            Ton.note_on(mNote, 100);
         }
         if (key == '1') {
             mScale = Scale.HALF_TONE;
         }
         if (key == '2') {
-            mScale = Scale.MAJOR_CHORD;
+            mScale = Scale.MINOR_CHORD_7;
         }
         if (key == '3') {
-            mScale = Scale.MINOR_CHORD_7;
+            mScale = new int[]{0, 2, 3, 6, 7, 8, 11}; // Nawa Athar
         }
     }
 

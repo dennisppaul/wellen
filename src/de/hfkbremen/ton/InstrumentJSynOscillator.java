@@ -123,11 +123,11 @@ public class InstrumentJSynOscillator extends InstrumentJSyn {
         update_freq();
     }
 
-    public void noteOff() {
+    public void note_off() {
         amplitude(0);
     }
 
-    public void noteOn(float pFreq, float pAmp) {
+    public void note_on(float pFreq, float pAmp) {
         TimeStamp mTimeStamp = new TimeStamp(mSynth.getCurrentTime());
         mFreq = pFreq;
         update_freq();

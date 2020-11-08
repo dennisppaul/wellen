@@ -3,6 +3,10 @@ package de.hfkbremen.ton.examples_ext;
 import de.hfkbremen.ton.DSP;
 import processing.core.PApplet;
 
+/**
+ * this examples demonstrates how to create stereo sounds with DSP.
+ */
+
 public class SketchExampleDSP01StereoOutput extends PApplet {
 
     private float mFreq = 344.53125f;

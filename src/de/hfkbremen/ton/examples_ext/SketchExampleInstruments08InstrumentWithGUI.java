@@ -9,7 +9,7 @@ import de.hfkbremen.ton.ToneEngineJSyn;
 import processing.core.PApplet;
 
 /**
- * this examples shows how to use controlP5 to control instrument paramters via visual interface.
+ * this examples shows how to use controlP5 to control instrument paramters via a visual interface.
  */
 public class SketchExampleInstruments08InstrumentWithGUI extends PApplet {
 
@@ -57,9 +57,9 @@ public class SketchExampleInstruments08InstrumentWithGUI extends PApplet {
         int mStep = mSteps[pBeat % mSteps.length];
         if (mStep != NO) {
             int mNote = Scale.note(Scale.HALF_TONE, Note.NOTE_C4, mStep);
-            mToneEngine.noteOn(mNote, 127);
+            mToneEngine.note_on(mNote, 127);
         } else {
-            mToneEngine.noteOff();
+            mToneEngine.note_off();
         }
         mToneEngine.instrument().filter_freq(abs(sin(radians(pBeat))) * 3000 + 200);
         ToneEngine.updateGUI(cp5, mToneEngine.instrument(), ToneEngine.GUI_FILTER_FREQ);

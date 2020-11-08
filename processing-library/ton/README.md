@@ -8,9 +8,9 @@ the library can be installed as a [Processing library](https://processing.org/re
 
 ### `Ton`
 
-muscial notes can be played with a single call to `Ton.noteOn(int, int)` and ended with `Ton.noteOff()` ( see `ExampleBasics01Notes` ). each node is characterized by two parameters `pitch` and `velocity`. the value range conforms to MIDI standards.
+muscial notes can be played with a single call to `Ton.note_on(int, int)` and ended with `Ton.note_off()` ( see `ExampleBasics01Notes` ). each node is characterized by two parameters `pitch` and `velocity`. the value range conforms to MIDI standards.
 
-by default a software-based synthesizer is used to produce the sound. however, there are quite a few options to change the sound characteristics ( see `ExampleInstruments01Oscillators` ff ). there are also options to use external sound sources via MIDI ( see `ExampleBasics06MIDI` ) or OSC ( see `ExampleInstruments07OSCToneEngine` ).
+by default a software-based synthesizer is used to produce the sound. however, there are quite a few options to change the sound characteristics ( see `ExampleInstruments02Oscillators` ff ). there are also options to use external sound sources via MIDI ( see `ExampleBasics05MIDI` ) or OSC ( see `ExampleInstruments04OSCToneEngine` ).
 
 ### `DSP`
 
@@ -18,23 +18,23 @@ by default a software-based synthesizer is used to produce the sound. however, t
 
 in the simplest setup the method `DSP.start(PApplet)` starts the signal processing pipeline which then continuously calls the method `audioblock(float[])`. the supplied `float[]` array can be filled with samples.
 
-see `ExampleBasics05DigitalSignalProcessing` for a simple implementation of a *sine wave oscillator* as well as `ExampleDSPLowPassFilter` and `ExampleDSPEcho` for implementations of two slightly more advanced aspects of DSP.
+see `ExampleBasics04DigitalSignalProcessing` for a simple implementation of a *sine wave oscillator* as well as `ExampleDSP04LowPassFilter` and `ExampleDSP03Echo` for implementations of two slightly more advanced aspects of DSP.
 
-additionally DSP can also be started with a different paramter set to either run with stereo output ( see `ExampleDSPStereoOutput` ), mono in- and output ( see `ExampleDSPPassThrough` ) or stereo in- and output.
+additionally DSP can also be started with a different paramter set to either run with stereo output ( see `ExampleDSP01StereoOutput` ), mono in- and output ( see `ExampleDSP02PassThrough` ) or stereo in- and output.
 
 ### `Beat`
 
 *ton* has a continues trigger mechanism to create a beat. the method `Beat.start(PApplet, int)` starts a beat at a specified *beats per minute* (BPM) ( see `ExampleBasics03Beat` ). 
 
-a beat can also be trigger by an external MIDI clock ( see `ExampleEventBeatMIDIClock` ) to synchronize with other applications.
+a beat can also be trigger by an external MIDI clock ( see `ExampleEvent02MIDIClock` ) to synchronize with other applications.
 
 ### other *muscial mechanics*
 
 with the `Scale` class values can be transformed into intervals based on musical scales ( see `ExampleBasics02Scales` ).
 
-the `Sequencer` class supplies a simple structure to facilitate the recording and recalling of note sequences ( see `ExampleBasics04Sequencer` ).
+the `Sequencer` class supplies a simple structure to facilitate the recording and recalling of note sequences ( see `ExampleTechnique01Sequencer` ).
 
-*ton* can receiver events from other applications or machines with the classes `EventReceiverMIDI` via MIDI and `EventReceiverOSC` via OSC ( see `ExampleEventReceive` ).
+*ton* can receiver events from other applications or machines with the classes `EventReceiverMIDI` via MIDI and `EventReceiverOSC` via OSC ( see `ExampleEvent01ReceiveMIDIandOSC` ).
 
 ## dependencies
 

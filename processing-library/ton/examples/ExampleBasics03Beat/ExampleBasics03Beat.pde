@@ -23,5 +23,5 @@ void draw() {
 void beat(int pBeatCount) {
     mBeatCount = pBeatCount;
     int mNote = mNotes[mBeatCount % mNotes.length];
-    Ton.noteOn(mNote, 100);
+    Ton.note_on(mNote, 100);
 }

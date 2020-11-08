@@ -4,8 +4,8 @@ import de.hfkbremen.ton.Ton;
 import processing.core.PApplet;
 
 /**
- * this examples shows how to use the MIDI tone engine to control a MIDI instrument. make sure to set up the MIDI
- * configuration properly in system control.
+ * this examples shows how to use the MIDI tone engine to control a MIDI instrument ( i.e sending MIDI events to a MIDI
+ * device ). make sure to set up the MIDI configuration properly in system control.
  */
 public class SketchExampleBasics05MIDI extends PApplet {
 
@@ -15,10 +15,10 @@ public class SketchExampleBasics05MIDI extends PApplet {
 
     public void setup() {
         Ton.dumpMidiOutputDevices();
-        /* ton enginges can be selected with `init`. in this case MIDI engine is selected with the first argument.
-        the second argument selects the MIDI bus. note `init` must be the first call to `Ton` otherwise a default
+        /* ton enginges can be selected with `start`. in this case MIDI engine is selected with the first argument.
+        the second argument selects the MIDI bus. note `start` must be the first call to `Ton` otherwise a default
          enginge is automatically selected. */
-        Ton.init("midi", "Bus 1");
+        Ton.start("midi", "Bus 1");
     }
 
     public void draw() {
@@ -30,11 +30,11 @@ public class SketchExampleBasics05MIDI extends PApplet {
         ( e.g `osc_type` ) are not available. */
         Ton.instrument(mouseX < width / 2.0 ? 0 : 1);
         int mNote = 45 + (int) random(0, 12);
-        Ton.noteOn(mNote, 127);
+        Ton.note_on(mNote, 127);
     }
 
     public void mouseReleased() {
-        Ton.noteOff();
+        Ton.note_off();
     }
 
     public static void main(String[] args) {

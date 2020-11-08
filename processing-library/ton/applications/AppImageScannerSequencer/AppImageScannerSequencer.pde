@@ -57,7 +57,7 @@ void beat(int pBeat) {
     final int mSteps = 10;
     final int mNote = Scale.note(Scale.MAJOR_CHORD_7, Note.NOTE_A2, (int) (mBrightnessNorm * mSteps));
     if (mNote != mLastNote) {
-        mSynth.noteOn(mNote, 127);
+        mSynth.note_on(mNote, 127);
     }
     mLastNote = mNote;
 }

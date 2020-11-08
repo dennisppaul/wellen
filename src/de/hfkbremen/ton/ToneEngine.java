@@ -51,10 +51,17 @@ public abstract class ToneEngine {
             } else if (pName[0].equalsIgnoreCase("jsyn-minimal")) {
                 return new ToneEngineJSyn(INSTRUMENT_WITH_OSCILLATOR);
             } else if (pName[0].equalsIgnoreCase("jsyn")) {
-                return new ToneEngineJSyn(INSTRUMENT_WITH_OSCILLATOR_ADSR);
+                if (pName.length == 1) {
+                    return new ToneEngineJSyn(INSTRUMENT_WITH_OSCILLATOR_ADSR);
+                } else if (pName.length == 3) {
+                    /* specify output device */
+                    return new ToneEngineJSyn(INSTRUMENT_WITH_OSCILLATOR_ADSR,
+                                              Integer.parseInt(pName[1]),
+                                              Integer.parseInt(pName[2]));
+                }
             } else if (pName[0].equalsIgnoreCase("jsyn-filter+lfo")) {
                 return new ToneEngineJSyn(INSTRUMENT_WITH_OSCILLATOR_ADSR_FILTER_LFO);
-            } else if (pName[0].equalsIgnoreCase("midi") && pName.length >= 2) {
+            } else if (pName[0].equalsIgnoreCase("midi") && pName.length == 2) {
                 return new ToneEngineMIDI(pName[1]);
             } else if (pName[0].equalsIgnoreCase("osc") && pName.length >= 2) {
                 if (pName.length == 2) {
@@ -141,9 +148,9 @@ public abstract class ToneEngine {
      *
      * @param note     pitch of note ranging from 0 to 127
      * @param velocity volume of note ranging from 0 to 127
-     * @param duration duration in seconds before the note is turned off ( noteOff() ) again
+     * @param duration duration in seconds before the note is turned off again
      */
-    public abstract void noteOn(int note, int velocity, float duration);
+    public abstract void note_on(int note, int velocity, float duration);
 
     /**
      * play a note
@@ -151,19 +158,19 @@ public abstract class ToneEngine {
      * @param note     pitch of note ranging from 0 to 127
      * @param velocity volume of note ranging from 0 to 127
      */
-    public abstract void noteOn(int note, int velocity);
+    public abstract void note_on(int note, int velocity);
 
     /**
      * turn off a note
      *
      * @param note pitch of note to turn off
      */
-    public abstract void noteOff(int note);
+    public abstract void note_off(int note);
 
     /**
      * turns off the last played note.
      */
-    public abstract void noteOff();
+    public abstract void note_off();
 
     public abstract void control_change(int pCC, int pValue);
 

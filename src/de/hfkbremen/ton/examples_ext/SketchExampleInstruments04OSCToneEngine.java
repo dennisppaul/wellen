@@ -3,6 +3,10 @@ package de.hfkbremen.ton.examples_ext;
 import de.hfkbremen.ton.Ton;
 import processing.core.PApplet;
 
+/**
+ * this examples demonstrates how to use the OSC tone engine to send OSC commands. the defined OSC address patterns can
+ * be found in `ToneEngineOSC`
+ */
 public class SketchExampleInstruments04OSCToneEngine extends PApplet {
 
     private int mNote;
@@ -12,7 +16,7 @@ public class SketchExampleInstruments04OSCToneEngine extends PApplet {
     }
 
     public void setup() {
-        Ton.init("osc", "127.0.0.1", "7001");
+        Ton.start("osc", "127.0.0.1", "7001");
     }
 
     public void draw() {
@@ -22,11 +26,11 @@ public class SketchExampleInstruments04OSCToneEngine extends PApplet {
     public void mousePressed() {
         Ton.instrument(mouseX < width / 2.0 ? 0 : 1);
         mNote = 45 + (int) random(0, 12);
-        Ton.noteOn(mNote, 127);
+        Ton.note_on(mNote, 127);
     }
 
     public void mouseReleased() {
-        Ton.noteOff(mNote);
+        Ton.note_off(mNote);
     }
 
     public static void main(String[] args) {

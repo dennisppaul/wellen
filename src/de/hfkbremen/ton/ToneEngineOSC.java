@@ -37,13 +37,13 @@ public class ToneEngineOSC extends ToneEngine {
         this("127.0.0.1");
     }
 
-    public void noteOn(int note, int velocity, float duration) {
-        noteOn(note, velocity);
+    public void note_on(int note, int velocity, float duration) {
+        note_on(note, velocity);
         TimerTask mTask = new NoteOffTask();
         mTimer.schedule(mTask, (long) (duration * 1000));
     }
 
-    public void noteOn(int note, int velocity) {
+    public void note_on(int note, int velocity) {
         mIsPlaying = true;
         OscMessage m = new OscMessage(OSC_ADDR_PATTERN_NOTE_ON);
         m.add(mChannel);
@@ -52,7 +52,7 @@ public class ToneEngineOSC extends ToneEngine {
         mOscP5.send(m, mRemoteLocation);
     }
 
-    public void noteOff(int note) {
+    public void note_off(int note) {
         mIsPlaying = false;
         OscMessage m = new OscMessage(OSC_ADDR_PATTERN_NOTE_OFF);
         m.add(mChannel);
@@ -60,8 +60,8 @@ public class ToneEngineOSC extends ToneEngine {
         mOscP5.send(m, mRemoteLocation);
     }
 
-    public void noteOff() {
-        noteOff(-1);
+    public void note_off() {
+        note_off(-1);
     }
 
     public void control_change(int pCC, int pValue) {
@@ -99,7 +99,7 @@ public class ToneEngineOSC extends ToneEngine {
     public class NoteOffTask extends TimerTask {
 
         public void run() {
-            noteOff();
+            note_off();
         }
     }
 }

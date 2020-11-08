@@ -118,7 +118,7 @@ final class Node {
         if (trigger) {
             trigger = false;
             playing = true;
-            Ton.noteOn(note, 32);
+            Ton.note_on(note, 32);
             /* activate child */
             if (children.size() > 0) {
                 int mChildID = (int) random(0, children.size());
@@ -126,7 +126,7 @@ final class Node {
             }
         } else {
             playing = false;
-            Ton.noteOff();
+            Ton.note_off();
         }
     }
     void scheduled() {
