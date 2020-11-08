@@ -7,8 +7,8 @@ import processing.core.PApplet;
 /**
  * this examples demonstrates how to control the tone engine’s frequency and amplitude directly ( instead of setting it
  * by a note and its velocity ). note that in this tone engine there is no envelope available i.e the tone engine plays
- * a sound continously if its amplitude is greater than 0. also note that when using an envelope the `amplitude` method
- * has no effect ( i.e in the default tone engine ).
+ * a sound continously if its amplitude is greater than 0. also note that when using an envelope ( i.e in the default
+ * tone engine ) the `amplitude` method affects the overall volume of the tone.
  */
 public class SketchExampleInstruments03FrequencyAndAmplitude extends PApplet {
 
