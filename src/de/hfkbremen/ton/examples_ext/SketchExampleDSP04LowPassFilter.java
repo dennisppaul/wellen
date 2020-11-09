@@ -63,7 +63,7 @@ public class SketchExampleDSP04LowPassFilter extends PApplet {
                 mSample = mButterworthLowPassFilter.filter(mSample);
             }
             mSample = DSP.clamp(mSample, -1, 1);
-            pOutputSamples[i] = mLPFilter.filter(mSample);
+            pOutputSamples[i] = mSample;
         }
     }
 
@@ -75,13 +75,11 @@ public class SketchExampleDSP04LowPassFilter extends PApplet {
 
 
     /**
-     * Second order Butterworth low-pass filter
-     * Dimitris Tassopoulos 2016
+     * Second order Butterworth low-pass filter Dimitris Tassopoulos 2016
      * <p>
-     * fc, corner frequency
-     * Butterworth low-pass and high-pass filters are specialized versions of the ordinary secondorder
-     * low-pass filter. Their Q values are fixed at 0.707, which is the largest value it can
-     * assume before peaking in the frequency response is observed.
+     * fc, corner frequency Butterworth low-pass and high-pass filters are specialized versions of the ordinary
+     * secondorder low-pass filter. Their Q values are fixed at 0.707, which is the largest value it can assume before
+     * peaking in the frequency response is observed.
      * <p>
      * from https://github.com/dimtass/DSP-Cpp-filters
      */
@@ -91,7 +89,7 @@ public class SketchExampleDSP04LowPassFilter extends PApplet {
         tp_coeffs m_coeffs = new tp_coeffs();
 
         public tp_coeffs calculate_coeffs(int fc) {
-            final int fs = 44100;
+            final int fs = DSP.DEFAULT_SAMPLING_RATE;
             float c = 1.0f / (tan(filter_constants.pi * fc / fs));
             m_coeffs.a0 = 1.0f / (1.0f + filter_constants.sqrt2 * c + pow(c, 2.0f));
             m_coeffs.a1 = 2.0f * m_coeffs.a0;
@@ -103,7 +101,8 @@ public class SketchExampleDSP04LowPassFilter extends PApplet {
 
         public float filter(float sample) {
             float xn = sample;
-            float yn = m_coeffs.a0 * xn + m_coeffs.a1 * m_xnz1 + m_coeffs.a2 * m_xnz2 - m_coeffs.b1 * m_ynz1 - m_coeffs.b2 * m_xnz2;
+            float yn =
+                    m_coeffs.a0 * xn + m_coeffs.a1 * m_xnz1 + m_coeffs.a2 * m_xnz2 - m_coeffs.b1 * m_ynz1 - m_coeffs.b2 * m_xnz2;
 
             m_xnz2 = m_xnz1;
             m_xnz1 = xn;
@@ -116,11 +115,9 @@ public class SketchExampleDSP04LowPassFilter extends PApplet {
     }
 
     /**
-     * Second order Low-pass filter
-     * Dimitris Tassopoulos 2016
+     * Second order Low-pass filter Dimitris Tassopoulos 2016
      * <p>
-     * fc , corner frequency
-     * Q , quality factor controlling resonant peaking
+     * fc , corner frequency Q , quality factor controlling resonant peaking
      * <p>
      * from https://github.com/dimtass/DSP-Cpp-filters
      */
@@ -130,7 +127,7 @@ public class SketchExampleDSP04LowPassFilter extends PApplet {
         tp_coeffs m_coeffs = new tp_coeffs();
 
         public tp_coeffs calculate_coeffs(float Q, int fc) {
-            final int fs = 44100;
+            final int fs = DSP.DEFAULT_SAMPLING_RATE;
             float w = 2.0f * filter_constants.pi * fc / fs;
             float d = 1.0f / Q;
             float b = 0.5f * (1.0f - (d / 2) * sin(w)) / (1.0f + (d / 2.0f) * sin(w));

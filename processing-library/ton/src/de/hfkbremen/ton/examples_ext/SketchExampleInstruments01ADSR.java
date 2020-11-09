@@ -26,24 +26,24 @@ import processing.core.PVector;
  */
 public class SketchExampleInstruments01ADSR extends PApplet {
 
-    private Parameter mParameterAttack;
-    private Parameter mParameterDecay;
-    private Parameter mParameterSustain;
-    private Parameter mParameterRelease;
+    private Slider mSliderAttack;
+    private Slider mSliderDecay;
+    private Slider mSliderSustain;
+    private Slider mSliderRelease;
     private int mNote;
 
     public void settings() {
-        size(640, 480, P2D);
+        size(640, 480);
     }
 
     public void setup() {
         hint(DISABLE_KEY_REPEAT);
 
-        mParameterAttack = new Parameter();
-        mParameterDecay = new Parameter();
-        mParameterSustain = new Parameter();
-        mParameterSustain.horziontal = false;
-        mParameterRelease = new Parameter();
+        mSliderAttack = new Slider();
+        mSliderDecay = new Slider();
+        mSliderSustain = new Slider();
+        mSliderSustain.horziontal = false;
+        mSliderRelease = new Slider();
         updateADSR();
         println(Instrument.ADSR_DIAGRAM);
     }
@@ -55,7 +55,7 @@ public class SketchExampleInstruments01ADSR extends PApplet {
         } else {
             background(255);
         }
-        final float mXOffset = (width - Parameter.size * 4) * 0.5f;
+        final float mXOffset = (width - Slider.size * 4) * 0.5f;
         final float mYOffset = height * 0.5f;
         translate(mXOffset, mYOffset);
         scale(1, -1);
@@ -78,68 +78,72 @@ public class SketchExampleInstruments01ADSR extends PApplet {
     }
 
     private void drawDiagram() {
-        stroke(0, 63);
-        line(0, 0, Parameter.size * 4, 0);
+        stroke(0, 15);
+        line(0, 0, Slider.size * 4, 0);
 
-        stroke(0);
-        line(0, 0,
-             mParameterAttack.current_position_x(),
-             mParameterAttack.current_position_y());
-        line(mParameterAttack.current_position_x(),
-             mParameterAttack.current_position_y(),
-             mParameterDecay.current_position_x(),
-             mParameterDecay.current_position_y());
-        line(mParameterDecay.current_position_x(),
-             mParameterDecay.current_position_y(),
-             mParameterSustain.current_position_x(),
-             mParameterSustain.current_position_y());
-        line(mParameterSustain.current_position_x(),
-             mParameterSustain.current_position_y(),
-             mParameterRelease.current_position_x(),
-             mParameterRelease.current_position_y());
-
+        /* GUI */
         noStroke();
         fill(0);
-        ellipse(0, 0, Parameter.radius * 2, Parameter.radius * 2);
+        ellipse(0, 0, Slider.radius, Slider.radius);
 
-        mParameterAttack.draw(g);
-        mParameterDecay.draw(g);
-        mParameterSustain.draw(g);
-        mParameterRelease.draw(g);
+        mSliderAttack.draw(g);
+        mSliderDecay.draw(g);
+        mSliderSustain.draw(g);
+        mSliderRelease.draw(g);
+
+        /* envelope */
+        strokeWeight(3);
+        stroke(0);
+        line(0, 0,
+                mSliderAttack.current_position_x(),
+                mSliderAttack.current_position_y());
+        line(mSliderAttack.current_position_x(),
+                mSliderAttack.current_position_y(),
+                mSliderDecay.current_position_x(),
+                mSliderDecay.current_position_y());
+        line(mSliderDecay.current_position_x(),
+                mSliderDecay.current_position_y(),
+                mSliderSustain.current_position_x(),
+                mSliderSustain.current_position_y());
+        line(mSliderSustain.current_position_x(),
+                mSliderSustain.current_position_y(),
+                mSliderRelease.current_position_x(),
+                mSliderRelease.current_position_y());
+        strokeWeight(1);
     }
 
     private void updateDiagram(float mXOffset, float mYOffset) {
         float mX = mouseX - mXOffset;
         float mY = -mouseY + mYOffset;
 
-        mParameterAttack.update(mX, mY, mousePressed);
-        mParameterAttack.x = 0;
-        mParameterAttack.y = Parameter.size;
+        mSliderAttack.update(mX, mY, mousePressed);
+        mSliderAttack.x = 0;
+        mSliderAttack.y = Slider.size;
 
-        mParameterDecay.update(mX, mY, mousePressed);
-        mParameterDecay.x = mParameterAttack.current_position_x();
-        mParameterDecay.y = mParameterSustain.current_position_y();
+        mSliderDecay.update(mX, mY, mousePressed);
+        mSliderDecay.x = mSliderAttack.current_position_x();
+        mSliderDecay.y = mSliderSustain.current_position_y();
 
-        mParameterSustain.update(mX, mY, mousePressed);
-        mParameterSustain.x = mParameterDecay.current_position_x() + Parameter.size;
-        mParameterSustain.y = 0;
+        mSliderSustain.update(mX, mY, mousePressed);
+        mSliderSustain.x = mSliderDecay.current_position_x() + Slider.size;
+        mSliderSustain.y = 0;
 
-        mParameterRelease.update(mX, mY, mousePressed);
-        mParameterRelease.x = mParameterSustain.x;
-        mParameterRelease.y = 0;
+        mSliderRelease.update(mX, mY, mousePressed);
+        mSliderRelease.x = mSliderSustain.x;
+        mSliderRelease.y = 0;
     }
 
     private void updateADSR() {
-        Ton.instrument().attack(mParameterAttack.value);
-        Ton.instrument().decay(mParameterDecay.value);
-        Ton.instrument().sustain(mParameterSustain.value);
-        Ton.instrument().release(mParameterRelease.value);
+        Ton.instrument().attack(mSliderAttack.value);
+        Ton.instrument().decay(mSliderDecay.value);
+        Ton.instrument().sustain(mSliderSustain.value);
+        Ton.instrument().release(mSliderRelease.value);
     }
 
-    private static class Parameter {
+    private static class Slider {
 
         private static final float size = 120;
-        private static final float radius = 6;
+        private static final float radius = 8;
         float x;
         float y;
         float value;
@@ -147,7 +151,7 @@ public class SketchExampleInstruments01ADSR extends PApplet {
         boolean hoover;
         boolean drag;
 
-        public Parameter() {
+        public Slider() {
             x = 0;
             y = 0;
             value = 0.5f;
@@ -157,12 +161,18 @@ public class SketchExampleInstruments01ADSR extends PApplet {
         }
 
         void draw(PGraphics g) {
-//            g.stroke(0, 63);
-//            g.line(x, y, x + (horziontal ? size : 0), y + (horziontal ? 0 : size));
+            g.stroke(191);
+            g.line(x, y, x + (horziontal ? size : 0), y + (horziontal ? 0 : size));
+
+            final float mEdgeDiameter = 5;
+            g.noStroke();
+            g.fill(0);
+            g.ellipse(x, y, mEdgeDiameter, mEdgeDiameter);
+            g.ellipse(x + (horziontal ? size : 0), y + (horziontal ? 0 : size), mEdgeDiameter, mEdgeDiameter);
 
             g.noStroke();
-            g.fill(hoover ? (drag ? 223 : 127) : 0);
-            g.ellipse(current_position_x(), current_position_y(), radius * 2, radius * 2);
+            g.fill(0);
+            g.ellipse(current_position_x(), current_position_y(), radius * (hoover ? 2 : 1), radius * (hoover ? 2 : 1));
         }
 
         void update_value(float pX, float pY) {
@@ -172,7 +182,7 @@ public class SketchExampleInstruments01ADSR extends PApplet {
 
         boolean hit(float pX, float pY) {
             final float mDistance = PVector.dist(new PVector().set(pX, pY),
-                                                 new PVector().set(current_position_x(), current_position_y()));
+                    new PVector().set(current_position_x(), current_position_y()));
             return mDistance < radius * 2;
         }
 

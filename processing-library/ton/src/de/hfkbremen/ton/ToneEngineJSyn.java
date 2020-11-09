@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static de.hfkbremen.ton.DSP.DEFAULT_SAMPLING_RATE;
 import static de.hfkbremen.ton.Note.note_to_frequency;
 import static de.hfkbremen.ton.Ton.clamp127;
 import static processing.core.PApplet.constrain;
@@ -29,11 +30,11 @@ public class ToneEngineJSyn extends ToneEngine {
     }
 
     public ToneEngineJSyn(int pDefaultInstrumentType) {
-        this(pDefaultInstrumentType, 44100, DEFAULT_DEVICE, 1, DEFAULT_DEVICE, 2);
+        this(pDefaultInstrumentType, DEFAULT_SAMPLING_RATE, DEFAULT_DEVICE, 1, DEFAULT_DEVICE, 2);
     }
 
     public ToneEngineJSyn(int pDefaultInstrumentType, int pOutputDeviceID, int pOutputChannels) {
-        this(pDefaultInstrumentType, 44100, DEFAULT_DEVICE, 1, pOutputDeviceID, pOutputChannels);
+        this(pDefaultInstrumentType, DEFAULT_SAMPLING_RATE, DEFAULT_DEVICE, 1, pOutputDeviceID, pOutputChannels);
     }
 
     public ToneEngineJSyn(int pDefaultInstrumentType,

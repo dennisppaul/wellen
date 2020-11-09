@@ -6,6 +6,9 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.TargetDataLine;
 
+import static de.hfkbremen.ton.DSP.DEFAULT_AUDIOBLOCK_SIZE;
+import static de.hfkbremen.ton.DSP.DEFAULT_SAMPLING_RATE;
+
 public class AudioBufferManager extends Thread {
 
     /*
@@ -38,16 +41,16 @@ public class AudioBufferManager extends Thread {
     private boolean mRunBuffer = true;
 
     public AudioBufferManager(AudioBufferRenderer pSampleRenderer) {
-        this(pSampleRenderer, 44100, 512, DEFAULT, STEREO, DEFAULT, MONO);
+        this(pSampleRenderer, DEFAULT_SAMPLING_RATE, DEFAULT_AUDIOBLOCK_SIZE, DEFAULT, STEREO, DEFAULT, MONO);
     }
 
     public AudioBufferManager(AudioBufferRenderer pSampleRenderer,
-                              int pSampleRate,
-                              int pSampleBufferSize,
-                              int pOutputDevice,
-                              int pNumOutputChannels,
-                              int pInputDevice,
-                              int pNumInputChannels) {
+            int pSampleRate,
+            int pSampleBufferSize,
+            int pOutputDevice,
+            int pNumOutputChannels,
+            int pInputDevice,
+            int pNumInputChannels) {
         mSampleRenderer = pSampleRenderer;
         mSampleRate = pSampleRate;
         mSampleBufferSize = pSampleBufferSize;
@@ -57,16 +60,16 @@ public class AudioBufferManager extends Thread {
         try {
             /* output */
             final AudioFormat mOutputFormat = new AudioFormat(pSampleRate,
-                                                              BITS_PER_SAMPLE,
-                                                              pNumOutputChannels,
-                                                              SIGNED,
-                                                              LITTLE_ENDIAN);
+                    BITS_PER_SAMPLE,
+                    pNumOutputChannels,
+                    SIGNED,
+                    LITTLE_ENDIAN);
             if (pOutputDevice == DEFAULT) {
                 mOutputLine = AudioSystem.getSourceDataLine(mOutputFormat);
             } else {
                 System.out.println("+ OUTPUT DEVICE: " + AudioSystem.getMixerInfo()[pOutputDevice]);
                 mOutputLine = AudioSystem.getSourceDataLine(mOutputFormat,
-                                                            AudioSystem.getMixerInfo()[pOutputDevice]);
+                        AudioSystem.getMixerInfo()[pOutputDevice]);
             }
             final int BYTES_PER_SAMPLE = BITS_PER_SAMPLE / 8;
             mOutputByteBuffer = new byte[mSampleBufferSize * BYTES_PER_SAMPLE * pNumOutputChannels];
@@ -75,15 +78,15 @@ public class AudioBufferManager extends Thread {
             /* input */
             if (mNumInputChannels > 0) {
                 final AudioFormat mInputFormat = new AudioFormat(pSampleRate,
-                                                                 BITS_PER_SAMPLE,
-                                                                 mNumInputChannels,
-                                                                 SIGNED,
-                                                                 LITTLE_ENDIAN);
+                        BITS_PER_SAMPLE,
+                        mNumInputChannels,
+                        SIGNED,
+                        LITTLE_ENDIAN);
                 if (pInputDevice == DEFAULT) {
                     mInputLine = AudioSystem.getTargetDataLine(mInputFormat);
                 } else {
                     mInputLine = AudioSystem.getTargetDataLine(mInputFormat,
-                                                               AudioSystem.getMixerInfo()[pInputDevice]);
+                            AudioSystem.getMixerInfo()[pInputDevice]);
                     System.out.println("+ INPUT DEVICE: " + AudioSystem.getMixerInfo()[pInputDevice]);
                 }
                 mInputByteBuffer = new byte[mSampleBufferSize * BYTES_PER_SAMPLE * mNumInputChannels];
@@ -92,7 +95,9 @@ public class AudioBufferManager extends Thread {
         } catch (LineUnavailableException e) {
             System.err.println(e.getMessage());
         }
-        if (mInputLine != null) { mInputLine.start(); }
+        if (mInputLine != null) {
+            mInputLine.start();
+        }
         mOutputLine.start();
         start();
     }
