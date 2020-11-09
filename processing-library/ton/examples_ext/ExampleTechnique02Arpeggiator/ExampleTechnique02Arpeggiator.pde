@@ -1,18 +1,21 @@
 import de.hfkbremen.ton.*; 
 import controlP5.*; 
+import netP5.*; 
+import oscP5.*; 
 import ddf.minim.*; 
 import com.jsyn.unitgen.*; 
 
 
 int mColor;
-BeatMIDI mBeatMIDI;
+Beat mBeatMIDI;
 Arpeggiator mArpeggiator;
+boolean mToggle;
 void settings() {
     size(640, 480);
 }
 void setup() {
     Ton.dumpMidiInputDevices();
-    mBeatMIDI = BeatMIDI.start(this, "Bus 1");
+    mBeatMIDI = Beat.start(this, 120 * 24);
     /* the pattern is composed of 8 notes with a length of 1/32 ( 8 * (1/32) = (1/4) ) i.e the pattern has a
      * length of 1/4 which means 24 pulses ( or ticks ) when synced with a MIDI clock.
      */
@@ -25,7 +28,11 @@ void setup() {
     mArpeggiator.pattern(6 * 3, 5, 0.1f);
 }
 void draw() {
-    background(mBeatMIDI.running() ? mColor : 0);
+    background(255);
+    if (mToggle) {
+        fill(0);
+        ellipse(width * 0.5f, height * 0.5f, 100, 100);
+    }
 }
 void keyPressed() {
     switch (key) {
@@ -48,7 +55,7 @@ void keyPressed() {
 }
 void beat(int pBeat) {
     if (pBeat % 24 == 0) {
-        mColor = color(random(0, 255));
+        mToggle = !mToggle;
     }
     /* step through the arpeggiator at clock speed i.e 24 steps ( or pulses ) per quarter note */
     if (mArpeggiator.step()) {

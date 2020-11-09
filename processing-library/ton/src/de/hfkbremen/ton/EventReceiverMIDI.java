@@ -3,10 +3,10 @@ package de.hfkbremen.ton;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import static de.hfkbremen.ton.Event.EVENT_CONTROLCHANGE;
-import static de.hfkbremen.ton.Event.EVENT_NOTE_OFF;
-import static de.hfkbremen.ton.Event.EVENT_NOTE_ON;
-import static de.hfkbremen.ton.Event.EVENT_PROGRAMCHANGE;
+import static de.hfkbremen.ton.TonEvent.EVENT_CONTROLCHANGE;
+import static de.hfkbremen.ton.TonEvent.EVENT_NOTE_OFF;
+import static de.hfkbremen.ton.TonEvent.EVENT_NOTE_ON;
+import static de.hfkbremen.ton.TonEvent.EVENT_PROGRAMCHANGE;
 import static de.hfkbremen.ton.MIDI.MIDI_CLOCK_CONTINUE;
 import static de.hfkbremen.ton.MIDI.MIDI_CLOCK_START;
 import static de.hfkbremen.ton.MIDI.MIDI_CLOCK_STOP;

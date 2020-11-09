@@ -1,6 +1,6 @@
 package de.hfkbremen.ton.examples_ext;
 
-import de.hfkbremen.ton.Event;
+import de.hfkbremen.ton.TonEvent;
 import de.hfkbremen.ton.EventReceiverMIDI;
 import de.hfkbremen.ton.Ton;
 import processing.core.PApplet;
@@ -33,12 +33,12 @@ public class SketchExampleEvent03MIDIExternalKeyboard extends PApplet {
 
     public void event_receive(int pEvent, float[] pData) {
         /* parse event + data. see `Event` for all *defined* events. */
-        if (pEvent == Event.EVENT_NOTE_ON) {
-            mNote = (int) pData[Event.NOTE];
-            mVelocity = (int) pData[Event.VELOCITY];
+        if (pEvent == TonEvent.EVENT_NOTE_ON) {
+            mNote = (int) pData[TonEvent.NOTE];
+            mVelocity = (int) pData[TonEvent.VELOCITY];
             Ton.note_on(mNote, mVelocity);
-        } else if (pEvent == Event.EVENT_NOTE_OFF) {
-            mNote = (int) pData[Event.NOTE];
+        } else if (pEvent == TonEvent.EVENT_NOTE_OFF) {
+            mNote = (int) pData[TonEvent.NOTE];
             mVelocity = 0;
             Ton.note_off(mNote);
         }

@@ -1,5 +1,7 @@
 import de.hfkbremen.ton.*; 
 import controlP5.*; 
+import netP5.*; 
+import oscP5.*; 
 import ddf.minim.*; 
 import com.jsyn.unitgen.*; 
 
@@ -22,12 +24,12 @@ void draw() {
 }
 void event_receive(int pEvent, float[] pData) {
     /* parse event + data. see `Event` for all *defined* events. */
-    if (pEvent == Event.EVENT_NOTE_ON) {
-        mNote = (int) pData[Event.NOTE];
-        mVelocity = (int) pData[Event.VELOCITY];
+    if (pEvent == TonEvent.EVENT_NOTE_ON) {
+        mNote = (int) pData[TonEvent.NOTE];
+        mVelocity = (int) pData[TonEvent.VELOCITY];
         Ton.note_on(mNote, mVelocity);
-    } else if (pEvent == Event.EVENT_NOTE_OFF) {
-        mNote = (int) pData[Event.NOTE];
+    } else if (pEvent == TonEvent.EVENT_NOTE_OFF) {
+        mNote = (int) pData[TonEvent.NOTE];
         mVelocity = 0;
         Ton.note_off(mNote);
     }

@@ -1,7 +1,7 @@
 package de.hfkbremen.ton.examples_ext;
 
 import de.hfkbremen.ton.Arpeggiator;
-import de.hfkbremen.ton.BeatMIDI;
+import de.hfkbremen.ton.Beat;
 import de.hfkbremen.ton.Note;
 import de.hfkbremen.ton.Scale;
 import de.hfkbremen.ton.Ton;
@@ -14,8 +14,9 @@ import processing.core.PApplet;
 public class SketchExampleTechnique02Arpeggiator extends PApplet {
 
     private int mColor;
-    private BeatMIDI mBeatMIDI;
+    private Beat mBeatMIDI;
     private Arpeggiator mArpeggiator;
+    private boolean mToggle;
 
     public void settings() {
         size(640, 480);
@@ -23,7 +24,7 @@ public class SketchExampleTechnique02Arpeggiator extends PApplet {
 
     public void setup() {
         Ton.dumpMidiInputDevices();
-        mBeatMIDI = BeatMIDI.start(this, "Bus 1");
+        mBeatMIDI = Beat.start(this, 120 * 24);
         /* the pattern is composed of 8 notes with a length of 1/32 ( 8 * (1/32) = (1/4) ) i.e the pattern has a
          * length of 1/4 which means 24 pulses ( or ticks ) when synced with a MIDI clock.
          */
@@ -37,7 +38,11 @@ public class SketchExampleTechnique02Arpeggiator extends PApplet {
     }
 
     public void draw() {
-        background(mBeatMIDI.running() ? mColor : 0);
+        background(255);
+        if (mToggle) {
+            fill(0);
+            ellipse(width * 0.5f, height * 0.5f, 100, 100);
+        }
     }
 
     public void keyPressed() {
@@ -62,7 +67,7 @@ public class SketchExampleTechnique02Arpeggiator extends PApplet {
 
     public void beat(int pBeat) {
         if (pBeat % 24 == 0) {
-            mColor = color(random(0, 255));
+            mToggle = !mToggle;
         }
         /* step through the arpeggiator at clock speed i.e 24 steps ( or pulses ) per quarter note */
         if (mArpeggiator.step()) {

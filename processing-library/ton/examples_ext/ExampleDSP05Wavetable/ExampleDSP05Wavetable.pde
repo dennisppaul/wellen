@@ -1,10 +1,12 @@
 import de.hfkbremen.ton.*; 
 import controlP5.*; 
+import netP5.*; 
+import oscP5.*; 
 import ddf.minim.*; 
 import com.jsyn.unitgen.*; 
 
 
-final Wavetable mWavetable = new Wavetable(1024);
+final Wavetable mWavetable = new Wavetable(16);
 void settings() {
     size(640, 480);
 }

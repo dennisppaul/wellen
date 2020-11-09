@@ -37,7 +37,6 @@ public class SketchExampleBasics04DigitalSignalProcessing extends PApplet {
     }
 
     public void audioblock(float[] pSamples) {
-        float mDetune = map(mouseY, 0, height, 1.0f, 1.5f);
         for (int i = 0; i < pSamples.length; i++) {
             mCounter++;
             pSamples[i] = 0.5f * sin(2 * PI * mFreq * mCounter / DSP.sample_rate());

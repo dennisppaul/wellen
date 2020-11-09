@@ -1,5 +1,7 @@
 import de.hfkbremen.ton.*; 
 import controlP5.*; 
+import netP5.*; 
+import oscP5.*; 
 import ddf.minim.*; 
 import com.jsyn.unitgen.*; 
 
@@ -27,7 +29,6 @@ void mouseMoved() {
     mFreq = map(mouseX, 0, width, 55, 440);
 }
 void audioblock(float[] pSamples) {
-    float mDetune = map(mouseY, 0, height, 1.0f, 1.5f);
     for (int i = 0; i < pSamples.length; i++) {
         mCounter++;
         pSamples[i] = 0.5f * sin(2 * PI * mFreq * mCounter / DSP.sample_rate());

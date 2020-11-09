@@ -6,11 +6,11 @@ import oscP5.OscP5;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import static de.hfkbremen.ton.Event.EVENT_CONTROLCHANGE;
-import static de.hfkbremen.ton.Event.EVENT_NOTE_OFF;
-import static de.hfkbremen.ton.Event.EVENT_NOTE_ON;
-import static de.hfkbremen.ton.Event.EVENT_PITCHBAND;
-import static de.hfkbremen.ton.Event.EVENT_UNDEFINED;
+import static de.hfkbremen.ton.TonEvent.EVENT_CONTROLCHANGE;
+import static de.hfkbremen.ton.TonEvent.EVENT_NOTE_OFF;
+import static de.hfkbremen.ton.TonEvent.EVENT_NOTE_ON;
+import static de.hfkbremen.ton.TonEvent.EVENT_PITCHBAND;
+import static de.hfkbremen.ton.TonEvent.EVENT_UNDEFINED;
 import static de.hfkbremen.ton.ToneEngineOSC.OSC_ADDR_PATTERN_CONTROLCHANGE;
 import static de.hfkbremen.ton.ToneEngineOSC.OSC_ADDR_PATTERN_NOTE_OFF;
 import static de.hfkbremen.ton.ToneEngineOSC.OSC_ADDR_PATTERN_NOTE_ON;

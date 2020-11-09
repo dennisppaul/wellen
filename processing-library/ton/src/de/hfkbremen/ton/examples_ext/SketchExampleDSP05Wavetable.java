@@ -5,7 +5,7 @@ import processing.core.PApplet;
 
 public class SketchExampleDSP05Wavetable extends PApplet {
 
-    private final Wavetable mWavetable = new Wavetable(1024);
+    private final Wavetable mWavetable = new Wavetable(16);
 
     public void settings() {
         size(640, 480);

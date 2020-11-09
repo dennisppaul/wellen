@@ -14,7 +14,7 @@ public class SketchExampleTechnique01Sequencer extends PApplet {
 
     private static final int OFF = -1;
 
-    private final Sequencer<Integer> mSequence = new Sequencer<>(
+    private final Sequencer<Integer> mSequence = new Sequencer<Integer>(
             0, OFF, 12, OFF,
             0, OFF, 12, OFF,
             0, OFF, 12, OFF,

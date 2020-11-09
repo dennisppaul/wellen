@@ -1,11 +1,13 @@
 import de.hfkbremen.ton.*; 
 import controlP5.*; 
+import netP5.*; 
+import oscP5.*; 
 import ddf.minim.*; 
 import com.jsyn.unitgen.*; 
 
 
 static final int OFF = -1;
-final Sequencer<Integer> mSequence = new Sequencer<>(
+final Sequencer<Integer> mSequence = new Sequencer<Integer>(
         0, OFF, 12, OFF,
         0, OFF, 12, OFF,
         0, OFF, 12, OFF,

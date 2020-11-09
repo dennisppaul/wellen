@@ -1,6 +1,6 @@
 package de.hfkbremen.ton;
 
-public interface Event {
+public interface TonEvent {
 
     int EVENT_UNDEFINED = -1;
     int EVENT_NOTE_ON = 0;
