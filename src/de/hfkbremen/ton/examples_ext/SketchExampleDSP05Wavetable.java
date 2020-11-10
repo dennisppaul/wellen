@@ -5,7 +5,7 @@ import processing.core.PApplet;
 
 public class SketchExampleDSP05Wavetable extends PApplet {
 
-    private final Wavetable mWavetable = new Wavetable(16);
+    private final Wavetable mWavetable = new Wavetable(512);
 
     public void settings() {
         size(640, 480);
@@ -25,6 +25,11 @@ public class SketchExampleDSP05Wavetable extends PApplet {
     public void mouseMoved() {
         mWavetable.set_frequency(map(mouseX, 0, width, 55, 220));
         mWavetable.set_amplitude(map(mouseY, 0, height, 0.0f, 0.9f));
+    }
+
+    public void mouseDragged() {
+        mWavetable.set_frequency(172.265625f);
+        mWavetable.set_amplitude(0.25f);
     }
 
     public void keyPressed() {

@@ -3,7 +3,6 @@ package de.hfkbremen.ton.examples_ext;
 import de.hfkbremen.ton.DSP;
 import processing.core.PApplet;
 
-
 /**
  * this examples demonstrates how to implement basic filters in DSP.
  */
@@ -12,7 +11,7 @@ public class SketchExampleDSP04LowPassFilter extends PApplet {
 
     private final SecondOrderLowPassFilter mLPFilter = new SecondOrderLowPassFilter();
     private final ButterworthLowPassFilter mButterworthLowPassFilter = new ButterworthLowPassFilter();
-    private final float mFreq = 110;
+    private final float mFreq = 2.0f * DSP.DEFAULT_SAMPLING_RATE / DSP.DEFAULT_AUDIOBLOCK_SIZE;
     private float mCounter = 0;
     private boolean mToggleFilter;
 
@@ -27,13 +26,16 @@ public class SketchExampleDSP04LowPassFilter extends PApplet {
     }
 
     public void draw() {
-        background(mToggleFilter ? 0 : 255);
-        stroke(mToggleFilter ? 255 : 0);
+        background(mToggleFilter ? 255 : 0);
+        stroke(mToggleFilter ? 0 : 255);
         final int mBufferSize = DSP.buffer_size();
         if (DSP.buffer() != null) {
-            for (int i = 0; i < mBufferSize; i++) {
+            for (int i = 0; i < mBufferSize - 1; i++) {
                 final float x = map(i, 0, mBufferSize, 0, width);
-                point(x, map(DSP.buffer()[i], -1, 1, 0, height));
+                line(map(i, 0, mBufferSize, 0, width),
+                        map(DSP.buffer()[i], -1, 1, 0, height),
+                        map(i + 1, 0, mBufferSize, 0, width),
+                        map(DSP.buffer()[i + 1], -1, 1, 0, height));
             }
         }
     }
