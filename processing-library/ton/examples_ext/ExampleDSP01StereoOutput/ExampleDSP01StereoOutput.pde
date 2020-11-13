@@ -1,12 +1,12 @@
-import de.hfkbremen.ton.*; 
+			 import de.hfkbremen.ton.*; 
 import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
 import ddf.minim.*; 
 import com.jsyn.unitgen.*; 
 
-
-float mFreq = 344.53125f;
+			 
+		float mFreq = 344.53125f;
 int mCounter = 0;
 float mDetune = 1.1f;
 void settings() {

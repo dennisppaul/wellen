@@ -1,12 +1,12 @@
-import de.hfkbremen.ton.*; 
+			 import de.hfkbremen.ton.*; 
 import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
 import ddf.minim.*; 
 import com.jsyn.unitgen.*; 
 
-
-static final int OFF = -1;
+			 
+		static final int OFF = -1;
 final int[] mSequence = new int[16];
 int mBeatCount = 0;
 void settings() {

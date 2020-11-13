@@ -1,18 +1,18 @@
-import de.hfkbremen.ton.*; 
+			 import de.hfkbremen.ton.*; 
 import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
 import ddf.minim.*; 
 import com.jsyn.unitgen.*; 
 
-
-Slider mSliderAttack;
+			 
+		Slider mSliderAttack;
 Slider mSliderDecay;
 Slider mSliderSustain;
 Slider mSliderRelease;
 int mNote;
 void settings() {
-    size(640, 480);
+    size(640, 480, P2D);
 }
 void setup() {
     hint(DISABLE_KEY_REPEAT);

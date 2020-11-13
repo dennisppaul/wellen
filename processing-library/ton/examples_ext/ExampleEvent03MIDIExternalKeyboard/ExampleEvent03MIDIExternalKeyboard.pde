@@ -1,12 +1,12 @@
-import de.hfkbremen.ton.*; 
+			 import de.hfkbremen.ton.*; 
 import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
 import ddf.minim.*; 
 import com.jsyn.unitgen.*; 
 
-
-int mNote = 0;
+			 
+		int mNote = 0;
 int mVelocity = 0;
 void settings() {
     size(640, 480);

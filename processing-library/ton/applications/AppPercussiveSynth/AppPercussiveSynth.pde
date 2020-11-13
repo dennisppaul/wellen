@@ -1,12 +1,12 @@
-import de.hfkbremen.ton.*; 
+			 import de.hfkbremen.ton.*; 
 import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
 import ddf.minim.*; 
 import com.jsyn.unitgen.*; 
 
-
-static final int O = -1;
+			 
+		static final int O = -1;
 static final int I = 0;
 static final int BASS = 0;
 static final int SNARE = 1;

@@ -1,12 +1,12 @@
-import de.hfkbremen.ton.*; 
+			 import de.hfkbremen.ton.*; 
 import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
 import ddf.minim.*; 
 import com.jsyn.unitgen.*; 
 
-
-final ToneEngine mSynth = new ToneEngineJSyn();
+			 
+		final ToneEngine mSynth = new ToneEngineJSyn();
 final ArrayList<ImageSampler> mSamplers = new ArrayList();
 Capture mCapture;
 int mCurrentSampler = 0;

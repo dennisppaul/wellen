@@ -1,12 +1,12 @@
-import de.hfkbremen.ton.*; 
+			 import de.hfkbremen.ton.*; 
 import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
 import ddf.minim.*; 
 import com.jsyn.unitgen.*; 
 
-
-static final int NO = -1;
+			 
+		static final int NO = -1;
 final int[] mSteps = {
         0, NO, 12, NO,
         0, NO, 12, NO,

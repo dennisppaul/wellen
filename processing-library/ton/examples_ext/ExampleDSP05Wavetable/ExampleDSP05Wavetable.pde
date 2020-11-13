@@ -1,12 +1,12 @@
-import de.hfkbremen.ton.*; 
+			 import de.hfkbremen.ton.*; 
 import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
 import ddf.minim.*; 
 import com.jsyn.unitgen.*; 
 
-
-final Wavetable mWavetable = new Wavetable(16);
+			 
+		final Wavetable mWavetable = new Wavetable(512);
 void settings() {
     size(640, 480);
 }
@@ -22,6 +22,10 @@ void draw() {
 void mouseMoved() {
     mWavetable.set_frequency(map(mouseX, 0, width, 55, 220));
     mWavetable.set_amplitude(map(mouseY, 0, height, 0.0f, 0.9f));
+}
+void mouseDragged() {
+    mWavetable.set_frequency(172.265625f);
+    mWavetable.set_amplitude(0.25f);
 }
 void keyPressed() {
     switch (key) {

@@ -1,14 +1,14 @@
-import de.hfkbremen.ton.*; 
+			 import de.hfkbremen.ton.*; 
 import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
 import ddf.minim.*; 
 import com.jsyn.unitgen.*; 
 
-
-final SecondOrderLowPassFilter mLPFilter = new SecondOrderLowPassFilter();
+			 
+		final SecondOrderLowPassFilter mLPFilter = new SecondOrderLowPassFilter();
 final ButterworthLowPassFilter mButterworthLowPassFilter = new ButterworthLowPassFilter();
-final float mFreq = 110;
+final float mFreq = 2.0f * DSP.DEFAULT_SAMPLING_RATE / DSP.DEFAULT_AUDIOBLOCK_SIZE;
 float mCounter = 0;
 boolean mToggleFilter;
 void settings() {
@@ -20,13 +20,16 @@ void setup() {
     mLPFilter.calculate_coeffs(2.0f, 2000);
 }
 void draw() {
-    background(mToggleFilter ? 0 : 255);
-    stroke(mToggleFilter ? 255 : 0);
+    background(mToggleFilter ? 255 : 0);
+    stroke(mToggleFilter ? 0 : 255);
     final int mBufferSize = DSP.buffer_size();
     if (DSP.buffer() != null) {
-        for (int i = 0; i < mBufferSize; i++) {
+        for (int i = 0; i < mBufferSize - 1; i++) {
             final float x = map(i, 0, mBufferSize, 0, width);
-            point(x, map(DSP.buffer()[i], -1, 1, 0, height));
+            line(map(i, 0, mBufferSize, 0, width),
+                    map(DSP.buffer()[i], -1, 1, 0, height),
+                    map(i + 1, 0, mBufferSize, 0, width),
+                    map(DSP.buffer()[i + 1], -1, 1, 0, height));
         }
     }
 }

@@ -1,12 +1,12 @@
-import de.hfkbremen.ton.*; 
+			 import de.hfkbremen.ton.*; 
 import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
 import ddf.minim.*; 
 import com.jsyn.unitgen.*; 
 
-
-final float mFreq = 220.0f;
+			 
+		final float mFreq = 220.0f;
 AudioFormula mFormula = new AudioFormulaMouse();
 int mCounter = 0;
 void settings() {

@@ -1,12 +1,12 @@
-import de.hfkbremen.ton.*; 
+			 import de.hfkbremen.ton.*; 
 import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
 import ddf.minim.*; 
 import com.jsyn.unitgen.*; 
 
-
-float[] mDelayBuffer = new float[4096];
+			 
+		float[] mDelayBuffer = new float[4096];
 int mDelayID = 0;
 int mDelayOffset = 512;
 float mDecay = 0.9f;

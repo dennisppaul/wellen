@@ -1,12 +1,12 @@
-import de.hfkbremen.ton.*; 
+			 import de.hfkbremen.ton.*; 
 import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
 import ddf.minim.*; 
 import com.jsyn.unitgen.*; 
 
-
-String mEventReceived = "EVENTS\n---\n";
+			 
+		String mEventReceived = "EVENTS\n---\n";
 int mEventCounter = 2;
 void settings() {
     size(640, 480);

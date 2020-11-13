@@ -1,12 +1,12 @@
-import de.hfkbremen.ton.*; 
+			 import de.hfkbremen.ton.*; 
 import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
 import ddf.minim.*; 
 import com.jsyn.unitgen.*; 
 
-
-ToneEngineMinim mToneEngine;
+			 
+		ToneEngineMinim mToneEngine;
 Instrument mInstrument;
 boolean mIsPlaying = false;
 int mNote;
