@@ -33,7 +33,7 @@ public class SketchExampleInstruments01ADSR extends PApplet {
     private int mNote;
 
     public void settings() {
-        size(640, 480, P2D);
+        size(640, 480);
     }
 
     public void setup() {
