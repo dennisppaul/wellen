@@ -6,15 +6,18 @@
 
 the library can be installed as a [Processing library](https://processing.org/reference/libraries/) by unpacking the `ton.zip` archive in the Processing library folder. a step-by-step introduction to the library can be found under `examples` and extended applications of the libray can be found in `examples_ext` and `applications`.
 
-make sure to also install the following dependencies:
-
 ### dependencies
 
-- [JSyn](https://github.com/philburk/jsyn/) *included in the distribution*
-- [Minim](http://code.compartmental.net/tools/minim/) *installed via processing library installer*
-- [oscP5](http://sojamo.de/code/) *installed via processing library installer*
-- [controlP5](http://sojamo.de/code/) *installed via processing library installer*
-- [video](https://processing.org/reference/libraries/video/) *installed via processing library installer* 
+the following libraries can be installed via processing library installer:
+
+- [Minim](http://code.compartmental.net/tools/minim/)
+- [oscP5](http://sojamo.de/code/)
+- [controlP5](http://sojamo.de/code/)
+- [video](https://processing.org/reference/libraries/video/)
+
+the following libraries are included in the distribution:
+
+- [JSyn](https://github.com/philburk/jsyn/)
 
 ## concepts
 
