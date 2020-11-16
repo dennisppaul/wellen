@@ -1,12 +1,12 @@
-			 import de.hfkbremen.ton.*; 
+import de.hfkbremen.ton.*; 
 import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
 import ddf.minim.*; 
 import com.jsyn.unitgen.*; 
 
-			 
-		static final int NO = -1;
+static final int NO = -1;
+
 final int[] mSteps = {
         0, NO, 12, NO,
         0, NO, 12, NO,
@@ -17,11 +17,15 @@ final int[] mSteps = {
         5, 5, 17, 17,
         5, 5, 17, 17
 };
+
 ToneEngine mToneEngine;
+
 controlP5.ControlP5 cp5;
+
 void settings() {
     size(640, 480);
 }
+
 void setup() {
     mToneEngine = new ToneEngineJSyn(ToneEngine.INSTRUMENT_WITH_OSCILLATOR_ADSR_FILTER_LFO);
     mToneEngine.instrument().osc_type(Instrument.SQUARE);
@@ -37,9 +41,11 @@ void setup() {
     Beat mBeat = new Beat(this);
     mBeat.bpm(120 * 4);
 }
+
 void draw() {
     background(127);
 }
+
 void beat(int pBeat) {
     int mStep = mSteps[pBeat % mSteps.length];
     if (mStep != NO) {

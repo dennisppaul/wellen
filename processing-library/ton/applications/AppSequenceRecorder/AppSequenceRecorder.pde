@@ -1,27 +1,32 @@
-			 import de.hfkbremen.ton.*; 
+import de.hfkbremen.ton.*; 
 import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
 import ddf.minim.*; 
 import com.jsyn.unitgen.*; 
 
-			 
-		static final int OFF = -1;
+static final int OFF = -1;
+
 static final int NO_INPUT = -2;
+
 final Sequencer<Integer> mSequence = new Sequencer<Integer>(
         OFF, OFF, OFF, OFF,
         OFF, OFF, OFF, OFF,
         OFF, OFF, OFF, OFF,
         OFF, OFF, OFF, OFF
 );
+
 int mLastInput = NO_INPUT;
+
 void settings() {
     size(640, 480);
 }
+
 void setup() {
     Beat.start(this, 120 * 2);
     noStroke();
 }
+
 void draw() {
     background(255);
     translate(0, height * 0.5f);
@@ -38,10 +43,12 @@ void draw() {
         ellipse(i, 30);
     }
 }
+
 void ellipse(int pPosition, float pSize) {
     final float x = map(pPosition, 0, mSequence.data().length - 1, 30, width - 30);
     ellipse(x, 0, pSize, pSize);
 }
+
 void keyPressed() {
     switch (key) {
         case ' ':
@@ -68,6 +75,7 @@ void keyPressed() {
         mLastInput = NO_INPUT;
     }
 }
+
 void beat(int pBeat) {
     /* playback next note */
     int mStep = mSequence.step();

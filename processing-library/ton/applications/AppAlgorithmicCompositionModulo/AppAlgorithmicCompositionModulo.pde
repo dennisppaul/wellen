@@ -1,15 +1,16 @@
-			 import de.hfkbremen.ton.*; 
+import de.hfkbremen.ton.*; 
 import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
 import ddf.minim.*; 
 import com.jsyn.unitgen.*; 
 
-			 
-		boolean mPlaying = false;
+boolean mPlaying = false;
+
 void settings() {
     size(640, 480);
 }
+
 void setup() {
     background(255);
     /* set ADSR parameters for current instrument */
@@ -22,6 +23,7 @@ void setup() {
     Beat.start(this, 120 * 4);
     Ton.instrument().osc_type(Instrument.SAWTOOTH);
 }
+
 void draw() {
     background(255);
     fill(0);
@@ -33,6 +35,7 @@ void draw() {
     }
     ellipse(width * 0.5f, height * 0.5f, mScale, mScale);
 }
+
 void beat(int pBeat) {
     mPlaying = true;
     if (pBeat % 32 == 0) {

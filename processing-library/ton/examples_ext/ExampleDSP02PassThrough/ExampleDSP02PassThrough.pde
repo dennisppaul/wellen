@@ -1,18 +1,19 @@
-			 import de.hfkbremen.ton.*; 
+import de.hfkbremen.ton.*; 
 import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
 import ddf.minim.*; 
 import com.jsyn.unitgen.*; 
 
-			 
-		void settings() {
+void settings() {
     size(640, 480);
 }
+
 void setup() {
     DSP.dumpAudioDevices();
     DSP.start(this, 1, 1);
 }
+
 void draw() {
     background(255);
     stroke(0);
@@ -24,6 +25,7 @@ void draw() {
         }
     }
 }
+
 void audioblock(float[] pOutputSamples, float[] pInputSamples) {
     for (int i = 0; i < pInputSamples.length; i++) {
         pOutputSamples[i] = pInputSamples[i] * 0.25f;

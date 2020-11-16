@@ -1,22 +1,26 @@
-			 import de.hfkbremen.ton.*; 
+import de.hfkbremen.ton.*; 
 import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
 import ddf.minim.*; 
 import com.jsyn.unitgen.*; 
 
-			 
-		final ArrayList<Node> mNodes = new ArrayList();
+final ArrayList<Node> mNodes = new ArrayList();
+
 Node mRoot;
+
 Node mSelectedNode;
+
 void settings() {
     size(1024, 768);
 }
+
 void setup() {
     Ton.instrument().osc_type(Instrument.SINE);
     mRoot = node(width / 2.0f, height / 2.0f, mNodes.size());
     Beat.start(this, 120 * 2);
 }
+
 void draw() {
     background(255);
     if (mSelectedNode != null) {
@@ -30,9 +34,11 @@ void draw() {
         mNode.drawNode(g);
     }
 }
+
 void mousePressed() {
     mSelectedNode = within(mouseX, mouseY);
 }
+
 void mouseReleased() {
     if (mSelectedNode != null) {
         Node mNodeWithin = within(mouseX, mouseY);
@@ -45,9 +51,11 @@ void mouseReleased() {
         mSelectedNode = null;
     }
 }
+
 void keyPressed() {
     mRoot.schedule();
 }
+
 void beat(int pBeat) {
     for (Node mNode : mNodes) {
         mNode.update();

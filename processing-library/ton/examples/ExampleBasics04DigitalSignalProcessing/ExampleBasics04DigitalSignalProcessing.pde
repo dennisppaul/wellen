@@ -1,19 +1,22 @@
-			 import de.hfkbremen.ton.*; 
+import de.hfkbremen.ton.*; 
 import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
 import ddf.minim.*; 
 import com.jsyn.unitgen.*; 
 
-			 
-		float mFreq = 440.0f;
+float mFreq = 440.0f;
+
 int mCounter = 0;
+
 void settings() {
     size(640, 480);
 }
+
 void setup() {
     DSP.start(this);
 }
+
 void draw() {
     background(255);
     stroke(0);
@@ -25,9 +28,11 @@ void draw() {
         }
     }
 }
+
 void mouseMoved() {
     mFreq = map(mouseX, 0, width, 55, 440);
 }
+
 void audioblock(float[] pSamples) {
     for (int i = 0; i < pSamples.length; i++) {
         mCounter++;

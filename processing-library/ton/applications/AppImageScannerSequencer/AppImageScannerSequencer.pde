@@ -1,19 +1,24 @@
-			 import de.hfkbremen.ton.*; 
+import de.hfkbremen.ton.*; 
 import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
 import ddf.minim.*; 
 import com.jsyn.unitgen.*; 
 
-			 
-		final ToneEngine mSynth = new ToneEngineJSyn();
+final ToneEngine mSynth = new ToneEngineJSyn();
+
 final ArrayList<ImageSampler> mSamplers = new ArrayList();
+
 Capture mCapture;
+
 int mCurrentSampler = 0;
+
 int mLastNote = -1;
+
 void settings() {
     size(1280, 720);
 }
+
 void setup() {
     background(255);
     println("### available cameras:");
@@ -36,6 +41,7 @@ void setup() {
     }
     Beat.start(this, 120 * 4);
 }
+
 void draw() {
     background(255);
     if (mCapture.available()) {
@@ -49,6 +55,7 @@ void draw() {
         mSampler.active = mSampler.ID == mCurrentSampler;
     }
 }
+
 void beat(int pBeat) {
     mCurrentSampler++;
     mCurrentSampler %= mSamplers.size();
@@ -69,10 +76,14 @@ class ImageSampler {
     int y = 0;
     int radius = 16;
     boolean active = false;
-    float mBrightnessNorm = 0;
-    int mSampleRed = 0;
-    int mSampleGreen = 0;
-    int mSampleBlue = 0;
+    
+float mBrightnessNorm = 0;
+    
+int mSampleRed = 0;
+    
+int mSampleGreen = 0;
+    
+int mSampleBlue = 0;
     ImageSampler(int pID) {
         ID = pID;
     }

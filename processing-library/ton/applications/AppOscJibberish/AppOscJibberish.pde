@@ -1,15 +1,16 @@
-			 import de.hfkbremen.ton.*; 
+import de.hfkbremen.ton.*; 
 import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
 import ddf.minim.*; 
 import com.jsyn.unitgen.*; 
 
-			 
-		final ArrayList<Jibberer> mJibberers = new ArrayList();
+final ArrayList<Jibberer> mJibberers = new ArrayList();
+
 void settings() {
     size(640, 480);
 }
+
 void setup() {
     Ton.start("jsyn-minimal");
     for (int i = 0; i < 3; i++) {
@@ -19,6 +20,7 @@ void setup() {
         mJibberers.add(mJibberer);
     }
 }
+
 void draw() {
     background(255);
     for (Jibberer mJibberer : mJibberers) {
@@ -27,17 +29,28 @@ void draw() {
         mJibberer.draw();
     }
 }
+
 class Jibberer {
-    final PVector mPosition;
-    final PVector mTriggerPosition;
-    final float mMaxDistance = 100;
-    final int mID;
-    float mFreqPointer = 0;
-    float mAmpPointer = 0;
-    final float mBaseFreq;
-    final float mFreqStep;
-    final float mAmpStep;
-    Jibberer(int pID) {
+    
+final PVector mPosition;
+    
+final PVector mTriggerPosition;
+    
+final float mMaxDistance = 100;
+    
+final int mID;
+    
+float mFreqPointer = 0;
+    
+float mAmpPointer = 0;
+    
+final float mBaseFreq;
+    
+final float mFreqStep;
+    
+final float mAmpStep;
+    
+Jibberer(int pID) {
         mID = pID;
         mPosition = new PVector();
         mTriggerPosition = new PVector();

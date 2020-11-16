@@ -1,20 +1,21 @@
-			 import de.hfkbremen.ton.*; 
+import de.hfkbremen.ton.*; 
 import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
 import ddf.minim.*; 
 import com.jsyn.unitgen.*; 
-
-			 
-		int mNote = 0;
+int mNote = 0;
 int mVelocity = 0;
+
 void settings() {
     size(640, 480);
 }
+
 void setup() {
     Ton.dumpMidiInputDevices();
     EventReceiverMIDI.start(this, "Arturia KeyStep 37");
 }
+
 void draw() {
     background(255);
     noStroke();
@@ -22,6 +23,7 @@ void draw() {
     float mScale = map(mNote, 24, 96, 5, height * 0.8f);
     ellipse(width * 0.5f, height * 0.5f, mScale, mScale);
 }
+
 void event_receive(int pEvent, float[] pData) {
     /* parse event + data. see `Event` for all *defined* events. */
     if (pEvent == TonEvent.EVENT_NOTE_ON) {

@@ -1,27 +1,32 @@
-			 import de.hfkbremen.ton.*; 
+import de.hfkbremen.ton.*; 
 import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
 import ddf.minim.*; 
 import com.jsyn.unitgen.*; 
 
-			 
-		int mNote;
+int mNote;
+
 int mStep;
+
 int[] mScale;
+
 void settings() {
     size(640, 480);
 }
+
 void setup() {
     mScale = Scale.HALF_TONE;
     mNote = Note.NOTE_C4;
     fill(0);
 }
+
 void draw() {
     background(255);
     float mScale = map(mNote, Note.NOTE_C4, Note.NOTE_C5, height * 0.1f, height * 0.8f);
     ellipse(width * 0.5f, height * 0.5f, mScale, mScale);
 }
+
 void keyPressed() {
     if (key == ' ') {
         mStep++;

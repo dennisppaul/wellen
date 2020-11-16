@@ -1,22 +1,26 @@
-			 import de.hfkbremen.ton.*; 
+import de.hfkbremen.ton.*; 
 import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
 import ddf.minim.*; 
 import com.jsyn.unitgen.*; 
 
-			 
-		Instrument mInstrument;
+Instrument mInstrument;
+
 boolean mIsPlaying = false;
+
 int mNote;
+
 void settings() {
     size(640, 480);
 }
+
 void setup() {
     background(255);
     /* select instrument #2 */
     mInstrument = Ton.instrument(2);
 }
+
 void draw() {
     if (mIsPlaying) {
         int mColor = (mNote - Note.NOTE_A2) * 5 + 50;
@@ -25,6 +29,7 @@ void draw() {
         background(255);
     }
 }
+
 void keyPressed() {
     if (key == ' ') {
         if (mIsPlaying) {

@@ -1,21 +1,25 @@
-			 import de.hfkbremen.ton.*; 
+import de.hfkbremen.ton.*; 
 import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
 import ddf.minim.*; 
 import com.jsyn.unitgen.*; 
 
-			 
-		final float mFreq = 220.0f;
+final float mFreq = 220.0f;
+
 AudioFormula mFormula = new AudioFormulaMouse();
+
 int mCounter = 0;
+
 void settings() {
     size(640, 480);
 }
+
 void setup() {
     DSP.dumpAudioDevices();
     DSP.start(this);
 }
+
 void draw() {
     background(255);
     stroke(0);
@@ -27,6 +31,7 @@ void draw() {
         }
     }
 }
+
 void keyPressed() {
     switch (key) {
         case '1':
@@ -40,6 +45,7 @@ void keyPressed() {
             break;
     }
 }
+
 void audioblock(float[] pOutputSamples) {
     for (int i = 0; i < pOutputSamples.length; i++) {
         pOutputSamples[i] = mFormula.render(mCounter++);
@@ -49,7 +55,8 @@ interface AudioFormula {
     float render(int pCounter);
 }
 class AudioFormulaMouse implements AudioFormula {
-    float render(int pCounter) {
+    
+float render(int pCounter) {
         float mFreqMouse = mFreq + map(mouseX, 0, width, 0, mFreq);
         float mAmpMouse = map(mouseY, 0, height, 0, 0.75f);
         float mSample = sin(2 * PI * mFreqMouse * pCounter / DSP.sample_rate());
@@ -58,7 +65,8 @@ class AudioFormulaMouse implements AudioFormula {
     }
 }
 class AudioFormulaKnisterKnister implements AudioFormula {
-    float render(int pCounter) {
+    
+float render(int pCounter) {
         final float mSeconds = (float) pCounter / DSP.sample_rate();
         float v;
         v = abs(sin(mSeconds * cos(mSeconds * 1.1f))) * 0.1f;
@@ -73,7 +81,8 @@ class AudioFormulaKnisterKnister implements AudioFormula {
     }
 }
 class MAudioFormulaAwayAndAway implements AudioFormula {
-    float render(int pCounter) {
+    
+float render(int pCounter) {
         final float mSeconds = (float) pCounter / DSP.sample_rate();
         final float mSecondsRad = 2.0f * PI * mSeconds;
         float v;

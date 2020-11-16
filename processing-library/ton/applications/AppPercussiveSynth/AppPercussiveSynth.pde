@@ -1,21 +1,28 @@
-			 import de.hfkbremen.ton.*; 
+import de.hfkbremen.ton.*; 
 import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
 import ddf.minim.*; 
 import com.jsyn.unitgen.*; 
 
-			 
-		static final int O = -1;
+static final int O = -1;
+
 static final int I = 0;
+
 static final int BASS = 0;
+
 static final int SNARE = 1;
+
 static final int HIHAT = 2;
+
 static final int NUMBER_OF_INSTRUMENTS = 3;
+
 final int[][] mSteps = new int[NUMBER_OF_INSTRUMENTS][];
+
 void settings() {
     size(640, 480);
 }
+
 void setup() {
     Ton.instrument(BASS).osc_type(Instrument.SQUARE);
     Ton.instrument(BASS).attack(0.01f);
@@ -47,9 +54,11 @@ void setup() {
     ToneEngine.createInstrumentsGUI(this, Ton.instance(), BASS, SNARE, HIHAT);
     Beat.start(this, 130 * 4);
 }
+
 void draw() {
     background(50);
 }
+
 void beat(int pBeat) {
     for (int i = 0; i < NUMBER_OF_INSTRUMENTS; i++) {
         Ton.instrument(i);

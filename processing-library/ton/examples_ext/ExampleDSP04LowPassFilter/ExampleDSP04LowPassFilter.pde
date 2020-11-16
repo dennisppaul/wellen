@@ -1,24 +1,30 @@
-			 import de.hfkbremen.ton.*; 
+import de.hfkbremen.ton.*; 
 import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
 import ddf.minim.*; 
 import com.jsyn.unitgen.*; 
 
-			 
-		final SecondOrderLowPassFilter mLPFilter = new SecondOrderLowPassFilter();
+final SecondOrderLowPassFilter mLPFilter = new SecondOrderLowPassFilter();
+
 final ButterworthLowPassFilter mButterworthLowPassFilter = new ButterworthLowPassFilter();
+
 final float mFreq = 2.0f * DSP.DEFAULT_SAMPLING_RATE / DSP.DEFAULT_AUDIOBLOCK_SIZE;
+
 float mCounter = 0;
+
 boolean mToggleFilter;
+
 void settings() {
     size(640, 480);
 }
+
 void setup() {
     DSP.dumpAudioDevices();
     DSP.start(this);
     mLPFilter.calculate_coeffs(2.0f, 2000);
 }
+
 void draw() {
     background(mToggleFilter ? 255 : 0);
     stroke(mToggleFilter ? 0 : 255);
@@ -33,15 +39,18 @@ void draw() {
         }
     }
 }
+
 void mousePressed() {
     mToggleFilter = !mToggleFilter;
 }
+
 void mouseMoved() {
     final int mCutoffFreq = (int) map(mouseY, 0, height, 1, DSP.sample_rate() / 4.0f);
     final float mResonance = map(mouseX, 0, width, 0.1f, 50.0f);
     mLPFilter.calculate_coeffs(mResonance, mCutoffFreq);
     mButterworthLowPassFilter.calculate_coeffs(mCutoffFreq);
 }
+
 void audioblock(float[] pOutputSamples) {
     for (int i = 0; i < pOutputSamples.length; i++) {
         /* square wave */
@@ -59,6 +68,7 @@ void audioblock(float[] pOutputSamples) {
         pOutputSamples[i] = mSample;
     }
 }
+
 interface filter_constants {
     float sqrt2 = (float) (2.0 * 3.1415926535897932384626433832795);
     float pi = (float) (2.0 * 0.707106781186547524401);
@@ -72,10 +82,12 @@ interface filter_constants {
  * <p>
  * from https://github.com/dimtass/DSP-Cpp-filters
  */
+
 static class ButterworthLowPassFilter {
     float m_xnz1, m_xnz2, m_ynz1, m_ynz2;
     tp_coeffs m_coeffs = new tp_coeffs();
-    tp_coeffs calculate_coeffs(int fc) {
+    
+tp_coeffs calculate_coeffs(int fc) {
         final int fs = DSP.DEFAULT_SAMPLING_RATE;
         float c = 1.0f / (tan(filter_constants.pi * fc / fs));
         m_coeffs.a0 = 1.0f / (1.0f + filter_constants.sqrt2 * c + pow(c, 2.0f));
@@ -85,7 +97,8 @@ static class ButterworthLowPassFilter {
         m_coeffs.b2 = m_coeffs.a0 * (1.0f - filter_constants.sqrt2 * c + pow(c, 2.0f));
         return (m_coeffs);
     }
-    float filter(float sample) {
+    
+float filter(float sample) {
         float xn = sample;
         float yn =
                 m_coeffs.a0 * xn + m_coeffs.a1 * m_xnz1 + m_coeffs.a2 * m_xnz2 - m_coeffs.b1 * m_ynz1 - m_coeffs.b2 * m_xnz2;
@@ -103,10 +116,12 @@ static class ButterworthLowPassFilter {
  * <p>
  * from https://github.com/dimtass/DSP-Cpp-filters
  */
+
 static class SecondOrderLowPassFilter {
     float m_xnz1, m_xnz2, m_ynz1, m_ynz2;
     tp_coeffs m_coeffs = new tp_coeffs();
-    tp_coeffs calculate_coeffs(float Q, int fc) {
+    
+tp_coeffs calculate_coeffs(float Q, int fc) {
         final int fs = DSP.DEFAULT_SAMPLING_RATE;
         float w = 2.0f * filter_constants.pi * fc / fs;
         float d = 1.0f / Q;
@@ -119,7 +134,8 @@ static class SecondOrderLowPassFilter {
         m_coeffs.b2 = 2.0f * b;
         return (m_coeffs);
     }
-    float filter(float sample) {
+    
+float filter(float sample) {
         float xn = sample;
         float yn = m_coeffs.a0 * xn + m_coeffs.a1 * m_xnz1 + m_coeffs.a2 * m_xnz2
                 - m_coeffs.b1 * m_ynz1 - m_coeffs.b2 * m_xnz2;
@@ -130,6 +146,7 @@ static class SecondOrderLowPassFilter {
         return (yn);
     }
 }
+
 static class tp_coeffs {
     float a0;
     float a1;

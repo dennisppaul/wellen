@@ -1,18 +1,22 @@
-			 import de.hfkbremen.ton.*; 
+import de.hfkbremen.ton.*; 
 import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
 import ddf.minim.*; 
 import com.jsyn.unitgen.*; 
 
-			 
-		ToneEngineMinim mToneEngine;
+ToneEngineMinim mToneEngine;
+
 Instrument mInstrument;
+
 boolean mIsPlaying = false;
+
 int mNote;
+
 void settings() {
     size(640, 480);
 }
+
 void setup() {
     background(255);
     mToneEngine = new ToneEngineMinim();
@@ -25,6 +29,7 @@ void setup() {
     mInstrument.sustain(1.0f);
     mInstrument.release(0.5f);
 }
+
 void draw() {
     if (mIsPlaying) {
         int mColor = (mNote - Note.NOTE_A2) * 5 + 50;
@@ -36,6 +41,7 @@ void draw() {
     final float mAttack = (float) mouseX / width;
     mInstrument.attack(mAttack);
 }
+
 void keyPressed() {
     if (key == ' ') {
         if (mIsPlaying) {

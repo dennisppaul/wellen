@@ -1,18 +1,22 @@
-			 import de.hfkbremen.ton.*; 
+import de.hfkbremen.ton.*; 
 import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
 import ddf.minim.*; 
 import com.jsyn.unitgen.*; 
 
-			 
-		int mColor;
+int mColor;
+
 Beat mBeatMIDI;
+
 Arpeggiator mArpeggiator;
+
 boolean mToggle;
+
 void settings() {
     size(640, 480);
 }
+
 void setup() {
     Ton.dumpMidiInputDevices();
     mBeatMIDI = Beat.start(this, 120 * 24);
@@ -27,6 +31,7 @@ void setup() {
     mArpeggiator.pattern(4 * 3, 4, 0.2f);
     mArpeggiator.pattern(6 * 3, 5, 0.1f);
 }
+
 void draw() {
     background(255);
     if (mToggle) {
@@ -34,6 +39,7 @@ void draw() {
         ellipse(width * 0.5f, height * 0.5f, 100, 100);
     }
 }
+
 void keyPressed() {
     switch (key) {
         case '1':
@@ -53,6 +59,7 @@ void keyPressed() {
             break;
     }
 }
+
 void beat(int pBeat) {
     if (pBeat % 24 == 0) {
         mToggle = !mToggle;

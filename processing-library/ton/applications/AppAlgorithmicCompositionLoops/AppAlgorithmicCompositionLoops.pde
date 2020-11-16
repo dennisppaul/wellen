@@ -1,20 +1,26 @@
-			 import de.hfkbremen.ton.*; 
+import de.hfkbremen.ton.*; 
 import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
 import ddf.minim.*; 
 import com.jsyn.unitgen.*; 
 
-			 
-		BeatEvent mBeatA;
+BeatEvent mBeatA;
+
 BeatEvent mBeatB;
+
 BeatEvent mBeatC;
+
 Loop mLoopA;
+
 Loop mLoopB;
+
 Loop mLoopC;
+
 void settings() {
     size(640, 480);
 }
+
 void setup() {
     mBeatA = BeatEvent.create(120);
     mBeatB = BeatEvent.create(140);
@@ -26,6 +32,7 @@ void setup() {
     mLoopC = new Loop(2, Note.NOTE_C4 + 7);
     mBeatC.add(mLoopC);
 }
+
 void draw() {
     background(255);
     noStroke();
@@ -40,6 +47,7 @@ void draw() {
         ellipse(width * 0.75f, height * 0.5f, width * 0.15f, width * 0.15f);
     }
 }
+
 void beat(Loop pLoop, int pBeatCount) {
     Ton.instrument(pLoop.instrument);
     if (pBeatCount % 4 == 0) {
@@ -50,6 +58,7 @@ void beat(Loop pLoop, int pBeatCount) {
         pLoop.playing = false;
     }
 }
+
 static class Loop implements BeatListener {
     final int note;
     final int instrument;
@@ -59,7 +68,8 @@ static class Loop implements BeatListener {
         instrument = pInstrument;
         playing = false;
     }
-    void beat(int pBeatCount) {
+    
+void beat(int pBeatCount) {
         Ton.instrument(instrument);
         if (pBeatCount % 2 == 0) {
             Ton.note_on(note, 50);

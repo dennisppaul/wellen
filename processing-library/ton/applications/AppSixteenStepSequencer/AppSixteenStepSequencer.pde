@@ -1,17 +1,20 @@
-			 import de.hfkbremen.ton.*; 
+import de.hfkbremen.ton.*; 
 import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
 import ddf.minim.*; 
 import com.jsyn.unitgen.*; 
 
-			 
-		static final int OFF = -1;
+static final int OFF = -1;
+
 final int[] mSequence = new int[16];
+
 int mBeatCount = 0;
+
 void settings() {
     size(640, 480);
 }
+
 void setup() {
     textFont(createFont("Roboto Mono", 14));
     textAlign(CENTER);
@@ -19,6 +22,7 @@ void setup() {
     populateSequence();
     Beat.start(this, 120 * 4);
 }
+
 void draw() {
     background(255);
     for (int i = 0; i < mSequence.length; i++) {
@@ -37,11 +41,13 @@ void draw() {
         text(mNote, x + mSize * 0.5f, y + mSize * 0.5f + 5);
     }
 }
+
 void keyPressed() {
     if (key == ' ') {
         populateSequence();
     }
 }
+
 void beat(int pBeatCount) {
     mBeatCount = pBeatCount;
     int mIndex = mBeatCount % mSequence.length;
@@ -52,6 +58,7 @@ void beat(int pBeatCount) {
         Ton.note_off();
     }
 }
+
 void populateSequence() {
     for (int i = 0; i < mSequence.length; i++) {
         if (random(1) > 0.5f) { mSequence[i] = OFF; } else {

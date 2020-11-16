@@ -1,19 +1,24 @@
-			 import de.hfkbremen.ton.*; 
+import de.hfkbremen.ton.*; 
 import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
 import ddf.minim.*; 
 import com.jsyn.unitgen.*; 
 
-			 
-		Slider mSliderAttack;
+Slider mSliderAttack;
+
 Slider mSliderDecay;
+
 Slider mSliderSustain;
+
 Slider mSliderRelease;
+
 int mNote;
+
 void settings() {
-    size(640, 480, P2D);
+    size(640, 480);
 }
+
 void setup() {
     hint(DISABLE_KEY_REPEAT);
     mSliderAttack = new Slider();
@@ -24,6 +29,7 @@ void setup() {
     updateADSR();
     println(Instrument.ADSR_DIAGRAM);
 }
+
 void draw() {
     if (Ton.isPlaying()) {
         int mColor = (mNote - Note.NOTE_A2) * 5 + 50;
@@ -38,16 +44,20 @@ void draw() {
     updateDiagram(mXOffset, mYOffset);
     drawDiagram();
 }
+
 void mouseDragged() {
     updateADSR();
 }
+
 void keyPressed() {
     mNote = Scale.note(Scale.MAJOR_CHORD_7, Note.NOTE_A2, (int) random(0, 10));
     Ton.note_on(mNote, 100);
 }
+
 void keyReleased() {
     Ton.note_off();
 }
+
 void drawDiagram() {
     stroke(0, 15);
     line(0, 0, Slider.size * 4, 0);
@@ -79,6 +89,7 @@ void drawDiagram() {
             mSliderRelease.current_position_y());
     strokeWeight(1);
 }
+
 void updateDiagram(float mXOffset, float mYOffset) {
     float mX = mouseX - mXOffset;
     float mY = -mouseY + mYOffset;
@@ -95,22 +106,27 @@ void updateDiagram(float mXOffset, float mYOffset) {
     mSliderRelease.x = mSliderSustain.x;
     mSliderRelease.y = 0;
 }
+
 void updateADSR() {
     Ton.instrument().attack(mSliderAttack.value);
     Ton.instrument().decay(mSliderDecay.value);
     Ton.instrument().sustain(mSliderSustain.value);
     Ton.instrument().release(mSliderRelease.value);
 }
+
 static class Slider {
-    static final float size = 120;
-    static final float radius = 8;
+    
+static final float size = 120;
+    
+static final float radius = 8;
     float x;
     float y;
     float value;
     boolean horziontal;
     boolean hoover;
     boolean drag;
-    Slider() {
+    
+Slider() {
         x = 0;
         y = 0;
         value = 0.5f;
