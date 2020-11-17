@@ -3,14 +3,13 @@ package de.hfkbremen.ton.examples_ext;
 import de.hfkbremen.ton.BeatMIDI;
 import de.hfkbremen.ton.Ton;
 import processing.core.PApplet;
+
 /**
  * this examples demonstrates
  */
-
 public class SketchExampleEvent02MIDIClock extends PApplet {
 
     private int mColor;
-
     private BeatMIDI mBeatMIDI;
 
     public void settings() {
@@ -28,7 +27,7 @@ public class SketchExampleEvent02MIDIClock extends PApplet {
 
     public void beat(int pBeat) {
         /* MIDI clock runs at 24 pulses per quarter note (PPQ). `pBeat % 12` is there for 0 every eigth note. */
-        if (pBeat % 12 == 0) {
+        if (pBeat % 12 == 6) {
             mColor = color(random(127, 255),
                     random(127, 255),
                     random(127, 255));

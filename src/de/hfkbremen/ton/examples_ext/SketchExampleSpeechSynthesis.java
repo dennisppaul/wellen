@@ -10,7 +10,6 @@ import processing.core.PApplet;
 public class SketchExampleSpeechSynthesis extends PApplet {
 
     private SpeechSynthesis mSpeech;
-
     private String[] mWords;
     private int mBeatCount;
 

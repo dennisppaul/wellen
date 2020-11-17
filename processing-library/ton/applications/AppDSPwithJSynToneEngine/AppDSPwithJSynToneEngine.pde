@@ -20,8 +20,8 @@ void setup() {
      * to internally generated sounds.
      */
     DSP.dumpAudioDevices();
-    final int OUTPUT_BUILT_IN_OUTPUT = 2;
-    final int INPUT_BACKHOLE_2CH = 3;
+    final int OUTPUT_BUILT_IN_OUTPUT = 10;
+    final int INPUT_BACKHOLE_2CH = 5;
     Ton.start("jsyn", INPUT_BACKHOLE_2CH, 2);
     DSP.start(this, OUTPUT_BUILT_IN_OUTPUT, 1, INPUT_BACKHOLE_2CH, 1);
 }

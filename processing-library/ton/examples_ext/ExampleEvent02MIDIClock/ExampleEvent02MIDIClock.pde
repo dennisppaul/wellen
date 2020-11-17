@@ -24,7 +24,7 @@ void draw() {
 
 void beat(int pBeat) {
     /* MIDI clock runs at 24 pulses per quarter note (PPQ). `pBeat % 12` is there for 0 every eigth note. */
-    if (pBeat % 12 == 0) {
+    if (pBeat % 12 == 6) {
         mColor = color(random(127, 255),
                 random(127, 255),
                 random(127, 255));

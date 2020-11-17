@@ -19,30 +19,17 @@ public class MidiOut {
         mMidiOut = find(pMidiOutputDevice);
     }
 
-    public static String[] availableOutputs() {
-        ArrayList<String> mMidiOutputs = new ArrayList<>();
-        MidiDevice.Info[] mInfos = MidiSystem.getMidiDeviceInfo();
-        for (MidiDevice.Info mInfo : mInfos) {
-            try {
-                MidiDevice mDevice = MidiSystem.getMidiDevice(mInfo);
-                if (mDevice.getMaxReceivers() != 0) {
-                    mMidiOutputs.add(mInfo.getName());
-                }
-            } catch (MidiUnavailableException e) {
-                e.printStackTrace();
-            }
-        }
-        String[] mMidiOutputsStr = new String[mMidiOutputs.size()];
-        return mMidiOutputs.toArray(mMidiOutputsStr);
+    public MidiOut(int pMidiOutputDevice) {
+        mMidiOut = find(pMidiOutputDevice);
     }
 
     public void sendNoteOn(int channel, int pitch, int velocity) {
         ShortMessage message = new ShortMessage();
         try {
             message.setMessage(ShortMessage.NOTE_ON,
-                               constrain(channel, 0, 15),
-                               constrain(pitch, 0, 127),
-                               constrain(velocity, 0, 127));
+                    constrain(channel, 0, 15),
+                    constrain(pitch, 0, 127),
+                    constrain(velocity, 0, 127));
             sendMessage(message);
         } catch (InvalidMidiDataException e) {
             System.err.println("### Message not sent, invalid MIDI data");
@@ -53,9 +40,9 @@ public class MidiOut {
         ShortMessage message = new ShortMessage();
         try {
             message.setMessage(ShortMessage.CONTROL_CHANGE,
-                               constrain(channel, 0, 15),
-                               constrain(number, 0, 127),
-                               constrain(value, 0, 127));
+                    constrain(channel, 0, 15),
+                    constrain(number, 0, 127),
+                    constrain(value, 0, 127));
             sendMessage(message);
         } catch (InvalidMidiDataException e) {
             System.err.println("### Message not sent, invalid MIDI data");
@@ -66,9 +53,9 @@ public class MidiOut {
         ShortMessage message = new ShortMessage();
         try {
             message.setMessage(ShortMessage.NOTE_OFF,
-                               constrain(channel, 0, 15),
-                               constrain(pitch, 0, 127),
-                               constrain(velocity, 0, 127));
+                    constrain(channel, 0, 15),
+                    constrain(pitch, 0, 127),
+                    constrain(velocity, 0, 127));
             sendMessage(message);
         } catch (InvalidMidiDataException e) {
             System.err.println("### Message not sent, invalid MIDI data");
@@ -114,8 +101,42 @@ public class MidiOut {
         return null;
     }
 
+    private Receiver find(int pMidiOutputDeviceID) {
+        MidiDevice.Info[] mInfos = MidiSystem.getMidiDeviceInfo();
+        MidiDevice.Info mInfo = mInfos[pMidiOutputDeviceID];
+        try {
+            MidiDevice mDevice = MidiSystem.getMidiDevice(mInfo);
+            if (mDevice.getMaxReceivers() != 0) {
+                if (!mDevice.isOpen()) {
+                    mDevice.open();
+                }
+                return mDevice.getReceiver();
+            }
+        } catch (MidiUnavailableException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     private synchronized void sendMessage(MidiMessage message) {
         mMidiOut.send(message, 0);
+    }
+
+    public static String[] availableOutputs() {
+        ArrayList<String> mMidiOutputs = new ArrayList<>();
+        MidiDevice.Info[] mInfos = MidiSystem.getMidiDeviceInfo();
+        for (MidiDevice.Info mInfo : mInfos) {
+            try {
+                MidiDevice mDevice = MidiSystem.getMidiDevice(mInfo);
+                if (mDevice.getMaxReceivers() != 0) {
+                    mMidiOutputs.add(mInfo.getName());
+                }
+            } catch (MidiUnavailableException e) {
+                e.printStackTrace();
+            }
+        }
+        String[] mMidiOutputsStr = new String[mMidiOutputs.size()];
+        return mMidiOutputs.toArray(mMidiOutputsStr);
     }
 
 }

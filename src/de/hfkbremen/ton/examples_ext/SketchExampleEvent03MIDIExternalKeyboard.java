@@ -1,8 +1,8 @@
 package de.hfkbremen.ton.examples_ext;
 
-import de.hfkbremen.ton.TonEvent;
 import de.hfkbremen.ton.EventReceiverMIDI;
 import de.hfkbremen.ton.Ton;
+import de.hfkbremen.ton.TonEvent;
 import processing.core.PApplet;
 
 /**
@@ -11,8 +11,8 @@ import processing.core.PApplet;
  */
 public class SketchExampleEvent03MIDIExternalKeyboard extends PApplet {
 
-    int mNote = 0;
-    int mVelocity = 0;
+    private int mNote = 0;
+    private int mVelocity = 0;
 
     public void settings() {
         size(640, 480);

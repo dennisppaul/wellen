@@ -12,6 +12,8 @@ import static de.hfkbremen.ton.ToneEngine.INSTRUMENT_WITH_OSCILLATOR_ADSR;
 
 public abstract class Ton {
 
+    public static final String TONE_ENGINE_JSYN = "jsyn";
+    public static final String TONE_ENGINE_MIDI = "midi";
     private static ToneEngine instance = null;
 
     private Ton() {
@@ -25,12 +27,20 @@ public abstract class Ton {
         instance = ToneEngine.createEngine(pName);
     }
 
+    public static void start(String pName, int pParameter) {
+        if (pName.equalsIgnoreCase(TONE_ENGINE_MIDI)) {
+            instance = new ToneEngineMIDI(pParameter);
+        } else {
+            instance = ToneEngine.createEngine(pName);
+        }
+    }
+
     public static void start(String pName, int pParameterA, int pParameterB) {
         if (instance != null) {
             System.err.println(
                     "+++ @start / tone engine already initialized. make sure that `start` is the first call to `Ton`.");
         }
-        if (pName.equalsIgnoreCase("jsyn")) {
+        if (pName.equalsIgnoreCase(TONE_ENGINE_JSYN)) {
             /* specify output device */
             instance = new ToneEngineJSyn(INSTRUMENT_WITH_OSCILLATOR_ADSR, pParameterA, pParameterB);
         } else {
@@ -117,10 +127,10 @@ public abstract class Ton {
         final int mListWidth = 300, mListHeight = 300;
 
         DropdownList dl = controls.addDropdownList("Please select MIDI Device",
-                                                   (controls.papplet.width - mListWidth) / 2,
-                                                   (controls.papplet.height - mListHeight) / 2,
-                                                   mListWidth,
-                                                   mListHeight);
+                (controls.papplet.width - mListWidth) / 2,
+                (controls.papplet.height - mListHeight) / 2,
+                mListWidth,
+                mListHeight);
 
         //        dl.toUpperCase(true);
         dl.setItemHeight(16);
@@ -146,7 +156,7 @@ public abstract class Ton {
     public static void run(Class<? extends PApplet> T, String... pArgs) {
         String[] mArgs;
         mArgs = PApplet.concat(new String[]{"--sketch-path=" + System.getProperty("user.dir") + "/simulator"},
-                               pArgs);
+                pArgs);
         mArgs = PApplet.concat(mArgs, new String[]{T.getName()});
         PApplet.main(mArgs);
     }
