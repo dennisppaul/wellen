@@ -5,7 +5,7 @@ import de.hfkbremen.ton.Ton;
 import processing.core.PApplet;
 
 /**
- * this examples demonstrates
+ * this examples shows how to use a beat triggered by an external MIDI beat clock.
  */
 public class SketchExampleEvent02MIDIClock extends PApplet {
 

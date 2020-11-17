@@ -162,6 +162,9 @@ extends <a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.h
 <th class="colOne" scope="col">Constructor and Description</th>
 </tr>
 <tr class="altColor">
+<td class="colOne"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngineMIDI.html#ToneEngineMIDI-int-">ToneEngineMIDI</a></span>(int&nbsp;pMidiOutputDeviceID)</code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngineMIDI.html#ToneEngineMIDI-java.lang.String-">ToneEngineMIDI</a></span>(java.lang.String&nbsp;pMidiOutputDeviceName)</code>&nbsp;</td>
 </tr>
 </table>
@@ -297,10 +300,19 @@ extends <a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.h
 <a name="ToneEngineMIDI-java.lang.String-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>ToneEngineMIDI</h4>
 <pre>public&nbsp;ToneEngineMIDI(java.lang.String&nbsp;pMidiOutputDeviceName)</pre>
+</li>
+</ul>
+<a name="ToneEngineMIDI-int-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>ToneEngineMIDI</h4>
+<pre>public&nbsp;ToneEngineMIDI(int&nbsp;pMidiOutputDeviceID)</pre>
 </li>
 </ul>
 </li>
@@ -311,15 +323,6 @@ extends <a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.h
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="getProperDeviceName-java.lang.String-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getProperDeviceName</h4>
-<pre>public static&nbsp;java.lang.String&nbsp;getProperDeviceName(java.lang.String&nbsp;pMidiOutputDeviceName)</pre>
-</li>
-</ul>
 <a name="note_on-int-int-float-">
 <!--   -->
 </a>
@@ -461,7 +464,7 @@ extends <a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.h
 <a name="instruments--">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>instruments</h4>
 <pre>public&nbsp;java.util.ArrayList&lt;? extends <a href="../../../de/hfkbremen/ton/Instrument.html" title="class in de.hfkbremen.ton">Instrument</a>&gt;&nbsp;instruments()</pre>
@@ -469,6 +472,15 @@ extends <a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.h
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../de/hfkbremen/ton/ToneEngine.html#instruments--">instruments</a></code>&nbsp;in class&nbsp;<code><a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.hfkbremen.ton">ToneEngine</a></code></dd>
 </dl>
+</li>
+</ul>
+<a name="getProperDeviceName-java.lang.String-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>getProperDeviceName</h4>
+<pre>public static&nbsp;java.lang.String&nbsp;getProperDeviceName(java.lang.String&nbsp;pMidiOutputDeviceName)</pre>
 </li>
 </ul>
 </li>
