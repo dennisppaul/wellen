@@ -29,6 +29,8 @@ printJob "copying additional libs"
 for i in ${ADDITIONAL_LIBS[@]}; do
 	sh copy_additional_libs.sh $LIB_NAME $i
 done
+printJob "copying resources"
+sh copy_resources.sh $LIB_NAME
 printJob "copying src"
 sh copy_src.sh $LIB_NAME
 printJob "copying README"

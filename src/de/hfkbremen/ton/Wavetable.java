@@ -2,6 +2,10 @@ package de.hfkbremen.ton;
 
 import processing.core.PApplet;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.util.Arrays;
+
 public class Wavetable {
 
     private final int mSamplingRate;
@@ -23,28 +27,26 @@ public class Wavetable {
         set_frequency(220);
     }
 
-    public void set_frequency(float pFrequency) {
-        if (mFrequency != pFrequency) {
-            mFrequency = pFrequency;
-            mStepSize = mFrequency * ((float) mWavetable.length / (float) mSamplingRate);
+    public static void from_bytes(byte[] pBytes, float[] pWavetable) {
+        if (pBytes.length / 4 == pWavetable.length) {
+            for (int i = 0; i < pWavetable.length; i++) {
+                pWavetable[i] = byteToFloat32(pBytes, i * 4, (i + 1) * 4);
+            }
+        } else {
+            System.err.println("+++ WARNING @ Wavetable.from_bytes / array sizes do not match. make sure the byte " +
+                               "array is exactly 4 times the size of the float array");
         }
     }
 
-    public void set_amplitude(float pAmplitude) {
-        mAmplitude = pAmplitude;
+    public static float byteToFloat32(byte[] b) {
+        ByteBuffer bb = ByteBuffer.wrap(b);
+        bb.order(ByteOrder.LITTLE_ENDIAN);
+        return bb.getFloat();
+//        return ByteBuffer.wrap(b).getFloat();
     }
 
-    public float[] wavetable() {
-        return mWavetable;
-    }
-
-    public float process() {
-        mArrayPtr += mStepSize;
-        final int i = (int) mArrayPtr;
-        final float mFrac = mArrayPtr - i;
-        final int j = i % mWavetable.length;
-        mArrayPtr = j + mFrac;
-        return mWavetable[j] * mAmplitude;
+    public static byte[] float32ToByte(float f) {
+        return ByteBuffer.allocate(4).putFloat(f).array();
     }
 
     public static void sine(float[] pWavetable) {
@@ -75,5 +77,46 @@ public class Wavetable {
             pWavetable[i] = 1.0f;
             pWavetable[i + pWavetable.length / 2] = -1.0f;
         }
+    }
+
+    public static float byteToFloat32(byte[] pBytes, int pStart, int pEnd) {
+        final byte[] mBytes = Arrays.copyOfRange(pBytes, pStart, pEnd);
+        return byteToFloat32(mBytes);
+    }
+
+    public void set_frequency(float pFrequency) {
+        if (mFrequency != pFrequency) {
+            mFrequency = pFrequency;
+            mStepSize = mFrequency * ((float) mWavetable.length / (float) mSamplingRate);
+        }
+    }
+
+    public void set_amplitude(float pAmplitude) {
+        mAmplitude = pAmplitude;
+    }
+
+    public float[] wavetable() {
+        return mWavetable;
+    }
+
+    public float process() {
+        mArrayPtr += mStepSize;
+        final int i = (int) mArrayPtr;
+        final float mFrac = mArrayPtr - i;
+        final int j = i % mWavetable.length;
+        mArrayPtr = j + mFrac;
+        return mWavetable[j] * mAmplitude;
+    }
+
+    public static void main(String[] args) {
+        float[] f = new float[4];
+        byte[] b = new byte[]{
+                64, 73, 6, 37,
+                64, 73, 6, 37,
+                64, 73, 6, 37,
+                64, 73, 6, 37
+        };
+        from_bytes(b, f);
+        PApplet.printArray(f);
     }
 }
