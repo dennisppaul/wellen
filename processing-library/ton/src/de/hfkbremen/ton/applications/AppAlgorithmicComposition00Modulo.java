@@ -6,7 +6,7 @@ import de.hfkbremen.ton.Note;
 import de.hfkbremen.ton.Ton;
 import processing.core.PApplet;
 
-public class AppAlgorithmicCompositionModulo extends PApplet {
+public class AppAlgorithmicComposition00Modulo extends PApplet {
 
     private boolean mPlaying = false;
 
@@ -59,6 +59,6 @@ public class AppAlgorithmicCompositionModulo extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main(AppAlgorithmicCompositionModulo.class.getName());
+        PApplet.main(AppAlgorithmicComposition00Modulo.class.getName());
     }
 }

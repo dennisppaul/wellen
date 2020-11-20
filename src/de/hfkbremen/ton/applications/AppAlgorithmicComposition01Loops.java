@@ -6,7 +6,7 @@ import de.hfkbremen.ton.Note;
 import de.hfkbremen.ton.Ton;
 import processing.core.PApplet;
 
-public class AppAlgorithmicCompositionLoops extends PApplet {
+public class AppAlgorithmicComposition01Loops extends PApplet {
 
     private BeatEvent mBeatA;
     private BeatEvent mBeatB;
@@ -83,6 +83,6 @@ public class AppAlgorithmicCompositionLoops extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main(AppAlgorithmicCompositionLoops.class.getName());
+        PApplet.main(AppAlgorithmicComposition01Loops.class.getName());
     }
 }

@@ -1,4 +1,4 @@
-package de.hfkbremen.ton.applications;
+package de.hfkbremen.ton.examples_ext;
 
 import de.hfkbremen.ton.Beat;
 import de.hfkbremen.ton.Instrument;
@@ -8,7 +8,7 @@ import de.hfkbremen.ton.Ton;
 import de.hfkbremen.ton.ToneEngine;
 import processing.core.PApplet;
 
-public class AppPercussiveSynth extends PApplet {
+public class SketchExampleInstruments09PercussiveInstruments extends PApplet {
 
     private static final int O = -1;
     private static final int I = 0;
@@ -76,6 +76,6 @@ public class AppPercussiveSynth extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main(AppPercussiveSynth.class.getName());
+        PApplet.main(SketchExampleInstruments09PercussiveInstruments.class.getName());
     }
 }

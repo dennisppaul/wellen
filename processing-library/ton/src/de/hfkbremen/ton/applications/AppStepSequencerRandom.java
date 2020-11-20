@@ -5,7 +5,7 @@ import de.hfkbremen.ton.Note;
 import de.hfkbremen.ton.Ton;
 import processing.core.PApplet;
 
-public class AppSixteenStepSequencer extends PApplet {
+public class AppStepSequencerRandom extends PApplet {
 
     private static final int OFF = -1;
     private final int[] mSequence = new int[16];
@@ -69,6 +69,6 @@ public class AppSixteenStepSequencer extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main(AppSixteenStepSequencer.class.getName());
+        PApplet.main(AppStepSequencerRandom.class.getName());
     }
 }
