@@ -4,6 +4,8 @@ import controlP5.ControlP5;
 import processing.core.PApplet;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public abstract class ToneEngine {
 
@@ -38,6 +40,12 @@ public abstract class ToneEngine {
         INSTRUMENT_FIELDS[GUI_LFO_FREQ] = "lfo_freq";
         INSTRUMENT_FIELDS[GUI_FILTER_Q] = "filter_q";
         INSTRUMENT_FIELDS[GUI_FILTER_FREQ] = "filter_freq";
+    }
+
+    private final Timer mTimer;
+
+    ToneEngine() {
+        mTimer = new Timer();
     }
 
     public static ToneEngine createEngine() {
@@ -150,7 +158,11 @@ public abstract class ToneEngine {
      * @param velocity volume of note ranging from 0 to 127
      * @param duration duration in seconds before the note is turned off again
      */
-    public abstract void note_on(int note, int velocity, float duration);
+    public final void note_on(int note, int velocity, float duration) {
+        TimerTask mTask = new NoteOffTask(note, instrument().ID());
+        mTimer.schedule(mTask, (long) (duration * 1000));
+        note_on(note, velocity);
+    }
 
     /**
      * play a note
@@ -183,4 +195,22 @@ public abstract class ToneEngine {
     public abstract Instrument instrument();
 
     public abstract ArrayList<? extends Instrument> instruments();
+
+    private class NoteOffTask extends TimerTask {
+
+        final int note;
+        final int instrument;
+
+        public NoteOffTask(int pNote, int pInstrument) {
+            note = pNote;
+            instrument = pInstrument;
+        }
+
+        public void run() {
+            int mCurrentInstrument = instrument().ID();
+            instrument(instrument);
+            note_off(note);
+            instrument(mCurrentInstrument);
+        }
+    }
 }

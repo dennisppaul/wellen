@@ -2,13 +2,12 @@ package de.hfkbremen.ton.applications;
 
 import processing.core.PApplet;
 
-public class AppAlgorithmicComposition02VisualParameterSpace extends PApplet {
+public class AppAlgorithmicComposition02VisualModel extends PApplet {
 
     //@todo(record from mic)
     //@todo(position circle)
 
     public void settings() {
-        size(640, 480);
     }
 
     public void setup() {
@@ -18,6 +17,6 @@ public class AppAlgorithmicComposition02VisualParameterSpace extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main(AppAlgorithmicComposition02VisualParameterSpace.class.getName());
+        PApplet.main(AppAlgorithmicComposition02VisualModel.class.getName());
     }
 }

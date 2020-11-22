@@ -3,11 +3,9 @@ package de.hfkbremen.ton;
 import com.jsyn.engine.SynthesisEngine;
 import com.jsyn.unitgen.LineOut;
 import com.jsyn.unitgen.UnitOscillator;
-import com.softsynth.shared.time.TimeStamp;
 
 import java.util.ArrayList;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import static de.hfkbremen.ton.DSP.DEFAULT_SAMPLING_RATE;
 import static de.hfkbremen.ton.Note.note_to_frequency;
@@ -22,7 +20,7 @@ public class ToneEngineJSyn extends ToneEngine {
     private final LineOut mLineOut;
     private final ArrayList<InstrumentJSyn> mInstruments;
     private final Timer mTimer;
-    private int mInstrumentID;
+    private int mCurrentInstrumentID;
     private boolean mIsPlaying = false;
 
     public ToneEngineJSyn() {
@@ -75,7 +73,7 @@ public class ToneEngineJSyn extends ToneEngine {
             }
             mInstruments.add(mInstrumentJSyn);
         }
-        mInstrumentID = 0;
+        mCurrentInstrumentID = 0;
         mSynth.start(pSamplingRate, pInputDeviceID, pInputChannels, pOutputDeviceID, pOutputChannels);
         mTimer = new Timer();
     }
@@ -96,28 +94,6 @@ public class ToneEngineJSyn extends ToneEngine {
 
     public LineOut line_out() {
         return mLineOut;
-    }
-
-    public void note_on(int note, int velocity, float duration) {
-        TimerTask mTask = new NoteOffTask();
-        mTimer.schedule(mTask, (long) (duration * 1000));
-        mIsPlaying = true;
-        final float mFreq = note_to_frequency(clamp127(note));
-        float mAmp = clamp127(velocity) / 127.0f;
-        if (USE_AMP_FRACTION) {
-            mAmp /= (float) NUMBERS_OF_INSTRUMENTS;
-        }
-        TimeStamp mOnTime = new TimeStamp(mSynth.getCurrentTime());
-        TimeStamp mOffTime = mOnTime.makeRelative(duration);
-        InstrumentJSyn mInstrument = getInstrument(getInstrumentID());
-        mInstrument.amplitude(mAmp);
-        mInstrument.frequency(mFreq);
-        if (mInstrument instanceof InstrumentJSynOscillatorADSR) {
-            InstrumentJSynOscillatorADSR mInstrumentJSynBasic = (InstrumentJSynOscillatorADSR) mInstrument;
-            mInstrumentJSynBasic.env().start(mOnTime);
-            mInstrumentJSynBasic.env().stop(mOffTime);
-            mInstrumentJSynBasic.trigger();
-        }
     }
 
     public void note_on(int note, int velocity) {
@@ -154,12 +130,12 @@ public class ToneEngineJSyn extends ToneEngine {
     }
 
     public final Instrument instrument(int pInstrumentID) {
-        mInstrumentID = pInstrumentID;
-        return instruments().get(mInstrumentID);
+        mCurrentInstrumentID = pInstrumentID;
+        return instruments().get(mCurrentInstrumentID);
     }
 
     public Instrument instrument() {
-        return mInstruments.get(mInstrumentID);
+        return mInstruments.get(mCurrentInstrumentID);
     }
 
     public ArrayList<? extends Instrument> instruments() {
@@ -167,41 +143,35 @@ public class ToneEngineJSyn extends ToneEngine {
     }
 
     public InstrumentJSyn getInstrument(int pInstrumentID) {
-        return mInstruments.get(mInstrumentID);
+        return mInstruments.get(mCurrentInstrumentID);
     }
 
     public InstrumentJSynOscillatorADSR getInstrumentBasic(int pInstrumentID) {
-        if (mInstruments.get(mInstrumentID) instanceof InstrumentJSynOscillatorADSR) {
-            return (InstrumentJSynOscillatorADSR) mInstruments.get(mInstrumentID);
+        if (mInstruments.get(mCurrentInstrumentID) instanceof InstrumentJSynOscillatorADSR) {
+            return (InstrumentJSynOscillatorADSR) mInstruments.get(mCurrentInstrumentID);
         } else {
             return null;
         }
     }
 
     public InstrumentJSynOscillatorADSRFilterLFO getInstrumentFilterLFO(int pInstrumentID) {
-        if (mInstruments.get(mInstrumentID) instanceof InstrumentJSynOscillatorADSRFilterLFO) {
-            return (InstrumentJSynOscillatorADSRFilterLFO) mInstruments.get(mInstrumentID);
+        if (mInstruments.get(mCurrentInstrumentID) instanceof InstrumentJSynOscillatorADSRFilterLFO) {
+            return (InstrumentJSynOscillatorADSRFilterLFO) mInstruments.get(mCurrentInstrumentID);
         } else {
             return null;
         }
     }
 
     private void prepareExitHandler() {
-        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-            public void run() {
-                mSynth.stop();
-            }
-        }));
+        Runtime.getRuntime().addShutdownHook(new Thread(mSynth::stop));
+//        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+//            public void run() {
+//                mSynth.stop();
+//            }
+//        }));
     }
 
     private int getInstrumentID() {
-        return Math.max(mInstrumentID, 0) % mInstruments.size();
-    }
-
-    public class NoteOffTask extends TimerTask {
-
-        public void run() {
-            mIsPlaying = false;
-        }
+        return Math.max(mCurrentInstrumentID, 0) % mInstruments.size();
     }
 }

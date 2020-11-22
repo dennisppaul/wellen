@@ -7,6 +7,8 @@ import static processing.core.PApplet.constrain;
 
 public class ToneEngineMIDI extends ToneEngine {
 
+    // @TODO(add `InstrumentMIDI`)
+
     public static final int CC_MODULATION = 1;
     public final MidiOut mMidiOut;
     private final Timer mTimer;
@@ -25,10 +27,21 @@ public class ToneEngineMIDI extends ToneEngine {
         prepareExitHandler();
     }
 
-    public void note_on(int note, int velocity, float duration) {
-        mTimer.schedule(new MidiTimerNoteOffTask(mMidiOut, mChannel, note, velocity), (long) duration * 1000);
-        note_on(note, velocity);
+    public static String getProperDeviceName(String pMidiOutputDeviceName) {
+        String[] mDevices = MidiOut.availableOutputs();
+        for (String mDevice : mDevices) {
+            if (mDevice.startsWith(pMidiOutputDeviceName)) {
+                return mDevice;
+            }
+        }
+        System.err.println("+++ @ToneEngineMIDI / couldn t find midi device");
+        return null;
     }
+
+//    public void note_on(int note, int velocity, float duration) {
+//        mTimer.schedule(new MidiTimerNoteOffTask(mMidiOut, mChannel, note, velocity), (long) duration * 1000);
+//        note_on(note, velocity);
+//    }
 
     public void note_on(int note, int velocity) {
         mMidiOut.sendNoteOn(mChannel, note, velocity);
@@ -84,16 +97,5 @@ public class ToneEngineMIDI extends ToneEngine {
                 mMidiOut.close();
             }
         }));
-    }
-
-    public static String getProperDeviceName(String pMidiOutputDeviceName) {
-        String[] mDevices = MidiOut.availableOutputs();
-        for (String mDevice : mDevices) {
-            if (mDevice.startsWith(pMidiOutputDeviceName)) {
-                return mDevice;
-            }
-        }
-        System.err.println("### couldn t find midi device");
-        return null;
     }
 }

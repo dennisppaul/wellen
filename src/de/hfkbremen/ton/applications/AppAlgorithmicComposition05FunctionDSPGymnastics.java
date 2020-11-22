@@ -3,7 +3,7 @@ package de.hfkbremen.ton.applications;
 import de.hfkbremen.ton.DSP;
 import processing.core.PApplet;
 
-public class AppDSPFormulaGymnastics extends PApplet {
+public class AppAlgorithmicComposition05FunctionDSPGymnastics extends PApplet {
 
     private final float mFreq = 220.0f;
     private AudioFormula mFormula = new AudioFormulaMouse();
@@ -97,6 +97,6 @@ public class AppDSPFormulaGymnastics extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main(AppDSPFormulaGymnastics.class.getName());
+        PApplet.main(AppAlgorithmicComposition05FunctionDSPGymnastics.class.getName());
     }
 }

@@ -6,9 +6,10 @@ import oscP5.OscP5;
 
 import java.util.ArrayList;
 import java.util.Timer;
-import java.util.TimerTask;
 
 public class ToneEngineOSC extends ToneEngine {
+
+    // @TODO(add `InstrumentOSC`)
 
     public static final String OSC_ADDR_PATTERN_NOTE_ON = "/note_on";
     public static final String OSC_ADDR_PATTERN_NOTE_OFF = "/note_off";
@@ -35,12 +36,6 @@ public class ToneEngineOSC extends ToneEngine {
 
     public ToneEngineOSC() {
         this("127.0.0.1");
-    }
-
-    public void note_on(int note, int velocity, float duration) {
-        note_on(note, velocity);
-        TimerTask mTask = new NoteOffTask();
-        mTimer.schedule(mTask, (long) (duration * 1000));
     }
 
     public void note_on(int note, int velocity) {
@@ -94,12 +89,5 @@ public class ToneEngineOSC extends ToneEngine {
 
     public ArrayList<? extends Instrument> instruments() {
         return null;
-    }
-
-    public class NoteOffTask extends TimerTask {
-
-        public void run() {
-            note_off();
-        }
     }
 }

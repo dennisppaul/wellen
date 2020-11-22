@@ -8,7 +8,6 @@ import com.jsyn.unitgen.*;
 //@todo(position circle)
 
 void settings() {
-    size(640, 480);
 }
 
 void setup() {

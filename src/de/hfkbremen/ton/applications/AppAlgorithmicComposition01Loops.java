@@ -47,17 +47,6 @@ public class AppAlgorithmicComposition01Loops extends PApplet {
         }
     }
 
-    public void beat(Loop pLoop, int pBeatCount) {
-        Ton.instrument(pLoop.instrument);
-        if (pBeatCount % 4 == 0) {
-            Ton.note_on(pLoop.note, 63);
-            pLoop.playing = true;
-        } else if (pBeatCount % 4 == 1) {
-            Ton.note_off(pLoop.note);
-            pLoop.playing = false;
-        }
-    }
-
     private static class Loop implements BeatListener {
 
         final int note;

@@ -5,7 +5,6 @@ import ddf.minim.Minim;
 
 import java.util.ArrayList;
 import java.util.Timer;
-import java.util.TimerTask;
 
 import static de.hfkbremen.ton.Note.note_to_frequency;
 import static de.hfkbremen.ton.Ton.clamp127;
@@ -30,12 +29,6 @@ public class ToneEngineMinim extends ToneEngine {
         }
     }
 
-    public void note_on(int note, int velocity, float duration) {
-        note_on(note, velocity);
-        TimerTask mTask = new NoteOffTask();
-        mTimer.schedule(mTask, (long) (duration * 1000));
-    }
-
     public void note_on(int note, int velocity) {
         mIsPlaying = true;
         final float mFreq = note_to_frequency(clamp127(note));
@@ -43,8 +36,8 @@ public class ToneEngineMinim extends ToneEngine {
         if (USE_AMP_FRACTION) {
             mAmp /= (float) NUMBERS_OF_INSTRUMENTS;
         }
-        if (mInstruments.get(getInstrumentID()) instanceof InstrumentMinim) {
-            InstrumentMinim mInstrument = (InstrumentMinim) mInstruments.get(getInstrumentID());
+        if (mInstruments.get(instrument().ID()) instanceof InstrumentMinim) {
+            InstrumentMinim mInstrument = (InstrumentMinim) mInstruments.get(instrument().ID());
             mInstrument.note_on(mFreq, mAmp);
         }
     }
@@ -54,8 +47,8 @@ public class ToneEngineMinim extends ToneEngine {
     }
 
     public void note_off() {
-        if (mInstruments.get(getInstrumentID()) instanceof InstrumentMinim) {
-            InstrumentMinim mInstrument = (InstrumentMinim) mInstruments.get(getInstrumentID());
+        if (mInstruments.get(instrument().ID()) instanceof InstrumentMinim) {
+            InstrumentMinim mInstrument = (InstrumentMinim) mInstruments.get(instrument().ID());
             mInstrument.note_off();
             mIsPlaying = false;
         }
@@ -82,16 +75,5 @@ public class ToneEngineMinim extends ToneEngine {
 
     public ArrayList<? extends Instrument> instruments() {
         return mInstruments;
-    }
-
-    private int getInstrumentID() {
-        return Math.max(mInstrumentID, 0) % mInstruments.size();
-    }
-
-    public class NoteOffTask extends TimerTask {
-
-        public void run() {
-            note_off();
-        }
     }
 }
