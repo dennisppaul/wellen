@@ -7,6 +7,9 @@ import ddf.minim.ugens.ADSR;
 import ddf.minim.ugens.Oscil;
 import ddf.minim.ugens.Waves;
 
+import static de.hfkbremen.ton.Note.note_to_frequency;
+import static de.hfkbremen.ton.Ton.clamp127;
+
 public class InstrumentMinim extends Instrument {
 
     private final Minim minim;
@@ -17,6 +20,7 @@ public class InstrumentMinim extends Instrument {
     private float mFreq = 220.0f;
     private boolean mDumpWarningLFO = true;
     private boolean mDumpWarningFILTER = true;
+    private boolean mIsPlaying = false;
 
     public InstrumentMinim(Minim pMinim, int pName) {
         super(pName);
@@ -180,14 +184,21 @@ public class InstrumentMinim extends Instrument {
     @Override
     public void note_off() {
         adsr.noteOff();
+        mIsPlaying = false;
     }
 
     @Override
-    public void note_on(float pFrequency, float pAmplitude) {
-        frequency(pFrequency);
-        amplitude(pAmplitude);
+    public void note_on(int note, int velocity) {
+        frequency(note_to_frequency(clamp127(note)));
+        amplitude(clamp127(velocity) / 127.0f);
         setADSR();
         adsr.noteOn();
+        mIsPlaying = true;
+    }
+
+    @Override
+    public boolean isPlaying() {
+        return mIsPlaying;
     }
 
     private void setADSR() {

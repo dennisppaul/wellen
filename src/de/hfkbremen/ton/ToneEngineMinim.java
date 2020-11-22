@@ -6,9 +6,6 @@ import ddf.minim.Minim;
 import java.util.ArrayList;
 import java.util.Timer;
 
-import static de.hfkbremen.ton.Note.note_to_frequency;
-import static de.hfkbremen.ton.Ton.clamp127;
-
 public class ToneEngineMinim extends ToneEngine {
 
     private static final boolean USE_AMP_FRACTION = false;
@@ -31,14 +28,12 @@ public class ToneEngineMinim extends ToneEngine {
 
     public void note_on(int note, int velocity) {
         mIsPlaying = true;
-        final float mFreq = note_to_frequency(clamp127(note));
-        float mAmp = clamp127(velocity) / 127.0f;
         if (USE_AMP_FRACTION) {
-            mAmp /= (float) NUMBERS_OF_INSTRUMENTS;
+            velocity /=  NUMBERS_OF_INSTRUMENTS;
         }
         if (mInstruments.get(instrument().ID()) instanceof InstrumentMinim) {
             InstrumentMinim mInstrument = (InstrumentMinim) mInstruments.get(instrument().ID());
-            mInstrument.note_on(mFreq, mAmp);
+            mInstrument.note_on(note, velocity);
         }
     }
 

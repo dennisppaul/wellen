@@ -133,13 +133,6 @@ public class InstrumentJSynOscillatorADSR extends InstrumentJSynOscillator {
 
     public void amplitude(float pAmp) {
         mAmp = pAmp;
-        if (mOsc instanceof UnitOscillator) {
-            UnitOscillator uo = (UnitOscillator) mOsc;
-            uo.amplitude.set(pAmp);
-        } else if (mOsc instanceof WhiteNoise) {
-            WhiteNoise uo = (WhiteNoise) mOsc;
-            uo.amplitude.set(pAmp);
-        }
     }
 
     public void frequency(float freq) {
@@ -149,17 +142,18 @@ public class InstrumentJSynOscillatorADSR extends InstrumentJSynOscillator {
 
     public void note_off() {
         mEnvPlayer.dataQueue.queueOff(mEnvData, true, new TimeStamp(mSynth.getCurrentTime()));
+        mIsPlaying = false;
     }
 
-    public void note_on(float pFreq, float pAmp) {
+    public void note_on(int note, int velocity) {
         update_env_data();
         mEnvData.setSustainBegin(2);
         mEnvData.setSustainEnd(2);
-        mFreq = pFreq;
-        update_freq();
+        frequency(_note_to_frequency(note));
         TimeStamp mTimeStamp = new TimeStamp(mSynth.getCurrentTime());
-        mEnvPlayer.amplitude.set(pAmp, mTimeStamp);
+        mEnvPlayer.amplitude.set(_velocity_to_amplitude(velocity), mTimeStamp);
         mEnvPlayer.dataQueue.queueOn(mEnvData, mTimeStamp);
+        mIsPlaying = true;
     }
 
     @ControlElement(properties = {"min=0.0", "max=2.0", "type=knob", "radius=20", "resolution=1000"}, x = 0, y = 0)
@@ -242,10 +236,12 @@ public class InstrumentJSynOscillatorADSR extends InstrumentJSynOscillator {
     }
 
     protected void update_env_data() {
-        double[] mData = {mAttack, 1.0 * mAmp, // get_attack
-                          mDecay, // get_decay
-                          mSustain * mAmp, // get_sustain
-                          mRelease, 0.0, // get_release
+        double[] mData = {mAttack,
+                          1.0 * mAmp, // attack level
+                          mDecay,
+                          mSustain * mAmp, // sustain level
+                          mRelease,
+                          0.0, // release level
         };
         mEnvData = new SegmentedEnvelope(mData);
     }

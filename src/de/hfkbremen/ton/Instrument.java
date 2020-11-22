@@ -15,9 +15,9 @@ public abstract class Instrument {
                                               + "    |/              \\\n"
                                               + "    +---------------------->\n"
                                               + "    [A   ][D][S   ][R]\n";
-    protected final float DEFAULT_ATTACK = 0.001f;
-    protected final float DEFAULT_DECAY = 0.0f;
-    protected final float DEFAULT_SUSTAIN = 0.75f;
+    protected final float DEFAULT_ATTACK = 0.005f;
+    protected final float DEFAULT_DECAY = 0.01f;
+    protected final float DEFAULT_SUSTAIN = 0.5f;
     protected final float DEFAULT_RELEASE = 0.075f;
     private final int mID;
     /**
@@ -109,5 +109,7 @@ public abstract class Instrument {
 
     public abstract void note_off();
 
-    public abstract void note_on(float pFreq, float pAmp);
+    public abstract void note_on(int note, int velocity);
+
+    public abstract boolean isPlaying();
 }
