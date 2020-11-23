@@ -13,6 +13,7 @@ void settings() {
 
 void setup() {
     byte[] mData = SampleDataSNARE.data;
+    // alternatively load data with `loadBytes("audio.raw")` ( raw format, 32bit float )
     mSampler = new Sampler();
     mSampler.load(mData);
     mSampler.loop(false);

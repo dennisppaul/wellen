@@ -10,9 +10,10 @@ public class SketchExampleDSP04LowPassFilter extends PApplet {
 
     private final SecondOrderLowPassFilter mLPFilter = new SecondOrderLowPassFilter();
     private final ButterworthLowPassFilter mButterworthLowPassFilter = new ButterworthLowPassFilter();
+    private final NaiveLowPassFilter mNaiveLowPassFilter = new NaiveLowPassFilter();
     private final float mFreq = 2.0f * DSP.DEFAULT_SAMPLING_RATE / DSP.DEFAULT_AUDIOBLOCK_SIZE;
     private float mCounter = 0;
-    private boolean mToggleFilter;
+    private int mFilterType;
 
     public void settings() {
         size(640, 480);
@@ -25,22 +26,23 @@ public class SketchExampleDSP04LowPassFilter extends PApplet {
     }
 
     public void draw() {
-        background(mToggleFilter ? 255 : 0);
-        stroke(mToggleFilter ? 0 : 255);
+        background(255);
+        stroke(0);
         final int mBufferSize = DSP.buffer_size();
         if (DSP.buffer() != null) {
             for (int i = 0; i < mBufferSize - 1; i++) {
                 final float x = map(i, 0, mBufferSize, 0, width);
                 line(map(i, 0, mBufferSize, 0, width),
-                        map(DSP.buffer()[i], -1, 1, 0, height),
-                        map(i + 1, 0, mBufferSize, 0, width),
-                        map(DSP.buffer()[i + 1], -1, 1, 0, height));
+                     map(DSP.buffer()[i], -1, 1, 0, height),
+                     map(i + 1, 0, mBufferSize, 0, width),
+                     map(DSP.buffer()[i + 1], -1, 1, 0, height));
             }
         }
     }
 
     public void mousePressed() {
-        mToggleFilter = !mToggleFilter;
+        mFilterType++;
+        mFilterType %= 3;
     }
 
     public void mouseMoved() {
@@ -48,6 +50,7 @@ public class SketchExampleDSP04LowPassFilter extends PApplet {
         final float mResonance = map(mouseX, 0, width, 0.1f, 50.0f);
         mLPFilter.calculate_coeffs(mResonance, mCutoffFreq);
         mButterworthLowPassFilter.calculate_coeffs(mCutoffFreq);
+        mNaiveLowPassFilter.ratio(map(mouseX, 0, width, 0.0f, 0.1f));
     }
 
     public void audioblock(float[] pOutputSamples) {
@@ -58,22 +61,40 @@ public class SketchExampleDSP04LowPassFilter extends PApplet {
             float mSample = mCounter > DSP.sample_rate() / 2.0f ? -1.0f : 1.0f;
             float mAmp = 0.25f;
             mSample *= mAmp;
-            if (mToggleFilter) {
+            if (mFilterType == 0) {
                 mSample = mLPFilter.filter(mSample);
-            } else {
+            } else if (mFilterType == 1) {
                 mSample = mButterworthLowPassFilter.filter(mSample);
+            } else if (mFilterType == 2) {
+                mSample = mNaiveLowPassFilter.filter(mSample);
             }
             mSample = DSP.clamp(mSample, -1, 1);
             pOutputSamples[i] = mSample;
         }
     }
 
-
     private interface filter_constants {
+
         float sqrt2 = (float) (2.0 * 3.1415926535897932384626433832795);
         float pi = (float) (2.0 * 0.707106781186547524401);
     }
 
+    private static class NaiveLowPassFilter {
+
+        float mBuffer;
+
+        float mRatio;
+
+        public float filter(float sample) {
+            float mSample = sample * mRatio + mBuffer * (1.0f - mRatio);
+            mBuffer = mSample;
+            return mSample;
+        }
+
+        void ratio(float pRatio) {
+            mRatio = pRatio;
+        }
+    }
 
     /**
      * Second order Butterworth low-pass filter Dimitris Tassopoulos 2016
@@ -144,7 +165,7 @@ public class SketchExampleDSP04LowPassFilter extends PApplet {
         public float filter(float sample) {
             float xn = sample;
             float yn = m_coeffs.a0 * xn + m_coeffs.a1 * m_xnz1 + m_coeffs.a2 * m_xnz2
-                    - m_coeffs.b1 * m_ynz1 - m_coeffs.b2 * m_xnz2;
+                       - m_coeffs.b1 * m_ynz1 - m_coeffs.b2 * m_xnz2;
 
             m_xnz2 = m_xnz1;
             m_xnz1 = xn;
@@ -156,6 +177,7 @@ public class SketchExampleDSP04LowPassFilter extends PApplet {
     }
 
     private static class tp_coeffs {
+
         float a0;
         float a1;
         float a2;

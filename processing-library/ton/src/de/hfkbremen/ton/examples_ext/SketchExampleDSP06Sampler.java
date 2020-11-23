@@ -5,7 +5,7 @@ import de.hfkbremen.ton.SampleDataSNARE;
 import de.hfkbremen.ton.Sampler;
 import processing.core.PApplet;
 
-public class SketchExampleDSP06Sample extends PApplet {
+public class SketchExampleDSP06Sampler extends PApplet {
 
     private Sampler mSampler;
 
@@ -15,6 +15,7 @@ public class SketchExampleDSP06Sample extends PApplet {
 
     public void setup() {
         byte[] mData = SampleDataSNARE.data;
+        // alternatively load data with `loadBytes("audio.raw")` ( raw format, 32bit float )
         mSampler = new Sampler();
         mSampler.load(mData);
         mSampler.loop(false);
@@ -55,6 +56,6 @@ public class SketchExampleDSP06Sample extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main(SketchExampleDSP06Sample.class.getName());
+        PApplet.main(SketchExampleDSP06Sampler.class.getName());
     }
 }
