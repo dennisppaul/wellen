@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -214,27 +214,31 @@ extends <a href="../../../de/hfkbremen/ton/Instrument.html" title="class in de.h
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/InstrumentJSyn.html#get_osc_type--">get_osc_type</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/InstrumentJSyn.html#lfo_amp-float-">lfo_amp</a></span>(float&nbsp;pLFOAmp)</code>&nbsp;</td>
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/InstrumentJSyn.html#isPlaying--">isPlaying</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/InstrumentJSyn.html#lfo_freq-float-">lfo_freq</a></span>(float&nbsp;pLFOFreq)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/InstrumentJSyn.html#lfo_amp-float-">lfo_amp</a></span>(float&nbsp;pLFOAmp)</code>&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/InstrumentJSyn.html#note_off--">note_off</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/InstrumentJSyn.html#lfo_freq-float-">lfo_freq</a></span>(float&nbsp;pLFOFreq)</code>&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/InstrumentJSyn.html#note_on-float-float-">note_on</a></span>(float&nbsp;pFreq,
-       float&nbsp;pAmp)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/InstrumentJSyn.html#note_off--">note_off</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/InstrumentJSyn.html#osc_type-int-">osc_type</a></span>(int&nbsp;pOsc)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/InstrumentJSyn.html#note_on-int-int-">note_on</a></span>(int&nbsp;note,
+       int&nbsp;velocity)</code>&nbsp;</td>
 </tr>
 <tr id="i16" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/InstrumentJSyn.html#osc_type-int-">osc_type</a></span>(int&nbsp;pOsc)</code>&nbsp;</td>
+</tr>
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/InstrumentJSyn.html#pitch_bend-float-">pitch_bend</a></span>(float&nbsp;freq_offset)</code>&nbsp;</td>
 </tr>
@@ -493,17 +497,30 @@ extends <a href="../../../de/hfkbremen/ton/Instrument.html" title="class in de.h
 </dl>
 </li>
 </ul>
-<a name="note_on-float-float-">
+<a name="note_on-int-int-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>note_on</h4>
+<pre>public&nbsp;void&nbsp;note_on(int&nbsp;note,
+                    int&nbsp;velocity)</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../de/hfkbremen/ton/Instrument.html#note_on-int-int-">note_on</a></code>&nbsp;in class&nbsp;<code><a href="../../../de/hfkbremen/ton/Instrument.html" title="class in de.hfkbremen.ton">Instrument</a></code></dd>
+</dl>
+</li>
+</ul>
+<a name="isPlaying--">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>note_on</h4>
-<pre>public&nbsp;void&nbsp;note_on(float&nbsp;pFreq,
-                    float&nbsp;pAmp)</pre>
+<h4>isPlaying</h4>
+<pre>public&nbsp;boolean&nbsp;isPlaying()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../de/hfkbremen/ton/Instrument.html#note_on-float-float-">note_on</a></code>&nbsp;in class&nbsp;<code><a href="../../../de/hfkbremen/ton/Instrument.html" title="class in de.hfkbremen.ton">Instrument</a></code></dd>
+<dd><code><a href="../../../de/hfkbremen/ton/Instrument.html#isPlaying--">isPlaying</a></code>&nbsp;in class&nbsp;<code><a href="../../../de/hfkbremen/ton/Instrument.html" title="class in de.hfkbremen.ton">Instrument</a></code></dd>
 </dl>
 </li>
 </ul>

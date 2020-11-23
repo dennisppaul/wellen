@@ -67,5 +67,4 @@ public class Scale {
             return pBaseNote - mOffset - mOctave * 12;
         }
     }
-
 }

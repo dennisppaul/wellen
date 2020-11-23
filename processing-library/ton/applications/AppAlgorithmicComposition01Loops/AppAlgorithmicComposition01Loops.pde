@@ -22,6 +22,7 @@ void settings() {
 }
 
 void setup() {
+    noStroke();
     mBeatA = BeatEvent.create(120);
     mBeatB = BeatEvent.create(140);
     mBeatC = BeatEvent.create(160);
@@ -35,7 +36,6 @@ void setup() {
 
 void draw() {
     background(255);
-    noStroke();
     fill(0);
     if (mLoopA.playing) {
         ellipse(width * 0.25f, height * 0.5f, width * 0.15f, width * 0.15f);

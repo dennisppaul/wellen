@@ -20,19 +20,8 @@ public class Sampler {
     public Sampler(int pWavetableSize) {
         mData = new float[pWavetableSize];
         mArrayPtr = 0;
-        mAmplitude = 0.75f;
         set_frequency(220);
-    }
-
-    public static void convertBytesToFloat32(byte[] pBytes, float[] pWavetable, boolean pLittleEndian) {
-        if (pBytes.length / 4 == pWavetable.length) {
-            for (int i = 0; i < pWavetable.length; i++) {
-                pWavetable[i] = bytesToFloat32(pBytes, i * 4, (i + 1) * 4, pLittleEndian);
-            }
-        } else {
-            System.err.println("+++ WARNING @ Wavetable.from_bytes / array sizes do not match. make sure the byte " +
-                               "array is exactly 4 times the size of the float array");
-        }
+        set_amplitude(0.75f);
     }
 
     public void load(byte[] pData) {
@@ -48,7 +37,11 @@ public class Sampler {
     }
 
     public void set_speed(float pSpeed) {
-        set_frequency(pSpeed * DSP.DEFAULT_SAMPLING_RATE / data().length); /* aka `mStepSize = pSpeed;` */
+        if (pSpeed > 0) {
+            set_frequency(pSpeed * DSP.DEFAULT_SAMPLING_RATE / data().length); /* aka `mStepSize = pSpeed;` */
+        } else {
+            set_frequency(0);
+        }
     }
 
     public void set_frequency(float pFrequency) {
@@ -86,7 +79,20 @@ public class Sampler {
         mArrayPtr = 0;
     }
 
-    public void loop(boolean pLoop) { mLoop = pLoop; }
+    public void loop(boolean pLoop) {
+        mLoop = pLoop;
+    }
+
+    public static void convertBytesToFloat32(byte[] pBytes, float[] pWavetable, boolean pLittleEndian) {
+        if (pBytes.length / 4 == pWavetable.length) {
+            for (int i = 0; i < pWavetable.length; i++) {
+                pWavetable[i] = bytesToFloat32(pBytes, i * 4, (i + 1) * 4, pLittleEndian);
+            }
+        } else {
+            System.err.println("+++ WARNING @ Wavetable.from_bytes / array sizes do not match. make sure the byte " +
+                    "array is exactly 4 times the size of the float array");
+        }
+    }
 
     private static float bytesToFloat32(byte[] b, boolean pLittleEndian) {
         return ByteBuffer.wrap(b).order(pLittleEndian ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN).getFloat();

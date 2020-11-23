@@ -3,9 +3,11 @@ package de.hfkbremen.ton;
 import com.jsyn.devices.javasound.JavaSoundAudioDevice;
 import controlP5.ControlP5;
 import controlP5.DropdownList;
+import ddf.minim.Minim;
 import processing.core.PApplet;
 import processing.core.PConstants;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 
 import static de.hfkbremen.ton.ToneEngine.INSTRUMENT_WITH_OSCILLATOR_ADSR;
@@ -84,12 +86,41 @@ public abstract class Ton {
         return instance().instrument();
     }
 
+    public static void replace_instrument(Class<? extends Instrument> pInstrumentClass, int pID) {
+        instance().replace_instrument(create_instrument(pInstrumentClass, pID));
+    }
+
+    public static void replace_instrument(Instrument pInstrument) {
+        instance().replace_instrument(pInstrument);
+    }
+
     public static ArrayList<? extends Instrument> instruments() {
         return instance().instruments();
     }
 
     public static int clamp127(int pValue) {
         return Math.max(0, Math.min(127, pValue));
+    }
+
+    public static <T extends Instrument> T create_instrument(Class<T> pInstrumentClass, int pID) {
+        T mInstrument;
+        try {
+            Constructor<T> c;
+            if (InstrumentJSyn.class.isAssignableFrom(pInstrumentClass) && instance() instanceof ToneEngineJSyn) {
+                c = pInstrumentClass.getDeclaredConstructor(ToneEngineJSyn.class, int.class);
+                mInstrument = c.newInstance(instance(), pID);
+            } else if (pInstrumentClass == InstrumentMinim.class && instance() instanceof ToneEngineMinim) {
+                c = pInstrumentClass.getDeclaredConstructor(Minim.class, int.class);
+                mInstrument = c.newInstance((Minim) ((ToneEngineMinim) instance()).minim(), pID);
+            } else {
+                c = pInstrumentClass.getDeclaredConstructor(int.class);
+                mInstrument = c.newInstance(pID);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            mInstrument = null;
+        }
+        return mInstrument;
     }
 
     public static void dumpMidiOutputDevices() {
@@ -131,10 +162,10 @@ public abstract class Ton {
         final int mListWidth = 300, mListHeight = 300;
 
         DropdownList dl = controls.addDropdownList("Please select MIDI Device",
-                                                   (controls.papplet.width - mListWidth) / 2,
-                                                   (controls.papplet.height - mListHeight) / 2,
-                                                   mListWidth,
-                                                   mListHeight);
+                (controls.papplet.width - mListWidth) / 2,
+                (controls.papplet.height - mListHeight) / 2,
+                mListWidth,
+                mListHeight);
 
         //        dl.toUpperCase(true);
         dl.setItemHeight(16);
@@ -160,7 +191,7 @@ public abstract class Ton {
     public static void run(Class<? extends PApplet> T, String... pArgs) {
         String[] mArgs;
         mArgs = PApplet.concat(new String[]{"--sketch-path=" + System.getProperty("user.dir") + "/simulator"},
-                               pArgs);
+                pArgs);
         mArgs = PApplet.concat(mArgs, new String[]{T.getName()});
         PApplet.main(mArgs);
     }
@@ -170,5 +201,9 @@ public abstract class Ton {
             instance = ToneEngine.createEngine();
         }
         return instance;
+    }
+
+    public static float clamp(float pValue, float pMin, float pMax) {
+        return Math.max(pMin, Math.min(pMax, pValue));
     }
 }

@@ -47,7 +47,7 @@ var activeTableTab = "activeTableTab";
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../de/hfkbremen/ton/ToneEngineJSyn.NoteOffTask.html" title="class in de.hfkbremen.ton"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../de/hfkbremen/ton/ToneEngineJSyn.html" title="class in de.hfkbremen.ton"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../de/hfkbremen/ton/ToneEngineMinim.html" title="class in de.hfkbremen.ton"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
@@ -228,15 +228,11 @@ extends <a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.h
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngineMIDI.html#note_on-int-int-float-">note_on</a></span>(int&nbsp;note,
-       int&nbsp;velocity,
-       float&nbsp;duration)</code>
-<div class="block">play a note</div>
-</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngineMIDI.html#pitch_bend-int-">pitch_bend</a></span>(int&nbsp;pValue)</code>&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngineMIDI.html#pitch_bend-int-">pitch_bend</a></span>(int&nbsp;pValue)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngineMIDI.html#replace_instrument-de.hfkbremen.ton.Instrument-">replace_instrument</a></span>(<a href="../../../de/hfkbremen/ton/Instrument.html" title="class in de.hfkbremen.ton">Instrument</a>&nbsp;pInstrument)</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -244,7 +240,7 @@ extends <a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.h
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;de.hfkbremen.ton.<a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.hfkbremen.ton">ToneEngine</a></h3>
-<code><a href="../../../de/hfkbremen/ton/ToneEngine.html#createEngine--">createEngine</a>, <a href="../../../de/hfkbremen/ton/ToneEngine.html#createEngine-java.lang.String...-">createEngine</a>, <a href="../../../de/hfkbremen/ton/ToneEngine.html#createInstrumentsGUI-processing.core.PApplet-de.hfkbremen.ton.ToneEngine-">createInstrumentsGUI</a>, <a href="../../../de/hfkbremen/ton/ToneEngine.html#createInstrumentsGUI-processing.core.PApplet-de.hfkbremen.ton.ToneEngine-int...-">createInstrumentsGUI</a>, <a href="../../../de/hfkbremen/ton/ToneEngine.html#updateGUI-controlP5.ControlP5-de.hfkbremen.ton.Instrument-">updateGUI</a>, <a href="../../../de/hfkbremen/ton/ToneEngine.html#updateGUI-controlP5.ControlP5-de.hfkbremen.ton.Instrument-int-">updateGUI</a></code></li>
+<code><a href="../../../de/hfkbremen/ton/ToneEngine.html#createEngine--">createEngine</a>, <a href="../../../de/hfkbremen/ton/ToneEngine.html#createEngine-java.lang.String...-">createEngine</a>, <a href="../../../de/hfkbremen/ton/ToneEngine.html#createInstrumentsGUI-processing.core.PApplet-de.hfkbremen.ton.ToneEngine-">createInstrumentsGUI</a>, <a href="../../../de/hfkbremen/ton/ToneEngine.html#createInstrumentsGUI-processing.core.PApplet-de.hfkbremen.ton.ToneEngine-int...-">createInstrumentsGUI</a>, <a href="../../../de/hfkbremen/ton/ToneEngine.html#note_on-int-int-float-">note_on</a>, <a href="../../../de/hfkbremen/ton/ToneEngine.html#updateGUI-controlP5.ControlP5-de.hfkbremen.ton.Instrument-">updateGUI</a>, <a href="../../../de/hfkbremen/ton/ToneEngine.html#updateGUI-controlP5.ControlP5-de.hfkbremen.ton.Instrument-int-">updateGUI</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
@@ -323,27 +319,6 @@ extends <a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.h
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="note_on-int-int-float-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>note_on</h4>
-<pre>public&nbsp;void&nbsp;note_on(int&nbsp;note,
-                    int&nbsp;velocity,
-                    float&nbsp;duration)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../de/hfkbremen/ton/ToneEngine.html#note_on-int-int-float-">ToneEngine</a></code></span></div>
-<div class="block">play a note</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="../../../de/hfkbremen/ton/ToneEngine.html#note_on-int-int-float-">note_on</a></code>&nbsp;in class&nbsp;<code><a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.hfkbremen.ton">ToneEngine</a></code></dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>note</code> - pitch of note ranging from 0 to 127</dd>
-<dd><code>velocity</code> - volume of note ranging from 0 to 127</dd>
-<dd><code>duration</code> - duration in seconds before the note is turned off again</dd>
-</dl>
-</li>
-</ul>
 <a name="note_on-int-int-">
 <!--   -->
 </a>
@@ -474,6 +449,19 @@ extends <a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.h
 </dl>
 </li>
 </ul>
+<a name="replace_instrument-de.hfkbremen.ton.Instrument-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>replace_instrument</h4>
+<pre>public&nbsp;void&nbsp;replace_instrument(<a href="../../../de/hfkbremen/ton/Instrument.html" title="class in de.hfkbremen.ton">Instrument</a>&nbsp;pInstrument)</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../../../de/hfkbremen/ton/ToneEngine.html#replace_instrument-de.hfkbremen.ton.Instrument-">replace_instrument</a></code>&nbsp;in class&nbsp;<code><a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.hfkbremen.ton">ToneEngine</a></code></dd>
+</dl>
+</li>
+</ul>
 <a name="getProperDeviceName-java.lang.String-">
 <!--   -->
 </a>
@@ -510,7 +498,7 @@ extends <a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.h
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../de/hfkbremen/ton/ToneEngineJSyn.NoteOffTask.html" title="class in de.hfkbremen.ton"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
+<li><a href="../../../de/hfkbremen/ton/ToneEngineJSyn.html" title="class in de.hfkbremen.ton"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
 <li><a href="../../../de/hfkbremen/ton/ToneEngineMinim.html" title="class in de.hfkbremen.ton"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">

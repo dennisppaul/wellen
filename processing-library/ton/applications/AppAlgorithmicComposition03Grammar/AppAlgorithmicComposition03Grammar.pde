@@ -6,12 +6,12 @@ import ddf.minim.*;
 import com.jsyn.unitgen.*; 
 
 final String mInput = "RADIO, LIVE TRANSMISSION.\n" +
-                              "RADIO, LIVE TRANSMISSION.\n" +
-                              "LISTEN TO THE SILENCE, LET IT RING ON.\n" +
-                              "EYES, DARK GREY LENSES FRIGHTENED OF THE SUN.\n" +
-                              "WE WOULD HAVE A FINE TIME LIVING IN THE NIGHT,\n" +
-                              "LEFT TO BLIND DESTRUCTION,\n" +
-                              "WAITING FOR OUR SIGHT.";
+        "RADIO, LIVE TRANSMISSION.\n" +
+        "LISTEN TO THE SILENCE, LET IT RING ON.\n" +
+        "EYES, DARK GREY LENSES FRIGHTENED OF THE SUN.\n" +
+        "WE WOULD HAVE A FINE TIME LIVING IN THE NIGHT,\n" +
+        "LEFT TO BLIND DESTRUCTION,\n" +
+        "WAITING FOR OUR SIGHT.";
 
 final int mBaseNote = Note.NOTE_C3;
 
@@ -35,9 +35,10 @@ void settings() {
 }
 
 void setup() {
-    Beat.start(this, 240);
     textFont(createFont("Helvetica-Bold", 10));
-    Ton.instrument(1).osc_type(Instrument.TRIANGLE);
+    Ton.instrument(1).osc_type(Instrument.SAWTOOTH);
+    Ton.instrument(2).osc_type(Instrument.SINE);
+    Beat.start(this, 240);
 }
 
 void draw() {
@@ -65,7 +66,9 @@ void beat(int pBeatCount) {
         Ton.note_off();
     }
     Ton.instrument(1);
-    Ton.note_on(Note.NOTE_C3, 75, 0.3f);
+    Ton.note_on(Note.NOTE_C2, 15, 0.05f);
+    Ton.instrument(2);
+    Ton.note_on(Note.NOTE_C2, 100, 0.15f);
 }
 
 void grammar(char c) {

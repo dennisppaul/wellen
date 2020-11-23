@@ -12,16 +12,8 @@ void settings() {
 }
 
 void setup() {
-    background(255);
-    /* set ADSR parameters for current instrument */
-    Instrument mInstrument = Ton.instrument();
-    mInstrument.attack(0.01f);
-    mInstrument.decay(0.1f);
-    mInstrument.sustain(0.0f);
-    mInstrument.release(0.01f);
-    mInstrument.osc_type(Instrument.TRIANGLE);
+    Ton.instrument().osc_type(Instrument.TRIANGLE);
     Beat.start(this, 120 * 4);
-    Ton.instrument().osc_type(Instrument.SAWTOOTH);
 }
 
 void draw() {
@@ -41,13 +33,13 @@ void beat(int pBeat) {
     if (pBeat % 32 == 0) {
         Ton.note_on(Note.NOTE_A4, 80);
     } else if (pBeat % 8 == 0) {
-        Ton.note_on(Note.NOTE_A3, 100);
+        Ton.note_on(Note.NOTE_A3, 110);
     } else if (pBeat % 2 == 0) {
         Ton.note_on(Note.NOTE_A2 + (pBeat % 4) * 3, 120);
     } else if (pBeat % 11 == 0) {
-        Ton.note_on(Note.NOTE_C4, 100);
+        Ton.note_on(Note.NOTE_C4, 90, 0.05f);
     } else if (pBeat % 13 == 0) {
-        Ton.note_on(Note.NOTE_C5, 100);
+        Ton.note_on(Note.NOTE_C5, 100, 0.1f);
     } else {
         mPlaying = false;
     }

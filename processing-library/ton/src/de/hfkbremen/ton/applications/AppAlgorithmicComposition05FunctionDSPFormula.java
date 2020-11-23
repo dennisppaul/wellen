@@ -3,10 +3,10 @@ package de.hfkbremen.ton.applications;
 import de.hfkbremen.ton.DSP;
 import processing.core.PApplet;
 
-public class AppAlgorithmicComposition05FunctionDSPGymnastics extends PApplet {
+public class AppAlgorithmicComposition05FunctionDSPFormula extends PApplet {
 
     private final float mFreq = 220.0f;
-    private AudioFormula mFormula = new AudioFormulaMouse();
+    private AudioFormula mFormula = new MAudioFormulaAwayAndAway();
     private int mCounter = 0;
 
     public void settings() {
@@ -33,12 +33,9 @@ public class AppAlgorithmicComposition05FunctionDSPGymnastics extends PApplet {
     public void keyPressed() {
         switch (key) {
             case '1':
-                mFormula = new AudioFormulaMouse();
-                break;
-            case '2':
                 mFormula = new AudioFormulaKnisterKnister();
                 break;
-            case '3':
+            case '2':
                 mFormula = new MAudioFormulaAwayAndAway();
                 break;
         }
@@ -52,16 +49,6 @@ public class AppAlgorithmicComposition05FunctionDSPGymnastics extends PApplet {
 
     interface AudioFormula {
         float render(int pCounter);
-    }
-
-    class AudioFormulaMouse implements AudioFormula {
-        public float render(int pCounter) {
-            float mFreqMouse = mFreq + map(mouseX, 0, width, 0, mFreq);
-            float mAmpMouse = map(mouseY, 0, height, 0, 0.75f);
-            float mSample = sin(2 * PI * mFreqMouse * pCounter / DSP.sample_rate());
-            mSample *= mAmpMouse;
-            return mSample;
-        }
     }
 
     class AudioFormulaKnisterKnister implements AudioFormula {
@@ -97,6 +84,6 @@ public class AppAlgorithmicComposition05FunctionDSPGymnastics extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main(AppAlgorithmicComposition05FunctionDSPGymnastics.class.getName());
+        PApplet.main(AppAlgorithmicComposition05FunctionDSPFormula.class.getName());
     }
 }

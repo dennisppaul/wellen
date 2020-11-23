@@ -33,11 +33,11 @@ public class ToneEngineJSyn extends ToneEngine {
     }
 
     public ToneEngineJSyn(int pDefaultInstrumentType,
-                          int pSamplingRate,
-                          int pInputDeviceID,
-                          int pInputChannels,
-                          int pOutputDeviceID,
-                          int pOutputChannels) {
+            int pSamplingRate,
+            int pInputDeviceID,
+            int pInputChannels,
+            int pOutputDeviceID,
+            int pOutputChannels) {
         mSynth = new SynthesisEngine();
         prepareExitHandler();
 
@@ -133,6 +133,15 @@ public class ToneEngineJSyn extends ToneEngine {
 
     public ArrayList<? extends Instrument> instruments() {
         return mInstruments;
+    }
+
+    public void replace_instrument(Instrument pInstrument) {
+        if (pInstrument instanceof InstrumentJSyn) {
+            mInstruments.set(pInstrument.ID(), (InstrumentJSyn) pInstrument);
+        } else {
+            System.err.println("+++ @ToneEngineJSyn.replace_instrument(Instrument) / instrument must be of type " +
+                    "`InstrumentJSyn`");
+        }
     }
 
     public InstrumentJSyn getInstrument(int pInstrumentID) {

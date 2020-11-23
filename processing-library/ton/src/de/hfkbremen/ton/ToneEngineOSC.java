@@ -90,4 +90,9 @@ public class ToneEngineOSC extends ToneEngine {
     public ArrayList<? extends Instrument> instruments() {
         return null;
     }
+
+    @Override
+    public void replace_instrument(Instrument pInstrument) {
+
+    }
 }

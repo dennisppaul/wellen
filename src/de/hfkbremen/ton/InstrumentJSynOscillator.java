@@ -24,10 +24,10 @@ public class InstrumentJSynOscillator extends InstrumentJSyn {
     }
 
     @ControlElement(properties = {"min=0.0",
-                                  "max=" + (NUMBER_OF_OSCILLATORS - 1),
-                                  "type=knob",
-                                  "radius=20",
-                                  "resolution=" + (NUMBER_OF_OSCILLATORS - 1)}, x = 200, y = 0)
+            "max=" + (NUMBER_OF_OSCILLATORS - 1),
+            "type=knob",
+            "radius=20",
+            "resolution=" + (NUMBER_OF_OSCILLATORS - 1)}, x = 200, y = 0)
     public void osc_type(int pOsc) {
         disconnectModules(mOsc);
         /*

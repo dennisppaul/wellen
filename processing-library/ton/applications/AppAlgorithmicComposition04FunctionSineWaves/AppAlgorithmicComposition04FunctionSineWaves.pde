@@ -16,9 +16,9 @@ static final int INSTRUMENT_FLUTE = 1;
 static final int INSTRUMENT_NOISE = 2;
 
 final int[] mBaseSequence = {0, O, X, 0,
-                                     X, X, 0, X,
-                                     X, 0, X, X,
-                                     7, O, X, 12};
+        X, X, 0, X,
+        X, 0, X, X,
+        7, O, X, 12};
 
 float mTime;
 
@@ -30,8 +30,7 @@ void setup() {
     Beat.start(this, 240);
     Ton.instrument(INSTRUMENT_BASE).osc_type(Instrument.TRIANGLE);
     Ton.instrument(INSTRUMENT_FLUTE).osc_type(Instrument.SAWTOOTH);
-    ArrayList<Instrument> m = (ArrayList<Instrument>) Ton.instruments();
-    m.set(INSTRUMENT_NOISE, new InstrumentJSynOscillator((ToneEngineJSyn) Ton.instance(), INSTRUMENT_NOISE));
+    Ton.replace_instrument(InstrumentJSynOscillator.class, INSTRUMENT_NOISE);
     Ton.instrument(INSTRUMENT_NOISE).osc_type(Instrument.NOISE);
     Ton.instrument(INSTRUMENT_NOISE).note_on(1, 127);
     Ton.instrument(INSTRUMENT_NOISE).sustain(1.0f);
@@ -46,10 +45,18 @@ void draw() {
 
 void beat(int pBeatCount) {
     playBaseSequence(pBeatCount);
-    if (pBeatCount % 2 == 0) {
-        playMelody(pBeatCount / 2 - 1, 1.0f);
+    playMelodyWithEcho(pBeatCount);
+}
+
+void playMelodyWithEcho(int pBeatCount) {
+    if (pBeatCount % 4 == 0) {
+        playMelody(pBeatCount / 4, 1.0f);
+    } else if (pBeatCount % 4 == 1) {
+        playMelody(pBeatCount / 4, 0.5f);
+    } else if (pBeatCount % 4 == 2) {
+        playMelody(pBeatCount / 4, 0.25f);
     } else {
-        playMelody(pBeatCount / 2, 0.33f);
+        playMelody(pBeatCount / 4, 0.125f);
     }
 }
 

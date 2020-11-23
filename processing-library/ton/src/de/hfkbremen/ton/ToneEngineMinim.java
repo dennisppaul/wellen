@@ -13,9 +13,10 @@ public class ToneEngineMinim extends ToneEngine {
     private final Timer mTimer;
     private int mInstrumentID;
     private boolean mIsPlaying = false;
+    private final Minim mMinim;
 
     public ToneEngineMinim() {
-        Minim mMinim = new Minim(this);
+        mMinim = new Minim(this);
         AudioOutput mOut = mMinim.getLineOut(Minim.MONO, 2048);
         mTimer = new Timer();
 
@@ -29,7 +30,7 @@ public class ToneEngineMinim extends ToneEngine {
     public void note_on(int note, int velocity) {
         mIsPlaying = true;
         if (USE_AMP_FRACTION) {
-            velocity /=  NUMBERS_OF_INSTRUMENTS;
+            velocity /= NUMBERS_OF_INSTRUMENTS;
         }
         if (mInstruments.get(instrument().ID()) instanceof InstrumentMinim) {
             InstrumentMinim mInstrument = (InstrumentMinim) mInstruments.get(instrument().ID());
@@ -70,5 +71,14 @@ public class ToneEngineMinim extends ToneEngine {
 
     public ArrayList<? extends Instrument> instruments() {
         return mInstruments;
+    }
+
+    @Override
+    public void replace_instrument(Instrument pInstrument) {
+        mInstruments.set(pInstrument.ID(), pInstrument);
+    }
+
+    public Minim minim() {
+        return mMinim;
     }
 }
