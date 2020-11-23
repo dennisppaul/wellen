@@ -7,7 +7,6 @@ import com.jsyn.unitgen.TriangleOscillator;
 import com.jsyn.unitgen.UnitGenerator;
 import com.jsyn.unitgen.UnitOscillator;
 import com.jsyn.unitgen.WhiteNoise;
-import com.softsynth.shared.time.TimeStamp;
 import controlP5.ControlElement;
 
 public class InstrumentJSynOscillator extends InstrumentJSyn {
@@ -125,13 +124,13 @@ public class InstrumentJSynOscillator extends InstrumentJSyn {
 
     public void note_off() {
         amplitude(0);
+        mIsPlaying = false;
     }
 
-    public void note_on(float pFreq, float pAmp) {
-        TimeStamp mTimeStamp = new TimeStamp(mSynth.getCurrentTime());
-        mFreq = pFreq;
-        update_freq();
-        amplitude(1);
+    public void note_on(int note, int velocity) {
+        frequency(_note_to_frequency(note));
+        amplitude(_velocity_to_amplitude(velocity));
+        mIsPlaying = true;
     }
 
     public void attack(float pAttack) {
@@ -188,5 +187,4 @@ public class InstrumentJSynOscillator extends InstrumentJSyn {
             uo.frequency.set(mFreq + mFreqOffset);
         }
     }
-
 }

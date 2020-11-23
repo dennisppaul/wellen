@@ -16,7 +16,7 @@ public abstract class ToneEngine {
     public static final int INSTRUMENT_WITH_OSCILLATOR_ADSR = 2;
     public static final int INSTRUMENT_WITH_OSCILLATOR_ADSR_FILTER_LFO = 3;
 
-    public static final int NUMBERS_OF_INSTRUMENTS = 12;
+    public static final int NUMBERS_OF_INSTRUMENTS = 16;
     public static final String INSTRUMENT_STR = "instrument";
     public static final int GUI_ATTACK = 0;
     public static final int GUI_DECAY = 1;

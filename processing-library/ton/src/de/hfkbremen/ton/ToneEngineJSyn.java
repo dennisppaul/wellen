@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import java.util.Timer;
 
 import static de.hfkbremen.ton.DSP.DEFAULT_SAMPLING_RATE;
-import static de.hfkbremen.ton.Note.note_to_frequency;
-import static de.hfkbremen.ton.Ton.clamp127;
 import static processing.core.PApplet.constrain;
 
 public class ToneEngineJSyn extends ToneEngine {
@@ -21,7 +19,6 @@ public class ToneEngineJSyn extends ToneEngine {
     private final ArrayList<InstrumentJSyn> mInstruments;
     private final Timer mTimer;
     private int mCurrentInstrumentID;
-    private boolean mIsPlaying = false;
 
     public ToneEngineJSyn() {
         this(INSTRUMENT_WITH_OSCILLATOR_ADSR);
@@ -97,13 +94,10 @@ public class ToneEngineJSyn extends ToneEngine {
     }
 
     public void note_on(int note, int velocity) {
-        mIsPlaying = true;
-        final float mFreq = note_to_frequency(clamp127(note));
-        float mAmp = clamp127(velocity) / 127.0f;
         if (USE_AMP_FRACTION) {
-            mAmp /= (float) NUMBERS_OF_INSTRUMENTS;
+            velocity /= NUMBERS_OF_INSTRUMENTS;
         }
-        getInstrument(getInstrumentID()).note_on(mFreq, mAmp);
+        getInstrument(getInstrumentID()).note_on(note, velocity);
     }
 
     public void note_off(int note) {
@@ -111,7 +105,6 @@ public class ToneEngineJSyn extends ToneEngine {
     }
 
     public void note_off() {
-        mIsPlaying = false;
         getInstrument(getInstrumentID()).note_off();
     }
 
@@ -126,7 +119,7 @@ public class ToneEngineJSyn extends ToneEngine {
     }
 
     public boolean isPlaying() {
-        return mIsPlaying;
+        return mInstruments.get(getInstrumentID()).isPlaying();
     }
 
     public final Instrument instrument(int pInstrumentID) {

@@ -19,7 +19,7 @@ public class SketchExampleBasics03Beat extends PApplet {
     }
 
     public void setup() {
-        /* it is advised to start at the very end of the `step` method */
+        /* it is advised to start the beat at the very end of the `setup` method */
         Beat.start(this, 120);
     }
 
