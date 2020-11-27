@@ -2,7 +2,7 @@ package de.hfkbremen.ton;
 
 import processing.core.PApplet;
 
-public class Wavetable {
+public class Wavetable implements DSPNodeOutput {
 
     public static final int TYPE_SINE = 0;
     public static final int TYPE_TRIANGLE = 1;
@@ -28,6 +28,10 @@ public class Wavetable {
         set_frequency(220);
     }
 
+    public float get_frequency() {
+        return mFrequency;
+    }
+
     public void set_frequency(float pFrequency) {
         if (mFrequency != pFrequency) {
             mFrequency = pFrequency;
@@ -39,6 +43,10 @@ public class Wavetable {
         mInterpolateSamples = pInterpolateSamples;
     }
 
+    public float get_amplitude() {
+        return mAmplitude;
+    }
+
     public void set_amplitude(float pAmplitude) {
         mAmplitude = pAmplitude;
     }
@@ -47,7 +55,7 @@ public class Wavetable {
         return mWavetable;
     }
 
-    public float process() {
+    public float output() {
         mArrayPtr += mStepSize;
         final int i = (int) mArrayPtr;
         final float mFrac = mArrayPtr - i;
