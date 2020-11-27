@@ -39,13 +39,13 @@ public class TestWavetableInterpolation extends PApplet {
                 Wavetable.sine(mWavetable.wavetable());
                 break;
             case '2':
-                Wavetable.sawtooth(mWavetable.wavetable());
-                break;
-            case '3':
                 Wavetable.triangle(mWavetable.wavetable());
                 break;
+            case '3':
+                Wavetable.sawtooth(mWavetable.wavetable());
+                break;
             case '4':
-                Wavetable.square(mWavetable.wavetable());
+                Wavetable.fill(mWavetable.wavetable(), Wavetable.TYPE_SQUARE); /* alternative way to fill wavetable */
                 break;
             case '5':
                 randomize(mWavetable.wavetable());

@@ -4,13 +4,16 @@ import processing.core.PApplet;
 
 public class Wavetable {
 
+    public static final int TYPE_SINE = 0;
+    public static final int TYPE_TRIANGLE = 1;
+    public static final int TYPE_SAWTOOTH = 2;
+    public static final int TYPE_SQUARE = 3;
     private final int mSamplingRate;
     private final float[] mWavetable;
     private float mFrequency;
     private float mStepSize;
     private float mArrayPtr;
     private float mAmplitude;
-
     private boolean mInterpolateSamples = false;
 
     public Wavetable(int pWavetableSize) {
@@ -54,10 +57,27 @@ public class Wavetable {
         if (mInterpolateSamples) {
             float mNextSample = mWavetable[(j + 1) % mWavetable.length];
             float mSample = mWavetable[j];
-            float mInterpolatedSample = mSample * ( 1.0f - mFrac) + mNextSample * mFrac;
-            return  mInterpolatedSample * mAmplitude;
+            float mInterpolatedSample = mSample * (1.0f - mFrac) + mNextSample * mFrac;
+            return mInterpolatedSample * mAmplitude;
         } else {
             return mWavetable[j] * mAmplitude;
+        }
+    }
+
+    public static void fill(float[] pWavetable, int pWavetableType) {
+        switch (pWavetableType) {
+            case TYPE_SINE:
+                sine(pWavetable);
+                break;
+            case TYPE_TRIANGLE:
+                triangle(pWavetable);
+                break;
+            case TYPE_SAWTOOTH:
+                sawtooth(pWavetable);
+                break;
+            case TYPE_SQUARE:
+                square(pWavetable);
+                break;
         }
     }
 
