@@ -11,6 +11,8 @@ public class Wavetable {
     private float mArrayPtr;
     private float mAmplitude;
 
+    private boolean mInterpolateSamples = false;
+
     public Wavetable(int pWavetableSize) {
         this(pWavetableSize, DSP.DEFAULT_SAMPLING_RATE);
     }
@@ -21,6 +23,42 @@ public class Wavetable {
         mArrayPtr = 0;
         mAmplitude = 0.75f;
         set_frequency(220);
+    }
+
+    public void set_frequency(float pFrequency) {
+        if (mFrequency != pFrequency) {
+            mFrequency = pFrequency;
+            mStepSize = mFrequency * ((float) mWavetable.length / (float) mSamplingRate);
+        }
+    }
+
+    public void interpolate(boolean pInterpolateSamples) {
+        mInterpolateSamples = pInterpolateSamples;
+    }
+
+    public void set_amplitude(float pAmplitude) {
+        mAmplitude = pAmplitude;
+    }
+
+    public float[] wavetable() {
+        return mWavetable;
+    }
+
+    public float process() {
+        mArrayPtr += mStepSize;
+        final int i = (int) mArrayPtr;
+        final float mFrac = mArrayPtr - i;
+        final int j = i % mWavetable.length;
+        mArrayPtr = j + mFrac;
+
+        if (mInterpolateSamples) {
+            float mNextSample = mWavetable[(j + 1) % mWavetable.length];
+            float mSample = mWavetable[j];
+            float mInterpolatedSample = mSample * ( 1.0f - mFrac) + mNextSample * mFrac;
+            return  mInterpolatedSample * mAmplitude;
+        } else {
+            return mWavetable[j] * mAmplitude;
+        }
     }
 
     public static void sine(float[] pWavetable) {
@@ -51,29 +89,5 @@ public class Wavetable {
             pWavetable[i] = 1.0f;
             pWavetable[i + pWavetable.length / 2] = -1.0f;
         }
-    }
-
-    public void set_frequency(float pFrequency) {
-        if (mFrequency != pFrequency) {
-            mFrequency = pFrequency;
-            mStepSize = mFrequency * ((float) mWavetable.length / (float) mSamplingRate);
-        }
-    }
-
-    public void set_amplitude(float pAmplitude) {
-        mAmplitude = pAmplitude;
-    }
-
-    public float[] wavetable() {
-        return mWavetable;
-    }
-
-    public float process() {
-        mArrayPtr += mStepSize;
-        final int i = (int) mArrayPtr;
-        final float mFrac = mArrayPtr - i;
-        final int j = i % mWavetable.length;
-        mArrayPtr = j + mFrac;
-        return mWavetable[j] * mAmplitude;
     }
 }
