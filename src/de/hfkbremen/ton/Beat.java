@@ -1,7 +1,5 @@
 package de.hfkbremen.ton;
 
-import processing.core.PApplet;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Timer;
@@ -10,21 +8,21 @@ import java.util.TimerTask;
 public class Beat {
 
     private static final String METHOD_NAME = "beat";
-    private final PApplet mPApplet;
+    private final Object mListener;
     private final Timer mTimer;
     private int mBeat = -1;
     private Method mMethod = null;
     private TimerTask mTask;
 
-    public Beat(PApplet pPApplet, int pBPM) {
-        this(pPApplet);
+    public Beat(Object pListener, int pBPM) {
+        this(pListener);
         bpm(pBPM);
     }
 
-    public Beat(PApplet pPApplet) {
-        mPApplet = pPApplet;
+    public Beat(Object pListener) {
+        mListener = pListener;
         try {
-            mMethod = pPApplet.getClass().getDeclaredMethod(METHOD_NAME, Integer.TYPE);
+            mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME, Integer.TYPE);
         } catch (NoSuchMethodException | SecurityException ex) {
             ex.printStackTrace();
         }
@@ -40,12 +38,12 @@ public class Beat {
         mTimer.scheduleAtFixedRate(mTask, 1000, mPeriod);
     }
 
-    public static Beat start(PApplet pPApplet, int pBPM) {
-        return new Beat(pPApplet, pBPM);
+    public static Beat start(Object pListener, int pBPM) {
+        return new Beat(pListener, pBPM);
     }
 
-    public static Beat start(PApplet pPApplet) {
-        return new Beat(pPApplet);
+    public static Beat start(Object pListener) {
+        return new Beat(pListener);
     }
 
     private class BeatTimerTaskP5 extends TimerTask {
@@ -54,7 +52,7 @@ public class Beat {
         public void run() {
             try {
                 mBeat++;
-                mMethod.invoke(mPApplet, mBeat);
+                mMethod.invoke(mListener, mBeat);
             } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
                 ex.printStackTrace();
             }

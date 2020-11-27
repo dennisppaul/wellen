@@ -1,7 +1,5 @@
 package de.hfkbremen.ton;
 
-import processing.core.PApplet;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -10,7 +8,7 @@ public class BeatMIDI implements MidiInListener {
     private static final String METHOD_NAME = "beat";
     private static final int BPM_SAMPLER_SIZE = 12;
     public static boolean VERBOSE = false;
-    private final PApplet mPApplet;
+    private final Object mListener;
     private Method mMethod = null;
     private int mTickPPQNCounter = 0;
     private boolean mIsRunning = false;
@@ -19,14 +17,14 @@ public class BeatMIDI implements MidiInListener {
     private final float[] mBPMSampler = new float[BPM_SAMPLER_SIZE];
     private int mBPMSamplerCounter = 0;
 
-    public BeatMIDI(PApplet pPApplet, int pBPM) {
-        this(pPApplet);
+    public BeatMIDI(Object pListener, int pBPM) {
+        this(pListener);
     }
 
-    public BeatMIDI(PApplet pPApplet) {
-        mPApplet = pPApplet;
+    public BeatMIDI(Object pListener) {
+        mListener = pListener;
         try {
-            mMethod = pPApplet.getClass().getDeclaredMethod(METHOD_NAME, Integer.TYPE);
+            mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME, Integer.TYPE);
         } catch (NoSuchMethodException | SecurityException ex) {
             ex.printStackTrace();
         }
@@ -54,7 +52,7 @@ public class BeatMIDI implements MidiInListener {
     public void invoke() {
         if (mIsRunning) {
             try {
-                mMethod.invoke(mPApplet, mTickPPQNCounter);
+                mMethod.invoke(mListener, mTickPPQNCounter);
             } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
                 System.err.println("### @BeatMIDI / problem calling `" + METHOD_NAME + "`");
                 ex.printStackTrace();
@@ -139,7 +137,8 @@ public class BeatMIDI implements MidiInListener {
     }
 
     private void estimate_bpm() {
-        float mBPMEstimateFragment = 60 / ((float) ((_timer() - mBPMMeasure) / _timer_divider()) * 24); // 24 PPQN * 4 QN * 60 SEC
+        float mBPMEstimateFragment = 60 / ((float) ((_timer() - mBPMMeasure) / _timer_divider()) * 24); // 24 PPQN *
+        // 4 QN * 60 SEC
         mBPMSampler[mBPMSamplerCounter % BPM_SAMPLER_SIZE] = mBPMEstimateFragment;
         mBPMSamplerCounter++;
         mBPMEstimate = 0;
@@ -150,8 +149,8 @@ public class BeatMIDI implements MidiInListener {
         mBPMMeasure = _timer();
     }
 
-    public static BeatMIDI start(PApplet pPApplet, String pMidiInput) {
-        final BeatMIDI mBeatMIDI = new BeatMIDI(pPApplet);
+    public static BeatMIDI start(Object pListener, String pMidiInput) {
+        final BeatMIDI mBeatMIDI = new BeatMIDI(pListener);
         MidiIn mMidiIn = new MidiIn(pMidiInput);
         mMidiIn.addListener(mBeatMIDI);
         return mBeatMIDI;
