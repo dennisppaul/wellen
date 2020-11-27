@@ -5,7 +5,15 @@ import de.hfkbremen.ton.SampleDataSNARE;
 import de.hfkbremen.ton.Sampler;
 import processing.core.PApplet;
 
-public class SketchExampleDSP06Sampler extends PApplet {
+/**
+ * this examples demonstrates how to use a sampler ( a pre-recorded chunk of memory ) and play it at different speeds
+ * and amplitudes. the sample data can also be loaded from external sources. the `load` method assumes a raw audio
+ * format with 32-bit floats and a value range from [-1.0, 1.0].
+ * <p>
+ * note that samples can either be played once or looped. if a sample is played once it must be rewound before it can
+ * be played again.
+ */
+public class SketchExampleDSP07Sampler extends PApplet {
 
     private Sampler mSampler;
 
@@ -51,11 +59,11 @@ public class SketchExampleDSP06Sampler extends PApplet {
 
     public void audioblock(float[] pOutputSamples) {
         for (int i = 0; i < pOutputSamples.length; i++) {
-            pOutputSamples[i] = mSampler.process();
+            pOutputSamples[i] = mSampler.output();
         }
     }
 
     public static void main(String[] args) {
-        PApplet.main(SketchExampleDSP06Sampler.class.getName());
+        PApplet.main(SketchExampleDSP07Sampler.class.getName());
     }
 }

@@ -6,7 +6,7 @@ import processing.core.PApplet;
 
 /**
  * this examples demonstrates how to use a wavetable ( a chunk of memory ) and play it back at different frequencies and
- * amplitudes.
+ * amplitudes. in this example a wavetable is used to emulate oscillators with different wave shapes.
  */
 public class SketchExampleDSP05Wavetable extends PApplet {
 
@@ -17,9 +17,9 @@ public class SketchExampleDSP05Wavetable extends PApplet {
     }
 
     public void setup() {
+        Wavetable.sine(mWavetable.wavetable());
         DSP.dumpAudioDevices();
         DSP.start(this);
-        Wavetable.triangle(mWavetable.wavetable());
     }
 
     public void draw() {
@@ -59,7 +59,7 @@ public class SketchExampleDSP05Wavetable extends PApplet {
 
     public void audioblock(float[] pOutputSamples) {
         for (int i = 0; i < pOutputSamples.length; i++) {
-            pOutputSamples[i] = mWavetable.process();
+            pOutputSamples[i] = mWavetable.output();
         }
     }
 

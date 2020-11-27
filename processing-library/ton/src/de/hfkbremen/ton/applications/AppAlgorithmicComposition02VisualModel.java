@@ -110,7 +110,7 @@ public class AppAlgorithmicComposition02VisualModel extends PApplet {
         }
 
         float process() {
-            return mSampler.process();
+            return mSampler.output();
         }
 
         void update(float pDelta) {

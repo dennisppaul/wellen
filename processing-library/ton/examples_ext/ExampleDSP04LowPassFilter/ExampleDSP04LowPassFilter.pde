@@ -22,9 +22,9 @@ void settings() {
 }
 
 void setup() {
+    mLPFilter.calculate_coeffs(2.0f, 2000);
     DSP.dumpAudioDevices();
     DSP.start(this);
-    mLPFilter.calculate_coeffs(2.0f, 2000);
 }
 
 void draw() {

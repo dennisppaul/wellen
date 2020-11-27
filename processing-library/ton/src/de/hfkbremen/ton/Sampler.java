@@ -4,7 +4,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
 
-public class Sampler {
+public class Sampler implements DSPNodeOutput {
 
     private float[] mData;
     private float mFrequency;
@@ -24,47 +24,21 @@ public class Sampler {
         set_amplitude(0.75f);
     }
 
-    public static void convertBytesToFloat32(byte[] pBytes, float[] pWavetable, boolean pLittleEndian) {
-        if (pBytes.length / 4 == pWavetable.length) {
-            for (int i = 0; i < pWavetable.length; i++) {
-                pWavetable[i] = bytesToFloat32(pBytes, i * 4, (i + 1) * 4, pLittleEndian);
-            }
-        } else {
-            System.err.println("+++ WARNING @ Wavetable.from_bytes / array sizes do not match. make sure the byte " +
-                               "array is exactly 4 times the size of the float array");
-        }
-    }
-
-    public static float bytesToFloat32(byte[] b) {
-        return bytesToFloat32(b, true);
-    }
-
-    public static float bytesToFloat32(byte[] b, boolean pLittleEndian) {
-        if (b.length != 4) {
-            System.out.println("+++ WARNING @ Sampler.bytesToFloat32(byte[], boolean)");
-        }
-        return ByteBuffer.wrap(b).order(pLittleEndian ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN).getFloat();
-    }
-
-    public static byte[] float32ToByte(float f) {
-        return ByteBuffer.allocate(4).putFloat(f).array();
-    }
-
     /**
-     * load the sample buffer from *raw* byte data. the method assumes a raw format with 32bit float in a value range.
+     * load the sample buffer from *raw* byte data. the method assumes a raw format with 32bit float in a value range from -1.0 to 1.0.
      * from -1.0 to 1.0.
      *
-     * @param pData
+     * @param pData raw byte data ( assuming 4 bytes per sample, 32-bit float )
      */
     public void load(byte[] pData) {
         load(pData, true);
     }
 
     /**
-     * load the sample buffer from *raw* byte data. the method assumes a raw format with 32bit float in a value range.
+     * load the sample buffer from *raw* byte data. the method assumes a raw format with 32bit float in a value range from -1.0 to 1.0.
      *
-     * @param pData
-     * @param pLittleEndian
+     * @param pData raw byte data ( assuming 4 bytes per sample, 32-bit float )
+     * @param pLittleEndian true if byte data is arranged in little endian order
      */
     public void load(byte[] pData, boolean pLittleEndian) {
         if (mData == null || mData.length != pData.length / 4) {
@@ -101,7 +75,7 @@ public class Sampler {
         mData = pData;
     }
 
-    public float process() {
+    public float output() {
         mArrayPtr += mStepSize;
         final int i = (int) mArrayPtr;
         if ((i > mData.length - 1 && !mLoop) || mData.length == 0) {
@@ -119,6 +93,32 @@ public class Sampler {
 
     public void loop(boolean pLoop) {
         mLoop = pLoop;
+    }
+
+    public static void convertBytesToFloat32(byte[] pBytes, float[] pWavetable, boolean pLittleEndian) {
+        if (pBytes.length / 4 == pWavetable.length) {
+            for (int i = 0; i < pWavetable.length; i++) {
+                pWavetable[i] = bytesToFloat32(pBytes, i * 4, (i + 1) * 4, pLittleEndian);
+            }
+        } else {
+            System.err.println("+++ WARNING @ Wavetable.from_bytes / array sizes do not match. make sure the byte " +
+                    "array is exactly 4 times the size of the float array");
+        }
+    }
+
+    public static float bytesToFloat32(byte[] b) {
+        return bytesToFloat32(b, true);
+    }
+
+    public static float bytesToFloat32(byte[] b, boolean pLittleEndian) {
+        if (b.length != 4) {
+            System.out.println("+++ WARNING @ Sampler.bytesToFloat32(byte[], boolean)");
+        }
+        return ByteBuffer.wrap(b).order(pLittleEndian ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN).getFloat();
+    }
+
+    public static byte[] float32ToByte(float f) {
+        return ByteBuffer.allocate(4).putFloat(f).array();
     }
 
     private static float bytesToFloat32(byte[] pBytes, int pStart, int pEnd, boolean pLittleEndian) {

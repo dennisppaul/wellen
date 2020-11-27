@@ -100,7 +100,7 @@ final Sampler mSampler;
         mSampler.set_speed(1);
     }
     float process() {
-        return mSampler.process();
+        return mSampler.output();
     }
     void update(float pDelta) {
         counter += pDelta * speed;

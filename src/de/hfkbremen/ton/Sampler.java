@@ -25,20 +25,20 @@ public class Sampler implements DSPNodeOutput {
     }
 
     /**
-     * load the sample buffer from *raw* byte data. the method assumes a raw format with 32bit float in a value range.
+     * load the sample buffer from *raw* byte data. the method assumes a raw format with 32bit float in a value range from -1.0 to 1.0.
      * from -1.0 to 1.0.
      *
-     * @param pData
+     * @param pData raw byte data ( assuming 4 bytes per sample, 32-bit float )
      */
     public void load(byte[] pData) {
         load(pData, true);
     }
 
     /**
-     * load the sample buffer from *raw* byte data. the method assumes a raw format with 32bit float in a value range.
+     * load the sample buffer from *raw* byte data. the method assumes a raw format with 32bit float in a value range from -1.0 to 1.0.
      *
-     * @param pData
-     * @param pLittleEndian
+     * @param pData raw byte data ( assuming 4 bytes per sample, 32-bit float )
+     * @param pLittleEndian true if byte data is arranged in little endian order
      */
     public void load(byte[] pData, boolean pLittleEndian) {
         if (mData == null || mData.length != pData.length / 4) {

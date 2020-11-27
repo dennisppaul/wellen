@@ -12,9 +12,9 @@ void settings() {
 }
 
 void setup() {
+    Wavetable.sine(mWavetable.wavetable());
     DSP.dumpAudioDevices();
     DSP.start(this);
-    Wavetable.triangle(mWavetable.wavetable());
 }
 
 void draw() {
@@ -54,7 +54,7 @@ void keyPressed() {
 
 void audioblock(float[] pOutputSamples) {
     for (int i = 0; i < pOutputSamples.length; i++) {
-        pOutputSamples[i] = mWavetable.process();
+        pOutputSamples[i] = mWavetable.output();
     }
 }
 
