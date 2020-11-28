@@ -21,6 +21,7 @@ public class AppAlgorithmicComposition01Loops extends PApplet {
 
     public void setup() {
         noStroke();
+        Ton.start();
 
         mBeatA = BeatEvent.create(120);
         mBeatB = BeatEvent.create(140);
