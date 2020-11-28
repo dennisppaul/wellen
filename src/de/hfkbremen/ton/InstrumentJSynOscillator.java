@@ -133,21 +133,21 @@ public class InstrumentJSynOscillator extends InstrumentJSyn {
         mIsPlaying = true;
     }
 
-    public void attack(float pAttack) {
-        super.attack(pAttack);
-    }
-
-    public void decay(float pDecay) {
-        super.decay(pDecay);
-    }
-
-    public void sustain(float pSustain) {
-        super.sustain(pSustain);
-    }
-
-    public void release(float pRelease) {
-        super.release(pRelease);
-    }
+//    public void attack(float pAttack) {
+//        super.attack(pAttack);
+//    }
+//
+//    public void decay(float pDecay) {
+//        super.decay(pDecay);
+//    }
+//
+//    public void sustain(float pSustain) {
+//        super.sustain(pSustain);
+//    }
+//
+//    public void release(float pRelease) {
+//        super.release(pRelease);
+//    }
 
     protected void connectModules(UnitGenerator o) {
         mSynth.add(o);

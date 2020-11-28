@@ -2,6 +2,7 @@ package de.hfkbremen.ton.applications;
 
 import de.hfkbremen.ton.BeatEvent;
 import de.hfkbremen.ton.BeatListener;
+import de.hfkbremen.ton.Instrument;
 import de.hfkbremen.ton.Note;
 import de.hfkbremen.ton.Ton;
 import processing.core.PApplet;
@@ -9,7 +10,7 @@ import processing.core.PApplet;
 public class AppTonIntroductionClip extends PApplet {
 
     private static final float SCALE = 720.0f / 480.0f;
-    private static final float FONT_SCALE = 200;
+    private static final float FONT_SCALE = 36;
     private static boolean mIntroDone;
     private static float mSceneDuration = 0.0f;
     private static BeatEvent mBeatA;
@@ -26,7 +27,7 @@ public class AppTonIntroductionClip extends PApplet {
     public void setup() {
         noStroke();
 
-        textFont(createFont("Times-Roman", FONT_SCALE * SCALE));
+        textFont(createFont("RobotoMono-Bold", FONT_SCALE * SCALE));
         textAlign(CENTER);
 
         Ton.start();
@@ -35,11 +36,11 @@ public class AppTonIntroductionClip extends PApplet {
         mBeatA = BeatEvent.create(120);
         mBeatC = BeatEvent.create(160);
 
-        mLoopA = new Loop(0, Note.NOTE_C4);
+        mLoopA = new Loop(0, Note.NOTE_C6);
         mBeatA.add(mLoopA);
-        mLoopB = new Loop(1, Note.NOTE_C4 + 4);
+        mLoopB = new Loop(1, Note.NOTE_C6 + 4);
         mBeatB.add(mLoopB);
-        mLoopC = new Loop(2, Note.NOTE_C4 + 7);
+        mLoopC = new Loop(2, Note.NOTE_C6 + 7);
         mBeatC.add(mLoopC);
     }
 
@@ -58,8 +59,8 @@ public class AppTonIntroductionClip extends PApplet {
                 ellipse(width * 0.75f, height * 0.5f, width * 0.15f, width * 0.15f);
             }
         } else {
-            if (mSceneDuration < 1.0f) {
-                text("Ton", width * 0.5f, height * 0.5f + FONT_SCALE * 0.25f * SCALE);
+            if (mSceneDuration < 3.0f) {
+                text("DIGITAL MUSIC WORKSHOP", width * 0.5f, height * 0.5f + FONT_SCALE * 0.25f * SCALE);
                 mSceneDuration += 1.0f / frameRate;
             } else {
                 mLoopA.stop();
@@ -79,6 +80,7 @@ public class AppTonIntroductionClip extends PApplet {
             note = pNote;
             instrument = pInstrument;
             playing = false;
+            Ton.instrument(instrument).osc_type(Instrument.TRIANGLE);
         }
 
         public void beat(int pBeatCount) {
@@ -92,7 +94,7 @@ public class AppTonIntroductionClip extends PApplet {
 
             Ton.instrument(instrument);
             if (pBeatCount % 2 == 0) {
-                Ton.note_on(note, 40);
+                Ton.note_on(note, 35, 0.25f);
                 playing = true;
             } else if (pBeatCount % 2 == 1) {
                 Ton.note_off(note);

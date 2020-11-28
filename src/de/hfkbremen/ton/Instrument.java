@@ -1,5 +1,8 @@
 package de.hfkbremen.ton;
 
+import static de.hfkbremen.ton.Note.note_to_frequency;
+import static de.hfkbremen.ton.Ton.clamp127;
+
 public abstract class Instrument {
 
     public static final int SINE = 0;
@@ -111,5 +114,16 @@ public abstract class Instrument {
 
     public abstract void note_on(int note, int velocity);
 
+    // @TODO (move scheduled note_on/off to instrument)
+    // public abstract void note_on(int note, int velocity, float duration);
+
     public abstract boolean isPlaying();
+
+    protected float _note_to_frequency(int note) {
+        return note_to_frequency(clamp127(note));
+    }
+
+    protected float _velocity_to_amplitude(int velocity) {
+        return clamp127(velocity) / 127.0f;
+    }
 }

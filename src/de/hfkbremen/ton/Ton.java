@@ -162,10 +162,10 @@ public abstract class Ton {
         final int mListWidth = 300, mListHeight = 300;
 
         DropdownList dl = controls.addDropdownList("Please select MIDI Device",
-                (controls.papplet.width - mListWidth) / 2,
-                (controls.papplet.height - mListHeight) / 2,
-                mListWidth,
-                mListHeight);
+                                                   (controls.papplet.width - mListWidth) / 2,
+                                                   (controls.papplet.height - mListHeight) / 2,
+                                                   mListWidth,
+                                                   mListHeight);
 
         //        dl.toUpperCase(true);
         dl.setItemHeight(16);
@@ -191,7 +191,7 @@ public abstract class Ton {
     public static void run(Class<? extends PApplet> T, String... pArgs) {
         String[] mArgs;
         mArgs = PApplet.concat(new String[]{"--sketch-path=" + System.getProperty("user.dir") + "/simulator"},
-                pArgs);
+                               pArgs);
         mArgs = PApplet.concat(mArgs, new String[]{T.getName()});
         PApplet.main(mArgs);
     }
@@ -201,6 +201,10 @@ public abstract class Ton {
             instance = ToneEngine.createEngine();
         }
         return instance;
+    }
+
+    public static void set_engine(ToneEngine pEngine) {
+        instance = pEngine;
     }
 
     public static float clamp(float pValue, float pMin, float pMax) {

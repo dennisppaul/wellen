@@ -5,7 +5,6 @@ import com.jsyn.unitgen.LineOut;
 import com.jsyn.unitgen.UnitOscillator;
 
 import java.util.ArrayList;
-import java.util.Timer;
 
 import static de.hfkbremen.ton.DSP.DEFAULT_SAMPLING_RATE;
 import static processing.core.PApplet.constrain;
@@ -17,7 +16,6 @@ public class ToneEngineJSyn extends ToneEngine {
     private final SynthesisEngine mSynth;
     private final LineOut mLineOut;
     private final ArrayList<InstrumentJSyn> mInstruments;
-    private final Timer mTimer;
     private int mCurrentInstrumentID;
 
     public ToneEngineJSyn() {
@@ -72,7 +70,6 @@ public class ToneEngineJSyn extends ToneEngine {
         }
         mCurrentInstrumentID = 0;
         mSynth.start(pSamplingRate, pInputDeviceID, pInputChannels, pOutputDeviceID, pOutputChannels);
-        mTimer = new Timer();
     }
 
     public void mute() {
@@ -97,7 +94,7 @@ public class ToneEngineJSyn extends ToneEngine {
         if (USE_AMP_FRACTION) {
             velocity /= NUMBERS_OF_INSTRUMENTS;
         }
-        getInstrument(getInstrumentID()).note_on(note, velocity);
+        mInstruments.get(getInstrumentID()).note_on(note, velocity);
     }
 
     public void note_off(int note) {
@@ -105,7 +102,7 @@ public class ToneEngineJSyn extends ToneEngine {
     }
 
     public void note_off() {
-        getInstrument(getInstrumentID()).note_off();
+        mInstruments.get(getInstrumentID()).note_off();
     }
 
     public void control_change(int pCC, int pValue) {
@@ -144,9 +141,9 @@ public class ToneEngineJSyn extends ToneEngine {
         }
     }
 
-    public InstrumentJSyn getInstrument(int pInstrumentID) {
-        return mInstruments.get(mCurrentInstrumentID);
-    }
+//    public InstrumentJSyn getInstrument(int pInstrumentID) {
+//        return mInstruments.get(mCurrentInstrumentID);
+//    }
 
     public InstrumentJSynOscillatorADSR getInstrumentBasic(int pInstrumentID) {
         if (mInstruments.get(mCurrentInstrumentID) instanceof InstrumentJSynOscillatorADSR) {
