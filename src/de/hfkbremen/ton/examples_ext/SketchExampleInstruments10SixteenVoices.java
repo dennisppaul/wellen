@@ -15,6 +15,7 @@ public class SketchExampleInstruments10SixteenVoices extends PApplet {
     }
 
     public void setup() {
+        Ton.start();
         Beat.start(this, 120 * 3);
     }
 
@@ -22,11 +23,12 @@ public class SketchExampleInstruments10SixteenVoices extends PApplet {
         background(255);
         noStroke();
         fill(0);
-        float mScale = (mBeatCount % 2) * 0.25f + 0.25f;
+        float mScale = (mBeatCount % 32) * 0.025f + 0.25f;
         ellipse(width * 0.5f, height * 0.5f, width * mScale, width * mScale);
     }
 
     public void beat(int pBeatCount) {
+        mBeatCount = pBeatCount;
         int mInstrument = 15 - pBeatCount % 16;
         Ton.instrument(mInstrument);
         if (Ton.isPlaying()) {

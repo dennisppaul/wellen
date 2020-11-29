@@ -19,13 +19,13 @@ public class TestWavetableInterpolation extends PApplet {
         Wavetable.sine(mWavetable.wavetable());
         mWavetable.set_frequency(172.265625f);
         mWavetable.set_amplitude(0.25f);
-        mWavetable.interpolate(true);
+        mWavetable.interpolate_samples(true);
     }
 
     public void draw() {
         background(255);
         DSP.draw_buffer(g, width, height);
-        mWavetable.interpolate(!mousePressed);
+        mWavetable.interpolate_samples(!mousePressed);
     }
 
     public void audioblock(float[] pOutputSamples) {

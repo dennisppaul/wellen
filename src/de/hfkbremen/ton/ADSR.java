@@ -6,7 +6,7 @@ import static de.hfkbremen.ton.Ton.DEFAULT_RELEASE;
 import static de.hfkbremen.ton.Ton.DEFAULT_SAMPLING_RATE;
 import static de.hfkbremen.ton.Ton.DEFAULT_SUSTAIN;
 
-//@TODO(when re-triggering attack stage while sustain/release is still running causes *click*)
+//@TODO(investigate some glitches that occur occasionally)
 public class ADSR implements DSPNodeOutput {
 
     /*
@@ -38,10 +38,9 @@ public class ADSR implements DSPNodeOutput {
      *
      */
 
-    private static final boolean DEBUG_ADSR = true;
+    private static final boolean DEBUG_ADSR = false;
     private final int mSamplingRate;
     private final float FADE_TO_ZERO_RATE_SEC;
-    private boolean mScheduleStateChange = false;
     private float mAttack = DEFAULT_ATTACK;
     private float mDecay = DEFAULT_DECAY;
     private float mSustain = DEFAULT_SUSTAIN;
@@ -52,7 +51,7 @@ public class ADSR implements DSPNodeOutput {
 
     public ADSR(int pSamplingRate) {
         mSamplingRate = pSamplingRate;
-        FADE_TO_ZERO_RATE_SEC = 100.0f / mSamplingRate;
+        FADE_TO_ZERO_RATE_SEC = 0.05f;
         setState(ENVELOPE_STATE.IDLE);
     }
 
@@ -62,17 +61,15 @@ public class ADSR implements DSPNodeOutput {
 
     @Override
     public float output() {
-        step_float();
+        step();
         return mAmp;
     }
 
     public void start() {
-        mScheduleStateChange = true;
         check_scheduled_attack_state();
     }
 
     public void stop() {
-        mScheduleStateChange = true;
         check_scheduled_release_state();
     }
 
@@ -96,29 +93,29 @@ public class ADSR implements DSPNodeOutput {
         return pDuration > 0 ? (pDelta / mSamplingRate) / pDuration : pDelta;
     }
 
-    void check_scheduled_attack_state() {
-        if (mScheduleStateChange) {
-            if (mAmp > 0.0f) {
+    private void check_scheduled_attack_state() {
+        if (mAmp > 0.0f) {
+            if (mState != ENVELOPE_STATE.PRE_ATTACK_FADE_TO_ZERO) {
                 mDelta = compute_delta_fraction(-mAmp, FADE_TO_ZERO_RATE_SEC);
                 setState(ENVELOPE_STATE.PRE_ATTACK_FADE_TO_ZERO);
-            } else {
-                mDelta = compute_delta_fraction(1.0f, mAttack);
-                setState(ENVELOPE_STATE.ATTACK);
             }
+        } else {
+            mDelta = compute_delta_fraction(1.0f, mAttack);
+            setState(ENVELOPE_STATE.ATTACK);
         }
     }
 
-    void check_scheduled_release_state() {
-        if (mScheduleStateChange) {
+    private void check_scheduled_release_state() {
+        if (mState != ENVELOPE_STATE.RELEASE) {
             mDelta = compute_delta_fraction(-mAmp, mRelease);
             setState(ENVELOPE_STATE.RELEASE);
         }
     }
 
-    private void step_float() {
+    private void step() {
         switch (mState) {
             case IDLE:
-                check_scheduled_attack_state();
+            case SUSTAIN:
                 break;
             case ATTACK:
                 // increase amp to sustain_level in ATTACK sec
@@ -127,8 +124,6 @@ public class ADSR implements DSPNodeOutput {
                     mAmp = 1.0f;
                     mDelta = compute_delta_fraction(-(1.0f - mSustain), mDecay);
                     setState(ENVELOPE_STATE.DECAY);
-                } else {
-                    check_scheduled_release_state();
                 }
                 break;
             case DECAY:
@@ -137,12 +132,7 @@ public class ADSR implements DSPNodeOutput {
                 if (mAmp <= mSustain) {
                     mAmp = mSustain;
                     setState(ENVELOPE_STATE.SUSTAIN);
-                } else {
-                    check_scheduled_release_state();
                 }
-                break;
-            case SUSTAIN:
-                check_scheduled_release_state();
                 break;
             case RELEASE:
                 // decrease amp to 0.0 in RELEASE sec
@@ -150,8 +140,6 @@ public class ADSR implements DSPNodeOutput {
                 if (mAmp <= 0.0f) {
                     mAmp = 0.0f;
                     setState(ENVELOPE_STATE.IDLE);
-                } else {
-                    check_scheduled_attack_state();
                 }
                 break;
             case PRE_ATTACK_FADE_TO_ZERO:
@@ -172,7 +160,6 @@ public class ADSR implements DSPNodeOutput {
             System.out.println(mAmp);
         }
         mState = pState;
-        mScheduleStateChange = false;
     }
 
     private enum ENVELOPE_STATE {

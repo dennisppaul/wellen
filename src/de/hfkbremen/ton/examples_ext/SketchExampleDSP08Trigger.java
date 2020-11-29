@@ -34,7 +34,7 @@ public class SketchExampleDSP08Trigger extends PApplet {
 
         mWavetable = new Wavetable(64); /* use wavetable as LFO */
         Wavetable.sine(mWavetable.wavetable());
-        mWavetable.interpolate(true); /* interpolate between samples to remove *steps* from the signal */
+        mWavetable.interpolate_samples(true); /* interpolate between samples to remove *steps* from the signal */
         mWavetable.set_frequency(1.0f / 3.0f); /* set phase duration to 3SEC */
 
         Ton.start();

@@ -14,12 +14,13 @@ public class InstrumentSoftware extends Instrument implements DSPNodeOutput {
     public static final float DEFAULT_FREQUENCY = 220.0f;
     private final int mSamplingRate;
     private final ADSR mADSR;
-    private final Wavetable mWavetable;
+    private final Wavetable mVCO;
+    private final Wavetable mFrequencyLFO;
+    private final Wavetable mAmplitudeLFO;
     protected float mAmp;
     protected float mFreq;
     protected boolean mIsPlaying = false;
     protected float mFreqOffset;
-    private int mCounter = 0;
     private boolean mEnableADSR;
     private int mOscType;
 
@@ -32,12 +33,33 @@ public class InstrumentSoftware extends Instrument implements DSPNodeOutput {
         mADSR.set_sustain(DEFAULT_SUSTAIN);
         mADSR.set_release(DEFAULT_RELEASE);
         enable_ADSR(true);
-        mWavetable = new Wavetable(pWavetableSize, pSamplingRate);
-        mWavetable.interpolate(true);
-        mWavetable.set_amplitude(1.0f);
+
+        mVCO = new Wavetable(pWavetableSize, pSamplingRate);
+        mVCO.interpolate_samples(true);
         osc_type(OSC_SINE);
         amplitude(0.0f);
         frequency(DEFAULT_FREQUENCY);
+        mVCO.set_amplitude(mAmp);
+        mVCO.set_frequency(mFreq);
+
+        /* setup LFO for frequency */
+        mFrequencyLFO = new Wavetable(pWavetableSize, pSamplingRate);
+        Wavetable.sine(mFrequencyLFO.wavetable());
+        mFrequencyLFO.interpolate_samples(true);
+        mFrequencyLFO.set_frequency(0);
+        mFrequencyLFO.set_amplitude(0);
+
+        /* setup LFO for amplitude */
+        mAmplitudeLFO = new Wavetable(pWavetableSize, pSamplingRate);
+        Wavetable.sine(mAmplitudeLFO.wavetable());
+        mAmplitudeLFO.interpolate_samples(true);
+        mAmplitudeLFO.set_frequency(0);
+        mAmplitudeLFO.set_amplitude(0);
+
+//        mFrequencyLFO.set_frequency(5);
+//        mFrequencyLFO.set_amplitude(40);
+//        mAmplitudeLFO.set_amplitude(0.3f);
+//        mAmplitudeLFO.set_frequency(5);
     }
 
     public InstrumentSoftware(int pID, int pSamplingRate) {
@@ -46,10 +68,16 @@ public class InstrumentSoftware extends Instrument implements DSPNodeOutput {
 
     @Override
     public float output() {
-        mCounter++;
+        final float mLFOAmp = PApplet.map(mAmplitudeLFO.output(), -1.0f, 1.0f, 0, 1);
+        final float mLFOFreq = mFrequencyLFO.output();
+
+        mVCO.set_amplitude(mAmp);
+        mVCO.set_frequency(mFreq);
+
         final float mADSRAmp = mEnableADSR ? mADSR.output() : 1.0f;
-        final float mSample = mWavetable.output();
-        return mADSRAmp * mAmp * PApplet.sin(2 * PApplet.PI * mFreq * mCounter / (float) mSamplingRate);
+        float mSample = mVCO.output();
+        mSample = Ton.clamp(mSample, -1.0f, 1.0f);
+        return mADSRAmp * mSample;
     }
 
     public void enable_ADSR(boolean pEnableADSR) {
@@ -83,7 +111,7 @@ public class InstrumentSoftware extends Instrument implements DSPNodeOutput {
     @Override
     public void osc_type(int pOsc) {
         mOscType = pOsc;
-        Wavetable.fill(mWavetable.wavetable(), pOsc);
+        Wavetable.fill(mVCO.wavetable(), pOsc);
     }
 
     @Override
@@ -93,7 +121,6 @@ public class InstrumentSoftware extends Instrument implements DSPNodeOutput {
 
     @Override
     public void lfo_amp(float pLFOAmp) {
-
     }
 
     @Override
@@ -140,7 +167,6 @@ public class InstrumentSoftware extends Instrument implements DSPNodeOutput {
     @Override
     public void amplitude(float pAmp) {
         mAmp = pAmp;
-        update_amp();
     }
 
     @Override
@@ -151,7 +177,6 @@ public class InstrumentSoftware extends Instrument implements DSPNodeOutput {
     @Override
     public void frequency(float freq) {
         mFreq = freq;
-        mWavetable.set_frequency(mFreq);
     }
 
     @Override
@@ -176,8 +201,5 @@ public class InstrumentSoftware extends Instrument implements DSPNodeOutput {
     @Override
     public boolean isPlaying() {
         return mIsPlaying;
-    }
-
-    protected void update_amp() {
     }
 }

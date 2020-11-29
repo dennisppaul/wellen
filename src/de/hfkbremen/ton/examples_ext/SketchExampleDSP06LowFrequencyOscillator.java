@@ -32,12 +32,12 @@ public class SketchExampleDSP06LowFrequencyOscillator extends PApplet {
 
         /* setup LFO for frequency */
         Wavetable.sine(mFrequencyLFO.wavetable());
-        mFrequencyLFO.interpolate(true);
+        mFrequencyLFO.interpolate_samples(true);
         mFrequencyLFO.set_frequency(0);
 
         /* setup LFO for amplitude */
         Wavetable.sine(mAmplitudeLFO.wavetable());
-        mAmplitudeLFO.interpolate(true);
+        mAmplitudeLFO.interpolate_samples(true);
         mAmplitudeLFO.set_frequency(0);
 
         DSP.dumpAudioDevices();

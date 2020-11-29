@@ -61,7 +61,8 @@ public class AppTonIntroductionClip extends PApplet {
             if (mSceneDuration < 3.0f) {
                 text("DIGITAL MUSIC WORKSHOP", width * 0.5f, height * 0.5f + FONT_SCALE * 0.25f * SCALE);
                 mSceneDuration += 1.0f / frameRate;
-            } else {
+            }
+            if (mSceneDuration > 2.0f) {
                 mLoopA.stop();
                 mLoopB.stop();
                 mLoopC.stop();
@@ -93,7 +94,7 @@ public class AppTonIntroductionClip extends PApplet {
 
             Ton.instrument(instrument);
             if (pBeatCount % 2 == 0) {
-                Ton.note_on(note, 35, 0.25f);
+                Ton.note_on(note, 35);
                 playing = true;
             } else if (pBeatCount % 2 == 1) {
                 Ton.note_off(note);

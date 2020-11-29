@@ -64,10 +64,6 @@ public class SketchExampleInstruments01ADSR extends PApplet {
         drawDiagram();
     }
 
-    public void mouseDragged() {
-        updateADSR();
-    }
-
     public void mousePressed() {
         mNote = Scale.note(Scale.MAJOR_CHORD_7, Note.NOTE_A2, (int) random(0, 10));
         Ton.note_on(mNote, 100);
@@ -75,6 +71,10 @@ public class SketchExampleInstruments01ADSR extends PApplet {
 
     public void mouseReleased() {
         Ton.note_off();
+    }
+
+    public void mouseDragged() {
+        updateADSR();
     }
 
     private void drawDiagram() {
@@ -95,20 +95,20 @@ public class SketchExampleInstruments01ADSR extends PApplet {
         strokeWeight(3);
         stroke(0);
         line(0, 0,
-                mSliderAttack.current_position_x(),
-                mSliderAttack.current_position_y());
+             mSliderAttack.current_position_x(),
+             mSliderAttack.current_position_y());
         line(mSliderAttack.current_position_x(),
-                mSliderAttack.current_position_y(),
-                mSliderDecay.current_position_x(),
-                mSliderDecay.current_position_y());
+             mSliderAttack.current_position_y(),
+             mSliderDecay.current_position_x(),
+             mSliderDecay.current_position_y());
         line(mSliderDecay.current_position_x(),
-                mSliderDecay.current_position_y(),
-                mSliderSustain.current_position_x(),
-                mSliderSustain.current_position_y());
+             mSliderDecay.current_position_y(),
+             mSliderSustain.current_position_x(),
+             mSliderSustain.current_position_y());
         line(mSliderSustain.current_position_x(),
-                mSliderSustain.current_position_y(),
-                mSliderRelease.current_position_x(),
-                mSliderRelease.current_position_y());
+             mSliderSustain.current_position_y(),
+             mSliderRelease.current_position_x(),
+             mSliderRelease.current_position_y());
         strokeWeight(1);
     }
 
@@ -182,7 +182,7 @@ public class SketchExampleInstruments01ADSR extends PApplet {
 
         boolean hit(float pX, float pY) {
             final float mDistance = PVector.dist(new PVector().set(pX, pY),
-                    new PVector().set(current_position_x(), current_position_y()));
+                                                 new PVector().set(current_position_x(), current_position_y()));
             return mDistance < radius * 2;
         }
 

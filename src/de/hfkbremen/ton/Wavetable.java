@@ -17,9 +17,12 @@ public class Wavetable implements DSPNodeOutput {
     private final float[] mWavetable;
     private float mFrequency;
     private float mStepSize;
+    private float mDesiredStepSize;
     private float mArrayPtr;
     private float mAmplitude;
     private boolean mInterpolateSamples = false;
+    private float mInterpolateFrequencyChangeFactor = 0.0f;
+    private float mInterpolateFrequencyDelta;
 
     public Wavetable(int pWavetableSize) {
         this(pWavetableSize, DEFAULT_SAMPLING_RATE);
@@ -96,12 +99,22 @@ public class Wavetable implements DSPNodeOutput {
     public void set_frequency(float pFrequency) {
         if (mFrequency != pFrequency) {
             mFrequency = pFrequency;
-            mStepSize = mFrequency * ((float) mWavetable.length / (float) mSamplingRate);
+            if (mInterpolateFrequencyChangeFactor > 0.0f) {
+                mDesiredStepSize = computeStepSize();
+                mInterpolateFrequencyDelta = mDesiredStepSize - mStepSize;
+                mInterpolateFrequencyDelta *= mInterpolateFrequencyChangeFactor;
+            } else {
+                mStepSize = computeStepSize();
+            }
         }
     }
 
-    public void interpolate(boolean pInterpolateSamples) {
+    public void interpolate_samples(boolean pInterpolateSamples) {
         mInterpolateSamples = pInterpolateSamples;
+    }
+
+    public void interpolate_frequency_change(float pInterpolateFrequencyChangeFactor) {
+        mInterpolateFrequencyChangeFactor = pInterpolateFrequencyChangeFactor;
     }
 
     public float get_amplitude() {
@@ -117,6 +130,15 @@ public class Wavetable implements DSPNodeOutput {
     }
 
     public float output() {
+        if (mInterpolateFrequencyChangeFactor > 0.0f) {
+            if (mStepSize != mDesiredStepSize) {
+                mStepSize += mInterpolateFrequencyDelta;
+                final float mDelta = mDesiredStepSize - mStepSize;
+                if (Math.abs(mDelta) < 0.1f) {
+                    mStepSize = mDesiredStepSize;
+                }
+            }
+        }
         mArrayPtr += mStepSize;
         final int i = (int) mArrayPtr;
         final float mFrac = mArrayPtr - i;
@@ -131,5 +153,9 @@ public class Wavetable implements DSPNodeOutput {
         } else {
             return mWavetable[j] * mAmplitude;
         }
+    }
+
+    private float computeStepSize() {
+        return mFrequency * ((float) mWavetable.length / (float) mSamplingRate);
     }
 }

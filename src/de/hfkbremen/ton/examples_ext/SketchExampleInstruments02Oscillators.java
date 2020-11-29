@@ -28,12 +28,10 @@ public class SketchExampleInstruments02Oscillators extends PApplet {
     }
 
     public void draw() {
-        if (mIsPlaying) {
-            int mColor = (mNote - Note.NOTE_A2) * 5 + 50;
-            background(mColor);
-        } else {
-            background(255);
-        }
+        background(255);
+        fill(0);
+        float mSize = map(mNote, 33, 69, 80, 320);
+        ellipse(width * 0.5f, height * 0.5f, Ton.isPlaying() ? mSize : 5, Ton.isPlaying() ? mSize : 5);
     }
 
     public void keyPressed() {
