@@ -4,6 +4,7 @@ import de.hfkbremen.ton.Beat;
 import de.hfkbremen.ton.Instrument;
 import de.hfkbremen.ton.Note;
 import de.hfkbremen.ton.Scale;
+import de.hfkbremen.ton.Ton;
 import de.hfkbremen.ton.ToneEngine;
 import de.hfkbremen.ton.ToneEngineJSyn;
 import processing.core.PApplet;
@@ -39,7 +40,7 @@ public class AppImageScannerSequencer extends PApplet {
         mInstrument.decay(0.1f);
         mInstrument.sustain(0.0f);
         mInstrument.release(0.01f);
-        mInstrument.osc_type(Instrument.SAWTOOTH);
+        mInstrument.osc_type(Ton.OSC_SAWTOOTH);
 
         final int mSpacing = 48;
         final int NUMBER_OF_SAMPLERS = 16;

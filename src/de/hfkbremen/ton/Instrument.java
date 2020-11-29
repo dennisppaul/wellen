@@ -1,16 +1,14 @@
 package de.hfkbremen.ton;
 
 import static de.hfkbremen.ton.Note.note_to_frequency;
+import static de.hfkbremen.ton.Ton.DEFAULT_ATTACK;
+import static de.hfkbremen.ton.Ton.DEFAULT_DECAY;
+import static de.hfkbremen.ton.Ton.DEFAULT_RELEASE;
+import static de.hfkbremen.ton.Ton.DEFAULT_SUSTAIN;
 import static de.hfkbremen.ton.Ton.clamp127;
 
 public abstract class Instrument {
 
-    public static final int SINE = 0;
-    public static final int TRIANGLE = 1;
-    public static final int SAWTOOTH = 2;
-    public static final int SQUARE = 3;
-    public static final int NOISE = 4;
-    public static final int NUMBER_OF_OSCILLATORS = 5;
     public static final String ADSR_DIAGRAM = "    ^    /\\\n"
                                               + "    |   /  \\\n"
                                               + "    |  /    \\______\n"
@@ -18,10 +16,6 @@ public abstract class Instrument {
                                               + "    |/              \\\n"
                                               + "    +---------------------->\n"
                                               + "    [A   ][D][S   ][R]\n";
-    protected final float DEFAULT_ATTACK = 0.005f;
-    protected final float DEFAULT_DECAY = 0.01f;
-    protected final float DEFAULT_SUSTAIN = 0.5f;
-    protected final float DEFAULT_RELEASE = 0.075f;
     private final int mID;
     /**
      * time parameter defining the time it takes for the set_amp to reach maximum level.

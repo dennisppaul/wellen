@@ -1,6 +1,5 @@
 package de.hfkbremen.ton.applications;
 
-import de.hfkbremen.ton.Instrument;
 import de.hfkbremen.ton.Ton;
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -54,7 +53,7 @@ public class AppOscJibberish extends PApplet {
             mFreqStep = random(0.02f, 0.04f);
             mAmpStep = random(0.5f, 0.8f);
 
-            Ton.instrument(mID).osc_type(Instrument.SAWTOOTH);
+            Ton.instrument(mID).osc_type(Ton.OSC_SAWTOOTH);
             Ton.instrument(mID).amplitude(0.0f);
             Ton.instrument(mID).frequency(200.0f);
         }

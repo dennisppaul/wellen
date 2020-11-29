@@ -1,6 +1,7 @@
 package de.hfkbremen.ton.examples_ext;
 
 import de.hfkbremen.ton.DSP;
+import de.hfkbremen.ton.Ton;
 import processing.core.PApplet;
 
 /**
@@ -11,7 +12,7 @@ public class SketchExampleDSP04LowPassFilter extends PApplet {
     private final SecondOrderLowPassFilter mLPFilter = new SecondOrderLowPassFilter();
     private final ButterworthLowPassFilter mButterworthLowPassFilter = new ButterworthLowPassFilter();
     private final NaiveLowPassFilter mNaiveLowPassFilter = new NaiveLowPassFilter();
-    private final float mFreq = 2.0f * DSP.DEFAULT_SAMPLING_RATE / DSP.DEFAULT_AUDIOBLOCK_SIZE;
+    private final float mFreq = 2.0f * Ton.DEFAULT_SAMPLING_RATE / Ton.DEFAULT_AUDIOBLOCK_SIZE;
     private float mCounter = 0;
     private int mFilterType;
 
@@ -111,7 +112,7 @@ public class SketchExampleDSP04LowPassFilter extends PApplet {
         tp_coeffs m_coeffs = new tp_coeffs();
 
         public tp_coeffs calculate_coeffs(int fc) {
-            final int fs = DSP.DEFAULT_SAMPLING_RATE;
+            final int fs = Ton.DEFAULT_SAMPLING_RATE;
             float c = 1.0f / (tan(filter_constants.pi * fc / fs));
             m_coeffs.a0 = 1.0f / (1.0f + filter_constants.sqrt2 * c + pow(c, 2.0f));
             m_coeffs.a1 = 2.0f * m_coeffs.a0;
@@ -149,7 +150,7 @@ public class SketchExampleDSP04LowPassFilter extends PApplet {
         tp_coeffs m_coeffs = new tp_coeffs();
 
         public tp_coeffs calculate_coeffs(float Q, int fc) {
-            final int fs = DSP.DEFAULT_SAMPLING_RATE;
+            final int fs = Ton.DEFAULT_SAMPLING_RATE;
             float w = 2.0f * filter_constants.pi * fc / fs;
             float d = 1.0f / Q;
             float b = 0.5f * (1.0f - (d / 2) * sin(w)) / (1.0f + (d / 2.0f) * sin(w));

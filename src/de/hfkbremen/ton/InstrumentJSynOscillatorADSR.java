@@ -12,6 +12,8 @@ import com.jsyn.unitgen.WhiteNoise;
 import com.softsynth.shared.time.TimeStamp;
 import controlP5.ControlElement;
 
+import static de.hfkbremen.ton.Ton.*;
+
 public class InstrumentJSynOscillatorADSR extends InstrumentJSynOscillator {
 
     protected VariableRateMonoReader mEnvPlayer;
@@ -39,19 +41,19 @@ public class InstrumentJSynOscillatorADSR extends InstrumentJSynOscillator {
          NOISE
          */
         switch (pOsc) {
-            case SINE:
+            case OSC_SINE:
                 mOsc = new SineOscillator();
                 break;
-            case TRIANGLE:
+            case OSC_TRIANGLE:
                 mOsc = new TriangleOscillator();
                 break;
-            case SAWTOOTH:
+            case OSC_SAWTOOTH:
                 mOsc = new SawtoothOscillator();
                 break;
-            case SQUARE:
+            case OSC_SQUARE:
                 mOsc = new SquareOscillator();
                 break;
-            case NOISE:
+            case OSC_NOISE:
                 mOsc = new WhiteNoise();
                 break;
         }
@@ -61,15 +63,15 @@ public class InstrumentJSynOscillatorADSR extends InstrumentJSynOscillator {
     public int get_osc_type() {
         int mOscID = -1;
         if (mOsc instanceof SineOscillator) {
-            mOscID = SINE;
+            mOscID = OSC_SINE;
         } else if (mOsc instanceof TriangleOscillator) {
-            mOscID = TRIANGLE;
+            mOscID = OSC_TRIANGLE;
         } else if (mOsc instanceof SawtoothOscillator) {
-            mOscID = SAWTOOTH;
+            mOscID = OSC_SAWTOOTH;
         } else if (mOsc instanceof SquareOscillator) {
-            mOscID = SQUARE;
+            mOscID = OSC_SQUARE;
         } else if (mOsc instanceof WhiteNoise) {
-            mOscID = NOISE;
+            mOscID = OSC_NOISE;
         }
         return mOscID;
     }

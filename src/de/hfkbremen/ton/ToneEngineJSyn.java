@@ -6,7 +6,7 @@ import com.jsyn.unitgen.UnitOscillator;
 
 import java.util.ArrayList;
 
-import static de.hfkbremen.ton.DSP.DEFAULT_SAMPLING_RATE;
+import static de.hfkbremen.ton.Ton.DEFAULT_SAMPLING_RATE;
 import static processing.core.PApplet.constrain;
 
 public class ToneEngineJSyn extends ToneEngine {
@@ -31,11 +31,11 @@ public class ToneEngineJSyn extends ToneEngine {
     }
 
     public ToneEngineJSyn(int pDefaultInstrumentType,
-            int pSamplingRate,
-            int pInputDeviceID,
-            int pInputChannels,
-            int pOutputDeviceID,
-            int pOutputChannels) {
+                          int pSamplingRate,
+                          int pInputDeviceID,
+                          int pInputChannels,
+                          int pOutputDeviceID,
+                          int pOutputChannels) {
         mSynth = new SynthesisEngine();
         prepareExitHandler();
 
@@ -137,7 +137,7 @@ public class ToneEngineJSyn extends ToneEngine {
             mInstruments.set(pInstrument.ID(), (InstrumentJSyn) pInstrument);
         } else {
             System.err.println("+++ @ToneEngineJSyn.replace_instrument(Instrument) / instrument must be of type " +
-                    "`InstrumentJSyn`");
+                               "`InstrumentJSyn`");
         }
     }
 

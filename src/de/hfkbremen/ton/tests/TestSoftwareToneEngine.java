@@ -3,12 +3,13 @@ package de.hfkbremen.ton.tests;
 import de.hfkbremen.ton.Ton;
 import de.hfkbremen.ton.ToneEngineSoftware;
 import processing.core.PApplet;
-
-import static de.hfkbremen.ton.DSP.DEFAULT_AUDIOBLOCK_SIZE;
+import processing.core.PGraphics;
 
 public class TestSoftwareToneEngine extends PApplet {
 
     private ToneEngineSoftware mToneEngine;
+
+    private MMasterEffect mPostProcessing;
 
     public void settings() {
         size(640, 480);
@@ -17,17 +18,19 @@ public class TestSoftwareToneEngine extends PApplet {
     public void setup() {
         mToneEngine = new ToneEngineSoftware();
         Ton.set_engine(mToneEngine);
-        mToneEngine.register_audioblock_callback(new MMasterEffect());
+        mPostProcessing = new MMasterEffect();
+        mToneEngine.register_audioblock_callback(mPostProcessing);
     }
 
     public void draw() {
         background(255);
         fill(0);
         ellipse(width * 0.5f, height * 0.5f, Ton.isPlaying() ? 100 : 5, Ton.isPlaying() ? 100 : 5);
+        draw_buffer(g, width, height);
     }
 
     public void mousePressed() {
-        int mNote = 45 + (int) random(0, 12);
+        int mNote = 53;
         Ton.instrument(0).note_on(mNote, 40);
         Ton.instrument(1).note_on(mNote + 7, 30);
         Ton.instrument(2).note_on(mNote + 12, 30);
@@ -39,17 +42,30 @@ public class TestSoftwareToneEngine extends PApplet {
         Ton.instrument(2).note_off();
     }
 
+    private void draw_buffer(PGraphics g, int pWidth, int pHeight) {
+        if (mPostProcessing.buffer != null) {
+            final int mBufferSize = mPostProcessing.buffer.length;
+            for (int i = 0; i < mBufferSize - 1; i++) {
+                g.line(map(i, 0, mBufferSize, 0, pWidth),
+                       map(mPostProcessing.buffer[i], -1, 1, 0, pHeight),
+                       map(i + 1, 0, mBufferSize, 0, pWidth),
+                       map(mPostProcessing.buffer[i + 1], -1, 1, 0, pHeight));
+            }
+        }
+    }
+
     private static class MMasterEffect implements ToneEngineSoftware.AudioOutputCallback {
 
         float[] mDelayBuffer = new float[4096];
         int mDelayID = 0;
         int mDelayOffset = 512;
         float mDecay = 0.9f;
-        float mMix = 0.9f;
+        float mMix = 0.7f;
+        float[] buffer = null;
 
         @Override
         public void audioblock(float[][] pOutputSamples) {
-            for (int i = 0; i < DEFAULT_AUDIOBLOCK_SIZE; i++) {
+            for (int i = 0; i < pOutputSamples[0].length; i++) {
                 mDelayID++;
                 mDelayID %= mDelayBuffer.length;
                 int mOffsetID = mDelayID + mDelayOffset;
@@ -58,6 +74,7 @@ public class TestSoftwareToneEngine extends PApplet {
                 pOutputSamples[1][i] = pOutputSamples[0][i];
                 mDelayBuffer[mDelayID] = pOutputSamples[0][i] * mDecay;
             }
+            buffer = pOutputSamples[0];
         }
     }
 

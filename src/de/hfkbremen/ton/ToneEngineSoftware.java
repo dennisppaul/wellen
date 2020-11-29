@@ -2,8 +2,8 @@ package de.hfkbremen.ton;
 
 import java.util.ArrayList;
 
-import static de.hfkbremen.ton.DSP.DEFAULT_AUDIOBLOCK_SIZE;
-import static de.hfkbremen.ton.DSP.DEFAULT_SAMPLING_RATE;
+import static de.hfkbremen.ton.Ton.DEFAULT_AUDIOBLOCK_SIZE;
+import static de.hfkbremen.ton.Ton.DEFAULT_SAMPLING_RATE;
 import static processing.core.PApplet.constrain;
 
 public class ToneEngineSoftware extends ToneEngine implements AudioBufferRenderer {
@@ -99,7 +99,7 @@ public class ToneEngineSoftware extends ToneEngine implements AudioBufferRendere
 
     @Override
     public void audioblock(float[][] pOutputSamples, float[][] pInputSamples) {
-        // @TODO(implememnt multi channels)
+        // @TODO(implement multi channels)
         for (int i = 0; i < pOutputSamples[0].length; i++) {
             float mSample = 0;
             for (InstrumentSoftware mInstrument : mInstruments) {

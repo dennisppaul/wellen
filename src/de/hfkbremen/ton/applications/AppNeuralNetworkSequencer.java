@@ -1,7 +1,6 @@
 package de.hfkbremen.ton.applications;
 
 import de.hfkbremen.ton.Beat;
-import de.hfkbremen.ton.Instrument;
 import de.hfkbremen.ton.Note;
 import de.hfkbremen.ton.Scale;
 import de.hfkbremen.ton.Ton;
@@ -21,7 +20,7 @@ public class AppNeuralNetworkSequencer extends PApplet {
     }
 
     public void setup() {
-        Ton.instrument().osc_type(Instrument.SINE);
+        Ton.instrument().osc_type(Ton.OSC_SINE);
 
         mRoot = node(width / 2.0f, height / 2.0f, mNodes.size());
         Beat.start(this, 120 * 2);

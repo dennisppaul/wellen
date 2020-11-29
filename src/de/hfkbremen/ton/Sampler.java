@@ -4,6 +4,9 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
 
+import static de.hfkbremen.ton.Ton.DEFAULT_SAMPLING_RATE;
+
+//@TODO(make sampling rate configurable)
 public class Sampler implements DSPNodeOutput {
 
     private float[] mData;
@@ -50,7 +53,7 @@ public class Sampler implements DSPNodeOutput {
 
     public void set_speed(float pSpeed) {
         if (pSpeed > 0) {
-            set_frequency(pSpeed * DSP.DEFAULT_SAMPLING_RATE / data().length); /* aka `mStepSize = pSpeed;` */
+            set_frequency(pSpeed * DEFAULT_SAMPLING_RATE / data().length); /* aka `mStepSize = pSpeed;` */
         } else {
             set_frequency(0);
         }
@@ -59,7 +62,7 @@ public class Sampler implements DSPNodeOutput {
     public void set_frequency(float pFrequency) {
         if (mFrequency != pFrequency) {
             mFrequency = pFrequency;
-            mStepSize = mFrequency * ((float) mData.length / (float) DSP.DEFAULT_SAMPLING_RATE);
+            mStepSize = mFrequency * ((float) mData.length / (float) DEFAULT_SAMPLING_RATE);
         }
     }
 

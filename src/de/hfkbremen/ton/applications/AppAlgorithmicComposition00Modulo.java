@@ -1,7 +1,6 @@
 package de.hfkbremen.ton.applications;
 
 import de.hfkbremen.ton.Beat;
-import de.hfkbremen.ton.Instrument;
 import de.hfkbremen.ton.Note;
 import de.hfkbremen.ton.Ton;
 import processing.core.PApplet;
@@ -15,7 +14,7 @@ public class AppAlgorithmicComposition00Modulo extends PApplet {
     }
 
     public void setup() {
-        Ton.instrument().osc_type(Instrument.TRIANGLE);
+        Ton.instrument().osc_type(Ton.OSC_TRIANGLE);
         Beat.start(this, 120 * 4);
     }
 

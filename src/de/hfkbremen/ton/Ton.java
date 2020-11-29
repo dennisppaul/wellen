@@ -14,9 +14,24 @@ import static de.hfkbremen.ton.ToneEngine.INSTRUMENT_WITH_OSCILLATOR_ADSR;
 
 public abstract class Ton {
 
+    public static final int OSC_SINE = 0;
+    public static final int OSC_TRIANGLE = 1;
+    public static final int OSC_SAWTOOTH = 2;
+    public static final int OSC_SQUARE = 3;
+    public static final int OSC_NOISE = 4;
+    public static final int NUMBER_OF_OSCILLATORS = 5;
+    public static final String TONE_ENGINE_SOFTWARE = "software";
     public static final String TONE_ENGINE_JSYN = "jsyn";
     public static final String TONE_ENGINE_MIDI = "midi";
+    public static final String TONE_ENGINE_OSC = "osc";
+    public static final float DEFAULT_ATTACK = 0.005f;
+    public static final float DEFAULT_DECAY = 0.01f;
+    public static final float DEFAULT_RELEASE = 0.075f;
+    public static final float DEFAULT_SUSTAIN = 0.5f;
     private static ToneEngine instance = null;
+
+    public static final int DEFAULT_SAMPLING_RATE = 44100;
+    public static final int DEFAULT_AUDIOBLOCK_SIZE = 512;
 
     private Ton() {
     }

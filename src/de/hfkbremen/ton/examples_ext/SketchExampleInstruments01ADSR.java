@@ -68,12 +68,12 @@ public class SketchExampleInstruments01ADSR extends PApplet {
         updateADSR();
     }
 
-    public void keyPressed() {
+    public void mousePressed() {
         mNote = Scale.note(Scale.MAJOR_CHORD_7, Note.NOTE_A2, (int) random(0, 10));
         Ton.note_on(mNote, 100);
     }
 
-    public void keyReleased() {
+    public void mouseReleased() {
         Ton.note_off();
     }
 

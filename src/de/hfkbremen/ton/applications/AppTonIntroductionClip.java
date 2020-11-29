@@ -2,7 +2,6 @@ package de.hfkbremen.ton.applications;
 
 import de.hfkbremen.ton.BeatEvent;
 import de.hfkbremen.ton.BeatListener;
-import de.hfkbremen.ton.Instrument;
 import de.hfkbremen.ton.Note;
 import de.hfkbremen.ton.Ton;
 import processing.core.PApplet;
@@ -80,7 +79,7 @@ public class AppTonIntroductionClip extends PApplet {
             note = pNote;
             instrument = pInstrument;
             playing = false;
-            Ton.instrument(instrument).osc_type(Instrument.TRIANGLE);
+            Ton.instrument(instrument).osc_type(Ton.OSC_TRIANGLE);
         }
 
         public void beat(int pBeatCount) {

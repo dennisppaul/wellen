@@ -43,10 +43,10 @@ public class SketchExampleDSP05Wavetable extends PApplet {
                 Wavetable.sine(mWavetable.wavetable());
                 break;
             case '2':
-                Wavetable.sawtooth(mWavetable.wavetable());
+                Wavetable.triangle(mWavetable.wavetable());
                 break;
             case '3':
-                Wavetable.triangle(mWavetable.wavetable());
+                Wavetable.sawtooth(mWavetable.wavetable());
                 break;
             case '4':
                 Wavetable.square(mWavetable.wavetable());

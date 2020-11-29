@@ -2,39 +2,93 @@ package de.hfkbremen.ton;
 
 import processing.core.PApplet;
 
+import static de.hfkbremen.ton.Ton.DEFAULT_ATTACK;
+import static de.hfkbremen.ton.Ton.DEFAULT_DECAY;
+import static de.hfkbremen.ton.Ton.DEFAULT_RELEASE;
+import static de.hfkbremen.ton.Ton.DEFAULT_SUSTAIN;
+import static de.hfkbremen.ton.Ton.OSC_SINE;
+
 public class InstrumentSoftware extends Instrument implements DSPNodeOutput {
 
-    public static final int SINE = 0;
-    public static final int TRIANGLE = 1;
-    public static final int SAWTOOTH = 2;
-    public static final int SQUARE = 3;
-    public static final int NOISE = 4;
-    protected final float DEFAULT_ATTACK = 0.005f;
-    protected final float DEFAULT_DECAY = 0.01f;
-    protected final float DEFAULT_SUSTAIN = 0.5f;
-    protected final float DEFAULT_RELEASE = 0.075f;
+    public static final int DEFAULT_WAVETABLE_SIZE = 512;
+    public static final float DEFAULT_FREQUENCY = 220.0f;
     private final int mSamplingRate;
+    private final ADSR mADSR;
+    private final Wavetable mWavetable;
     protected float mAmp;
     protected float mFreq;
     protected boolean mIsPlaying = false;
     protected float mFreqOffset;
     private int mCounter = 0;
+    private boolean mEnableADSR;
+    private int mOscType;
 
-    public InstrumentSoftware(int pID, int pSamplingRate) {
+    public InstrumentSoftware(int pID, int pSamplingRate, int pWavetableSize) {
         super(pID);
         mSamplingRate = pSamplingRate;
+        mADSR = new ADSR(pSamplingRate);
+        mADSR.set_attack(DEFAULT_ATTACK);
+        mADSR.set_decay(DEFAULT_DECAY);
+        mADSR.set_sustain(DEFAULT_SUSTAIN);
+        mADSR.set_release(DEFAULT_RELEASE);
+        enable_ADSR(true);
+        mWavetable = new Wavetable(pWavetableSize, pSamplingRate);
+        mWavetable.interpolate(true);
+        mWavetable.set_amplitude(1.0f);
+        osc_type(OSC_SINE);
         amplitude(0.0f);
-        frequency(220.0f);
+        frequency(DEFAULT_FREQUENCY);
+    }
+
+    public InstrumentSoftware(int pID, int pSamplingRate) {
+        this(pID, pSamplingRate, DEFAULT_WAVETABLE_SIZE);
+    }
+
+    @Override
+    public float output() {
+        mCounter++;
+        final float mADSRAmp = mEnableADSR ? mADSR.output() : 1.0f;
+        final float mSample = mWavetable.output();
+        return mADSRAmp * mAmp * PApplet.sin(2 * PApplet.PI * mFreq * mCounter / (float) mSamplingRate);
+    }
+
+    public void enable_ADSR(boolean pEnableADSR) {
+        mEnableADSR = pEnableADSR;
+    }
+
+    @Override
+    public void attack(float pAttack) {
+        mAttack = pAttack;
+        mADSR.set_attack(mAttack);
+    }
+
+    @Override
+    public void decay(float pDecay) {
+        mDecay = pDecay;
+        mADSR.set_decay(mDecay);
+    }
+
+    @Override
+    public void sustain(float pSustain) {
+        mSustain = pSustain;
+        mADSR.set_sustain(mSustain);
+    }
+
+    @Override
+    public void release(float pRelease) {
+        mRelease = pRelease;
+        mADSR.set_release(mRelease);
     }
 
     @Override
     public void osc_type(int pOsc) {
-
+        mOscType = pOsc;
+        Wavetable.fill(mWavetable.wavetable(), pOsc);
     }
 
     @Override
     public int get_osc_type() {
-        return 0;
+        return mOscType;
     }
 
     @Override
@@ -80,7 +134,7 @@ public class InstrumentSoftware extends Instrument implements DSPNodeOutput {
     @Override
     public void pitch_bend(float freq_offset) {
         mFreqOffset = freq_offset;
-        update_freq();
+        frequency(mFreq);
     }
 
     @Override
@@ -97,7 +151,7 @@ public class InstrumentSoftware extends Instrument implements DSPNodeOutput {
     @Override
     public void frequency(float freq) {
         mFreq = freq;
-        update_freq();
+        mWavetable.set_frequency(mFreq);
     }
 
     @Override
@@ -107,30 +161,21 @@ public class InstrumentSoftware extends Instrument implements DSPNodeOutput {
 
     @Override
     public void note_off() {
-        amplitude(0);
         mIsPlaying = false;
+        mADSR.stop();
     }
 
     @Override
     public void note_on(int note, int velocity) {
+        mIsPlaying = true;
         frequency(_note_to_frequency(note));
         amplitude(_velocity_to_amplitude(velocity));
-        mIsPlaying = true;
+        mADSR.start();
     }
 
     @Override
     public boolean isPlaying() {
         return mIsPlaying;
-    }
-
-    @Override
-    public float output() {
-        // @TODO(replace with wavetable)
-        mCounter++;
-        return mAmp * PApplet.sin(2 * PApplet.PI * mFreq * mCounter / (float)mSamplingRate);
-    }
-
-    protected void update_freq() {
     }
 
     protected void update_amp() {

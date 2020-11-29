@@ -6,7 +6,7 @@ import de.hfkbremen.ton.Scale;
 import de.hfkbremen.ton.Ton;
 import processing.core.PApplet;
 
-public class SketchExampleInstruments16Voices extends PApplet {
+public class SketchExampleInstruments10SixteenVoices extends PApplet {
 
     private int mBeatCount;
 
@@ -38,6 +38,6 @@ public class SketchExampleInstruments16Voices extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main(SketchExampleInstruments16Voices.class.getName());
+        PApplet.main(SketchExampleInstruments10SixteenVoices.class.getName());
     }
 }

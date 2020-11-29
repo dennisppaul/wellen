@@ -7,6 +7,11 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static de.hfkbremen.ton.Ton.TONE_ENGINE_JSYN;
+import static de.hfkbremen.ton.Ton.TONE_ENGINE_MIDI;
+import static de.hfkbremen.ton.Ton.TONE_ENGINE_OSC;
+import static de.hfkbremen.ton.Ton.TONE_ENGINE_SOFTWARE;
+
 public abstract class ToneEngine {
 
     // @TODO(add javadoc to abstract classes)
@@ -48,77 +53,32 @@ public abstract class ToneEngine {
         mTimer = new Timer();
     }
 
-    /**
-     * play a note
-     *
-     * @param note     pitch of note ranging from 0 to 127
-     * @param velocity volume of note ranging from 0 to 127
-     * @param duration duration in seconds before the note is turned off again
-     */
-    public final void note_on(int note, int velocity, float duration) {
-        TimerTask mTask = new NoteOffTask(note, instrument().ID());
-        mTimer.schedule(mTask, (long) (duration * 1000));
-        note_on(note, velocity);
-    }
-
-    /**
-     * play a note
-     *
-     * @param note     pitch of note ranging from 0 to 127
-     * @param velocity volume of note ranging from 0 to 127
-     */
-    public abstract void note_on(int note, int velocity);
-
-    /**
-     * turn off a note
-     *
-     * @param note pitch of note to turn off
-     */
-    public abstract void note_off(int note);
-
-    /**
-     * turns off the last played note.
-     */
-    public abstract void note_off();
-
-    public abstract void control_change(int pCC, int pValue);
-
-    public abstract void pitch_bend(int pValue);
-
-    public abstract boolean isPlaying();
-
-    public abstract Instrument instrument(int pInstrumentID);
-
-    public abstract Instrument instrument();
-
-    public abstract ArrayList<? extends Instrument> instruments();
-
-    public abstract void replace_instrument(Instrument pInstrument);
-
     public static ToneEngine createEngine() {
-        return new ToneEngineJSyn(INSTRUMENT_WITH_OSCILLATOR_ADSR);
+        return new ToneEngineSoftware();
     }
 
     public static ToneEngine createEngine(String... pName) {
         if (pName.length > 0) {
-            if (pName[0].equalsIgnoreCase("minim")) {
+            if (pName[0].equalsIgnoreCase(TONE_ENGINE_SOFTWARE)) {
+                return new ToneEngineSoftware();
+            } else if (pName[0].equalsIgnoreCase("minim")) {
                 return new ToneEngineMinim();
             } else if (pName[0].equalsIgnoreCase("jsyn-minimal")) {
                 return new ToneEngineJSyn(INSTRUMENT_WITH_OSCILLATOR);
-            } else if (pName[0].equalsIgnoreCase("jsyn")) {
+            } else if (pName[0].equalsIgnoreCase(TONE_ENGINE_JSYN)) {
                 if (pName.length == 1) {
                     return new ToneEngineJSyn(INSTRUMENT_WITH_OSCILLATOR_ADSR);
                 } else if (pName.length == 3) {
                     /* specify output device */
                     return new ToneEngineJSyn(INSTRUMENT_WITH_OSCILLATOR_ADSR,
-                            Integer.parseInt(pName[1]),
-                            Integer.parseInt(pName[2]));
+                                              Integer.parseInt(pName[1]),
+                                              Integer.parseInt(pName[2]));
                 }
             } else if (pName[0].equalsIgnoreCase("jsyn-filter+lfo")) {
                 return new ToneEngineJSyn(INSTRUMENT_WITH_OSCILLATOR_ADSR_FILTER_LFO);
-            } else if (pName[0].equalsIgnoreCase("midi") && pName.length == 2) {
+            } else if (pName[0].equalsIgnoreCase(TONE_ENGINE_MIDI) && pName.length == 2) {
                 return new ToneEngineMIDI(pName[1]);
-            } else if (pName[0].equalsIgnoreCase("osc") && pName.length >= 2) {
+            } else if (pName[0].equalsIgnoreCase(TONE_ENGINE_OSC) && pName.length >= 2) {
                 if (pName.length == 2) {
                     return new ToneEngineOSC(pName[1]);
                 } else if (pName.length == 3) {
@@ -197,6 +157,53 @@ public abstract class ToneEngine {
             updateGUI(cp5, mInstrument, i);
         }
     }
+
+    /**
+     * play a note
+     *
+     * @param note     pitch of note ranging from 0 to 127
+     * @param velocity volume of note ranging from 0 to 127
+     * @param duration duration in seconds before the note is turned off again
+     */
+    public final void note_on(int note, int velocity, float duration) {
+        TimerTask mTask = new NoteOffTask(note, instrument().ID());
+        mTimer.schedule(mTask, (long) (duration * 1000));
+        note_on(note, velocity);
+    }
+
+    /**
+     * play a note
+     *
+     * @param note     pitch of note ranging from 0 to 127
+     * @param velocity volume of note ranging from 0 to 127
+     */
+    public abstract void note_on(int note, int velocity);
+
+    /**
+     * turn off a note
+     *
+     * @param note pitch of note to turn off
+     */
+    public abstract void note_off(int note);
+
+    /**
+     * turns off the last played note.
+     */
+    public abstract void note_off();
+
+    public abstract void control_change(int pCC, int pValue);
+
+    public abstract void pitch_bend(int pValue);
+
+    public abstract boolean isPlaying();
+
+    public abstract Instrument instrument(int pInstrumentID);
+
+    public abstract Instrument instrument();
+
+    public abstract ArrayList<? extends Instrument> instruments();
+
+    public abstract void replace_instrument(Instrument pInstrument);
 
     private class NoteOffTask extends TimerTask {
 
