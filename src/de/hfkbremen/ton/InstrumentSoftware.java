@@ -1,7 +1,5 @@
 package de.hfkbremen.ton;
 
-import processing.core.PApplet;
-
 import static de.hfkbremen.ton.Ton.DEFAULT_ATTACK;
 import static de.hfkbremen.ton.Ton.DEFAULT_DECAY;
 import static de.hfkbremen.ton.Ton.DEFAULT_RELEASE;
@@ -23,6 +21,8 @@ public class InstrumentSoftware extends Instrument implements DSPNodeOutput {
     protected float mFreqOffset;
     private boolean mEnableADSR;
     private int mOscType;
+    private boolean mEnableLFOFrequency;
+    private boolean mEnableLFOAmplitude;
 
     public InstrumentSoftware(int pID, int pSamplingRate, int pWavetableSize) {
         super(pID);
@@ -56,10 +56,13 @@ public class InstrumentSoftware extends Instrument implements DSPNodeOutput {
         mAmplitudeLFO.set_frequency(0);
         mAmplitudeLFO.set_amplitude(0);
 
+        mEnableLFOFrequency = false;
+        mEnableLFOAmplitude = false;
+
 //        mFrequencyLFO.set_frequency(5);
 //        mFrequencyLFO.set_amplitude(40);
-//        mAmplitudeLFO.set_amplitude(0.3f);
-//        mAmplitudeLFO.set_frequency(5);
+        mAmplitudeLFO.set_amplitude(0.5f);
+        mAmplitudeLFO.set_frequency(1.0f);
     }
 
     public InstrumentSoftware(int pID, int pSamplingRate) {
@@ -68,11 +71,11 @@ public class InstrumentSoftware extends Instrument implements DSPNodeOutput {
 
     @Override
     public float output() {
-        final float mLFOAmp = PApplet.map(mAmplitudeLFO.output(), -1.0f, 1.0f, 0, 1);
-        final float mLFOFreq = mFrequencyLFO.output();
+        final float mLFOFreq = mEnableLFOFrequency ? mFrequencyLFO.output() : 0.0f;
+        final float mLFOAmp = mEnableLFOAmplitude ? mAmplitudeLFO.output() : 0.0f;
 
-        mVCO.set_amplitude(mAmp);
-        mVCO.set_frequency(mFreq);
+        mVCO.set_frequency(mFreq + mLFOFreq);
+        mVCO.set_amplitude((mAmp + mLFOAmp) * (mEnableLFOAmplitude ? 0.5f : 1.0f));
 
         final float mADSRAmp = mEnableADSR ? mADSR.output() : 1.0f;
         float mSample = mVCO.output();
@@ -82,6 +85,14 @@ public class InstrumentSoftware extends Instrument implements DSPNodeOutput {
 
     public void enable_ADSR(boolean pEnableADSR) {
         mEnableADSR = pEnableADSR;
+    }
+
+    public void enable_LFO_amplitude(boolean pEnableLFOAmplitude) {
+        mEnableLFOAmplitude = pEnableLFOAmplitude;
+    }
+
+    public void enable_LFO_frequency(boolean pEnableLFOFrequency) {
+        mEnableLFOFrequency = pEnableLFOFrequency;
     }
 
     @Override
