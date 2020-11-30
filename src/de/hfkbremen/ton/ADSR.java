@@ -41,6 +41,7 @@ public class ADSR implements DSPNodeOutput {
     private static final boolean DEBUG_ADSR = false;
     private final int mSamplingRate;
     private final float FADE_TO_ZERO_RATE_SEC;
+    private final boolean USE_FADE_TO_ZERO_STATE = false;
     private float mAttack = DEFAULT_ATTACK;
     private float mDecay = DEFAULT_DECAY;
     private float mSustain = DEFAULT_SUSTAIN;
@@ -51,7 +52,7 @@ public class ADSR implements DSPNodeOutput {
 
     public ADSR(int pSamplingRate) {
         mSamplingRate = pSamplingRate;
-        FADE_TO_ZERO_RATE_SEC = 0.05f;
+        FADE_TO_ZERO_RATE_SEC = 0.01f;
         setState(ENVELOPE_STATE.IDLE);
     }
 
@@ -95,9 +96,14 @@ public class ADSR implements DSPNodeOutput {
 
     private void check_scheduled_attack_state() {
         if (mAmp > 0.0f) {
-            if (mState != ENVELOPE_STATE.PRE_ATTACK_FADE_TO_ZERO) {
-                mDelta = compute_delta_fraction(-mAmp, FADE_TO_ZERO_RATE_SEC);
-                setState(ENVELOPE_STATE.PRE_ATTACK_FADE_TO_ZERO);
+            if (USE_FADE_TO_ZERO_STATE) {
+                if (mState != ENVELOPE_STATE.PRE_ATTACK_FADE_TO_ZERO) {
+                    mDelta = compute_delta_fraction(-mAmp, FADE_TO_ZERO_RATE_SEC);
+                    setState(ENVELOPE_STATE.PRE_ATTACK_FADE_TO_ZERO);
+                }
+            } else {
+                mDelta = compute_delta_fraction(1.0f, mAttack);
+                setState(ENVELOPE_STATE.ATTACK);
             }
         } else {
             mDelta = compute_delta_fraction(1.0f, mAttack);
