@@ -23,7 +23,7 @@ public class AppImageScannerSequencer extends PApplet {
     private int mLastNote = -1;
 
     public void settings() {
-        size(1280, 720);
+        size(640, 480);
     }
 
     public void setup() {
@@ -40,9 +40,9 @@ public class AppImageScannerSequencer extends PApplet {
         mInstrument.decay(0.1f);
         mInstrument.sustain(0.0f);
         mInstrument.release(0.01f);
-        mInstrument.osc_type(Ton.OSC_SAWTOOTH);
+        mInstrument.osc_type(Ton.OSC_SINE);
 
-        final int mSpacing = 48;
+        final int mSpacing = 36;
         final int NUMBER_OF_SAMPLERS = 16;
         for (int i = 0; i < NUMBER_OF_SAMPLERS; i++) {
             mSamplers.add(new ImageSampler(i));
@@ -61,7 +61,7 @@ public class AppImageScannerSequencer extends PApplet {
         }
         scale(-1, 1);
         translate(-width, 0);
-        image(mCapture, 0, 0);
+        image(mCapture, 0, 0, width, height);
 
         for (ImageSampler mSampler : mSamplers) {
             mSampler.draw(g);
@@ -77,9 +77,9 @@ public class AppImageScannerSequencer extends PApplet {
         }
         float mBrightnessNorm = mSamplers.get(mCurrentSampler).sample(mCapture);
         final int mSteps = 10;
-        final int mNote = Scale.note(Scale.MAJOR_CHORD_7, Note.NOTE_A2, (int) (mBrightnessNorm * mSteps));
+        final int mNote = Scale.note(Scale.MAJOR_CHORD_7, Note.NOTE_C2, (int) (mBrightnessNorm * mSteps));
         if (mNote != mLastNote) {
-            mSynth.note_on(mNote, 127);
+            mSynth.note_on(mNote, 100);
         }
         mLastNote = mNote;
     }
@@ -89,7 +89,7 @@ public class AppImageScannerSequencer extends PApplet {
         final int ID;
         int x = 0;
         int y = 0;
-        int radius = 16;
+        int radius = 12;
         boolean active = false;
         private float mBrightnessNorm = 0;
         private int mSampleRed = 0;
