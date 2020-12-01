@@ -1,9 +1,6 @@
 import de.hfkbremen.ton.*; 
-import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
-import ddf.minim.*; 
-import com.jsyn.unitgen.*; 
 
 Instrument mInstrument;
 
@@ -39,18 +36,18 @@ void keyPressed() {
         mIsPlaying = !mIsPlaying;
     }
     if (key == '1') {
-        mInstrument.osc_type(Ton.OSC_SINE);
+        mInstrument.set_osc_type(Ton.OSC_SINE);
     }
     if (key == '2') {
-        mInstrument.osc_type(Ton.OSC_TRIANGLE);
+        mInstrument.set_osc_type(Ton.OSC_TRIANGLE);
     }
     if (key == '3') {
-        mInstrument.osc_type(Ton.OSC_SAWTOOTH);
+        mInstrument.set_osc_type(Ton.OSC_SAWTOOTH);
     }
     if (key == '4') {
-        mInstrument.osc_type(Ton.OSC_SQUARE);
+        mInstrument.set_osc_type(Ton.OSC_SQUARE);
     }
     if (key == '5') {
-        mInstrument.osc_type(Ton.OSC_NOISE);
+        mInstrument.set_osc_type(Ton.OSC_NOISE);
     }
 }

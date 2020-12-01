@@ -1,9 +1,6 @@
 import de.hfkbremen.ton.*; 
-import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
-import ddf.minim.*; 
-import com.jsyn.unitgen.*; 
 
 void settings() {
     size(640, 480);
@@ -11,7 +8,7 @@ void settings() {
 
 void setup() {
     Ton.start("jsyn-minimal");
-    Ton.instrument().osc_type(Ton.OSC_SAWTOOTH);
+    Ton.instrument().set_osc_type(Ton.OSC_SAWTOOTH);
 }
 
 void draw() {
@@ -25,6 +22,6 @@ void draw() {
 void mouseMoved() {
     float mFreq = map(mouseX, 0, width, 110, 440);
     float mAmp = mouseY / (float) height;
-    Ton.instrument().frequency(mFreq);
-    Ton.instrument().amplitude(mAmp);
+    Ton.instrument().set_frequency(mFreq);
+    Ton.instrument().set_amplitude(mAmp);
 }

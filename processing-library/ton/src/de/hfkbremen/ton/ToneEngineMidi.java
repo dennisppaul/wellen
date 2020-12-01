@@ -59,7 +59,7 @@ public class ToneEngineMIDI extends ToneEngine {
         mMidiOut.sendPitchBend(mChannel, lsb, msb);
     }
 
-    public boolean isPlaying() {
+    public boolean is_playing() {
         return (mLastPlayedNote != -1);
     }
 

@@ -15,11 +15,12 @@ public class SketchExampleInstruments06PitchBend extends PApplet {
     }
 
     public void setup() {
-        background(255);
     }
 
     public void draw() {
-        background(Ton.isPlaying() ? 255 : 0);
+        background(255);
+        fill(0);
+        ellipse(width * 0.5f, height * 0.5f, Ton.isPlaying() ? 100 : 5, Ton.isPlaying() ? 100 : 5);
     }
 
     public void mousePressed() {

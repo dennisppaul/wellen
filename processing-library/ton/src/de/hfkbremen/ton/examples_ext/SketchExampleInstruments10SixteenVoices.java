@@ -16,6 +16,10 @@ public class SketchExampleInstruments10SixteenVoices extends PApplet {
 
     public void setup() {
         Ton.start();
+        for (int i = 0; i < Ton.instruments().size(); i++) {
+            final float mPan = 2.0f * i / Ton.instruments().size() - 1.0f;
+            Ton.instruments().get(i).set_pan(mPan);
+        }
         Beat.start(this, 120 * 3);
     }
 

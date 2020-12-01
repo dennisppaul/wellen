@@ -1,9 +1,6 @@
 import de.hfkbremen.ton.*; 
-import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
-import ddf.minim.*; 
-import com.jsyn.unitgen.*; 
 
 boolean mPlaying = false;
 
@@ -12,7 +9,7 @@ void settings() {
 }
 
 void setup() {
-    Ton.instrument().osc_type(Ton.OSC_TRIANGLE);
+    Ton.instrument().set_osc_type(Ton.OSC_TRIANGLE);
     Beat.start(this, 120 * 4);
 }
 

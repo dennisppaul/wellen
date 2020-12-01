@@ -5,6 +5,7 @@ import de.hfkbremen.ton.Ton;
 import processing.core.PApplet;
 
 public class AppDSPwithJSynToneEngine extends PApplet {
+    //@TODO("rewrite this with shared audioblocks and callbacks")
 
     float[] mDelayBuffer = new float[4096];
     int mDelayID = 0;
@@ -24,7 +25,7 @@ public class AppDSPwithJSynToneEngine extends PApplet {
         DSP.dumpAudioDevices();
         final int OUTPUT_BUILT_IN_OUTPUT = 10;
         final int INPUT_BACKHOLE_2CH = 5;
-        Ton.start("jsyn", INPUT_BACKHOLE_2CH, 2);
+        Ton.start(Ton.TONE_ENGINE_SOFTWARE, INPUT_BACKHOLE_2CH, 2);
         DSP.start(this, OUTPUT_BUILT_IN_OUTPUT, 1, INPUT_BACKHOLE_2CH, 1);
     }
 

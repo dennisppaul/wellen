@@ -1,9 +1,6 @@
 import de.hfkbremen.ton.*; 
-import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
-import ddf.minim.*; 
-import com.jsyn.unitgen.*; 
 
 final ArrayList<Node> mNodes = new ArrayList();
 
@@ -16,7 +13,7 @@ void settings() {
 }
 
 void setup() {
-    Ton.instrument().osc_type(Ton.OSC_SINE);
+    Ton.instrument().set_osc_type(Ton.OSC_SINE);
     mRoot = node(width / 2.0f, height / 2.0f, mNodes.size());
     Beat.start(this, 120 * 2);
 }

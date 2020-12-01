@@ -1,20 +1,18 @@
 import de.hfkbremen.ton.*; 
-import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
-import ddf.minim.*; 
-import com.jsyn.unitgen.*; 
 
 void settings() {
     size(640, 480);
 }
 
 void setup() {
-    background(255);
 }
 
 void draw() {
-    background(Ton.isPlaying() ? 255 : 0);
+    background(255);
+    fill(0);
+    ellipse(width * 0.5f, height * 0.5f, Ton.isPlaying() ? 100 : 5, Ton.isPlaying() ? 100 : 5);
 }
 
 void mousePressed() {

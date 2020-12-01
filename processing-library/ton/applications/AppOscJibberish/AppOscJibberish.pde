@@ -1,9 +1,6 @@
 import de.hfkbremen.ton.*; 
-import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
-import ddf.minim.*; 
-import com.jsyn.unitgen.*; 
 
 final ArrayList<Jibberer> mJibberers = new ArrayList();
 
@@ -57,9 +54,9 @@ Jibberer(int pID) {
         mBaseFreq = random(200, 400);
         mFreqStep = random(0.02f, 0.04f);
         mAmpStep = random(0.5f, 0.8f);
-        Ton.instrument(mID).osc_type(Ton.OSC_SAWTOOTH);
-        Ton.instrument(mID).amplitude(0.0f);
-        Ton.instrument(mID).frequency(200.0f);
+        Ton.instrument(mID).set_osc_type(Ton.OSC_SAWTOOTH);
+        Ton.instrument(mID).set_amplitude(0.0f);
+        Ton.instrument(mID).set_frequency(200.0f);
     }
     void drag() {
         if (mousePressed) {
@@ -82,14 +79,14 @@ Jibberer(int pID) {
         mAmpPointer += mAmpStep;
         float mAmp = noise(mAmpPointer) * noise(mAmpPointer * 1.3f);
         if (noise(mAmpPointer * 0.45f) > 0.5f) {
-            Ton.instrument(mID).amplitude(mDistanceRatio * mAmp);
+            Ton.instrument(mID).set_amplitude(mDistanceRatio * mAmp);
         } else {
-            Ton.instrument(mID).amplitude(0);
+            Ton.instrument(mID).set_amplitude(0);
         }
         /* get frequency from perlin noise */
         mFreqPointer += mFreqStep;
         float mFreq = noise(mFreqPointer);
-        Ton.instrument(mID).frequency(mBaseFreq * mFreq + 75);
+        Ton.instrument(mID).set_frequency(mBaseFreq * mFreq + 75);
     }
     void draw() {
         noFill();

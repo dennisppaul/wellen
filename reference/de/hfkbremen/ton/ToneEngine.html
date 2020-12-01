@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":9,"i2":9,"i3":9,"i4":9,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6,"i12":10,"i13":6,"i14":6,"i15":9,"i16":9};
+var methods = {"i0":6,"i1":9,"i2":9,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":10,"i11":6,"i12":6};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -48,7 +48,7 @@ var activeTableTab = "activeTableTab";
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../de/hfkbremen/ton/Ton.html" title="class in de.hfkbremen.ton"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../de/hfkbremen/ton/ToneEngineJSyn.html" title="class in de.hfkbremen.ton"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../de/hfkbremen/ton/ToneEngineMIDI.html" title="class in de.hfkbremen.ton"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?de/hfkbremen/ton/ToneEngine.html" target="_top">Frames</a></li>
@@ -107,7 +107,7 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>Direct Known Subclasses:</dt>
-<dd><a href="../../../de/hfkbremen/ton/ToneEngineJSyn.html" title="class in de.hfkbremen.ton">ToneEngineJSyn</a>, <a href="../../../de/hfkbremen/ton/ToneEngineMIDI.html" title="class in de.hfkbremen.ton">ToneEngineMIDI</a>, <a href="../../../de/hfkbremen/ton/ToneEngineMinim.html" title="class in de.hfkbremen.ton">ToneEngineMinim</a>, <a href="../../../de/hfkbremen/ton/ToneEngineOSC.html" title="class in de.hfkbremen.ton">ToneEngineOSC</a>, <a href="../../../de/hfkbremen/ton/ToneEngineSoftware.html" title="class in de.hfkbremen.ton">ToneEngineSoftware</a></dd>
+<dd><a href="../../../de/hfkbremen/ton/ToneEngineMIDI.html" title="class in de.hfkbremen.ton">ToneEngineMIDI</a>, <a href="../../../de/hfkbremen/ton/ToneEngineOSC.html" title="class in de.hfkbremen.ton">ToneEngineOSC</a>, <a href="../../../de/hfkbremen/ton/ToneEngineSoftware.html" title="class in de.hfkbremen.ton">ToneEngineSoftware</a></dd>
 </dl>
 <hr>
 <br>
@@ -133,47 +133,7 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngine.html#GUI_ATTACK">GUI_ATTACK</a></span></code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngine.html#GUI_DECAY">GUI_DECAY</a></span></code>&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngine.html#GUI_FILTER_FREQ">GUI_FILTER_FREQ</a></span></code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngine.html#GUI_FILTER_Q">GUI_FILTER_Q</a></span></code>&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngine.html#GUI_LFO_AMP">GUI_LFO_AMP</a></span></code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngine.html#GUI_LFO_FREQ">GUI_LFO_FREQ</a></span></code>&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngine.html#GUI_OSC">GUI_OSC</a></span></code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngine.html#GUI_RELEASE">GUI_RELEASE</a></span></code>&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngine.html#GUI_SUSTAIN">GUI_SUSTAIN</a></span></code>&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngine.html#INSTRUMENT_EMPTY">INSTRUMENT_EMPTY</a></span></code>&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static java.lang.String</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngine.html#INSTRUMENT_STR">INSTRUMENT_STR</a></span></code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static int</code></td>
@@ -220,52 +180,41 @@ extends java.lang.Object</pre>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngine.html#createEngine-java.lang.String...-">createEngine</a></span>(java.lang.String...&nbsp;pName)</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>static controlP5.ControlP5</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngine.html#createInstrumentsGUI-processing.core.PApplet-de.hfkbremen.ton.ToneEngine-">createInstrumentsGUI</a></span>(processing.core.PApplet&nbsp;p,
-                    <a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.hfkbremen.ton">ToneEngine</a>&nbsp;pToneEngine)</code>&nbsp;</td>
-</tr>
-<tr id="i4" class="altColor">
-<td class="colFirst"><code>static controlP5.ControlP5</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngine.html#createInstrumentsGUI-processing.core.PApplet-de.hfkbremen.ton.ToneEngine-int...-">createInstrumentsGUI</a></span>(processing.core.PApplet&nbsp;p,
-                    <a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.hfkbremen.ton">ToneEngine</a>&nbsp;pToneEngine,
-                    int...&nbsp;mInstruments)</code>&nbsp;</td>
-</tr>
-<tr id="i5" class="rowColor">
 <td class="colFirst"><code>abstract <a href="../../../de/hfkbremen/ton/Instrument.html" title="class in de.hfkbremen.ton">Instrument</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngine.html#instrument--">instrument</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>abstract <a href="../../../de/hfkbremen/ton/Instrument.html" title="class in de.hfkbremen.ton">Instrument</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngine.html#instrument-int-">instrument</a></span>(int&nbsp;pInstrumentID)</code>&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>abstract java.util.ArrayList&lt;? extends <a href="../../../de/hfkbremen/ton/Instrument.html" title="class in de.hfkbremen.ton">Instrument</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngine.html#instruments--">instruments</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>abstract boolean</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngine.html#isPlaying--">isPlaying</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngine.html#is_playing--">is_playing</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>abstract void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngine.html#note_off--">note_off</a></span>()</code>
 <div class="block">turns off the last played note.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>abstract void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngine.html#note_off-int-">note_off</a></span>(int&nbsp;note)</code>
 <div class="block">turn off a note</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>abstract void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngine.html#note_on-int-int-">note_on</a></span>(int&nbsp;note,
        int&nbsp;velocity)</code>
 <div class="block">play a note</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngine.html#note_on-int-int-float-">note_on</a></span>(int&nbsp;note,
        int&nbsp;velocity,
@@ -273,24 +222,13 @@ extends java.lang.Object</pre>
 <div class="block">play a note</div>
 </td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>abstract void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngine.html#pitch_bend-int-">pitch_bend</a></span>(int&nbsp;pValue)</code>&nbsp;</td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>abstract void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngine.html#replace_instrument-de.hfkbremen.ton.Instrument-">replace_instrument</a></span>(<a href="../../../de/hfkbremen/ton/Instrument.html" title="class in de.hfkbremen.ton">Instrument</a>&nbsp;pInstrument)</code>&nbsp;</td>
-</tr>
-<tr id="i15" class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngine.html#updateGUI-controlP5.ControlP5-de.hfkbremen.ton.Instrument-">updateGUI</a></span>(controlP5.ControlP5&nbsp;cp5,
-         <a href="../../../de/hfkbremen/ton/Instrument.html" title="class in de.hfkbremen.ton">Instrument</a>&nbsp;mInstrument)</code>&nbsp;</td>
-</tr>
-<tr id="i16" class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/ToneEngine.html#updateGUI-controlP5.ControlP5-de.hfkbremen.ton.Instrument-int-">updateGUI</a></span>(controlP5.ControlP5&nbsp;cp5,
-         <a href="../../../de/hfkbremen/ton/Instrument.html" title="class in de.hfkbremen.ton">Instrument</a>&nbsp;mInstrument,
-         int&nbsp;pField)</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -369,143 +307,13 @@ extends java.lang.Object</pre>
 <a name="NUMBERS_OF_INSTRUMENTS">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>NUMBERS_OF_INSTRUMENTS</h4>
 <pre>public static final&nbsp;int NUMBERS_OF_INSTRUMENTS</pre>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../constant-values.html#de.hfkbremen.ton.ToneEngine.NUMBERS_OF_INSTRUMENTS">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a name="INSTRUMENT_STR">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>INSTRUMENT_STR</h4>
-<pre>public static final&nbsp;java.lang.String INSTRUMENT_STR</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../constant-values.html#de.hfkbremen.ton.ToneEngine.INSTRUMENT_STR">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a name="GUI_ATTACK">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>GUI_ATTACK</h4>
-<pre>public static final&nbsp;int GUI_ATTACK</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../constant-values.html#de.hfkbremen.ton.ToneEngine.GUI_ATTACK">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a name="GUI_DECAY">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>GUI_DECAY</h4>
-<pre>public static final&nbsp;int GUI_DECAY</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../constant-values.html#de.hfkbremen.ton.ToneEngine.GUI_DECAY">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a name="GUI_SUSTAIN">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>GUI_SUSTAIN</h4>
-<pre>public static final&nbsp;int GUI_SUSTAIN</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../constant-values.html#de.hfkbremen.ton.ToneEngine.GUI_SUSTAIN">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a name="GUI_RELEASE">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>GUI_RELEASE</h4>
-<pre>public static final&nbsp;int GUI_RELEASE</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../constant-values.html#de.hfkbremen.ton.ToneEngine.GUI_RELEASE">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a name="GUI_OSC">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>GUI_OSC</h4>
-<pre>public static final&nbsp;int GUI_OSC</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../constant-values.html#de.hfkbremen.ton.ToneEngine.GUI_OSC">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a name="GUI_LFO_AMP">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>GUI_LFO_AMP</h4>
-<pre>public static final&nbsp;int GUI_LFO_AMP</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../constant-values.html#de.hfkbremen.ton.ToneEngine.GUI_LFO_AMP">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a name="GUI_LFO_FREQ">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>GUI_LFO_FREQ</h4>
-<pre>public static final&nbsp;int GUI_LFO_FREQ</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../constant-values.html#de.hfkbremen.ton.ToneEngine.GUI_LFO_FREQ">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a name="GUI_FILTER_Q">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>GUI_FILTER_Q</h4>
-<pre>public static final&nbsp;int GUI_FILTER_Q</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../constant-values.html#de.hfkbremen.ton.ToneEngine.GUI_FILTER_Q">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a name="GUI_FILTER_FREQ">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>GUI_FILTER_FREQ</h4>
-<pre>public static final&nbsp;int GUI_FILTER_FREQ</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../constant-values.html#de.hfkbremen.ton.ToneEngine.GUI_FILTER_FREQ">Constant Field Values</a></dd>
 </dl>
 </li>
 </ul>
@@ -533,48 +341,6 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>createEngine</h4>
 <pre>public static&nbsp;<a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.hfkbremen.ton">ToneEngine</a>&nbsp;createEngine(java.lang.String...&nbsp;pName)</pre>
-</li>
-</ul>
-<a name="createInstrumentsGUI-processing.core.PApplet-de.hfkbremen.ton.ToneEngine-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createInstrumentsGUI</h4>
-<pre>public static&nbsp;controlP5.ControlP5&nbsp;createInstrumentsGUI(processing.core.PApplet&nbsp;p,
-                                                       <a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.hfkbremen.ton">ToneEngine</a>&nbsp;pToneEngine)</pre>
-</li>
-</ul>
-<a name="createInstrumentsGUI-processing.core.PApplet-de.hfkbremen.ton.ToneEngine-int...-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createInstrumentsGUI</h4>
-<pre>public static&nbsp;controlP5.ControlP5&nbsp;createInstrumentsGUI(processing.core.PApplet&nbsp;p,
-                                                       <a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.hfkbremen.ton">ToneEngine</a>&nbsp;pToneEngine,
-                                                       int...&nbsp;mInstruments)</pre>
-</li>
-</ul>
-<a name="updateGUI-controlP5.ControlP5-de.hfkbremen.ton.Instrument-int-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>updateGUI</h4>
-<pre>public static&nbsp;void&nbsp;updateGUI(controlP5.ControlP5&nbsp;cp5,
-                             <a href="../../../de/hfkbremen/ton/Instrument.html" title="class in de.hfkbremen.ton">Instrument</a>&nbsp;mInstrument,
-                             int&nbsp;pField)</pre>
-</li>
-</ul>
-<a name="updateGUI-controlP5.ControlP5-de.hfkbremen.ton.Instrument-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>updateGUI</h4>
-<pre>public static&nbsp;void&nbsp;updateGUI(controlP5.ControlP5&nbsp;cp5,
-                             <a href="../../../de/hfkbremen/ton/Instrument.html" title="class in de.hfkbremen.ton">Instrument</a>&nbsp;mInstrument)</pre>
 </li>
 </ul>
 <a name="note_on-int-int-float-">
@@ -654,13 +420,13 @@ extends java.lang.Object</pre>
 <pre>public abstract&nbsp;void&nbsp;pitch_bend(int&nbsp;pValue)</pre>
 </li>
 </ul>
-<a name="isPlaying--">
+<a name="is_playing--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>isPlaying</h4>
-<pre>public abstract&nbsp;boolean&nbsp;isPlaying()</pre>
+<h4>is_playing</h4>
+<pre>public abstract&nbsp;boolean&nbsp;is_playing()</pre>
 </li>
 </ul>
 <a name="instrument-int-">
@@ -727,7 +493,7 @@ extends java.lang.Object</pre>
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../de/hfkbremen/ton/Ton.html" title="class in de.hfkbremen.ton"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../de/hfkbremen/ton/ToneEngineJSyn.html" title="class in de.hfkbremen.ton"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../de/hfkbremen/ton/ToneEngineMIDI.html" title="class in de.hfkbremen.ton"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?de/hfkbremen/ton/ToneEngine.html" target="_top">Frames</a></li>

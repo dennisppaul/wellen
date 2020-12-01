@@ -1,9 +1,7 @@
 import de.hfkbremen.ton.*; 
-import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
-import ddf.minim.*; 
-import com.jsyn.unitgen.*; 
+//@TODO("rewrite this with shared audioblocks and callbacks")
 float[] mDelayBuffer = new float[4096];
 int mDelayID = 0;
 int mDelayOffset = 512;
@@ -22,7 +20,7 @@ void setup() {
     DSP.dumpAudioDevices();
     final int OUTPUT_BUILT_IN_OUTPUT = 10;
     final int INPUT_BACKHOLE_2CH = 5;
-    Ton.start("jsyn", INPUT_BACKHOLE_2CH, 2);
+    Ton.start(Ton.TONE_ENGINE_SOFTWARE, INPUT_BACKHOLE_2CH, 2);
     DSP.start(this, OUTPUT_BUILT_IN_OUTPUT, 1, INPUT_BACKHOLE_2CH, 1);
 }
 

@@ -80,7 +80,7 @@ public class AppTonIntroductionClip extends PApplet {
             note = pNote;
             instrument = pInstrument;
             playing = false;
-            Ton.instrument(instrument).osc_type(Ton.OSC_TRIANGLE);
+            Ton.instrument(instrument).set_osc_type(Ton.OSC_TRIANGLE);
         }
 
         public void beat(int pBeatCount) {

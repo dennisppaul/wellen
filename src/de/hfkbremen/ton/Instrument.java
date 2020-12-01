@@ -9,30 +9,15 @@ import static de.hfkbremen.ton.Ton.clamp127;
 
 public abstract class Instrument {
 
-    public static final String ADSR_DIAGRAM = "    ^    /\\\n"
-                                              + "    |   /  \\\n"
-                                              + "    |  /    \\______\n"
-                                              + "    | /            \\\n"
-                                              + "    |/              \\\n"
-                                              + "    +---------------------->\n"
-                                              + "    [A   ][D][S   ][R]\n";
     private final int mID;
-    /**
-     * time parameter defining the time it takes for the set_amp to reach maximum level.
-     */
     protected float mAttack = DEFAULT_ATTACK;
-    /**
-     * time parameter defining the time it takes to go from maximum to get_sustain level.
-     */
     protected float mDecay = DEFAULT_DECAY;
-    /**
-     * level parameter defining the level hold while note is still played.
-     */
     protected float mSustain = DEFAULT_SUSTAIN;
-    /**
-     * time parameter defining the time it takes for the set_amp to reach zero after note is off.
-     */
     protected float mRelease = DEFAULT_RELEASE;
+    protected float mPan = 0.0f;
+    protected boolean mEnableLFOFrequency;
+    protected boolean mEnableLFOAmplitude;
+    protected boolean mEnableADSR;
 
     public Instrument(int pID) {
         mID = pID;
@@ -42,82 +27,120 @@ public abstract class Instrument {
         return mID;
     }
 
-    public void attack(float pAttack) {
-        mAttack = pAttack;
-    }
-
-    public void decay(float pDecay) {
-        mDecay = pDecay;
-    }
-
-    public void sustain(float pSustain) {
-        mSustain = pSustain;
-    }
-
-    public void release(float pRelease) {
-        mRelease = pRelease;
-    }
-
     public float get_attack() {
         return mAttack;
+    }
+
+    /**
+     * @param pAttack time parameter defining the time it takes for the set_amp to reach maximum level.
+     */
+    public void set_attack(float pAttack) {
+        mAttack = pAttack;
     }
 
     public float get_decay() {
         return mDecay;
     }
 
+    /**
+     * @param pDecay time parameter defining the time it takes to go from maximum to get_sustain level.
+     */
+    public void set_decay(float pDecay) {
+        mDecay = pDecay;
+    }
+
     public float get_sustain() {
         return mSustain;
+    }
+
+    /**
+     * @param pSustain level parameter defining the level hold while note is still played.
+     */
+    public void set_sustain(float pSustain) {
+        mSustain = pSustain;
     }
 
     public float get_release() {
         return mRelease;
     }
 
-    public abstract void osc_type(int pOsc);
+    /**
+     * @param pRelease time parameter defining the time it takes for the set_amp to reach zero after note is off.
+     */
+    public void set_release(float pRelease) {
+        mRelease = pRelease;
+    }
 
     public abstract int get_osc_type();
 
-    public abstract void lfo_amp(float pLFOAmp);
+    public abstract void set_osc_type(int pOsc);
 
-    public abstract float get_lfo_amp();
+    public abstract float get_freq_LFO_amp();
 
-    public abstract void lfo_freq(float pLFOFreq);
+    public abstract void set_freq_LFO_amp(float pLFOAmp);
 
-    public abstract float get_lfo_freq();
+    public abstract float get_freq_LFO_freq();
 
-    public abstract void filter_q(float f);
+    public abstract void set_freq_LFO_freq(float pLFOFreq);
+
+    public abstract float get_amp_LFO_amp();
+
+    public abstract void set_amp_LFO_amp(float pLFOAmp);
+
+    public abstract float get_amp_LFO_freq();
+
+    public abstract void set_amp_LFO_freq(float pLFOFreq);
 
     public abstract float get_filter_q();
 
-    public abstract void filter_freq(float f);
+    public abstract void set_filter_q(float pResonance);
 
     public abstract float get_filter_freq();
 
-    public abstract void pitch_bend(float freq_offset);
+    public abstract void set_filter_freq(float pFreq);
 
-    public abstract void amplitude(float pAmp);
+    public abstract void pitch_bend(float pFreqOffset);
 
     public abstract float get_amplitude();
 
-    public abstract void frequency(float freq);
+    public abstract void set_amplitude(float pAmp);
 
     public abstract float get_frequency();
 
-    public abstract void note_off();
+    public abstract void set_frequency(float pFreq);
 
-    public abstract void note_on(int note, int velocity);
+    public float get_pan() {return mPan;}
 
-    // @TODO (move scheduled note_on/off to instrument)
-    // public abstract void note_on(int note, int velocity, float duration);
-
-    public abstract boolean isPlaying();
-
-    protected float _note_to_frequency(int note) {
-        return note_to_frequency(clamp127(note));
+    /**
+     * @param pPan panning of instrument with -1.0 is the left side and 1.0 is the right side
+     */
+    public void set_pan(float pPan) {
+        mPan = pPan;
     }
 
-    protected float _velocity_to_amplitude(int velocity) {
-        return clamp127(velocity) / 127.0f;
+    public void enable_ADSR(boolean pEnableADSR) {
+        mEnableADSR = pEnableADSR;
+    }
+
+    public void enable_LFO_amplitude(boolean pEnableLFOAmplitude) {
+        mEnableLFOAmplitude = pEnableLFOAmplitude;
+    }
+
+    public void enable_LFO_frequency(boolean pEnableLFOFrequency) {
+        mEnableLFOFrequency = pEnableLFOFrequency;
+    }
+
+    public abstract void note_off();
+
+    public abstract void note_on(int pNote, int pVelocity);
+
+    public abstract boolean is_playing();
+
+    protected float _note_to_frequency(int pNote) {
+        return note_to_frequency(clamp127(pNote));
+    }
+
+    protected float _velocity_to_amplitude(int pVelocity) {
+        return clamp127(pVelocity) / 127.0f;
     }
 }

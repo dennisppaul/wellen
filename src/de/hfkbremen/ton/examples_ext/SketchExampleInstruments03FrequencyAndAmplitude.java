@@ -17,7 +17,7 @@ public class SketchExampleInstruments03FrequencyAndAmplitude extends PApplet {
 
     public void setup() {
         Ton.start("jsyn-minimal");
-        Ton.instrument().osc_type(Ton.OSC_SAWTOOTH);
+        Ton.instrument().set_osc_type(Ton.OSC_SAWTOOTH);
     }
 
     public void draw() {
@@ -31,8 +31,8 @@ public class SketchExampleInstruments03FrequencyAndAmplitude extends PApplet {
     public void mouseMoved() {
         float mFreq = map(mouseX, 0, width, 110, 440);
         float mAmp = mouseY / (float) height;
-        Ton.instrument().frequency(mFreq);
-        Ton.instrument().amplitude(mAmp);
+        Ton.instrument().set_frequency(mFreq);
+        Ton.instrument().set_amplitude(mAmp);
     }
 
     public static void main(String[] args) {

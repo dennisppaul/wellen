@@ -1,6 +1,6 @@
 package de.hfkbremen.ton.examples_ext;
 
-import de.hfkbremen.ton.Instrument;
+import de.hfkbremen.ton.ADSR;
 import de.hfkbremen.ton.Note;
 import de.hfkbremen.ton.Scale;
 import de.hfkbremen.ton.Ton;
@@ -45,7 +45,7 @@ public class SketchExampleInstruments01ADSR extends PApplet {
         mSliderSustain.horziontal = false;
         mSliderRelease = new Slider();
         updateADSR();
-        println(Instrument.ADSR_DIAGRAM);
+        println(ADSR.ADSR_DIAGRAM);
     }
 
     public void draw() {
@@ -134,10 +134,10 @@ public class SketchExampleInstruments01ADSR extends PApplet {
     }
 
     private void updateADSR() {
-        Ton.instrument().attack(mSliderAttack.value);
-        Ton.instrument().decay(mSliderDecay.value);
-        Ton.instrument().sustain(mSliderSustain.value);
-        Ton.instrument().release(mSliderRelease.value);
+        Ton.instrument().set_attack(mSliderAttack.value);
+        Ton.instrument().set_decay(mSliderDecay.value);
+        Ton.instrument().set_sustain(mSliderSustain.value);
+        Ton.instrument().set_release(mSliderRelease.value);
     }
 
     private static class Slider {

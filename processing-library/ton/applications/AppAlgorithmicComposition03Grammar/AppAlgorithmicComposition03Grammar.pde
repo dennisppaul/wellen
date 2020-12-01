@@ -1,9 +1,6 @@
 import de.hfkbremen.ton.*; 
-import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
-import ddf.minim.*; 
-import com.jsyn.unitgen.*; 
 
 final String mInput = "RADIO, LIVE TRANSMISSION.\n" +
         "RADIO, LIVE TRANSMISSION.\n" +
@@ -36,8 +33,8 @@ void settings() {
 
 void setup() {
     textFont(createFont("Helvetica-Bold", 10));
-    Ton.instrument(1).osc_type(Ton.OSC_SAWTOOTH);
-    Ton.instrument(2).osc_type(Ton.OSC_SINE);
+    Ton.instrument(1).set_osc_type(Ton.OSC_SAWTOOTH);
+    Ton.instrument(2).set_osc_type(Ton.OSC_SINE);
     Beat.start(this, 240);
 }
 

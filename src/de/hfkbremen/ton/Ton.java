@@ -1,16 +1,9 @@
 package de.hfkbremen.ton;
 
-import com.jsyn.devices.javasound.JavaSoundAudioDevice;
-import controlP5.ControlP5;
-import controlP5.DropdownList;
-import ddf.minim.Minim;
 import processing.core.PApplet;
-import processing.core.PConstants;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
-
-import static de.hfkbremen.ton.ToneEngine.INSTRUMENT_WITH_OSCILLATOR_ADSR;
 
 public abstract class Ton {
 
@@ -21,17 +14,15 @@ public abstract class Ton {
     public static final int OSC_NOISE = 4;
     public static final int NUMBER_OF_OSCILLATORS = 5;
     public static final String TONE_ENGINE_SOFTWARE = "software";
-    public static final String TONE_ENGINE_JSYN = "jsyn";
     public static final String TONE_ENGINE_MIDI = "midi";
     public static final String TONE_ENGINE_OSC = "osc";
     public static final float DEFAULT_ATTACK = 0.005f;
     public static final float DEFAULT_DECAY = 0.01f;
     public static final float DEFAULT_RELEASE = 0.075f;
     public static final float DEFAULT_SUSTAIN = 0.5f;
-    private static ToneEngine instance = null;
-
     public static final int DEFAULT_SAMPLING_RATE = 44100;
     public static final int DEFAULT_AUDIOBLOCK_SIZE = 512;
+    private static ToneEngine instance = null;
 
     private Ton() {
     }
@@ -57,9 +48,12 @@ public abstract class Ton {
             System.err.println(
                     "+++ @start / tone engine already initialized. make sure that `start` is the first call to `Ton`.");
         }
-        if (pName.equalsIgnoreCase(TONE_ENGINE_JSYN)) {
+        if (pName.equalsIgnoreCase(TONE_ENGINE_SOFTWARE)) {
             /* specify output device */
-            instance = new ToneEngineJSyn(INSTRUMENT_WITH_OSCILLATOR_ADSR, pParameterA, pParameterB);
+            //     public ToneEngineSoftware(int pSamplingRate,
+            //                              int pOutputDeviceID,
+            //                              int pOutputChannels)
+            instance = new ToneEngineSoftware(DEFAULT_SAMPLING_RATE, pParameterA, pParameterB);
         } else {
             instance = ToneEngine.createEngine(pName);
         }
@@ -90,7 +84,7 @@ public abstract class Ton {
     }
 
     public static boolean isPlaying() {
-        return instance().isPlaying();
+        return instance().is_playing();
     }
 
     public static Instrument instrument(int pInstrumentID) {
@@ -121,16 +115,16 @@ public abstract class Ton {
         T mInstrument;
         try {
             Constructor<T> c;
-            if (InstrumentJSyn.class.isAssignableFrom(pInstrumentClass) && instance() instanceof ToneEngineJSyn) {
-                c = pInstrumentClass.getDeclaredConstructor(ToneEngineJSyn.class, int.class);
-                mInstrument = c.newInstance(instance(), pID);
-            } else if (pInstrumentClass == InstrumentMinim.class && instance() instanceof ToneEngineMinim) {
-                c = pInstrumentClass.getDeclaredConstructor(Minim.class, int.class);
-                mInstrument = c.newInstance((Minim) ((ToneEngineMinim) instance()).minim(), pID);
-            } else {
-                c = pInstrumentClass.getDeclaredConstructor(int.class);
-                mInstrument = c.newInstance(pID);
-            }
+//            if (InstrumentJSyn.class.isAssignableFrom(pInstrumentClass) && instance() instanceof ToneEngineJSyn) {
+//                c = pInstrumentClass.getDeclaredConstructor(ToneEngineJSyn.class, int.class);
+//                mInstrument = c.newInstance(instance(), pID);
+//            } else if (pInstrumentClass == InstrumentMinim.class && instance() instanceof ToneEngineMinim) {
+//                c = pInstrumentClass.getDeclaredConstructor(Minim.class, int.class);
+//                mInstrument = c.newInstance((Minim) ((ToneEngineMinim) instance()).minim(), pID);
+//            } else {
+            c = pInstrumentClass.getDeclaredConstructor(int.class);
+            mInstrument = c.newInstance(pID);
+//            }
         } catch (Exception ex) {
             ex.printStackTrace();
             mInstrument = null;
@@ -159,39 +153,39 @@ public abstract class Ton {
         }
     }
 
-    public static void dumpAudioDevices() {
-        final JavaSoundAudioDevice mDevice = new JavaSoundAudioDevice();
-        System.out.println("+-------------------------------------------------------+");
-        System.out.println("AUDIO DEVICES ( Java Sound )");
-        System.out.println("+-------------------------------------------------------+");
-        for (int i = 0; i < mDevice.getDeviceCount(); i++) {
-            System.out.println("+ " + "ID ................ : " + i);
-            System.out.println("+ " + "NAME .............. : " + mDevice.getDeviceName(i));
-            System.out.println("+ " + "OUTPUT CHANNELS ... : " + mDevice.getMaxOutputChannels(i));
-            System.out.println("+ " + "INPUT CHANNELS .... : " + mDevice.getMaxInputChannels(i));
-            System.out.println("+-------------------------------------------------------+");
-        }
-    }
+//    public static void dumpAudioDevices() {
+//        final JavaSoundAudioDevice mDevice = new JavaSoundAudioDevice();
+//        System.out.println("+-------------------------------------------------------+");
+//        System.out.println("AUDIO DEVICES ( Java Sound )");
+//        System.out.println("+-------------------------------------------------------+");
+//        for (int i = 0; i < mDevice.getDeviceCount(); i++) {
+//            System.out.println("+ " + "ID ................ : " + i);
+//            System.out.println("+ " + "NAME .............. : " + mDevice.getDeviceName(i));
+//            System.out.println("+ " + "OUTPUT CHANNELS ... : " + mDevice.getMaxOutputChannels(i));
+//            System.out.println("+ " + "INPUT CHANNELS .... : " + mDevice.getMaxInputChannels(i));
+//            System.out.println("+-------------------------------------------------------+");
+//        }
+//    }
 
-    public static void buildSelectMidiDeviceMenu(ControlP5 controls) {
-        final int mListWidth = 300, mListHeight = 300;
-
-        DropdownList dl = controls.addDropdownList("Please select MIDI Device",
-                                                   (controls.papplet.width - mListWidth) / 2,
-                                                   (controls.papplet.height - mListHeight) / 2,
-                                                   mListWidth,
-                                                   mListHeight);
-
-        //        dl.toUpperCase(true);
-        dl.setItemHeight(16);
-        dl.setBarHeight(16);
-        dl.getCaptionLabel().align(PConstants.LEFT, PConstants.CENTER);
-
-        final String[] mOutputNames = MidiOut.availableOutputs();
-        for (int i = 0; i < mOutputNames.length; i++) {
-            dl.addItem(mOutputNames[i], i);
-        }
-    }
+//    public static void buildSelectMidiDeviceMenu(ControlP5 controls) {
+//        final int mListWidth = 300, mListHeight = 300;
+//
+//        DropdownList dl = controls.addDropdownList("Please select MIDI Device",
+//                                                   (controls.papplet.width - mListWidth) / 2,
+//                                                   (controls.papplet.height - mListHeight) / 2,
+//                                                   mListWidth,
+//                                                   mListHeight);
+//
+//        //        dl.toUpperCase(true);
+//        dl.setItemHeight(16);
+//        dl.setBarHeight(16);
+//        dl.getCaptionLabel().align(PConstants.LEFT, PConstants.CENTER);
+//
+//        final String[] mOutputNames = MidiOut.availableOutputs();
+//        for (int i = 0; i < mOutputNames.length; i++) {
+//            dl.addItem(mOutputNames[i], i);
+//        }
+//    }
 
     public static int constrain(int value, int min, int max) {
         if (value > max) {

@@ -66,8 +66,8 @@ public class ToneEngineSoftware extends ToneEngine implements AudioBufferRendere
     }
 
     @Override
-    public boolean isPlaying() {
-        return mInstruments.get(getInstrumentID()).isPlaying();
+    public boolean is_playing() {
+        return mInstruments.get(getInstrumentID()).is_playing();
     }
 
     @Override
@@ -101,12 +101,24 @@ public class ToneEngineSoftware extends ToneEngine implements AudioBufferRendere
     public void audioblock(float[][] pOutputSamples, float[][] pInputSamples) {
         // @TODO(implement multi channels)
         for (int i = 0; i < pOutputSamples[0].length; i++) {
-            float mSample = 0;
-            for (InstrumentSoftware mInstrument : mInstruments) {
-                mSample += mInstrument.output();
+            if (pOutputSamples.length == 1) {
+                float mSample = 0;
+                for (InstrumentSoftware mInstrument : mInstruments) {
+                    mSample += mInstrument.output();
+                }
+                pOutputSamples[0][i] = mSample;
+            } else if (pOutputSamples.length == 2) {
+                float mSampleL = 0;
+                float mSampleR = 0;
+                for (InstrumentSoftware mInstrument : mInstruments) {
+                    final float mSample = mInstrument.output();
+                    final float mPan = mInstrument.get_pan() * 0.5f + 0.5f;
+                    mSampleR += mSample * mPan;
+                    mSampleL += mSample * (1.0f - mPan);
+                }
+                pOutputSamples[0][i] = mSampleL;
+                pOutputSamples[1][i] = mSampleR;
             }
-            pOutputSamples[0][i] = mSample;
-            pOutputSamples[1][i] = mSample;
         }
         if (mAudioblockCallback != null) { mAudioblockCallback.audioblock(pOutputSamples); }
     }

@@ -19,10 +19,8 @@ public class InstrumentSoftware extends Instrument implements DSPNodeOutput {
     protected float mFreq;
     protected boolean mIsPlaying = false;
     protected float mFreqOffset;
-    private boolean mEnableADSR;
     private int mOscType;
-    private boolean mEnableLFOFrequency;
-    private boolean mEnableLFOAmplitude;
+
 
     public InstrumentSoftware(int pID, int pSamplingRate, int pWavetableSize) {
         super(pID);
@@ -36,9 +34,9 @@ public class InstrumentSoftware extends Instrument implements DSPNodeOutput {
 
         mVCO = new Wavetable(pWavetableSize, pSamplingRate);
         mVCO.interpolate_samples(true);
-        osc_type(OSC_SINE);
-        amplitude(0.0f);
-        frequency(DEFAULT_FREQUENCY);
+        set_osc_type(OSC_SINE);
+        set_amplitude(0.0f);
+        set_frequency(DEFAULT_FREQUENCY);
         mVCO.set_amplitude(mAmp);
         mVCO.set_frequency(mFreq);
 
@@ -74,7 +72,7 @@ public class InstrumentSoftware extends Instrument implements DSPNodeOutput {
         final float mLFOFreq = mEnableLFOFrequency ? mFrequencyLFO.output() : 0.0f;
         final float mLFOAmp = mEnableLFOAmplitude ? mAmplitudeLFO.output() : 0.0f;
 
-        mVCO.set_frequency(mFreq + mLFOFreq);
+        mVCO.set_frequency(mFreq + mLFOFreq + mFreqOffset);
         mVCO.set_amplitude((mAmp + mLFOAmp) * (mEnableLFOAmplitude ? 0.5f : 1.0f));
 
         final float mADSRAmp = mEnableADSR ? mADSR.output() : 1.0f;
@@ -83,44 +81,34 @@ public class InstrumentSoftware extends Instrument implements DSPNodeOutput {
         return mADSRAmp * mSample;
     }
 
-    public void enable_ADSR(boolean pEnableADSR) {
-        mEnableADSR = pEnableADSR;
-    }
 
-    public void enable_LFO_amplitude(boolean pEnableLFOAmplitude) {
-        mEnableLFOAmplitude = pEnableLFOAmplitude;
-    }
-
-    public void enable_LFO_frequency(boolean pEnableLFOFrequency) {
-        mEnableLFOFrequency = pEnableLFOFrequency;
-    }
 
     @Override
-    public void attack(float pAttack) {
+    public void set_attack(float pAttack) {
         mAttack = pAttack;
         mADSR.set_attack(mAttack);
     }
 
     @Override
-    public void decay(float pDecay) {
+    public void set_decay(float pDecay) {
         mDecay = pDecay;
         mADSR.set_decay(mDecay);
     }
 
     @Override
-    public void sustain(float pSustain) {
+    public void set_sustain(float pSustain) {
         mSustain = pSustain;
         mADSR.set_sustain(mSustain);
     }
 
     @Override
-    public void release(float pRelease) {
+    public void set_release(float pRelease) {
         mRelease = pRelease;
         mADSR.set_release(mRelease);
     }
 
     @Override
-    public void osc_type(int pOsc) {
+    public void set_osc_type(int pOsc) {
         mOscType = pOsc;
         Wavetable.fill(mVCO.wavetable(), pOsc);
     }
@@ -131,26 +119,46 @@ public class InstrumentSoftware extends Instrument implements DSPNodeOutput {
     }
 
     @Override
-    public void lfo_amp(float pLFOAmp) {
+    public void set_freq_LFO_amp(float pLFOAmp) {
     }
 
     @Override
-    public float get_lfo_amp() {
+    public float get_freq_LFO_amp() {
         return 0;
     }
 
     @Override
-    public void lfo_freq(float pLFOFreq) {
+    public void set_freq_LFO_freq(float pLFOFreq) {
 
     }
 
     @Override
-    public float get_lfo_freq() {
+    public float get_freq_LFO_freq() {
         return 0;
     }
 
     @Override
-    public void filter_q(float f) {
+    public void set_amp_LFO_amp(float pLFOAmp) {
+
+    }
+
+    @Override
+    public float get_amp_LFO_amp() {
+        return 0;
+    }
+
+    @Override
+    public void set_amp_LFO_freq(float pLFOFreq) {
+
+    }
+
+    @Override
+    public float get_amp_LFO_freq() {
+        return 0;
+    }
+
+    @Override
+    public void set_filter_q(float pResonance) {
 
     }
 
@@ -160,7 +168,7 @@ public class InstrumentSoftware extends Instrument implements DSPNodeOutput {
     }
 
     @Override
-    public void filter_freq(float f) {
+    public void set_filter_freq(float pFreq) {
 
     }
 
@@ -170,13 +178,12 @@ public class InstrumentSoftware extends Instrument implements DSPNodeOutput {
     }
 
     @Override
-    public void pitch_bend(float freq_offset) {
-        mFreqOffset = freq_offset;
-        frequency(mFreq);
+    public void pitch_bend(float pFreqOffset) {
+        mFreqOffset = pFreqOffset;
     }
 
     @Override
-    public void amplitude(float pAmp) {
+    public void set_amplitude(float pAmp) {
         mAmp = pAmp;
     }
 
@@ -186,8 +193,8 @@ public class InstrumentSoftware extends Instrument implements DSPNodeOutput {
     }
 
     @Override
-    public void frequency(float freq) {
-        mFreq = freq;
+    public void set_frequency(float pFreq) {
+        mFreq = pFreq;
     }
 
     @Override
@@ -202,15 +209,15 @@ public class InstrumentSoftware extends Instrument implements DSPNodeOutput {
     }
 
     @Override
-    public void note_on(int note, int velocity) {
+    public void note_on(int pNote, int pVelocity) {
         mIsPlaying = true;
-        frequency(_note_to_frequency(note));
-        amplitude(_velocity_to_amplitude(velocity));
+        set_frequency(_note_to_frequency(pNote));
+        set_amplitude(_velocity_to_amplitude(pVelocity));
         mADSR.start();
     }
 
     @Override
-    public boolean isPlaying() {
+    public boolean is_playing() {
         return mIsPlaying;
     }
 }

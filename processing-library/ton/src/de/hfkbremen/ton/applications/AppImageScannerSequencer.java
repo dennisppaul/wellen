@@ -5,8 +5,6 @@ import de.hfkbremen.ton.Instrument;
 import de.hfkbremen.ton.Note;
 import de.hfkbremen.ton.Scale;
 import de.hfkbremen.ton.Ton;
-import de.hfkbremen.ton.ToneEngine;
-import de.hfkbremen.ton.ToneEngineJSyn;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PImage;
@@ -16,7 +14,6 @@ import java.util.ArrayList;
 
 public class AppImageScannerSequencer extends PApplet {
 
-    private final ToneEngine mSynth = new ToneEngineJSyn();
     private final ArrayList<ImageSampler> mSamplers = new ArrayList<>();
     private Capture mCapture;
     private int mCurrentSampler = 0;
@@ -35,12 +32,12 @@ public class AppImageScannerSequencer extends PApplet {
         mCapture.start();
 
         /* set ADSR parameters for current instrument */
-        Instrument mInstrument = mSynth.instrument();
-        mInstrument.attack(0.01f);
-        mInstrument.decay(0.1f);
-        mInstrument.sustain(0.0f);
-        mInstrument.release(0.01f);
-        mInstrument.osc_type(Ton.OSC_SINE);
+        Instrument mInstrument = Ton.instrument();
+        mInstrument.set_attack(0.01f);
+        mInstrument.set_decay(0.1f);
+        mInstrument.set_sustain(0.0f);
+        mInstrument.set_release(0.01f);
+        mInstrument.set_osc_type(Ton.OSC_SINE);
 
         final int mSpacing = 36;
         final int NUMBER_OF_SAMPLERS = 16;
@@ -79,7 +76,7 @@ public class AppImageScannerSequencer extends PApplet {
         final int mSteps = 10;
         final int mNote = Scale.note(Scale.MAJOR_CHORD_7, Note.NOTE_C2, (int) (mBrightnessNorm * mSteps));
         if (mNote != mLastNote) {
-            mSynth.note_on(mNote, 100);
+            Ton.note_on(mNote, 100);
         }
         mLastNote = mNote;
     }

@@ -1,9 +1,6 @@
 import de.hfkbremen.ton.*; 
-import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
-import ddf.minim.*; 
-import com.jsyn.unitgen.*; 
 
 static final float SCALE = 720.0f / 480.0f;
 
@@ -79,7 +76,7 @@ static class Loop implements BeatListener {
         note = pNote;
         instrument = pInstrument;
         playing = false;
-        Ton.instrument(instrument).osc_type(Ton.OSC_TRIANGLE);
+        Ton.instrument(instrument).set_osc_type(Ton.OSC_TRIANGLE);
     }
     
 void beat(int pBeatCount) {

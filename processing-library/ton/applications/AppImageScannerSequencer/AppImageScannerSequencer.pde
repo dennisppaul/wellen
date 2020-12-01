@@ -1,11 +1,6 @@
 import de.hfkbremen.ton.*; 
-import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
-import ddf.minim.*; 
-import com.jsyn.unitgen.*; 
-
-final ToneEngine mSynth = new ToneEngineJSyn();
 
 final ArrayList<ImageSampler> mSamplers = new ArrayList();
 
@@ -26,12 +21,12 @@ void setup() {
     mCapture = new Capture(this, Capture.list()[0]);
     mCapture.start();
     /* set ADSR parameters for current instrument */
-    Instrument mInstrument = mSynth.instrument();
-    mInstrument.attack(0.01f);
-    mInstrument.decay(0.1f);
-    mInstrument.sustain(0.0f);
-    mInstrument.release(0.01f);
-    mInstrument.osc_type(Ton.OSC_SINE);
+    Instrument mInstrument = Ton.instrument();
+    mInstrument.set_attack(0.01f);
+    mInstrument.set_decay(0.1f);
+    mInstrument.set_sustain(0.0f);
+    mInstrument.set_release(0.01f);
+    mInstrument.set_osc_type(Ton.OSC_SINE);
     final int mSpacing = 36;
     final int NUMBER_OF_SAMPLERS = 16;
     for (int i = 0; i < NUMBER_OF_SAMPLERS; i++) {
@@ -66,7 +61,7 @@ void beat(int pBeat) {
     final int mSteps = 10;
     final int mNote = Scale.note(Scale.MAJOR_CHORD_7, Note.NOTE_C2, (int) (mBrightnessNorm * mSteps));
     if (mNote != mLastNote) {
-        mSynth.note_on(mNote, 100);
+        Ton.note_on(mNote, 100);
     }
     mLastNote = mNote;
 }

@@ -1,9 +1,6 @@
 import de.hfkbremen.ton.*; 
-import controlP5.*; 
 import netP5.*; 
 import oscP5.*; 
-import ddf.minim.*; 
-import com.jsyn.unitgen.*; 
 
 Slider mSliderAttack;
 
@@ -27,7 +24,7 @@ void setup() {
     mSliderSustain.horziontal = false;
     mSliderRelease = new Slider();
     updateADSR();
-    println(Instrument.ADSR_DIAGRAM);
+    println(ADSR.ADSR_DIAGRAM);
 }
 
 void draw() {
@@ -108,10 +105,10 @@ void updateDiagram(float mXOffset, float mYOffset) {
 }
 
 void updateADSR() {
-    Ton.instrument().attack(mSliderAttack.value);
-    Ton.instrument().decay(mSliderDecay.value);
-    Ton.instrument().sustain(mSliderSustain.value);
-    Ton.instrument().release(mSliderRelease.value);
+    Ton.instrument().set_attack(mSliderAttack.value);
+    Ton.instrument().set_decay(mSliderDecay.value);
+    Ton.instrument().set_sustain(mSliderSustain.value);
+    Ton.instrument().set_release(mSliderRelease.value);
 }
 
 static class Slider {

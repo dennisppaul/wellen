@@ -74,7 +74,7 @@ public class ToneEngineOSC extends ToneEngine {
         mOscP5.send(m, mRemoteLocation);
     }
 
-    public boolean isPlaying() {
+    public boolean is_playing() {
         return mIsPlaying;
     }
 

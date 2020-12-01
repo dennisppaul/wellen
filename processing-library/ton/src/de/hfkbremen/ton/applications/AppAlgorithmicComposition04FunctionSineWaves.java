@@ -1,7 +1,7 @@
 package de.hfkbremen.ton.applications;
 
 import de.hfkbremen.ton.Beat;
-import de.hfkbremen.ton.InstrumentJSynOscillator;
+import de.hfkbremen.ton.InstrumentSoftware;
 import de.hfkbremen.ton.Note;
 import de.hfkbremen.ton.Scale;
 import de.hfkbremen.ton.Ton;
@@ -26,14 +26,15 @@ public class AppAlgorithmicComposition04FunctionSineWaves extends PApplet {
 
     public void setup() {
         Beat.start(this, 240);
-        Ton.instrument(INSTRUMENT_BASE).osc_type(Ton.OSC_TRIANGLE);
-        Ton.instrument(INSTRUMENT_FLUTE).osc_type(Ton.OSC_SAWTOOTH);
+        Ton.instrument(INSTRUMENT_BASE).set_osc_type(Ton.OSC_TRIANGLE);
+        Ton.instrument(INSTRUMENT_FLUTE).set_osc_type(Ton.OSC_SAWTOOTH);
 
-        Ton.replace_instrument(InstrumentJSynOscillator.class, INSTRUMENT_NOISE);
-        Ton.instrument(INSTRUMENT_NOISE).osc_type(Ton.OSC_NOISE);
+        //@TODO("this might be broken!")
+        Ton.replace_instrument(InstrumentSoftware.class, INSTRUMENT_NOISE);
+        Ton.instrument(INSTRUMENT_NOISE).set_osc_type(Ton.OSC_NOISE);
         Ton.instrument(INSTRUMENT_NOISE).note_on(1, 127);
-        Ton.instrument(INSTRUMENT_NOISE).sustain(1.0f);
-        Ton.instrument(INSTRUMENT_NOISE).amplitude(0.0f);
+        Ton.instrument(INSTRUMENT_NOISE).set_sustain(1.0f);
+        Ton.instrument(INSTRUMENT_NOISE).set_amplitude(0.0f);
     }
 
     public void draw() {
@@ -64,7 +65,7 @@ public class AppAlgorithmicComposition04FunctionSineWaves extends PApplet {
         float r = pBeatCount;
         r *= 0.5;
         float mAmplitude = abs(sin(r * r + sin(r * 0.3f) * TWO_PI)) * abs(sin(r / 20.0f));
-        Ton.instrument(INSTRUMENT_NOISE).amplitude(map(mAmplitude, 0, 1.0f, 0.001f, 0.03f));
+        Ton.instrument(INSTRUMENT_NOISE).set_amplitude(map(mAmplitude, 0, 1.0f, 0.001f, 0.03f));
     }
 
     private void playMelody(int pBeatCount, float pVelocityScale) {
