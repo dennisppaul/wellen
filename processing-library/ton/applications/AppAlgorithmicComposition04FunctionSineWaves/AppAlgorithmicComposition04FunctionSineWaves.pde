@@ -28,10 +28,10 @@ void settings() {
 
 void setup() {
     Beat.start(this, 240);
-    Ton.instrument(INSTRUMENT_BASE).osc_type(Instrument.TRIANGLE);
-    Ton.instrument(INSTRUMENT_FLUTE).osc_type(Instrument.SAWTOOTH);
+    Ton.instrument(INSTRUMENT_BASE).osc_type(Ton.OSC_TRIANGLE);
+    Ton.instrument(INSTRUMENT_FLUTE).osc_type(Ton.OSC_SAWTOOTH);
     Ton.replace_instrument(InstrumentJSynOscillator.class, INSTRUMENT_NOISE);
-    Ton.instrument(INSTRUMENT_NOISE).osc_type(Instrument.NOISE);
+    Ton.instrument(INSTRUMENT_NOISE).osc_type(Ton.OSC_NOISE);
     Ton.instrument(INSTRUMENT_NOISE).note_on(1, 127);
     Ton.instrument(INSTRUMENT_NOISE).sustain(1.0f);
     Ton.instrument(INSTRUMENT_NOISE).amplitude(0.0f);

@@ -1,6 +1,7 @@
 package de.hfkbremen.ton.tests;
 
 import de.hfkbremen.ton.DSP;
+import de.hfkbremen.ton.Ton;
 import de.hfkbremen.ton.Wavetable;
 import processing.core.PApplet;
 
@@ -18,13 +19,13 @@ public class TestWavetableInterpolation extends PApplet {
         Wavetable.sine(mWavetable.wavetable());
         mWavetable.set_frequency(172.265625f);
         mWavetable.set_amplitude(0.25f);
-        mWavetable.interpolate(true);
+        mWavetable.interpolate_samples(true);
     }
 
     public void draw() {
         background(255);
         DSP.draw_buffer(g, width, height);
-        mWavetable.interpolate(!mousePressed);
+        mWavetable.interpolate_samples(!mousePressed);
     }
 
     public void audioblock(float[] pOutputSamples) {
@@ -45,7 +46,7 @@ public class TestWavetableInterpolation extends PApplet {
                 Wavetable.sawtooth(mWavetable.wavetable());
                 break;
             case '4':
-                Wavetable.fill(mWavetable.wavetable(), Wavetable.TYPE_SQUARE); /* alternative way to fill wavetable */
+                Wavetable.fill(mWavetable.wavetable(), Ton.OSC_SQUARE); /* alternative way to fill wavetable */
                 break;
             case '5':
                 randomize(mWavetable.wavetable());

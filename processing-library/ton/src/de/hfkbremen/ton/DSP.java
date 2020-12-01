@@ -8,11 +8,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import static de.hfkbremen.ton.AudioBufferManager.DEFAULT;
+import static de.hfkbremen.ton.Ton.DEFAULT_AUDIOBLOCK_SIZE;
+import static de.hfkbremen.ton.Ton.DEFAULT_SAMPLING_RATE;
 
 public class DSP implements AudioBufferRenderer {
 
-    public static final int DEFAULT_SAMPLING_RATE = 44100;
-    public static final int DEFAULT_AUDIOBLOCK_SIZE = 512;
     private static final String METHOD_NAME = "audioblock";
     private static AudioBufferManager mAudioPlayer;
     private static DSP mInstance = null;

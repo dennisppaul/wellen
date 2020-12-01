@@ -9,6 +9,7 @@ import ddf.minim.ugens.Waves;
 
 import static de.hfkbremen.ton.Note.note_to_frequency;
 import static de.hfkbremen.ton.Ton.clamp127;
+import static de.hfkbremen.ton.Ton.*;
 
 public class InstrumentMinim extends Instrument {
 
@@ -67,19 +68,19 @@ public class InstrumentMinim extends Instrument {
     @Override
     public void osc_type(int pOsc) {
         switch (pOsc) {
-            case SINE:
+            case OSC_SINE:
                 mOsc.setWaveform(Waves.SINE);
                 break;
-            case TRIANGLE:
+            case OSC_TRIANGLE:
                 mOsc.setWaveform(Waves.TRIANGLE);
                 break;
-            case SAWTOOTH:
+            case OSC_SAWTOOTH:
                 mOsc.setWaveform(Waves.SAW);
                 break;
-            case SQUARE:
+            case OSC_SQUARE:
                 mOsc.setWaveform(Waves.SQUARE);
                 break;
-            case NOISE:
+            case OSC_NOISE:
                 mOsc.setWaveform(Waves.randomNoise());
                 break;
         }
@@ -89,15 +90,15 @@ public class InstrumentMinim extends Instrument {
     public int get_osc_type() {
         int mOscID;
         if (mOsc.getWaveform() == Waves.SINE) {
-            mOscID = SINE;
+            mOscID = OSC_SINE;
         } else if (mOsc.getWaveform() == Waves.TRIANGLE) {
-            mOscID = TRIANGLE;
+            mOscID = OSC_TRIANGLE;
         } else if (mOsc.getWaveform() == Waves.SAW) {
-            mOscID = SAWTOOTH;
+            mOscID = OSC_SAWTOOTH;
         } else if (mOsc.getWaveform() == Waves.SQUARE) {
-            mOscID = SQUARE;
+            mOscID = OSC_SQUARE;
         } else {
-            mOscID = NOISE;
+            mOscID = OSC_NOISE;
         }
         return mOscID;
     }

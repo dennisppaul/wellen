@@ -36,8 +36,8 @@ void settings() {
 
 void setup() {
     textFont(createFont("Helvetica-Bold", 10));
-    Ton.instrument(1).osc_type(Instrument.SAWTOOTH);
-    Ton.instrument(2).osc_type(Instrument.SINE);
+    Ton.instrument(1).osc_type(Ton.OSC_SAWTOOTH);
+    Ton.instrument(2).osc_type(Ton.OSC_SINE);
     Beat.start(this, 240);
 }
 

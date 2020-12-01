@@ -3,9 +3,6 @@ package de.hfkbremen.ton;
 import com.jsyn.engine.SynthesisEngine;
 import com.jsyn.unitgen.LineOut;
 
-import static de.hfkbremen.ton.Note.note_to_frequency;
-import static de.hfkbremen.ton.Ton.clamp127;
-
 public class InstrumentJSyn extends Instrument {
 
     protected final SynthesisEngine mSynth;
@@ -111,13 +108,5 @@ public class InstrumentJSyn extends Instrument {
     @Override
     public boolean isPlaying() {
         return mIsPlaying;
-    }
-
-    protected float _note_to_frequency(int note) {
-        return note_to_frequency(clamp127(note));
-    }
-
-    protected float _velocity_to_amplitude(int velocity) {
-        return clamp127(velocity) / 127.0f;
     }
 }

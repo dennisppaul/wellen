@@ -9,9 +9,9 @@ import java.util.TimerTask;
 
 public class BeatEvent {
 
-    private static BeatPool instance;
     private final Timer mTimer;
     private final ArrayList<BeatListener> pListeners;
+    private BeatPool instance;
     private int mBeat = -1;
     private boolean mFlagged = false;
     private TimerTask mTask;
@@ -28,8 +28,12 @@ public class BeatEvent {
 
     public static BeatEvent create(int pBPM) {
         BeatEvent mBeatEvent = new BeatEvent(pBPM);
-        BeatPool.instance().pool.add(mBeatEvent);
+        mBeatEvent.instance().pool.add(mBeatEvent);
         return mBeatEvent;
+    }
+
+    public void stop() {
+        instance().end();
     }
 
     public void add(BeatListener pListener) {
@@ -45,18 +49,20 @@ public class BeatEvent {
         mTimer.scheduleAtFixedRate(mTask, 1000, mPeriod);
     }
 
+    private BeatPool instance() {
+        if (instance == null) {
+            instance = new BeatPool();
+        }
+        return instance;
+    }
+
     private static class BeatPool extends Thread {
 
-        private static BeatPool instance = null;
         final List<BeatEvent> pool = Collections.synchronizedList(new ArrayList<>());
         private boolean mActive = true;
 
-        public static BeatPool instance() {
-            if (instance == null) {
-                instance = new BeatPool();
-                instance.start();
-            }
-            return instance;
+        public BeatPool() {
+            start();
         }
 
         public void end() {

@@ -57,7 +57,7 @@ Jibberer(int pID) {
         mBaseFreq = random(200, 400);
         mFreqStep = random(0.02f, 0.04f);
         mAmpStep = random(0.5f, 0.8f);
-        Ton.instrument(mID).osc_type(Instrument.SAWTOOTH);
+        Ton.instrument(mID).osc_type(Ton.OSC_SAWTOOTH);
         Ton.instrument(mID).amplitude(0.0f);
         Ton.instrument(mID).frequency(200.0f);
     }

@@ -28,12 +28,10 @@ public class SketchExampleInstruments02Oscillators extends PApplet {
     }
 
     public void draw() {
-        if (mIsPlaying) {
-            int mColor = (mNote - Note.NOTE_A2) * 5 + 50;
-            background(mColor);
-        } else {
-            background(255);
-        }
+        background(255);
+        fill(0);
+        float mSize = map(mNote, 33, 69, 80, 320);
+        ellipse(width * 0.5f, height * 0.5f, Ton.isPlaying() ? mSize : 5, Ton.isPlaying() ? mSize : 5);
     }
 
     public void keyPressed() {
@@ -47,19 +45,19 @@ public class SketchExampleInstruments02Oscillators extends PApplet {
             mIsPlaying = !mIsPlaying;
         }
         if (key == '1') {
-            mInstrument.osc_type(Instrument.SINE);
+            mInstrument.osc_type(Ton.OSC_SINE);
         }
         if (key == '2') {
-            mInstrument.osc_type(Instrument.TRIANGLE);
+            mInstrument.osc_type(Ton.OSC_TRIANGLE);
         }
         if (key == '3') {
-            mInstrument.osc_type(Instrument.SAWTOOTH);
+            mInstrument.osc_type(Ton.OSC_SAWTOOTH);
         }
         if (key == '4') {
-            mInstrument.osc_type(Instrument.SQUARE);
+            mInstrument.osc_type(Ton.OSC_SQUARE);
         }
         if (key == '5') {
-            mInstrument.osc_type(Instrument.NOISE);
+            mInstrument.osc_type(Ton.OSC_NOISE);
         }
     }
 

@@ -11,7 +11,7 @@ final Wavetable mFrequencyLFO = new Wavetable(512);
 
 final Wavetable mAmplitudeLFO = new Wavetable(512);
 
-final float mBaseFrequency = 2.0f * DSP.DEFAULT_SAMPLING_RATE / DSP.DEFAULT_AUDIOBLOCK_SIZE;
+final float mBaseFrequency = 2.0f * Ton.DEFAULT_SAMPLING_RATE / Ton.DEFAULT_AUDIOBLOCK_SIZE;
 
 void settings() {
     size(640, 480);
@@ -23,11 +23,11 @@ void setup() {
     mVCO.set_amplitude(0.25f);
     /* setup LFO for frequency */
     Wavetable.sine(mFrequencyLFO.wavetable());
-    mFrequencyLFO.interpolate(true);
+    mFrequencyLFO.interpolate_samples(true);
     mFrequencyLFO.set_frequency(0);
     /* setup LFO for amplitude */
     Wavetable.sine(mAmplitudeLFO.wavetable());
-    mAmplitudeLFO.interpolate(true);
+    mAmplitudeLFO.interpolate_samples(true);
     mAmplitudeLFO.set_frequency(0);
     DSP.dumpAudioDevices();
     DSP.start(this);
@@ -38,53 +38,53 @@ void draw() {
     DSP.draw_buffer(g, width, height);
 }
 
-void mouseMoved() {
-    mFrequencyLFO.set_frequency(map(mouseX, 0, width, 0.1f, 100.0f));
-    mFrequencyLFO.set_amplitude(map(mouseY, 0, height, 0.0f, 1.0f));
-}
-
 void mouseDragged() {
     mAmplitudeLFO.set_frequency(map(mouseX, 0, width, 0.1f, 100.0f));
     mAmplitudeLFO.set_amplitude(map(mouseY, 0, height, 0.0f, 1.0f));
 }
 
+void mouseMoved() {
+    mFrequencyLFO.set_frequency(map(mouseX, 0, width, 0.1f, 100.0f));
+    mFrequencyLFO.set_amplitude(map(mouseY, 0, height, 0.0f, 1.0f));
+}
+
 void keyPressed() {
     switch (key) {
         case '1':
-            Wavetable.fill(mFrequencyLFO.wavetable(), Wavetable.TYPE_SINE);
+            Wavetable.fill(mFrequencyLFO.wavetable(), Ton.OSC_SINE);
             break;
         case '2':
-            Wavetable.fill(mFrequencyLFO.wavetable(), Wavetable.TYPE_TRIANGLE);
+            Wavetable.fill(mFrequencyLFO.wavetable(), Ton.OSC_TRIANGLE);
             break;
         case '3':
-            Wavetable.fill(mFrequencyLFO.wavetable(), Wavetable.TYPE_SAWTOOTH);
+            Wavetable.fill(mFrequencyLFO.wavetable(), Ton.OSC_SAWTOOTH);
             break;
         case '4':
-            Wavetable.fill(mFrequencyLFO.wavetable(), Wavetable.TYPE_SQUARE);
+            Wavetable.fill(mFrequencyLFO.wavetable(), Ton.OSC_SQUARE);
             break;
         case 'q':
-            Wavetable.fill(mAmplitudeLFO.wavetable(), Wavetable.TYPE_SINE);
+            Wavetable.fill(mAmplitudeLFO.wavetable(), Ton.OSC_SINE);
             break;
         case 'w':
-            Wavetable.fill(mAmplitudeLFO.wavetable(), Wavetable.TYPE_TRIANGLE);
+            Wavetable.fill(mAmplitudeLFO.wavetable(), Ton.OSC_TRIANGLE);
             break;
         case 'e':
-            Wavetable.fill(mAmplitudeLFO.wavetable(), Wavetable.TYPE_SAWTOOTH);
+            Wavetable.fill(mAmplitudeLFO.wavetable(), Ton.OSC_SAWTOOTH);
             break;
         case 'r':
-            Wavetable.fill(mAmplitudeLFO.wavetable(), Wavetable.TYPE_SQUARE);
+            Wavetable.fill(mAmplitudeLFO.wavetable(), Ton.OSC_SQUARE);
             break;
         case 'a':
-            Wavetable.fill(mVCO.wavetable(), Wavetable.TYPE_SINE);
+            Wavetable.fill(mVCO.wavetable(), Ton.OSC_SINE);
             break;
         case 's':
-            Wavetable.fill(mVCO.wavetable(), Wavetable.TYPE_TRIANGLE);
+            Wavetable.fill(mVCO.wavetable(), Ton.OSC_TRIANGLE);
             break;
         case 'd':
-            Wavetable.fill(mVCO.wavetable(), Wavetable.TYPE_SAWTOOTH);
+            Wavetable.fill(mVCO.wavetable(), Ton.OSC_SAWTOOTH);
             break;
         case 'f':
-            Wavetable.fill(mVCO.wavetable(), Wavetable.TYPE_SQUARE);
+            Wavetable.fill(mVCO.wavetable(), Ton.OSC_SQUARE);
             break;
     }
 }

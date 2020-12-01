@@ -1,9 +1,9 @@
 package de.hfkbremen.ton.examples_ext;
 
 import de.hfkbremen.ton.Beat;
-import de.hfkbremen.ton.Instrument;
 import de.hfkbremen.ton.Note;
 import de.hfkbremen.ton.Scale;
+import de.hfkbremen.ton.Ton;
 import de.hfkbremen.ton.ToneEngine;
 import de.hfkbremen.ton.ToneEngineJSyn;
 import processing.core.PApplet;
@@ -33,7 +33,7 @@ public class SketchExampleInstruments08InstrumentWithGUI extends PApplet {
 
     public void setup() {
         mToneEngine = new ToneEngineJSyn(ToneEngine.INSTRUMENT_WITH_OSCILLATOR_ADSR_FILTER_LFO);
-        mToneEngine.instrument().osc_type(Instrument.SQUARE);
+        mToneEngine.instrument().osc_type(Ton.OSC_SQUARE);
         mToneEngine.instrument().attack(0.01f);
         mToneEngine.instrument().decay(0.2f);
         mToneEngine.instrument().sustain(0.0f);

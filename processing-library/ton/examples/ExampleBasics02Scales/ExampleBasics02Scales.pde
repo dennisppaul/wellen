@@ -32,7 +32,7 @@ void keyPressed() {
         mStep++;
         mStep %= mScale.length + 1;
         mNote = Scale.note(mScale, Note.NOTE_C4, mStep);
-        Ton.note_on(mNote, 100);
+        Ton.note_on(mNote, 100, 0.25f);
     }
     if (key == '1') {
         mScale = Scale.HALF_TONE;

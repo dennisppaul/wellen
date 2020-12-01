@@ -22,14 +22,14 @@ void draw() {
     DSP.draw_buffer(g, width, height);
 }
 
-void mouseMoved() {
-    mWavetable.set_frequency(map(mouseX, 0, width, 55, 220));
-    mWavetable.set_amplitude(map(mouseY, 0, height, 0.0f, 0.9f));
-}
-
 void mouseDragged() {
     mWavetable.set_frequency(172.265625f);
     mWavetable.set_amplitude(0.25f);
+}
+
+void mouseMoved() {
+    mWavetable.set_frequency(map(mouseX, 0, width, 55, 220));
+    mWavetable.set_amplitude(map(mouseY, 0, height, 0.0f, 0.9f));
 }
 
 void keyPressed() {
@@ -38,10 +38,10 @@ void keyPressed() {
             Wavetable.sine(mWavetable.wavetable());
             break;
         case '2':
-            Wavetable.sawtooth(mWavetable.wavetable());
+            Wavetable.triangle(mWavetable.wavetable());
             break;
         case '3':
-            Wavetable.triangle(mWavetable.wavetable());
+            Wavetable.sawtooth(mWavetable.wavetable());
             break;
         case '4':
             Wavetable.square(mWavetable.wavetable());

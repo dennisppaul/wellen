@@ -14,9 +14,24 @@ import static de.hfkbremen.ton.ToneEngine.INSTRUMENT_WITH_OSCILLATOR_ADSR;
 
 public abstract class Ton {
 
+    public static final int OSC_SINE = 0;
+    public static final int OSC_TRIANGLE = 1;
+    public static final int OSC_SAWTOOTH = 2;
+    public static final int OSC_SQUARE = 3;
+    public static final int OSC_NOISE = 4;
+    public static final int NUMBER_OF_OSCILLATORS = 5;
+    public static final String TONE_ENGINE_SOFTWARE = "software";
     public static final String TONE_ENGINE_JSYN = "jsyn";
     public static final String TONE_ENGINE_MIDI = "midi";
+    public static final String TONE_ENGINE_OSC = "osc";
+    public static final float DEFAULT_ATTACK = 0.005f;
+    public static final float DEFAULT_DECAY = 0.01f;
+    public static final float DEFAULT_RELEASE = 0.075f;
+    public static final float DEFAULT_SUSTAIN = 0.5f;
     private static ToneEngine instance = null;
+
+    public static final int DEFAULT_SAMPLING_RATE = 44100;
+    public static final int DEFAULT_AUDIOBLOCK_SIZE = 512;
 
     private Ton() {
     }
@@ -162,10 +177,10 @@ public abstract class Ton {
         final int mListWidth = 300, mListHeight = 300;
 
         DropdownList dl = controls.addDropdownList("Please select MIDI Device",
-                (controls.papplet.width - mListWidth) / 2,
-                (controls.papplet.height - mListHeight) / 2,
-                mListWidth,
-                mListHeight);
+                                                   (controls.papplet.width - mListWidth) / 2,
+                                                   (controls.papplet.height - mListHeight) / 2,
+                                                   mListWidth,
+                                                   mListHeight);
 
         //        dl.toUpperCase(true);
         dl.setItemHeight(16);
@@ -191,7 +206,7 @@ public abstract class Ton {
     public static void run(Class<? extends PApplet> T, String... pArgs) {
         String[] mArgs;
         mArgs = PApplet.concat(new String[]{"--sketch-path=" + System.getProperty("user.dir") + "/simulator"},
-                pArgs);
+                               pArgs);
         mArgs = PApplet.concat(mArgs, new String[]{T.getName()});
         PApplet.main(mArgs);
     }
@@ -201,6 +216,10 @@ public abstract class Ton {
             instance = ToneEngine.createEngine();
         }
         return instance;
+    }
+
+    public static void set_engine(ToneEngine pEngine) {
+        instance = pEngine;
     }
 
     public static float clamp(float pValue, float pMin, float pMax) {

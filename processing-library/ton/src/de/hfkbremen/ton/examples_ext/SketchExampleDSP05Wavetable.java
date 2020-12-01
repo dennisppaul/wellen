@@ -6,7 +6,7 @@ import processing.core.PApplet;
 
 /**
  * this examples demonstrates how to use a wavetable ( a chunk of memory ) and play it back at different frequencies and
- * amplitudes. in this example a wavetable is used to emulate oscillators with different wave shapes.
+ * amplitudes. in this example a wavetable is used to emulate an oscillator (VCO) with different wave shapes.
  */
 public class SketchExampleDSP05Wavetable extends PApplet {
 
@@ -27,14 +27,14 @@ public class SketchExampleDSP05Wavetable extends PApplet {
         DSP.draw_buffer(g, width, height);
     }
 
-    public void mouseMoved() {
-        mWavetable.set_frequency(map(mouseX, 0, width, 55, 220));
-        mWavetable.set_amplitude(map(mouseY, 0, height, 0.0f, 0.9f));
-    }
-
     public void mouseDragged() {
         mWavetable.set_frequency(172.265625f);
         mWavetable.set_amplitude(0.25f);
+    }
+
+    public void mouseMoved() {
+        mWavetable.set_frequency(map(mouseX, 0, width, 55, 220));
+        mWavetable.set_amplitude(map(mouseY, 0, height, 0.0f, 0.9f));
     }
 
     public void keyPressed() {
@@ -43,10 +43,10 @@ public class SketchExampleDSP05Wavetable extends PApplet {
                 Wavetable.sine(mWavetable.wavetable());
                 break;
             case '2':
-                Wavetable.sawtooth(mWavetable.wavetable());
+                Wavetable.triangle(mWavetable.wavetable());
                 break;
             case '3':
-                Wavetable.triangle(mWavetable.wavetable());
+                Wavetable.sawtooth(mWavetable.wavetable());
                 break;
             case '4':
                 Wavetable.square(mWavetable.wavetable());

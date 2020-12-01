@@ -28,7 +28,7 @@ void settings() {
 
 void setup() {
     mToneEngine = new ToneEngineJSyn(ToneEngine.INSTRUMENT_WITH_OSCILLATOR_ADSR_FILTER_LFO);
-    mToneEngine.instrument().osc_type(Instrument.SQUARE);
+    mToneEngine.instrument().osc_type(Ton.OSC_SQUARE);
     mToneEngine.instrument().attack(0.01f);
     mToneEngine.instrument().decay(0.2f);
     mToneEngine.instrument().sustain(0.0f);

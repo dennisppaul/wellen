@@ -1,7 +1,6 @@
 package de.hfkbremen.ton.examples_ext;
 
 import de.hfkbremen.ton.Beat;
-import de.hfkbremen.ton.Instrument;
 import de.hfkbremen.ton.Note;
 import de.hfkbremen.ton.Scale;
 import de.hfkbremen.ton.Ton;
@@ -23,7 +22,7 @@ public class SketchExampleInstruments09PercussiveInstruments extends PApplet {
     }
 
     public void setup() {
-        Ton.instrument(BASS).osc_type(Instrument.SQUARE);
+        Ton.instrument(BASS).osc_type(Ton.OSC_SQUARE);
         Ton.instrument(BASS).attack(0.01f);
         Ton.instrument(BASS).decay(0.04f);
         Ton.instrument(BASS).sustain(0.0f);
@@ -33,7 +32,7 @@ public class SketchExampleInstruments09PercussiveInstruments extends PApplet {
                                  I, O, O, O,
                                  O, O, O, I,};
 
-        Ton.instrument(SNARE).osc_type(Instrument.NOISE);
+        Ton.instrument(SNARE).osc_type(Ton.OSC_NOISE);
         Ton.instrument(SNARE).attack(0.01f);
         Ton.instrument(SNARE).decay(0.2f);
         Ton.instrument(SNARE).sustain(0.0f);
@@ -43,7 +42,7 @@ public class SketchExampleInstruments09PercussiveInstruments extends PApplet {
                                   O, O, O, O,
                                   I, O, O, O,};
 
-        Ton.instrument(HIHAT).osc_type(Instrument.NOISE);
+        Ton.instrument(HIHAT).osc_type(Ton.OSC_NOISE);
         Ton.instrument(HIHAT).attack(0.01f);
         Ton.instrument(HIHAT).decay(0.04f);
         Ton.instrument(HIHAT).sustain(0.0f);

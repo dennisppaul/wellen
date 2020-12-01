@@ -107,7 +107,7 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>Direct Known Subclasses:</dt>
-<dd><a href="../../../de/hfkbremen/ton/ToneEngineJSyn.html" title="class in de.hfkbremen.ton">ToneEngineJSyn</a>, <a href="../../../de/hfkbremen/ton/ToneEngineMIDI.html" title="class in de.hfkbremen.ton">ToneEngineMIDI</a>, <a href="../../../de/hfkbremen/ton/ToneEngineMinim.html" title="class in de.hfkbremen.ton">ToneEngineMinim</a>, <a href="../../../de/hfkbremen/ton/ToneEngineOSC.html" title="class in de.hfkbremen.ton">ToneEngineOSC</a></dd>
+<dd><a href="../../../de/hfkbremen/ton/ToneEngineJSyn.html" title="class in de.hfkbremen.ton">ToneEngineJSyn</a>, <a href="../../../de/hfkbremen/ton/ToneEngineMIDI.html" title="class in de.hfkbremen.ton">ToneEngineMIDI</a>, <a href="../../../de/hfkbremen/ton/ToneEngineMinim.html" title="class in de.hfkbremen.ton">ToneEngineMinim</a>, <a href="../../../de/hfkbremen/ton/ToneEngineOSC.html" title="class in de.hfkbremen.ton">ToneEngineOSC</a>, <a href="../../../de/hfkbremen/ton/ToneEngineSoftware.html" title="class in de.hfkbremen.ton">ToneEngineSoftware</a></dd>
 </dl>
 <hr>
 <br>
@@ -517,6 +517,66 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a name="createEngine--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>createEngine</h4>
+<pre>public static&nbsp;<a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.hfkbremen.ton">ToneEngine</a>&nbsp;createEngine()</pre>
+</li>
+</ul>
+<a name="createEngine-java.lang.String...-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>createEngine</h4>
+<pre>public static&nbsp;<a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.hfkbremen.ton">ToneEngine</a>&nbsp;createEngine(java.lang.String...&nbsp;pName)</pre>
+</li>
+</ul>
+<a name="createInstrumentsGUI-processing.core.PApplet-de.hfkbremen.ton.ToneEngine-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>createInstrumentsGUI</h4>
+<pre>public static&nbsp;controlP5.ControlP5&nbsp;createInstrumentsGUI(processing.core.PApplet&nbsp;p,
+                                                       <a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.hfkbremen.ton">ToneEngine</a>&nbsp;pToneEngine)</pre>
+</li>
+</ul>
+<a name="createInstrumentsGUI-processing.core.PApplet-de.hfkbremen.ton.ToneEngine-int...-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>createInstrumentsGUI</h4>
+<pre>public static&nbsp;controlP5.ControlP5&nbsp;createInstrumentsGUI(processing.core.PApplet&nbsp;p,
+                                                       <a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.hfkbremen.ton">ToneEngine</a>&nbsp;pToneEngine,
+                                                       int...&nbsp;mInstruments)</pre>
+</li>
+</ul>
+<a name="updateGUI-controlP5.ControlP5-de.hfkbremen.ton.Instrument-int-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>updateGUI</h4>
+<pre>public static&nbsp;void&nbsp;updateGUI(controlP5.ControlP5&nbsp;cp5,
+                             <a href="../../../de/hfkbremen/ton/Instrument.html" title="class in de.hfkbremen.ton">Instrument</a>&nbsp;mInstrument,
+                             int&nbsp;pField)</pre>
+</li>
+</ul>
+<a name="updateGUI-controlP5.ControlP5-de.hfkbremen.ton.Instrument-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>updateGUI</h4>
+<pre>public static&nbsp;void&nbsp;updateGUI(controlP5.ControlP5&nbsp;cp5,
+                             <a href="../../../de/hfkbremen/ton/Instrument.html" title="class in de.hfkbremen.ton">Instrument</a>&nbsp;mInstrument)</pre>
+</li>
+</ul>
 <a name="note_on-int-int-float-">
 <!--   -->
 </a>
@@ -633,70 +693,10 @@ extends java.lang.Object</pre>
 <a name="replace_instrument-de.hfkbremen.ton.Instrument-">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>replace_instrument</h4>
 <pre>public abstract&nbsp;void&nbsp;replace_instrument(<a href="../../../de/hfkbremen/ton/Instrument.html" title="class in de.hfkbremen.ton">Instrument</a>&nbsp;pInstrument)</pre>
-</li>
-</ul>
-<a name="createEngine--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createEngine</h4>
-<pre>public static&nbsp;<a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.hfkbremen.ton">ToneEngine</a>&nbsp;createEngine()</pre>
-</li>
-</ul>
-<a name="createEngine-java.lang.String...-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createEngine</h4>
-<pre>public static&nbsp;<a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.hfkbremen.ton">ToneEngine</a>&nbsp;createEngine(java.lang.String...&nbsp;pName)</pre>
-</li>
-</ul>
-<a name="createInstrumentsGUI-processing.core.PApplet-de.hfkbremen.ton.ToneEngine-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createInstrumentsGUI</h4>
-<pre>public static&nbsp;controlP5.ControlP5&nbsp;createInstrumentsGUI(processing.core.PApplet&nbsp;p,
-                                                       <a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.hfkbremen.ton">ToneEngine</a>&nbsp;pToneEngine)</pre>
-</li>
-</ul>
-<a name="createInstrumentsGUI-processing.core.PApplet-de.hfkbremen.ton.ToneEngine-int...-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createInstrumentsGUI</h4>
-<pre>public static&nbsp;controlP5.ControlP5&nbsp;createInstrumentsGUI(processing.core.PApplet&nbsp;p,
-                                                       <a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.hfkbremen.ton">ToneEngine</a>&nbsp;pToneEngine,
-                                                       int...&nbsp;mInstruments)</pre>
-</li>
-</ul>
-<a name="updateGUI-controlP5.ControlP5-de.hfkbremen.ton.Instrument-int-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>updateGUI</h4>
-<pre>public static&nbsp;void&nbsp;updateGUI(controlP5.ControlP5&nbsp;cp5,
-                             <a href="../../../de/hfkbremen/ton/Instrument.html" title="class in de.hfkbremen.ton">Instrument</a>&nbsp;mInstrument,
-                             int&nbsp;pField)</pre>
-</li>
-</ul>
-<a name="updateGUI-controlP5.ControlP5-de.hfkbremen.ton.Instrument-">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>updateGUI</h4>
-<pre>public static&nbsp;void&nbsp;updateGUI(controlP5.ControlP5&nbsp;cp5,
-                             <a href="../../../de/hfkbremen/ton/Instrument.html" title="class in de.hfkbremen.ton">Instrument</a>&nbsp;mInstrument)</pre>
 </li>
 </ul>
 </li>

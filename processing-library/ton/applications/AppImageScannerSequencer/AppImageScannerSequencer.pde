@@ -31,7 +31,7 @@ void setup() {
     mInstrument.decay(0.1f);
     mInstrument.sustain(0.0f);
     mInstrument.release(0.01f);
-    mInstrument.osc_type(Instrument.SAWTOOTH);
+    mInstrument.osc_type(Ton.OSC_SAWTOOTH);
     final int mSpacing = 48;
     final int NUMBER_OF_SAMPLERS = 16;
     for (int i = 0; i < NUMBER_OF_SAMPLERS; i++) {

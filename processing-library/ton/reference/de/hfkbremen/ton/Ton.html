@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9,"i16":9,"i17":9,"i18":9,"i19":9,"i20":9,"i21":9,"i22":9,"i23":9,"i24":9};
+var methods = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9,"i16":9,"i17":9,"i18":9,"i19":9,"i20":9,"i21":9,"i22":9,"i23":9,"i24":9,"i25":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -128,12 +128,68 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Field and Description</th>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>static float</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Ton.html#DEFAULT_ATTACK">DEFAULT_ATTACK</a></span></code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Ton.html#DEFAULT_AUDIOBLOCK_SIZE">DEFAULT_AUDIOBLOCK_SIZE</a></span></code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static float</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Ton.html#DEFAULT_DECAY">DEFAULT_DECAY</a></span></code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static float</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Ton.html#DEFAULT_RELEASE">DEFAULT_RELEASE</a></span></code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Ton.html#DEFAULT_SAMPLING_RATE">DEFAULT_SAMPLING_RATE</a></span></code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static float</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Ton.html#DEFAULT_SUSTAIN">DEFAULT_SUSTAIN</a></span></code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Ton.html#NUMBER_OF_OSCILLATORS">NUMBER_OF_OSCILLATORS</a></span></code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Ton.html#OSC_NOISE">OSC_NOISE</a></span></code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Ton.html#OSC_SAWTOOTH">OSC_SAWTOOTH</a></span></code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Ton.html#OSC_SINE">OSC_SINE</a></span></code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Ton.html#OSC_SQUARE">OSC_SQUARE</a></span></code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Ton.html#OSC_TRIANGLE">OSC_TRIANGLE</a></span></code>&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Ton.html#TONE_ENGINE_JSYN">TONE_ENGINE_JSYN</a></span></code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Ton.html#TONE_ENGINE_MIDI">TONE_ENGINE_MIDI</a></span></code>&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Ton.html#TONE_ENGINE_OSC">TONE_ENGINE_OSC</a></span></code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static java.lang.String</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Ton.html#TONE_ENGINE_SOFTWARE">TONE_ENGINE_SOFTWARE</a></span></code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -251,14 +307,18 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i22" class="altColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Ton.html#start-java.lang.String...-">start</a></span>(java.lang.String...&nbsp;pName)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Ton.html#set_engine-de.hfkbremen.ton.ToneEngine-">set_engine</a></span>(<a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.hfkbremen.ton">ToneEngine</a>&nbsp;pEngine)</code>&nbsp;</td>
 </tr>
 <tr id="i23" class="rowColor">
+<td class="colFirst"><code>static void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Ton.html#start-java.lang.String...-">start</a></span>(java.lang.String...&nbsp;pName)</code>&nbsp;</td>
+</tr>
+<tr id="i24" class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Ton.html#start-java.lang.String-int-">start</a></span>(java.lang.String&nbsp;pName,
      int&nbsp;pParameter)</code>&nbsp;</td>
 </tr>
-<tr id="i24" class="altColor">
+<tr id="i25" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Ton.html#start-java.lang.String-int-int-">start</a></span>(java.lang.String&nbsp;pName,
      int&nbsp;pParameterA,
@@ -286,6 +346,97 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Field Detail</h3>
+<a name="OSC_SINE">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>OSC_SINE</h4>
+<pre>public static final&nbsp;int OSC_SINE</pre>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../constant-values.html#de.hfkbremen.ton.Ton.OSC_SINE">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
+<a name="OSC_TRIANGLE">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>OSC_TRIANGLE</h4>
+<pre>public static final&nbsp;int OSC_TRIANGLE</pre>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../constant-values.html#de.hfkbremen.ton.Ton.OSC_TRIANGLE">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
+<a name="OSC_SAWTOOTH">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>OSC_SAWTOOTH</h4>
+<pre>public static final&nbsp;int OSC_SAWTOOTH</pre>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../constant-values.html#de.hfkbremen.ton.Ton.OSC_SAWTOOTH">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
+<a name="OSC_SQUARE">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>OSC_SQUARE</h4>
+<pre>public static final&nbsp;int OSC_SQUARE</pre>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../constant-values.html#de.hfkbremen.ton.Ton.OSC_SQUARE">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
+<a name="OSC_NOISE">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>OSC_NOISE</h4>
+<pre>public static final&nbsp;int OSC_NOISE</pre>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../constant-values.html#de.hfkbremen.ton.Ton.OSC_NOISE">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
+<a name="NUMBER_OF_OSCILLATORS">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>NUMBER_OF_OSCILLATORS</h4>
+<pre>public static final&nbsp;int NUMBER_OF_OSCILLATORS</pre>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../constant-values.html#de.hfkbremen.ton.Ton.NUMBER_OF_OSCILLATORS">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
+<a name="TONE_ENGINE_SOFTWARE">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>TONE_ENGINE_SOFTWARE</h4>
+<pre>public static final&nbsp;java.lang.String TONE_ENGINE_SOFTWARE</pre>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../constant-values.html#de.hfkbremen.ton.Ton.TONE_ENGINE_SOFTWARE">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
 <a name="TONE_ENGINE_JSYN">
 <!--   -->
 </a>
@@ -302,13 +453,104 @@ extends java.lang.Object</pre>
 <a name="TONE_ENGINE_MIDI">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>TONE_ENGINE_MIDI</h4>
 <pre>public static final&nbsp;java.lang.String TONE_ENGINE_MIDI</pre>
 <dl>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../constant-values.html#de.hfkbremen.ton.Ton.TONE_ENGINE_MIDI">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
+<a name="TONE_ENGINE_OSC">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>TONE_ENGINE_OSC</h4>
+<pre>public static final&nbsp;java.lang.String TONE_ENGINE_OSC</pre>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../constant-values.html#de.hfkbremen.ton.Ton.TONE_ENGINE_OSC">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
+<a name="DEFAULT_ATTACK">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>DEFAULT_ATTACK</h4>
+<pre>public static final&nbsp;float DEFAULT_ATTACK</pre>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../constant-values.html#de.hfkbremen.ton.Ton.DEFAULT_ATTACK">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
+<a name="DEFAULT_DECAY">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>DEFAULT_DECAY</h4>
+<pre>public static final&nbsp;float DEFAULT_DECAY</pre>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../constant-values.html#de.hfkbremen.ton.Ton.DEFAULT_DECAY">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
+<a name="DEFAULT_RELEASE">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>DEFAULT_RELEASE</h4>
+<pre>public static final&nbsp;float DEFAULT_RELEASE</pre>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../constant-values.html#de.hfkbremen.ton.Ton.DEFAULT_RELEASE">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
+<a name="DEFAULT_SUSTAIN">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>DEFAULT_SUSTAIN</h4>
+<pre>public static final&nbsp;float DEFAULT_SUSTAIN</pre>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../constant-values.html#de.hfkbremen.ton.Ton.DEFAULT_SUSTAIN">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
+<a name="DEFAULT_SAMPLING_RATE">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>DEFAULT_SAMPLING_RATE</h4>
+<pre>public static final&nbsp;int DEFAULT_SAMPLING_RATE</pre>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../constant-values.html#de.hfkbremen.ton.Ton.DEFAULT_SAMPLING_RATE">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
+<a name="DEFAULT_AUDIOBLOCK_SIZE">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>DEFAULT_AUDIOBLOCK_SIZE</h4>
+<pre>public static final&nbsp;int DEFAULT_AUDIOBLOCK_SIZE</pre>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../../../constant-values.html#de.hfkbremen.ton.Ton.DEFAULT_AUDIOBLOCK_SIZE">Constant Field Values</a></dd>
 </dl>
 </li>
 </ul>
@@ -546,6 +788,15 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>instance</h4>
 <pre>public static&nbsp;<a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.hfkbremen.ton">ToneEngine</a>&nbsp;instance()</pre>
+</li>
+</ul>
+<a name="set_engine-de.hfkbremen.ton.ToneEngine-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>set_engine</h4>
+<pre>public static&nbsp;void&nbsp;set_engine(<a href="../../../de/hfkbremen/ton/ToneEngine.html" title="class in de.hfkbremen.ton">ToneEngine</a>&nbsp;pEngine)</pre>
 </li>
 </ul>
 <a name="clamp-float-float-float-">

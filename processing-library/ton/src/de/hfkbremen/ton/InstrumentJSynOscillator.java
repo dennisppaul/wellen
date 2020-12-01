@@ -9,6 +9,8 @@ import com.jsyn.unitgen.UnitOscillator;
 import com.jsyn.unitgen.WhiteNoise;
 import controlP5.ControlElement;
 
+import static de.hfkbremen.ton.Ton.*;
+
 public class InstrumentJSynOscillator extends InstrumentJSyn {
 
     protected UnitGenerator mOsc;
@@ -38,19 +40,19 @@ public class InstrumentJSynOscillator extends InstrumentJSyn {
          NOISE
          */
         switch (pOsc) {
-            case SINE:
+            case OSC_SINE:
                 mOsc = new SineOscillator();
                 break;
-            case TRIANGLE:
+            case OSC_TRIANGLE:
                 mOsc = new TriangleOscillator();
                 break;
-            case SAWTOOTH:
+            case OSC_SAWTOOTH:
                 mOsc = new SawtoothOscillator();
                 break;
-            case SQUARE:
+            case OSC_SQUARE:
                 mOsc = new SquareOscillator();
                 break;
-            case NOISE:
+            case OSC_NOISE:
                 mOsc = new WhiteNoise();
                 break;
         }
@@ -60,15 +62,15 @@ public class InstrumentJSynOscillator extends InstrumentJSyn {
     public int get_osc_type() {
         int mOscID = -1;
         if (mOsc instanceof SineOscillator) {
-            mOscID = SINE;
+            mOscID = OSC_SINE;
         } else if (mOsc instanceof TriangleOscillator) {
-            mOscID = TRIANGLE;
+            mOscID = OSC_TRIANGLE;
         } else if (mOsc instanceof SawtoothOscillator) {
-            mOscID = SAWTOOTH;
+            mOscID = OSC_SAWTOOTH;
         } else if (mOsc instanceof SquareOscillator) {
-            mOscID = SQUARE;
+            mOscID = OSC_SQUARE;
         } else if (mOsc instanceof WhiteNoise) {
-            mOscID = NOISE;
+            mOscID = OSC_NOISE;
         }
         return mOscID;
     }
@@ -133,21 +135,21 @@ public class InstrumentJSynOscillator extends InstrumentJSyn {
         mIsPlaying = true;
     }
 
-    public void attack(float pAttack) {
-        super.attack(pAttack);
-    }
-
-    public void decay(float pDecay) {
-        super.decay(pDecay);
-    }
-
-    public void sustain(float pSustain) {
-        super.sustain(pSustain);
-    }
-
-    public void release(float pRelease) {
-        super.release(pRelease);
-    }
+//    public void attack(float pAttack) {
+//        super.attack(pAttack);
+//    }
+//
+//    public void decay(float pDecay) {
+//        super.decay(pDecay);
+//    }
+//
+//    public void sustain(float pSustain) {
+//        super.sustain(pSustain);
+//    }
+//
+//    public void release(float pRelease) {
+//        super.release(pRelease);
+//    }
 
     protected void connectModules(UnitGenerator o) {
         mSynth.add(o);

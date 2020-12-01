@@ -1,7 +1,6 @@
 package de.hfkbremen.ton.applications;
 
 import de.hfkbremen.ton.Beat;
-import de.hfkbremen.ton.Instrument;
 import de.hfkbremen.ton.Note;
 import de.hfkbremen.ton.Scale;
 import de.hfkbremen.ton.Ton;
@@ -32,8 +31,8 @@ public class AppAlgorithmicComposition03Grammar extends PApplet {
 
     public void setup() {
         textFont(createFont("Helvetica-Bold", 10));
-        Ton.instrument(1).osc_type(Instrument.SAWTOOTH);
-        Ton.instrument(2).osc_type(Instrument.SINE);
+        Ton.instrument(1).osc_type(Ton.OSC_SAWTOOTH);
+        Ton.instrument(2).osc_type(Ton.OSC_SINE);
         Beat.start(this, 240);
     }
 

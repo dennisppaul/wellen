@@ -1,6 +1,5 @@
 package de.hfkbremen.ton.examples_ext;
 
-import de.hfkbremen.ton.Instrument;
 import de.hfkbremen.ton.Ton;
 import processing.core.PApplet;
 
@@ -18,7 +17,7 @@ public class SketchExampleInstruments03FrequencyAndAmplitude extends PApplet {
 
     public void setup() {
         Ton.start("jsyn-minimal");
-        Ton.instrument().osc_type(Instrument.SAWTOOTH);
+        Ton.instrument().osc_type(Ton.OSC_SAWTOOTH);
     }
 
     public void draw() {

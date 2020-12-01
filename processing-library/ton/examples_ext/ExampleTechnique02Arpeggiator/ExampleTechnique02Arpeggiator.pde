@@ -7,7 +7,7 @@ import com.jsyn.unitgen.*;
 
 int mColor;
 
-Beat mBeatMIDI;
+Beat mBeat;
 
 Arpeggiator mArpeggiator;
 
@@ -19,7 +19,7 @@ void settings() {
 
 void setup() {
     Ton.dumpMidiInputDevices();
-    mBeatMIDI = Beat.start(this, 120 * 24);
+    mBeat = Beat.start(this, 120 * 24);
     /* the pattern is composed of 8 notes with a length of 1/32 ( 8 * (1/32) = (1/4) ) i.e the pattern has a
      * length of 1/4 which means 24 pulses ( or ticks ) when synced with a MIDI clock.
      */

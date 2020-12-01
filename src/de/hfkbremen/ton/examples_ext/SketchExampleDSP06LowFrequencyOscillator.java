@@ -6,8 +6,8 @@ import de.hfkbremen.ton.Wavetable;
 import processing.core.PApplet;
 
 /**
- * this examples demonstrates how to implement a low-frewuency oscillator by using wavetables to emulate oscillators
- * that affect the amplitude and frequency parameter of an oscillator (VCO).
+ * this examples demonstrates how to implement a low-frequency oscillator (LFO) by using wavetables to emulate
+ * oscillators that affect the amplitude and frequency parameter of an oscillator (VCO).
  * <p>
  * move mouse to change amplitude and frequency of LFO connected to frequency. keep mouse pressed to change amplitude
  * and frequency of LFO connected to amplitude.

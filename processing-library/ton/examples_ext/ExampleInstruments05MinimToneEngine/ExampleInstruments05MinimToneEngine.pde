@@ -53,18 +53,18 @@ void keyPressed() {
         mIsPlaying = !mIsPlaying;
     }
     if (key == '1') {
-        mInstrument.osc_type(Instrument.SINE);
+        mInstrument.osc_type(Ton.OSC_SINE);
     }
     if (key == '2') {
-        mInstrument.osc_type(Instrument.TRIANGLE);
+        mInstrument.osc_type(Ton.OSC_TRIANGLE);
     }
     if (key == '3') {
-        mInstrument.osc_type(Instrument.SAWTOOTH);
+        mInstrument.osc_type(Ton.OSC_SAWTOOTH);
     }
     if (key == '4') {
-        mInstrument.osc_type(Instrument.SQUARE);
+        mInstrument.osc_type(Ton.OSC_SQUARE);
     }
     if (key == '5') {
-        mInstrument.osc_type(Instrument.NOISE);
+        mInstrument.osc_type(Ton.OSC_NOISE);
     }
 }

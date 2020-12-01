@@ -23,6 +23,7 @@ void settings() {
 
 void setup() {
     noStroke();
+    Ton.start();
     mBeatA = BeatEvent.create(120);
     mBeatB = BeatEvent.create(140);
     mBeatC = BeatEvent.create(160);

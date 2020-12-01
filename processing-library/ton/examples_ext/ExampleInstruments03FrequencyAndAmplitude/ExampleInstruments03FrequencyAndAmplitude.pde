@@ -11,7 +11,7 @@ void settings() {
 
 void setup() {
     Ton.start("jsyn-minimal");
-    Ton.instrument().osc_type(Instrument.SAWTOOTH);
+    Ton.instrument().osc_type(Ton.OSC_SAWTOOTH);
 }
 
 void draw() {
