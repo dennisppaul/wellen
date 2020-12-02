@@ -1,6 +1,6 @@
 LIB_NAME=ton
 IO_EXAMPLE_PATHS=( examples examples_ext applications )
-PROJECT_PACKAGE=de.hfkbremen.ton
+PROJECT_PACKAGE=ton
 SKETCH_IMPORTS=( netP5.* oscP5.* )
 BASE_COLOR=59
 ADDITIONAL_LIBS=( )

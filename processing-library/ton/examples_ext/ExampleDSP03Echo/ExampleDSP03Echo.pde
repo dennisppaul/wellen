@@ -1,4 +1,4 @@
-import de.hfkbremen.ton.*; 
+import ton.*; 
 import netP5.*; 
 import oscP5.*; 
 float[] mDelayBuffer = new float[4096];

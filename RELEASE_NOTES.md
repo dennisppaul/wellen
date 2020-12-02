@@ -1,6 +1,4 @@
-# ton / RELEASE_NOTES
-
-## v0.5
+# ton / release notes
 
 ## v0.4 (20201202)
 
@@ -18,6 +16,7 @@
 - added interpolation between sample in `Wavetable` ( helps with small buffer LFOs )
 - added `Trigger` to allow triggering on rising and falling edge
 - introduced interfaces for input, output and process for DSP classes ( more semantic than functional )
+- renamed package
 
 ## v0.3 (20201124)
 

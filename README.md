@@ -1,6 +1,6 @@
 # ton
 
-*ton* is a framework for exploring and teaching generative music making and algorithmic compositions. it facilitates simple ways of playing musical notes, facilitates easy access to low-level digital signal processing (DSP) and supplies rhythm and timing as well as some *standard* muscial mechanics. the library acts as a simple adapter to various sound in- and outputs like JSyn, MIDI, OSC, or analog audio.
+*ton* is a framework for exploring and teaching generative music making and algorithmic compositions. it facilitates simple ways of playing musical notes, facilitates easy access to low-level digital signal processing (DSP) and supplies rhythm and timing as well as some *standard* muscial mechanics. the library acts as an adapter to various sound in- and outputs like MIDI, OSC, or digital/analog audio. the library is hosted on github [ton](https://github.com/dennisppaul/ton).
 
 ## installation
 
@@ -8,16 +8,7 @@ the library can be installed as a [Processing library](https://processing.org/re
 
 ### dependencies
 
-the following libraries can be installed via processing library installer:
-
-- [Minim](http://code.compartmental.net/tools/minim/)
-- [oscP5](http://sojamo.de/code/)
-- [controlP5](http://sojamo.de/code/)
-- [video](https://processing.org/reference/libraries/video/)
-
-the following libraries are included in the distribution:
-
-- [JSyn](https://github.com/philburk/jsyn/)
+*ton* makes use of the [oscP5](http://sojamo.de/code/) library to communicate over network with OSC ( see e.g `ExampleExternal04OSCToneEngine` ). the library can be installed via the processing library installer.
 
 ## concepts
 
@@ -25,28 +16,38 @@ the following libraries are included in the distribution:
 
 muscial notes can be played with a single call to `Ton.note_on(int, int)` and ended with `Ton.note_off()` ( see `ExampleBasics01Notes` ). each node is characterized by two parameters `pitch` and `velocity`. the value range conforms to MIDI standards.
 
-by default a software-based synthesizer is used to produce the sound. however, there are quite a few options to change the sound characteristics ( see `ExampleInstruments02Oscillators` ff ). there are also options to use external sound sources via MIDI ( see `ExampleBasics05MIDI` ) or OSC ( see `ExampleInstruments04OSCToneEngine` ).
+by default a simple software-based synthesizer is used as a *tone engine* to produce the sound. however, there are quite a lot of options ( i.e an oscillator with different waveshapes, a low-pass filter (LPF), an attack-decay-sustain-release envelope (ADSR), and two low-frequency oscillators (LFOs) one for frequency and one for amplitude modulation ) to change the sound characteristics ( see `ExampleBasics05Instruments` + `ExampleInstruments01ADSR` ff. ). 
+
+note that the default *tone engine* is monophonic i.e a single *instrument* can play only one note at a time. however, there are 16 instruments available which can be combined into a polyphonic setup with 16 voices.
+
+although `Ton` is designed to play musical notes ( arranged in half-tone steps ) trigger by the `note_on`+`note_off` paradigm, it can also be used to controll the frequency and amplitude of the generated sounds directly ( see `ExampleInstruments03FrequencyAndAmplitude` ).
+
+*ton* comes with mechanisms to send messages to other applications or machines via MIDI ( see `ExampleBasics06MIDI` ) or OSC ( see `ExampleInstruments07OSCToneEngine` ). likewise *ton* can also receive events from other applications or machines with `EventReceiverMIDI` via MIDI and `EventReceiverOSC` via OSC ( see `ExampleExternal01ReceiveMIDIandOSC` ).
 
 ### `DSP`
 
-*ton* facilitates a mechanism for digital signal processing (DSP).
+*ton* facilitates a mechanism for digital ( audio ) signal processing (DSP).
 
-in the simplest setup the method `DSP.start(PApplet)` starts the signal processing pipeline which then continuously calls the method `audioblock(float[])`. the supplied `float[]` array can be filled with samples.
+in the simplest setup the method `DSP.start(Object)` starts the signal processing pipeline which then continuously calls the method `audioblock(float[])`. the `float[]` array must be filled with samples that are then played back by the underlying audio infrastructure.
 
-see `ExampleBasics04DigitalSignalProcessing` for a simple implementation of a *sine wave oscillator* as well as `ExampleDSP04LowPassFilter` and `ExampleDSP03Echo` for implementations of two slightly more advanced aspects of DSP.
+see `ExampleBasics04DSP` for a simple implementation of a *sine wave oscillator* as well as `ExampleDSP03Echo` for an implementations of slightly more advanced concept in DSP.
 
-additionally DSP can also be started with a different paramter set to either run with stereo output ( see `ExampleDSP01StereoOutput` ), mono in- and output ( see `ExampleDSP02PassThrough` ) or stereo in- and output.
+additionally DSP can also be started with different parameter sets to either run with stereo output ( see `ExampleDSP01StereoOutput` ), mono in- and output ( see `ExampleDSP02PassThrough` ) or stereo in- and output.
+
+the default *tone engine* is designed to be optionally interfaced with `DSP`. this mechanism can e.g be used to apply an *effect* to played notes ( see `ExampleDSP09ToneEngineInternalWithDSP` ).
+
+*ton* comes with a series of handy classes to facilitate some fundamental DSP techniques. `Sampler` can be used to play back chunks of memory at varying speed ( see `ExampleDSP07Sampler` ). `Wavetable` is similar but designed to facilitate the emulation of oscillators with different wave shapes ( see `ExampleDSP05Wavetable` + `ExampleDSP06LFO` ). `ADSR` supplies an envelope to controll the amplitude of a signal over time. `LowPassFilter` allows the filtering of a signal with a resonance filter ( see `ExampleDSP04LowPassFilter` ). `Trigger` observes a continous signal and fires events whenever a rising or falling edge is detected; in conjunction with an oscillator it can be used to generate reoccuring events ( see `ExampleDSP08Trigger` ).
 
 ### `Beat`
 
-*ton* has a continues trigger mechanism to create a beat. the method `Beat.start(PApplet, int)` starts a beat at a specified *beats per minute* (BPM) ( see `ExampleBasics03Beat` ). 
+*ton* has a mechanism to trigger a continous beat. the method `Beat.start(Object, int)` starts a beat at a specified *beats per minute* (BPM) ( see `ExampleBasics03Beat` ). 
 
-a beat can also be trigger by an external MIDI clock ( see `ExampleEvent02MIDIClock` ) to synchronize with other applications.
+a beat can also be triggered by an external MIDI clock ( see `ExampleExternal02MIDIClock` ) to synchronize with other applications.
 
-### other *muscial mechanics*
+### other *muscial* techniques
 
-with the `Scale` class values can be transformed into intervals based on musical scales ( see `ExampleBasics02Scales` ).
+with `Scale` values can be transformed into intervals based on musical scales ( see `ExampleBasics02Scales` ).
 
-the `Sequencer` class supplies a simple structure to facilitate the recording and recalling of note sequences ( see `ExampleTechnique01Sequencer` ).
+the `Sequencer` supplies a simple structure to facilitate the recording and recalling of note sequences ( see `ExampleTechnique01Sequencer` ). 
 
-*ton* can receiver events from other applications or machines with the classes `EventReceiverMIDI` via MIDI and `EventReceiverOSC` via OSC ( see `ExampleEvent01ReceiveMIDIandOSC` ).
+`Arpeggiator` works in a similar way but schedules a series of notes based on a predefined pattern and a base note.
