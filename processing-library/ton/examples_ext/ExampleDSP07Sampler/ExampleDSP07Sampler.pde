@@ -14,7 +14,7 @@ void setup() {
     mSampler = new Sampler();
     mSampler.load(mData);
     mSampler.loop(false);
-    DSP.dumpAudioDevices();
+    Ton.dumpAudioInputAndOutputDevices();
     DSP.start(this);
 }
 

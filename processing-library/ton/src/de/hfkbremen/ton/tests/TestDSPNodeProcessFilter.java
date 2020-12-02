@@ -19,7 +19,7 @@ public class TestDSPNodeProcessFilter extends PApplet {
         Wavetable.sawtooth(mWavetable.wavetable());
         mWavetable.set_frequency(172.265625f);
         mWavetable.set_amplitude(0.55f);
-        DSP.dumpAudioDevices();
+        Ton.dumpAudioInputAndOutputDevices();
         DSP.start(this);
     }
 

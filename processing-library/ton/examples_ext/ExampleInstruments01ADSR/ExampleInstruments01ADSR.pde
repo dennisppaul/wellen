@@ -28,7 +28,7 @@ void setup() {
 }
 
 void draw() {
-    if (Ton.isPlaying()) {
+    if (Ton.is_playing()) {
         int mColor = (mNote - Note.NOTE_A2) * 5 + 50;
         background(mColor);
     } else {

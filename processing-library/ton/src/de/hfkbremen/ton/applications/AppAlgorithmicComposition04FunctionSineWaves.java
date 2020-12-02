@@ -1,7 +1,7 @@
 package de.hfkbremen.ton.applications;
 
 import de.hfkbremen.ton.Beat;
-import de.hfkbremen.ton.InstrumentSoftware;
+import de.hfkbremen.ton.InstrumentInternal;
 import de.hfkbremen.ton.Note;
 import de.hfkbremen.ton.Scale;
 import de.hfkbremen.ton.Ton;
@@ -26,12 +26,12 @@ public class AppAlgorithmicComposition04FunctionSineWaves extends PApplet {
 
     public void setup() {
         Beat.start(this, 240);
-        Ton.instrument(INSTRUMENT_BASE).set_osc_type(Ton.OSC_TRIANGLE);
-        Ton.instrument(INSTRUMENT_FLUTE).set_osc_type(Ton.OSC_SAWTOOTH);
+        Ton.instrument(INSTRUMENT_BASE).set_oscillator_type(Ton.OSC_TRIANGLE);
+        Ton.instrument(INSTRUMENT_FLUTE).set_oscillator_type(Ton.OSC_SAWTOOTH);
 
         //@TODO("this might be broken!")
-        Ton.replace_instrument(InstrumentSoftware.class, INSTRUMENT_NOISE);
-        Ton.instrument(INSTRUMENT_NOISE).set_osc_type(Ton.OSC_NOISE);
+        Ton.replace_instrument(InstrumentInternal.class, INSTRUMENT_NOISE);
+        Ton.instrument(INSTRUMENT_NOISE).set_oscillator_type(Ton.OSC_NOISE);
         Ton.instrument(INSTRUMENT_NOISE).note_on(1, 127);
         Ton.instrument(INSTRUMENT_NOISE).set_sustain(1.0f);
         Ton.instrument(INSTRUMENT_NOISE).set_amplitude(0.0f);

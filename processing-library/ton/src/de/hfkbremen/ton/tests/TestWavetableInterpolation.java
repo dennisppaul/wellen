@@ -14,7 +14,7 @@ public class TestWavetableInterpolation extends PApplet {
     }
 
     public void setup() {
-        DSP.dumpAudioDevices();
+        Ton.dumpAudioInputAndOutputDevices();
         DSP.start(this);
         Wavetable.sine(mWavetable.wavetable());
         mWavetable.set_frequency(172.265625f);

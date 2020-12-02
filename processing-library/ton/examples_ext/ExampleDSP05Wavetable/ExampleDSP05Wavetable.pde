@@ -10,7 +10,7 @@ void settings() {
 
 void setup() {
     Wavetable.sine(mWavetable.wavetable());
-    DSP.dumpAudioDevices();
+    Ton.dumpAudioInputAndOutputDevices();
     DSP.start(this);
 }
 

@@ -35,16 +35,6 @@ public class LowPassFilter implements DSPNodeProcess {
         mOldRes = -1.0f;
     }
 
-    /**
-     * @param pCutoffFrequency cutoff frequency in Hz
-     */
-    public void set_frequency(float pCutoffFrequency) { mCutoffFrequency = pCutoffFrequency; }
-
-    /**
-     * @param pResonance resonance factor [0.0, 1.0] ( becomes instable close to 1.0 )
-     */
-    public void set_resonance(float pResonance) { mResonance = pResonance; }
-
     @Override
     public float process(float pSignal) {
         float freq = mCutoffFrequency;
@@ -99,6 +89,24 @@ public class LowPassFilter implements DSPNodeProcess {
         }
         return mDelay[5];
     }
+
+    public float get_frequency() {
+        return mCutoffFrequency;
+    }
+
+    /**
+     * @param pCutoffFrequency cutoff frequency in Hz
+     */
+    public void set_frequency(float pCutoffFrequency) { mCutoffFrequency = pCutoffFrequency; }
+
+    public float get_resonance() {
+        return mResonance;
+    }
+
+    /**
+     * @param pResonance resonance factor [0.0, 1.0] ( becomes instable close to 1.0 )
+     */
+    public void set_resonance(float pResonance) { mResonance = pResonance; }
 
     private float my_tanh(float x) {
         int sign = 1;

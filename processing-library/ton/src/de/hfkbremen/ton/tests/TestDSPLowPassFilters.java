@@ -20,7 +20,7 @@ public class TestDSPLowPassFilters extends PApplet {
 
     public void setup() {
         mLPFilter.calculate_coeffs(2.0f, 2000);
-        DSP.dumpAudioDevices();
+        Ton.dumpAudioInputAndOutputDevices();
         DSP.start(this);
     }
 

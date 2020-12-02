@@ -26,7 +26,7 @@ public class AppImageScannerSequencer extends PApplet {
     public void setup() {
         background(255);
 
-        println("### available cameras:");
+        println("+++ available cameras:");
         printArray(Capture.list());
         mCapture = new Capture(this, Capture.list()[0]);
         mCapture.start();
@@ -37,7 +37,7 @@ public class AppImageScannerSequencer extends PApplet {
         mInstrument.set_decay(0.1f);
         mInstrument.set_sustain(0.0f);
         mInstrument.set_release(0.01f);
-        mInstrument.set_osc_type(Ton.OSC_SINE);
+        mInstrument.set_oscillator_type(Ton.OSC_SINE);
 
         final int mSpacing = 36;
         final int NUMBER_OF_SAMPLERS = 16;

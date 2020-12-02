@@ -7,8 +7,8 @@ void settings() {
 }
 
 void setup() {
-    Ton.start("jsyn-minimal");
-    Ton.instrument().set_osc_type(Ton.OSC_SAWTOOTH);
+    /* disable ADSR */
+    Ton.instrument().enable_ADSR(false);
 }
 
 void draw() {

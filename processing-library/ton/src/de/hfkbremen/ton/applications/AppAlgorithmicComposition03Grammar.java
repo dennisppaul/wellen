@@ -31,8 +31,8 @@ public class AppAlgorithmicComposition03Grammar extends PApplet {
 
     public void setup() {
         textFont(createFont("Helvetica-Bold", 10));
-        Ton.instrument(1).set_osc_type(Ton.OSC_SAWTOOTH);
-        Ton.instrument(2).set_osc_type(Ton.OSC_SINE);
+        Ton.instrument(1).set_oscillator_type(Ton.OSC_SAWTOOTH);
+        Ton.instrument(2).set_oscillator_type(Ton.OSC_SINE);
         Beat.start(this, 240);
     }
 

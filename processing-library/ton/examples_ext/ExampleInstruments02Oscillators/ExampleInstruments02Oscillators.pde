@@ -22,7 +22,7 @@ void draw() {
     background(255);
     fill(0);
     float mSize = map(mNote, 33, 69, 80, 320);
-    ellipse(width * 0.5f, height * 0.5f, Ton.isPlaying() ? mSize : 5, Ton.isPlaying() ? mSize : 5);
+    ellipse(width * 0.5f, height * 0.5f, Ton.is_playing() ? mSize : 5, Ton.is_playing() ? mSize : 5);
 }
 
 void keyPressed() {
@@ -36,18 +36,18 @@ void keyPressed() {
         mIsPlaying = !mIsPlaying;
     }
     if (key == '1') {
-        mInstrument.set_osc_type(Ton.OSC_SINE);
+        mInstrument.set_oscillator_type(Ton.OSC_SINE);
     }
     if (key == '2') {
-        mInstrument.set_osc_type(Ton.OSC_TRIANGLE);
+        mInstrument.set_oscillator_type(Ton.OSC_TRIANGLE);
     }
     if (key == '3') {
-        mInstrument.set_osc_type(Ton.OSC_SAWTOOTH);
+        mInstrument.set_oscillator_type(Ton.OSC_SAWTOOTH);
     }
     if (key == '4') {
-        mInstrument.set_osc_type(Ton.OSC_SQUARE);
+        mInstrument.set_oscillator_type(Ton.OSC_SQUARE);
     }
     if (key == '5') {
-        mInstrument.set_osc_type(Ton.OSC_NOISE);
+        mInstrument.set_oscillator_type(Ton.OSC_NOISE);
     }
 }

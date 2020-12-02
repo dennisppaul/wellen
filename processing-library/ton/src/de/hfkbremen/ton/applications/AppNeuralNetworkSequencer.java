@@ -20,7 +20,7 @@ public class AppNeuralNetworkSequencer extends PApplet {
     }
 
     public void setup() {
-        Ton.instrument().set_osc_type(Ton.OSC_SINE);
+        Ton.instrument().set_oscillator_type(Ton.OSC_SINE);
 
         mRoot = node(width / 2.0f, height / 2.0f, mNodes.size());
         Beat.start(this, 120 * 2);

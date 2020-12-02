@@ -12,7 +12,7 @@ void setup() {
 void draw() {
     background(255);
     fill(0);
-    ellipse(width * 0.5f, height * 0.5f, Ton.isPlaying() ? 100 : 5, Ton.isPlaying() ? 100 : 5);
+    ellipse(width * 0.5f, height * 0.5f, Ton.is_playing() ? 100 : 5, Ton.is_playing() ? 100 : 5);
 }
 
 void mousePressed() {

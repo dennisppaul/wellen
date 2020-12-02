@@ -13,7 +13,7 @@ void settings() {
 }
 
 void setup() {
-    DSP.dumpAudioDevices();
+    Ton.dumpAudioInputAndOutputDevices();
     DSP.start(this);
 }
 

@@ -14,7 +14,7 @@ void setup() {
     Wavetable.sawtooth(mWavetable.wavetable());
     mWavetable.set_frequency(2.0f * Ton.DEFAULT_SAMPLING_RATE / Ton.DEFAULT_AUDIOBLOCK_SIZE);
     mWavetable.set_amplitude(0.5f);
-    DSP.dumpAudioDevices();
+    Ton.dumpAudioInputAndOutputDevices();
     DSP.start(this);
 }
 

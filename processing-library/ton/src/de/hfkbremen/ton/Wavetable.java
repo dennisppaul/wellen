@@ -97,8 +97,8 @@ public class Wavetable implements DSPNodeOutput {
     }
 
     public void set_frequency(float pFrequency) {
-        if (mFrequency != pFrequency) {
-            mFrequency = pFrequency;
+        if (mFrequency != PApplet.abs(pFrequency)) {
+            mFrequency = PApplet.abs(pFrequency);
             if (mInterpolateFrequencyChangeFactor > 0.0f) {
                 mDesiredStepSize = computeStepSize();
                 mInterpolateFrequencyDelta = mDesiredStepSize - mStepSize;

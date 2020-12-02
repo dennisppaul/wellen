@@ -18,7 +18,7 @@ void setup() {
         c.speed = random(0, 5);
         mControllers.add(c);
     }
-    DSP.dumpAudioDevices();
+    Ton.dumpAudioInputAndOutputDevices();
     DSP.start(this);
 }
 
