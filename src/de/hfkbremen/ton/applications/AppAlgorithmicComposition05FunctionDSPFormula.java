@@ -1,6 +1,7 @@
 package de.hfkbremen.ton.applications;
 
 import de.hfkbremen.ton.DSP;
+import de.hfkbremen.ton.Ton;
 import processing.core.PApplet;
 
 public class AppAlgorithmicComposition05FunctionDSPFormula extends PApplet {
@@ -14,7 +15,7 @@ public class AppAlgorithmicComposition05FunctionDSPFormula extends PApplet {
     }
 
     public void setup() {
-        DSP.dumpAudioDevices();
+        Ton.dumpAudioInputAndOutputDevices();
         DSP.start(this);
     }
 

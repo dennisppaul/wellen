@@ -2,6 +2,7 @@ package de.hfkbremen.ton;
 
 import processing.core.PApplet;
 
+import javax.sound.sampled.AudioSystem;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 
@@ -13,7 +14,8 @@ public abstract class Ton {
     public static final int OSC_SQUARE = 3;
     public static final int OSC_NOISE = 4;
     public static final int NUMBER_OF_OSCILLATORS = 5;
-    public static final String TONE_ENGINE_SOFTWARE = "software";
+    public static final int TONE_ENGINE_INTERNAL_WITH_NO_OUTPUT = -2;
+    public static final String TONE_ENGINE_INTERNAL = "internal";
     public static final String TONE_ENGINE_MIDI = "midi";
     public static final String TONE_ENGINE_OSC = "osc";
     public static final float DEFAULT_ATTACK = 0.005f;
@@ -22,6 +24,9 @@ public abstract class Ton {
     public static final float DEFAULT_SUSTAIN = 0.5f;
     public static final int DEFAULT_SAMPLING_RATE = 44100;
     public static final int DEFAULT_AUDIOBLOCK_SIZE = 512;
+    public static final int DEFAULT_AUDIO_DEVICE = -1;
+    public static final int NO_CHANNELS = 0;
+
     private static ToneEngine instance = null;
 
     private Ton() {
@@ -29,14 +34,23 @@ public abstract class Ton {
 
     public static void start(String... pName) {
         if (instance != null) {
-            System.err.println(
-                    "+++ @start / tone engine already initialized. make sure that `start` is the first call to `Ton`.");
+            printAlreadyStartedWarning();
+            return;
         }
         instance = ToneEngine.createEngine(pName);
     }
 
     public static void start(String pName, int pParameter) {
-        if (pName.equalsIgnoreCase(TONE_ENGINE_MIDI)) {
+        if (instance != null) {
+            printAlreadyStartedWarning();
+            return;
+        }
+        if (pName.equalsIgnoreCase(TONE_ENGINE_INTERNAL)) {
+            /* specify output channels */
+            // ToneEngineInternal(int pSamplingRate, int pOutputDeviceID, int pOutputChannels)
+            instance = new ToneEngineInternal(DEFAULT_SAMPLING_RATE, DEFAULT_AUDIO_DEVICE, pParameter);
+        } else if (pName.equalsIgnoreCase(TONE_ENGINE_MIDI)) {
+            /* specify output device ID */
             instance = new ToneEngineMIDI(pParameter);
         } else {
             instance = ToneEngine.createEngine(pName);
@@ -45,30 +59,62 @@ public abstract class Ton {
 
     public static void start(String pName, int pParameterA, int pParameterB) {
         if (instance != null) {
-            System.err.println(
-                    "+++ @start / tone engine already initialized. make sure that `start` is the first call to `Ton`.");
+            printAlreadyStartedWarning();
+            return;
         }
-        if (pName.equalsIgnoreCase(TONE_ENGINE_SOFTWARE)) {
-            /* specify output device */
-            //     public ToneEngineSoftware(int pSamplingRate,
-            //                              int pOutputDeviceID,
-            //                              int pOutputChannels)
-            instance = new ToneEngineSoftware(DEFAULT_SAMPLING_RATE, pParameterA, pParameterB);
+        if (pName.equalsIgnoreCase(TONE_ENGINE_INTERNAL)) {
+            /* specify output device + output channels */
+            // ToneEngineInternal(int pSamplingRate, int pOutputDeviceID, int pOutputChannels)
+            instance = new ToneEngineInternal(DEFAULT_SAMPLING_RATE, pParameterA, pParameterB);
         } else {
             instance = ToneEngine.createEngine(pName);
         }
     }
 
-    public static void note_on(int note, int velocity, float duration) {
-        instance().note_on(note, velocity, duration);
+    public static void start(String pName, int pParameterA, int pParameterB, int pParameterC) {
+        if (instance != null) {
+            printAlreadyStartedWarning();
+            return;
+        }
+        if (pName.equalsIgnoreCase(TONE_ENGINE_INTERNAL)) {
+            /* specify sampling rate + output device + output channels */
+            // ToneEngineInternal(int pSamplingRate, int pOutputDeviceID, int pOutputChannels)
+            instance = new ToneEngineInternal(pParameterA, pParameterB, pParameterC);
+        } else {
+            instance = ToneEngine.createEngine(pName);
+        }
     }
 
-    public static void note_on(int note, int velocity) {
-        instance().note_on(note, velocity);
+    public static ToneEngineInternal start(int pConfiguration) {
+        if (instance != null) {
+            printAlreadyStartedWarning();
+            if (instance instanceof ToneEngineInternal) {
+                return (ToneEngineInternal) instance;
+            }
+        }
+        if (pConfiguration == TONE_ENGINE_INTERNAL_WITH_NO_OUTPUT) {
+            ToneEngineInternal mInstance = new ToneEngineInternal(DEFAULT_SAMPLING_RATE,
+                                                                  DEFAULT_AUDIO_DEVICE,
+                                                                  NO_CHANNELS);
+            instance = mInstance;
+            return mInstance;
+        } else {
+            System.err.println("+++ WARNING @" + Ton.class.getSimpleName() + ".start" +
+                               " / unknown configuration, using default");
+            return new ToneEngineInternal();
+        }
     }
 
-    public static void note_off(int note) {
-        instance().note_off(note);
+    public static void note_on(int pNote, int pVelocity, float pDuration) {
+        instance().note_on(pNote, pVelocity, pDuration);
+    }
+
+    public static void note_on(int pNote, int pVelocity) {
+        instance().note_on(pNote, pVelocity);
+    }
+
+    public static void note_off(int pNote) {
+        instance().note_off(pNote);
     }
 
     public static void note_off() {
@@ -83,7 +129,7 @@ public abstract class Ton {
         instance().pitch_bend(pValue);
     }
 
-    public static boolean isPlaying() {
+    public static boolean is_playing() {
         return instance().is_playing();
     }
 
@@ -112,9 +158,11 @@ public abstract class Ton {
     }
 
     public static <T extends Instrument> T create_instrument(Class<T> pInstrumentClass, int pID) {
+        //@TODO(maybe move this to ToneEngine)
         T mInstrument;
         try {
             Constructor<T> c;
+            //@TODO(add constructor for `InstrumentInternal(int pID, int pSamplingRate, int pWavetableSize)`)
 //            if (InstrumentJSyn.class.isAssignableFrom(pInstrumentClass) && instance() instanceof ToneEngineJSyn) {
 //                c = pInstrumentClass.getDeclaredConstructor(ToneEngineJSyn.class, int.class);
 //                mInstrument = c.newInstance(instance(), pID);
@@ -141,6 +189,7 @@ public abstract class Ton {
             System.out.println("+ " + mOutputName);
         }
         System.out.println("+-------------------------------------------------------+");
+        System.out.println();
     }
 
     public static void dumpMidiInputDevices() {
@@ -149,43 +198,22 @@ public abstract class Ton {
         System.out.println("+ MIDI INPUT DEVICES");
         System.out.println("+-------------------------------------------------------+");
         for (String mOutputName : mInputNames) {
-            System.out.println("  - " + mOutputName);
+            System.out.println("+ " + mOutputName);
         }
+        System.out.println("+-------------------------------------------------------+");
+        System.out.println();
     }
 
-//    public static void dumpAudioDevices() {
-//        final JavaSoundAudioDevice mDevice = new JavaSoundAudioDevice();
-//        System.out.println("+-------------------------------------------------------+");
-//        System.out.println("AUDIO DEVICES ( Java Sound )");
-//        System.out.println("+-------------------------------------------------------+");
-//        for (int i = 0; i < mDevice.getDeviceCount(); i++) {
-//            System.out.println("+ " + "ID ................ : " + i);
-//            System.out.println("+ " + "NAME .............. : " + mDevice.getDeviceName(i));
-//            System.out.println("+ " + "OUTPUT CHANNELS ... : " + mDevice.getMaxOutputChannels(i));
-//            System.out.println("+ " + "INPUT CHANNELS .... : " + mDevice.getMaxInputChannels(i));
-//            System.out.println("+-------------------------------------------------------+");
-//        }
-//    }
-
-//    public static void buildSelectMidiDeviceMenu(ControlP5 controls) {
-//        final int mListWidth = 300, mListHeight = 300;
-//
-//        DropdownList dl = controls.addDropdownList("Please select MIDI Device",
-//                                                   (controls.papplet.width - mListWidth) / 2,
-//                                                   (controls.papplet.height - mListHeight) / 2,
-//                                                   mListWidth,
-//                                                   mListHeight);
-//
-//        //        dl.toUpperCase(true);
-//        dl.setItemHeight(16);
-//        dl.setBarHeight(16);
-//        dl.getCaptionLabel().align(PConstants.LEFT, PConstants.CENTER);
-//
-//        final String[] mOutputNames = MidiOut.availableOutputs();
-//        for (int i = 0; i < mOutputNames.length; i++) {
-//            dl.addItem(mOutputNames[i], i);
-//        }
-//    }
+    public static void dumpAudioInputAndOutputDevices() {
+        System.out.println("+-------------------------------------------------------+");
+        System.out.println("+ AUDIO DEVICES ( Audio System )");
+        System.out.println("+-------------------------------------------------------+");
+        for (int i = 0; i < AudioSystem.getMixerInfo().length; i++) {
+            System.out.println("+ " + i + "\t: " + AudioSystem.getMixerInfo()[i].getName());
+        }
+        System.out.println("+-------------------------------------------------------+");
+        System.out.println();
+    }
 
     public static int constrain(int value, int min, int max) {
         if (value > max) {
@@ -218,5 +246,11 @@ public abstract class Ton {
 
     public static float clamp(float pValue, float pMin, float pMax) {
         return Math.max(pMin, Math.min(pMax, pValue));
+    }
+
+    private static void printAlreadyStartedWarning() {
+        System.err.println("+++ WARNING @" + Ton.class.getSimpleName() + ".start" +
+                           " / tone engine already initialized. make sure that `start` is the first call to `Ton`. " +
+                           "use `set_engine(ToneEngine)` to switch tone engines.");
     }
 }

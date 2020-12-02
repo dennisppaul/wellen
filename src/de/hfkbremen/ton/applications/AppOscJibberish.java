@@ -53,7 +53,7 @@ public class AppOscJibberish extends PApplet {
             mFreqStep = random(0.02f, 0.04f);
             mAmpStep = random(0.5f, 0.8f);
 
-            Ton.instrument(mID).set_osc_type(Ton.OSC_SAWTOOTH);
+            Ton.instrument(mID).set_oscillator_type(Ton.OSC_SAWTOOTH);
             Ton.instrument(mID).set_amplitude(0.0f);
             Ton.instrument(mID).set_frequency(200.0f);
         }

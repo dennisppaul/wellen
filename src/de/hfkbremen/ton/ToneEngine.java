@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static de.hfkbremen.ton.Ton.TONE_ENGINE_INTERNAL;
 import static de.hfkbremen.ton.Ton.TONE_ENGINE_MIDI;
 import static de.hfkbremen.ton.Ton.TONE_ENGINE_OSC;
-import static de.hfkbremen.ton.Ton.TONE_ENGINE_SOFTWARE;
 
 public abstract class ToneEngine {
 
@@ -23,13 +23,13 @@ public abstract class ToneEngine {
     }
 
     public static ToneEngine createEngine() {
-        return new ToneEngineSoftware();
+        return new ToneEngineInternal();
     }
 
     public static ToneEngine createEngine(String... pName) {
         if (pName.length > 0) {
-            if (pName[0].equalsIgnoreCase(TONE_ENGINE_SOFTWARE)) {
-                return new ToneEngineSoftware();
+            if (pName[0].equalsIgnoreCase(TONE_ENGINE_INTERNAL)) {
+                return new ToneEngineInternal();
             } else if (pName[0].equalsIgnoreCase(TONE_ENGINE_MIDI) && pName.length == 2) {
                 return new ToneEngineMIDI(pName[1]);
             } else if (pName[0].equalsIgnoreCase(TONE_ENGINE_OSC) && pName.length >= 2) {
@@ -41,13 +41,15 @@ public abstract class ToneEngine {
                         final int mPortTransmit = Integer.parseInt(pName[2]);
                         return new ToneEngineOSC(mIPTransmit, mPortTransmit);
                     } catch (NumberFormatException e) {
-                        System.err.println("+++ could not parse ports");
+                        System.err.println("+++ WARNING @" + ToneEngine.class.getSimpleName() + ".createEngine" +
+                                           " / could not parse ports");
                     }
                 }
                 return new ToneEngineOSC();
             }
-            System.err.println("+++ could not find specified tone engine: " + pName[0]);
-            System.err.println("+++ hint: check number of parameters");
+            System.err.println("+++ WARNING @" + ToneEngine.class.getSimpleName() + ".createEngine" +
+                    " / could not find specified tone engine: " + pName[0]);
+            System.err.println("+++ hint: check engine name and number of parameters");
         }
         return createEngine();
     }

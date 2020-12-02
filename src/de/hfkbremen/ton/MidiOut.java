@@ -32,7 +32,7 @@ public class MidiOut {
                     constrain(velocity, 0, 127));
             sendMessage(message);
         } catch (InvalidMidiDataException e) {
-            System.err.println("### Message not sent, invalid MIDI data");
+            System.err.println("+++ Message not sent, invalid MIDI data");
         }
     }
 
@@ -45,7 +45,7 @@ public class MidiOut {
                     constrain(value, 0, 127));
             sendMessage(message);
         } catch (InvalidMidiDataException e) {
-            System.err.println("### Message not sent, invalid MIDI data");
+            System.err.println("+++ Message not sent, invalid MIDI data");
         }
     }
 
@@ -58,7 +58,7 @@ public class MidiOut {
                     constrain(velocity, 0, 127));
             sendMessage(message);
         } catch (InvalidMidiDataException e) {
-            System.err.println("### Message not sent, invalid MIDI data");
+            System.err.println("+++ Message not sent, invalid MIDI data");
         }
     }
 
@@ -73,7 +73,7 @@ public class MidiOut {
             message.setMessage(command, channel, data1, data2);
             sendMessage(message);
         } catch (InvalidMidiDataException e) {
-            System.err.println("### Message not sent, invalid MIDI data");
+            System.err.println("+++ Message not sent, invalid MIDI data");
         }
     }
 

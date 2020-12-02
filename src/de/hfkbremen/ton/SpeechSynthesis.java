@@ -49,7 +49,7 @@ public class SpeechSynthesis {
 
     public void say(String pVoice, String pMessage, boolean pBlocking, int pWordsPerMinute, String pFileName) {
         if (mVerbose) {
-            System.out.println("### saying: " + pMessage);
+            System.out.println("+++ saying: " + pMessage);
         }
         try {
             if (mRemoveSpecialChars) {
@@ -70,7 +70,7 @@ public class SpeechSynthesis {
                                              (pFileName != null && !pFileName.isEmpty()) ? pFileName : "",
                                              "\"" + pMessage + "\""};
             if (mVerbose) {
-                System.out.print("### ");
+                System.out.print("+++ ");
                 for (String mCommandSeg : mCommand) {
                     System.out.print(mCommandSeg);
                     System.out.print(" ");
@@ -81,7 +81,7 @@ public class SpeechSynthesis {
             if (pBlocking) {
                 int mExit = p.waitFor();
                 if (mVerbose) {
-                    System.out.println("### exit value: " + mExit);
+                    System.out.println("+++ exit value: " + mExit);
                 }
             }
         } catch (Exception e) {

@@ -27,7 +27,7 @@ public class AppAlgorithmicComposition02VisualModel extends PApplet {
             mControllers.add(c);
         }
 
-        DSP.dumpAudioDevices();
+        Ton.dumpAudioInputAndOutputDevices();
         DSP.start(this);
     }
 

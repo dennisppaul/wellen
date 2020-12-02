@@ -54,7 +54,7 @@ public class BeatMIDI implements MidiInListener {
             try {
                 mMethod.invoke(mListener, mTickPPQNCounter);
             } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                System.err.println("### @BeatMIDI / problem calling `" + METHOD_NAME + "`");
+                System.err.println("+++ @BeatMIDI / problem calling `" + METHOD_NAME + "`");
                 ex.printStackTrace();
             } catch (Exception e) {
                 e.printStackTrace();

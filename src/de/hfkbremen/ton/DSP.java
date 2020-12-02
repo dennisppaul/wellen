@@ -3,7 +3,6 @@ package de.hfkbremen.ton;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 
-import javax.sound.sampled.AudioSystem;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -30,28 +29,28 @@ public class DSP implements AudioBufferRenderer {
         try {
             if (mNumberOutputChannels == 2 && mNumberInputChannels == 2) {
                 mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME,
-                                                                float[].class,
-                                                                float[].class,
-                                                                float[].class,
-                                                                float[].class);
+                                                                 float[].class,
+                                                                 float[].class,
+                                                                 float[].class,
+                                                                 float[].class);
             } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 0) {
                 mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME,
-                                                                float[].class,
-                                                                float[].class);
+                                                                 float[].class,
+                                                                 float[].class);
             } else if (mNumberOutputChannels == 1 && mNumberInputChannels == 1) {
                 mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME,
-                                                                float[].class,
-                                                                float[].class);
+                                                                 float[].class,
+                                                                 float[].class);
             } else if (mNumberOutputChannels == 1 && mNumberInputChannels == 0) {
                 mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME,
-                                                                float[].class);
+                                                                 float[].class);
             } else {
                 mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME,
-                                                                float[][].class);
+                                                                 float[][].class);
             }
         } catch (NoSuchMethodException | SecurityException ex) {
             System.err.println("+++ @DSP / could not find callback `" + METHOD_NAME + "()`. hint: check the callback " +
-                               "method paramters, they must match the sum of input and ouput channels. default is `" + METHOD_NAME + "(float[])` ( = MONO OUTPUT ).");
+                               "method paramters, they must match the number of input and ouput channels. default is `" + METHOD_NAME + "(float[])` ( = MONO OUTPUT ).");
         }
     }
 
@@ -103,16 +102,6 @@ public class DSP implements AudioBufferRenderer {
 
     public static float[] buffer_right() {
         return mInstance == null ? null : mInstance.mCurrentBufferRight;
-    }
-
-    public static void dumpAudioDevices() {
-        System.out.println("+-------------------------------------------------------+");
-        System.out.println("AUDIO DEVICES ( Audio System )");
-        System.out.println("+-------------------------------------------------------+");
-        for (int i = 0; i < AudioSystem.getMixerInfo().length; i++) {
-            System.out.println(i + "\t: " + AudioSystem.getMixerInfo()[i].getName());
-        }
-        System.out.println("+-------------------------------------------------------+");
     }
 
     public static float clamp(float pValue, float pMin, float pMax) {

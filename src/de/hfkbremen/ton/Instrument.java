@@ -15,9 +15,11 @@ public abstract class Instrument {
     protected float mSustain = DEFAULT_SUSTAIN;
     protected float mRelease = DEFAULT_RELEASE;
     protected float mPan = 0.0f;
-    protected boolean mEnableLFOFrequency;
-    protected boolean mEnableLFOAmplitude;
-    protected boolean mEnableADSR;
+    protected boolean mEnableFrequencyLFO = false;
+    protected boolean mEnableAmplitudeLFO = false;
+    protected boolean mEnableADSR = false;
+    protected boolean mEnableLPF = false;
+    protected boolean mIsPlaying = false;
 
     public Instrument(int pID) {
         mID = pID;
@@ -71,43 +73,43 @@ public abstract class Instrument {
         mRelease = pRelease;
     }
 
-    public abstract int get_osc_type();
+    public abstract int get_oscillator_type();
 
-    public abstract void set_osc_type(int pOsc);
+    public abstract void set_oscillator_type(int pOscillator);
 
-    public abstract float get_freq_LFO_amp();
+    public abstract float get_frequency_LFO_amplitude();
 
-    public abstract void set_freq_LFO_amp(float pLFOAmp);
+    public abstract void set_frequency_LFO_amplitude(float pAmplitude);
 
-    public abstract float get_freq_LFO_freq();
+    public abstract float get_frequency_LFO_frequency();
 
-    public abstract void set_freq_LFO_freq(float pLFOFreq);
+    public abstract void set_frequency_LFO_frequency(float pFrequency);
 
-    public abstract float get_amp_LFO_amp();
+    public abstract float get_amplitude_LFO_amplitude();
 
-    public abstract void set_amp_LFO_amp(float pLFOAmp);
+    public abstract void set_amplitude_LFO_amplitude(float pAmplitude);
 
-    public abstract float get_amp_LFO_freq();
+    public abstract float get_amplitude_LFO_frequency();
 
-    public abstract void set_amp_LFO_freq(float pLFOFreq);
+    public abstract void set_amplitude_LFO_frequency(float pFrequency);
 
-    public abstract float get_filter_q();
+    public abstract float get_filter_resonance();
 
-    public abstract void set_filter_q(float pResonance);
+    public abstract void set_filter_resonance(float pResonance);
 
-    public abstract float get_filter_freq();
+    public abstract float get_filter_frequency();
 
-    public abstract void set_filter_freq(float pFreq);
+    public abstract void set_filter_frequency(float pFrequency);
 
     public abstract void pitch_bend(float pFreqOffset);
 
     public abstract float get_amplitude();
 
-    public abstract void set_amplitude(float pAmp);
+    public abstract void set_amplitude(float pAmplitude);
 
     public abstract float get_frequency();
 
-    public abstract void set_frequency(float pFreq);
+    public abstract void set_frequency(float pFrequency);
 
     public float get_pan() {return mPan;}
 
@@ -122,19 +124,26 @@ public abstract class Instrument {
         mEnableADSR = pEnableADSR;
     }
 
-    public void enable_LFO_amplitude(boolean pEnableLFOAmplitude) {
-        mEnableLFOAmplitude = pEnableLFOAmplitude;
+    public void enable_amplitude_LFO(boolean pEnableAmplitudeLFO) {
+        mEnableAmplitudeLFO = pEnableAmplitudeLFO;
     }
 
-    public void enable_LFO_frequency(boolean pEnableLFOFrequency) {
-        mEnableLFOFrequency = pEnableLFOFrequency;
+    public void enable_frequency_LFO(boolean pEnableFrequencyLFO) {
+        mEnableFrequencyLFO = pEnableFrequencyLFO;
+    }
+
+    public void enable_LPF(boolean pEnableLPF) {
+        mEnableLPF = pEnableLPF;
     }
 
     public abstract void note_off();
 
     public abstract void note_on(int pNote, int pVelocity);
 
-    public abstract boolean is_playing();
+
+    public boolean is_playing() {
+        return mIsPlaying;
+    }
 
     protected float _note_to_frequency(int pNote) {
         return note_to_frequency(clamp127(pNote));

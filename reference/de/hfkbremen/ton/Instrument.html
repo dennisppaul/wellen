@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":6,"i4":6,"i5":6,"i6":10,"i7":10,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6,"i14":10,"i15":10,"i16":10,"i17":10,"i18":6,"i19":6,"i20":6,"i21":6,"i22":6,"i23":6,"i24":6,"i25":10,"i26":10,"i27":6,"i28":6,"i29":6,"i30":6,"i31":6,"i32":6,"i33":10,"i34":10,"i35":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":6,"i5":6,"i6":6,"i7":10,"i8":10,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6,"i14":6,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":6,"i21":6,"i22":6,"i23":6,"i24":6,"i25":6,"i26":10,"i27":10,"i28":6,"i29":6,"i30":6,"i31":6,"i32":6,"i33":6,"i34":10,"i35":10,"i36":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -48,7 +48,7 @@ var activeTableTab = "activeTableTab";
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../de/hfkbremen/ton/EventReceiverOSC.html" title="class in de.hfkbremen.ton"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../de/hfkbremen/ton/InstrumentSoftware.html" title="class in de.hfkbremen.ton"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../de/hfkbremen/ton/InstrumentInternal.html" title="class in de.hfkbremen.ton"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?de/hfkbremen/ton/Instrument.html" target="_top">Frames</a></li>
@@ -107,7 +107,7 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <dl>
 <dt>Direct Known Subclasses:</dt>
-<dd><a href="../../../de/hfkbremen/ton/InstrumentSoftware.html" title="class in de.hfkbremen.ton">InstrumentSoftware</a></dd>
+<dd><a href="../../../de/hfkbremen/ton/InstrumentInternal.html" title="class in de.hfkbremen.ton">InstrumentInternal</a></dd>
 </dl>
 <hr>
 <br>
@@ -154,142 +154,146 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#enable_LFO_amplitude-boolean-">enable_LFO_amplitude</a></span>(boolean&nbsp;pEnableLFOAmplitude)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#enable_amplitude_LFO-boolean-">enable_amplitude_LFO</a></span>(boolean&nbsp;pEnableAmplitudeLFO)</code>&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#enable_LFO_frequency-boolean-">enable_LFO_frequency</a></span>(boolean&nbsp;pEnableLFOFrequency)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#enable_frequency_LFO-boolean-">enable_frequency_LFO</a></span>(boolean&nbsp;pEnableFrequencyLFO)</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
-<td class="colFirst"><code>abstract float</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#get_amp_LFO_amp--">get_amp_LFO_amp</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#enable_LPF-boolean-">enable_LPF</a></span>(boolean&nbsp;pEnableLPF)</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>abstract float</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#get_amp_LFO_freq--">get_amp_LFO_freq</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#get_amplitude_LFO_amplitude--">get_amplitude_LFO_amplitude</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>abstract float</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#get_amplitude--">get_amplitude</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#get_amplitude_LFO_frequency--">get_amplitude_LFO_frequency</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
-<td class="colFirst"><code>float</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#get_attack--">get_attack</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>abstract float</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#get_amplitude--">get_amplitude</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>float</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#get_decay--">get_decay</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#get_attack--">get_attack</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
-<td class="colFirst"><code>abstract float</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#get_filter_freq--">get_filter_freq</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>float</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#get_decay--">get_decay</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>abstract float</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#get_filter_q--">get_filter_q</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#get_filter_frequency--">get_filter_frequency</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i10" class="altColor">
 <td class="colFirst"><code>abstract float</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#get_freq_LFO_amp--">get_freq_LFO_amp</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#get_filter_resonance--">get_filter_resonance</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i11" class="rowColor">
 <td class="colFirst"><code>abstract float</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#get_freq_LFO_freq--">get_freq_LFO_freq</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#get_frequency_LFO_amplitude--">get_frequency_LFO_amplitude</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i12" class="altColor">
 <td class="colFirst"><code>abstract float</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#get_frequency--">get_frequency</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#get_frequency_LFO_frequency--">get_frequency_LFO_frequency</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i13" class="rowColor">
-<td class="colFirst"><code>abstract int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#get_osc_type--">get_osc_type</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>abstract float</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#get_frequency--">get_frequency</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i14" class="altColor">
-<td class="colFirst"><code>float</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#get_pan--">get_pan</a></span>()</code>&nbsp;</td>
+<td class="colFirst"><code>abstract int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#get_oscillator_type--">get_oscillator_type</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code>float</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#get_release--">get_release</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#get_pan--">get_pan</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i16" class="altColor">
 <td class="colFirst"><code>float</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#get_sustain--">get_sustain</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#get_release--">get_release</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i17" class="rowColor">
+<td class="colFirst"><code>float</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#get_sustain--">get_sustain</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i18" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#ID--">ID</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i18" class="altColor">
-<td class="colFirst"><code>abstract boolean</code></td>
+<tr id="i19" class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#is_playing--">is_playing</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i19" class="rowColor">
+<tr id="i20" class="altColor">
 <td class="colFirst"><code>abstract void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#note_off--">note_off</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i20" class="altColor">
+<tr id="i21" class="rowColor">
 <td class="colFirst"><code>abstract void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#note_on-int-int-">note_on</a></span>(int&nbsp;pNote,
        int&nbsp;pVelocity)</code>&nbsp;</td>
 </tr>
-<tr id="i21" class="rowColor">
+<tr id="i22" class="altColor">
 <td class="colFirst"><code>abstract void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#pitch_bend-float-">pitch_bend</a></span>(float&nbsp;pFreqOffset)</code>&nbsp;</td>
 </tr>
-<tr id="i22" class="altColor">
-<td class="colFirst"><code>abstract void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#set_amp_LFO_amp-float-">set_amp_LFO_amp</a></span>(float&nbsp;pLFOAmp)</code>&nbsp;</td>
-</tr>
 <tr id="i23" class="rowColor">
 <td class="colFirst"><code>abstract void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#set_amp_LFO_freq-float-">set_amp_LFO_freq</a></span>(float&nbsp;pLFOFreq)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#set_amplitude_LFO_amplitude-float-">set_amplitude_LFO_amplitude</a></span>(float&nbsp;pAmplitude)</code>&nbsp;</td>
 </tr>
 <tr id="i24" class="altColor">
 <td class="colFirst"><code>abstract void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#set_amplitude-float-">set_amplitude</a></span>(float&nbsp;pAmp)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#set_amplitude_LFO_frequency-float-">set_amplitude_LFO_frequency</a></span>(float&nbsp;pFrequency)</code>&nbsp;</td>
 </tr>
 <tr id="i25" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#set_attack-float-">set_attack</a></span>(float&nbsp;pAttack)</code>&nbsp;</td>
+<td class="colFirst"><code>abstract void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#set_amplitude-float-">set_amplitude</a></span>(float&nbsp;pAmplitude)</code>&nbsp;</td>
 </tr>
 <tr id="i26" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#set_decay-float-">set_decay</a></span>(float&nbsp;pDecay)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#set_attack-float-">set_attack</a></span>(float&nbsp;pAttack)</code>&nbsp;</td>
 </tr>
 <tr id="i27" class="rowColor">
-<td class="colFirst"><code>abstract void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#set_filter_freq-float-">set_filter_freq</a></span>(float&nbsp;pFreq)</code>&nbsp;</td>
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#set_decay-float-">set_decay</a></span>(float&nbsp;pDecay)</code>&nbsp;</td>
 </tr>
 <tr id="i28" class="altColor">
 <td class="colFirst"><code>abstract void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#set_filter_q-float-">set_filter_q</a></span>(float&nbsp;pResonance)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#set_filter_frequency-float-">set_filter_frequency</a></span>(float&nbsp;pFrequency)</code>&nbsp;</td>
 </tr>
 <tr id="i29" class="rowColor">
 <td class="colFirst"><code>abstract void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#set_freq_LFO_amp-float-">set_freq_LFO_amp</a></span>(float&nbsp;pLFOAmp)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#set_filter_resonance-float-">set_filter_resonance</a></span>(float&nbsp;pResonance)</code>&nbsp;</td>
 </tr>
 <tr id="i30" class="altColor">
 <td class="colFirst"><code>abstract void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#set_freq_LFO_freq-float-">set_freq_LFO_freq</a></span>(float&nbsp;pLFOFreq)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#set_frequency_LFO_amplitude-float-">set_frequency_LFO_amplitude</a></span>(float&nbsp;pAmplitude)</code>&nbsp;</td>
 </tr>
 <tr id="i31" class="rowColor">
 <td class="colFirst"><code>abstract void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#set_frequency-float-">set_frequency</a></span>(float&nbsp;pFreq)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#set_frequency_LFO_frequency-float-">set_frequency_LFO_frequency</a></span>(float&nbsp;pFrequency)</code>&nbsp;</td>
 </tr>
 <tr id="i32" class="altColor">
 <td class="colFirst"><code>abstract void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#set_osc_type-int-">set_osc_type</a></span>(int&nbsp;pOsc)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#set_frequency-float-">set_frequency</a></span>(float&nbsp;pFrequency)</code>&nbsp;</td>
 </tr>
 <tr id="i33" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#set_pan-float-">set_pan</a></span>(float&nbsp;pPan)</code>&nbsp;</td>
+<td class="colFirst"><code>abstract void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#set_oscillator_type-int-">set_oscillator_type</a></span>(int&nbsp;pOscillator)</code>&nbsp;</td>
 </tr>
 <tr id="i34" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#set_release-float-">set_release</a></span>(float&nbsp;pRelease)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#set_pan-float-">set_pan</a></span>(float&nbsp;pPan)</code>&nbsp;</td>
 </tr>
 <tr id="i35" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#set_release-float-">set_release</a></span>(float&nbsp;pRelease)</code>&nbsp;</td>
+</tr>
+<tr id="i36" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../de/hfkbremen/ton/Instrument.html#set_sustain-float-">set_sustain</a></span>(float&nbsp;pSustain)</code>&nbsp;</td>
 </tr>
@@ -429,130 +433,130 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a name="get_osc_type--">
+<a name="get_oscillator_type--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>get_osc_type</h4>
-<pre>public abstract&nbsp;int&nbsp;get_osc_type()</pre>
+<h4>get_oscillator_type</h4>
+<pre>public abstract&nbsp;int&nbsp;get_oscillator_type()</pre>
 </li>
 </ul>
-<a name="set_osc_type-int-">
+<a name="set_oscillator_type-int-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>set_osc_type</h4>
-<pre>public abstract&nbsp;void&nbsp;set_osc_type(int&nbsp;pOsc)</pre>
+<h4>set_oscillator_type</h4>
+<pre>public abstract&nbsp;void&nbsp;set_oscillator_type(int&nbsp;pOscillator)</pre>
 </li>
 </ul>
-<a name="get_freq_LFO_amp--">
+<a name="get_frequency_LFO_amplitude--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>get_freq_LFO_amp</h4>
-<pre>public abstract&nbsp;float&nbsp;get_freq_LFO_amp()</pre>
+<h4>get_frequency_LFO_amplitude</h4>
+<pre>public abstract&nbsp;float&nbsp;get_frequency_LFO_amplitude()</pre>
 </li>
 </ul>
-<a name="set_freq_LFO_amp-float-">
+<a name="set_frequency_LFO_amplitude-float-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>set_freq_LFO_amp</h4>
-<pre>public abstract&nbsp;void&nbsp;set_freq_LFO_amp(float&nbsp;pLFOAmp)</pre>
+<h4>set_frequency_LFO_amplitude</h4>
+<pre>public abstract&nbsp;void&nbsp;set_frequency_LFO_amplitude(float&nbsp;pAmplitude)</pre>
 </li>
 </ul>
-<a name="get_freq_LFO_freq--">
+<a name="get_frequency_LFO_frequency--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>get_freq_LFO_freq</h4>
-<pre>public abstract&nbsp;float&nbsp;get_freq_LFO_freq()</pre>
+<h4>get_frequency_LFO_frequency</h4>
+<pre>public abstract&nbsp;float&nbsp;get_frequency_LFO_frequency()</pre>
 </li>
 </ul>
-<a name="set_freq_LFO_freq-float-">
+<a name="set_frequency_LFO_frequency-float-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>set_freq_LFO_freq</h4>
-<pre>public abstract&nbsp;void&nbsp;set_freq_LFO_freq(float&nbsp;pLFOFreq)</pre>
+<h4>set_frequency_LFO_frequency</h4>
+<pre>public abstract&nbsp;void&nbsp;set_frequency_LFO_frequency(float&nbsp;pFrequency)</pre>
 </li>
 </ul>
-<a name="get_amp_LFO_amp--">
+<a name="get_amplitude_LFO_amplitude--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>get_amp_LFO_amp</h4>
-<pre>public abstract&nbsp;float&nbsp;get_amp_LFO_amp()</pre>
+<h4>get_amplitude_LFO_amplitude</h4>
+<pre>public abstract&nbsp;float&nbsp;get_amplitude_LFO_amplitude()</pre>
 </li>
 </ul>
-<a name="set_amp_LFO_amp-float-">
+<a name="set_amplitude_LFO_amplitude-float-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>set_amp_LFO_amp</h4>
-<pre>public abstract&nbsp;void&nbsp;set_amp_LFO_amp(float&nbsp;pLFOAmp)</pre>
+<h4>set_amplitude_LFO_amplitude</h4>
+<pre>public abstract&nbsp;void&nbsp;set_amplitude_LFO_amplitude(float&nbsp;pAmplitude)</pre>
 </li>
 </ul>
-<a name="get_amp_LFO_freq--">
+<a name="get_amplitude_LFO_frequency--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>get_amp_LFO_freq</h4>
-<pre>public abstract&nbsp;float&nbsp;get_amp_LFO_freq()</pre>
+<h4>get_amplitude_LFO_frequency</h4>
+<pre>public abstract&nbsp;float&nbsp;get_amplitude_LFO_frequency()</pre>
 </li>
 </ul>
-<a name="set_amp_LFO_freq-float-">
+<a name="set_amplitude_LFO_frequency-float-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>set_amp_LFO_freq</h4>
-<pre>public abstract&nbsp;void&nbsp;set_amp_LFO_freq(float&nbsp;pLFOFreq)</pre>
+<h4>set_amplitude_LFO_frequency</h4>
+<pre>public abstract&nbsp;void&nbsp;set_amplitude_LFO_frequency(float&nbsp;pFrequency)</pre>
 </li>
 </ul>
-<a name="get_filter_q--">
+<a name="get_filter_resonance--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>get_filter_q</h4>
-<pre>public abstract&nbsp;float&nbsp;get_filter_q()</pre>
+<h4>get_filter_resonance</h4>
+<pre>public abstract&nbsp;float&nbsp;get_filter_resonance()</pre>
 </li>
 </ul>
-<a name="set_filter_q-float-">
+<a name="set_filter_resonance-float-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>set_filter_q</h4>
-<pre>public abstract&nbsp;void&nbsp;set_filter_q(float&nbsp;pResonance)</pre>
+<h4>set_filter_resonance</h4>
+<pre>public abstract&nbsp;void&nbsp;set_filter_resonance(float&nbsp;pResonance)</pre>
 </li>
 </ul>
-<a name="get_filter_freq--">
+<a name="get_filter_frequency--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>get_filter_freq</h4>
-<pre>public abstract&nbsp;float&nbsp;get_filter_freq()</pre>
+<h4>get_filter_frequency</h4>
+<pre>public abstract&nbsp;float&nbsp;get_filter_frequency()</pre>
 </li>
 </ul>
-<a name="set_filter_freq-float-">
+<a name="set_filter_frequency-float-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>set_filter_freq</h4>
-<pre>public abstract&nbsp;void&nbsp;set_filter_freq(float&nbsp;pFreq)</pre>
+<h4>set_filter_frequency</h4>
+<pre>public abstract&nbsp;void&nbsp;set_filter_frequency(float&nbsp;pFrequency)</pre>
 </li>
 </ul>
 <a name="pitch_bend-float-">
@@ -579,7 +583,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>set_amplitude</h4>
-<pre>public abstract&nbsp;void&nbsp;set_amplitude(float&nbsp;pAmp)</pre>
+<pre>public abstract&nbsp;void&nbsp;set_amplitude(float&nbsp;pAmplitude)</pre>
 </li>
 </ul>
 <a name="get_frequency--">
@@ -597,7 +601,7 @@ extends java.lang.Object</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>set_frequency</h4>
-<pre>public abstract&nbsp;void&nbsp;set_frequency(float&nbsp;pFreq)</pre>
+<pre>public abstract&nbsp;void&nbsp;set_frequency(float&nbsp;pFrequency)</pre>
 </li>
 </ul>
 <a name="get_pan--">
@@ -631,22 +635,31 @@ extends java.lang.Object</pre>
 <pre>public&nbsp;void&nbsp;enable_ADSR(boolean&nbsp;pEnableADSR)</pre>
 </li>
 </ul>
-<a name="enable_LFO_amplitude-boolean-">
+<a name="enable_amplitude_LFO-boolean-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>enable_LFO_amplitude</h4>
-<pre>public&nbsp;void&nbsp;enable_LFO_amplitude(boolean&nbsp;pEnableLFOAmplitude)</pre>
+<h4>enable_amplitude_LFO</h4>
+<pre>public&nbsp;void&nbsp;enable_amplitude_LFO(boolean&nbsp;pEnableAmplitudeLFO)</pre>
 </li>
 </ul>
-<a name="enable_LFO_frequency-boolean-">
+<a name="enable_frequency_LFO-boolean-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>enable_LFO_frequency</h4>
-<pre>public&nbsp;void&nbsp;enable_LFO_frequency(boolean&nbsp;pEnableLFOFrequency)</pre>
+<h4>enable_frequency_LFO</h4>
+<pre>public&nbsp;void&nbsp;enable_frequency_LFO(boolean&nbsp;pEnableFrequencyLFO)</pre>
+</li>
+</ul>
+<a name="enable_LPF-boolean-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>enable_LPF</h4>
+<pre>public&nbsp;void&nbsp;enable_LPF(boolean&nbsp;pEnableLPF)</pre>
 </li>
 </ul>
 <a name="note_off--">
@@ -674,7 +687,7 @@ extends java.lang.Object</pre>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>is_playing</h4>
-<pre>public abstract&nbsp;boolean&nbsp;is_playing()</pre>
+<pre>public&nbsp;boolean&nbsp;is_playing()</pre>
 </li>
 </ul>
 </li>
@@ -705,7 +718,7 @@ extends java.lang.Object</pre>
 <div class="subNav">
 <ul class="navList">
 <li><a href="../../../de/hfkbremen/ton/EventReceiverOSC.html" title="class in de.hfkbremen.ton"><span class="typeNameLink">Prev&nbsp;Class</span></a></li>
-<li><a href="../../../de/hfkbremen/ton/InstrumentSoftware.html" title="class in de.hfkbremen.ton"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
+<li><a href="../../../de/hfkbremen/ton/InstrumentInternal.html" title="class in de.hfkbremen.ton"><span class="typeNameLink">Next&nbsp;Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../index.html?de/hfkbremen/ton/Instrument.html" target="_top">Frames</a></li>
