@@ -5,11 +5,11 @@ public class InstrumentInternal extends Instrument implements DSPNodeOutput {
     public static final int DEFAULT_WAVETABLE_SIZE = 512;
     public static final float DEFAULT_FREQUENCY = 220.0f;
     private final int mSamplingRate;
-    private final ADSR mADSR;
-    private final Wavetable mVCO;
-    private final Wavetable mFrequencyLFO;
-    private final Wavetable mAmplitudeLFO;
-    private final LowPassFilter mLPF;
+    protected final ADSR mADSR;
+    protected final Wavetable mVCO;
+    protected final Wavetable mFrequencyLFO;
+    protected final Wavetable mAmplitudeLFO;
+    protected final LowPassFilter mLPF;
     private float mAmp;
     private float mFreq;
     private float mFreqOffset;
@@ -56,6 +56,10 @@ public class InstrumentInternal extends Instrument implements DSPNodeOutput {
 
     public InstrumentInternal(int pID, int pSamplingRate) {
         this(pID, pSamplingRate, DEFAULT_WAVETABLE_SIZE);
+    }
+
+    public InstrumentInternal(int pID) {
+        this(pID, Ton.DEFAULT_SAMPLING_RATE, DEFAULT_WAVETABLE_SIZE);
     }
 
     @Override
