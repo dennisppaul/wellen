@@ -14,7 +14,7 @@
 - improved `Beat` class to accept any object for callback
 - improved `ADSR` ( removed clicks when triggered at high frequency )
 - added interpolation between sample in `Wavetable` ( helps with small buffer LFOs )
-- added `Trigger` to allow triggering on rising and falling edge
+- added `Trigger` to allow triggering on rising and falling edges
 - introduced interfaces for input, output and process for DSP classes ( more semantic than functional )
 - renamed package
 
