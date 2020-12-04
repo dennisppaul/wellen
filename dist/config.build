@@ -1,6 +1,6 @@
-LIB_NAME=welle
+LIB_NAME=wellen
 IO_EXAMPLE_PATHS=( examples examples_ext applications )
-PROJECT_PACKAGE=welle
+PROJECT_PACKAGE=wellen
 SKETCH_IMPORTS=( netP5.* oscP5.* )
 BASE_COLOR=59
 ADDITIONAL_LIBS=( )

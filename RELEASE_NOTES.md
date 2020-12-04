@@ -1,4 +1,4 @@
-# welle / release notes
+# wellen / release notes
 
 ## v0.4 (20201202)
 
