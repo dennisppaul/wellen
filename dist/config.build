@@ -1,6 +1,6 @@
-LIB_NAME=ton
+LIB_NAME=welle
 IO_EXAMPLE_PATHS=( examples examples_ext applications )
-PROJECT_PACKAGE=ton
+PROJECT_PACKAGE=welle
 SKETCH_IMPORTS=( netP5.* oscP5.* )
 BASE_COLOR=59
 ADDITIONAL_LIBS=( )

@@ -1,4 +1,4 @@
-# ton / release notes
+# welle / release notes
 
 ## v0.4 (20201202)
 
