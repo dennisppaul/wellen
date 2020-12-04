@@ -2,19 +2,22 @@ package ton.examples_ext;
 
 import processing.core.PApplet;
 import ton.InstrumentInternal;
+import ton.SampleDataSNARE;
+import ton.Sampler;
 import ton.Ton;
 import ton.Wavetable;
 
 public class ExampleInstruments08CustomDSPInstrument extends PApplet {
 
-    private CustomInstrument mInstrument;
+    private CustomInstrumentMultipleOscillators mInstrument;
 
     public void settings() {
         size(640, 480);
     }
 
     public void setup() {
-        mInstrument = new CustomInstrument(0);
+        Ton.replace_instrument(new CustomInstrumentSampler(1));
+        mInstrument = new CustomInstrumentMultipleOscillators(0);
         Ton.replace_instrument(mInstrument);
         Ton.instrument(0);
     }
@@ -25,16 +28,8 @@ public class ExampleInstruments08CustomDSPInstrument extends PApplet {
         ellipse(width * 0.5f, height * 0.5f, Ton.is_playing() ? 100 : 5, Ton.is_playing() ? 100 : 5);
     }
 
-    public void mousePressed() {
-        int mNote = 45 + (int) random(0, 12);
-        Ton.note_on(mNote, 100);
-    }
-
-    public void mouseReleased() {
-        Ton.note_off();
-    }
-
     public void keyPressed() {
+        int mNote = 45 + (int) random(0, 12);
         switch (key) {
             case '0':
                 Ton.instrument(0);
@@ -42,15 +37,49 @@ public class ExampleInstruments08CustomDSPInstrument extends PApplet {
             case '1':
                 Ton.instrument(1);
                 break;
+            case '2':
+                Ton.instrument(2);
+                break;
+        }
+        Ton.note_on(mNote, 100);
+    }
+
+    public void keyReleased() {
+        Ton.note_off();
+    }
+
+    private static class CustomInstrumentSampler extends InstrumentInternal {
+
+        private final Sampler mSampler;
+
+        public CustomInstrumentSampler(int pID) {
+            super(pID);
+            mSampler = new Sampler();
+            mSampler.load(SampleDataSNARE.data);
+            mSampler.loop(false);
+        }
+
+        public float output() {
+            return mSampler.output() * get_amplitude();
+        }
+
+        public void note_off() {
+            mIsPlaying = false;
+        }
+
+        public void note_on(int pNote, int pVelocity) {
+            mIsPlaying = true;
+            set_amplitude(_velocity_to_amplitude(pVelocity));
+            mSampler.rewind();
         }
     }
 
-    private static class CustomInstrument extends InstrumentInternal {
+    private static class CustomInstrumentMultipleOscillators extends InstrumentInternal {
 
         private final Wavetable mLowerVCO;
         private final Wavetable mVeryLowVCO;
 
-        public CustomInstrument(int pID) {
+        public CustomInstrumentMultipleOscillators(int pID) {
             super(pID);
             mLowerVCO = new Wavetable(DEFAULT_WAVETABLE_SIZE);
             mLowerVCO.interpolate_samples(true);
@@ -74,7 +103,6 @@ public class ExampleInstruments08CustomDSPInstrument extends PApplet {
             float mSample = mVCO.output();
             mSample += mLowerVCO.output();
             mSample += mVeryLowVCO.output();
-            mSample *= 0.5f;
             return mADSRAmp * mSample;
         }
     }

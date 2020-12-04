@@ -2,14 +2,15 @@ import ton.*;
 import netP5.*; 
 import oscP5.*; 
 
-CustomInstrument mInstrument;
+CustomInstrumentMultipleOscillators mInstrument;
 
 void settings() {
     size(640, 480);
 }
 
 void setup() {
-    mInstrument = new CustomInstrument(0);
+    Ton.replace_instrument(new CustomInstrumentSampler(1));
+    mInstrument = new CustomInstrumentMultipleOscillators(0);
     Ton.replace_instrument(mInstrument);
     Ton.instrument(0);
 }
@@ -20,16 +21,8 @@ void draw() {
     ellipse(width * 0.5f, height * 0.5f, Ton.is_playing() ? 100 : 5, Ton.is_playing() ? 100 : 5);
 }
 
-void mousePressed() {
-    int mNote = 45 + (int) random(0, 12);
-    Ton.note_on(mNote, 100);
-}
-
-void mouseReleased() {
-    Ton.note_off();
-}
-
 void keyPressed() {
+    int mNote = 45 + (int) random(0, 12);
     switch (key) {
         case '0':
             Ton.instrument(0);
@@ -37,16 +30,50 @@ void keyPressed() {
         case '1':
             Ton.instrument(1);
             break;
+        case '2':
+            Ton.instrument(2);
+            break;
+    }
+    Ton.note_on(mNote, 100);
+}
+
+void keyReleased() {
+    Ton.note_off();
+}
+
+static class CustomInstrumentSampler extends InstrumentInternal {
+    
+final Sampler mSampler;
+    
+CustomInstrumentSampler(int pID) {
+        super(pID);
+        mSampler = new Sampler();
+        mSampler.load(SampleDataSNARE.data);
+        mSampler.loop(false);
+    }
+    
+float output() {
+        return mSampler.output() * get_amplitude();
+    }
+    
+void note_off() {
+        mIsPlaying = false;
+    }
+    
+void note_on(int pNote, int pVelocity) {
+        mIsPlaying = true;
+        set_amplitude(_velocity_to_amplitude(pVelocity));
+        mSampler.rewind();
     }
 }
 
-static class CustomInstrument extends InstrumentInternal {
+static class CustomInstrumentMultipleOscillators extends InstrumentInternal {
     
 final Wavetable mLowerVCO;
     
 final Wavetable mVeryLowVCO;
     
-CustomInstrument(int pID) {
+CustomInstrumentMultipleOscillators(int pID) {
         super(pID);
         mLowerVCO = new Wavetable(DEFAULT_WAVETABLE_SIZE);
         mLowerVCO.interpolate_samples(true);
@@ -69,7 +96,6 @@ float output() {
         float mSample = mVCO.output();
         mSample += mLowerVCO.output();
         mSample += mVeryLowVCO.output();
-        mSample *= 0.5f;
         return mADSRAmp * mSample;
     }
 }

@@ -16,6 +16,7 @@ public class Sampler implements DSPNodeOutput {
     private float mAmplitude;
     private boolean mLoop = false;
     private boolean mDirectionForward;
+    private float mSpeed;
 
     public Sampler() {
         this(0);
@@ -87,10 +88,12 @@ public class Sampler implements DSPNodeOutput {
         }
         convertBytesToFloat32(pData, data(), pLittleEndian);
         rewind();
+        set_speed(mSpeed);
         return this;
     }
 
     public void set_speed(float pSpeed) {
+        mSpeed = pSpeed;
         mDirectionForward = pSpeed > 0;
         set_frequency(PApplet.abs(pSpeed) * mSamplingRate / data().length); /* aka `mStepSize = pSpeed;` */
     }
