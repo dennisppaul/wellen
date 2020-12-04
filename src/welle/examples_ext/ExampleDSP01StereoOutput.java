@@ -4,7 +4,8 @@ import processing.core.PApplet;
 import welle.DSP;
 
 /**
- * this example demonstrates how to create stereo sounds with DSP.
+ * this example demonstrates how to create stereo sounds with DSP. two slightly detuned sine waves are generated and
+ * distributed to the left and right channel.
  */
 
 public class ExampleDSP01StereoOutput extends PApplet {
@@ -45,7 +46,7 @@ public class ExampleDSP01StereoOutput extends PApplet {
             float mLeft = 0.5f * sin(2 * PI * mFreq * mCounter / DSP.get_sample_rate());
             float mRight = 0.5f * sin(2 * PI * mFreq * mDetune * mCounter / DSP.get_sample_rate());
             pSamplesLeft[i] = mLeft * 0.7f + mRight * 0.3f;
-            pSamplesRight[i] = mRight * 0.7f + mLeft * 0.3f;
+            pSamplesRight[i] = mLeft * 0.3f + mRight * 0.7f;
         }
     }
 

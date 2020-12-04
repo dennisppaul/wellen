@@ -43,7 +43,7 @@ public class ExampleInstruments01ADSR extends PApplet {
         mSliderAttack = new Slider();
         mSliderDecay = new Slider();
         mSliderSustain = new Slider();
-        mSliderSustain.horziontal = false;
+        mSliderSustain.horizontal = false;
         mSliderRelease = new Slider();
         updateADSR();
         println(ADSR.ADSR_DIAGRAM);
@@ -148,7 +148,7 @@ public class ExampleInstruments01ADSR extends PApplet {
         float x;
         float y;
         float value;
-        boolean horziontal;
+        boolean horizontal;
         boolean hoover;
         boolean drag;
 
@@ -156,20 +156,20 @@ public class ExampleInstruments01ADSR extends PApplet {
             x = 0;
             y = 0;
             value = 0.5f;
-            horziontal = true;
+            horizontal = true;
             hoover = false;
             drag = false;
         }
 
         void draw(PGraphics g) {
             g.stroke(191);
-            g.line(x, y, x + (horziontal ? size : 0), y + (horziontal ? 0 : size));
+            g.line(x, y, x + (horizontal ? size : 0), y + (horizontal ? 0 : size));
 
             final float mEdgeDiameter = 5;
             g.noStroke();
             g.fill(0);
             g.ellipse(x, y, mEdgeDiameter, mEdgeDiameter);
-            g.ellipse(x + (horziontal ? size : 0), y + (horziontal ? 0 : size), mEdgeDiameter, mEdgeDiameter);
+            g.ellipse(x + (horizontal ? size : 0), y + (horizontal ? 0 : size), mEdgeDiameter, mEdgeDiameter);
 
             g.noStroke();
             g.fill(0);
@@ -177,7 +177,7 @@ public class ExampleInstruments01ADSR extends PApplet {
         }
 
         void update_value(float pX, float pY) {
-            value = (horziontal ? (pX - x) : (pY - y)) / size;
+            value = (horizontal ? (pX - x) : (pY - y)) / size;
             value = min(1, max(0, value));
         }
 
@@ -188,11 +188,11 @@ public class ExampleInstruments01ADSR extends PApplet {
         }
 
         float current_position_x() {
-            return horziontal ? x + size * value : x;
+            return horizontal ? x + size * value : x;
         }
 
         float current_position_y() {
-            return horziontal ? y : y + size * value;
+            return horizontal ? y : y + size * value;
         }
 
         void update(float mouse_x, float mouse_y, boolean mouse_pressed) {
