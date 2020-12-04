@@ -3,6 +3,7 @@ package welle.applications;
 import processing.core.PApplet;
 import processing.core.PVector;
 import welle.Tone;
+import welle.Welle;
 
 import java.util.ArrayList;
 
@@ -53,7 +54,7 @@ public class AppOscJibberish extends PApplet {
             mFreqStep = random(0.02f, 0.04f);
             mAmpStep = random(0.5f, 0.8f);
 
-            Tone.instrument(mID).set_oscillator_type(Tone.OSC_SAWTOOTH);
+            Tone.instrument(mID).set_oscillator_type(Welle.OSC_SAWTOOTH);
             Tone.instrument(mID).set_amplitude(0.0f);
             Tone.instrument(mID).set_frequency(200.0f);
         }

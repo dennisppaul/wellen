@@ -4,6 +4,7 @@ import processing.core.PApplet;
 import welle.Beat;
 import welle.Note;
 import welle.Tone;
+import welle.Welle;
 
 public class AppAlgorithmicComposition00Modulo extends PApplet {
 
@@ -14,7 +15,7 @@ public class AppAlgorithmicComposition00Modulo extends PApplet {
     }
 
     public void setup() {
-        Tone.instrument().set_oscillator_type(Tone.OSC_TRIANGLE);
+        Tone.instrument().set_oscillator_type(Welle.OSC_TRIANGLE);
         Beat.start(this, 120 * 4);
     }
 

@@ -95,8 +95,8 @@ public class DSP implements AudioBufferRenderer {
         if (mInstance == null) {
             mInstance = new DSP(pPApplet, pNumberOutputChannels, pNumberInputChannels);
             mAudioPlayer = new AudioBufferManager(mInstance,
-                    Tone.DEFAULT_SAMPLING_RATE,
-                    Tone.DEFAULT_AUDIOBLOCK_SIZE,
+                    Welle.DEFAULT_SAMPLING_RATE,
+                    Welle.DEFAULT_AUDIOBLOCK_SIZE,
                     pOutputDevice,
                     pNumberOutputChannels,
                     pInputDevice,

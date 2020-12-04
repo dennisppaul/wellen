@@ -38,7 +38,7 @@ public class AudioBufferManager extends Thread {
     private final boolean mRunBuffer = true;
 
     public AudioBufferManager(AudioBufferRenderer pSampleRenderer) {
-        this(pSampleRenderer, Tone.DEFAULT_SAMPLING_RATE, Tone.DEFAULT_AUDIOBLOCK_SIZE, DEFAULT, STEREO, DEFAULT, MONO);
+        this(pSampleRenderer, Welle.DEFAULT_SAMPLING_RATE, Welle.DEFAULT_AUDIOBLOCK_SIZE, DEFAULT, STEREO, DEFAULT, MONO);
     }
 
     public AudioBufferManager(AudioBufferRenderer pSampleRenderer,

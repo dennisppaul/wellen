@@ -7,7 +7,7 @@ void settings() {
 }
 
 void setup() {
-    Tone.dumpMidiOutputDevices();
+    Welle.dumpMidiOutputDevices();
     /* ton enginges can be selected with `start`. in this case MIDI engine is selected with the first argument.
     the second argument selects the MIDI bus. note `start` must be the first call to `Ton` otherwise a default
      enginge is automatically selected. */

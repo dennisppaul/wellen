@@ -23,11 +23,11 @@ public class Sampler implements DSPNodeOutput {
     }
 
     public Sampler(int pWavetableSize) {
-        this(new float[pWavetableSize], Tone.DEFAULT_SAMPLING_RATE);
+        this(new float[pWavetableSize], Welle.DEFAULT_SAMPLING_RATE);
     }
 
     public Sampler(float[] pWavetable) {
-        this(pWavetable, Tone.DEFAULT_SAMPLING_RATE);
+        this(pWavetable, Welle.DEFAULT_SAMPLING_RATE);
     }
 
     public Sampler(float[] pWavetable, float pSamplingRate) {
@@ -43,6 +43,7 @@ public class Sampler implements DSPNodeOutput {
      * from -1.0 to 1.0. from -1.0 to 1.0.
      *
      * @param pData raw byte data ( assuming 4 bytes per sample, 32-bit float )
+     * @return instance with data loaded
      */
     public Sampler load(byte[] pData) {
         load(pData, true);
@@ -55,6 +56,7 @@ public class Sampler implements DSPNodeOutput {
      *
      * @param pData         raw byte data ( assuming 4 bytes per sample, 32-bit float )
      * @param pLittleEndian true if byte data is arranged in little endian order
+     * @return instance with data loaded
      */
     public Sampler load(byte[] pData, boolean pLittleEndian) {
         if (mData == null || mData.length != pData.length / 4) {

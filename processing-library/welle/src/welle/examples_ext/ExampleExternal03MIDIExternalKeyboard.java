@@ -4,6 +4,7 @@ import processing.core.PApplet;
 import welle.EventReceiverMIDI;
 import welle.TonEvent;
 import welle.Tone;
+import welle.Welle;
 
 /**
  * this example demonstrates how to parse MIDI events sent from an external MIDI device ( i.e a MIDI keyboard ) and
@@ -19,7 +20,7 @@ public class ExampleExternal03MIDIExternalKeyboard extends PApplet {
     }
 
     public void setup() {
-        Tone.dumpMidiInputDevices();
+        Welle.dumpMidiInputDevices();
         EventReceiverMIDI.start(this, "Arturia KeyStep 37");
     }
 

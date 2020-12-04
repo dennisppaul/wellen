@@ -2,8 +2,8 @@ package welle.tests;
 
 import processing.core.PApplet;
 import welle.DSP;
-import welle.Tone;
 import welle.Wavetable;
+import welle.Welle;
 
 public class TestWavetableInterpolation extends PApplet {
 
@@ -14,7 +14,7 @@ public class TestWavetableInterpolation extends PApplet {
     }
 
     public void setup() {
-        Tone.dumpAudioInputAndOutputDevices();
+        Welle.dumpAudioInputAndOutputDevices();
         DSP.start(this);
         Wavetable.sine(mWavetable.wavetable());
         mWavetable.set_frequency(172.265625f);
@@ -46,7 +46,7 @@ public class TestWavetableInterpolation extends PApplet {
                 Wavetable.sawtooth(mWavetable.wavetable());
                 break;
             case '4':
-                Wavetable.fill(mWavetable.wavetable(), Tone.OSC_SQUARE); /* alternative way to fill wavetable */
+                Wavetable.fill(mWavetable.wavetable(), Welle.OSC_SQUARE); /* alternative way to fill wavetable */
                 break;
             case '5':
                 randomize(mWavetable.wavetable());

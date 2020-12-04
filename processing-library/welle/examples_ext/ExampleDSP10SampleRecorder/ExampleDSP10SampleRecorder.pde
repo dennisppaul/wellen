@@ -25,7 +25,7 @@ void draw() {
     DSP.draw_buffer(g, width, height);
     fill(0);
     float mSize = mRecording != null ? mRecording.length : mSampler.data().length;
-    mSize /= Tone.DEFAULT_SAMPLING_RATE;
+    mSize /= Welle.DEFAULT_SAMPLING_RATE;
     mSize *= 100.0f;
     ellipse(width * 0.5f, height * 0.5f, mSize + 5, mSize + 5);
 }

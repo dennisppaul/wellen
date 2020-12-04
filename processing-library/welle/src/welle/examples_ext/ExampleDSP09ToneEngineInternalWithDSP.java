@@ -4,6 +4,7 @@ import processing.core.PApplet;
 import welle.DSP;
 import welle.Tone;
 import welle.ToneEngineInternal;
+import welle.Welle;
 
 /**
  * this example demonstrate how to reroute the output of the internal tone engine to `DSP` to e.g apply an effect. in
@@ -24,7 +25,7 @@ public class ExampleDSP09ToneEngineInternalWithDSP extends PApplet {
     }
 
     public void setup() {
-        mToneEngine = Tone.start(Tone.TONE_ENGINE_INTERNAL_WITH_NO_OUTPUT);
+        mToneEngine = Tone.start(Welle.TONE_ENGINE_INTERNAL_WITH_NO_OUTPUT);
         DSP.start(this);
     }
 

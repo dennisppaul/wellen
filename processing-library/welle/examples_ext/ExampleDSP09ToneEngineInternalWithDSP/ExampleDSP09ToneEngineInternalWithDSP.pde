@@ -19,7 +19,7 @@ void settings() {
 }
 
 void setup() {
-    mToneEngine = Tone.start(Tone.TONE_ENGINE_INTERNAL_WITH_NO_OUTPUT);
+    mToneEngine = Tone.start(Welle.TONE_ENGINE_INTERNAL_WITH_NO_OUTPUT);
     DSP.start(this);
 }
 

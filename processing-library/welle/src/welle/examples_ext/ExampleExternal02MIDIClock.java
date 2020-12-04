@@ -3,6 +3,7 @@ package welle.examples_ext;
 import processing.core.PApplet;
 import welle.BeatMIDI;
 import welle.Tone;
+import welle.Welle;
 
 /**
  * this example demonstrates how to use a beat triggered by an external MIDI beat clock.
@@ -17,7 +18,7 @@ public class ExampleExternal02MIDIClock extends PApplet {
     }
 
     public void setup() {
-        Tone.dumpMidiInputDevices();
+        Welle.dumpMidiInputDevices();
         mBeatMIDI = BeatMIDI.start(this, "Arturia KeyStep 37");
     }
 

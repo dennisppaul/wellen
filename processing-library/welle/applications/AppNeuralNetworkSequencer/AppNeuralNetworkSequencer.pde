@@ -13,7 +13,7 @@ void settings() {
 }
 
 void setup() {
-    Tone.instrument().set_oscillator_type(Tone.OSC_SINE);
+    Tone.instrument().set_oscillator_type(Welle.OSC_SINE);
     mRoot = node(width / 2.0f, height / 2.0f, mNodes.size());
     Beat.start(this, 120 * 2);
 }

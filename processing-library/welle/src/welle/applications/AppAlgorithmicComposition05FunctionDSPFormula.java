@@ -2,7 +2,7 @@ package welle.applications;
 
 import processing.core.PApplet;
 import welle.DSP;
-import welle.Tone;
+import welle.Welle;
 
 public class AppAlgorithmicComposition05FunctionDSPFormula extends PApplet {
 
@@ -15,7 +15,7 @@ public class AppAlgorithmicComposition05FunctionDSPFormula extends PApplet {
     }
 
     public void setup() {
-        Tone.dumpAudioInputAndOutputDevices();
+        Welle.dumpAudioInputAndOutputDevices();
         DSP.start(this);
     }
 

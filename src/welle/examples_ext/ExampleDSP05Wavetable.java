@@ -2,8 +2,8 @@ package welle.examples_ext;
 
 import processing.core.PApplet;
 import welle.DSP;
-import welle.Tone;
 import welle.Wavetable;
+import welle.Welle;
 
 /**
  * this example demonstrates how to use a wavetable ( a chunk of memory ) and play it back at different frequencies and
@@ -19,7 +19,7 @@ public class ExampleDSP05Wavetable extends PApplet {
 
     public void setup() {
         Wavetable.sine(mWavetable.wavetable());
-        Tone.dumpAudioInputAndOutputDevices();
+        Welle.dumpAudioInputAndOutputDevices();
         DSP.start(this);
     }
 

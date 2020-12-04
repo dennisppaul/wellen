@@ -8,7 +8,7 @@ void settings() {
 
 void setup() {
     Tone.instrument().enable_LPF(true);
-    Tone.instrument().set_oscillator_type(Tone.OSC_SAWTOOTH);
+    Tone.instrument().set_oscillator_type(Welle.OSC_SAWTOOTH);
 }
 
 void draw() {

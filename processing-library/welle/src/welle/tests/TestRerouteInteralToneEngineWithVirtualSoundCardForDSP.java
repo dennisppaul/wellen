@@ -3,6 +3,7 @@ package welle.tests;
 import processing.core.PApplet;
 import welle.DSP;
 import welle.Tone;
+import welle.Welle;
 
 /**
  * @deprecated do not use this method. it is just a proof of concept. depending on system configurations the output can
@@ -26,10 +27,10 @@ public class TestRerouteInteralToneEngineWithVirtualSoundCardForDSP extends PApp
          * can be used as an input for `DSP`. this presents a pipeline to apply e.g filters and effects ( e.g an echo )
          * to internally generated sounds.
          */
-        Tone.dumpAudioInputAndOutputDevices();
+        Welle.dumpAudioInputAndOutputDevices();
         final int OUTPUT_BUILT_IN_OUTPUT = 2;
         final int INPUT_BACKHOLE_2CH = 3;
-        Tone.start(Tone.TONE_ENGINE_INTERNAL, INPUT_BACKHOLE_2CH, 2);
+        Tone.start(Welle.TONE_ENGINE_INTERNAL, INPUT_BACKHOLE_2CH, 2);
         DSP.start(this, OUTPUT_BUILT_IN_OUTPUT, 1, INPUT_BACKHOLE_2CH, 1);
     }
 

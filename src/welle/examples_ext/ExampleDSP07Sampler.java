@@ -4,7 +4,7 @@ import processing.core.PApplet;
 import welle.DSP;
 import welle.SampleDataSNARE;
 import welle.Sampler;
-import welle.Tone;
+import welle.Welle;
 
 /**
  * this example demonstrates how to use a sampler ( a pre-recorded chunk of memory ) and play it at different speeds and
@@ -29,7 +29,7 @@ public class ExampleDSP07Sampler extends PApplet {
         mSampler.load(mData);
         mSampler.loop(false);
 
-        Tone.dumpAudioInputAndOutputDevices();
+        Welle.dumpAudioInputAndOutputDevices();
         DSP.start(this);
     }
 

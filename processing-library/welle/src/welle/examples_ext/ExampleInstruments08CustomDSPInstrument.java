@@ -7,6 +7,7 @@ import welle.SampleDataSNARE;
 import welle.Sampler;
 import welle.Tone;
 import welle.Wavetable;
+import welle.Welle;
 
 /**
  * this example demonstrates how to implement custom instruments by extending default internal instruments. an in-depth
@@ -95,9 +96,9 @@ public class ExampleInstruments08CustomDSPInstrument extends PApplet {
             mLowerVCO.interpolate_samples(true);
             mVeryLowVCO = new Wavetable(DEFAULT_WAVETABLE_SIZE);
             mVeryLowVCO.interpolate_samples(true);
-            Wavetable.fill(mVCO.wavetable(), Tone.OSC_TRIANGLE);
-            Wavetable.fill(mLowerVCO.wavetable(), Tone.OSC_SINE);
-            Wavetable.fill(mVeryLowVCO.wavetable(), Tone.OSC_SQUARE);
+            Wavetable.fill(mVCO.wavetable(), Welle.OSC_TRIANGLE);
+            Wavetable.fill(mLowerVCO.wavetable(), Welle.OSC_SINE);
+            Wavetable.fill(mVeryLowVCO.wavetable(), Welle.OSC_SQUARE);
         }
 
         public float output() {
@@ -126,7 +127,7 @@ public class ExampleInstruments08CustomDSPInstrument extends PApplet {
         public CustomInstrumentKickDrum(int pID) {
             super(pID);
 
-            set_oscillator_type(Tone.OSC_SINE);
+            set_oscillator_type(Welle.OSC_SINE);
             set_amplitude(0.5f);
             set_frequency(90);
 

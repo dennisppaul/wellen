@@ -19,15 +19,15 @@ public class InstrumentInternal extends Instrument implements DSPNodeOutput {
         super(pID);
         mSamplingRate = pSamplingRate;
         mADSR = new ADSR(pSamplingRate);
-        mADSR.set_attack(Tone.DEFAULT_ATTACK);
-        mADSR.set_decay(Tone.DEFAULT_DECAY);
-        mADSR.set_sustain(Tone.DEFAULT_SUSTAIN);
-        mADSR.set_release(Tone.DEFAULT_RELEASE);
+        mADSR.set_attack(Welle.DEFAULT_ATTACK);
+        mADSR.set_decay(Welle.DEFAULT_DECAY);
+        mADSR.set_sustain(Welle.DEFAULT_SUSTAIN);
+        mADSR.set_release(Welle.DEFAULT_RELEASE);
         enable_ADSR(true);
 
         mVCO = new Wavetable(pWavetableSize, pSamplingRate);
         mVCO.interpolate_samples(true);
-        set_oscillator_type(Tone.OSC_SINE);
+        set_oscillator_type(Welle.OSC_SINE);
         set_amplitude(0.0f);
         set_frequency(DEFAULT_FREQUENCY);
 
@@ -57,7 +57,7 @@ public class InstrumentInternal extends Instrument implements DSPNodeOutput {
     }
 
     public InstrumentInternal(int pID) {
-        this(pID, Tone.DEFAULT_SAMPLING_RATE, DEFAULT_WAVETABLE_SIZE);
+        this(pID, Welle.DEFAULT_SAMPLING_RATE, DEFAULT_WAVETABLE_SIZE);
     }
 
     @Override
@@ -73,7 +73,7 @@ public class InstrumentInternal extends Instrument implements DSPNodeOutput {
         if (mEnableLPF) {
             mSample = mLPF.process(mSample);
         }
-        mSample = Tone.clamp(mSample, -1.0f, 1.0f);
+        mSample = Welle.clamp(mSample, -1.0f, 1.0f);
         return mADSRAmp * mSample;
     }
 

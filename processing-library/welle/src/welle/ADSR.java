@@ -42,10 +42,10 @@ public class ADSR implements DSPNodeOutput {
     private final int mSamplingRate;
     private final float FADE_TO_ZERO_RATE_SEC;
     private final boolean USE_FADE_TO_ZERO_STATE = false;
-    private float mAttack = Tone.DEFAULT_ATTACK;
-    private float mDecay = Tone.DEFAULT_DECAY;
-    private float mSustain = Tone.DEFAULT_SUSTAIN;
-    private float mRelease = Tone.DEFAULT_RELEASE;
+    private float mAttack = Welle.DEFAULT_ATTACK;
+    private float mDecay = Welle.DEFAULT_DECAY;
+    private float mSustain = Welle.DEFAULT_SUSTAIN;
+    private float mRelease = Welle.DEFAULT_RELEASE;
     private ENVELOPE_STATE mState;
     private float mAmp = 0.0f;
     private float mDelta = 0.0f;
@@ -57,7 +57,7 @@ public class ADSR implements DSPNodeOutput {
     }
 
     public ADSR() {
-        this(Tone.DEFAULT_SAMPLING_RATE);
+        this(Welle.DEFAULT_SAMPLING_RATE);
     }
 
     private enum ENVELOPE_STATE {

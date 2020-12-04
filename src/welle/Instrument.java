@@ -2,10 +2,10 @@ package welle;
 
 public abstract class Instrument {
 
-    protected float mAttack = Tone.DEFAULT_ATTACK;
-    protected float mDecay = Tone.DEFAULT_DECAY;
-    protected float mSustain = Tone.DEFAULT_SUSTAIN;
-    protected float mRelease = Tone.DEFAULT_RELEASE;
+    protected float mAttack = Welle.DEFAULT_ATTACK;
+    protected float mDecay = Welle.DEFAULT_DECAY;
+    protected float mSustain = Welle.DEFAULT_SUSTAIN;
+    protected float mRelease = Welle.DEFAULT_RELEASE;
     protected float mPan = 0.0f;
     protected boolean mEnableFrequencyLFO = false;
     protected boolean mEnableAmplitudeLFO = false;
@@ -141,10 +141,10 @@ public abstract class Instrument {
     }
 
     protected float note_to_frequency(int pNote) {
-        return Note.note_to_frequency(Tone.clamp127(pNote));
+        return Note.note_to_frequency(Welle.clamp127(pNote));
     }
 
     protected float velocity_to_amplitude(int pVelocity) {
-        return Tone.clamp127(pVelocity) / 127.0f;
+        return Welle.clamp127(pVelocity) / 127.0f;
     }
 }

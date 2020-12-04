@@ -4,7 +4,7 @@ import processing.core.PApplet;
 import welle.DSP;
 import welle.SampleDataSNARE;
 import welle.Sampler;
-import welle.Tone;
+import welle.Welle;
 
 /**
  * this example demonstrates how to record the input of `DSP` into a float array which is then played back via
@@ -35,7 +35,7 @@ public class ExampleDSP10SampleRecorder extends PApplet {
         DSP.draw_buffer(g, width, height);
         fill(0);
         float mSize = mRecording != null ? mRecording.length : mSampler.data().length;
-        mSize /= Tone.DEFAULT_SAMPLING_RATE;
+        mSize /= Welle.DEFAULT_SAMPLING_RATE;
         mSize *= 100.0f;
         ellipse(width * 0.5f, height * 0.5f, mSize + 5, mSize + 5);
     }

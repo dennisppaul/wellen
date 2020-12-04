@@ -5,7 +5,7 @@ import processing.core.PVector;
 import welle.DSP;
 import welle.SampleDataSNARE;
 import welle.Sampler;
-import welle.Tone;
+import welle.Welle;
 
 import java.util.ArrayList;
 
@@ -27,7 +27,7 @@ public class AppAlgorithmicComposition02VisualModel extends PApplet {
             mControllers.add(c);
         }
 
-        Tone.dumpAudioInputAndOutputDevices();
+        Welle.dumpAudioInputAndOutputDevices();
         DSP.start(this);
     }
 
@@ -88,7 +88,7 @@ public class AppAlgorithmicComposition02VisualModel extends PApplet {
                 pOutputSamples[i] += c.process();
             }
             pOutputSamples[i] /= mControllers.size();
-            pOutputSamples[i] = Tone.clamp(pOutputSamples[i], -1.0f, 1.0f);
+            pOutputSamples[i] = Welle.clamp(pOutputSamples[i], -1.0f, 1.0f);
         }
     }
 

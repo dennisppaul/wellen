@@ -14,7 +14,7 @@ void setup() {
     mSampler = new Sampler();
     mSampler.load(mData);
     mSampler.loop(false);
-    Tone.dumpAudioInputAndOutputDevices();
+    Welle.dumpAudioInputAndOutputDevices();
     DSP.start(this);
 }
 

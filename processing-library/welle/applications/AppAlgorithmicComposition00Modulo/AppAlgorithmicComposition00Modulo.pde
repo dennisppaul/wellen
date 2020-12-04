@@ -9,7 +9,7 @@ void settings() {
 }
 
 void setup() {
-    Tone.instrument().set_oscillator_type(Tone.OSC_TRIANGLE);
+    Tone.instrument().set_oscillator_type(Welle.OSC_TRIANGLE);
     Beat.start(this, 120 * 4);
 }
 

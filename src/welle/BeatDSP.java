@@ -14,7 +14,7 @@ public class BeatDSP implements DSPNodeInput {
     private float mInterval;
 
     public BeatDSP(Object pListener) {
-        this(pListener, Tone.DEFAULT_SAMPLING_RATE);
+        this(pListener, Welle.DEFAULT_SAMPLING_RATE);
     }
 
     public BeatDSP(Object pListener, int pSamplingRate) {
@@ -60,6 +60,6 @@ public class BeatDSP implements DSPNodeInput {
     }
 
     public static BeatDSP start(Object pListener) {
-        return new BeatDSP(pListener, Tone.DEFAULT_SAMPLING_RATE);
+        return new BeatDSP(pListener, Welle.DEFAULT_SAMPLING_RATE);
     }
 }

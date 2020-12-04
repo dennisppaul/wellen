@@ -3,13 +3,13 @@ package welle.tests;
 import processing.core.PApplet;
 import welle.DSP;
 import welle.LowPassFilter;
-import welle.Tone;
 import welle.Wavetable;
+import welle.Welle;
 
 public class TestDSPNodeProcessFilter extends PApplet {
 
     private final Wavetable mWavetable = new Wavetable(512);
-    private final LowPassFilter mFilter = new LowPassFilter(Tone.DEFAULT_SAMPLING_RATE);
+    private final LowPassFilter mFilter = new LowPassFilter(Welle.DEFAULT_SAMPLING_RATE);
 
     public void settings() {
         size(640, 480);
@@ -19,7 +19,7 @@ public class TestDSPNodeProcessFilter extends PApplet {
         Wavetable.sawtooth(mWavetable.wavetable());
         mWavetable.set_frequency(172.265625f);
         mWavetable.set_amplitude(0.55f);
-        Tone.dumpAudioInputAndOutputDevices();
+        Welle.dumpAudioInputAndOutputDevices();
         DSP.start(this);
     }
 

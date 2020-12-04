@@ -2,6 +2,7 @@ package welle.examples;
 
 import processing.core.PApplet;
 import welle.Tone;
+import welle.Welle;
 
 /**
  * this example demonstrates how to use the MIDI tone engine to control a MIDI instrument ( i.e sending MIDI events to a
@@ -14,7 +15,7 @@ public class ExampleBasics06MIDI extends PApplet {
     }
 
     public void setup() {
-        Tone.dumpMidiOutputDevices();
+        Welle.dumpMidiOutputDevices();
         /* ton enginges can be selected with `start`. in this case MIDI engine is selected with the first argument.
         the second argument selects the MIDI bus. note `start` must be the first call to `Ton` otherwise a default
          enginge is automatically selected. */

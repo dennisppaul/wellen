@@ -3,14 +3,14 @@ package welle.tests;
 import processing.core.PApplet;
 import welle.DSP;
 import welle.DSPNodeProcess;
-import welle.Tone;
+import welle.Welle;
 
 public class TestDSPLowPassFilters extends PApplet {
 
     private final SecondOrderLowPassFilter mLPFilter = new SecondOrderLowPassFilter();
     private final ButterworthLowPassFilter mButterworthLowPassFilter = new ButterworthLowPassFilter();
     private final NaiveLowPassFilter mNaiveLowPassFilter = new NaiveLowPassFilter();
-    private final float mFreq = 2.0f * Tone.DEFAULT_SAMPLING_RATE / Tone.DEFAULT_AUDIOBLOCK_SIZE;
+    private final float mFreq = 2.0f * Welle.DEFAULT_SAMPLING_RATE / Welle.DEFAULT_AUDIOBLOCK_SIZE;
     private float mCounter = 0;
     private int mFilterType;
 
@@ -20,7 +20,7 @@ public class TestDSPLowPassFilters extends PApplet {
 
     public void setup() {
         mLPFilter.calculate_coeffs(2.0f, 2000);
-        Tone.dumpAudioInputAndOutputDevices();
+        Welle.dumpAudioInputAndOutputDevices();
         DSP.start(this);
     }
 
@@ -110,7 +110,7 @@ public class TestDSPLowPassFilters extends PApplet {
         tp_coeffs m_coeffs = new tp_coeffs();
 
         public tp_coeffs calculate_coeffs(int fc) {
-            final int fs = Tone.DEFAULT_SAMPLING_RATE;
+            final int fs = Welle.DEFAULT_SAMPLING_RATE;
             float c = 1.0f / (tan(filter_constants.pi * fc / fs));
             m_coeffs.a0 = 1.0f / (1.0f + filter_constants.sqrt2 * c + pow(c, 2.0f));
             m_coeffs.a1 = 2.0f * m_coeffs.a0;
@@ -148,7 +148,7 @@ public class TestDSPLowPassFilters extends PApplet {
         tp_coeffs m_coeffs = new tp_coeffs();
 
         public tp_coeffs calculate_coeffs(float Q, int fc) {
-            final int fs = Tone.DEFAULT_SAMPLING_RATE;
+            final int fs = Welle.DEFAULT_SAMPLING_RATE;
             float w = 2.0f * filter_constants.pi * fc / fs;
             float d = 1.0f / Q;
             float b = 0.5f * (1.0f - (d / 2) * sin(w)) / (1.0f + (d / 2.0f) * sin(w));

@@ -5,6 +5,7 @@ import welle.Beat;
 import welle.Note;
 import welle.Scale;
 import welle.Tone;
+import welle.Welle;
 
 public class AppAlgorithmicComposition03Grammar extends PApplet {
 
@@ -31,8 +32,8 @@ public class AppAlgorithmicComposition03Grammar extends PApplet {
 
     public void setup() {
         textFont(createFont("Helvetica-Bold", 10));
-        Tone.instrument(1).set_oscillator_type(Tone.OSC_SAWTOOTH);
-        Tone.instrument(2).set_oscillator_type(Tone.OSC_SINE);
+        Tone.instrument(1).set_oscillator_type(Welle.OSC_SAWTOOTH);
+        Tone.instrument(2).set_oscillator_type(Welle.OSC_SINE);
         Beat.start(this, 240);
     }
 

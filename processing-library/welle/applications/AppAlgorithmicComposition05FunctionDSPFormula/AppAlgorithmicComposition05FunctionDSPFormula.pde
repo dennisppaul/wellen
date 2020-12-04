@@ -13,7 +13,7 @@ void settings() {
 }
 
 void setup() {
-    Tone.dumpAudioInputAndOutputDevices();
+    Welle.dumpAudioInputAndOutputDevices();
     DSP.start(this);
 }
 

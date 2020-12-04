@@ -3,7 +3,7 @@ package welle.examples_ext;
 import processing.core.PApplet;
 import welle.EventReceiverMIDI;
 import welle.EventReceiverOSC;
-import welle.Tone;
+import welle.Welle;
 
 /**
  * this example demonstrates how to receive MIDI and OSC events in the `event_receive` method.
@@ -27,7 +27,7 @@ public class ExampleExternal01ReceiveMIDIandOSC extends PApplet {
     public void setup() {
         textFont(createFont("Roboto Mono", 11));
         EventReceiverOSC.start(this);
-        Tone.dumpMidiInputDevices();
+        Welle.dumpMidiInputDevices();
         EventReceiverMIDI.start(this, "Bus 1");
     }
 

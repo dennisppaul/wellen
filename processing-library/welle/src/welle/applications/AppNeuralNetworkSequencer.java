@@ -6,6 +6,7 @@ import welle.Beat;
 import welle.Note;
 import welle.Scale;
 import welle.Tone;
+import welle.Welle;
 
 import java.util.ArrayList;
 
@@ -20,7 +21,7 @@ public class AppNeuralNetworkSequencer extends PApplet {
     }
 
     public void setup() {
-        Tone.instrument().set_oscillator_type(Tone.OSC_SINE);
+        Tone.instrument().set_oscillator_type(Welle.OSC_SINE);
 
         mRoot = node(width / 2.0f, height / 2.0f, mNodes.size());
         Beat.start(this, 120 * 2);

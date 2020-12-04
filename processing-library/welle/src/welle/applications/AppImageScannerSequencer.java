@@ -9,6 +9,7 @@ import welle.Instrument;
 import welle.Note;
 import welle.Scale;
 import welle.Tone;
+import welle.Welle;
 
 import java.util.ArrayList;
 
@@ -41,7 +42,7 @@ public class AppImageScannerSequencer extends PApplet {
         mInstrument.set_decay(0.1f);
         mInstrument.set_sustain(0.0f);
         mInstrument.set_release(0.01f);
-        mInstrument.set_oscillator_type(Tone.OSC_SINE);
+        mInstrument.set_oscillator_type(Welle.OSC_SINE);
 
         final int mSpacing = 36;
         final int NUMBER_OF_SAMPLERS = 16;

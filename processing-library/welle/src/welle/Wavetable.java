@@ -18,7 +18,7 @@ public class Wavetable implements DSPNodeOutput {
     private float mInterpolateFrequencyDelta;
 
     public Wavetable(int pWavetableSize) {
-        this(pWavetableSize, Tone.DEFAULT_SAMPLING_RATE);
+        this(pWavetableSize, Welle.DEFAULT_SAMPLING_RATE);
     }
 
     public Wavetable(int pWavetableSize, int pSamplingRate) {
@@ -98,19 +98,19 @@ public class Wavetable implements DSPNodeOutput {
 
     public static void fill(float[] pWavetable, int pWavetableType) {
         switch (pWavetableType) {
-            case Tone.OSC_SINE:
+            case Welle.OSC_SINE:
                 sine(pWavetable);
                 break;
-            case Tone.OSC_TRIANGLE:
+            case Welle.OSC_TRIANGLE:
                 triangle(pWavetable);
                 break;
-            case Tone.OSC_SAWTOOTH:
+            case Welle.OSC_SAWTOOTH:
                 sawtooth(pWavetable);
                 break;
-            case Tone.OSC_SQUARE:
+            case Welle.OSC_SQUARE:
                 square(pWavetable);
                 break;
-            case Tone.OSC_NOISE:
+            case Welle.OSC_NOISE:
                 noise(pWavetable);
                 break;
         }

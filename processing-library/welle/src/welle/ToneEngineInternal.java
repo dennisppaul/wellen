@@ -23,8 +23,8 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
 
         if (pOutputChannels > 0) {
             mAudioPlayer = new AudioBufferManager(this,
-                    Tone.DEFAULT_SAMPLING_RATE,
-                    Tone.DEFAULT_AUDIOBLOCK_SIZE,
+                    Welle.DEFAULT_SAMPLING_RATE,
+                    Welle.DEFAULT_AUDIOBLOCK_SIZE,
                     pOutputDeviceID,
                     pOutputChannels,
                     0,
@@ -35,7 +35,7 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
     }
 
     public ToneEngineInternal() {
-        this(Tone.DEFAULT_SAMPLING_RATE, Tone.DEFAULT_AUDIO_DEVICE, 2);
+        this(Welle.DEFAULT_SAMPLING_RATE, Welle.DEFAULT_AUDIO_DEVICE, 2);
     }
 
     @Override
@@ -149,7 +149,7 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
     }
 
     public static ToneEngineInternal no_output() {
-        return new ToneEngineInternal(Tone.DEFAULT_SAMPLING_RATE, Tone.DEFAULT_AUDIO_DEVICE, Tone.NO_CHANNELS);
+        return new ToneEngineInternal(Welle.DEFAULT_SAMPLING_RATE, Welle.DEFAULT_AUDIO_DEVICE, Welle.NO_CHANNELS);
     }
 
     public interface AudioOutputCallback {

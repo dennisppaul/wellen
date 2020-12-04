@@ -4,7 +4,7 @@ import oscP5.*;
 
 final Wavetable mWavetable = new Wavetable(512);
 
-final LowPassFilter mFilter = new LowPassFilter(Tone.DEFAULT_SAMPLING_RATE);
+final LowPassFilter mFilter = new LowPassFilter(Welle.DEFAULT_SAMPLING_RATE);
 
 void settings() {
     size(640, 480);
@@ -12,9 +12,9 @@ void settings() {
 
 void setup() {
     Wavetable.sawtooth(mWavetable.wavetable());
-    mWavetable.set_frequency(2.0f * Tone.DEFAULT_SAMPLING_RATE / Tone.DEFAULT_AUDIOBLOCK_SIZE);
+    mWavetable.set_frequency(2.0f * Welle.DEFAULT_SAMPLING_RATE / Welle.DEFAULT_AUDIOBLOCK_SIZE);
     mWavetable.set_amplitude(0.5f);
-    Tone.dumpAudioInputAndOutputDevices();
+    Welle.dumpAudioInputAndOutputDevices();
     DSP.start(this);
 }
 

@@ -29,7 +29,7 @@ public class MidiIn implements Receiver {
         } else {
             System.err.println("+++ Error @ MidiIn / could not find midi device: " + pMidiOutputDevice);
             System.err.println("+++ availabel inputs are: ");
-            Tone.dumpMidiInputDevices();
+            Welle.dumpMidiInputDevices();
         }
         mListener = new ArrayList<>();
     }

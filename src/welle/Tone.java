@@ -1,31 +1,9 @@
 package welle;
 
-import processing.core.PApplet;
-
-import javax.sound.sampled.AudioSystem;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 
 public abstract class Tone {
-
-    public static final int OSC_SINE = 0;
-    public static final int OSC_TRIANGLE = 1;
-    public static final int OSC_SAWTOOTH = 2;
-    public static final int OSC_SQUARE = 3;
-    public static final int OSC_NOISE = 4;
-    public static final int NUMBER_OF_OSCILLATORS = 5;
-    public static final int TONE_ENGINE_INTERNAL_WITH_NO_OUTPUT = -2;
-    public static final String TONE_ENGINE_INTERNAL = "internal";
-    public static final String TONE_ENGINE_MIDI = "midi";
-    public static final String TONE_ENGINE_OSC = "osc";
-    public static final float DEFAULT_ATTACK = 0.005f;
-    public static final float DEFAULT_DECAY = 0.01f;
-    public static final float DEFAULT_RELEASE = 0.075f;
-    public static final float DEFAULT_SUSTAIN = 0.5f;
-    public static final int DEFAULT_SAMPLING_RATE = 44100;
-    public static final int DEFAULT_AUDIOBLOCK_SIZE = 512;
-    public static final int DEFAULT_AUDIO_DEVICE = -1;
-    public static final int NO_CHANNELS = 0;
 
     private static ToneEngine instance = null;
 
@@ -45,11 +23,11 @@ public abstract class Tone {
             printAlreadyStartedWarning();
             return;
         }
-        if (pName.equalsIgnoreCase(TONE_ENGINE_INTERNAL)) {
+        if (pName.equalsIgnoreCase(Welle.TONE_ENGINE_INTERNAL)) {
             /* specify output channels */
             // ToneEngineInternal(int pSamplingRate, int pOutputDeviceID, int pOutputChannels)
-            instance = new ToneEngineInternal(DEFAULT_SAMPLING_RATE, DEFAULT_AUDIO_DEVICE, pParameter);
-        } else if (pName.equalsIgnoreCase(TONE_ENGINE_MIDI)) {
+            instance = new ToneEngineInternal(Welle.DEFAULT_SAMPLING_RATE, Welle.DEFAULT_AUDIO_DEVICE, pParameter);
+        } else if (pName.equalsIgnoreCase(Welle.TONE_ENGINE_MIDI)) {
             /* specify output device ID */
             instance = new ToneEngineMIDI(pParameter);
         } else {
@@ -62,10 +40,10 @@ public abstract class Tone {
             printAlreadyStartedWarning();
             return;
         }
-        if (pName.equalsIgnoreCase(TONE_ENGINE_INTERNAL)) {
+        if (pName.equalsIgnoreCase(Welle.TONE_ENGINE_INTERNAL)) {
             /* specify output device + output channels */
             // ToneEngineInternal(int pSamplingRate, int pOutputDeviceID, int pOutputChannels)
-            instance = new ToneEngineInternal(DEFAULT_SAMPLING_RATE, pParameterA, pParameterB);
+            instance = new ToneEngineInternal(Welle.DEFAULT_SAMPLING_RATE, pParameterA, pParameterB);
         } else {
             instance = ToneEngine.createEngine(pName);
         }
@@ -76,7 +54,7 @@ public abstract class Tone {
             printAlreadyStartedWarning();
             return;
         }
-        if (pName.equalsIgnoreCase(TONE_ENGINE_INTERNAL)) {
+        if (pName.equalsIgnoreCase(Welle.TONE_ENGINE_INTERNAL)) {
             /* specify sampling rate + output device + output channels */
             // ToneEngineInternal(int pSamplingRate, int pOutputDeviceID, int pOutputChannels)
             instance = new ToneEngineInternal(pParameterA, pParameterB, pParameterC);
@@ -92,10 +70,10 @@ public abstract class Tone {
                 return (ToneEngineInternal) instance;
             }
         }
-        if (pConfiguration == TONE_ENGINE_INTERNAL_WITH_NO_OUTPUT) {
-            ToneEngineInternal mInstance = new ToneEngineInternal(DEFAULT_SAMPLING_RATE,
-                    DEFAULT_AUDIO_DEVICE,
-                    NO_CHANNELS);
+        if (pConfiguration == Welle.TONE_ENGINE_INTERNAL_WITH_NO_OUTPUT) {
+            ToneEngineInternal mInstance = new ToneEngineInternal(Welle.DEFAULT_SAMPLING_RATE,
+                    Welle.DEFAULT_AUDIO_DEVICE,
+                    Welle.NO_CHANNELS);
             instance = mInstance;
             return mInstance;
         } else {
@@ -153,10 +131,6 @@ public abstract class Tone {
         return instance().instruments();
     }
 
-    public static int clamp127(int pValue) {
-        return Math.max(0, Math.min(127, pValue));
-    }
-
     public static <T extends Instrument> T create_instrument(Class<T> pInstrumentClass, int pID) {
         //@TODO(maybe move this to ToneEngine)
         T mInstrument;
@@ -180,59 +154,6 @@ public abstract class Tone {
         return mInstrument;
     }
 
-    public static void dumpMidiOutputDevices() {
-        final String[] mOutputNames = MidiOut.availableOutputs();
-        System.out.println("+-------------------------------------------------------+");
-        System.out.println("+ MIDI OUTPUT DEVICES ( aka Ports or Buses )");
-        System.out.println("+-------------------------------------------------------+");
-        for (String mOutputName : mOutputNames) {
-            System.out.println("+ " + mOutputName);
-        }
-        System.out.println("+-------------------------------------------------------+");
-        System.out.println();
-    }
-
-    public static void dumpMidiInputDevices() {
-        final String[] mInputNames = MidiIn.availableInputs();
-        System.out.println("+-------------------------------------------------------+");
-        System.out.println("+ MIDI INPUT DEVICES");
-        System.out.println("+-------------------------------------------------------+");
-        for (String mOutputName : mInputNames) {
-            System.out.println("+ " + mOutputName);
-        }
-        System.out.println("+-------------------------------------------------------+");
-        System.out.println();
-    }
-
-    public static void dumpAudioInputAndOutputDevices() {
-        System.out.println("+-------------------------------------------------------+");
-        System.out.println("+ AUDIO DEVICES ( Audio System )");
-        System.out.println("+-------------------------------------------------------+");
-        for (int i = 0; i < AudioSystem.getMixerInfo().length; i++) {
-            System.out.println("+ " + i + "\t: " + AudioSystem.getMixerInfo()[i].getName());
-        }
-        System.out.println("+-------------------------------------------------------+");
-        System.out.println();
-    }
-
-    public static int constrain(int value, int min, int max) {
-        if (value > max) {
-            value = max;
-        }
-        if (value < min) {
-            value = min;
-        }
-        return value;
-    }
-
-    public static void run(Class<? extends PApplet> T, String... pArgs) {
-        String[] mArgs;
-        mArgs = PApplet.concat(new String[]{"--sketch-path=" + System.getProperty("user.dir") + "/simulator"},
-                pArgs);
-        mArgs = PApplet.concat(mArgs, new String[]{T.getName()});
-        PApplet.main(mArgs);
-    }
-
     public static ToneEngine instance() {
         if (instance == null) {
             instance = ToneEngine.createEngine();
@@ -242,10 +163,6 @@ public abstract class Tone {
 
     public static void set_engine(ToneEngine pEngine) {
         instance = pEngine;
-    }
-
-    public static float clamp(float pValue, float pMin, float pMax) {
-        return Math.max(pMin, Math.min(pMax, pValue));
     }
 
     private static void printAlreadyStartedWarning() {

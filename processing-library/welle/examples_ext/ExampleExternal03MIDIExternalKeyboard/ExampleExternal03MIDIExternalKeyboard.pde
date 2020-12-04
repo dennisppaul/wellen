@@ -11,7 +11,7 @@ void settings() {
 }
 
 void setup() {
-    Tone.dumpMidiInputDevices();
+    Welle.dumpMidiInputDevices();
     EventReceiverMIDI.start(this, "Arturia KeyStep 37");
 }
 

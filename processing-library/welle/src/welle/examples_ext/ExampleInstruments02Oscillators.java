@@ -5,6 +5,7 @@ import welle.Instrument;
 import welle.Note;
 import welle.Scale;
 import welle.Tone;
+import welle.Welle;
 
 /**
  * this example shows how to use different oscillators in an instrument.
@@ -46,19 +47,19 @@ public class ExampleInstruments02Oscillators extends PApplet {
             mIsPlaying = !mIsPlaying;
         }
         if (key == '1') {
-            mInstrument.set_oscillator_type(Tone.OSC_SINE);
+            mInstrument.set_oscillator_type(Welle.OSC_SINE);
         }
         if (key == '2') {
-            mInstrument.set_oscillator_type(Tone.OSC_TRIANGLE);
+            mInstrument.set_oscillator_type(Welle.OSC_TRIANGLE);
         }
         if (key == '3') {
-            mInstrument.set_oscillator_type(Tone.OSC_SAWTOOTH);
+            mInstrument.set_oscillator_type(Welle.OSC_SAWTOOTH);
         }
         if (key == '4') {
-            mInstrument.set_oscillator_type(Tone.OSC_SQUARE);
+            mInstrument.set_oscillator_type(Welle.OSC_SQUARE);
         }
         if (key == '5') {
-            mInstrument.set_oscillator_type(Tone.OSC_NOISE);
+            mInstrument.set_oscillator_type(Welle.OSC_NOISE);
         }
     }
 

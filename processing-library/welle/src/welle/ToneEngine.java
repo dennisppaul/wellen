@@ -71,11 +71,11 @@ public abstract class ToneEngine {
 
     public static ToneEngine createEngine(String... pName) {
         if (pName.length > 0) {
-            if (pName[0].equalsIgnoreCase(Tone.TONE_ENGINE_INTERNAL)) {
+            if (pName[0].equalsIgnoreCase(Welle.TONE_ENGINE_INTERNAL)) {
                 return new ToneEngineInternal();
-            } else if (pName[0].equalsIgnoreCase(Tone.TONE_ENGINE_MIDI) && pName.length == 2) {
+            } else if (pName[0].equalsIgnoreCase(Welle.TONE_ENGINE_MIDI) && pName.length == 2) {
                 return new ToneEngineMIDI(pName[1]);
-            } else if (pName[0].equalsIgnoreCase(Tone.TONE_ENGINE_OSC) && pName.length >= 2) {
+            } else if (pName[0].equalsIgnoreCase(Welle.TONE_ENGINE_OSC) && pName.length >= 2) {
                 if (pName.length == 2) {
                     return new ToneEngineOSC(pName[1]);
                 } else if (pName.length == 3) {

@@ -2,8 +2,8 @@ package welle.examples_ext;
 
 import processing.core.PApplet;
 import welle.DSP;
-import welle.Tone;
 import welle.Wavetable;
+import welle.Welle;
 
 /**
  * this example demonstrates how to implement a low-frequency oscillator (LFO) by using wavetables to emulate
@@ -19,7 +19,7 @@ public class ExampleDSP06LFO extends PApplet {
     private final Wavetable mVCO = new Wavetable(512);
     private final Wavetable mFrequencyLFO = new Wavetable(512);
     private final Wavetable mAmplitudeLFO = new Wavetable(512);
-    private final float mBaseFrequency = 2.0f * Tone.DEFAULT_SAMPLING_RATE / Tone.DEFAULT_AUDIOBLOCK_SIZE;
+    private final float mBaseFrequency = 2.0f * Welle.DEFAULT_SAMPLING_RATE / Welle.DEFAULT_AUDIOBLOCK_SIZE;
 
     public void settings() {
         size(640, 480);
@@ -40,7 +40,7 @@ public class ExampleDSP06LFO extends PApplet {
         mAmplitudeLFO.interpolate_samples(true);
         mAmplitudeLFO.set_frequency(0);
 
-        Tone.dumpAudioInputAndOutputDevices();
+        Welle.dumpAudioInputAndOutputDevices();
         DSP.start(this);
     }
 
@@ -62,40 +62,40 @@ public class ExampleDSP06LFO extends PApplet {
     public void keyPressed() {
         switch (key) {
             case '1':
-                Wavetable.fill(mFrequencyLFO.wavetable(), Tone.OSC_SINE);
+                Wavetable.fill(mFrequencyLFO.wavetable(), Welle.OSC_SINE);
                 break;
             case '2':
-                Wavetable.fill(mFrequencyLFO.wavetable(), Tone.OSC_TRIANGLE);
+                Wavetable.fill(mFrequencyLFO.wavetable(), Welle.OSC_TRIANGLE);
                 break;
             case '3':
-                Wavetable.fill(mFrequencyLFO.wavetable(), Tone.OSC_SAWTOOTH);
+                Wavetable.fill(mFrequencyLFO.wavetable(), Welle.OSC_SAWTOOTH);
                 break;
             case '4':
-                Wavetable.fill(mFrequencyLFO.wavetable(), Tone.OSC_SQUARE);
+                Wavetable.fill(mFrequencyLFO.wavetable(), Welle.OSC_SQUARE);
                 break;
             case 'q':
-                Wavetable.fill(mAmplitudeLFO.wavetable(), Tone.OSC_SINE);
+                Wavetable.fill(mAmplitudeLFO.wavetable(), Welle.OSC_SINE);
                 break;
             case 'w':
-                Wavetable.fill(mAmplitudeLFO.wavetable(), Tone.OSC_TRIANGLE);
+                Wavetable.fill(mAmplitudeLFO.wavetable(), Welle.OSC_TRIANGLE);
                 break;
             case 'e':
-                Wavetable.fill(mAmplitudeLFO.wavetable(), Tone.OSC_SAWTOOTH);
+                Wavetable.fill(mAmplitudeLFO.wavetable(), Welle.OSC_SAWTOOTH);
                 break;
             case 'r':
-                Wavetable.fill(mAmplitudeLFO.wavetable(), Tone.OSC_SQUARE);
+                Wavetable.fill(mAmplitudeLFO.wavetable(), Welle.OSC_SQUARE);
                 break;
             case 'a':
-                Wavetable.fill(mVCO.wavetable(), Tone.OSC_SINE);
+                Wavetable.fill(mVCO.wavetable(), Welle.OSC_SINE);
                 break;
             case 's':
-                Wavetable.fill(mVCO.wavetable(), Tone.OSC_TRIANGLE);
+                Wavetable.fill(mVCO.wavetable(), Welle.OSC_TRIANGLE);
                 break;
             case 'd':
-                Wavetable.fill(mVCO.wavetable(), Tone.OSC_SAWTOOTH);
+                Wavetable.fill(mVCO.wavetable(), Welle.OSC_SAWTOOTH);
                 break;
             case 'f':
-                Wavetable.fill(mVCO.wavetable(), Tone.OSC_SQUARE);
+                Wavetable.fill(mVCO.wavetable(), Welle.OSC_SQUARE);
                 break;
         }
     }

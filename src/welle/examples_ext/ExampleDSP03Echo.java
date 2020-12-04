@@ -2,7 +2,7 @@ package welle.examples_ext;
 
 import processing.core.PApplet;
 import welle.DSP;
-import welle.Tone;
+import welle.Welle;
 
 /**
  * this example demonstrates how to implement a basic echo effect in DSP.
@@ -20,7 +20,7 @@ public class ExampleDSP03Echo extends PApplet {
     }
 
     public void setup() {
-        Tone.dumpAudioInputAndOutputDevices();
+        Welle.dumpAudioInputAndOutputDevices();
         DSP.start(this, 1, 1);
     }
 

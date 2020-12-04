@@ -14,7 +14,7 @@ void settings() {
 void setup() {
     textFont(createFont("Roboto Mono", 11));
     EventReceiverOSC.start(this);
-    Tone.dumpMidiInputDevices();
+    Welle.dumpMidiInputDevices();
     EventReceiverMIDI.start(this, "Bus 1");
 }
 

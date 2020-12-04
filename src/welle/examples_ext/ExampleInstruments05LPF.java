@@ -2,6 +2,7 @@ package welle.examples_ext;
 
 import processing.core.PApplet;
 import welle.Tone;
+import welle.Welle;
 
 /**
  * this example demonstrates how to use a *Low-Pass Filter* (LPF) on a sawtooth oscillator in DSP.
@@ -16,7 +17,7 @@ public class ExampleInstruments05LPF extends PApplet {
 
     public void setup() {
         Tone.instrument().enable_LPF(true);
-        Tone.instrument().set_oscillator_type(Tone.OSC_SAWTOOTH);
+        Tone.instrument().set_oscillator_type(Welle.OSC_SAWTOOTH);
     }
 
     public void draw() {

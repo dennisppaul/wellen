@@ -18,7 +18,7 @@ void setup() {
         c.speed = random(0, 5);
         mControllers.add(c);
     }
-    Tone.dumpAudioInputAndOutputDevices();
+    Welle.dumpAudioInputAndOutputDevices();
     DSP.start(this);
 }
 
@@ -77,7 +77,7 @@ void audioblock(float[] pOutputSamples) {
             pOutputSamples[i] += c.process();
         }
         pOutputSamples[i] /= mControllers.size();
-        pOutputSamples[i] = Tone.clamp(pOutputSamples[i], -1.0f, 1.0f);
+        pOutputSamples[i] = Welle.clamp(pOutputSamples[i], -1.0f, 1.0f);
     }
 }
 

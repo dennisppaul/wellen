@@ -2,7 +2,7 @@ package welle.examples_ext;
 
 import processing.core.PApplet;
 import welle.DSP;
-import welle.Tone;
+import welle.Welle;
 
 /**
  * this example demonstrates how to receive audio data from the input device and pass it through to the output device.
@@ -15,7 +15,7 @@ public class ExampleDSP02PassThrough extends PApplet {
     }
 
     public void setup() {
-        Tone.dumpAudioInputAndOutputDevices();
+        Welle.dumpAudioInputAndOutputDevices();
         DSP.start(this, 1, 1);
     }
 

@@ -5,6 +5,7 @@ import welle.BeatEvent;
 import welle.BeatListener;
 import welle.Note;
 import welle.Tone;
+import welle.Welle;
 
 /**
  * this sketch is used to produce the opening sequence for the video tutorials.
@@ -83,7 +84,7 @@ public class AppTonIntroductionClip extends PApplet {
             note = pNote;
             instrument = pInstrument;
             playing = false;
-            Tone.instrument(instrument).set_oscillator_type(Tone.OSC_TRIANGLE);
+            Tone.instrument(instrument).set_oscillator_type(Welle.OSC_TRIANGLE);
         }
 
         public void beat(int pBeatCount) {
