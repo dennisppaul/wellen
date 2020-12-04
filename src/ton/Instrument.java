@@ -140,11 +140,11 @@ public abstract class Instrument {
         return mIsPlaying;
     }
 
-    protected float _note_to_frequency(int pNote) {
+    protected float note_to_frequency(int pNote) {
         return Note.note_to_frequency(Ton.clamp127(pNote));
     }
 
-    protected float _velocity_to_amplitude(int pVelocity) {
+    protected float velocity_to_amplitude(int pVelocity) {
         return Ton.clamp127(pVelocity) / 127.0f;
     }
 }

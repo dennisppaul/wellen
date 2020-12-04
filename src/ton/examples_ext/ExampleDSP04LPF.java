@@ -9,7 +9,7 @@ import processing.core.PApplet;
 /**
  * this examples demonstrates how to use a *Low-Pass Filter* (LPF) on a sawtooth oscillator in DSP.
  */
-public class ExampleDSP04LowPassFilter extends PApplet {
+public class ExampleDSP04LPF extends PApplet {
 
     private final Wavetable mWavetable = new Wavetable(512);
     private final LowPassFilter mFilter = new LowPassFilter(Ton.DEFAULT_SAMPLING_RATE);
@@ -43,6 +43,6 @@ public class ExampleDSP04LowPassFilter extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main(ExampleDSP04LowPassFilter.class.getName());
+        PApplet.main(ExampleDSP04LPF.class.getName());
     }
 }

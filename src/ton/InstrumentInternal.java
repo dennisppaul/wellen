@@ -30,8 +30,6 @@ public class InstrumentInternal extends Instrument implements DSPNodeOutput {
         set_oscillator_type(Ton.OSC_SINE);
         set_amplitude(0.0f);
         set_frequency(DEFAULT_FREQUENCY);
-        mVCO.set_amplitude(mAmp);
-        mVCO.set_frequency(mFreq);
 
         /* setup LFO for frequency */
         mFrequencyLFO = new Wavetable(pWavetableSize, pSamplingRate);
@@ -206,8 +204,8 @@ public class InstrumentInternal extends Instrument implements DSPNodeOutput {
     @Override
     public void note_on(int pNote, int pVelocity) {
         mIsPlaying = true;
-        set_frequency(_note_to_frequency(pNote));
-        set_amplitude(_velocity_to_amplitude(pVelocity));
+        set_frequency(note_to_frequency(pNote));
+        set_amplitude(velocity_to_amplitude(pVelocity));
         mADSR.start();
     }
 }
