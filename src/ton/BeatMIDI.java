@@ -9,12 +9,12 @@ public class BeatMIDI implements MidiInListener {
     private static final int BPM_SAMPLER_SIZE = 12;
     public static boolean VERBOSE = false;
     private final Object mListener;
+    private final float[] mBPMSampler = new float[BPM_SAMPLER_SIZE];
     private Method mMethod = null;
     private int mTickPPQNCounter = 0;
     private boolean mIsRunning = false;
     private float mBPMEstimate = 0;
     private long mBPMMeasure;
-    private final float[] mBPMSampler = new float[BPM_SAMPLER_SIZE];
     private int mBPMSamplerCounter = 0;
 
     public BeatMIDI(Object pListener, int pBPM) {
@@ -23,13 +23,21 @@ public class BeatMIDI implements MidiInListener {
 
     public BeatMIDI(Object pListener) {
         mListener = pListener;
+        mTickPPQNCounter = -1;
         try {
             mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME, Integer.TYPE);
         } catch (NoSuchMethodException | SecurityException ex) {
-            ex.printStackTrace();
+            System.err.println("+++ @" + getClass().getSimpleName() + " / could not find `" + METHOD_NAME + "(int)`");
         }
         mBPMMeasure = _timer();
         start();
+    }
+
+    public static BeatMIDI start(Object pListener, String pMidiInput) {
+        final BeatMIDI mBeatMIDI = new BeatMIDI(pListener);
+        MidiIn mMidiIn = new MidiIn(pMidiInput);
+        mMidiIn.addListener(mBeatMIDI);
+        return mBeatMIDI;
     }
 
     public boolean running() {
@@ -87,15 +95,6 @@ public class BeatMIDI implements MidiInListener {
         }
     }
 
-    public void stop() {
-        mIsRunning = false;
-    }
-
-    public void start() {
-        mIsRunning = true;
-        mBPMMeasure = System.currentTimeMillis();
-    }
-
     @Override
     public void clock_start() {
         if (VERBOSE) {
@@ -136,6 +135,15 @@ public class BeatMIDI implements MidiInListener {
         }
     }
 
+    public void stop() {
+        mIsRunning = false;
+    }
+
+    public void start() {
+        mIsRunning = true;
+        mBPMMeasure = System.currentTimeMillis();
+    }
+
     private void estimate_bpm() {
         float mBPMEstimateFragment = 60 / ((float) ((_timer() - mBPMMeasure) / _timer_divider()) * 24); // 24 PPQN *
         // 4 QN * 60 SEC
@@ -147,13 +155,6 @@ public class BeatMIDI implements MidiInListener {
         }
         mBPMEstimate /= BPM_SAMPLER_SIZE;
         mBPMMeasure = _timer();
-    }
-
-    public static BeatMIDI start(Object pListener, String pMidiInput) {
-        final BeatMIDI mBeatMIDI = new BeatMIDI(pListener);
-        MidiIn mMidiIn = new MidiIn(pMidiInput);
-        mMidiIn.addListener(mBeatMIDI);
-        return mBeatMIDI;
     }
 
     private static long _timer() {

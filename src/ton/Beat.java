@@ -10,7 +10,7 @@ public class Beat {
     private static final String METHOD_NAME = "beat";
     private final Object mListener;
     private final Timer mTimer;
-    private int mBeat = -1;
+    private int mBeat;
     private Method mMethod = null;
     private TimerTask mTask;
 
@@ -21,12 +21,21 @@ public class Beat {
 
     public Beat(Object pListener) {
         mListener = pListener;
+        mBeat = -1;
         try {
             mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME, Integer.TYPE);
         } catch (NoSuchMethodException | SecurityException ex) {
-            ex.printStackTrace();
+            System.err.println("+++ @" + getClass().getSimpleName() + " / could not find `" + METHOD_NAME + "(int)`");
         }
         mTimer = new Timer();
+    }
+
+    public static Beat start(Object pListener, int pBPM) {
+        return new Beat(pListener, pBPM);
+    }
+
+    public static Beat start(Object pListener) {
+        return new Beat(pListener);
     }
 
     public void bpm(float pBPM) {
@@ -36,14 +45,6 @@ public class Beat {
         }
         mTask = new BeatTimerTaskP5();
         mTimer.scheduleAtFixedRate(mTask, 1000, mPeriod);
-    }
-
-    public static Beat start(Object pListener, int pBPM) {
-        return new Beat(pListener, pBPM);
-    }
-
-    public static Beat start(Object pListener) {
-        return new Beat(pListener);
     }
 
     private class BeatTimerTaskP5 extends TimerTask {

@@ -6,8 +6,8 @@ import java.lang.reflect.Method;
 public class Trigger implements DSPNodeInput {
 
     private static final String METHOD_NAME = "trigger";
-    private float mPreviousSignal = 0.0f;
     private final Object mListener;
+    private float mPreviousSignal = 0.0f;
     private Method mMethod = null;
     private boolean mEnableRisingEdge = true;
     private boolean mEnableFallingEdge = true;
@@ -17,8 +17,12 @@ public class Trigger implements DSPNodeInput {
         try {
             mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME);
         } catch (NoSuchMethodException | SecurityException ex) {
-            ex.printStackTrace();
+            System.err.println("+++ @" + getClass().getSimpleName() + " / could not find `" + METHOD_NAME + "`");
         }
+    }
+
+    public static Trigger start(Object pListener) {
+        return new Trigger(pListener);
     }
 
     public void trigger_rising_edge(boolean pEnableRisingEdge) {
@@ -45,9 +49,5 @@ public class Trigger implements DSPNodeInput {
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
             ex.printStackTrace();
         }
-    }
-
-    public static Trigger start(Object pListener) {
-        return new Trigger(pListener);
     }
 }
