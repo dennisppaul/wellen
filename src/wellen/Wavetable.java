@@ -13,8 +13,8 @@ public class Wavetable implements DSPNodeOutput {
     private float mDesiredStepSize;
     private float mArrayPtr;
     private float mAmplitude;
-    private boolean mInterpolateSamples = false;
-    private float mInterpolateFrequencyChangeFactor = 0.0f;
+    private boolean mInterpolateSamples;
+    private float mInterpolateFrequencyChangeFactor;
     private float mInterpolateFrequencyDelta;
 
     public Wavetable(int pWavetableSize) {
@@ -25,75 +25,10 @@ public class Wavetable implements DSPNodeOutput {
         mWavetable = new float[pWavetableSize];
         mSamplingRate = pSamplingRate;
         mArrayPtr = 0;
+        mInterpolateSamples = false;
+        mInterpolateFrequencyChangeFactor = 0.0f;
         mAmplitude = DEFAULT_AMPLITUDE;
         set_frequency(DEFAULT_FREQUENCY);
-    }
-
-    public float get_frequency() {
-        return mFrequency;
-    }
-
-    public void set_frequency(float pFrequency) {
-        if (mFrequency != PApplet.abs(pFrequency)) {
-            mFrequency = PApplet.abs(pFrequency);
-            if (mInterpolateFrequencyChangeFactor > 0.0f) {
-                mDesiredStepSize = computeStepSize();
-                mInterpolateFrequencyDelta = mDesiredStepSize - mStepSize;
-                mInterpolateFrequencyDelta *= mInterpolateFrequencyChangeFactor;
-            } else {
-                mStepSize = computeStepSize();
-            }
-        }
-    }
-
-    public void interpolate_samples(boolean pInterpolateSamples) {
-        mInterpolateSamples = pInterpolateSamples;
-    }
-
-    public void interpolate_frequency_change(float pInterpolateFrequencyChangeFactor) {
-        mInterpolateFrequencyChangeFactor = pInterpolateFrequencyChangeFactor;
-    }
-
-    public float get_amplitude() {
-        return mAmplitude;
-    }
-
-    public void set_amplitude(float pAmplitude) {
-        mAmplitude = pAmplitude;
-    }
-
-    public float[] get_wavetable() {
-        return mWavetable;
-    }
-
-    public float output() {
-        if (mInterpolateFrequencyChangeFactor > 0.0f) {
-            if (mStepSize != mDesiredStepSize) {
-                mStepSize += mInterpolateFrequencyDelta;
-                final float mDelta = mDesiredStepSize - mStepSize;
-                if (Math.abs(mDelta) < 0.1f) {
-                    mStepSize = mDesiredStepSize;
-                }
-            }
-        }
-        mArrayPtr += mStepSize;
-        final int i = (int) mArrayPtr;
-        final float mFrac = mArrayPtr - i;
-        final int j = i % mWavetable.length;
-        mArrayPtr = j + mFrac;
-
-        if (mInterpolateSamples) {
-            float mNextSample = mWavetable[(j + 1) % mWavetable.length];
-            float mSample = mWavetable[j];
-            float mInterpolatedSample = mSample * (1.0f - mFrac) + mNextSample * mFrac;
-            return mInterpolatedSample * mAmplitude;
-        } else {
-            return mWavetable[j] * mAmplitude;
-        }
-    }
-
-    private float computeStepSize() {
-        return mFrequency * ((float) mWavetable.length / (float) mSamplingRate);
     }
 
     public static void fill(float[] pWavetable, int pWavetableType) {
@@ -150,5 +85,72 @@ public class Wavetable implements DSPNodeOutput {
         for (int i = 0; i < pWavetable.length; i++) {
             pWavetable[i] = (float) (Math.random() * 2.0 - 1.0);
         }
+    }
+
+    public float get_frequency() {
+        return mFrequency;
+    }
+
+    public void set_frequency(float pFrequency) {
+        if (mFrequency != PApplet.abs(pFrequency)) {
+            mFrequency = PApplet.abs(pFrequency);
+            if (mInterpolateFrequencyChangeFactor > 0.0f) {
+                mDesiredStepSize = computeStepSize();
+                mInterpolateFrequencyDelta = mDesiredStepSize - mStepSize;
+                mInterpolateFrequencyDelta *= mInterpolateFrequencyChangeFactor;
+            } else {
+                mStepSize = computeStepSize();
+            }
+        }
+    }
+
+    public void interpolate_samples(boolean pInterpolateSamples) {
+        mInterpolateSamples = pInterpolateSamples;
+    }
+
+    public void interpolate_frequency_change(float pInterpolateFrequencyChangeFactor) {
+        mInterpolateFrequencyChangeFactor = pInterpolateFrequencyChangeFactor;
+    }
+
+    public float get_amplitude() {
+        return mAmplitude;
+    }
+
+    public void set_amplitude(float pAmplitude) {
+        mAmplitude = pAmplitude;
+    }
+
+    public float[] get_wavetable() {
+        return mWavetable;
+    }
+
+    public float output() {
+        if (mInterpolateFrequencyChangeFactor > 0.0f) {
+            if (mStepSize != mDesiredStepSize) {
+                mStepSize += mInterpolateFrequencyDelta;
+                final float mDelta = mDesiredStepSize - mStepSize;
+                if (Math.abs(mDelta) < 0.1f) {
+                    mStepSize = mDesiredStepSize;
+                }
+            }
+        }
+        mArrayPtr += mStepSize;
+        final int i = (int) mArrayPtr;
+        final float mFrac = mArrayPtr - i;
+        final int j = i % mWavetable.length;
+        mArrayPtr = j + mFrac;
+
+        if (mInterpolateSamples) {
+            final float mNextSample = mWavetable[(j + 1) % mWavetable.length];
+            final float mSample = mWavetable[j];
+            final float mInterpolatedSample = mSample * (1.0f - mFrac) + mNextSample * mFrac;
+            return mInterpolatedSample * mAmplitude;
+        } else {
+            return mWavetable[j] * mAmplitude;
+        }
+    }
+
+    private float computeStepSize() {
+        return mFrequency * ((float) mWavetable.length / (float) mSamplingRate);
     }
 }
