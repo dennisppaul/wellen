@@ -20,11 +20,11 @@ void setup() {
 void draw() {
     background(255);
     stroke(0);
-    final int mBufferSize = DSP.buffer_size();
-    if (DSP.buffer() != null) {
+    final int mBufferSize = DSP.get_buffer_size();
+    if (DSP.get_buffer() != null) {
         for (int i = 0; i < mBufferSize; i++) {
             final float x = map(i, 0, mBufferSize, 0, width);
-            point(x, map(DSP.buffer()[i], -1, 1, 0, height));
+            point(x, map(DSP.get_buffer()[i], -1, 1, 0, height));
         }
     }
 }
@@ -51,7 +51,7 @@ interface AudioFormula {
 class AudioFormulaKnisterKnister implements AudioFormula {
     
 float render(int pCounter) {
-        final float mSeconds = (float) pCounter / DSP.sample_rate();
+        final float mSeconds = (float) pCounter / DSP.get_sample_rate();
         float v;
         v = abs(sin(mSeconds * cos(mSeconds * 1.1f))) * 0.1f;
         v = (mFreq + (v % 0.037f));
@@ -59,7 +59,7 @@ float render(int pCounter) {
         v *= v;
         v *= 2 + sin(mSeconds * 21.9f);
         v -= 1;
-        v = DSP.clamp(v, -1.0f, 1.0f);
+        v = Welle.clamp(v, -1.0f, 1.0f);
         v *= 0.75f;
         return v;
     }
@@ -67,15 +67,15 @@ float render(int pCounter) {
 class MAudioFormulaAwayAndAway implements AudioFormula {
     
 float render(int pCounter) {
-        final float mSeconds = (float) pCounter / DSP.sample_rate();
+        final float mSeconds = (float) pCounter / DSP.get_sample_rate();
         final float mSecondsRad = 2.0f * PI * mSeconds;
         float v;
         v = sin(mSecondsRad * (mFreq + sin(mSecondsRad * 0.001f) * 110.0f));
         v -= sin(mSecondsRad * mFreq * 13) * 0.1f;
         v *= 1.0 + abs(sin(mSecondsRad * 0.47f)) * 2.0f;
-        v = DSP.flip(v);
+        v = Welle.flip(v);
         v *= pow(sin(mSecondsRad * 0.01f), 8) * 0.9f + 0.1f;
-        v = DSP.clamp(v, -1.0f, 1.0f);
+        v = Welle.clamp(v, -1.0f, 1.0f);
         v *= 0.75f;
         return v;
     }

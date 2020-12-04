@@ -62,7 +62,7 @@ public class Sampler implements DSPNodeOutput {
         if (mData == null || mData.length != pData.length / 4) {
             mData = new float[pData.length / 4];
         }
-        convertBytesToFloat32(pData, data(), pLittleEndian);
+        bytes_to_float32(pData, data(), pLittleEndian);
         rewind();
         set_speed(mSpeed);
         return this;
@@ -114,10 +114,10 @@ public class Sampler implements DSPNodeOutput {
         mLoop = pLoop;
     }
 
-    public static void convertBytesToFloat32(byte[] pBytes, float[] pWavetable, boolean pLittleEndian) {
+    public static void bytes_to_float32(byte[] pBytes, float[] pWavetable, boolean pLittleEndian) {
         if (pBytes.length / 4 == pWavetable.length) {
             for (int i = 0; i < pWavetable.length; i++) {
-                pWavetable[i] = bytesToFloat32(pBytes, i * 4, (i + 1) * 4, pLittleEndian);
+                pWavetable[i] = bytes_to_float32(pBytes, i * 4, (i + 1) * 4, pLittleEndian);
             }
         } else {
             System.err.println("+++ WARNING @ Wavetable.from_bytes / array sizes do not match. make sure the byte " +
@@ -125,23 +125,23 @@ public class Sampler implements DSPNodeOutput {
         }
     }
 
-    public static float bytesToFloat32(byte[] b) {
-        return bytesToFloat32(b, true);
+    public static float bytes_to_float32(byte[] b) {
+        return bytes_to_float32(b, true);
     }
 
-    public static float bytesToFloat32(byte[] b, boolean pLittleEndian) {
+    public static float bytes_to_float32(byte[] b, boolean pLittleEndian) {
         if (b.length != 4) {
             System.out.println("+++ WARNING @ Sampler.bytesToFloat32(byte[], boolean)");
         }
         return ByteBuffer.wrap(b).order(pLittleEndian ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN).getFloat();
     }
 
-    public static byte[] float32ToByte(float f) {
+    public static byte[] float32_to_byte(float f) {
         return ByteBuffer.allocate(4).putFloat(f).array();
     }
 
-    private static float bytesToFloat32(byte[] pBytes, int pStart, int pEnd, boolean pLittleEndian) {
+    private static float bytes_to_float32(byte[] pBytes, int pStart, int pEnd, boolean pLittleEndian) {
         final byte[] mBytes = Arrays.copyOfRange(pBytes, pStart, pEnd);
-        return bytesToFloat32(mBytes, pLittleEndian);
+        return bytes_to_float32(mBytes, pLittleEndian);
     }
 }

@@ -19,12 +19,12 @@ void setup() {
 void draw() {
     background(255);
     stroke(0);
-    final int mBufferSize = DSP.buffer_size();
-    if (DSP.buffer_left() != null && DSP.buffer_right() != null) {
+    final int mBufferSize = DSP.get_buffer_size();
+    if (DSP.get_buffer_left() != null && DSP.get_buffer_right() != null) {
         for (int i = 0; i < mBufferSize; i++) {
             final float x = map(i, 0, mBufferSize, 0, width);
-            point(x, map(DSP.buffer_left()[i], -1, 1, 0, height * 0.5f));
-            point(x, map(DSP.buffer_right()[i], -1, 1, height * 0.5f, height));
+            point(x, map(DSP.get_buffer_left()[i], -1, 1, 0, height * 0.5f));
+            point(x, map(DSP.get_buffer_right()[i], -1, 1, height * 0.5f, height));
         }
     }
 }
@@ -37,8 +37,8 @@ void mouseMoved() {
 void audioblock(float[] pSamplesLeft, float[] pSamplesRight) {
     for (int i = 0; i < pSamplesLeft.length; i++) {
         mCounter++;
-        float mLeft = 0.5f * sin(2 * PI * mFreq * mCounter / DSP.sample_rate());
-        float mRight = 0.5f * sin(2 * PI * mFreq * mDetune * mCounter / DSP.sample_rate());
+        float mLeft = 0.5f * sin(2 * PI * mFreq * mCounter / DSP.get_sample_rate());
+        float mRight = 0.5f * sin(2 * PI * mFreq * mDetune * mCounter / DSP.get_sample_rate());
         pSamplesLeft[i] = mLeft * 0.7f + mRight * 0.3f;
         pSamplesRight[i] = mRight * 0.7f + mLeft * 0.3f;
     }

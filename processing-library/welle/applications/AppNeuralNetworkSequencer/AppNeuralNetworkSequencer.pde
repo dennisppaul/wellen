@@ -69,7 +69,7 @@ void connect(Node a, Node b) {
     }
 }
 Node node(float x, float y, int pNote) {
-    int mNote = Scale.note(Scale.MINOR_PENTATONIC, Note.NOTE_C3, pNote);
+    int mNote = Scale.get_note(Scale.MINOR_PENTATONIC, Note.NOTE_C3, pNote);
     Node n = new Node(x, y, mNote);
     mNodes.add(n);
     return n;

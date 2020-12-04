@@ -92,7 +92,7 @@ public class AppAlgorithmicComposition04FunctionSineWaves extends PApplet {
         r *= TWO_PI;
         float mNoteStep = sin(r) * 0.5f + 0.5f;
         mNoteStep *= 5;
-        int mNote = Scale.note(Scale.FIFTH, Note.NOTE_C3, (int) mNoteStep);
+        int mNote = Scale.get_note(Scale.FIFTH, Note.NOTE_C3, (int) mNoteStep);
         return mNote;
     }
 
@@ -105,7 +105,7 @@ public class AppAlgorithmicComposition04FunctionSineWaves extends PApplet {
         } else if (mStep == O) {
             /* do nothing, continue playing note */
         } else {
-            int mNote = Scale.note(Scale.HALF_TONE, Note.NOTE_C2, mStep);
+            int mNote = Scale.get_note(Scale.HALF_TONE, Note.NOTE_C2, mStep);
             Tone.note_on(mNote, 110);
         }
     }

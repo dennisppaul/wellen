@@ -5,7 +5,6 @@ public class Sequencer<T> {
     // @TODO(should `T` be limited to `Number` e.g `T extends Number` )
 
     private final T[] mSequence;
-
     private int mStep;
 
     public Sequencer(int pSteps) {
@@ -30,8 +29,12 @@ public class Sequencer<T> {
         return mValue;
     }
 
-    public T current() {
+    public T get_current() {
         return mSequence[mStep];
+    }
+
+    public void set_current(T pValue) {
+        set(mStep, pValue);
     }
 
     public void set(int pStep, T pValue) {
@@ -40,23 +43,20 @@ public class Sequencer<T> {
         }
     }
 
-    public void set(T pValue) {
-        set(mStep, pValue);
-    }
-
-    public void reset() {
-        mStep = 0;
-    }
-
-    public int position() {
-        return mStep;
-    }
-
-    public T at(int pStep) {
+    public T get(int pStep) {
         if (pStep >= 0 && pStep < mSequence.length) {
             return mSequence[pStep];
         } else {
             return mSequence[0];
         }
     }
+
+    public void reset() {
+        mStep = 0;
+    }
+
+    public int get_step() {
+        return mStep;
+    }
+
 }

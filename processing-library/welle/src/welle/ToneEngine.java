@@ -65,11 +65,11 @@ public abstract class ToneEngine {
 
     public abstract void replace_instrument(Instrument pInstrument);
 
-    public static ToneEngine createEngine() {
+    public static ToneEngine create() {
         return new ToneEngineInternal();
     }
 
-    public static ToneEngine createEngine(String... pName) {
+    public static ToneEngine create(String... pName) {
         if (pName.length > 0) {
             if (pName[0].equalsIgnoreCase(Welle.TONE_ENGINE_INTERNAL)) {
                 return new ToneEngineInternal();
@@ -94,7 +94,7 @@ public abstract class ToneEngine {
                     " / could not find specified tone engine: " + pName[0]);
             System.err.println("+++ hint: check engine name and number of parameters");
         }
-        return createEngine();
+        return create();
     }
 
     private class NoteOffTask extends TimerTask {

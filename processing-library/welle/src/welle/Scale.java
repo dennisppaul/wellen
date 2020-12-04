@@ -54,7 +54,7 @@ public class Scale {
         return ALL_SCALES[pScaleID];
     }
 
-    public static int note(int[] pScale, int pBaseNote, int pNoteStepOffset) {
+    public static int get_note(int[] pScale, int pBaseNote, int pNoteStepOffset) {
         if (pNoteStepOffset >= 0) {
             final int i = pNoteStepOffset % pScale.length;
             final int mOctave = pNoteStepOffset / pScale.length;

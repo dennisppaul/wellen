@@ -27,14 +27,14 @@ public class TestDSPLowPassFilters extends PApplet {
     public void draw() {
         background(255);
         stroke(0);
-        final int mBufferSize = DSP.buffer_size();
-        if (DSP.buffer() != null) {
+        final int mBufferSize = DSP.get_buffer_size();
+        if (DSP.get_buffer() != null) {
             for (int i = 0; i < mBufferSize - 1; i++) {
                 final float x = map(i, 0, mBufferSize, 0, width);
                 line(map(i, 0, mBufferSize, 0, width),
-                        map(DSP.buffer()[i], -1, 1, 0, height),
+                        map(DSP.get_buffer()[i], -1, 1, 0, height),
                         map(i + 1, 0, mBufferSize, 0, width),
-                        map(DSP.buffer()[i + 1], -1, 1, 0, height));
+                        map(DSP.get_buffer()[i + 1], -1, 1, 0, height));
             }
         }
     }
@@ -45,7 +45,7 @@ public class TestDSPLowPassFilters extends PApplet {
     }
 
     public void mouseMoved() {
-        final int mCutoffFreq = (int) map(mouseY, 0, height, 1, DSP.sample_rate() / 4.0f);
+        final int mCutoffFreq = (int) map(mouseY, 0, height, 1, DSP.get_sample_rate() / 4.0f);
         final float mResonance = map(mouseX, 0, width, 0.1f, 50.0f);
         mLPFilter.calculate_coeffs(mResonance, mCutoffFreq);
         mButterworthLowPassFilter.calculate_coeffs(mCutoffFreq);
@@ -56,8 +56,8 @@ public class TestDSPLowPassFilters extends PApplet {
         for (int i = 0; i < pOutputSamples.length; i++) {
             /* square wave */
             mCounter += mFreq;
-            mCounter = mCounter > DSP.sample_rate() ? mCounter - DSP.sample_rate() : mCounter;
-            float mSample = mCounter > DSP.sample_rate() / 2.0f ? -1.0f : 1.0f;
+            mCounter = mCounter > DSP.get_sample_rate() ? mCounter - DSP.get_sample_rate() : mCounter;
+            float mSample = mCounter > DSP.get_sample_rate() / 2.0f ? -1.0f : 1.0f;
             float mAmp = 0.25f;
             mSample *= mAmp;
             if (mFilterType == 0) {
@@ -67,7 +67,7 @@ public class TestDSPLowPassFilters extends PApplet {
             } else if (mFilterType == 2) {
                 mSample = mNaiveLowPassFilter.process(mSample);
             }
-            mSample = DSP.clamp(mSample, -1, 1);
+            mSample = Welle.clamp(mSample, -1, 1);
             pOutputSamples[i] = mSample;
         }
     }

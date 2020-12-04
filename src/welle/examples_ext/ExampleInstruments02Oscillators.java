@@ -41,7 +41,7 @@ public class ExampleInstruments02Oscillators extends PApplet {
             if (mIsPlaying) {
                 Tone.note_off();
             } else {
-                mNote = Scale.note(Scale.MAJOR_CHORD_7, Note.NOTE_A2, (int) random(0, 10));
+                mNote = Scale.get_note(Scale.MAJOR_CHORD_7, Note.NOTE_A2, (int) random(0, 10));
                 Tone.note_on(mNote, 127);
             }
             mIsPlaying = !mIsPlaying;

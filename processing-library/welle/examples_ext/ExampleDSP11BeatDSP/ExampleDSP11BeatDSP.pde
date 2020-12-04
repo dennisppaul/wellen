@@ -27,7 +27,7 @@ void draw() {
 }
 
 void mouseMoved() {
-    mBeat.bpm(map(mouseX, 0, width, 1, 480));
+    mBeat.set_bpm(map(mouseX, 0, width, 1, 480));
 }
 
 void audioblock(float[] pOutputSamples) {

@@ -147,20 +147,20 @@ extends java.lang.Object</pre>
 <th class="colLast" scope="col">Method and Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="../welle/Sequencer.html" title="type parameter in Sequencer">T</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../welle/Sequencer.html#at-int-">at</a></span>(int&nbsp;pStep)</code>&nbsp;</td>
-</tr>
-<tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="../welle/Sequencer.html" title="type parameter in Sequencer">T</a></code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../welle/Sequencer.html#current--">current</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i2" class="altColor">
 <td class="colFirst"><code><a href="../welle/Sequencer.html" title="type parameter in Sequencer">T</a>[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../welle/Sequencer.html#data--">data</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code><a href="../welle/Sequencer.html" title="type parameter in Sequencer">T</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../welle/Sequencer.html#get_current--">get_current</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../welle/Sequencer.html#position--">position</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../welle/Sequencer.html#get_step--">get_step</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code><a href="../welle/Sequencer.html" title="type parameter in Sequencer">T</a></code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../welle/Sequencer.html#get-int-">get</a></span>(int&nbsp;pStep)</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
@@ -168,12 +168,12 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../welle/Sequencer.html#set-int-T-">set</a></span>(int&nbsp;pStep,
-   <a href="../welle/Sequencer.html" title="type parameter in Sequencer">T</a>&nbsp;pValue)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../welle/Sequencer.html#set_current-T-">set_current</a></span>(<a href="../welle/Sequencer.html" title="type parameter in Sequencer">T</a>&nbsp;pValue)</code>&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../welle/Sequencer.html#set-T-">set</a></span>(<a href="../welle/Sequencer.html" title="type parameter in Sequencer">T</a>&nbsp;pValue)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../welle/Sequencer.html#set-int-T-">set</a></span>(int&nbsp;pStep,
+   <a href="../welle/Sequencer.html" title="type parameter in Sequencer">T</a>&nbsp;pValue)</code>&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="../welle/Sequencer.html" title="type parameter in Sequencer">T</a></code></td>
@@ -248,13 +248,24 @@ public&nbsp;Sequencer(<a href="../welle/Sequencer.html" title="type parameter in
 <pre>public&nbsp;<a href="../welle/Sequencer.html" title="type parameter in Sequencer">T</a>&nbsp;step()</pre>
 </li>
 </ul>
-<a name="current--">
+<a name="get_current--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>current</h4>
-<pre>public&nbsp;<a href="../welle/Sequencer.html" title="type parameter in Sequencer">T</a>&nbsp;current()</pre>
+<h4>get_current</h4>
+<pre>public&nbsp;<a href="../welle/Sequencer.html" title="type parameter in Sequencer">T</a>&nbsp;get_current()</pre>
+</li>
+</ul>
+<a name="set_current-java.lang.Object-">
+<!--   -->
+</a><a name="set_current-T-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>set_current</h4>
+<pre>public&nbsp;void&nbsp;set_current(<a href="../welle/Sequencer.html" title="type parameter in Sequencer">T</a>&nbsp;pValue)</pre>
 </li>
 </ul>
 <a name="set-int-java.lang.Object-">
@@ -269,15 +280,13 @@ public&nbsp;Sequencer(<a href="../welle/Sequencer.html" title="type parameter in
                 <a href="../welle/Sequencer.html" title="type parameter in Sequencer">T</a>&nbsp;pValue)</pre>
 </li>
 </ul>
-<a name="set-java.lang.Object-">
-<!--   -->
-</a><a name="set-T-">
+<a name="get-int-">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>set</h4>
-<pre>public&nbsp;void&nbsp;set(<a href="../welle/Sequencer.html" title="type parameter in Sequencer">T</a>&nbsp;pValue)</pre>
+<h4>get</h4>
+<pre>public&nbsp;<a href="../welle/Sequencer.html" title="type parameter in Sequencer">T</a>&nbsp;get(int&nbsp;pStep)</pre>
 </li>
 </ul>
 <a name="reset--">
@@ -289,22 +298,13 @@ public&nbsp;Sequencer(<a href="../welle/Sequencer.html" title="type parameter in
 <pre>public&nbsp;void&nbsp;reset()</pre>
 </li>
 </ul>
-<a name="position--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>position</h4>
-<pre>public&nbsp;int&nbsp;position()</pre>
-</li>
-</ul>
-<a name="at-int-">
+<a name="get_step--">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>at</h4>
-<pre>public&nbsp;<a href="../welle/Sequencer.html" title="type parameter in Sequencer">T</a>&nbsp;at(int&nbsp;pStep)</pre>
+<h4>get_step</h4>
+<pre>public&nbsp;int&nbsp;get_step()</pre>
 </li>
 </ul>
 </li>

@@ -62,7 +62,7 @@ public class Wavetable implements DSPNodeOutput {
         mAmplitude = pAmplitude;
     }
 
-    public float[] wavetable() {
+    public float[] get_wavetable() {
         return mWavetable;
     }
 

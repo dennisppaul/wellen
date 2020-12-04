@@ -9,7 +9,7 @@ void settings() {
 }
 
 void setup() {
-    Wavetable.sine(mWavetable.wavetable());
+    Wavetable.sine(mWavetable.get_wavetable());
     Welle.dumpAudioInputAndOutputDevices();
     DSP.start(this);
 }
@@ -32,19 +32,19 @@ void mouseMoved() {
 void keyPressed() {
     switch (key) {
         case '1':
-            Wavetable.sine(mWavetable.wavetable());
+            Wavetable.sine(mWavetable.get_wavetable());
             break;
         case '2':
-            Wavetable.triangle(mWavetable.wavetable());
+            Wavetable.triangle(mWavetable.get_wavetable());
             break;
         case '3':
-            Wavetable.sawtooth(mWavetable.wavetable());
+            Wavetable.sawtooth(mWavetable.get_wavetable());
             break;
         case '4':
-            Wavetable.square(mWavetable.wavetable());
+            Wavetable.square(mWavetable.get_wavetable());
             break;
         case '5':
-            randomize(mWavetable.wavetable());
+            randomize(mWavetable.get_wavetable());
             break;
     }
 }

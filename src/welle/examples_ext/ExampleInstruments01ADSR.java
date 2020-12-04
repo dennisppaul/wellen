@@ -66,7 +66,7 @@ public class ExampleInstruments01ADSR extends PApplet {
     }
 
     public void mousePressed() {
-        mNote = Scale.note(Scale.MAJOR_CHORD_7, Note.NOTE_A2, (int) random(0, 10));
+        mNote = Scale.get_note(Scale.MAJOR_CHORD_7, Note.NOTE_A2, (int) random(0, 10));
         Tone.note_on(mNote, 100);
     }
 

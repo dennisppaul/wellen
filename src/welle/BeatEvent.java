@@ -18,7 +18,7 @@ public class BeatEvent {
 
     private BeatEvent(int pBPM) {
         this();
-        bpm(pBPM);
+        set_bpm(pBPM);
     }
 
     private BeatEvent() {
@@ -34,7 +34,7 @@ public class BeatEvent {
         pListeners.add(pListener);
     }
 
-    public void bpm(float pBPM) {
+    public void set_bpm(float pBPM) {
         final int mPeriod = (int) (60.0f / pBPM * 1000.0f);
         if (mTask != null) {
             mTask.cancel();

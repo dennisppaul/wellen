@@ -11,7 +11,7 @@ void settings() {
 }
 
 void setup() {
-    Wavetable.sawtooth(mWavetable.wavetable());
+    Wavetable.sawtooth(mWavetable.get_wavetable());
     mWavetable.set_frequency(2.0f * Welle.DEFAULT_SAMPLING_RATE / Welle.DEFAULT_AUDIOBLOCK_SIZE);
     mWavetable.set_amplitude(0.5f);
     Welle.dumpAudioInputAndOutputDevices();

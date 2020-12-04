@@ -21,7 +21,7 @@ void setup() {
     mTrigger.trigger_falling_edge(true);
     mTrigger.trigger_falling_edge(true);
     mWavetable = new Wavetable(64); /* use wavetable as LFO */
-    Wavetable.sine(mWavetable.wavetable());
+    Wavetable.sine(mWavetable.get_wavetable());
     mWavetable.interpolate_samples(true); /* interpolate between samples to remove *steps* from the signal */
     mWavetable.set_frequency(1.0f / 3.0f); /* set phase duration to 3SEC */
     Tone.start();

@@ -37,7 +37,7 @@ public class EventReceiverOSC {
             } else if (pOSCMessage.checkAddrPattern(ToneEngineOSC.OSC_ADDR_PATTERN_CONTROLCHANGE)) {
                 mEvent = TonEvent.EVENT_CONTROLCHANGE;
             } else if (pOSCMessage.checkAddrPattern(ToneEngineOSC.OSC_ADDR_PATTERN_PITCHBAND)) {
-                mEvent = TonEvent.EVENT_PITCHBAND;
+                mEvent = TonEvent.EVENT_PITCHBEND;
             }
             for (int i = 0; i < mData.length; i++) {
                 if (pOSCMessage.typetag().charAt(i) == 'i') {

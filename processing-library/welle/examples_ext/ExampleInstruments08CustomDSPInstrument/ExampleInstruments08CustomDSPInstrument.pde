@@ -87,9 +87,9 @@ CustomInstrumentMultipleOscillators(int pID) {
         mLowerVCO.interpolate_samples(true);
         mVeryLowVCO = new Wavetable(DEFAULT_WAVETABLE_SIZE);
         mVeryLowVCO.interpolate_samples(true);
-        Wavetable.fill(mVCO.wavetable(), Welle.OSC_TRIANGLE);
-        Wavetable.fill(mLowerVCO.wavetable(), Welle.OSC_SINE);
-        Wavetable.fill(mVeryLowVCO.wavetable(), Welle.OSC_SQUARE);
+        Wavetable.fill(mVCO.get_wavetable(), Welle.OSC_TRIANGLE);
+        Wavetable.fill(mLowerVCO.get_wavetable(), Welle.OSC_SINE);
+        Wavetable.fill(mVeryLowVCO.get_wavetable(), Welle.OSC_SQUARE);
     }
     
 float output() {

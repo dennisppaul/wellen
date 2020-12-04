@@ -37,8 +37,8 @@ public class ExampleTechnique01Sequencer extends PApplet {
         background(255);
         noStroke();
         fill(0);
-        if (mSequence.current() != OFF) {
-            float mNote = (mSequence.current() - 18) / 36.0f + 0.1f;
+        if (mSequence.get_current() != OFF) {
+            float mNote = (mSequence.get_current() - 18) / 36.0f + 0.1f;
             ellipse(width * 0.5f, height * 0.5f, width * mNote, width * mNote);
         }
     }
@@ -46,7 +46,7 @@ public class ExampleTechnique01Sequencer extends PApplet {
     public void beat(int pBeat) {
         int mStep = mSequence.step();
         if (mStep != OFF) {
-            int mNote = Scale.note(Scale.HALF_TONE, Note.NOTE_C4, mStep);
+            int mNote = Scale.get_note(Scale.HALF_TONE, Note.NOTE_C4, mStep);
             Tone.note_on(mNote, 100);
         } else {
             Tone.note_off();

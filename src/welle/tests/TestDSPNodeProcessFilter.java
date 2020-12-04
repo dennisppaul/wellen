@@ -16,7 +16,7 @@ public class TestDSPNodeProcessFilter extends PApplet {
     }
 
     public void setup() {
-        Wavetable.sawtooth(mWavetable.wavetable());
+        Wavetable.sawtooth(mWavetable.get_wavetable());
         mWavetable.set_frequency(172.265625f);
         mWavetable.set_amplitude(0.55f);
         Welle.dumpAudioInputAndOutputDevices();
@@ -36,19 +36,19 @@ public class TestDSPNodeProcessFilter extends PApplet {
     public void keyPressed() {
         switch (key) {
             case '1':
-                Wavetable.sine(mWavetable.wavetable());
+                Wavetable.sine(mWavetable.get_wavetable());
                 break;
             case '2':
-                Wavetable.triangle(mWavetable.wavetable());
+                Wavetable.triangle(mWavetable.get_wavetable());
                 break;
             case '3':
-                Wavetable.sawtooth(mWavetable.wavetable());
+                Wavetable.sawtooth(mWavetable.get_wavetable());
                 break;
             case '4':
-                Wavetable.square(mWavetable.wavetable());
+                Wavetable.square(mWavetable.get_wavetable());
                 break;
             case '5':
-                randomize(mWavetable.wavetable());
+                randomize(mWavetable.get_wavetable());
                 break;
         }
     }

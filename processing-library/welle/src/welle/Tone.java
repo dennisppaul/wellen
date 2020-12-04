@@ -15,7 +15,7 @@ public abstract class Tone {
             printAlreadyStartedWarning();
             return;
         }
-        instance = ToneEngine.createEngine(pName);
+        instance = ToneEngine.create(pName);
     }
 
     public static void start(String pName, int pParameter) {
@@ -31,7 +31,7 @@ public abstract class Tone {
             /* specify output device ID */
             instance = new ToneEngineMIDI(pParameter);
         } else {
-            instance = ToneEngine.createEngine(pName);
+            instance = ToneEngine.create(pName);
         }
     }
 
@@ -45,7 +45,7 @@ public abstract class Tone {
             // ToneEngineInternal(int pSamplingRate, int pOutputDeviceID, int pOutputChannels)
             instance = new ToneEngineInternal(Welle.DEFAULT_SAMPLING_RATE, pParameterA, pParameterB);
         } else {
-            instance = ToneEngine.createEngine(pName);
+            instance = ToneEngine.create(pName);
         }
     }
 
@@ -59,7 +59,7 @@ public abstract class Tone {
             // ToneEngineInternal(int pSamplingRate, int pOutputDeviceID, int pOutputChannels)
             instance = new ToneEngineInternal(pParameterA, pParameterB, pParameterC);
         } else {
-            instance = ToneEngine.createEngine(pName);
+            instance = ToneEngine.create(pName);
         }
     }
 
@@ -156,7 +156,7 @@ public abstract class Tone {
 
     public static ToneEngine instance() {
         if (instance == null) {
-            instance = ToneEngine.createEngine();
+            instance = ToneEngine.create();
         }
         return instance;
     }

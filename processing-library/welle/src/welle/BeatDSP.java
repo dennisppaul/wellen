@@ -21,7 +21,7 @@ public class BeatDSP implements DSPNodeInput {
         mListener = pListener;
         mSamplingRate = pSamplingRate;
         mBeat = -1;
-        bpm(120);
+        set_bpm(120);
         try {
             mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME, Integer.TYPE);
         } catch (NoSuchMethodException | SecurityException ex) {
@@ -29,7 +29,7 @@ public class BeatDSP implements DSPNodeInput {
         }
     }
 
-    public void bpm(float pBPM) {
+    public void set_bpm(float pBPM) {
         final float mPeriod = 60.0f / pBPM;
         mInterval = mSamplingRate * mPeriod;
     }

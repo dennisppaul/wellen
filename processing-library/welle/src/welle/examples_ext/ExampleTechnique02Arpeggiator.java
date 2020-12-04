@@ -72,7 +72,7 @@ public class ExampleTechnique02Arpeggiator extends PApplet {
         }
         /* step through the arpeggiator at clock speed i.e 24 steps ( or pulses ) per quarter note */
         if (mArpeggiator.step()) {
-            int mNote = Scale.note(Scale.MINOR_PENTATONIC, Note.NOTE_C3, mArpeggiator.note());
+            int mNote = Scale.get_note(Scale.MINOR_PENTATONIC, Note.NOTE_C3, mArpeggiator.note());
             Tone.note_on(mNote, mArpeggiator.velocity());
         } else {
             Tone.note_off();

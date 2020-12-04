@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9};
+var methods = {"i0":10,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -156,57 +156,47 @@ implements <a href="../welle/AudioBufferRenderer.html" title="interface in welle
           float[][]&nbsp;pInputSamples)</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>static float[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../welle/DSP.html#buffer_left--">buffer_left</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i2" class="altColor">
-<td class="colFirst"><code>static float[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../welle/DSP.html#buffer_right--">buffer_right</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i3" class="rowColor">
-<td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../welle/DSP.html#buffer_size--">buffer_size</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i4" class="altColor">
-<td class="colFirst"><code>static float[]</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../welle/DSP.html#buffer--">buffer</a></span>()</code>&nbsp;</td>
-</tr>
-<tr id="i5" class="rowColor">
-<td class="colFirst"><code>static float</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../welle/DSP.html#clamp-float-float-float-">clamp</a></span>(float&nbsp;pValue,
-     float&nbsp;pMin,
-     float&nbsp;pMax)</code>&nbsp;</td>
-</tr>
-<tr id="i6" class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../welle/DSP.html#draw_buffer-processing.core.PGraphics-int-int-">draw_buffer</a></span>(processing.core.PGraphics&nbsp;g,
            int&nbsp;pWidth,
            int&nbsp;pHeight)</code>&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
-<td class="colFirst"><code>static float</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../welle/DSP.html#flip-float-">flip</a></span>(float&nbsp;pValue)</code>&nbsp;</td>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>static float[]</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../welle/DSP.html#get_buffer_left--">get_buffer_left</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>static float[]</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../welle/DSP.html#get_buffer_right--">get_buffer_right</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../welle/DSP.html#sample_rate--">sample_rate</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../welle/DSP.html#get_buffer_size--">get_buffer_size</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>static float[]</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../welle/DSP.html#get_buffer--">get_buffer</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>static int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../welle/DSP.html#get_sample_rate--">get_sample_rate</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>static <a href="../welle/DSP.html" title="class in welle">DSP</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../welle/DSP.html#start-processing.core.PApplet-">start</a></span>(processing.core.PApplet&nbsp;pPApplet)</code>&nbsp;</td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>static <a href="../welle/DSP.html" title="class in welle">DSP</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../welle/DSP.html#start-processing.core.PApplet-int-">start</a></span>(processing.core.PApplet&nbsp;pPApplet,
      int&nbsp;pNumberOutputChannels)</code>&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>static <a href="../welle/DSP.html" title="class in welle">DSP</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../welle/DSP.html#start-processing.core.PApplet-int-int-">start</a></span>(processing.core.PApplet&nbsp;pPApplet,
      int&nbsp;pNumberOutputChannels,
      int&nbsp;pNumberInputChannels)</code>&nbsp;</td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>static <a href="../welle/DSP.html" title="class in welle">DSP</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../welle/DSP.html#start-processing.core.PApplet-int-int-int-int-">start</a></span>(processing.core.PApplet&nbsp;pPApplet,
      int&nbsp;pOutputDevice,
@@ -312,69 +302,49 @@ implements <a href="../welle/AudioBufferRenderer.html" title="interface in welle
                         int&nbsp;pNumberInputChannels)</pre>
 </li>
 </ul>
-<a name="sample_rate--">
+<a name="get_sample_rate--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>sample_rate</h4>
-<pre>public static&nbsp;int&nbsp;sample_rate()</pre>
+<h4>get_sample_rate</h4>
+<pre>public static&nbsp;int&nbsp;get_sample_rate()</pre>
 </li>
 </ul>
-<a name="buffer_size--">
+<a name="get_buffer_size--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>buffer_size</h4>
-<pre>public static&nbsp;int&nbsp;buffer_size()</pre>
+<h4>get_buffer_size</h4>
+<pre>public static&nbsp;int&nbsp;get_buffer_size()</pre>
 </li>
 </ul>
-<a name="buffer--">
+<a name="get_buffer--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>buffer</h4>
-<pre>public static&nbsp;float[]&nbsp;buffer()</pre>
+<h4>get_buffer</h4>
+<pre>public static&nbsp;float[]&nbsp;get_buffer()</pre>
 </li>
 </ul>
-<a name="buffer_left--">
+<a name="get_buffer_left--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>buffer_left</h4>
-<pre>public static&nbsp;float[]&nbsp;buffer_left()</pre>
+<h4>get_buffer_left</h4>
+<pre>public static&nbsp;float[]&nbsp;get_buffer_left()</pre>
 </li>
 </ul>
-<a name="buffer_right--">
+<a name="get_buffer_right--">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>buffer_right</h4>
-<pre>public static&nbsp;float[]&nbsp;buffer_right()</pre>
-</li>
-</ul>
-<a name="clamp-float-float-float-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>clamp</h4>
-<pre>public static&nbsp;float&nbsp;clamp(float&nbsp;pValue,
-                          float&nbsp;pMin,
-                          float&nbsp;pMax)</pre>
-</li>
-</ul>
-<a name="flip-float-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>flip</h4>
-<pre>public static&nbsp;float&nbsp;flip(float&nbsp;pValue)</pre>
+<h4>get_buffer_right</h4>
+<pre>public static&nbsp;float[]&nbsp;get_buffer_right()</pre>
 </li>
 </ul>
 <a name="draw_buffer-processing.core.PGraphics-int-int-">

@@ -17,11 +17,11 @@ void setup() {
 void draw() {
     background(255);
     stroke(0);
-    if (DSP.buffer() != null) {
-        final int mBufferSize = DSP.buffer_size();
+    if (DSP.get_buffer() != null) {
+        final int mBufferSize = DSP.get_buffer_size();
         for (int i = 0; i < mBufferSize; i++) {
             final float x = map(i, 0, mBufferSize, 0, width);
-            point(x, map(DSP.buffer()[i], -1, 1, 0, height));
+            point(x, map(DSP.get_buffer()[i], -1, 1, 0, height));
         }
     }
 }
@@ -33,6 +33,6 @@ void mouseMoved() {
 void audioblock(float[] pSamples) {
     for (int i = 0; i < pSamples.length; i++) {
         mCounter++;
-        pSamples[i] = 0.5f * sin(2 * PI * mFreq * mCounter / DSP.sample_rate());
+        pSamples[i] = 0.5f * sin(2 * PI * mFreq * mCounter / DSP.get_sample_rate());
     }
 }

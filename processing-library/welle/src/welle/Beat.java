@@ -16,7 +16,7 @@ public class Beat {
 
     public Beat(Object pListener, int pBPM) {
         this(pListener);
-        bpm(pBPM);
+        set_bpm(pBPM);
     }
 
     public Beat(Object pListener) {
@@ -30,7 +30,7 @@ public class Beat {
         mTimer = new Timer();
     }
 
-    public void bpm(float pBPM) {
+    public void set_bpm(float pBPM) {
         final int mPeriod = (int) (60.0f / pBPM * 1000.0f);
         if (mTask != null) {
             mTask.cancel();

@@ -33,7 +33,7 @@ public class InstrumentInternal extends Instrument implements DSPNodeOutput {
 
         /* setup LFO for frequency */
         mFrequencyLFO = new Wavetable(pWavetableSize, pSamplingRate);
-        Wavetable.sine(mFrequencyLFO.wavetable());
+        Wavetable.sine(mFrequencyLFO.get_wavetable());
         mFrequencyLFO.interpolate_samples(true);
         mFrequencyLFO.set_frequency(0);
         mFrequencyLFO.set_amplitude(0);
@@ -41,7 +41,7 @@ public class InstrumentInternal extends Instrument implements DSPNodeOutput {
 
         /* setup LFO for amplitude */
         mAmplitudeLFO = new Wavetable(pWavetableSize, pSamplingRate);
-        Wavetable.sine(mAmplitudeLFO.wavetable());
+        Wavetable.sine(mAmplitudeLFO.get_wavetable());
         mAmplitudeLFO.interpolate_samples(true);
         mAmplitudeLFO.set_frequency(0);
         mAmplitudeLFO.set_amplitude(0);
@@ -109,7 +109,7 @@ public class InstrumentInternal extends Instrument implements DSPNodeOutput {
     @Override
     public void set_oscillator_type(int pOscillator) {
         mOscType = pOscillator;
-        Wavetable.fill(mVCO.wavetable(), pOscillator);
+        Wavetable.fill(mVCO.get_wavetable(), pOscillator);
     }
 
     @Override

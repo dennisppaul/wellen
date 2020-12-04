@@ -35,7 +35,7 @@ public class ExampleBasics02Scales extends PApplet {
         if (key == ' ') {
             mStep++;
             mStep %= mScale.length + 1;
-            mNote = Scale.note(mScale, Note.NOTE_C4, mStep);
+            mNote = Scale.get_note(mScale, Note.NOTE_C4, mStep);
             Tone.note_on(mNote, 100, 0.25f);
         }
         if (key == '1') {

@@ -33,6 +33,6 @@ void beat(int pBeatCount) {
         Tone.note_off();
     } else {
         final int mVelocity = (int) map(mInstrument, 0, 15, 16, 2);
-        Tone.note_on(Scale.note(Scale.MAJOR_CHORD_7, Note.NOTE_C3, mInstrument), mVelocity);
+        Tone.note_on(Scale.get_note(Scale.MAJOR_CHORD_7, Note.NOTE_C3, mInstrument), mVelocity);
     }
 }

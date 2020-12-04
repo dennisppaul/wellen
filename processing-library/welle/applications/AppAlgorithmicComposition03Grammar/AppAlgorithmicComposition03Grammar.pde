@@ -57,7 +57,7 @@ void beat(int pBeatCount) {
     mCharCounter %= mInput.length();
     Tone.instrument(0);
     if (!mSkipNote) {
-        int mNote = Scale.note(mScale, mBaseNote, mNoteCounter);
+        int mNote = Scale.get_note(mScale, mBaseNote, mNoteCounter);
         Tone.note_on(mNote, 100);
     } else {
         Tone.note_off();

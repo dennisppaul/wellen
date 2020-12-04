@@ -16,7 +16,7 @@ public class TestWavetableInterpolation extends PApplet {
     public void setup() {
         Welle.dumpAudioInputAndOutputDevices();
         DSP.start(this);
-        Wavetable.sine(mWavetable.wavetable());
+        Wavetable.sine(mWavetable.get_wavetable());
         mWavetable.set_frequency(172.265625f);
         mWavetable.set_amplitude(0.25f);
         mWavetable.interpolate_samples(true);
@@ -37,19 +37,19 @@ public class TestWavetableInterpolation extends PApplet {
     public void keyPressed() {
         switch (key) {
             case '1':
-                Wavetable.sine(mWavetable.wavetable());
+                Wavetable.sine(mWavetable.get_wavetable());
                 break;
             case '2':
-                Wavetable.triangle(mWavetable.wavetable());
+                Wavetable.triangle(mWavetable.get_wavetable());
                 break;
             case '3':
-                Wavetable.sawtooth(mWavetable.wavetable());
+                Wavetable.sawtooth(mWavetable.get_wavetable());
                 break;
             case '4':
-                Wavetable.fill(mWavetable.wavetable(), Welle.OSC_SQUARE); /* alternative way to fill wavetable */
+                Wavetable.fill(mWavetable.get_wavetable(), Welle.OSC_SQUARE); /* alternative way to fill wavetable */
                 break;
             case '5':
-                randomize(mWavetable.wavetable());
+                randomize(mWavetable.get_wavetable());
                 break;
         }
     }

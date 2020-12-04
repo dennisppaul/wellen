@@ -31,7 +31,7 @@ public class AppSequenceRecorder extends PApplet {
         background(255);
         translate(0, height * 0.5f);
         for (int i = 0; i < mSequence.data().length; i++) {
-            if (mSequence.position() == (i + 1) % mSequence.data().length) {
+            if (mSequence.get_step() == (i + 1) % mSequence.data().length) {
                 fill(0, 31);
                 ellipse(i, 45);
             }
@@ -71,7 +71,7 @@ public class AppSequenceRecorder extends PApplet {
         }
         /* record note */
         if (mLastInput != NO_INPUT) {
-            mSequence.set(mLastInput);
+            mSequence.set_current(mLastInput);
             mLastInput = NO_INPUT;
         }
     }

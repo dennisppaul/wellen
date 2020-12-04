@@ -105,59 +105,38 @@ public class DSP implements AudioBufferRenderer {
         return mInstance;
     }
 
-    public static int sample_rate() {
+    public static int get_sample_rate() {
         return mAudioPlayer == null ? 0 : mAudioPlayer.sample_rate();
     }
 
-    public static int buffer_size() {
+    public static int get_buffer_size() {
         return mAudioPlayer == null ? 0 : mAudioPlayer.buffer_size();
     }
 
-    public static float[] buffer() {
-        return buffer_left();
+    public static float[] get_buffer() {
+        return get_buffer_left();
     }
 
-    public static float[] buffer_left() {
+    public static float[] get_buffer_left() {
         return mInstance == null ? null : mInstance.mCurrentBufferLeft;
     }
 
-    public static float[] buffer_right() {
+    public static float[] get_buffer_right() {
         return mInstance == null ? null : mInstance.mCurrentBufferRight;
     }
 
-    public static float clamp(float pValue, float pMin, float pMax) {
-        if (pValue > pMax) {
-            return pMax;
-        } else if (pValue < pMin) {
-            return pMin;
-        } else {
-            return pValue;
-        }
-    }
-
-    public static float flip(float pValue) {
-        float pMin = -1.0f;
-        float pMax = 1.0f;
-        if (pValue > pMax) {
-            return pValue - PApplet.floor(pValue);
-        } else if (pValue < pMin) {
-            return -PApplet.ceil(pValue) + pValue;
-        } else {
-            return pValue;
-        }
-    }
 
     public static void draw_buffer(PGraphics g, int pWidth, int pHeight) {
-        final int mBufferSize = DSP.buffer_size();
-        if (DSP.buffer() != null) {
+        final int mBufferSize = DSP.get_buffer_size();
+        if (DSP.get_buffer() != null) {
 //            g.beginShape(PConstants.LINES);
             for (int i = 0; i < mBufferSize - 1; i++) {
 //                final float x = PApplet.map(i, 0, mBufferSize, 0, pWidth);
 //                g.vertex(x, PApplet.map(DSP.buffer()[i], -1, 1, 0, pHeight));
                 g.line(PApplet.map(i, 0, mBufferSize, 0, pWidth),
-                        PApplet.map(DSP.buffer()[i], -1, 1, 0, pHeight),
+                        PApplet.map(DSP.get_buffer()[i], -1, 1, 0, pHeight),
                         PApplet.map(i + 1, 0, mBufferSize, 0, pWidth),
-                        PApplet.map(DSP.buffer()[i + 1], -1, 1, 0, pHeight));
+                        PApplet.map(DSP.get_buffer()[i + 1], -1, 1, 0, pHeight));
             }
 //            g.endShape();
         }

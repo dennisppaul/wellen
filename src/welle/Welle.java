@@ -1,5 +1,7 @@
 package welle;
 
+import processing.core.PApplet;
+
 import javax.sound.sampled.AudioSystem;
 
 public class Welle {
@@ -71,6 +73,25 @@ public class Welle {
     }
 
     public static float clamp(float pValue, float pMin, float pMax) {
-        return Math.max(pMin, Math.min(pMax, pValue));
+        if (pValue > pMax) {
+            return pMax;
+        } else if (pValue < pMin) {
+            return pMin;
+        } else {
+            return pValue;
+        }
+//        return Math.max(pMin, Math.min(pMax, pValue));
+    }
+
+    public static float flip(float pValue) {
+        float pMin = -1.0f;
+        float pMax = 1.0f;
+        if (pValue > pMax) {
+            return pValue - PApplet.floor(pValue);
+        } else if (pValue < pMin) {
+            return -PApplet.ceil(pValue) + pValue;
+        } else {
+            return pValue;
+        }
     }
 }
