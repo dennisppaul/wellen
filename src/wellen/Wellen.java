@@ -5,6 +5,7 @@ import processing.core.PApplet;
 import javax.sound.sampled.AudioSystem;
 
 public class Wellen {
+
     public static final int OSC_SINE = 0;
     public static final int OSC_TRIANGLE = 1;
     public static final int OSC_SAWTOOTH = 2;
@@ -81,6 +82,20 @@ public class Wellen {
             return pValue;
         }
 //        return Math.max(pMin, Math.min(pMax, pValue));
+    }
+
+    public static float[] get_extremum(float[] pSignal) {
+        float mMaximum = Float.MIN_VALUE;
+        float mMinimum = Float.MAX_VALUE;
+        for (float f : pSignal) {
+            if (f > mMaximum) {
+                mMaximum = f;
+            }
+            if (f < mMinimum) {
+                mMinimum = f;
+            }
+        }
+        return new float[]{mMinimum, mMaximum};
     }
 
     public static float flip(float pValue) {
