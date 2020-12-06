@@ -72,12 +72,6 @@ public class FFT extends FourierTransform {
         fillSpectrum();
     }
 
-    protected void allocateArrays() {
-        spectrum = new float[timeSize / 2 + 1];
-        real = new float[timeSize];
-        imag = new float[timeSize];
-    }
-
     public void setBand(int i, float a) {
         if (a < 0) {
             throw new IllegalArgumentException("Can't set a frequency band to a negative value.");
@@ -143,6 +137,12 @@ public class FFT extends FourierTransform {
         for (int i = 0; i < buffer.length; i++) {
             buffer[i] = real[i] / real.length;
         }
+    }
+
+    protected void allocateArrays() {
+        spectrum = new float[timeSize / 2 + 1];
+        real = new float[timeSize];
+        imag = new float[timeSize];
     }
 
     // performs an in-place fft on the data in the real and imag arrays
@@ -318,7 +318,7 @@ public class FFT extends FourierTransform {
      * @author Damien Di Fede
      * @see <a href="http://www.dspguide.com/ch8.htm">The Discrete Fourier Transform</a>
      */
-    public abstract class FourierTransform {
+    private abstract static class FourierTransform {
 
         /** A constant indicating no window should be used on sample buffers. */
         public static final int NONE = 0;
