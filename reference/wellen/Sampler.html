@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":9,"i1":9,"i2":9,"i3":10,"i4":9,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10};
+var methods = {"i0":9,"i1":9,"i2":9,"i3":10,"i4":9,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -182,43 +182,47 @@ implements <a href="../wellen/DSPNodeOutput.html" title="interface in wellen">DS
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Sampler.html#float32_to_byte-float-">float32_to_byte</a></span>(float&nbsp;f)</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Sampler.html#interpolate_samples-boolean-">interpolate_samples</a></span>(boolean&nbsp;pInterpolateSamples)</code>&nbsp;</td>
+</tr>
+<tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="../wellen/Sampler.html" title="class in wellen">Sampler</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Sampler.html#load-byte:A-">load</a></span>(byte[]&nbsp;pData)</code>
 <div class="block">load the sample buffer from *raw* byte data.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="../wellen/Sampler.html" title="class in wellen">Sampler</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Sampler.html#load-byte:A-boolean-">load</a></span>(byte[]&nbsp;pData,
     boolean&nbsp;pLittleEndian)</code>
 <div class="block">load the sample buffer from *raw* byte data.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Sampler.html#loop-boolean-">loop</a></span>(boolean&nbsp;pLoop)</code>&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>float</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Sampler.html#output--">output</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Sampler.html#rewind--">rewind</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Sampler.html#set_amplitude-float-">set_amplitude</a></span>(float&nbsp;pAmplitude)</code>&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Sampler.html#set_data-float:A-">set_data</a></span>(float[]&nbsp;pData)</code>&nbsp;</td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Sampler.html#set_frequency-float-">set_frequency</a></span>(float&nbsp;pFrequency)</code>&nbsp;</td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Sampler.html#set_speed-float-">set_speed</a></span>(float&nbsp;pSpeed)</code>&nbsp;</td>
 </tr>
@@ -289,6 +293,45 @@ implements <a href="../wellen/DSPNodeOutput.html" title="interface in wellen">DS
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a name="bytes_to_float32-byte:A-float:A-boolean-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>bytes_to_float32</h4>
+<pre>public static&nbsp;void&nbsp;bytes_to_float32(byte[]&nbsp;pBytes,
+                                    float[]&nbsp;pWavetable,
+                                    boolean&nbsp;pLittleEndian)</pre>
+</li>
+</ul>
+<a name="bytes_to_float32-byte:A-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>bytes_to_float32</h4>
+<pre>public static&nbsp;float&nbsp;bytes_to_float32(byte[]&nbsp;b)</pre>
+</li>
+</ul>
+<a name="bytes_to_float32-byte:A-boolean-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>bytes_to_float32</h4>
+<pre>public static&nbsp;float&nbsp;bytes_to_float32(byte[]&nbsp;b,
+                                     boolean&nbsp;pLittleEndian)</pre>
+</li>
+</ul>
+<a name="float32_to_byte-float-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>float32_to_byte</h4>
+<pre>public static&nbsp;byte[]&nbsp;float32_to_byte(float&nbsp;f)</pre>
+</li>
+</ul>
 <a name="load-byte:A-">
 <!--   -->
 </a>
@@ -370,6 +413,15 @@ implements <a href="../wellen/DSPNodeOutput.html" title="interface in wellen">DS
 <pre>public&nbsp;void&nbsp;set_data(float[]&nbsp;pData)</pre>
 </li>
 </ul>
+<a name="interpolate_samples-boolean-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>interpolate_samples</h4>
+<pre>public&nbsp;void&nbsp;interpolate_samples(boolean&nbsp;pInterpolateSamples)</pre>
+</li>
+</ul>
 <a name="output--">
 <!--   -->
 </a>
@@ -395,49 +447,10 @@ implements <a href="../wellen/DSPNodeOutput.html" title="interface in wellen">DS
 <a name="loop-boolean-">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>loop</h4>
 <pre>public&nbsp;void&nbsp;loop(boolean&nbsp;pLoop)</pre>
-</li>
-</ul>
-<a name="bytes_to_float32-byte:A-float:A-boolean-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>bytes_to_float32</h4>
-<pre>public static&nbsp;void&nbsp;bytes_to_float32(byte[]&nbsp;pBytes,
-                                    float[]&nbsp;pWavetable,
-                                    boolean&nbsp;pLittleEndian)</pre>
-</li>
-</ul>
-<a name="bytes_to_float32-byte:A-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>bytes_to_float32</h4>
-<pre>public static&nbsp;float&nbsp;bytes_to_float32(byte[]&nbsp;b)</pre>
-</li>
-</ul>
-<a name="bytes_to_float32-byte:A-boolean-">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>bytes_to_float32</h4>
-<pre>public static&nbsp;float&nbsp;bytes_to_float32(byte[]&nbsp;b,
-                                     boolean&nbsp;pLittleEndian)</pre>
-</li>
-</ul>
-<a name="float32_to_byte-float-">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>float32_to_byte</h4>
-<pre>public static&nbsp;byte[]&nbsp;float32_to_byte(float&nbsp;f)</pre>
 </li>
 </ul>
 </li>
