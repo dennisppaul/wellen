@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":9,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":9,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -223,53 +223,61 @@ implements <a href="../wellen/AudioBufferRenderer.html" title="interface in well
               int&nbsp;pValue)</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
+<td class="colFirst"><code>float[]</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../wellen/ToneEngineInternal.html#get_buffer_left--">get_buffer_left</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>float[]</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../wellen/ToneEngineInternal.html#get_buffer_right--">get_buffer_right</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i6" class="altColor">
 <td class="colFirst"><code><a href="../wellen/Instrument.html" title="class in wellen">Instrument</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/ToneEngineInternal.html#instrument--">instrument</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code><a href="../wellen/Instrument.html" title="class in wellen">Instrument</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/ToneEngineInternal.html#instrument-int-">instrument</a></span>(int&nbsp;pInstrumentID)</code>&nbsp;</td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>java.util.ArrayList&lt;? extends <a href="../wellen/Instrument.html" title="class in wellen">Instrument</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/ToneEngineInternal.html#instruments--">instruments</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/ToneEngineInternal.html#is_playing--">is_playing</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>static <a href="../wellen/ToneEngineInternal.html" title="class in wellen">ToneEngineInternal</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/ToneEngineInternal.html#no_output--">no_output</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/ToneEngineInternal.html#note_off--">note_off</a></span>()</code>
 <div class="block">turns off the last played note.</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/ToneEngineInternal.html#note_off-int-">note_off</a></span>(int&nbsp;note)</code>
 <div class="block">turn off a note</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/ToneEngineInternal.html#note_on-int-int-">note_on</a></span>(int&nbsp;note,
        int&nbsp;velocity)</code>
 <div class="block">play a note</div>
 </td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/ToneEngineInternal.html#pitch_bend-int-">pitch_bend</a></span>(int&nbsp;pValue)</code>&nbsp;</td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/ToneEngineInternal.html#register_audioblock_callback-wellen.ToneEngineInternal.AudioOutputCallback-">register_audioblock_callback</a></span>(<a href="../wellen/ToneEngineInternal.AudioOutputCallback.html" title="interface in wellen">ToneEngineInternal.AudioOutputCallback</a>&nbsp;pAudioblockCallback)</code>&nbsp;</td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/ToneEngineInternal.html#replace_instrument-wellen.Instrument-">replace_instrument</a></span>(<a href="../wellen/Instrument.html" title="class in wellen">Instrument</a>&nbsp;pInstrument)</code>&nbsp;</td>
 </tr>
@@ -279,7 +287,7 @@ implements <a href="../wellen/AudioBufferRenderer.html" title="interface in well
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;wellen.<a href="../wellen/ToneEngine.html" title="class in wellen">ToneEngine</a></h3>
-<code><a href="../wellen/ToneEngine.html#create--">create</a>, <a href="../wellen/ToneEngine.html#create-java.lang.String...-">create</a>, <a href="../wellen/ToneEngine.html#note_on-int-int-float-">note_on</a></code></li>
+<code><a href="../wellen/ToneEngine.html#create--">create</a>, <a href="../wellen/ToneEngine.html#create-java.lang.String...-">create</a>, <a href="../wellen/ToneEngine.html#get_buffer--">get_buffer</a>, <a href="../wellen/ToneEngine.html#note_on-int-int-float-">note_on</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
@@ -521,6 +529,32 @@ implements <a href="../wellen/AudioBufferRenderer.html" title="interface in well
 <li class="blockList">
 <h4>audioblock</h4>
 <pre>public&nbsp;void&nbsp;audioblock(float[]&nbsp;pSamples)</pre>
+</li>
+</ul>
+<a name="get_buffer_left--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>get_buffer_left</h4>
+<pre>public&nbsp;float[]&nbsp;get_buffer_left()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="../wellen/ToneEngine.html#get_buffer_left--">get_buffer_left</a></code>&nbsp;in class&nbsp;<code><a href="../wellen/ToneEngine.html" title="class in wellen">ToneEngine</a></code></dd>
+</dl>
+</li>
+</ul>
+<a name="get_buffer_right--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>get_buffer_right</h4>
+<pre>public&nbsp;float[]&nbsp;get_buffer_right()</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="../wellen/ToneEngine.html#get_buffer_right--">get_buffer_right</a></code>&nbsp;in class&nbsp;<code><a href="../wellen/ToneEngine.html" title="class in wellen">ToneEngine</a></code></dd>
+</dl>
 </li>
 </ul>
 <a name="register_audioblock_callback-wellen.ToneEngineInternal.AudioOutputCallback-">

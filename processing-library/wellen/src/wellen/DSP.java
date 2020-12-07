@@ -33,6 +33,11 @@ public class DSP implements AudioBufferRenderer {
                 mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME,
                         float[].class,
                         float[].class);
+            } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 1) {
+                mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME,
+                        float[].class,
+                        float[].class,
+                        float[].class);
             } else if (mNumberOutputChannels == 1 && mNumberInputChannels == 1) {
                 mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME,
                         float[].class,
@@ -45,8 +50,10 @@ public class DSP implements AudioBufferRenderer {
                         float[][].class);
             }
         } catch (NoSuchMethodException | SecurityException ex) {
-            System.err.println("+++ @DSP / could not find callback `" + METHOD_NAME + "()`. hint: check the callback " +
-                    "method paramters, they must match the number of input and ouput channels. default is `" + METHOD_NAME + "(float[])` ( = MONO OUTPUT ).");
+            System.err.println("+++ @" + DSP.class.getSimpleName() + " / could not find callback `" + METHOD_NAME +
+                    "()`.");
+            System.err.println("    hint: check the callback method parameters, they must match the number of input" +
+                    " and output channels. default is `" + METHOD_NAME + "(float[])` ( = MONO OUTPUT ).");
         }
     }
 
@@ -62,15 +69,17 @@ public class DSP implements AudioBufferRenderer {
                 mMethod.invoke(mListener, pOutputSamples[0], pOutputSamples[1]);
                 mCurrentBufferLeft = pOutputSamples[0];
                 mCurrentBufferRight = pOutputSamples[1];
+            } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 1) {
+                mMethod.invoke(mListener, pOutputSamples[0], pOutputSamples[1], pInputSamples[0]);
+                mCurrentBufferLeft = pOutputSamples[0];
+                mCurrentBufferRight = pOutputSamples[1];
             } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 2) {
                 mMethod.invoke(mListener, pOutputSamples[0], pOutputSamples[1], pInputSamples[0], pInputSamples[1]);
                 mCurrentBufferLeft = pOutputSamples[0];
                 mCurrentBufferRight = pOutputSamples[1];
-            } else {
-                mMethod.invoke(mListener, pOutputSamples);
             }
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-            ex.printStackTrace();
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException ex) {
+//            ex.printStackTrace();
         }
     }
 
@@ -125,21 +134,22 @@ public class DSP implements AudioBufferRenderer {
         return mInstance == null ? null : mInstance.mCurrentBufferRight;
     }
 
-
     public static void draw_buffer(PGraphics g, int pWidth, int pHeight) {
-        final int mBufferSize = DSP.get_buffer_size();
-        if (DSP.get_buffer() != null) {
-//            g.beginShape(PConstants.LINES);
-            for (int i = 0; i < mBufferSize - 1; i++) {
-//                final float x = PApplet.map(i, 0, mBufferSize, 0, pWidth);
-//                g.vertex(x, PApplet.map(DSP.buffer()[i], -1, 1, 0, pHeight));
-                g.line(PApplet.map(i, 0, mBufferSize, 0, pWidth),
-                        PApplet.map(DSP.get_buffer()[i], -1, 1, 0, pHeight),
-                        PApplet.map(i + 1, 0, mBufferSize, 0, pWidth),
-                        PApplet.map(DSP.get_buffer()[i + 1], -1, 1, 0, pHeight));
-            }
-//            g.endShape();
-        }
+        Wellen.draw_buffer(g, pWidth, pHeight, DSP.get_buffer());
+//        final int mBufferSize = DSP.get_buffer_size();
+//        g.line(0, pHeight * 0.5f, pWidth, pHeight * 0.5f);
+//        if (DSP.get_buffer() != null) {
+////            g.beginShape(PConstants.LINES);
+//            for (int i = 0; i < mBufferSize - 1; i++) {
+////                final float x = PApplet.map(i, 0, mBufferSize, 0, pWidth);
+////                g.vertex(x, PApplet.map(DSP.buffer()[i], -1, 1, 0, pHeight));
+//                g.line(PApplet.map(i, 0, mBufferSize, 0, pWidth),
+//                       PApplet.map(DSP.get_buffer()[i], -1.0f, 1.0f, 0, pHeight),
+//                       PApplet.map(i + 1, 0, mBufferSize, 0, pWidth),
+//                       PApplet.map(DSP.get_buffer()[i + 1], -1.0f, 1.0f, 0, pHeight));
+//            }
+////            g.endShape();
+//        }
     }
 }
 

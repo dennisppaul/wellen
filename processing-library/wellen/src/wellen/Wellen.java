@@ -1,10 +1,12 @@
 package wellen;
 
 import processing.core.PApplet;
+import processing.core.PGraphics;
 
 import javax.sound.sampled.AudioSystem;
 
 public class Wellen {
+
     public static final int OSC_SINE = 0;
     public static final int OSC_TRIANGLE = 1;
     public static final int OSC_SAWTOOTH = 2;
@@ -83,6 +85,20 @@ public class Wellen {
 //        return Math.max(pMin, Math.min(pMax, pValue));
     }
 
+    public static float[] get_extremum(float[] pSignal) {
+        float mMaximum = Float.MIN_VALUE;
+        float mMinimum = Float.MAX_VALUE;
+        for (float f : pSignal) {
+            if (f > mMaximum) {
+                mMaximum = f;
+            }
+            if (f < mMinimum) {
+                mMinimum = f;
+            }
+        }
+        return new float[]{mMinimum, mMaximum};
+    }
+
     public static float flip(float pValue) {
         float pMin = -1.0f;
         float pMax = 1.0f;
@@ -92,6 +108,18 @@ public class Wellen {
             return -PApplet.ceil(pValue) + pValue;
         } else {
             return pValue;
+        }
+    }
+
+    public static void draw_buffer(PGraphics g, int pWidth, int pHeight, float[] pBuffer) {
+        g.line(0, pHeight * 0.5f, pWidth, pHeight * 0.5f);
+        if (pBuffer != null) {
+            for (int i = 0; i < pBuffer.length - 1; i++) {
+                g.line(PApplet.map(i, 0, pBuffer.length, 0, pWidth),
+                        PApplet.map(pBuffer[i], -1.0f, 1.0f, 0, pHeight),
+                        PApplet.map(i + 1, 0, pBuffer.length, 0, pWidth),
+                        PApplet.map(pBuffer[i + 1], -1.0f, 1.0f, 0, pHeight));
+            }
         }
     }
 }

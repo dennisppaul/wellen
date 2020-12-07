@@ -119,6 +119,18 @@ public abstract class Tone {
         return instance().instrument();
     }
 
+    public static float[] get_buffer() {
+        return instance().get_buffer();
+    }
+
+    public static float[] get_buffer_left() {
+        return instance().get_buffer_left();
+    }
+
+    public static float[] get_buffer_right() {
+        return instance().get_buffer_right();
+    }
+
     public static void replace_instrument(Class<? extends Instrument> pInstrumentClass, int pID) {
         instance().replace_instrument(create_instrument(pInstrumentClass, pID));
     }

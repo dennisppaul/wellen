@@ -4,6 +4,8 @@ import oscP5.*;
 
 float mFreq = 440.0f;
 
+float mAmp = 0.5f;
+
 int mCounter = 0;
 
 void settings() {
@@ -28,11 +30,12 @@ void draw() {
 
 void mouseMoved() {
     mFreq = map(mouseX, 0, width, 55, 440);
+    mAmp = map(mouseY, 0, height, 0, 1);
 }
 
 void audioblock(float[] pSamples) {
     for (int i = 0; i < pSamples.length; i++) {
         mCounter++;
-        pSamples[i] = 0.5f * sin(2 * PI * mFreq * mCounter / DSP.get_sample_rate());
+        pSamples[i] = mAmp * sin(2 * PI * mFreq * mCounter / DSP.get_sample_rate());
     }
 }

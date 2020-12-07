@@ -65,6 +65,18 @@ public abstract class ToneEngine {
 
     public abstract void replace_instrument(Instrument pInstrument);
 
+    public float[] get_buffer() {
+        return get_buffer_left();
+    }
+
+    public float[] get_buffer_left() {
+        return null;
+    }
+
+    public float[] get_buffer_right() {
+        return null;
+    }
+
     public static ToneEngine create() {
         return new ToneEngineInternal();
     }

@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":6,"i1":9,"i2":9,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":10,"i11":6,"i12":6};
+var methods = {"i0":6,"i1":9,"i2":9,"i3":10,"i4":10,"i5":10,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":10,"i14":6,"i15":6};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -179,41 +179,53 @@ extends java.lang.Object</pre>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/ToneEngine.html#create-java.lang.String...-">create</a></span>(java.lang.String...&nbsp;pName)</code>&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
+<td class="colFirst"><code>float[]</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../wellen/ToneEngine.html#get_buffer_left--">get_buffer_left</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>float[]</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../wellen/ToneEngine.html#get_buffer_right--">get_buffer_right</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>float[]</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../wellen/ToneEngine.html#get_buffer--">get_buffer</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>abstract <a href="../wellen/Instrument.html" title="class in wellen">Instrument</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/ToneEngine.html#instrument--">instrument</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>abstract <a href="../wellen/Instrument.html" title="class in wellen">Instrument</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/ToneEngine.html#instrument-int-">instrument</a></span>(int&nbsp;pInstrumentID)</code>&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>abstract java.util.ArrayList&lt;? extends <a href="../wellen/Instrument.html" title="class in wellen">Instrument</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/ToneEngine.html#instruments--">instruments</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>abstract boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/ToneEngine.html#is_playing--">is_playing</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>abstract void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/ToneEngine.html#note_off--">note_off</a></span>()</code>
 <div class="block">turns off the last played note.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>abstract void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/ToneEngine.html#note_off-int-">note_off</a></span>(int&nbsp;note)</code>
 <div class="block">turn off a note</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>abstract void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/ToneEngine.html#note_on-int-int-">note_on</a></span>(int&nbsp;note,
        int&nbsp;velocity)</code>
 <div class="block">play a note</div>
 </td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/ToneEngine.html#note_on-int-int-float-">note_on</a></span>(int&nbsp;note,
        int&nbsp;velocity,
@@ -221,11 +233,11 @@ extends java.lang.Object</pre>
 <div class="block">play a note</div>
 </td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>abstract void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/ToneEngine.html#pitch_bend-int-">pitch_bend</a></span>(int&nbsp;pValue)</code>&nbsp;</td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>abstract void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/ToneEngine.html#replace_instrument-wellen.Instrument-">replace_instrument</a></span>(<a href="../wellen/Instrument.html" title="class in wellen">Instrument</a>&nbsp;pInstrument)</code>&nbsp;</td>
 </tr>
@@ -444,6 +456,33 @@ extends java.lang.Object</pre>
 <li class="blockList">
 <h4>replace_instrument</h4>
 <pre>public abstract&nbsp;void&nbsp;replace_instrument(<a href="../wellen/Instrument.html" title="class in wellen">Instrument</a>&nbsp;pInstrument)</pre>
+</li>
+</ul>
+<a name="get_buffer--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>get_buffer</h4>
+<pre>public&nbsp;float[]&nbsp;get_buffer()</pre>
+</li>
+</ul>
+<a name="get_buffer_left--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>get_buffer_left</h4>
+<pre>public&nbsp;float[]&nbsp;get_buffer_left()</pre>
+</li>
+</ul>
+<a name="get_buffer_right--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>get_buffer_right</h4>
+<pre>public&nbsp;float[]&nbsp;get_buffer_right()</pre>
 </li>
 </ul>
 <a name="create--">

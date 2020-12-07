@@ -32,9 +32,9 @@ void draw() {
 
 void mousePressed() {
     int mNote = 53;
-    Tone.instrument(0).note_on(mNote, 40);
-    Tone.instrument(1).note_on(mNote + 7, 30);
-    Tone.instrument(2).note_on(mNote + 12, 30);
+    Tone.instrument(0).note_on(mNote, 80);
+    Tone.instrument(1).note_on(mNote + 7, 60);
+    Tone.instrument(2).note_on(mNote + 12, 60);
 }
 
 void mouseReleased() {

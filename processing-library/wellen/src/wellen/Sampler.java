@@ -17,6 +17,7 @@ public class Sampler implements DSPNodeOutput {
     private boolean mLoop = false;
     private boolean mDirectionForward;
     private float mSpeed;
+    private boolean mInterpolateSamples;
 
     public Sampler() {
         this(0);
@@ -34,8 +35,40 @@ public class Sampler implements DSPNodeOutput {
         mData = pWavetable;
         mSamplingRate = pSamplingRate;
         mArrayPtr = 0;
+        mInterpolateSamples = false;
         set_speed(1);
         set_amplitude(0.75f);
+    }
+
+    public static void bytes_to_float32(byte[] pBytes, float[] pWavetable, boolean pLittleEndian) {
+        if (pBytes.length / 4 == pWavetable.length) {
+            for (int i = 0; i < pWavetable.length; i++) {
+                pWavetable[i] = bytes_to_float32(pBytes, i * 4, (i + 1) * 4, pLittleEndian);
+            }
+        } else {
+            System.err.println("+++ WARNING @ Wavetable.from_bytes / array sizes do not match. make sure the byte " +
+                    "array is exactly 4 times the size of the float array");
+        }
+    }
+
+    public static float bytes_to_float32(byte[] b) {
+        return bytes_to_float32(b, true);
+    }
+
+    public static float bytes_to_float32(byte[] b, boolean pLittleEndian) {
+        if (b.length != 4) {
+            System.out.println("+++ WARNING @ Sampler.bytesToFloat32(byte[], boolean)");
+        }
+        return ByteBuffer.wrap(b).order(pLittleEndian ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN).getFloat();
+    }
+
+    public static byte[] float32_to_byte(float f) {
+        return ByteBuffer.allocate(4).putFloat(f).array();
+    }
+
+    private static float bytes_to_float32(byte[] pBytes, int pStart, int pEnd, boolean pLittleEndian) {
+        final byte[] mBytes = Arrays.copyOfRange(pBytes, pStart, pEnd);
+        return bytes_to_float32(mBytes, pLittleEndian);
     }
 
     /**
@@ -93,6 +126,10 @@ public class Sampler implements DSPNodeOutput {
         mData = pData;
     }
 
+    public void interpolate_samples(boolean pInterpolateSamples) {
+        mInterpolateSamples = pInterpolateSamples;
+    }
+
     public float output() {
         mArrayPtr += mStepSize;
         final int i = (int) mArrayPtr;
@@ -102,8 +139,18 @@ public class Sampler implements DSPNodeOutput {
         final float mFrac = mArrayPtr - i;
         final int j = i % mData.length;
         mArrayPtr = j + mFrac;
-        final float mSample = mDirectionForward ? mData[j] : mData[(mData.length - 1) - j];
-        return mSample * mAmplitude;
+
+        if (mInterpolateSamples) {
+            final int mIndex = mDirectionForward ? j : (mData.length - 1) - j;
+            final int mNextIndex = mDirectionForward ? (mIndex + 1) % mData.length : (mIndex == 0 ? mData.length - 1 : mIndex - 1);
+            final float mNextSample = mData[mNextIndex];
+            final float mSample = mData[mIndex];
+            final float mInterpolatedSample = mSample * (1.0f - mFrac) + mNextSample * mFrac;
+            return mInterpolatedSample * mAmplitude;
+        } else {
+            final float mSample = mDirectionForward ? mData[j] : mData[(mData.length - 1) - j];
+            return mSample * mAmplitude;
+        }
     }
 
     public void rewind() {
@@ -112,36 +159,5 @@ public class Sampler implements DSPNodeOutput {
 
     public void loop(boolean pLoop) {
         mLoop = pLoop;
-    }
-
-    public static void bytes_to_float32(byte[] pBytes, float[] pWavetable, boolean pLittleEndian) {
-        if (pBytes.length / 4 == pWavetable.length) {
-            for (int i = 0; i < pWavetable.length; i++) {
-                pWavetable[i] = bytes_to_float32(pBytes, i * 4, (i + 1) * 4, pLittleEndian);
-            }
-        } else {
-            System.err.println("+++ WARNING @ Wavetable.from_bytes / array sizes do not match. make sure the byte " +
-                    "array is exactly 4 times the size of the float array");
-        }
-    }
-
-    public static float bytes_to_float32(byte[] b) {
-        return bytes_to_float32(b, true);
-    }
-
-    public static float bytes_to_float32(byte[] b, boolean pLittleEndian) {
-        if (b.length != 4) {
-            System.out.println("+++ WARNING @ Sampler.bytesToFloat32(byte[], boolean)");
-        }
-        return ByteBuffer.wrap(b).order(pLittleEndian ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN).getFloat();
-    }
-
-    public static byte[] float32_to_byte(float f) {
-        return ByteBuffer.allocate(4).putFloat(f).array();
-    }
-
-    private static float bytes_to_float32(byte[] pBytes, int pStart, int pEnd, boolean pLittleEndian) {
-        final byte[] mBytes = Arrays.copyOfRange(pBytes, pStart, pEnd);
-        return bytes_to_float32(mBytes, pLittleEndian);
     }
 }

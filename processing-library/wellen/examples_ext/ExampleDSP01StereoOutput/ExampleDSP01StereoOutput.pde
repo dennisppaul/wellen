@@ -34,12 +34,12 @@ void mouseMoved() {
     mDetune = map(mouseY, 0, height, 1.0f, 1.5f);
 }
 
-void audioblock(float[] pSamplesLeft, float[] pSamplesRight) {
-    for (int i = 0; i < pSamplesLeft.length; i++) {
+void audioblock(float[] pOutputSamplesLeft, float[] pOutputSamplesRight) {
+    for (int i = 0; i < pOutputSamplesLeft.length; i++) {
         mCounter++;
         float mLeft = 0.5f * sin(2 * PI * mFreq * mCounter / DSP.get_sample_rate());
         float mRight = 0.5f * sin(2 * PI * mFreq * mDetune * mCounter / DSP.get_sample_rate());
-        pSamplesLeft[i] = mLeft * 0.7f + mRight * 0.3f;
-        pSamplesRight[i] = mLeft * 0.3f + mRight * 0.7f;
+        pOutputSamplesLeft[i] = mLeft * 0.7f + mRight * 0.3f;
+        pOutputSamplesRight[i] = mLeft * 0.3f + mRight * 0.7f;
     }
 }
