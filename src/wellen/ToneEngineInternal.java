@@ -11,6 +11,8 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
     private final AudioBufferManager mAudioPlayer;
     private int mCurrentInstrumentID;
     private AudioOutputCallback mAudioblockCallback = null;
+    private float[] mCurrentBufferLeft;
+    private float[] mCurrentBufferRight;
 
     public ToneEngineInternal(int pSamplingRate,
             int pOutputDeviceID,
@@ -128,6 +130,8 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
             pSamplesLeft[i] = mSampleL;
             pSamplesRight[i] = mSampleR;
         }
+        mCurrentBufferLeft = pSamplesLeft;
+        mCurrentBufferRight = pSamplesRight;
     }
 
     public void audioblock(float[] pSamples) {
@@ -138,6 +142,15 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
             }
             pSamples[i] = mSample;
         }
+        mCurrentBufferLeft = pSamples;
+    }
+
+    public float[] get_buffer_left() {
+        return mCurrentBufferLeft;
+    }
+
+    public float[] get_buffer_right() {
+        return mCurrentBufferRight;
     }
 
     public void register_audioblock_callback(AudioOutputCallback pAudioblockCallback) {
@@ -151,6 +164,7 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
     public static ToneEngineInternal no_output() {
         return new ToneEngineInternal(Wellen.DEFAULT_SAMPLING_RATE, Wellen.DEFAULT_AUDIO_DEVICE, Wellen.NO_CHANNELS);
     }
+
 
     public interface AudioOutputCallback {
 

@@ -18,6 +18,8 @@ package wellen;
  *   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+import java.lang.reflect.Array;
+
 /**
  * FFT stands for Fast Fourier Transform. It is an efficient way to calculate the Complex Discrete Fourier Transform.
  * There is not much to say about this class other than the fact that when you want to analyze the spectrum of an audio
@@ -32,6 +34,7 @@ package wellen;
  */
 public class FFT extends FourierTransform {
 
+    private static FFT instance;
     private int[] reverse;
     private float[] sinlookup;
     private float[] coslookup;
@@ -183,7 +186,9 @@ public class FFT extends FourierTransform {
         // set up the bit reversing table
         reverse[0] = 0;
         for (int limit = 1, bit = N / 2; limit < N; limit <<= 1, bit >>= 1) {
-            for (int i = 0; i < limit; i++) { reverse[i + limit] = reverse[i] + bit; }
+            for (int i = 0; i < limit; i++) {
+                reverse[i + limit] = reverse[i] + bit;
+            }
         }
     }
 
@@ -226,6 +231,28 @@ public class FFT extends FourierTransform {
             sinlookup[i] = (float) Math.sin(-(float) Math.PI / i);
             coslookup[i] = (float) Math.cos(-(float) Math.PI / i);
         }
+    }
+
+    public static FFT instance() {
+        if (instance == null) {
+            instance = new FFT(Wellen.DEFAULT_AUDIOBLOCK_SIZE, Wellen.DEFAULT_SAMPLING_RATE);
+            instance.window(FFT.HAMMING);
+        }
+        return instance;
+    }
+
+    public static float[] get_spectrum() {
+        return instance().getSpectrum();
+    }
+
+    public static float get_frequency(float pFrequency) {
+        return instance().getFreq(pFrequency);
+    }
+
+    public static void perform_forward_transform(float[] pSignal) {
+        float[] mSignalCopy = new float[pSignal.length];
+        System.arraycopy(pSignal, 0, mSignalCopy, 0, Array.getLength(pSignal));
+        instance().forward(mSignalCopy);
     }
 
     /**
@@ -320,9 +347,13 @@ public class FFT extends FourierTransform {
      */
     private abstract static class FourierTransform {
 
-        /** A constant indicating no window should be used on sample buffers. */
+        /**
+         * A constant indicating no window should be used on sample buffers.
+         */
         public static final int NONE = 0;
-        /** A constant indicating a Hamming window should be used on sample buffers. */
+        /**
+         * A constant indicating a Hamming window should be used on sample buffers.
+         */
         public static final int HAMMING = 1;
         protected static final int LINAVG = 2;
         protected static final int LOGAVG = 3;
@@ -445,8 +476,12 @@ public class FFT extends FourierTransform {
          * @return the amplitude of the requested frequency band
          */
         public float getBand(int i) {
-            if (i < 0) { i = 0; }
-            if (i > spectrum.length - 1) { i = spectrum.length - 1; }
+            if (i < 0) {
+                i = 0;
+            }
+            if (i > spectrum.length - 1) {
+                i = spectrum.length - 1;
+            }
             return spectrum[i];
         }
 
@@ -488,9 +523,13 @@ public class FFT extends FourierTransform {
          */
         public int freqToIndex(float freq) {
             // special case: freq is lower than the bandwidth of spectrum[0]
-            if (freq < getBandWidth() / 2) { return 0; }
+            if (freq < getBandWidth() / 2) {
+                return 0;
+            }
             // special case: freq is within the bandwidth of spectrum[spectrum.length - 1]
-            if (freq > sampleRate / 2 - getBandWidth() / 2) { return spectrum.length - 1; }
+            if (freq > sampleRate / 2 - getBandWidth() / 2) {
+                return spectrum.length - 1;
+            }
             // all other cases
             float fraction = freq / (float) sampleRate;
             int i = Math.round(timeSize * fraction);
@@ -506,7 +545,9 @@ public class FFT extends FourierTransform {
             float bw = getBandWidth();
             // special case: the width of the first bin is half that of the others.
             //               so the center frequency is a quarter of the way.
-            if (i == 0) { return bw * 0.25f; }
+            if (i == 0) {
+                return bw * 0.25f;
+            }
             // special case: the width of the last bin is half that of the others.
             if (i == spectrum.length - 1) {
                 float lastBinBeginFreq = (sampleRate / 2) - (bw / 2);
@@ -606,7 +647,11 @@ public class FFT extends FourierTransform {
          */
         public float getAvg(int i) {
             float ret;
-            if (averages.length > 0) { ret = averages[i]; } else { ret = 0; }
+            if (averages.length > 0) {
+                ret = averages[i];
+            } else {
+                ret = 0;
+            }
             return ret;
         }
 
@@ -647,8 +692,8 @@ public class FFT extends FourierTransform {
         public void forward(float[] buffer, int startAt) {
             if (buffer.length - startAt < timeSize) {
                 throw new IllegalArgumentException("FourierTransform.forward: not enough samples in the buffer " +
-                                                   "between " + startAt + " and " + buffer.length + " to perform a " +
-                                                   "transform.");
+                        "between " + startAt + " and " + buffer.length + " to perform a " +
+                        "transform.");
             }
 
             // copy the section of samples we want to analyze
@@ -864,9 +909,13 @@ public class FFT extends FourierTransform {
  */
 abstract class FourierTransform {
 
-    /** A constant indicating no window should be used on sample buffers. */
+    /**
+     * A constant indicating no window should be used on sample buffers.
+     */
     public static final int NONE = 0;
-    /** A constant indicating a Hamming window should be used on sample buffers. */
+    /**
+     * A constant indicating a Hamming window should be used on sample buffers.
+     */
     public static final int HAMMING = 1;
     protected static final int LINAVG = 2;
     protected static final int LOGAVG = 3;
@@ -988,8 +1037,12 @@ abstract class FourierTransform {
      * @return the amplitude of the requested frequency band
      */
     public float getBand(int i) {
-        if (i < 0) { i = 0; }
-        if (i > spectrum.length - 1) { i = spectrum.length - 1; }
+        if (i < 0) {
+            i = 0;
+        }
+        if (i > spectrum.length - 1) {
+            i = spectrum.length - 1;
+        }
         return spectrum[i];
     }
 
@@ -1031,9 +1084,13 @@ abstract class FourierTransform {
      */
     public int freqToIndex(float freq) {
         // special case: freq is lower than the bandwidth of spectrum[0]
-        if (freq < getBandWidth() / 2) { return 0; }
+        if (freq < getBandWidth() / 2) {
+            return 0;
+        }
         // special case: freq is within the bandwidth of spectrum[spectrum.length - 1]
-        if (freq > sampleRate / 2 - getBandWidth() / 2) { return spectrum.length - 1; }
+        if (freq > sampleRate / 2 - getBandWidth() / 2) {
+            return spectrum.length - 1;
+        }
         // all other cases
         float fraction = freq / (float) sampleRate;
         int i = Math.round(timeSize * fraction);
@@ -1044,12 +1101,15 @@ abstract class FourierTransform {
      * Returns the middle frequency of the i<sup>th</sup> band.
      *
      * @param i the index of the band you want to middle frequency of
+     * @return Returns the middle frequency of the i<sup>th</sup> band.
      */
     public float indexToFreq(int i) {
         float bw = getBandWidth();
         // special case: the width of the first bin is half that of the others.
         //               so the center frequency is a quarter of the way.
-        if (i == 0) { return bw * 0.25f; }
+        if (i == 0) {
+            return bw * 0.25f;
+        }
         // special case: the width of the last bin is half that of the others.
         if (i == spectrum.length - 1) {
             float lastBinBeginFreq = (sampleRate / 2) - (bw / 2);
@@ -1067,6 +1127,7 @@ abstract class FourierTransform {
      * Returns the center frequency of the i<sup>th</sup> average band.
      *
      * @param i which average band you want the center frequency of.
+     * @return Returns the center frequency of the i<sup>th</sup> average band.
      */
     public float getAverageCenterFrequency(int i) {
         if (whichAverage == LINAVG) {
@@ -1149,7 +1210,11 @@ abstract class FourierTransform {
      */
     public float getAvg(int i) {
         float ret;
-        if (averages.length > 0) { ret = averages[i]; } else { ret = 0; }
+        if (averages.length > 0) {
+            ret = averages[i];
+        } else {
+            ret = 0;
+        }
         return ret;
     }
 

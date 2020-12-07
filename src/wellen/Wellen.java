@@ -1,6 +1,7 @@
 package wellen;
 
 import processing.core.PApplet;
+import processing.core.PGraphics;
 
 import javax.sound.sampled.AudioSystem;
 
@@ -107,6 +108,18 @@ public class Wellen {
             return -PApplet.ceil(pValue) + pValue;
         } else {
             return pValue;
+        }
+    }
+
+    public static void draw_buffer(PGraphics g, int pWidth, int pHeight, float[] pBuffer) {
+        g.line(0, pHeight * 0.5f, pWidth, pHeight * 0.5f);
+        if (pBuffer != null) {
+            for (int i = 0; i < pBuffer.length - 1; i++) {
+                g.line(PApplet.map(i, 0, pBuffer.length, 0, pWidth),
+                        PApplet.map(pBuffer[i], -1.0f, 1.0f, 0, pHeight),
+                        PApplet.map(i + 1, 0, pBuffer.length, 0, pWidth),
+                        PApplet.map(pBuffer[i + 1], -1.0f, 1.0f, 0, pHeight));
+            }
         }
     }
 }

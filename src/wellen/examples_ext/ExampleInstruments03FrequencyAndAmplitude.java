@@ -17,7 +17,7 @@ public class ExampleInstruments03FrequencyAndAmplitude extends PApplet {
     }
 
     public void setup() {
-        /* disable ADSR */
+        /* disable ADSR to release amplitude control */
         Tone.instrument().enable_ADSR(false);
     }
 
@@ -31,7 +31,7 @@ public class ExampleInstruments03FrequencyAndAmplitude extends PApplet {
 
     public void mouseMoved() {
         float mFreq = map(mouseX, 0, width, 110, 440);
-        float mAmp = mouseY / (float) height;
+        float mAmp = map(mouseY, 0, height, 0, 1);
         Tone.instrument().set_frequency(mFreq);
         Tone.instrument().set_amplitude(mAmp);
     }

@@ -10,6 +10,7 @@ import wellen.DSP;
 public class ExampleBasics04DSP extends PApplet {
 
     private float mFreq = 440.0f;
+    private float mAmp = 0.5f;
     private int mCounter = 0;
 
     public void settings() {
@@ -34,12 +35,13 @@ public class ExampleBasics04DSP extends PApplet {
 
     public void mouseMoved() {
         mFreq = map(mouseX, 0, width, 55, 440);
+        mAmp = map(mouseY, 0, height, 0, 1);
     }
 
     public void audioblock(float[] pSamples) {
         for (int i = 0; i < pSamples.length; i++) {
             mCounter++;
-            pSamples[i] = 0.5f * sin(2 * PI * mFreq * mCounter / DSP.get_sample_rate());
+            pSamples[i] = mAmp * sin(2 * PI * mFreq * mCounter / DSP.get_sample_rate());
         }
     }
 
