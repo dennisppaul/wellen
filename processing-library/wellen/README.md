@@ -12,9 +12,9 @@ the library can be installed as a [Processing library](https://processing.org/re
 
 ## concepts
 
-watch the screencast series [Wellen](https://www.youtube.com/playlist?list=PLXJNr6N-Bu4NzkP4UJ5m-9721MdaZ6v-q) as an introduction by coding examples to the *wellen* library.
+in the screencast series [Wellen](https://www.youtube.com/playlist?list=PLXJNr6N-Bu4NzkP4UJ5m-9721MdaZ6v-q) some of the examples are explained in more detail. the text below explains the core concepts of the *wellen* library:
 
-below is a text-based explanation of the core concepts of the *wellen* library:
+![](./resources/wellen-schematics.png)
 
 ### `Tone`
 

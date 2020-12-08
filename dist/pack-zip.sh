@@ -11,5 +11,5 @@ if [ -f "$ZIP_NAME" ]; then
 	rm "$ZIP_NAME"
 fi
 
-zip --quiet -r "$ZIP_NAME" ./$LIB_NAME
+zip --quiet -r "$ZIP_NAME" ./$LIB_NAME -x "*.DS_Store"
 cd ../dist/
