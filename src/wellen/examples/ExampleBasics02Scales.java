@@ -6,7 +6,7 @@ import wellen.Scale;
 import wellen.Tone;
 
 /**
- * this example demonstrates how to use musical scales. a selection of predefined scales is available in `Scale`,
+ * this example demonstrates how to use *musical scales*. a selection of predefined scales is available in `Scale`,
  * however custom scales can also be created.
  */
 public class ExampleBasics02Scales extends PApplet {
@@ -27,8 +27,8 @@ public class ExampleBasics02Scales extends PApplet {
 
     public void draw() {
         background(255);
-        float mScale = map(mNote, Note.NOTE_C4, Note.NOTE_C5, height * 0.1f, height * 0.8f);
-        ellipse(width * 0.5f, height * 0.5f, mScale, mScale);
+        float mDiameter = map(mNote, Note.NOTE_C4, Note.NOTE_C5, height * 0.1f, height * 0.8f);
+        ellipse(width * 0.5f, height * 0.5f, mDiameter, mDiameter);
     }
 
     public void keyPressed() {

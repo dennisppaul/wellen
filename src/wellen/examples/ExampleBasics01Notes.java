@@ -4,7 +4,7 @@ import processing.core.PApplet;
 import wellen.Tone;
 
 /**
- * this example demonstrates how to use the default tone engine to play notes.
+ * this example demonstrates how to play *musical notes*.
  */
 public class ExampleBasics01Notes extends PApplet {
 

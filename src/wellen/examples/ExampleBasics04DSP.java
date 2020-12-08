@@ -4,8 +4,7 @@ import processing.core.PApplet;
 import wellen.DSP;
 
 /**
- * this example demonstrates how to perform digital signal processing (DSP) by continuously writing to an audio buffer
- * directly.
+ * this example demonstrates how to perform digital signal processing (DSP) by continuously writing to an audio buffer.
  */
 public class ExampleBasics04DSP extends PApplet {
 
