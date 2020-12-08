@@ -1,5 +1,17 @@
 # wellen / release notes
 
+## v0.5 (20201208)
+
+- renamed project to *wellen*
+- prepared release on processing.org website
+- added `BeatDSP` to generate a beat events from `DSP`
+- added `ExampleDSP10SampleRecorder` which demonstrates how to record data and play it back with `Sampler`
+- enabled `Sampler` to play samples backwards
+- added `ExampleInstruments08CustomDSPInstrument` which demonstrates how to implement a custom instrument with multiple oscillators and a kick drum
+- added `FFT` for analyzing audio signals
+- released a series of screencasts on youtube explaining some of the examples: [Wellen](https://www.youtube.com/playlist?list=PLXJNr6N-Bu4NzkP4UJ5m-9721MdaZ6v-q)
+- cleaned up method names to comply to *methods start with verb* paradigm
+
 ## v0.4 (20201202)
 
 - implemented *software* tone engine ( based on DSP classes )
