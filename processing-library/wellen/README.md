@@ -12,6 +12,10 @@ the library can be installed as a [Processing library](https://processing.org/re
 
 ## concepts
 
+watch the screencast series [Wellen](https://www.youtube.com/playlist?list=PLXJNr6N-Bu4NzkP4UJ5m-9721MdaZ6v-q) as an introduction by coding examples to the *wellen* library.
+
+below is a text-based explanation of the core concepts of the *wellen* library:
+
 ### `Tone`
 
 muscial notes can be played with a single call to `Tone.note_on(int, int)` and ended with `Tone.note_off(int)` ( see `ExampleBasics01Notes` ). each node is characterized by two parameters `pitch` and `velocity`. the value range conforms to MIDI standards.

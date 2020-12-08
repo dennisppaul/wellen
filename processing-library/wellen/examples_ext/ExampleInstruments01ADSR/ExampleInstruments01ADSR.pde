@@ -28,12 +28,7 @@ void setup() {
 }
 
 void draw() {
-    if (Tone.is_playing()) {
-        int mColor = (mNote - Note.NOTE_A2) * 5 + 50;
-        background(mColor);
-    } else {
-        background(255);
-    }
+    background(Tone.is_playing() ? 0 : 255);
     final float mXOffset = (width - Slider.size * 4) * 0.5f;
     final float mYOffset = height * 0.5f;
     translate(mXOffset, mYOffset);
@@ -56,34 +51,35 @@ void mouseDragged() {
 }
 
 void drawDiagram() {
-    stroke(0, 15);
+    int mColor = Tone.is_playing() ? 255 : 0;
+    stroke(mColor, 15);
     line(0, 0, Slider.size * 4, 0);
     /* GUI */
     noStroke();
-    fill(0);
+    fill(mColor);
     ellipse(0, 0, Slider.radius, Slider.radius);
-    mSliderAttack.draw(g);
-    mSliderDecay.draw(g);
-    mSliderSustain.draw(g);
-    mSliderRelease.draw(g);
+    mSliderAttack.draw(g, mColor);
+    mSliderDecay.draw(g, mColor);
+    mSliderSustain.draw(g, mColor);
+    mSliderRelease.draw(g, mColor);
     /* envelope */
     strokeWeight(3);
-    stroke(0);
+    stroke(mColor);
     line(0, 0,
-            mSliderAttack.current_position_x(),
-            mSliderAttack.current_position_y());
+         mSliderAttack.current_position_x(),
+         mSliderAttack.current_position_y());
     line(mSliderAttack.current_position_x(),
-            mSliderAttack.current_position_y(),
-            mSliderDecay.current_position_x(),
-            mSliderDecay.current_position_y());
+         mSliderAttack.current_position_y(),
+         mSliderDecay.current_position_x(),
+         mSliderDecay.current_position_y());
     line(mSliderDecay.current_position_x(),
-            mSliderDecay.current_position_y(),
-            mSliderSustain.current_position_x(),
-            mSliderSustain.current_position_y());
+         mSliderDecay.current_position_y(),
+         mSliderSustain.current_position_x(),
+         mSliderSustain.current_position_y());
     line(mSliderSustain.current_position_x(),
-            mSliderSustain.current_position_y(),
-            mSliderRelease.current_position_x(),
-            mSliderRelease.current_position_y());
+         mSliderSustain.current_position_y(),
+         mSliderRelease.current_position_x(),
+         mSliderRelease.current_position_y());
     strokeWeight(1);
 }
 
@@ -131,16 +127,16 @@ Slider() {
         hoover = false;
         drag = false;
     }
-    void draw(PGraphics g) {
-        g.stroke(191);
+    void draw(PGraphics g, int pColor) {
+        g.stroke(pColor);
         g.line(x, y, x + (horizontal ? size : 0), y + (horizontal ? 0 : size));
         final float mEdgeDiameter = 5;
         g.noStroke();
-        g.fill(0);
+        g.fill(pColor);
         g.ellipse(x, y, mEdgeDiameter, mEdgeDiameter);
         g.ellipse(x + (horizontal ? size : 0), y + (horizontal ? 0 : size), mEdgeDiameter, mEdgeDiameter);
         g.noStroke();
-        g.fill(0);
+        g.fill(pColor);
         g.ellipse(current_position_x(), current_position_y(), radius * (hoover ? 2 : 1), radius * (hoover ? 2 : 1));
     }
     void update_value(float pX, float pY) {
@@ -149,7 +145,7 @@ Slider() {
     }
     boolean hit(float pX, float pY) {
         final float mDistance = PVector.dist(new PVector().set(pX, pY),
-                new PVector().set(current_position_x(), current_position_y()));
+                                             new PVector().set(current_position_x(), current_position_y()));
         return mDistance < radius * 2;
     }
     float current_position_x() {

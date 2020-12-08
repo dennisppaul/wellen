@@ -50,7 +50,7 @@ public class ExampleDSP09ToneEngineInternalWithDSP extends PApplet {
     }
 
     public void audioblock(float[] pSamples) {
-        mToneEngine.audioblock(pSamples);
+        mToneEngine.audioblock(pSamples); /* populate buffer with samples from tone engine */
         for (int i = 0; i < pSamples.length; i++) {
             mDelayID++;
             mDelayID %= mDelayBuffer.length;

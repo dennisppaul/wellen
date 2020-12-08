@@ -16,6 +16,7 @@ import wellen.Wavetable;
  * it is common to use a low-frequency oscillator (LFO) to generate the signal for the trigger.
  */
 public class ExampleDSP08Trigger extends PApplet {
+
     private final int[] mNotes = {Note.NOTE_C3, Note.NOTE_C4, Note.NOTE_A2, Note.NOTE_A3};
     private int mBeatCount;
 

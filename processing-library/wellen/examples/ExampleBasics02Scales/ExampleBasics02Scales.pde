@@ -20,8 +20,8 @@ void setup() {
 
 void draw() {
     background(255);
-    float mScale = map(mNote, Note.NOTE_C4, Note.NOTE_C5, height * 0.1f, height * 0.8f);
-    ellipse(width * 0.5f, height * 0.5f, mScale, mScale);
+    float mDiameter = map(mNote, Note.NOTE_C4, Note.NOTE_C5, height * 0.1f, height * 0.8f);
+    ellipse(width * 0.5f, height * 0.5f, mDiameter, mDiameter);
 }
 
 void keyPressed() {

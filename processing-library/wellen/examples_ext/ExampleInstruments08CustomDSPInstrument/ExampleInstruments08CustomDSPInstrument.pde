@@ -93,7 +93,7 @@ CustomInstrumentMultipleOscillators(int pID) {
     }
     
 float output() {
-        /* this custom instrumetn ignores LFOs and LPF for now */
+        /* this custom instrument ignores LFOs and LPF */
         mVCO.set_frequency(get_frequency());
         mVCO.set_amplitude(get_amplitude() * 0.2f);
         mLowerVCO.set_frequency(get_frequency() * 0.5f);
