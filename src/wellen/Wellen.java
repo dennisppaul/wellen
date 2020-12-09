@@ -112,7 +112,7 @@ public class Wellen {
         }
     }
 
-    public static void draw_buffer(PGraphics g, int pWidth, int pHeight, float[] pBuffer) {
+    public static void draw_buffer(PGraphics g, float pWidth, float pHeight, float[] pBuffer) {
         g.line(0, pHeight * 0.5f, pWidth, pHeight * 0.5f);
         if (pBuffer != null) {
             for (int i = 0; i < pBuffer.length - 1; i++) {
@@ -122,6 +122,18 @@ public class Wellen {
                        PApplet.map(pBuffer[i + 1], -1.0f, 1.0f, 0, pHeight));
             }
         }
+    }
+
+    public static void draw_buffer(PGraphics g,
+                                   float pWidth,
+                                   float pHeight,
+                                   float[] pBufferLeft,
+                                   float[] pBufferRight) {
+        g.pushMatrix();
+        draw_buffer(g, pWidth, pHeight * 0.5f, pBufferLeft);
+        g.translate(0, pHeight * 0.5f);
+        draw_buffer(g, pWidth, pHeight * 0.5f, pBufferRight);
+        g.popMatrix();
     }
 
     public static float random(float pMin, float pMax) {
