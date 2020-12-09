@@ -25,36 +25,95 @@ public class DSP implements AudioBufferRenderer {
         try {
             if (mNumberOutputChannels == 2 && mNumberInputChannels == 2) {
                 mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME,
-                        float[].class,
-                        float[].class,
-                        float[].class,
-                        float[].class);
+                                                                 float[].class,
+                                                                 float[].class,
+                                                                 float[].class,
+                                                                 float[].class);
             } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 0) {
                 mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME,
-                        float[].class,
-                        float[].class);
+                                                                 float[].class,
+                                                                 float[].class);
             } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 1) {
                 mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME,
-                        float[].class,
-                        float[].class,
-                        float[].class);
+                                                                 float[].class,
+                                                                 float[].class,
+                                                                 float[].class);
             } else if (mNumberOutputChannels == 1 && mNumberInputChannels == 1) {
                 mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME,
-                        float[].class,
-                        float[].class);
+                                                                 float[].class,
+                                                                 float[].class);
             } else if (mNumberOutputChannels == 1 && mNumberInputChannels == 0) {
                 mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME,
-                        float[].class);
+                                                                 float[].class);
             } else {
                 mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME,
-                        float[][].class);
+                                                                 float[][].class);
             }
         } catch (NoSuchMethodException | SecurityException ex) {
             System.err.println("+++ @" + DSP.class.getSimpleName() + " / could not find callback `" + METHOD_NAME +
-                    "()`.");
+                               "()`.");
             System.err.println("    hint: check the callback method parameters, they must match the number of input" +
-                    " and output channels. default is `" + METHOD_NAME + "(float[])` ( = MONO OUTPUT ).");
+                               " and output channels. default is `" + METHOD_NAME + "(float[])` ( = MONO OUTPUT ).");
         }
+    }
+
+    public static DSP start(PApplet pPApplet) {
+        return start(pPApplet, 1, 0);
+    }
+
+    public static DSP start(PApplet pPApplet, int pNumberOutputChannels) {
+        return start(pPApplet, pNumberOutputChannels, 0);
+    }
+
+    public static DSP start(PApplet pPApplet, int pNumberOutputChannels, int pNumberInputChannels) {
+        return start(pPApplet, AudioBufferManager.DEFAULT, pNumberOutputChannels, AudioBufferManager.DEFAULT,
+                     pNumberInputChannels);
+    }
+
+    public static DSP start(PApplet pPApplet,
+                            int pOutputDevice,
+                            int pNumberOutputChannels,
+                            int pInputDevice,
+                            int pNumberInputChannels) {
+        if (mInstance == null) {
+            mInstance = new DSP(pPApplet, pNumberOutputChannels, pNumberInputChannels);
+            mAudioPlayer = new AudioBufferManager(mInstance,
+                                                  Wellen.DEFAULT_SAMPLING_RATE,
+                                                  Wellen.DEFAULT_AUDIOBLOCK_SIZE,
+                                                  pOutputDevice,
+                                                  pNumberOutputChannels,
+                                                  pInputDevice,
+                                                  pNumberInputChannels);
+        }
+        return mInstance;
+    }
+
+    public static int get_sample_rate() {
+        return mAudioPlayer == null ? 0 : mAudioPlayer.sample_rate();
+    }
+
+    public static int get_buffer_size() {
+        return mAudioPlayer == null ? 0 : mAudioPlayer.buffer_size();
+    }
+
+    public static float[] get_buffer() {
+        return get_buffer_left();
+    }
+
+    public static float[] get_buffer_left() {
+        return mInstance == null ? null : mInstance.mCurrentBufferLeft;
+    }
+
+    public static float[] get_buffer_right() {
+        return mInstance == null ? null : mInstance.mCurrentBufferRight;
+    }
+
+    public static void draw_buffer_stereo(PGraphics g, float pWidth, float pHeight) {
+        Wellen.draw_buffer(g, pWidth, pHeight, DSP.get_buffer_left(), DSP.get_buffer_right());
+    }
+
+    public static void draw_buffer(PGraphics g, float pWidth, float pHeight) {
+        Wellen.draw_buffer(g, pWidth, pHeight, DSP.get_buffer());
     }
 
     public void audioblock(float[][] pOutputSamples, float[][] pInputSamples) {
@@ -81,75 +140,6 @@ public class DSP implements AudioBufferRenderer {
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException ex) {
 //            ex.printStackTrace();
         }
-    }
-
-    public static DSP start(PApplet pPApplet) {
-        return start(pPApplet, 1, 0);
-    }
-
-    public static DSP start(PApplet pPApplet, int pNumberOutputChannels) {
-        return start(pPApplet, pNumberOutputChannels, 0);
-    }
-
-    public static DSP start(PApplet pPApplet, int pNumberOutputChannels, int pNumberInputChannels) {
-        return start(pPApplet, AudioBufferManager.DEFAULT, pNumberOutputChannels, AudioBufferManager.DEFAULT,
-                pNumberInputChannels);
-    }
-
-    public static DSP start(PApplet pPApplet,
-            int pOutputDevice,
-            int pNumberOutputChannels,
-            int pInputDevice,
-            int pNumberInputChannels) {
-        if (mInstance == null) {
-            mInstance = new DSP(pPApplet, pNumberOutputChannels, pNumberInputChannels);
-            mAudioPlayer = new AudioBufferManager(mInstance,
-                    Wellen.DEFAULT_SAMPLING_RATE,
-                    Wellen.DEFAULT_AUDIOBLOCK_SIZE,
-                    pOutputDevice,
-                    pNumberOutputChannels,
-                    pInputDevice,
-                    pNumberInputChannels);
-        }
-        return mInstance;
-    }
-
-    public static int get_sample_rate() {
-        return mAudioPlayer == null ? 0 : mAudioPlayer.sample_rate();
-    }
-
-    public static int get_buffer_size() {
-        return mAudioPlayer == null ? 0 : mAudioPlayer.buffer_size();
-    }
-
-    public static float[] get_buffer() {
-        return get_buffer_left();
-    }
-
-    public static float[] get_buffer_left() {
-        return mInstance == null ? null : mInstance.mCurrentBufferLeft;
-    }
-
-    public static float[] get_buffer_right() {
-        return mInstance == null ? null : mInstance.mCurrentBufferRight;
-    }
-
-    public static void draw_buffer(PGraphics g, int pWidth, int pHeight) {
-        Wellen.draw_buffer(g, pWidth, pHeight, DSP.get_buffer());
-//        final int mBufferSize = DSP.get_buffer_size();
-//        g.line(0, pHeight * 0.5f, pWidth, pHeight * 0.5f);
-//        if (DSP.get_buffer() != null) {
-////            g.beginShape(PConstants.LINES);
-//            for (int i = 0; i < mBufferSize - 1; i++) {
-////                final float x = PApplet.map(i, 0, mBufferSize, 0, pWidth);
-////                g.vertex(x, PApplet.map(DSP.buffer()[i], -1, 1, 0, pHeight));
-//                g.line(PApplet.map(i, 0, mBufferSize, 0, pWidth),
-//                       PApplet.map(DSP.get_buffer()[i], -1.0f, 1.0f, 0, pHeight),
-//                       PApplet.map(i + 1, 0, mBufferSize, 0, pWidth),
-//                       PApplet.map(DSP.get_buffer()[i + 1], -1.0f, 1.0f, 0, pHeight));
-//            }
-////            g.endShape();
-//        }
     }
 }
 

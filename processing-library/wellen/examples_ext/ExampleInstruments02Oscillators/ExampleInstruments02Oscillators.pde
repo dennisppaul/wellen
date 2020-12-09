@@ -2,10 +2,6 @@ import wellen.*;
 import netP5.*; 
 import oscP5.*; 
 
-Instrument mInstrument;
-
-boolean mIsPlaying = false;
-
 int mNote;
 
 void settings() {
@@ -14,8 +10,6 @@ void settings() {
 
 void setup() {
     background(255);
-    /* select instrument #2 */
-    mInstrument = Tone.instrument(2);
 }
 
 void draw() {
@@ -25,29 +19,29 @@ void draw() {
     ellipse(width * 0.5f, height * 0.5f, Tone.is_playing() ? mSize : 5, Tone.is_playing() ? mSize : 5);
 }
 
+void mousePressed() {
+    mNote = Scale.get_note(Scale.MAJOR_CHORD_7, Note.NOTE_A2, (int) random(0, 10));
+    Tone.note_on(mNote, 127);
+}
+
+void mouseReleased() {
+    Tone.note_off();
+}
+
 void keyPressed() {
-    if (key == ' ') {
-        if (mIsPlaying) {
-            Tone.note_off();
-        } else {
-            mNote = Scale.get_note(Scale.MAJOR_CHORD_7, Note.NOTE_A2, (int) random(0, 10));
-            Tone.note_on(mNote, 127);
-        }
-        mIsPlaying = !mIsPlaying;
-    }
     if (key == '1') {
-        mInstrument.set_oscillator_type(Wellen.OSC_SINE);
+        Tone.instrument().set_oscillator_type(Wellen.OSC_SINE);
     }
     if (key == '2') {
-        mInstrument.set_oscillator_type(Wellen.OSC_TRIANGLE);
+        Tone.instrument().set_oscillator_type(Wellen.OSC_TRIANGLE);
     }
     if (key == '3') {
-        mInstrument.set_oscillator_type(Wellen.OSC_SAWTOOTH);
+        Tone.instrument().set_oscillator_type(Wellen.OSC_SAWTOOTH);
     }
     if (key == '4') {
-        mInstrument.set_oscillator_type(Wellen.OSC_SQUARE);
+        Tone.instrument().set_oscillator_type(Wellen.OSC_SQUARE);
     }
     if (key == '5') {
-        mInstrument.set_oscillator_type(Wellen.OSC_NOISE);
+        Tone.instrument().set_oscillator_type(Wellen.OSC_NOISE);
     }
 }
