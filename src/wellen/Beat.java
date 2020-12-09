@@ -30,6 +30,14 @@ public class Beat {
         mTimer = new Timer();
     }
 
+    public static Beat start(Object pListener, int pBPM) {
+        return new Beat(pListener, pBPM);
+    }
+
+    public static Beat start(Object pListener) {
+        return new Beat(pListener);
+    }
+
     public void set_bpm(float pBPM) {
         final int mPeriod = (int) (60.0f / pBPM * 1000.0f);
         if (mTask != null) {
@@ -39,12 +47,8 @@ public class Beat {
         mTimer.scheduleAtFixedRate(mTask, 1000, mPeriod);
     }
 
-    public static Beat start(Object pListener, int pBPM) {
-        return new Beat(pListener, pBPM);
-    }
-
-    public static Beat start(Object pListener) {
-        return new Beat(pListener);
+    public int get_beat_count() {
+        return mBeat;
     }
 
     private class BeatTimerTaskP5 extends TimerTask {

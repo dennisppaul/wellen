@@ -18,7 +18,6 @@ public class ExampleInstruments06SixteenVoices extends PApplet {
     }
 
     public void setup() {
-        Tone.start();
         for (int i = 0; i < Tone.instruments().size(); i++) {
             final float mPan = 2.0f * i / Tone.instruments().size() - 1.0f;
             Tone.instruments().get(i).set_pan(mPan);

@@ -2,7 +2,6 @@ package wellen.examples_ext;
 
 import processing.core.PApplet;
 import wellen.Note;
-import wellen.Scale;
 import wellen.Tone;
 
 /**
@@ -24,8 +23,7 @@ public class ExampleInstruments07PitchBend extends PApplet {
     }
 
     public void mousePressed() {
-        int mNote = Scale.get_note(Scale.MAJOR_CHORD_7, Note.NOTE_A3, (int) random(0, 10));
-        Tone.note_on(mNote, 127);
+        Tone.note_on(Note.NOTE_A4, 127);
     }
 
     public void mouseReleased() {

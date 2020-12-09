@@ -12,6 +12,8 @@ import wellen.Wellen;
 /**
  * this example demonstrates how to implement custom instruments by extending default internal instruments. an in-depth
  * explanation of the behavior of each custom instrument can be found in the source code below as inline comments.
+ * <p>
+ * use keys `1`, `2`, or `3` to play a custom instrument.
  */
 public class ExampleInstruments08CustomDSPInstrument extends PApplet {
 
@@ -59,18 +61,22 @@ public class ExampleInstruments08CustomDSPInstrument extends PApplet {
         Tone.note_off();
     }
 
+    /**
+     * custom DSP instrument that plays a pre-recorded sample ( "snare drum" ).
+     */
     private static class CustomInstrumentSampler extends InstrumentInternal {
 
         private final Sampler mSampler;
 
         public CustomInstrumentSampler(int pID) {
-            super(pID);
+            super(pID); /* call super constructor with instrument ID */
             mSampler = new Sampler();
             mSampler.load(SampleDataSNARE.data);
             mSampler.loop(false);
         }
 
         public float output() {
+            /* `output()` is called to request a new sample */
             return mSampler.output() * get_amplitude();
         }
 
@@ -80,11 +86,16 @@ public class ExampleInstruments08CustomDSPInstrument extends PApplet {
 
         public void note_on(int pNote, int pVelocity) {
             mIsPlaying = true;
+            /* use `velocity_to_amplitude(float)` to convert velocities with a value range [0, 127] to amplitude with
+             a value range [0.0, 0.1] */
             set_amplitude(velocity_to_amplitude(pVelocity));
             mSampler.rewind();
         }
     }
 
+    /**
+     * custom DSP instrument that combines 3 oscillators to create a more complex sound.
+     */
     private static class CustomInstrumentMultipleOscillators extends InstrumentInternal {
 
         private final Wavetable mLowerVCO;
@@ -92,6 +103,7 @@ public class ExampleInstruments08CustomDSPInstrument extends PApplet {
 
         public CustomInstrumentMultipleOscillators(int pID) {
             super(pID);
+
             mLowerVCO = new Wavetable(DEFAULT_WAVETABLE_SIZE);
             mLowerVCO.interpolate_samples(true);
             mVeryLowVCO = new Wavetable(DEFAULT_WAVETABLE_SIZE);
@@ -110,7 +122,9 @@ public class ExampleInstruments08CustomDSPInstrument extends PApplet {
             mVeryLowVCO.set_frequency(get_frequency() * 0.25f);
             mVeryLowVCO.set_amplitude(get_amplitude() * 0.075f);
 
+            /* use inherited ADSR envelope to control the amplitude */
             final float mADSRAmp = mADSR.output();
+            /* multiple samples are combined by a simple addition */
             float mSample = mVCO.output();
             mSample += mLowerVCO.output();
             mSample += mVeryLowVCO.output();
@@ -131,6 +145,7 @@ public class ExampleInstruments08CustomDSPInstrument extends PApplet {
             set_amplitude(0.5f);
             set_frequency(90);
 
+            /* this ADSR envelope is used to control the frequency instead of amplitude */
             mFrequencyEnvelope = new ADSR();
 
             mADSR.set_attack(0.001f);
@@ -160,6 +175,7 @@ public class ExampleInstruments08CustomDSPInstrument extends PApplet {
 
         public void note_on(int pNote, int pVelocity) {
             mIsPlaying = true;
+            /* make sure to trigger both ADSRs when a note is played */
             mADSR.start();
             mFrequencyEnvelope.start();
         }

@@ -3,7 +3,6 @@ package wellen.examples_ext;
 import processing.core.PApplet;
 import wellen.Beat;
 import wellen.Note;
-import wellen.Scale;
 import wellen.Sequencer;
 import wellen.Tone;
 
@@ -46,7 +45,7 @@ public class ExampleTechnique01Sequencer extends PApplet {
     public void beat(int pBeat) {
         int mStep = mSequence.step();
         if (mStep != OFF) {
-            int mNote = Scale.get_note(Scale.HALF_TONE, Note.NOTE_C4, mStep);
+            int mNote = Note.NOTE_C3 + mStep;
             Tone.note_on(mNote, 100);
         } else {
             Tone.note_off();

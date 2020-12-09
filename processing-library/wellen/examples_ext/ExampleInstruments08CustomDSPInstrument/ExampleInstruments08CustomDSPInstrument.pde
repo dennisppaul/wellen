@@ -48,19 +48,23 @@ void keyPressed() {
 void keyReleased() {
     Tone.note_off();
 }
+/**
+ * custom DSP instrument that plays a pre-recorded sample ( "snare drum" ).
+ */
 
 static class CustomInstrumentSampler extends InstrumentInternal {
     
 final Sampler mSampler;
     
 CustomInstrumentSampler(int pID) {
-        super(pID);
+        super(pID); /* call super constructor with instrument ID */
         mSampler = new Sampler();
         mSampler.load(SampleDataSNARE.data);
         mSampler.loop(false);
     }
     
 float output() {
+        /* `output()` is called to request a new sample */
         return mSampler.output() * get_amplitude();
     }
     
@@ -70,10 +74,15 @@ void note_off() {
     
 void note_on(int pNote, int pVelocity) {
         mIsPlaying = true;
+        /* use `velocity_to_amplitude(float)` to convert velocities with a value range [0, 127] to amplitude with
+         a value range [0.0, 0.1] */
         set_amplitude(velocity_to_amplitude(pVelocity));
         mSampler.rewind();
     }
 }
+/**
+ * custom DSP instrument that combines 3 oscillators to create a more complex sound.
+ */
 
 static class CustomInstrumentMultipleOscillators extends InstrumentInternal {
     
@@ -100,7 +109,9 @@ float output() {
         mLowerVCO.set_amplitude(get_amplitude());
         mVeryLowVCO.set_frequency(get_frequency() * 0.25f);
         mVeryLowVCO.set_amplitude(get_amplitude() * 0.075f);
+        /* use inherited ADSR envelope to control the amplitude */
         final float mADSRAmp = mADSR.output();
+        /* multiple samples are combined by a simple addition */
         float mSample = mVCO.output();
         mSample += mLowerVCO.output();
         mSample += mVeryLowVCO.output();
@@ -121,6 +132,7 @@ CustomInstrumentKickDrum(int pID) {
         set_oscillator_type(Wellen.OSC_SINE);
         set_amplitude(0.5f);
         set_frequency(90);
+        /* this ADSR envelope is used to control the frequency instead of amplitude */
         mFrequencyEnvelope = new ADSR();
         mADSR.set_attack(0.001f);
         mADSR.set_decay(mDecaySpeed);
@@ -147,6 +159,7 @@ void note_off() {
     
 void note_on(int pNote, int pVelocity) {
         mIsPlaying = true;
+        /* make sure to trigger both ADSRs when a note is played */
         mADSR.start();
         mFrequencyEnvelope.start();
     }

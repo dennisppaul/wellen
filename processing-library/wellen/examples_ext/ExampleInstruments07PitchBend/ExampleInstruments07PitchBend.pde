@@ -16,8 +16,7 @@ void draw() {
 }
 
 void mousePressed() {
-    int mNote = Scale.get_note(Scale.MAJOR_CHORD_7, Note.NOTE_A3, (int) random(0, 10));
-    Tone.note_on(mNote, 127);
+    Tone.note_on(Note.NOTE_A4, 127);
 }
 
 void mouseReleased() {

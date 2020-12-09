@@ -28,7 +28,7 @@ public class ExampleSpeechSynthesis extends PApplet {
         mSpeech = new SpeechSynthesis();
         mSpeech.blocking(false);
 
-        Beat mBeat = new Beat(this, 140);
+        Beat.start(this, 140);
     }
 
     public void draw() {

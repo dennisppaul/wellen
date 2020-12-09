@@ -37,11 +37,11 @@ public class ExampleInstruments01ADSR extends PApplet {
         scale(1, -1);
 
         ellipse(0, 0, 6, 6);
-        float mStart = draw_connection_line(0, Tone.instrument().get_attack(), 0.0f, 1.0f);
+        float mStart = draw_connection_line(0.0f, Tone.instrument().get_attack(), 0.0f, 1.0f);
         mStart = draw_connection_line(mStart, Tone.instrument().get_decay(), 1.0f, Tone.instrument().get_sustain());
-        mStart = draw_connection_line(mStart, 1, Tone.instrument().get_sustain(), Tone.instrument().get_sustain());
-        mStart = draw_connection_line(mStart, Tone.instrument().get_release(), Tone.instrument().get_sustain(), 0);
-        line(0, 0, mStart, 0);
+        mStart = draw_connection_line(mStart, 0.5f, Tone.instrument().get_sustain(), Tone.instrument().get_sustain());
+        mStart = draw_connection_line(mStart, Tone.instrument().get_release(), Tone.instrument().get_sustain(), 0.0f);
+        line(0.0f, 0.0f, mStart, 0.0f);
     }
 
     public void mousePressed() {
@@ -58,8 +58,8 @@ public class ExampleInstruments01ADSR extends PApplet {
     }
 
     private void randomizeADSR() {
-        Tone.instrument().set_attack(random(0.0f, 1.0f));
-        Tone.instrument().set_decay(random(0.0f, 1.0f));
+        Tone.instrument().set_attack(random(0.0f, 0.5f));
+        Tone.instrument().set_decay(random(0.0f, 0.5f));
         Tone.instrument().set_sustain(random(0.0f, 1.0f));
         Tone.instrument().set_release(random(0.0f, 1.0f));
         System.out.println("A: " + Tone.instrument().get_attack());
@@ -70,7 +70,7 @@ public class ExampleInstruments01ADSR extends PApplet {
     }
 
     private float draw_connection_line(float pStartX, float pDuration, float pLevelStart, float pLevelEnd) {
-        final float mScaleX = width * 0.2f;
+        final float mScaleX = width * 0.25f;
         final float mScaleY = height * 0.25f;
         PVector mStart = new PVector().set(pStartX, mScaleX * pLevelStart);
         PVector mEnd = new PVector().set(pStartX + mScaleX * pDuration, mScaleX * pLevelEnd);

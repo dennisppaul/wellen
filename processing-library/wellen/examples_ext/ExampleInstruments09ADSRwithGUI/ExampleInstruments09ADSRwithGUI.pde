@@ -65,20 +65,20 @@ void drawDiagram() {
     strokeWeight(3);
     stroke(mColor);
     line(0, 0,
-            mSliderAttack.current_position_x(),
-            mSliderAttack.current_position_y());
+         mSliderAttack.current_position_x(),
+         mSliderAttack.current_position_y());
     line(mSliderAttack.current_position_x(),
-            mSliderAttack.current_position_y(),
-            mSliderDecay.current_position_x(),
-            mSliderDecay.current_position_y());
+         mSliderAttack.current_position_y(),
+         mSliderDecay.current_position_x(),
+         mSliderDecay.current_position_y());
     line(mSliderDecay.current_position_x(),
-            mSliderDecay.current_position_y(),
-            mSliderSustain.current_position_x(),
-            mSliderSustain.current_position_y());
+         mSliderDecay.current_position_y(),
+         mSliderSustain.current_position_x(),
+         mSliderSustain.current_position_y());
     line(mSliderSustain.current_position_x(),
-            mSliderSustain.current_position_y(),
-            mSliderRelease.current_position_x(),
-            mSliderRelease.current_position_y());
+         mSliderSustain.current_position_y(),
+         mSliderRelease.current_position_x(),
+         mSliderRelease.current_position_y());
     strokeWeight(1);
 }
 
@@ -144,7 +144,7 @@ Slider() {
     }
     boolean hit(float pX, float pY) {
         final float mDistance = PVector.dist(new PVector().set(pX, pY),
-                new PVector().set(current_position_x(), current_position_y()));
+                                             new PVector().set(current_position_x(), current_position_y()));
         return mDistance < radius * 2;
     }
     float current_position_x() {

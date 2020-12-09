@@ -22,7 +22,7 @@ void setup() {
     printArray(SpeechSynthesis.list());
     mSpeech = new SpeechSynthesis();
     mSpeech.blocking(false);
-    Beat mBeat = new Beat(this, 140);
+    Beat.start(this, 140);
 }
 
 void draw() {

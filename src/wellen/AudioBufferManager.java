@@ -9,12 +9,9 @@ import javax.sound.sampled.TargetDataLine;
 public class AudioBufferManager extends Thread {
 
     /*
-     * - @TODO(add recording (TargetDataLine))
-     * - @TODO(add stereo)
-     * - @REF([Java Sound Resources: FAQ: Audio Programming](http://jsresources.sourceforge.net/faq_audio
-     * .html#sync_playback_recording))
+     * - @REF([Java Sound Resources: FAQ: Audio Programming](http://jsresources.sourceforge.net/faq_audio.html#sync_playback_recording))
      * - SOURCE == output
-     * - TAARGET == input
+     * - TARGET == input
      */
 
     public static final float MAX_16_BIT = 32768;
