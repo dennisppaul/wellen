@@ -29,7 +29,7 @@ public class ExampleDSP05Wavetable extends PApplet {
     }
 
     public void mouseDragged() {
-        mWavetable.set_frequency(172.265625f);
+        mWavetable.set_frequency(2.0f * Wellen.DEFAULT_SAMPLING_RATE / Wellen.DEFAULT_AUDIOBLOCK_SIZE);
         mWavetable.set_amplitude(0.25f);
     }
 

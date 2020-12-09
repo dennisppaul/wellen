@@ -23,6 +23,7 @@ public class Wellen {
     public static final int DEFAULT_SAMPLING_RATE = 44100;
     public static final int DEFAULT_AUDIOBLOCK_SIZE = 512;
     public static final int DEFAULT_AUDIO_DEVICE = -1;
+    public static final int DEFAULT_WAVETABLE_SIZE = 512;
     public static final int NO_CHANNELS = 0;
 
     public static int clamp127(int pValue) {
@@ -116,10 +117,20 @@ public class Wellen {
         if (pBuffer != null) {
             for (int i = 0; i < pBuffer.length - 1; i++) {
                 g.line(PApplet.map(i, 0, pBuffer.length, 0, pWidth),
-                        PApplet.map(pBuffer[i], -1.0f, 1.0f, 0, pHeight),
-                        PApplet.map(i + 1, 0, pBuffer.length, 0, pWidth),
-                        PApplet.map(pBuffer[i + 1], -1.0f, 1.0f, 0, pHeight));
+                       PApplet.map(pBuffer[i], -1.0f, 1.0f, 0, pHeight),
+                       PApplet.map(i + 1, 0, pBuffer.length, 0, pWidth),
+                       PApplet.map(pBuffer[i + 1], -1.0f, 1.0f, 0, pHeight));
             }
+        }
+    }
+
+    public static float random(float pMin, float pMax) {
+        if (pMin >= pMax) {
+            return pMin;
+        } else {
+            final float mDiff = pMax - pMin;
+            final float mValue = (float) Math.random() * mDiff + pMin;
+            return mValue;
         }
     }
 }

@@ -8,6 +8,7 @@ public class Wavetable implements DSPNodeOutput {
     public static final float DEFAULT_AMPLITUDE = 0.75f;
     private final int mSamplingRate;
     private final float[] mWavetable;
+    private int mPhaseOffset;
     private float mFrequency;
     private float mStepSize;
     private float mDesiredStepSize;
@@ -16,6 +17,12 @@ public class Wavetable implements DSPNodeOutput {
     private boolean mInterpolateSamples;
     private float mInterpolateFrequencyChangeFactor;
     private float mInterpolateFrequencyDelta;
+    private boolean mEnableJitter;
+    private float mJitterRange;
+
+    public Wavetable() {
+        this(Wellen.DEFAULT_WAVETABLE_SIZE, Wellen.DEFAULT_SAMPLING_RATE);
+    }
 
     public Wavetable(int pWavetableSize) {
         this(pWavetableSize, Wellen.DEFAULT_SAMPLING_RATE);
@@ -27,7 +34,10 @@ public class Wavetable implements DSPNodeOutput {
         mArrayPtr = 0;
         mInterpolateSamples = false;
         mInterpolateFrequencyChangeFactor = 0.0f;
+        mJitterRange = 0.0f;
+        mEnableJitter = false;
         mAmplitude = DEFAULT_AMPLITUDE;
+        mPhaseOffset = 0;
         set_frequency(DEFAULT_FREQUENCY);
     }
 
@@ -124,6 +134,26 @@ public class Wavetable implements DSPNodeOutput {
         return mWavetable;
     }
 
+    public void enable_jitter(boolean pEnableJitter) {
+        mEnableJitter = pEnableJitter;
+    }
+
+    public int get_phase_offset() {
+        return mPhaseOffset;
+    }
+
+    public void set_phase_offset(int pPhaseOffset) {
+        mPhaseOffset = pPhaseOffset;
+    }
+
+    public float get_jitter_range() {
+        return mJitterRange;
+    }
+
+    public void set_jitter_range(float pJitterRange) {
+        mJitterRange = pJitterRange;
+    }
+
     public float output() {
         if (mInterpolateFrequencyChangeFactor > 0.0f) {
             if (mStepSize != mDesiredStepSize) {
@@ -134,11 +164,12 @@ public class Wavetable implements DSPNodeOutput {
                 }
             }
         }
-        mArrayPtr += mStepSize;
+        mArrayPtr += mStepSize * (mEnableJitter ? (Wellen.random(-mJitterRange, mJitterRange) + 1.0f) : 1.0f);
         final int i = (int) mArrayPtr;
-        final float mFrac = mArrayPtr - i;
-        final int j = i % mWavetable.length;
+        final float mFrac = mArrayPtr - i; /* store fractional part */
+        int j = i % mWavetable.length; /* wrap pointer to array size */
         mArrayPtr = j + mFrac;
+        j = (j + mPhaseOffset) % mWavetable.length; /* apply phase offset */
 
         if (mInterpolateSamples) {
             final float mNextSample = mWavetable[(j + 1) % mWavetable.length];
