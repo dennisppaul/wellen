@@ -16,7 +16,6 @@ public class AppOscJibberish extends PApplet {
     }
 
     public void setup() {
-        Tone.start("jsyn-minimal");
         for (int i = 0; i < 3; i++) {
             Jibberer mJibberer = new Jibberer(i);
             mJibberer.triggerposition().set(width / 2.0f, height / 2.0f);
@@ -57,6 +56,9 @@ public class AppOscJibberish extends PApplet {
             Tone.instrument(mID).set_oscillator_type(Wellen.OSC_SAWTOOTH);
             Tone.instrument(mID).set_amplitude(0.0f);
             Tone.instrument(mID).set_frequency(200.0f);
+            Tone.instrument(mID).enable_ADSR(false);
+            Tone.instrument(mID).enable_LPF(true);
+            Tone.instrument(mID).set_pan(mID / 3.0f - 0.5f);
         }
 
         void drag() {
@@ -79,19 +81,23 @@ public class AppOscJibberish extends PApplet {
         }
 
         void update() {
+            Tone.instrument(mID).set_pan(map(mPosition.x - width * 0.5f, -width * 0.5f, width * 0.5f, -1.0f, 1.0f));
+
             float mDistanceRatio = (1 - min(1, mPosition.dist(mTriggerPosition) / mMaxDistance));
             mAmpPointer += mAmpStep;
-            float mAmp = noise(mAmpPointer) * noise(mAmpPointer * 1.3f);
+            float mAmp = noise(mAmpPointer * 0.5f) * noise(mAmpPointer * 0.3f);
             if (noise(mAmpPointer * 0.45f) > 0.5f) {
-                Tone.instrument(mID).set_amplitude(mDistanceRatio * mAmp);
+                Tone.instrument(mID).set_amplitude(mDistanceRatio * mAmp * 4.0f);
             } else {
                 Tone.instrument(mID).set_amplitude(0);
             }
+            Tone.instrument(mID).set_filter_resonance(0.2f + 0.8f * noise(mAmpPointer * 0.33f));
 
             /* get frequency from perlin noise */
             mFreqPointer += mFreqStep;
             float mFreq = noise(mFreqPointer);
             Tone.instrument(mID).set_frequency(mBaseFreq * mFreq + 75);
+            Tone.instrument(mID).set_filter_frequency(Tone.instrument(mID).get_frequency() * 5);
         }
 
         void draw() {
