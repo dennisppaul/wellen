@@ -6,10 +6,11 @@ import wellen.Note;
 import wellen.Sequencer;
 import wellen.Tone;
 
-/**
- * this example demonstrates how to use `Sequencer` to repeatedly play a predefined pattern of notes.
- */
 public class ExampleTechnique01Sequencer extends PApplet {
+
+    /*
+     * this example demonstrates how to use `Sequencer` to repeatedly play a predefined pattern of notes.
+     */
 
     private static final int OFF = -1;
 

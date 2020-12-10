@@ -58,6 +58,28 @@ public class FFT extends FourierTransform {
         buildTrigTables();
     }
 
+    public static FFT instance() {
+        if (instance == null) {
+            instance = new FFT(Wellen.DEFAULT_AUDIOBLOCK_SIZE, Wellen.DEFAULT_SAMPLING_RATE);
+            instance.window(FFT.HAMMING);
+        }
+        return instance;
+    }
+
+    public static float[] get_spectrum() {
+        return instance().getSpectrum();
+    }
+
+    public static float get_frequency(float pFrequency) {
+        return instance().getFreq(pFrequency);
+    }
+
+    public static void perform_forward_transform(float[] pSignal) {
+        float[] mSignalCopy = new float[pSignal.length];
+        System.arraycopy(pSignal, 0, mSignalCopy, 0, Array.getLength(pSignal));
+        instance().forward(mSignalCopy);
+    }
+
     /**
      * Performs a forward transform on the passed buffers.
      *
@@ -126,6 +148,8 @@ public class FFT extends FourierTransform {
         fillSpectrum();
     }
 
+    // lookup tables
+
     public void inverse(float[] buffer) {
         if (buffer.length > real.length) {
             throw new IllegalArgumentException("FFT.inverse: the passed array's length must equal FFT.timeSize().");
@@ -192,8 +216,6 @@ public class FFT extends FourierTransform {
         }
     }
 
-    // lookup tables
-
     // copies the values in the samples array into the real array
     // in bit reversed order. the imag array is filled with zeros.
     private void bitReverseSamples(float[] samples) {
@@ -233,28 +255,6 @@ public class FFT extends FourierTransform {
         }
     }
 
-    public static FFT instance() {
-        if (instance == null) {
-            instance = new FFT(Wellen.DEFAULT_AUDIOBLOCK_SIZE, Wellen.DEFAULT_SAMPLING_RATE);
-            instance.window(FFT.HAMMING);
-        }
-        return instance;
-    }
-
-    public static float[] get_spectrum() {
-        return instance().getSpectrum();
-    }
-
-    public static float get_frequency(float pFrequency) {
-        return instance().getFreq(pFrequency);
-    }
-
-    public static void perform_forward_transform(float[] pSignal) {
-        float[] mSignalCopy = new float[pSignal.length];
-        System.arraycopy(pSignal, 0, mSignalCopy, 0, Array.getLength(pSignal));
-        instance().forward(mSignalCopy);
-    }
-
     /**
      * A Fourier Transform is an algorithm that transforms a signal in the time domain, such as a sample buffer, into a
      * signal in the frequency domain, often called the spectrum. The spectrum does not represent individual
@@ -279,7 +279,7 @@ public class FFT extends FourierTransform {
      * it is good to be aware of them. The function <code>getFreq()</code> allows you to query the spectrum with a
      * frequency in Hz and the function <code>getBandWidth()</code> will return the bandwidth in Hz of each frequency
      * band in the spectrum.
-     * <p>
+     *
      * <b>Usage</b>
      * <p>
      * A typical usage of a FourierTransform is to analyze a signal so that the frequency spectrum may be represented in
@@ -302,17 +302,17 @@ public class FFT extends FourierTransform {
      * call the <code>window()</code> function with an appropriate constant, such as FourierTransform.HAMMING, the
      * sample buffers passed to the object for analysis will be shaped by the current window before being transformed.
      * The result of using a window is to reduce the noise in the spectrum somewhat.
-     * <p>
+     *
      * <b>Averages</b>
      * <p>
      * FourierTransform also has functions that allow you to request the creation of an average spectrum. An average
      * spectrum is simply a spectrum with fewer bands than the full spectrum where each average band is the average of
      * the amplitudes of some number of contiguous frequency bands in the full spectrum.
-     * <p>
+     *
      * <code>linAverages()</code> allows you to specify the number of averages
      * that you want and will group frequency bands into groups of equal number. So if you have a spectrum with 512
      * frequency bands and you ask for 64 averages, each average will span 8 bands of the full spectrum.
-     * <p>
+     *
      * <code>logAverages()</code> will group frequency bands by octave and allows
      * you to specify the size of the smallest octave to use (in Hz) and also how many bands to split each octave into.
      * So you might ask for the smallest octave to be 60 Hz and to split each octave into two bands. The result is that
@@ -323,7 +323,7 @@ public class FFT extends FourierTransform {
      * octave will always span <code>sampleRate/4 - sampleRate/2</code>, which in the case of audio sampled at 44100 Hz
      * is 11025-22010 Hz. These logarithmically spaced averages are usually much more useful than the full spectrum or
      * the linearly spaced averages because they map more directly to how humans perceive sound.
-     * <p>
+     *
      * <code>calcAvg()</code> allows you to specify the frequency band you want an
      * average calculated for. You might ask for 60-500Hz and this function will group together the bands from the full
      * spectrum that fall into that range and average their amplitudes for you.
@@ -332,7 +332,7 @@ public class FFT extends FourierTransform {
      * <code>noAverages()</code>. This will not impact your ability to use
      * <code>calcAvg()</code>, it will merely prevent the object from calculating
      * an average array every time you use <code>forward()</code>.
-     * <p>
+     *
      * <b>Inverse Transform</b>
      * <p>
      * FourierTransform also supports taking the inverse transform of a spectrum. This means that a frequency spectrum
@@ -569,7 +569,7 @@ public class FFT extends FourierTransform {
         public float getAverageCenterFrequency(int i) {
             if (whichAverage == LINAVG) {
                 // an average represents a certain number of bands in the spectrum
-                int avgWidth = (int) spectrum.length / averages.length;
+                int avgWidth = spectrum.length / averages.length;
                 // the "center" bin of the average, this is fudgy.
                 int centerBinIndex = i * avgWidth + avgWidth / 2;
                 return indexToFreq(centerBinIndex);
@@ -692,8 +692,8 @@ public class FFT extends FourierTransform {
         public void forward(float[] buffer, int startAt) {
             if (buffer.length - startAt < timeSize) {
                 throw new IllegalArgumentException("FourierTransform.forward: not enough samples in the buffer " +
-                        "between " + startAt + " and " + buffer.length + " to perform a " +
-                        "transform.");
+                                                   "between " + startAt + " and " + buffer.length + " to perform a " +
+                                                   "transform.");
             }
 
             // copy the section of samples we want to analyze
@@ -767,7 +767,7 @@ public class FFT extends FourierTransform {
             }
 
             if (whichAverage == LINAVG) {
-                int avgWidth = (int) spectrum.length / averages.length;
+                int avgWidth = spectrum.length / averages.length;
                 for (int i = 0; i < averages.length; i++) {
                     float avg = 0;
                     int j;
@@ -841,7 +841,7 @@ public class FFT extends FourierTransform {
  * is equal to about 50 Hz. It is not necessary for you to remember all of these relationships, though it is good to be
  * aware of them. The function <code>getFreq()</code> allows you to query the spectrum with a frequency in Hz and the
  * function <code>getBandWidth()</code> will return the bandwidth in Hz of each frequency band in the spectrum.
- * <p>
+ *
  * <b>Usage</b>
  * <p>
  * A typical usage of a FourierTransform is to analyze a signal so that the frequency spectrum may be represented in
@@ -864,17 +864,17 @@ public class FFT extends FourierTransform {
  * the <code>window()</code> function with an appropriate constant, such as FourierTransform.HAMMING, the sample buffers
  * passed to the object for analysis will be shaped by the current window before being transformed. The result of using
  * a window is to reduce the noise in the spectrum somewhat.
- * <p>
+ *
  * <b>Averages</b>
  * <p>
  * FourierTransform also has functions that allow you to request the creation of an average spectrum. An average
  * spectrum is simply a spectrum with fewer bands than the full spectrum where each average band is the average of the
  * amplitudes of some number of contiguous frequency bands in the full spectrum.
- * <p>
+ *
  * <code>linAverages()</code> allows you to specify the number of averages
  * that you want and will group frequency bands into groups of equal number. So if you have a spectrum with 512
  * frequency bands and you ask for 64 averages, each average will span 8 bands of the full spectrum.
- * <p>
+ *
  * <code>logAverages()</code> will group frequency bands by octave and allows
  * you to specify the size of the smallest octave to use (in Hz) and also how many bands to split each octave into. So
  * you might ask for the smallest octave to be 60 Hz and to split each octave into two bands. The result is that the
@@ -885,7 +885,7 @@ public class FFT extends FourierTransform {
  * always span <code>sampleRate/4 - sampleRate/2</code>, which in the case of audio sampled at 44100 Hz is 11025-22010
  * Hz. These logarithmically spaced averages are usually much more useful than the full spectrum or the linearly spaced
  * averages because they map more directly to how humans perceive sound.
- * <p>
+ *
  * <code>calcAvg()</code> allows you to specify the frequency band you want an
  * average calculated for. You might ask for 60-500Hz and this function will group together the bands from the full
  * spectrum that fall into that range and average their amplitudes for you.
@@ -894,7 +894,7 @@ public class FFT extends FourierTransform {
  * <code>noAverages()</code>. This will not impact your ability to use
  * <code>calcAvg()</code>, it will merely prevent the object from calculating
  * an average array every time you use <code>forward()</code>.
- * <p>
+ *
  * <b>Inverse Transform</b>
  * <p>
  * FourierTransform also supports taking the inverse transform of a spectrum. This means that a frequency spectrum will
@@ -1132,7 +1132,7 @@ abstract class FourierTransform {
     public float getAverageCenterFrequency(int i) {
         if (whichAverage == LINAVG) {
             // an average represents a certain number of bands in the spectrum
-            int avgWidth = (int) spectrum.length / averages.length;
+            int avgWidth = spectrum.length / averages.length;
             // the "center" bin of the average, this is fudgy.
             int centerBinIndex = i * avgWidth + avgWidth / 2;
             return indexToFreq(centerBinIndex);
@@ -1328,7 +1328,7 @@ abstract class FourierTransform {
         }
 
         if (whichAverage == LINAVG) {
-            int avgWidth = (int) spectrum.length / averages.length;
+            int avgWidth = spectrum.length / averages.length;
             for (int i = 0; i < averages.length; i++) {
                 float avg = 0;
                 int j;

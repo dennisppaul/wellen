@@ -3,10 +3,12 @@ package wellen.examples;
 import processing.core.PApplet;
 import wellen.DSP;
 
-/**
- * this example demonstrates how to perform digital signal processing (DSP) by continuously writing to an audio buffer.
- */
 public class ExampleBasics04DSP extends PApplet {
+
+    /*
+     * this example demonstrates how to perform digital signal processing (DSP) by continuously writing to an audio
+     * buffer.
+     */
 
     private float mFreq = 440.0f;
     private float mAmp = 0.5f;

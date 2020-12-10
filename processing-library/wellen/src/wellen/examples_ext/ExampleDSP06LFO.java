@@ -5,16 +5,17 @@ import wellen.DSP;
 import wellen.Wavetable;
 import wellen.Wellen;
 
-/**
- * this example demonstrates how to implement a low-frequency oscillator (LFO) by using wavetables to emulate
- * oscillators that affect the amplitude and frequency parameter of an oscillator (VCO).
- * <p>
- * move mouse to change amplitude and frequency of LFO connected to frequency. keep mouse pressed to change amplitude
- * and frequency of LFO connected to amplitude.
- * <p>
- * use keys to change waveform of LFOs and VCO.
- */
 public class ExampleDSP06LFO extends PApplet {
+
+    /*
+     * this example demonstrates how to implement a low-frequency oscillator (LFO) by using wavetables to emulate
+     * oscillators that affect the amplitude and frequency parameter of an oscillator (VCO).
+     *
+     * move mouse to change amplitude and frequency of LFO connected to frequency. keep mouse pressed to change
+     * amplitude and frequency of LFO connected to amplitude.
+     *
+     * use keys to change waveform of LFOs and VCO.
+     */
 
     private final Wavetable mVCO = new Wavetable(512);
     private final Wavetable mFrequencyLFO = new Wavetable(512);

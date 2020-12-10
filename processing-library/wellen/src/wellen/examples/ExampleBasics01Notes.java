@@ -3,10 +3,11 @@ package wellen.examples;
 import processing.core.PApplet;
 import wellen.Tone;
 
-/**
- * this example demonstrates how to play *musical notes*.
- */
 public class ExampleBasics01Notes extends PApplet {
+
+    /*
+     * this example demonstrates how to play *musical notes*.
+     */
 
     public void settings() {
         size(640, 480);

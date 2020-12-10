@@ -3,12 +3,12 @@ import netP5.*;
 import oscP5.*; 
 
 final String mInput = "RADIO, LIVE TRANSMISSION.\n" +
-        "RADIO, LIVE TRANSMISSION.\n" +
-        "LISTEN TO THE SILENCE, LET IT RING ON.\n" +
-        "EYES, DARK GREY LENSES FRIGHTENED OF THE SUN.\n" +
-        "WE WOULD HAVE A FINE TIME LIVING IN THE NIGHT,\n" +
-        "LEFT TO BLIND DESTRUCTION,\n" +
-        "WAITING FOR OUR SIGHT.";
+                              "RADIO, LIVE TRANSMISSION.\n" +
+                              "LISTEN TO THE SILENCE, LET IT RING ON.\n" +
+                              "EYES, DARK GREY LENSES FRIGHTENED OF THE SUN.\n" +
+                              "WE WOULD HAVE A FINE TIME LIVING IN THE NIGHT,\n" +
+                              "LEFT TO BLIND DESTRUCTION,\n" +
+                              "WAITING FOR OUR SIGHT.";
 
 final int mBaseNote = Note.NOTE_C3;
 

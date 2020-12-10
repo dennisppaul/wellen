@@ -37,15 +37,15 @@ final float mMaxDistance = 100;
     
 final int mID;
     
-float mFreqPointer = 0;
-    
-float mAmpPointer = 0;
-    
 final float mBaseFreq;
     
 final float mFreqStep;
     
 final float mAmpStep;
+    
+float mFreqPointer = 0;
+    
+float mAmpPointer = 0;
     
 Jibberer(int pID) {
         mID = pID;
@@ -61,9 +61,9 @@ Jibberer(int pID) {
     void drag() {
         if (mousePressed) {
             if (mouseX > position().x - 30
-                    && mouseX < position().x + 30
-                    && mouseY > position().y - 30
-                    && mouseY < position().y + 30) {
+                && mouseX < position().x + 30
+                && mouseY > position().y - 30
+                && mouseY < position().y + 30) {
                 position().set(mouseX, mouseY, 0);
             }
         }

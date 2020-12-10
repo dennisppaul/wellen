@@ -4,10 +4,11 @@ import processing.core.PApplet;
 import wellen.Beat;
 import wellen.SpeechSynthesis;
 
-/**
- * this example demonstrates how to use the built-in speech synthesis engine ( MacOS only )
- */
 public class ExampleSpeechSynthesis extends PApplet {
+
+    /*
+     * this example demonstrates how to use the built-in speech synthesis engine ( MacOS only ).
+     */
 
     private SpeechSynthesis mSpeech;
     private String[] mWords;

@@ -46,9 +46,9 @@ public class TestToneEngineInteralWithDSPPostProcess extends PApplet {
             final int mBufferSize = mPostProcessing.buffer.length;
             for (int i = 0; i < mBufferSize - 1; i++) {
                 g.line(map(i, 0, mBufferSize, 0, pWidth),
-                        map(mPostProcessing.buffer[i], -1, 1, 0, pHeight),
-                        map(i + 1, 0, mBufferSize, 0, pWidth),
-                        map(mPostProcessing.buffer[i + 1], -1, 1, 0, pHeight));
+                       map(mPostProcessing.buffer[i], -1, 1, 0, pHeight),
+                       map(i + 1, 0, mBufferSize, 0, pWidth),
+                       map(mPostProcessing.buffer[i + 1], -1, 1, 0, pHeight));
             }
         }
     }

@@ -4,11 +4,12 @@ import processing.core.PApplet;
 import wellen.Tone;
 import wellen.Wellen;
 
-/**
- * this example demonstrates how to use the MIDI tone engine to control a MIDI instrument ( i.e sending MIDI events to a
- * MIDI device ). make sure to set up the MIDI configuration properly in system control.
- */
 public class ExampleBasics06MIDI extends PApplet {
+
+    /*
+     * this example demonstrates how to use the MIDI tone engine to control a MIDI instrument ( i.e sending MIDI events
+     * to a MIDI device ). make sure to set up the MIDI configuration properly in system control.
+     */
 
     public void settings() {
         size(640, 480);

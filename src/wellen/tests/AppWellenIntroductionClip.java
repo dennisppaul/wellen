@@ -15,6 +15,7 @@ public class AppWellenIntroductionClip extends PApplet {
 
     private static final float SCALE = 720.0f / 480.0f;
     private static final float FONT_SCALE = 36 * 3;
+    private static final int BASE_NOTE = Note.NOTE_C3;
     private static boolean mIntroDone;
     private static float mSceneDuration = 0.0f;
     private static BeatEvent mBeatA;
@@ -23,7 +24,6 @@ public class AppWellenIntroductionClip extends PApplet {
     private static Loop mLoopA;
     private static Loop mLoopB;
     private static Loop mLoopC;
-    private static final int BASE_NOTE = Note.NOTE_C3;
 
     public void settings() {
         size(1280, 720);

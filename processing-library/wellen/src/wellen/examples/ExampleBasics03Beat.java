@@ -5,11 +5,12 @@ import wellen.Beat;
 import wellen.Note;
 import wellen.Tone;
 
-/**
- * this example demonstrates how to use a *beat*. once started the method `beat(int)` is called at a speed defined in
- * *beats per minute* (bpm) ( i.e quarter notes per minute ).
- */
 public class ExampleBasics03Beat extends PApplet {
+
+    /*
+     * this example demonstrates how to use a *beat*. once started the method `beat(int)` is called at a speed defined
+     * in *beats per minute* (bpm) ( i.e quarter notes per minute ).
+     */
 
     private final int[] mNotes = {Note.NOTE_C3, Note.NOTE_C4, Note.NOTE_A2, Note.NOTE_A3};
     private int mBeatCount;

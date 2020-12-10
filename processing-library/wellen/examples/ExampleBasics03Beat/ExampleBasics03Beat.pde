@@ -1,6 +1,10 @@
 import wellen.*; 
 import netP5.*; 
 import oscP5.*; 
+/*
+ * this example demonstrates how to use a *beat*. once started the method `beat(int)` is called at a speed defined
+ * in *beats per minute* (bpm) ( i.e quarter notes per minute ).
+ */
 
 final int[] mNotes = {Note.NOTE_C3, Note.NOTE_C4, Note.NOTE_A2, Note.NOTE_A3};
 

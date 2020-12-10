@@ -4,12 +4,13 @@ import processing.core.PApplet;
 import wellen.Tone;
 import wellen.Wellen;
 
-/**
- * this example demonstrates how to use a *Low-Pass Filter* (LPF) on a sawtooth oscillator in DSP.
- * <p>
- * note that this functionality is not implemented for MIDI and OSC.
- */
 public class ExampleInstruments05LPF extends PApplet {
+
+    /*
+     * this example demonstrates how to use a *Low-Pass Filter* (LPF) on a sawtooth oscillator in DSP.
+     *
+     * note that this functionality is not implemented for MIDI and OSC.
+     */
 
     public void settings() {
         size(640, 480);

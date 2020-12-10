@@ -32,12 +32,12 @@ public class ADSR implements DSPNodeOutput {
      */
 
     public static final String ADSR_DIAGRAM = "    ^    /\\\n"
-            + "    |   /  \\\n"
-            + "    |  /    \\______\n"
-            + "    | /            \\\n"
-            + "    |/              \\\n"
-            + "    +---------------------->\n"
-            + "    [A   ][D][S   ][R]\n";
+                                              + "    |   /  \\\n"
+                                              + "    |  /    \\______\n"
+                                              + "    | /            \\\n"
+                                              + "    |/              \\\n"
+                                              + "    +---------------------->\n"
+                                              + "    [A   ][D][S   ][R]\n";
     private static final boolean DEBUG_ADSR = false;
     private final int mSamplingRate;
     private final float FADE_TO_ZERO_RATE_SEC;

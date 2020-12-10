@@ -4,10 +4,11 @@ import processing.core.PApplet;
 import wellen.Note;
 import wellen.Tone;
 
-/**
- * this example shows how use pitch bending i.e offsetting the note’s frequency by a fraction of its frequency.
- */
 public class ExampleInstruments07PitchBend extends PApplet {
+
+    /*
+     * this example shows how use pitch bending i.e offsetting the note’s frequency by a fraction of its frequency.
+     */
 
     public void settings() {
         size(640, 480);

@@ -9,13 +9,15 @@ import wellen.Tone;
 import wellen.Wavetable;
 import wellen.Wellen;
 
-/**
- * this example demonstrates how to implement custom instruments by extending default internal instruments. an in-depth
- * explanation of the behavior of each custom instrument can be found in the source code below as inline comments.
- * <p>
- * use keys `1`, `2`, or `3` to play a custom instrument.
- */
 public class ExampleInstruments08CustomDSPInstrument extends PApplet {
+
+    /*
+     * this example demonstrates how to implement custom instruments by extending default internal instruments. an
+     * in-depth
+     * explanation of the behavior of each custom instrument can be found in the source code below as inline comments.
+     *
+     * use keys `1`, `2`, or `3` to play a custom instrument.
+     */
 
     private static final int INSTRUMENT_DEFAULT = 0;
     private static final int INSTRUMENT_SAMPLER = 1;

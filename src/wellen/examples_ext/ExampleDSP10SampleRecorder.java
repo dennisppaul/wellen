@@ -6,11 +6,12 @@ import wellen.SampleDataSNARE;
 import wellen.Sampler;
 import wellen.Wellen;
 
-/**
- * this example demonstrates how to record the input of `DSP` into a float array which is then played back via
- * `Sampler`. this example also demonstrates how to play a sample backwards.
- */
 public class ExampleDSP10SampleRecorder extends PApplet {
+
+    /*
+     * this example demonstrates how to record the input of `DSP` into a float array which is then played back via
+     * `Sampler`. this example also demonstrates how to play a sample backwards.
+     */
 
     private Sampler mSampler;
     private boolean mIsRecording;

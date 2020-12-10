@@ -3,11 +3,12 @@ package wellen.examples_ext;
 import processing.core.PApplet;
 import wellen.Tone;
 
-/**
- * this example demonstrates how to use the OSC tone engine to send OSC commands. the defined OSC address patterns can
- * be found in `ToneEngineOSC`
- */
 public class ExampleExternal04OSCToneEngine extends PApplet {
+
+    /*
+     * this example demonstrates how to use the OSC tone engine to send OSC commands. the defined OSC address patterns
+     * can be found in `ToneEngineOSC`
+     */
 
     private int mNote;
 

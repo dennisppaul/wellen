@@ -74,6 +74,7 @@ public class InstrumentInternal extends Instrument implements DSPNodeOutput {
             mSample = mLPF.process(mSample);
         }
         mSample = Wellen.clamp(mSample, -1.0f, 1.0f);
+
         return mADSRAmp * mSample;
     }
 

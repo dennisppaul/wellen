@@ -3,12 +3,12 @@ package wellen.examples_ext;
 import processing.core.PApplet;
 import wellen.DSP;
 
-/**
- * this example demonstrates how to create stereo sounds with DSP. two slightly detuned sine waves are generated and
- * distributed to the left and right channel.
- */
-
 public class ExampleDSP01StereoOutput extends PApplet {
+
+    /*
+     * this example demonstrates how to create stereo sounds with DSP. two slightly detuned sine waves are generated and
+     * distributed to the left and right channel.
+     */
 
     private float mFreq = 344.53125f;
     private int mCounter = 0;

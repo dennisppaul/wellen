@@ -6,10 +6,11 @@ import wellen.Note;
 import wellen.Scale;
 import wellen.Tone;
 
-/**
- * this examples demonstrates how to play all 16 instruments at the same time.
- */
 public class ExampleInstruments06SixteenVoices extends PApplet {
+
+    /*
+     * this examples demonstrates how to play all 16 instruments at the same time.
+     */
 
     private int mBeatCount;
 

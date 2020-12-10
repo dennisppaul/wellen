@@ -13,9 +13,9 @@ static final int INSTRUMENT_FLUTE = 1;
 static final int INSTRUMENT_NOISE = 2;
 
 final int[] mBaseSequence = {0, O, X, 0,
-        X, X, 0, X,
-        X, 0, X, X,
-        7, O, X, 12};
+                                     X, X, 0, X,
+                                     X, 0, X, X,
+                                     7, O, X, 12};
 
 float mTime;
 

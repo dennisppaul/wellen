@@ -5,11 +5,13 @@ import wellen.DSP;
 import wellen.Wavetable;
 import wellen.Wellen;
 
-/**
- * this example demonstrates how to use a *wavetable* ( a chunk of memory ) and play it back at different frequencies
- * and amplitudes. in this example a wavetable is used to emulate an oscillator (VCO) with different wave shapes.
- */
 public class ExampleDSP05Wavetable extends PApplet {
+
+    /*
+     * this example demonstrates how to use a *wavetable* ( a chunk of memory ) and play it back at different
+     * frequencies
+     * and amplitudes. in this example a wavetable is used to emulate an oscillator (VCO) with different wave shapes.
+     */
 
     private final Wavetable mWavetable = new Wavetable(512);
 

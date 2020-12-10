@@ -3,15 +3,16 @@ package wellen.examples_ext;
 import processing.core.PApplet;
 import wellen.Tone;
 
-/**
- * this example demonstrates how to use the built-in low-frequency oscillators (LFOs) to change the sound
- * characteristics of an instrument.
- * <p>
- * use keys `1` and `2` to enable/disable LFOs and ` ` to toggle parameter selection.
- * <p>
- * note that this functionality is not implemented for MIDI and OSC.
- */
 public class ExampleInstruments04LFOs extends PApplet {
+
+    /*
+     * this example demonstrates how to use the built-in low-frequency oscillators (LFOs) to change the sound
+     * characteristics of an instrument.
+     *
+     * use keys `1` and `2` to enable/disable LFOs and ` ` to toggle parameter selection.
+     *
+     * note that this functionality is not implemented for MIDI and OSC.
+     */
 
     private boolean mToggleLFOParameterSelect = true;
     private boolean mEnableFrequencyLFO = false;

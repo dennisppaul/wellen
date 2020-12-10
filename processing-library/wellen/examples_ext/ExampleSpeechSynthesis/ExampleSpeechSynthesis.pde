@@ -1,6 +1,9 @@
 import wellen.*; 
 import netP5.*; 
 import oscP5.*; 
+/*
+ * this example demonstrates how to use the built-in speech synthesis engine ( MacOS only ).
+ */
 
 SpeechSynthesis mSpeech;
 

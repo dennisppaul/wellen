@@ -1,6 +1,9 @@
 import wellen.*; 
 import netP5.*; 
 import oscP5.*; 
+/*
+ * this example demonstrates how to implement a basic echo effect in DSP.
+ */
 float[] mDelayBuffer = new float[4096];
 int mDelayID = 0;
 int mDelayOffset = 512;

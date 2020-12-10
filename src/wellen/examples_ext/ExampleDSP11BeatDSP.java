@@ -6,15 +6,16 @@ import wellen.DSP;
 import wellen.Note;
 import wellen.Tone;
 
-/**
- * this example demonstrates how to use `BeatDSP` to trigger beats, similar to the *normal* `Beat` mechanism, with the
- * only difference that events are timed by the speed at which `DSP` requests audio blocks.
- * <p>
- * this has three consequences: beats are synced with the `DSP` audio engine, depending on the time stability of the
- * underlying audio engine beats might run more precise over time, and a timing error depending on the audio block size
- * is introduced ( e.g ( AUDIOBLOCK_SIZE=512 / SAMPLING_RATE=44100Hz ) = 0.01161SEC maximum timing error ).
- */
 public class ExampleDSP11BeatDSP extends PApplet {
+
+    /*
+     * this example demonstrates how to use `BeatDSP` to trigger beats, similar to the *normal* `Beat` mechanism, with
+     * the only difference that events are timed by the speed at which `DSP` requests audio blocks.
+     *
+     * this has three consequences: beats are synced with the `DSP` audio engine, depending on the time stability of the
+     * underlying audio engine beats might run more precise over time, and a timing error depending on the audio block
+     * size is introduced ( e.g ( AUDIOBLOCK_SIZE=512 / SAMPLING_RATE=44100Hz ) = 0.01161SEC maximum timing error ).
+     */
 
     private final int[] mNotes = {Note.NOTE_C3, Note.NOTE_C4, Note.NOTE_A2, Note.NOTE_A3};
     private int mBeatCount;

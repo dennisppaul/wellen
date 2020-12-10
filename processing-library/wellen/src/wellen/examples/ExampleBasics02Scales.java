@@ -5,11 +5,12 @@ import wellen.Note;
 import wellen.Scale;
 import wellen.Tone;
 
-/**
- * this example demonstrates how to use *musical scales*. a selection of predefined scales is available in `Scale`,
- * however custom scales can also be created.
- */
 public class ExampleBasics02Scales extends PApplet {
+
+    /*
+     * this example demonstrates how to use *musical scales*. a selection of predefined scales is available in `Scale`,
+     * however custom scales can also be created.
+     */
 
     private int mNote;
     private int mStep;

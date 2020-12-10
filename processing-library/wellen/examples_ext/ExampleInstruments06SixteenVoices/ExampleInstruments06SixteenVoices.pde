@@ -1,6 +1,9 @@
 import wellen.*; 
 import netP5.*; 
 import oscP5.*; 
+/*
+ * this examples demonstrates how to play all 16 instruments at the same time.
+ */
 
 int mBeatCount;
 

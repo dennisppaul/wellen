@@ -32,9 +32,9 @@ public class TestDSPLowPassFilters extends PApplet {
             for (int i = 0; i < mBufferSize - 1; i++) {
                 final float x = map(i, 0, mBufferSize, 0, width);
                 line(map(i, 0, mBufferSize, 0, width),
-                        map(DSP.get_buffer()[i], -1, 1, 0, height),
-                        map(i + 1, 0, mBufferSize, 0, width),
-                        map(DSP.get_buffer()[i + 1], -1, 1, 0, height));
+                     map(DSP.get_buffer()[i], -1, 1, 0, height),
+                     map(i + 1, 0, mBufferSize, 0, width),
+                     map(DSP.get_buffer()[i + 1], -1, 1, 0, height));
             }
         }
     }
@@ -164,7 +164,7 @@ public class TestDSPLowPassFilters extends PApplet {
         public float process(float pSignal) {
             float xn = pSignal;
             float yn = m_coeffs.a0 * xn + m_coeffs.a1 * m_xnz1 + m_coeffs.a2 * m_xnz2
-                    - m_coeffs.b1 * m_ynz1 - m_coeffs.b2 * m_xnz2;
+                       - m_coeffs.b1 * m_ynz1 - m_coeffs.b2 * m_xnz2;
 
             m_xnz2 = m_xnz1;
             m_xnz1 = xn;

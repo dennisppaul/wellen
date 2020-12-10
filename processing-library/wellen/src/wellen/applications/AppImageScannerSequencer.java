@@ -13,11 +13,12 @@ import wellen.Wellen;
 
 import java.util.ArrayList;
 
-/**
- * this application requires the processing [video](https://processing.org/reference/libraries/video/) library to be
- * installted as well as some kind of camera to be connected.
- */
 public class AppImageScannerSequencer extends PApplet {
+
+    /*
+     * this application requires the processing [video](https://processing.org/reference/libraries/video/) library to be
+     * installed as well as some kind of camera to be connected.
+     */
 
     private final ArrayList<ImageSampler> mSamplers = new ArrayList<>();
     private Capture mCapture;
@@ -150,3 +151,4 @@ public class AppImageScannerSequencer extends PApplet {
         PApplet.main(AppImageScannerSequencer.class.getName());
     }
 }
+

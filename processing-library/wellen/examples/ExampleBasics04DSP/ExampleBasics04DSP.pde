@@ -1,6 +1,10 @@
 import wellen.*; 
 import netP5.*; 
 import oscP5.*; 
+/*
+ * this example demonstrates how to perform digital signal processing (DSP) by continuously writing to an audio
+ * buffer.
+ */
 
 float mFreq = 440.0f;
 

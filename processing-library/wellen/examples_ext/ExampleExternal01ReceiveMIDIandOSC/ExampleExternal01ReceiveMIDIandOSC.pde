@@ -1,7 +1,15 @@
 import wellen.*; 
 import netP5.*; 
 import oscP5.*; 
-//@TODO(parse received events and play them as musical notes)
+/*
+ * this example demonstrates how to receive MIDI and OSC events in the `event_receive` method.
+ *
+ * note that two arguments are received. the first specifies the event type ( see `Event` for a list of events ) and
+ * the second contains the payload ( i.e the actual event related data ).
+ *
+ * note that each event type implies a number of data points e.g `EVENT_NOTE_ON` always has 3 data points:
+ * `CHANNEL`, `NOTE` and `VELOCITY` ( see `ExampleEvent03MIDIExternalKeyboard` for an example of an implementation )
+ */
 
 String mEventReceived = "EVENTS\n---\n";
 

@@ -7,15 +7,16 @@ import wellen.Note;
 import wellen.Scale;
 import wellen.Tone;
 
-/**
- * this example shows how to use an instrument with an amplitude envelope ( ADSR ). the envelope controls the amplitude
- * of a tone over time. the attack stage is started by calling `note_on()` fading the amplitude from 0 to 1, moving via
- * the decay stage to the sustain stage fading the amplitude to the sustain level. there the envelope remains until
- * `note_off()` is called which starts the release stage which fades the amplitude back to 0.
- * <p>
- * note that this functionality is not implemented for MIDI and OSC.
- */
 public class ExampleInstruments01ADSR extends PApplet {
+
+    /*
+     * this example shows how to use an instrument with an amplitude envelope ( ADSR ). the envelope controls the
+     * amplitude of a tone over time. the attack stage is started by calling `note_on()` fading the amplitude from 0 to
+     * 1, moving via the decay stage to the sustain stage fading the amplitude to the sustain level. there the envelope
+     * remains until `note_off()` is called which starts the release stage which fades the amplitude back to 0.
+     *
+     * note that this functionality is not implemented for MIDI and OSC.
+     */
 
     public void settings() {
         size(640, 480);
@@ -72,8 +73,8 @@ public class ExampleInstruments01ADSR extends PApplet {
     private float draw_connection_line(float pStartX, float pDuration, float pLevelStart, float pLevelEnd) {
         final float mScaleX = width * 0.25f;
         final float mScaleY = height * 0.25f;
-        PVector mStart = new PVector().set(pStartX, mScaleX * pLevelStart);
-        PVector mEnd = new PVector().set(pStartX + mScaleX * pDuration, mScaleX * pLevelEnd);
+        PVector mStart = new PVector().set(pStartX, mScaleY * pLevelStart);
+        PVector mEnd = new PVector().set(pStartX + mScaleX * pDuration, mScaleY * pLevelEnd);
         strokeWeight(3);
         line(mStart.x, mStart.y, mEnd.x, mEnd.y);
         strokeWeight(0.5f);

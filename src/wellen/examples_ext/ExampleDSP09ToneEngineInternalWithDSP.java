@@ -6,12 +6,13 @@ import wellen.Tone;
 import wellen.ToneEngineInternal;
 import wellen.Wellen;
 
-/**
- * this example demonstrate how to reroute the output of the internal tone engine to `DSP` to e.g apply an effect. in
- * order to achieve this the tone engine is started without an output device and is then called in `audioblock` to
- * produce the tone signals.
- */
 public class ExampleDSP09ToneEngineInternalWithDSP extends PApplet {
+
+    /*
+     * this example demonstrate how to reroute the output of the internal tone engine to `DSP` to e.g apply an effect.
+     * in order to achieve this the tone engine is started without an output device and is then called in `audioblock`
+     * to produce the tone signals.
+     */
 
     private final float[] mDelayBuffer = new float[4096];
     private final int mDelayOffset = 512;

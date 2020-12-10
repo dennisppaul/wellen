@@ -6,15 +6,16 @@ import wellen.SampleDataSNARE;
 import wellen.Sampler;
 import wellen.Wellen;
 
-/**
- * this example demonstrates how to use a sampler ( a pre-recorded chunk of memory ) and play it at different speeds and
- * amplitudes. the sample data can also be loaded from external sources. the `load` method assumes a raw audio format
- * with 32-bit floats and a value range from [-1.0, 1.0].
- * <p>
- * note that samples can either be played once or looped. if a sample is played once it must be rewound before it can be
- * played again.
- */
 public class ExampleDSP07Sampler extends PApplet {
+
+    /*
+     * this example demonstrates how to use a sampler ( a pre-recorded chunk of memory ) and play it at different speeds
+     * and amplitudes. the sample data can also be loaded from external sources. the `load` method assumes a raw audio
+     * format with 32-bit floats and a value range from [-1.0, 1.0].
+     *
+     * note that samples can either be played once or looped. if a sample is played once it must be rewound before it
+     * can be played again.
+     */
 
     private Sampler mSampler;
 

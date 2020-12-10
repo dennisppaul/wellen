@@ -3,10 +3,11 @@ package wellen.examples;
 import processing.core.PApplet;
 import wellen.Tone;
 
-/**
- * this example demonstrates how to use *instruments* to play multiple notes at the same time.
- */
 public class ExampleBasics05Instruments extends PApplet {
+
+    /*
+     * this example demonstrates how to use *instruments* to play multiple notes at the same time.
+     */
 
     public void settings() {
         size(640, 480);

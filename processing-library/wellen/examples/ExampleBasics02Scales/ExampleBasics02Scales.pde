@@ -1,6 +1,10 @@
 import wellen.*; 
 import netP5.*; 
 import oscP5.*; 
+/*
+ * this example demonstrates how to use *musical scales*. a selection of predefined scales is available in `Scale`,
+ * however custom scales can also be created.
+ */
 
 int mNote;
 

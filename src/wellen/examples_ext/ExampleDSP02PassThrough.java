@@ -4,11 +4,12 @@ import processing.core.PApplet;
 import wellen.DSP;
 import wellen.Wellen;
 
-/**
- * this example demonstrates how to receive audio data from the input device and pass it through to the output device.
- * this is somewhat the *hello world* of DSP.
- */
 public class ExampleDSP02PassThrough extends PApplet {
+
+    /*
+     * this example demonstrates how to receive audio data from the input device and pass it through to the output
+     * device. this is somewhat the *hello world* of DSP.
+     */
 
     public void settings() {
         size(640, 480);

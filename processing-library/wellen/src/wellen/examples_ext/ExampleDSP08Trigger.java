@@ -7,15 +7,16 @@ import wellen.Tone;
 import wellen.Trigger;
 import wellen.Wavetable;
 
-/**
- * this example demonstrates how to use a trigger to convert alternating signals into events ( `trigger` ). the trigger
- * is continuously fed a signal, whenever the signal cross the zero point an event is triggered. the trigger can be
- * configured to detect *rising-edge* ( signal previously had a negative value ), *falling-edge* ( signal previously had
- * a positive value ) signals or both.
- * <p>
- * it is common to use a low-frequency oscillator (LFO) to generate the signal for the trigger.
- */
 public class ExampleDSP08Trigger extends PApplet {
+
+    /*
+     * this example demonstrates how to use a trigger to convert alternating signals into events ( `trigger` ). the
+     * trigger is continuously fed a signal, whenever the signal cross the zero point an event is triggered. the trigger
+     * can be configured to detect *rising-edge* ( signal previously had a negative value ), *falling-edge* ( signal
+     * previously had a positive value ) signals or both.
+     *
+     * it is common to use a low-frequency oscillator (LFO) to generate the signal for the trigger.
+     */
 
     private final int[] mNotes = {Note.NOTE_C3, Note.NOTE_C4, Note.NOTE_A2, Note.NOTE_A3};
     private int mBeatCount;

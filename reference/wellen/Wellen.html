@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9};
+var methods = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -156,41 +156,45 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static int</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Wellen.html#NO_CHANNELS">NO_CHANNELS</a></span></code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Wellen.html#DEFAULT_WAVETABLE_SIZE">DEFAULT_WAVETABLE_SIZE</a></span></code>&nbsp;</td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>static int</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Wellen.html#NO_CHANNELS">NO_CHANNELS</a></span></code>&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <td class="colFirst"><code>static int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Wellen.html#OSC_NOISE">OSC_NOISE</a></span></code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>static int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Wellen.html#OSC_SAWTOOTH">OSC_SAWTOOTH</a></span></code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Wellen.html#OSC_SINE">OSC_SINE</a></span></code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>static int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Wellen.html#OSC_SQUARE">OSC_SQUARE</a></span></code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Wellen.html#OSC_TRIANGLE">OSC_TRIANGLE</a></span></code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Wellen.html#TONE_ENGINE_INTERNAL">TONE_ENGINE_INTERNAL</a></span></code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Wellen.html#TONE_ENGINE_INTERNAL_WITH_NO_OUTPUT">TONE_ENGINE_INTERNAL_WITH_NO_OUTPUT</a></span></code>&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Wellen.html#TONE_ENGINE_MIDI">TONE_ENGINE_MIDI</a></span></code>&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <td class="colFirst"><code>static java.lang.String</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Wellen.html#TONE_ENGINE_OSC">TONE_ENGINE_OSC</a></span></code>&nbsp;</td>
 </tr>
@@ -244,30 +248,43 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Wellen.html#draw_buffer-processing.core.PGraphics-int-int-float:A-">draw_buffer</a></span>(processing.core.PGraphics&nbsp;g,
-           int&nbsp;pWidth,
-           int&nbsp;pHeight,
+<td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Wellen.html#draw_buffer-processing.core.PGraphics-float-float-float:A-">draw_buffer</a></span>(processing.core.PGraphics&nbsp;g,
+           float&nbsp;pWidth,
+           float&nbsp;pHeight,
            float[]&nbsp;pBuffer)</code>&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Wellen.html#dumpAudioInputAndOutputDevices--">dumpAudioInputAndOutputDevices</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Wellen.html#draw_buffer-processing.core.PGraphics-float-float-float:A-float:A-">draw_buffer</a></span>(processing.core.PGraphics&nbsp;g,
+           float&nbsp;pWidth,
+           float&nbsp;pHeight,
+           float[]&nbsp;pBufferLeft,
+           float[]&nbsp;pBufferRight)</code>&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Wellen.html#dumpMidiInputDevices--">dumpMidiInputDevices</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Wellen.html#dumpAudioInputAndOutputDevices--">dumpAudioInputAndOutputDevices</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>static void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Wellen.html#dumpMidiOutputDevices--">dumpMidiOutputDevices</a></span>()</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Wellen.html#dumpMidiInputDevices--">dumpMidiInputDevices</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
+<td class="colFirst"><code>static void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Wellen.html#dumpMidiOutputDevices--">dumpMidiOutputDevices</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>static float</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Wellen.html#flip-float-">flip</a></span>(float&nbsp;pValue)</code>&nbsp;</td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>static float[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Wellen.html#get_extremum-float:A-">get_extremum</a></span>(float[]&nbsp;pSignal)</code>&nbsp;</td>
+</tr>
+<tr id="i10" class="altColor">
+<td class="colFirst"><code>static float</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Wellen.html#random-float-float-">random</a></span>(float&nbsp;pMin,
+      float&nbsp;pMax)</code>&nbsp;</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -499,6 +516,19 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
+<a name="DEFAULT_WAVETABLE_SIZE">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>DEFAULT_WAVETABLE_SIZE</h4>
+<pre>public static final&nbsp;int DEFAULT_WAVETABLE_SIZE</pre>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../constant-values.html#wellen.Wellen.DEFAULT_WAVETABLE_SIZE">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
 <a name="NO_CHANNELS">
 <!--   -->
 </a>
@@ -613,16 +643,39 @@ extends java.lang.Object</pre>
 <pre>public static&nbsp;float&nbsp;flip(float&nbsp;pValue)</pre>
 </li>
 </ul>
-<a name="draw_buffer-processing.core.PGraphics-int-int-float:A-">
+<a name="draw_buffer-processing.core.PGraphics-float-float-float:A-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>draw_buffer</h4>
+<pre>public static&nbsp;void&nbsp;draw_buffer(processing.core.PGraphics&nbsp;g,
+                               float&nbsp;pWidth,
+                               float&nbsp;pHeight,
+                               float[]&nbsp;pBuffer)</pre>
+</li>
+</ul>
+<a name="draw_buffer-processing.core.PGraphics-float-float-float:A-float:A-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>draw_buffer</h4>
+<pre>public static&nbsp;void&nbsp;draw_buffer(processing.core.PGraphics&nbsp;g,
+                               float&nbsp;pWidth,
+                               float&nbsp;pHeight,
+                               float[]&nbsp;pBufferLeft,
+                               float[]&nbsp;pBufferRight)</pre>
+</li>
+</ul>
+<a name="random-float-float-">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>draw_buffer</h4>
-<pre>public static&nbsp;void&nbsp;draw_buffer(processing.core.PGraphics&nbsp;g,
-                               int&nbsp;pWidth,
-                               int&nbsp;pHeight,
-                               float[]&nbsp;pBuffer)</pre>
+<h4>random</h4>
+<pre>public static&nbsp;float&nbsp;random(float&nbsp;pMin,
+                           float&nbsp;pMax)</pre>
 </li>
 </ul>
 </li>

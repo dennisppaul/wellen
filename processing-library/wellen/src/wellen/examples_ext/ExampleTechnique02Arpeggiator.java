@@ -8,11 +8,12 @@ import wellen.Scale;
 import wellen.Tone;
 import wellen.Wellen;
 
-/**
- * this example demonstrates how to use `Arpeggiator` to play a predefined *pattern* of notes. `play(int, int)` produces
- * a series of notes to be played sequentially.
- */
 public class ExampleTechnique02Arpeggiator extends PApplet {
+
+    /*
+     * this example demonstrates how to use `Arpeggiator` to play a predefined *pattern* of notes. `play(int, int)`
+     * produces a series of notes to be played sequentially.
+     */
 
     private int mColor;
     private Beat mBeat;

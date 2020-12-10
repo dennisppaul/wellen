@@ -49,10 +49,12 @@ public class AppAlgorithmicComposition05FunctionDSPFormula extends PApplet {
     }
 
     interface AudioFormula {
+
         float render(int pCounter);
     }
 
     class AudioFormulaKnisterKnister implements AudioFormula {
+
         public float render(int pCounter) {
             final float mSeconds = (float) pCounter / DSP.get_sample_rate();
             float v;
@@ -69,6 +71,7 @@ public class AppAlgorithmicComposition05FunctionDSPFormula extends PApplet {
     }
 
     class MAudioFormulaAwayAndAway implements AudioFormula {
+
         public float render(int pCounter) {
             final float mSeconds = (float) pCounter / DSP.get_sample_rate();
             final float mSecondsRad = 2.0f * PI * mSeconds;

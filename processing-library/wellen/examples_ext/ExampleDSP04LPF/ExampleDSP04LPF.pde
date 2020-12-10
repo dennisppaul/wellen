@@ -1,6 +1,9 @@
 import wellen.*; 
 import netP5.*; 
 import oscP5.*; 
+/*
+ * this example demonstrates how to use a *Low-Pass Filter* (LPF) on a sawtooth oscillator in DSP.
+ */
 
 final Wavetable mWavetable = new Wavetable(512);
 

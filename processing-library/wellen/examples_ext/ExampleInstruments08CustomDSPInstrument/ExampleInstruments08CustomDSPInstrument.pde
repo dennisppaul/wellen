@@ -1,6 +1,13 @@
 import wellen.*; 
 import netP5.*; 
 import oscP5.*; 
+/*
+ * this example demonstrates how to implement custom instruments by extending default internal instruments. an
+ * in-depth
+ * explanation of the behavior of each custom instrument can be found in the source code below as inline comments.
+ *
+ * use keys `1`, `2`, or `3` to play a custom instrument.
+ */
 
 static final int INSTRUMENT_DEFAULT = 0;
 

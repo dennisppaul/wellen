@@ -93,13 +93,13 @@ public class AppAlgorithmicComposition02VisualModel extends PApplet {
     }
 
     private class CircleController {
+
         final PVector position = new PVector();
         final PVector pointer = new PVector();
+        private final Sampler mSampler;
         float radius = 100.0f;
         float counter = 0.0f;
         float speed = 3.0f;
-
-        private final Sampler mSampler;
 
         CircleController() {
             byte[] mData = SampleDataSNARE.data;

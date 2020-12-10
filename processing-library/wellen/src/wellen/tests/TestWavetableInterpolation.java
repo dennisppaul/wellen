@@ -28,12 +28,6 @@ public class TestWavetableInterpolation extends PApplet {
         mWavetable.interpolate_samples(!mousePressed);
     }
 
-    public void audioblock(float[] pOutputSamples) {
-        for (int i = 0; i < pOutputSamples.length; i++) {
-            pOutputSamples[i] = mWavetable.output();
-        }
-    }
-
     public void keyPressed() {
         switch (key) {
             case '1':
@@ -51,6 +45,12 @@ public class TestWavetableInterpolation extends PApplet {
             case '5':
                 randomize(mWavetable.get_wavetable());
                 break;
+        }
+    }
+
+    public void audioblock(float[] pOutputSamples) {
+        for (int i = 0; i < pOutputSamples.length; i++) {
+            pOutputSamples[i] = mWavetable.output();
         }
     }
 

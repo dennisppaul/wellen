@@ -6,10 +6,11 @@ import wellen.LowPassFilter;
 import wellen.Wavetable;
 import wellen.Wellen;
 
-/**
- * this example demonstrates how to use a *Low-Pass Filter* (LPF) on a sawtooth oscillator in DSP.
- */
 public class ExampleDSP04LPF extends PApplet {
+
+    /*
+     * this example demonstrates how to use a *Low-Pass Filter* (LPF) on a sawtooth oscillator in DSP.
+     */
 
     private final Wavetable mWavetable = new Wavetable(512);
     private final LowPassFilter mFilter = new LowPassFilter(Wellen.DEFAULT_SAMPLING_RATE);

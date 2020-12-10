@@ -1,6 +1,14 @@
 import wellen.*; 
 import netP5.*; 
 import oscP5.*; 
+/*
+ * this example demonstrates how to use the built-in low-frequency oscillators (LFOs) to change the sound
+ * characteristics of an instrument.
+ *
+ * use keys `1` and `2` to enable/disable LFOs and ` ` to toggle parameter selection.
+ *
+ * note that this functionality is not implemented for MIDI and OSC.
+ */
 
 boolean mToggleLFOParameterSelect = true;
 

@@ -1,6 +1,10 @@
 import wellen.*; 
 import netP5.*; 
 import oscP5.*; 
+/*
+ * this example demonstrates how to use the OSC tone engine to send OSC commands. the defined OSC address patterns
+ * can be found in `ToneEngineOSC`
+ */
 
 int mNote;
 

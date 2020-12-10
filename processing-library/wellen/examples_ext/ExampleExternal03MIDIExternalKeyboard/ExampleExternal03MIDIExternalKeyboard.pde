@@ -1,6 +1,10 @@
 import wellen.*; 
 import netP5.*; 
 import oscP5.*; 
+/*
+ * this example demonstrates how to parse MIDI events sent from an external MIDI device ( i.e a MIDI keyboard ) and
+ * parse the events to play notes with the tone engine.
+ */
 
 int mNote = 0;
 

@@ -40,11 +40,11 @@ public class AppOscJibberish extends PApplet {
         private final PVector mTriggerPosition;
         private final float mMaxDistance = 100;
         private final int mID;
-        private float mFreqPointer = 0;
-        private float mAmpPointer = 0;
         private final float mBaseFreq;
         private final float mFreqStep;
         private final float mAmpStep;
+        private float mFreqPointer = 0;
+        private float mAmpPointer = 0;
 
         public Jibberer(int pID) {
             mID = pID;
@@ -62,9 +62,9 @@ public class AppOscJibberish extends PApplet {
         void drag() {
             if (mousePressed) {
                 if (mouseX > position().x - 30
-                        && mouseX < position().x + 30
-                        && mouseY > position().y - 30
-                        && mouseY < position().y + 30) {
+                    && mouseX < position().x + 30
+                    && mouseY > position().y - 30
+                    && mouseY < position().y + 30) {
                     position().set(mouseX, mouseY, 0);
                 }
             }

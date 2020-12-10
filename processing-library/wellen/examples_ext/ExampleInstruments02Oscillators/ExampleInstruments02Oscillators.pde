@@ -1,6 +1,13 @@
 import wellen.*; 
 import netP5.*; 
 import oscP5.*; 
+/*
+ * this example shows how to use different oscillators in an instrument.
+ *
+ * use keys `1` – `5` to select different wave shapes.
+ *
+ * note that this functionality is not implemented for MIDI and OSC.
+ */
 
 int mNote;
 

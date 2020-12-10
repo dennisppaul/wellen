@@ -3,14 +3,15 @@ package wellen.examples_ext;
 import processing.core.PApplet;
 import wellen.Tone;
 
-/**
- * this example demonstrates how to control the tone engine’s frequency and amplitude directly ( instead of setting it
- * by a note and its velocity ). in order to control frequency and amplitude directly the ADSR envelope, normally
- * controlling the amplitude, needs to be disabled.
- * <p>
- * note that this functionality is not implemented for MIDI and OSC.
- */
 public class ExampleInstruments03FrequencyAndAmplitude extends PApplet {
+
+    /*
+     * this example demonstrates how to control the tone engine’s frequency and amplitude directly ( instead of setting
+     * it by a note and its velocity ). in order to control frequency and amplitude directly the ADSR envelope, normally
+     * controlling the amplitude, needs to be disabled.
+     *
+     * note that this functionality is not implemented for MIDI and OSC.
+     */
 
     public void settings() {
         size(640, 480);

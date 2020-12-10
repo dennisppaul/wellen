@@ -6,14 +6,15 @@ import wellen.Scale;
 import wellen.Tone;
 import wellen.Wellen;
 
-/**
- * this example shows how to use different oscillators in an instrument.
- * <p>
- * use keys `1` – `5` to select different wave shapes.
- * <p>
- * note that this functionality is not implemented for MIDI and OSC.
- */
 public class ExampleInstruments02Oscillators extends PApplet {
+
+    /*
+     * this example shows how to use different oscillators in an instrument.
+     *
+     * use keys `1` – `5` to select different wave shapes.
+     *
+     * note that this functionality is not implemented for MIDI and OSC.
+     */
 
     private int mNote;
 

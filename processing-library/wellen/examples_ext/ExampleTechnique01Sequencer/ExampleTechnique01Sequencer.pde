@@ -1,6 +1,9 @@
 import wellen.*; 
 import netP5.*; 
 import oscP5.*; 
+/*
+ * this example demonstrates how to use `Sequencer` to repeatedly play a predefined pattern of notes.
+ */
 
 static final int OFF = -1;
 

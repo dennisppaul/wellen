@@ -4,10 +4,11 @@ import processing.core.PApplet;
 import wellen.DSP;
 import wellen.Wellen;
 
-/**
- * this example demonstrates how to implement a basic echo effect in DSP.
- */
 public class ExampleDSP03Echo extends PApplet {
+
+    /*
+     * this example demonstrates how to implement a basic echo effect in DSP.
+     */
 
     float[] mDelayBuffer = new float[4096];
     int mDelayID = 0;
