@@ -1,6 +1,7 @@
 import wellen.*; 
 import netP5.*; 
 import oscP5.*; 
+
 /*
  * this example demonstrates how to use a trigger to convert alternating signals into events ( `trigger` ). the
  * trigger is continuously fed a signal, whenever the signal cross the zero point an event is triggered. the trigger

@@ -1,6 +1,7 @@
 import wellen.*; 
 import netP5.*; 
 import oscP5.*; 
+
 /*
  * this example demonstrates how to use a *wavetable* ( a chunk of memory ) and play it back at different
  * frequencies

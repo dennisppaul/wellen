@@ -1,6 +1,7 @@
 import wellen.*; 
 import netP5.*; 
 import oscP5.*; 
+
 /*
  * this example demonstrates how to use `BeatDSP` to trigger beats, similar to the *normal* `Beat` mechanism, with
  * the only difference that events are timed by the speed at which `DSP` requests audio blocks.

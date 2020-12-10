@@ -1,6 +1,7 @@
 import wellen.*; 
 import netP5.*; 
 import oscP5.*; 
+
 /*
  * this example demonstrates how to use `Arpeggiator` to play a predefined *pattern* of notes. `play(int, int)`
  * produces a series of notes to be played sequentially.

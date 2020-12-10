@@ -1,6 +1,7 @@
 import wellen.*; 
 import netP5.*; 
 import oscP5.*; 
+
 /*
  * this example shows how to use different oscillators in an instrument.
  *

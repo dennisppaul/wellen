@@ -1,6 +1,7 @@
 import wellen.*; 
 import netP5.*; 
 import oscP5.*; 
+
 /*
  * this example demonstrates how to implement a low-frequency oscillator (LFO) by using wavetables to emulate
  * oscillators that affect the amplitude and frequency parameter of an oscillator (VCO).

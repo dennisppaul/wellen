@@ -1,6 +1,7 @@
 import wellen.*; 
 import netP5.*; 
 import oscP5.*; 
+
 /*
  * this example demonstrates how to create stereo sounds with DSP. two slightly detuned sine waves are generated and
  * distributed to the left and right channel.
