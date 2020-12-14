@@ -14,8 +14,10 @@ public class Wavetable implements DSPNodeOutput {
     private float mDesiredStepSize;
     private float mArrayPtr;
     private float mAmplitude;
+    private float mCurrentAmplitude;
     private boolean mInterpolateSamples;
     private float mInterpolateFrequencyChangeFactor;
+    private float mInterpolateAmplitudeChangeFactor;
     private float mInterpolateFrequencyDelta;
     private boolean mEnableJitter;
     private float mJitterRange;
@@ -34,6 +36,7 @@ public class Wavetable implements DSPNodeOutput {
         mArrayPtr = 0;
         mInterpolateSamples = false;
         mInterpolateFrequencyChangeFactor = 0.0f;
+        mInterpolateAmplitudeChangeFactor = 0.0f;
         mJitterRange = 0.0f;
         mEnableJitter = false;
         mAmplitude = DEFAULT_AMPLITUDE;
@@ -122,6 +125,10 @@ public class Wavetable implements DSPNodeOutput {
         mInterpolateFrequencyChangeFactor = pInterpolateFrequencyChangeFactor;
     }
 
+    public void interpolate_amplitude_change(float pInterpolateAmplitudeChangeFactor) {
+        mInterpolateAmplitudeChangeFactor = pInterpolateAmplitudeChangeFactor;
+    }
+
     public float get_amplitude() {
         return mAmplitude;
     }
@@ -171,13 +178,21 @@ public class Wavetable implements DSPNodeOutput {
         mArrayPtr = j + mFrac;
         j = (j + mPhaseOffset) % mWavetable.length; /* apply phase offset */
 
+        final float mTmpAmplitude;
+        if (mInterpolateAmplitudeChangeFactor > 0.0f) {
+            mCurrentAmplitude += (mAmplitude - mCurrentAmplitude) * mInterpolateAmplitudeChangeFactor;
+            mTmpAmplitude = mCurrentAmplitude;
+        } else {
+            mTmpAmplitude = mAmplitude;
+        }
+
         if (mInterpolateSamples) {
             final float mNextSample = mWavetable[(j + 1) % mWavetable.length];
             final float mSample = mWavetable[j];
             final float mInterpolatedSample = mSample * (1.0f - mFrac) + mNextSample * mFrac;
-            return mInterpolatedSample * mAmplitude;
+            return mInterpolatedSample * mTmpAmplitude;
         } else {
-            return mWavetable[j] * mAmplitude;
+            return mWavetable[j] * mTmpAmplitude;
         }
     }
 
