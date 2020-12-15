@@ -211,4 +211,8 @@ public class InstrumentInternal extends Instrument implements DSPNodeOutput {
         set_amplitude(velocity_to_amplitude(pVelocity));
         mADSR.start();
     }
+
+    public Wavetable get_VCO() {
+        return mVCO;
+    }
 }

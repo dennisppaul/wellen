@@ -17,6 +17,7 @@ public class Wavetable implements DSPNodeOutput {
     private float mCurrentAmplitude;
     private boolean mInterpolateSamples;
     private float mInterpolateFrequencyChangeFactor;
+    /* @TODO(consider replacing this with a linear ramp mechanism at some point) */
     private float mInterpolateAmplitudeChangeFactor;
     private float mInterpolateFrequencyDelta;
     private boolean mEnableJitter;
