@@ -1,6 +1,6 @@
 # wellen
 
-*wellen* is a framework for exploring and teaching generative music making and algorithmic compositions. it facilitates simple ways of playing musical notes, facilitates easy access to low-level digital signal processing (DSP) and supplies rhythm and timing as well as some *standard* muscial mechanics. the library acts as an adapter to various sound in- and outputs like MIDI, OSC, or digital/analog audio. the library is hosted on github [wellen](https://github.com/dennisppaul/wellen).
+*wellen* is a framework for exploring and teaching generative music making and algorithmic compositions. it facilitates simple ways of playing musical notes, facilitates easy access to low-level digital signal processing (DSP) and supplies rhythm and timing as well as some *standard* muscial mechanics. the library acts as an adapter to various sound in- + outputs like MIDI, OSC, or digital/analog audio. the library is hosted on github [wellen](https://github.com/dennisppaul/wellen).
 
 ## installation
 
@@ -26,6 +26,10 @@ note that the default *tone engine* is monophonic i.e a single *instrument* can 
 
 although `Tone` is designed to play musical notes ( arranged in half-tone steps ) trigger by the `note_on`+`note_off` paradigm, it can also be used to controll the frequency and amplitude of the generated sounds directly ( see `ExampleInstruments03FrequencyAndAmplitude` ).
 
+![](./resources/wellen-schematics-instrument.png)
+
+this schematic summarizes the relation of the different components that comprise an instrument in *wellen*. all components can be dis- + enabled ( see `ExampleInstruments04LFOs` + `ExampleInstruments05LPF` ) and overridden to implement custom behaviors ( see `ExampleInstruments08CustomDSPInstrument` ).
+
 *wellen* comes with mechanisms to send messages to other applications or machines via MIDI ( see `ExampleBasics06MIDI` ) or OSC ( see `ExampleInstruments07OSCToneEngine` ). likewise *wellen* can also receive events from other applications or machines with `EventReceiverMIDI` via MIDI and `EventReceiverOSC` via OSC ( see `ExampleExternal01ReceiveMIDIandOSC` ).
 
 ### `DSP`
@@ -36,7 +40,7 @@ in the simplest setup the method `DSP.start(Object)` starts the signal processin
 
 see `ExampleBasics04DSP` for a simple implementation of a *sine wave oscillator* as well as `ExampleDSP03Echo` for an implementations of slightly more advanced concept in DSP.
 
-additionally DSP can also be started with different parameter sets to either run with stereo output ( see `ExampleDSP01StereoOutput` ), mono in- and output ( see `ExampleDSP02PassThrough` ) or stereo in- and output.
+additionally DSP can also be started with different parameter sets to either run with stereo output ( see `ExampleDSP01StereoOutput` ), mono in- + output ( see `ExampleDSP02PassThrough` ) or stereo in- + output. additionally variations of the `DSP.start(...)` method allow to select other in- + output devices ( + sampling rate, audio block size, and number of in- + output channels ).
 
 the default *tone engine* is designed to be optionally interfaced with `DSP`. this mechanism can e.g be used to apply an *effect* to played notes ( see `ExampleDSP09ToneEngineInternalWithDSP` ).
 
@@ -47,6 +51,8 @@ the default *tone engine* is designed to be optionally interfaced with `DSP`. th
 *wellen* has a mechanism to trigger a continous beat. the method `Beat.start(Object, int)` starts a beat at a specified *beats per minute* (BPM) ( see `ExampleBasics03Beat` ). 
 
 a beat can also be triggered by an external MIDI clock ( see `ExampleExternal02MIDIClock` ) to synchronize with other applications.
+
+to synchronize a beat to `DSP` it can also be triggered by audio system requests ( see `ExampleDSP11BeatDSP` ).
 
 ### other *muscial* techniques
 

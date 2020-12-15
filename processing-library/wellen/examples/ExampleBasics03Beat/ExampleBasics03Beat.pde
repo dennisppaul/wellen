@@ -1,6 +1,4 @@
 import wellen.*; 
-import netP5.*; 
-import oscP5.*; 
 
 /*
  * this example demonstrates how to use a *beat*. once started the method `beat(int)` is called at a speed defined

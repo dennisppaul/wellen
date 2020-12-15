@@ -72,13 +72,13 @@ public abstract class Tone {
         }
         if (pConfiguration == Wellen.TONE_ENGINE_INTERNAL_WITH_NO_OUTPUT) {
             ToneEngineInternal mInstance = new ToneEngineInternal(Wellen.DEFAULT_SAMPLING_RATE,
-                    Wellen.DEFAULT_AUDIO_DEVICE,
-                    Wellen.NO_CHANNELS);
+                                                                  Wellen.DEFAULT_AUDIO_DEVICE,
+                                                                  Wellen.NO_CHANNELS);
             instance = mInstance;
             return mInstance;
         } else {
             System.err.println("+++ WARNING @" + Tone.class.getSimpleName() + ".start" +
-                    " / unknown configuration, using default");
+                               " / unknown configuration, using default");
             return new ToneEngineInternal();
         }
     }
@@ -173,13 +173,21 @@ public abstract class Tone {
         return instance;
     }
 
+    public static ToneEngineInternal get_internal_engine() {
+        if (instance() instanceof ToneEngineInternal) {
+            return (ToneEngineInternal) instance();
+        } else {
+            return null;
+        }
+    }
+
     public static void set_engine(ToneEngine pEngine) {
         instance = pEngine;
     }
 
     private static void printAlreadyStartedWarning() {
         System.err.println("+++ WARNING @" + Tone.class.getSimpleName() + ".start" +
-                " / tone engine already initialized. make sure that `start` is the first call to `Ton`. " +
-                "use `set_engine(ToneEngine)` to switch tone engines.");
+                           " / tone engine already initialized. make sure that `start` is the first call to `Ton`. " +
+                           "use `set_engine(ToneEngine)` to switch tone engines.");
     }
 }

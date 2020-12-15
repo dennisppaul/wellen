@@ -1,7 +1,7 @@
 LIB_NAME=wellen
-IO_EXAMPLE_PATHS=( examples examples_ext applications )
+IO_EXAMPLE_PATHS=( examples )
 PROJECT_PACKAGE=wellen
-SKETCH_IMPORTS=( netP5.* oscP5.* )
+SKETCH_IMPORTS=( )
 BASE_COLOR=59
 ADDITIONAL_LIBS=( )
 RESOURCES=( audio.raw teilchen-beat.raw )

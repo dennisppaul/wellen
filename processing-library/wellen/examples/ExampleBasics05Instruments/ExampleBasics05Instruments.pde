@@ -1,6 +1,4 @@
 import wellen.*; 
-import netP5.*; 
-import oscP5.*; 
 
 /*
  * this example demonstrates how to use *instruments* to play multiple notes at the same time.

@@ -1,6 +1,4 @@
 import wellen.*; 
-import netP5.*; 
-import oscP5.*; 
 
 /*
  * this example demonstrates how to use the MIDI tone engine to control a MIDI instrument ( i.e sending MIDI events
