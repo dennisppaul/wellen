@@ -1,6 +1,6 @@
 package wellen;
 
-public class Reverb {
+public class Reverb implements DSPNodeProcess {
 
     /* a `FreeVerb` implementation taken from https://github.com/kmatheussen/soundengine */
 
@@ -293,6 +293,12 @@ public class Reverb {
         this.wet.set(wet);
     }
 
+    public float process(float pSignal) {
+        float[] mBuffer = {pSignal};
+        process(mBuffer, mBuffer, mBuffer, mBuffer);
+        return mBuffer[0];
+    }
+
     /*
      * Simple interpolation where set and get can be called at any time. Furthermore, the difference between two
      * returned (i.e. 'get()') values will never be larger than 'largest_diff'. Note that the implementation is the
@@ -300,7 +306,7 @@ public class Reverb {
      */
     private static class GlideVar {
 
-        private float largest_diff;
+        private final float largest_diff;
         private float current;
         private float to;
 

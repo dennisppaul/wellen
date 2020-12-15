@@ -3,6 +3,7 @@ package wellen.examples.instruments;
 import processing.core.PApplet;
 import wellen.ADSR;
 import wellen.InstrumentInternal;
+import wellen.Reverb;
 import wellen.SampleDataSNARE;
 import wellen.Sampler;
 import wellen.Tone;
@@ -70,16 +71,19 @@ public class ExampleInstruments08CustomDSPInstrument extends PApplet {
 
         private final Sampler mSampler;
 
+        private final Reverb mReverb;
+
         public CustomInstrumentSampler(int pID) {
             super(pID); /* call super constructor with instrument ID */
             mSampler = new Sampler();
             mSampler.load(SampleDataSNARE.data);
             mSampler.loop(false);
+            mReverb = new Reverb();
         }
 
         public float output() {
             /* `output()` is called to request a new sample */
-            return mSampler.output() * get_amplitude();
+            return mReverb.process(mSampler.output() * get_amplitude());
         }
 
         public void note_off() {
