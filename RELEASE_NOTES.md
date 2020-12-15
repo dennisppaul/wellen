@@ -1,5 +1,12 @@
 # wellen / release notes
 
+## v0.6 (20201215)
+
+- added jitter and phase offset to `Wavetable`
+- moved examples into a single folder
+- added `Reverb` 
+- added master reverb to  `Tone`
+
 ## v0.5 (20201208)
 
 - renamed project to *wellen*

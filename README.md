@@ -4,7 +4,7 @@
 
 ## installation
 
-the library can be installed as a [Processing library](https://processing.org/reference/libraries/) by unpacking the `wellen.zip` archive in the Processing library folder. a step-by-step introduction to the library can be found under `examples` and extended applications of the libray can be found in `examples_ext` and `applications`.
+the library can be installed as a [Processing library](https://processing.org/reference/libraries/) by unpacking the `wellen.zip` archive in the Processing library folder. a step-by-step introduction to the library as well as extended applications can be found under `examples`.
 
 ### dependencies
 
