@@ -24,13 +24,13 @@ by default a simple software-based synthesizer is used as a *tone engine* to pro
 
 note that the default *tone engine* is monophonic i.e a single *instrument* can play only one note at a time. however, there are 16 instruments available which can be combined into a polyphonic setup with 16 voices.
 
-although `Tone` is designed to play musical notes ( arranged in half-tone steps ) trigger by the `note_on`+`note_off` paradigm, it can also be used to controll the frequency and amplitude of the generated sounds directly ( see `ExampleInstruments03FrequencyAndAmplitude` ).
+although `Tone` is designed to play musical notes ( arranged in half-tone steps ) trigger by the `note_on` + `note_off` paradigm, it can also be used to controll the frequency and amplitude of the generated sounds directly ( see `ExampleInstruments03FrequencyAndAmplitude` ).
 
 ![](./resources/wellen-schematics-instrument.png)
 
 this schematic summarizes the relation of the different components that comprise an instrument in *wellen*. all components can be dis- + enabled ( see `ExampleInstruments04LFOs` + `ExampleInstruments05LPF` ) and overridden to implement custom behaviors ( see `ExampleInstruments08CustomDSPInstrument` ).
 
-*wellen* comes with mechanisms to send messages to other applications or machines via MIDI ( see `ExampleBasics06MIDI` ) or OSC ( see `ExampleInstruments07OSCToneEngine` ). likewise *wellen* can also receive events from other applications or machines with `EventReceiverMIDI` via MIDI and `EventReceiverOSC` via OSC ( see `ExampleExternal01ReceiveMIDIandOSC` ).
+*wellen* comes with mechanisms to send messages to other applications or machines via MIDI ( see `ExampleBasics06MIDI` ) or OSC ( see `ExampleInstruments07OSCToneEngine` ) or can even use multiple *tone engines* at the same time ( see `ExampleExternal01MultipleToneEngines` ). likewise *wellen* can also receive events from other applications or machines with `EventReceiverMIDI` via MIDI and `EventReceiverOSC` via OSC ( see `ExampleExternal05ReceiveMIDIandOSC` ).
 
 ### `DSP`
 

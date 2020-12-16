@@ -6,7 +6,7 @@ import wellen.EventReceiverOSC;
 import wellen.Wellen;
 
 //@TODO(parse received events and play them as musical notes)
-public class ExampleExternal01ReceiveMIDIandOSC extends PApplet {
+public class ExampleExternal05ReceiveMIDIandOSC extends PApplet {
 
     /*
      * this example demonstrates how to receive MIDI and OSC events in the `event_receive` method.
@@ -70,6 +70,6 @@ public class ExampleExternal01ReceiveMIDIandOSC extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main(ExampleExternal01ReceiveMIDIandOSC.class.getName());
+        PApplet.main(ExampleExternal05ReceiveMIDIandOSC.class.getName());
     }
 }

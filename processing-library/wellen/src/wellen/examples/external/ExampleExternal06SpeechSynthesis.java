@@ -4,7 +4,7 @@ import processing.core.PApplet;
 import wellen.Beat;
 import wellen.SpeechSynthesis;
 
-public class ExampleExternalSpeechSynthesis extends PApplet {
+public class ExampleExternal06SpeechSynthesis extends PApplet {
 
     /*
      * this example demonstrates how to use the built-in speech synthesis engine ( MacOS only ).
@@ -47,6 +47,6 @@ public class ExampleExternalSpeechSynthesis extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main(ExampleExternalSpeechSynthesis.class.getName());
+        PApplet.main(ExampleExternal06SpeechSynthesis.class.getName());
     }
 }

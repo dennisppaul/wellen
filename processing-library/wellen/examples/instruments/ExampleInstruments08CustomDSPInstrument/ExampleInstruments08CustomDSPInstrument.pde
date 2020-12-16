@@ -62,16 +62,19 @@ static class CustomInstrumentSampler extends InstrumentInternal {
     
 final Sampler mSampler;
     
+final Reverb mReverb;
+    
 CustomInstrumentSampler(int pID) {
         super(pID); /* call super constructor with instrument ID */
         mSampler = new Sampler();
         mSampler.load(SampleDataSNARE.data);
         mSampler.loop(false);
+        mReverb = new Reverb();
     }
     
 float output() {
         /* `output()` is called to request a new sample */
-        return mSampler.output() * get_amplitude();
+        return mReverb.process(mSampler.output() * get_amplitude());
     }
     
 void note_off() {

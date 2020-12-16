@@ -25,8 +25,11 @@ public abstract class Tone {
         }
         if (pName.equalsIgnoreCase(Wellen.TONE_ENGINE_INTERNAL)) {
             /* specify output channels */
-            // ToneEngineInternal(int pSamplingRate, int pOutputDeviceID, int pOutputChannels)
-            instance = new ToneEngineInternal(Wellen.DEFAULT_SAMPLING_RATE, Wellen.DEFAULT_AUDIO_DEVICE, pParameter);
+            // ToneEngineInternal(int pSamplingRate, int pAudioblockSize, int pOutputDeviceID, int pOutputChannels)
+            instance = new ToneEngineInternal(Wellen.DEFAULT_SAMPLING_RATE,
+                                              Wellen.DEFAULT_AUDIOBLOCK_SIZE,
+                                              Wellen.DEFAULT_AUDIO_DEVICE,
+                                              pParameter);
         } else if (pName.equalsIgnoreCase(Wellen.TONE_ENGINE_MIDI)) {
             /* specify output device ID */
             instance = new ToneEngineMIDI(pParameter);
@@ -42,8 +45,11 @@ public abstract class Tone {
         }
         if (pName.equalsIgnoreCase(Wellen.TONE_ENGINE_INTERNAL)) {
             /* specify output device + output channels */
-            // ToneEngineInternal(int pSamplingRate, int pOutputDeviceID, int pOutputChannels)
-            instance = new ToneEngineInternal(Wellen.DEFAULT_SAMPLING_RATE, pParameterA, pParameterB);
+            // ToneEngineInternal(int pSamplingRate, int pAudioblockSize, int pOutputDeviceID, int pOutputChannels)
+            instance = new ToneEngineInternal(Wellen.DEFAULT_SAMPLING_RATE,
+                                              Wellen.DEFAULT_AUDIOBLOCK_SIZE,
+                                              pParameterA,
+                                              pParameterB);
         } else {
             instance = ToneEngine.create(pName);
         }
@@ -56,8 +62,8 @@ public abstract class Tone {
         }
         if (pName.equalsIgnoreCase(Wellen.TONE_ENGINE_INTERNAL)) {
             /* specify sampling rate + output device + output channels */
-            // ToneEngineInternal(int pSamplingRate, int pOutputDeviceID, int pOutputChannels)
-            instance = new ToneEngineInternal(pParameterA, pParameterB, pParameterC);
+            // ToneEngineInternal(int pSamplingRate, int pAudioblockSize, int pOutputDeviceID, int pOutputChannels)
+            instance = new ToneEngineInternal(pParameterA, Wellen.DEFAULT_AUDIOBLOCK_SIZE, pParameterB, pParameterC);
         } else {
             instance = ToneEngine.create(pName);
         }
@@ -72,6 +78,7 @@ public abstract class Tone {
         }
         if (pConfiguration == Wellen.TONE_ENGINE_INTERNAL_WITH_NO_OUTPUT) {
             ToneEngineInternal mInstance = new ToneEngineInternal(Wellen.DEFAULT_SAMPLING_RATE,
+                                                                  Wellen.DEFAULT_AUDIOBLOCK_SIZE,
                                                                   Wellen.DEFAULT_AUDIO_DEVICE,
                                                                   Wellen.NO_CHANNELS);
             instance = mInstance;

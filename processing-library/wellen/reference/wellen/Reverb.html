@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -104,10 +104,15 @@ var activeTableTab = "activeTableTab";
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl>
+<dt>All Implemented Interfaces:</dt>
+<dd><a href="../wellen/DSPNodeProcess.html" title="interface in wellen">DSPNodeProcess</a></dd>
+</dl>
 <hr>
 <br>
 <pre>public class <span class="typeNameLabel">Reverb</span>
-extends java.lang.Object</pre>
+extends java.lang.Object
+implements <a href="../wellen/DSPNodeProcess.html" title="interface in wellen">DSPNodeProcess</a></pre>
 </li>
 </ul>
 </div>
@@ -148,21 +153,25 @@ extends java.lang.Object</pre>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Reverb.html#get_wet--">get_wet</a></span>()</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>float</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Reverb.html#process-float-">process</a></span>(float&nbsp;pSignal)</code>&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Reverb.html#process-float:A-float:A-float:A-float:A-">process</a></span>(float[]&nbsp;pOutputSamplesLeft,
        float[]&nbsp;pOutputSamplesRight,
        float[]&nbsp;pInputSamplesLeft,
        float[]&nbsp;pInputSamplesRight)</code>&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Reverb.html#set_damp-float-">set_damp</a></span>(float&nbsp;pDamp)</code>&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Reverb.html#set_roomsize-float-">set_roomsize</a></span>(float&nbsp;pSize)</code>&nbsp;</td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Reverb.html#set_wet-float-">set_wet</a></span>(float&nbsp;wet)</code>&nbsp;</td>
 </tr>
@@ -247,10 +256,23 @@ extends java.lang.Object</pre>
 <a name="set_wet-float-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>set_wet</h4>
 <pre>public&nbsp;void&nbsp;set_wet(float&nbsp;wet)</pre>
+</li>
+</ul>
+<a name="process-float-">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>process</h4>
+<pre>public&nbsp;float&nbsp;process(float&nbsp;pSignal)</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="../wellen/DSPNodeProcess.html#process-float-">process</a></code>&nbsp;in interface&nbsp;<code><a href="../wellen/DSPNodeProcess.html" title="interface in wellen">DSPNodeProcess</a></code></dd>
+</dl>
 </li>
 </ul>
 </li>

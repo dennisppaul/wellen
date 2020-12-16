@@ -17,6 +17,7 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
     private boolean mReverbEnabled;
 
     public ToneEngineInternal(int pSamplingRate,
+                              int pAudioblockSize,
                               int pOutputDeviceID,
                               int pOutputChannels) {
         mInstruments = new ArrayList<>();
@@ -27,8 +28,8 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
 
         if (pOutputChannels > 0) {
             mAudioPlayer = new AudioBufferManager(this,
-                                                  Wellen.DEFAULT_SAMPLING_RATE,
-                                                  Wellen.DEFAULT_AUDIOBLOCK_SIZE,
+                                                  pSamplingRate,
+                                                  pAudioblockSize,
                                                   pOutputDeviceID,
                                                   pOutputChannels,
                                                   0,
@@ -41,11 +42,14 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
     }
 
     public ToneEngineInternal() {
-        this(Wellen.DEFAULT_SAMPLING_RATE, Wellen.DEFAULT_AUDIO_DEVICE, 2);
+        this(Wellen.DEFAULT_SAMPLING_RATE, Wellen.DEFAULT_AUDIOBLOCK_SIZE, Wellen.DEFAULT_AUDIO_DEVICE, 2);
     }
 
     public static ToneEngineInternal no_output() {
-        return new ToneEngineInternal(Wellen.DEFAULT_SAMPLING_RATE, Wellen.DEFAULT_AUDIO_DEVICE, Wellen.NO_CHANNELS);
+        return new ToneEngineInternal(Wellen.DEFAULT_SAMPLING_RATE,
+                                      Wellen.DEFAULT_AUDIOBLOCK_SIZE,
+                                      Wellen.DEFAULT_AUDIO_DEVICE,
+                                      Wellen.NO_CHANNELS);
     }
 
     public void enable_reverb(boolean pReverbEnabled) {
