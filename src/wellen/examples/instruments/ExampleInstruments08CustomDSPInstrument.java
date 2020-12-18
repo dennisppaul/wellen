@@ -50,6 +50,7 @@ public class ExampleInstruments08CustomDSPInstrument extends PApplet {
     private static final int INSTRUMENT_KICK_DRUM = 2;
     private static final int INSTRUMENT_HIHAT = 3;
     private static final int INSTRUMENT_FAT_LEAD = 4;
+    private static final int NUM_OF_INSTRUMENTS = 5;
 
     public void settings() {
         size(640, 480);
@@ -66,37 +67,44 @@ public class ExampleInstruments08CustomDSPInstrument extends PApplet {
     public void draw() {
         background(255);
         fill(0);
-        ellipse(width * 0.5f, height * 0.5f, Tone.is_playing() ? 100 : 5, Tone.is_playing() ? 100 : 5);
+        final float mTranslate = width / 6.0f;
+        for (int i = 0; i < NUM_OF_INSTRUMENTS; i++) {
+            Tone.instrument(i);
+            translate(mTranslate, 0);
+            ellipse(0, height * 0.5f, Tone.is_playing() ? 100 : 5, Tone.is_playing() ? 100 : 5);
+        }
     }
 
     public void keyPressed() {
         int mNote = 45 + (int) random(0, 12);
         switch (key) {
             case '1':
-                Tone.instrument(INSTRUMENT_SNARE_DRUM);
+                Tone.instrument(INSTRUMENT_DEFAULT);
                 Tone.note_on(mNote, 100);
                 break;
             case '2':
-                Tone.instrument(INSTRUMENT_KICK_DRUM);
+                Tone.instrument(INSTRUMENT_SNARE_DRUM);
                 Tone.note_on(mNote, 100);
                 break;
             case '3':
+                Tone.instrument(INSTRUMENT_KICK_DRUM);
+                Tone.note_on(mNote, 100);
+                break;
+            case '4':
                 Tone.instrument(INSTRUMENT_HIHAT);
                 Tone.note_on(mNote, 25);
                 break;
-            case '4':
-                Tone.instrument(INSTRUMENT_FAT_LEAD);
-                Tone.note_on(mNote, 100);
-                break;
             case '5':
-                Tone.instrument(INSTRUMENT_DEFAULT);
+                Tone.instrument(INSTRUMENT_FAT_LEAD);
                 Tone.note_on(mNote, 100);
                 break;
         }
     }
 
     public void keyReleased() {
-        Tone.note_off();
+        for (int i = 0; i < NUM_OF_INSTRUMENTS; i++) {
+            Tone.instrument(i).note_off();
+        }
     }
 
     /**
@@ -260,7 +268,7 @@ public class ExampleInstruments08CustomDSPInstrument extends PApplet {
      * custom DSP instrument that implements a hi-hat. it uses the `random(float, float)` method to create noise and
      * shapes it with the built-in ADSR.
      */
-    private class CustomInstrumentNoise extends InstrumentInternal {
+    private static class CustomInstrumentNoise extends InstrumentInternal {
 
         public CustomInstrumentNoise(int pID) {
             super(pID);
@@ -271,7 +279,7 @@ public class ExampleInstruments08CustomDSPInstrument extends PApplet {
         }
 
         public float output() {
-            return random(-get_amplitude(), get_amplitude()) * mADSR.output();
+            return Wellen.random(-get_amplitude(), get_amplitude()) * mADSR.output();
         }
     }
 

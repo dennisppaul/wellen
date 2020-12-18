@@ -45,6 +45,8 @@ static final int INSTRUMENT_HIHAT = 3;
 
 static final int INSTRUMENT_FAT_LEAD = 4;
 
+static final int NUM_OF_INSTRUMENTS = 5;
+
 void settings() {
     size(640, 480);
 }
@@ -60,37 +62,44 @@ void setup() {
 void draw() {
     background(255);
     fill(0);
-    ellipse(width * 0.5f, height * 0.5f, Tone.is_playing() ? 100 : 5, Tone.is_playing() ? 100 : 5);
+    final float mTranslate = width / 6.0f;
+    for (int i = 0; i < NUM_OF_INSTRUMENTS; i++) {
+        Tone.instrument(i);
+        translate(mTranslate, 0);
+        ellipse(0, height * 0.5f, Tone.is_playing() ? 100 : 5, Tone.is_playing() ? 100 : 5);
+    }
 }
 
 void keyPressed() {
     int mNote = 45 + (int) random(0, 12);
     switch (key) {
         case '1':
-            Tone.instrument(INSTRUMENT_SNARE_DRUM);
+            Tone.instrument(INSTRUMENT_DEFAULT);
             Tone.note_on(mNote, 100);
             break;
         case '2':
-            Tone.instrument(INSTRUMENT_KICK_DRUM);
+            Tone.instrument(INSTRUMENT_SNARE_DRUM);
             Tone.note_on(mNote, 100);
             break;
         case '3':
+            Tone.instrument(INSTRUMENT_KICK_DRUM);
+            Tone.note_on(mNote, 100);
+            break;
+        case '4':
             Tone.instrument(INSTRUMENT_HIHAT);
             Tone.note_on(mNote, 25);
             break;
-        case '4':
-            Tone.instrument(INSTRUMENT_FAT_LEAD);
-            Tone.note_on(mNote, 100);
-            break;
         case '5':
-            Tone.instrument(INSTRUMENT_DEFAULT);
+            Tone.instrument(INSTRUMENT_FAT_LEAD);
             Tone.note_on(mNote, 100);
             break;
     }
 }
 
 void keyReleased() {
-    Tone.note_off();
+    for (int i = 0; i < NUM_OF_INSTRUMENTS; i++) {
+        Tone.instrument(i).note_off();
+    }
 }
 /**
  * custom DSP instrument that implements a snare drum by playing a pre-recorded sample.
@@ -248,7 +257,7 @@ void note_on(int pNote, int pVelocity) {
  * shapes it with the built-in ADSR.
  */
 
-class CustomInstrumentNoise extends InstrumentInternal {
+static class CustomInstrumentNoise extends InstrumentInternal {
     
 CustomInstrumentNoise(int pID) {
         super(pID);
@@ -259,6 +268,6 @@ CustomInstrumentNoise(int pID) {
     }
     
 float output() {
-        return random(-get_amplitude(), get_amplitude()) * mADSR.output();
+        return Wellen.random(-get_amplitude(), get_amplitude()) * mADSR.output();
     }
 }
