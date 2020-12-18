@@ -5,6 +5,7 @@ import wellen.Beat;
 import wellen.Note;
 import wellen.Scale;
 import wellen.Tone;
+import wellen.Wellen;
 
 public class ExampleInstruments06SixteenVoices extends PApplet {
 
@@ -19,6 +20,9 @@ public class ExampleInstruments06SixteenVoices extends PApplet {
     }
 
     public void setup() {
+        Wellen.dumpMidiInputDevices();
+        Wellen.dumpMidiOutputDevices();
+        Wellen.dumpAudioInputAndOutputDevices();
         for (int i = 0; i < Tone.instruments().size(); i++) {
             final float mPan = 2.0f * i / Tone.instruments().size() - 1.0f;
             Tone.instruments().get(i).set_pan(mPan);

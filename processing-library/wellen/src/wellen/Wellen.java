@@ -4,6 +4,11 @@ import processing.core.PApplet;
 import processing.core.PGraphics;
 
 import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Line;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.Mixer;
+import javax.sound.sampled.SourceDataLine;
+import javax.sound.sampled.TargetDataLine;
 
 public class Wellen {
 
@@ -24,6 +29,7 @@ public class Wellen {
     public static final int DEFAULT_AUDIOBLOCK_SIZE = 512;
     public static final int DEFAULT_AUDIO_DEVICE = -1;
     public static final int DEFAULT_WAVETABLE_SIZE = 512;
+    public static final int DEFAULT_NUMBER_OF_INSTRUMENTS = 16;
     public static final int NO_CHANNELS = 0;
 
     public static int clamp127(int pValue) {
@@ -35,8 +41,9 @@ public class Wellen {
         System.out.println("+-------------------------------------------------------+");
         System.out.println("+ MIDI OUTPUT DEVICES ( aka Ports or Buses )");
         System.out.println("+-------------------------------------------------------+");
-        for (String mOutputName : mOutputNames) {
-            System.out.println("+ " + mOutputName);
+        for (int i = 0; i < mOutputNames.length; i++) {
+            final String mOutputName = mOutputNames[i];
+            System.out.println("+ " + PApplet.nf(i, 2) + " : " + mOutputName);
         }
         System.out.println("+-------------------------------------------------------+");
         System.out.println();
@@ -45,10 +52,11 @@ public class Wellen {
     public static void dumpMidiInputDevices() {
         final String[] mInputNames = MidiIn.availableInputs();
         System.out.println("+-------------------------------------------------------+");
-        System.out.println("+ MIDI INPUT DEVICES");
+        System.out.println("+ MIDI INPUT DEVICES ( aka Ports or Buses )");
         System.out.println("+-------------------------------------------------------+");
-        for (String mOutputName : mInputNames) {
-            System.out.println("+ " + mOutputName);
+        for (int i = 0; i < mInputNames.length; i++) {
+            final String mInputName = mInputNames[i];
+            System.out.println("+ " + PApplet.nf(i, 2) + " : " + mInputName);
         }
         System.out.println("+-------------------------------------------------------+");
         System.out.println();
@@ -58,8 +66,43 @@ public class Wellen {
         System.out.println("+-------------------------------------------------------+");
         System.out.println("+ AUDIO DEVICES ( Audio System )");
         System.out.println("+-------------------------------------------------------+");
+
         for (int i = 0; i < AudioSystem.getMixerInfo().length; i++) {
-            System.out.println("+ " + i + "\t: " + AudioSystem.getMixerInfo()[i].getName());
+            int mInputChannels = 0;
+            int mOutputChannels = 0;
+
+            Mixer mMixer = AudioSystem.getMixer(AudioSystem.getMixerInfo()[i]);
+            Line.Info[] mSourceLines = mMixer.getSourceLineInfo();
+            for (Line.Info li : mSourceLines) {
+                try {
+                    final Line mLine = mMixer.getLine(li);
+                    if (mLine instanceof SourceDataLine) {
+                        SourceDataLine mDataLine = (SourceDataLine) mLine;
+                        mOutputChannels = mDataLine.getFormat().getChannels();
+                    }
+                } catch (LineUnavailableException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            Line.Info[] targetLines = mMixer.getTargetLineInfo();
+            for (Line.Info li : targetLines) {
+                try {
+                    final Line mLine = mMixer.getLine(li);
+                    if (mLine instanceof TargetDataLine) {
+                        TargetDataLine mDataLine = (TargetDataLine) mLine;
+                        mInputChannels = mDataLine.getFormat().getChannels();
+                    }
+                } catch (LineUnavailableException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (mInputChannels + mOutputChannels > 0) {
+                final String mID = PApplet.nf(i, 2);
+                final String mName = AudioSystem.getMixerInfo()[i].getName();
+                System.out.println("+ " + mID + " ( IN:" + mInputChannels + " / OUT:" + mOutputChannels + " ) : " + mName);
+            }
         }
         System.out.println("+-------------------------------------------------------+");
         System.out.println();

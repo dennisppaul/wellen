@@ -9,7 +9,8 @@ import javax.sound.sampled.TargetDataLine;
 public class AudioBufferManager extends Thread {
 
     /*
-     * - @REF([Java Sound Resources: FAQ: Audio Programming](http://jsresources.sourceforge.net/faq_audio.html#sync_playback_recording))
+     * - @REF([Java Sound Resources: FAQ: Audio Programming](http://jsresources.sourceforge.net/faq_audio
+     * .html#sync_playback_recording))
      * - SOURCE == output
      * - TARGET == input
      */
@@ -35,16 +36,22 @@ public class AudioBufferManager extends Thread {
     private final boolean mRunBuffer = true;
 
     public AudioBufferManager(AudioBufferRenderer pSampleRenderer) {
-        this(pSampleRenderer, Wellen.DEFAULT_SAMPLING_RATE, Wellen.DEFAULT_AUDIOBLOCK_SIZE, DEFAULT, STEREO, DEFAULT, MONO);
+        this(pSampleRenderer,
+             Wellen.DEFAULT_SAMPLING_RATE,
+             Wellen.DEFAULT_AUDIOBLOCK_SIZE,
+             DEFAULT,
+             STEREO,
+             DEFAULT,
+             MONO);
     }
 
     public AudioBufferManager(AudioBufferRenderer pSampleRenderer,
-            int pSampleRate,
-            int pSampleBufferSize,
-            int pOutputDevice,
-            int pNumOutputChannels,
-            int pInputDevice,
-            int pNumInputChannels) {
+                              int pSampleRate,
+                              int pSampleBufferSize,
+                              int pOutputDevice,
+                              int pNumOutputChannels,
+                              int pInputDevice,
+                              int pNumInputChannels) {
         mSampleRenderer = pSampleRenderer;
         mSampleRate = pSampleRate;
         mSampleBufferSize = pSampleBufferSize;
@@ -54,16 +61,15 @@ public class AudioBufferManager extends Thread {
         try {
             /* output */
             final AudioFormat mOutputFormat = new AudioFormat(pSampleRate,
-                    BITS_PER_SAMPLE,
-                    pNumOutputChannels,
-                    SIGNED,
-                    LITTLE_ENDIAN);
+                                                              BITS_PER_SAMPLE,
+                                                              pNumOutputChannels,
+                                                              SIGNED,
+                                                              LITTLE_ENDIAN);
             if (pOutputDevice == DEFAULT) {
                 mOutputLine = AudioSystem.getSourceDataLine(mOutputFormat);
             } else {
                 System.out.println("+ OUTPUT DEVICE: " + AudioSystem.getMixerInfo()[pOutputDevice]);
-                mOutputLine = AudioSystem.getSourceDataLine(mOutputFormat,
-                        AudioSystem.getMixerInfo()[pOutputDevice]);
+                mOutputLine = AudioSystem.getSourceDataLine(mOutputFormat, AudioSystem.getMixerInfo()[pOutputDevice]);
             }
             final int BYTES_PER_SAMPLE = BITS_PER_SAMPLE / 8;
             mOutputByteBuffer = new byte[mSampleBufferSize * BYTES_PER_SAMPLE * pNumOutputChannels];
@@ -72,15 +78,14 @@ public class AudioBufferManager extends Thread {
             /* input */
             if (mNumInputChannels > 0) {
                 final AudioFormat mInputFormat = new AudioFormat(pSampleRate,
-                        BITS_PER_SAMPLE,
-                        mNumInputChannels,
-                        SIGNED,
-                        LITTLE_ENDIAN);
+                                                                 BITS_PER_SAMPLE,
+                                                                 mNumInputChannels,
+                                                                 SIGNED,
+                                                                 LITTLE_ENDIAN);
                 if (pInputDevice == DEFAULT) {
                     mInputLine = AudioSystem.getTargetDataLine(mInputFormat);
                 } else {
-                    mInputLine = AudioSystem.getTargetDataLine(mInputFormat,
-                            AudioSystem.getMixerInfo()[pInputDevice]);
+                    mInputLine = AudioSystem.getTargetDataLine(mInputFormat, AudioSystem.getMixerInfo()[pInputDevice]);
                     System.out.println("+ INPUT DEVICE: " + AudioSystem.getMixerInfo()[pInputDevice]);
                 }
                 mInputByteBuffer = new byte[mSampleBufferSize * BYTES_PER_SAMPLE * mNumInputChannels];

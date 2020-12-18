@@ -57,7 +57,6 @@ public class ExampleInstruments08CustomDSPInstrument extends PApplet {
     }
 
     public void setup() {
-        assert (0 == 1);
         Tone.replace_instrument(new CustomInstrumentKickDrum(INSTRUMENT_KICK_DRUM));
         Tone.replace_instrument(new CustomInstrumentSampler(INSTRUMENT_SNARE_DRUM));
         Tone.replace_instrument(new CustomInstrumentMultipleOscillators(INSTRUMENT_FAT_LEAD));

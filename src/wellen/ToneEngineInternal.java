@@ -15,13 +15,16 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
     private float[] mCurrentBufferLeft;
     private float[] mCurrentBufferRight;
     private boolean mReverbEnabled;
+    private final int mNumberOfInstruments;
 
     public ToneEngineInternal(int pSamplingRate,
                               int pAudioblockSize,
                               int pOutputDeviceID,
-                              int pOutputChannels) {
+                              int pOutputChannels,
+                              int pNumberOfInstruments) {
         mInstruments = new ArrayList<>();
-        for (int i = 0; i < NUMBERS_OF_INSTRUMENTS; i++) {
+        mNumberOfInstruments = pNumberOfInstruments;
+        for (int i = 0; i < mNumberOfInstruments; i++) {
             final InstrumentInternal mInstrument = new InstrumentInternal(i, pSamplingRate);
             mInstruments.add(mInstrument);
         }
@@ -42,14 +45,7 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
     }
 
     public ToneEngineInternal() {
-        this(Wellen.DEFAULT_SAMPLING_RATE, Wellen.DEFAULT_AUDIOBLOCK_SIZE, Wellen.DEFAULT_AUDIO_DEVICE, 2);
-    }
-
-    public static ToneEngineInternal no_output() {
-        return new ToneEngineInternal(Wellen.DEFAULT_SAMPLING_RATE,
-                                      Wellen.DEFAULT_AUDIOBLOCK_SIZE,
-                                      Wellen.DEFAULT_AUDIO_DEVICE,
-                                      Wellen.NO_CHANNELS);
+        this(Wellen.DEFAULT_SAMPLING_RATE, Wellen.DEFAULT_AUDIOBLOCK_SIZE, Wellen.DEFAULT_AUDIO_DEVICE, 2, 16);
     }
 
     public void enable_reverb(boolean pReverbEnabled) {
@@ -63,7 +59,7 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
     @Override
     public void note_on(int note, int velocity) {
         if (USE_AMP_FRACTION) {
-            velocity /= NUMBERS_OF_INSTRUMENTS;
+            velocity /= mNumberOfInstruments;
         }
         mInstruments.get(getInstrumentID()).note_on(note, velocity);
     }
@@ -115,9 +111,8 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
         if (pInstrument instanceof InstrumentInternal) {
             mInstruments.set(pInstrument.ID(), (InstrumentInternal) pInstrument);
         } else {
-            System.err.println("+++ WARNING @" + getClass().getSimpleName() +
-                               ".replace_instrument(Instrument) / instrument must be" +
-                               " of type `InstrumentInternal`");
+            System.err.println("+++ WARNING @" + getClass().getSimpleName() + ".replace_instrument(Instrument) / " +
+                                       "instrument must be" + " of type `InstrumentInternal`");
         }
     }
 
@@ -136,9 +131,8 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
         } else if (pOutputSamples.length == 2) {
             audioblock(pOutputSamples[0], pOutputSamples[1]);
         } else {
-            System.err.println("+++ WARNING @" + getClass().getSimpleName() +
-                               ".audioblock / multiple output channels are " +
-                               "not supported.");
+            System.err.println("+++ WARNING @" + getClass().getSimpleName() + ".audioblock / multiple output " +
+                                       "channels" + " are " + "not supported.");
         }
         if (mAudioblockCallback != null) {
             mAudioblockCallback.audioblock(pOutputSamples);
@@ -158,7 +152,9 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
             pSamplesLeft[i] = mSampleL;
             pSamplesRight[i] = mSampleR;
         }
-        if (mReverbEnabled) { mReverb.process(pSamplesLeft, pSamplesRight, pSamplesLeft, pSamplesRight); }
+        if (mReverbEnabled) {
+            mReverb.process(pSamplesLeft, pSamplesRight, pSamplesLeft, pSamplesRight);
+        }
         mCurrentBufferLeft = pSamplesLeft;
         mCurrentBufferRight = pSamplesRight;
     }
@@ -171,7 +167,9 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
             }
             pSamples[i] = mSample;
         }
-        if (mReverbEnabled) { mReverb.process(pSamples, pSamples, pSamples, pSamples); }
+        if (mReverbEnabled) {
+            mReverb.process(pSamples, pSamples, pSamples, pSamples);
+        }
         mCurrentBufferLeft = pSamples;
     }
 
@@ -181,6 +179,14 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
 
     private int getInstrumentID() {
         return Math.max(mCurrentInstrumentID, 0) % mInstruments.size();
+    }
+
+    public static ToneEngineInternal no_output() {
+        return new ToneEngineInternal(Wellen.DEFAULT_SAMPLING_RATE,
+                                      Wellen.DEFAULT_AUDIOBLOCK_SIZE,
+                                      Wellen.DEFAULT_AUDIO_DEVICE,
+                                      Wellen.NO_CHANNELS,
+                                      Wellen.DEFAULT_NUMBER_OF_INSTRUMENTS);
     }
 
     public interface AudioOutputCallback {

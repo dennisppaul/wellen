@@ -11,6 +11,9 @@ void settings() {
 }
 
 void setup() {
+    Wellen.dumpMidiInputDevices();
+    Wellen.dumpMidiOutputDevices();
+    Wellen.dumpAudioInputAndOutputDevices();
     for (int i = 0; i < Tone.instruments().size(); i++) {
         final float mPan = 2.0f * i / Tone.instruments().size() - 1.0f;
         Tone.instruments().get(i).set_pan(mPan);

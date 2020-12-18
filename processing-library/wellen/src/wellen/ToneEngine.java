@@ -11,7 +11,6 @@ public abstract class ToneEngine {
     public static final int INSTRUMENT_WITH_OSCILLATOR = 1;
     public static final int INSTRUMENT_WITH_OSCILLATOR_ADSR = 2;
     public static final int INSTRUMENT_WITH_OSCILLATOR_ADSR_FILTER_LFO = 3;
-    public static final int NUMBERS_OF_INSTRUMENTS = 16;
     private final Timer mTimer;
 
     ToneEngine() {
@@ -96,14 +95,14 @@ public abstract class ToneEngine {
                         final int mPortTransmit = Integer.parseInt(pName[2]);
                         return new ToneEngineOSC(mIPTransmit, mPortTransmit);
                     } catch (NumberFormatException e) {
-                        System.err.println("+++ WARNING @" + ToneEngine.class.getSimpleName() + ".createEngine" +
-                                " / could not parse ports");
+                        System.err.println("+++ WARNING @" + ToneEngine.class.getSimpleName() + ".createEngine" + " /" +
+                                                   " could not parse ports");
                     }
                 }
                 return new ToneEngineOSC();
             }
-            System.err.println("+++ WARNING @" + ToneEngine.class.getSimpleName() + ".createEngine" +
-                    " / could not find specified tone engine: " + pName[0]);
+            System.err.println("+++ WARNING @" + ToneEngine.class.getSimpleName() + ".createEngine" + " / could not " +
+                                       "find specified tone engine: " + pName[0]);
             System.err.println("+++ hint: check engine name and number of parameters");
         }
         return create();
