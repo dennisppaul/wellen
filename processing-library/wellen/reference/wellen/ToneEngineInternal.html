@@ -165,7 +165,7 @@ implements <a href="../wellen/AudioBufferRenderer.html" title="interface in well
 <!--   -->
 </a>
 <h3>Fields inherited from class&nbsp;wellen.<a href="../wellen/ToneEngine.html" title="class in wellen">ToneEngine</a></h3>
-<code><a href="../wellen/ToneEngine.html#INSTRUMENT_EMPTY">INSTRUMENT_EMPTY</a>, <a href="../wellen/ToneEngine.html#INSTRUMENT_WITH_OSCILLATOR">INSTRUMENT_WITH_OSCILLATOR</a>, <a href="../wellen/ToneEngine.html#INSTRUMENT_WITH_OSCILLATOR_ADSR">INSTRUMENT_WITH_OSCILLATOR_ADSR</a>, <a href="../wellen/ToneEngine.html#INSTRUMENT_WITH_OSCILLATOR_ADSR_FILTER_LFO">INSTRUMENT_WITH_OSCILLATOR_ADSR_FILTER_LFO</a>, <a href="../wellen/ToneEngine.html#NUMBERS_OF_INSTRUMENTS">NUMBERS_OF_INSTRUMENTS</a></code></li>
+<code><a href="../wellen/ToneEngine.html#INSTRUMENT_EMPTY">INSTRUMENT_EMPTY</a>, <a href="../wellen/ToneEngine.html#INSTRUMENT_WITH_OSCILLATOR">INSTRUMENT_WITH_OSCILLATOR</a>, <a href="../wellen/ToneEngine.html#INSTRUMENT_WITH_OSCILLATOR_ADSR">INSTRUMENT_WITH_OSCILLATOR_ADSR</a>, <a href="../wellen/ToneEngine.html#INSTRUMENT_WITH_OSCILLATOR_ADSR_FILTER_LFO">INSTRUMENT_WITH_OSCILLATOR_ADSR_FILTER_LFO</a></code></li>
 </ul>
 </li>
 </ul>
@@ -184,10 +184,11 @@ implements <a href="../wellen/AudioBufferRenderer.html" title="interface in well
 <td class="colOne"><code><span class="memberNameLink"><a href="../wellen/ToneEngineInternal.html#ToneEngineInternal--">ToneEngineInternal</a></span>()</code>&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colOne"><code><span class="memberNameLink"><a href="../wellen/ToneEngineInternal.html#ToneEngineInternal-int-int-int-int-">ToneEngineInternal</a></span>(int&nbsp;pSamplingRate,
+<td class="colOne"><code><span class="memberNameLink"><a href="../wellen/ToneEngineInternal.html#ToneEngineInternal-int-int-int-int-int-">ToneEngineInternal</a></span>(int&nbsp;pSamplingRate,
                   int&nbsp;pAudioblockSize,
                   int&nbsp;pOutputDeviceID,
-                  int&nbsp;pOutputChannels)</code>&nbsp;</td>
+                  int&nbsp;pOutputChannels,
+                  int&nbsp;pNumberOfInstruments)</code>&nbsp;</td>
 </tr>
 </table>
 </li>
@@ -336,7 +337,7 @@ implements <a href="../wellen/AudioBufferRenderer.html" title="interface in well
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a name="ToneEngineInternal-int-int-int-int-">
+<a name="ToneEngineInternal-int-int-int-int-int-">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -345,7 +346,8 @@ implements <a href="../wellen/AudioBufferRenderer.html" title="interface in well
 <pre>public&nbsp;ToneEngineInternal(int&nbsp;pSamplingRate,
                           int&nbsp;pAudioblockSize,
                           int&nbsp;pOutputDeviceID,
-                          int&nbsp;pOutputChannels)</pre>
+                          int&nbsp;pOutputChannels,
+                          int&nbsp;pNumberOfInstruments)</pre>
 </li>
 </ul>
 <a name="ToneEngineInternal--">
@@ -365,15 +367,6 @@ implements <a href="../wellen/AudioBufferRenderer.html" title="interface in well
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="no_output--">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>no_output</h4>
-<pre>public static&nbsp;<a href="../wellen/ToneEngineInternal.html" title="class in wellen">ToneEngineInternal</a>&nbsp;no_output()</pre>
-</li>
-</ul>
 <a name="enable_reverb-boolean-">
 <!--   -->
 </a>
@@ -597,10 +590,19 @@ implements <a href="../wellen/AudioBufferRenderer.html" title="interface in well
 <a name="register_audioblock_callback-wellen.ToneEngineInternal.AudioOutputCallback-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>register_audioblock_callback</h4>
 <pre>public&nbsp;void&nbsp;register_audioblock_callback(<a href="../wellen/ToneEngineInternal.AudioOutputCallback.html" title="interface in wellen">ToneEngineInternal.AudioOutputCallback</a>&nbsp;pAudioblockCallback)</pre>
+</li>
+</ul>
+<a name="no_output--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>no_output</h4>
+<pre>public static&nbsp;<a href="../wellen/ToneEngineInternal.html" title="class in wellen">ToneEngineInternal</a>&nbsp;no_output()</pre>
 </li>
 </ul>
 </li>

@@ -1,3 +1,22 @@
+/*
+ * Wellen
+ *
+ * This file is part of the *wellen* library (https://github.com/dennisppaul/wellen).
+ * Copyright (c) 2020 Dennis P Paul.
+ *
+ * This library is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, version 3.
+ *
+ * This library is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package wellen;
 
 import processing.core.PApplet;
@@ -30,30 +49,49 @@ public class DSP implements AudioBufferRenderer {
                                                                  float[].class,
                                                                  float[].class);
             } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 0) {
-                mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME,
-                                                                 float[].class,
-                                                                 float[].class);
+                mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME, float[].class, float[].class);
             } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 1) {
                 mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME,
                                                                  float[].class,
                                                                  float[].class,
                                                                  float[].class);
             } else if (mNumberOutputChannels == 1 && mNumberInputChannels == 1) {
-                mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME,
-                                                                 float[].class,
-                                                                 float[].class);
+                mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME, float[].class, float[].class);
             } else if (mNumberOutputChannels == 1 && mNumberInputChannels == 0) {
-                mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME,
-                                                                 float[].class);
+                mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME, float[].class);
             } else {
-                mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME,
-                                                                 float[][].class);
+                mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME, float[][].class);
             }
         } catch (NoSuchMethodException | SecurityException ex) {
             System.err.println("+++ @" + DSP.class.getSimpleName() + " / could not find callback `" + METHOD_NAME +
-                               "()`.");
-            System.err.println("    hint: check the callback method parameters, they must match the number of input" +
-                               " and output channels. default is `" + METHOD_NAME + "(float[])` ( = MONO OUTPUT ).");
+                                       "()`.");
+            System.err.println("    hint: check the callback method parameters, they must match the number of input" + " and output channels. default is `" + METHOD_NAME + "(float[])` ( = MONO OUTPUT ).");
+        }
+    }
+
+    public void audioblock(float[][] pOutputSamples, float[][] pInputSamples) {
+        try {
+            if (mNumberOutputChannels == 1 && mNumberInputChannels == 0) {
+                mMethod.invoke(mListener, pOutputSamples[0]);
+                mCurrentBufferLeft = pOutputSamples[0];
+            } else if (mNumberOutputChannels == 1 && mNumberInputChannels == 1) {
+                mMethod.invoke(mListener, pOutputSamples[0], pInputSamples[0]);
+                mCurrentBufferLeft = pOutputSamples[0];
+            } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 0) {
+                mMethod.invoke(mListener, pOutputSamples[0], pOutputSamples[1]);
+                mCurrentBufferLeft = pOutputSamples[0];
+                mCurrentBufferRight = pOutputSamples[1];
+            } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 1) {
+                mMethod.invoke(mListener, pOutputSamples[0], pOutputSamples[1], pInputSamples[0]);
+                mCurrentBufferLeft = pOutputSamples[0];
+                mCurrentBufferRight = pOutputSamples[1];
+            } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 2) {
+                mMethod.invoke(mListener, pOutputSamples[0], pOutputSamples[1], pInputSamples[0], pInputSamples[1]);
+                mCurrentBufferLeft = pOutputSamples[0];
+                mCurrentBufferRight = pOutputSamples[1];
+            }
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException ex) {
+//            ex.printStackTrace();
         }
     }
 
@@ -66,7 +104,10 @@ public class DSP implements AudioBufferRenderer {
     }
 
     public static DSP start(PApplet pPApplet, int pNumberOutputChannels, int pNumberInputChannels) {
-        return start(pPApplet, AudioBufferManager.DEFAULT, pNumberOutputChannels, AudioBufferManager.DEFAULT,
+        return start(pPApplet,
+                     AudioBufferManager.DEFAULT,
+                     pNumberOutputChannels,
+                     AudioBufferManager.DEFAULT,
                      pNumberInputChannels);
     }
 
@@ -114,32 +155,6 @@ public class DSP implements AudioBufferRenderer {
 
     public static void draw_buffer(PGraphics g, float pWidth, float pHeight) {
         Wellen.draw_buffer(g, pWidth, pHeight, DSP.get_buffer());
-    }
-
-    public void audioblock(float[][] pOutputSamples, float[][] pInputSamples) {
-        try {
-            if (mNumberOutputChannels == 1 && mNumberInputChannels == 0) {
-                mMethod.invoke(mListener, pOutputSamples[0]);
-                mCurrentBufferLeft = pOutputSamples[0];
-            } else if (mNumberOutputChannels == 1 && mNumberInputChannels == 1) {
-                mMethod.invoke(mListener, pOutputSamples[0], pInputSamples[0]);
-                mCurrentBufferLeft = pOutputSamples[0];
-            } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 0) {
-                mMethod.invoke(mListener, pOutputSamples[0], pOutputSamples[1]);
-                mCurrentBufferLeft = pOutputSamples[0];
-                mCurrentBufferRight = pOutputSamples[1];
-            } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 1) {
-                mMethod.invoke(mListener, pOutputSamples[0], pOutputSamples[1], pInputSamples[0]);
-                mCurrentBufferLeft = pOutputSamples[0];
-                mCurrentBufferRight = pOutputSamples[1];
-            } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 2) {
-                mMethod.invoke(mListener, pOutputSamples[0], pOutputSamples[1], pInputSamples[0], pInputSamples[1]);
-                mCurrentBufferLeft = pOutputSamples[0];
-                mCurrentBufferRight = pOutputSamples[1];
-            }
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException ex) {
-//            ex.printStackTrace();
-        }
     }
 }
 
