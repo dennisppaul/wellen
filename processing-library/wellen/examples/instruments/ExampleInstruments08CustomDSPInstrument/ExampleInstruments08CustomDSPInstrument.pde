@@ -1,29 +1,60 @@
 import wellen.*; 
 
 /*
- * this example demonstrates how to implement custom instruments by extending default internal instruments. an
- * in-depth
- * explanation of the behavior of each custom instrument can be found in the source code below as inline comments.
+ * this example demonstrates how to implement custom instruments by extending default internal instruments.
+ *
+ * a custom instrument is created by extending the class `InstrumentInternal`. usually the `output()` method, which
+ * is called by the underlying tone engine whenever new sample data is needed, is overridden to implement custom
+ * instrument behavior.
+ *
+ * the code below shows a very basic implementation of a custom instrument ( without audible output ):
+ *
+ * ```
+ *     class CustomInstrument extends InstrumentInternal {
+ *
+ *         
+CustomInstrument(int pID) {
+ *             super(pID);
+ *         }
+ *
+ *         
+float output() {
+ *             float mSample = 0.0f;
+ *             return mSample;
+ *         }
+ *     }
+ * ```
+ *
+ * note that the modules of `InstrumentInternal` ( e.g ADSR, VCO, LPF, LFOs, amplitude, frequency ) are still
+ * available in the custom instrument but must be explicitly used in `output`. the implementation of the `output`
+ * method in `InstrumentInternal` is a good starting point.
+ *
+ * an in-depth explanation of the behavior of each custom instrument can be found in the source code below as inline
+ * comments.
  *
  * use keys `1`, `2`, or `3` to play a custom instrument.
  */
 
 static final int INSTRUMENT_DEFAULT = 0;
 
-static final int INSTRUMENT_SAMPLER = 1;
+static final int INSTRUMENT_SNARE_DRUM = 1;
 
 static final int INSTRUMENT_KICK_DRUM = 2;
 
-static final int INSTRUMENT_MULTIPLE_OSCILLATOR = 3;
+static final int INSTRUMENT_HIHAT = 3;
+
+static final int INSTRUMENT_FAT_LEAD = 4;
 
 void settings() {
     size(640, 480);
 }
 
 void setup() {
+    assert (0 == 1);
     Tone.replace_instrument(new CustomInstrumentKickDrum(INSTRUMENT_KICK_DRUM));
-    Tone.replace_instrument(new CustomInstrumentSampler(INSTRUMENT_SAMPLER));
-    Tone.replace_instrument(new CustomInstrumentMultipleOscillators(INSTRUMENT_MULTIPLE_OSCILLATOR));
+    Tone.replace_instrument(new CustomInstrumentSampler(INSTRUMENT_SNARE_DRUM));
+    Tone.replace_instrument(new CustomInstrumentMultipleOscillators(INSTRUMENT_FAT_LEAD));
+    Tone.replace_instrument(new CustomInstrumentNoise(INSTRUMENT_HIHAT));
 }
 
 void draw() {
@@ -35,27 +66,34 @@ void draw() {
 void keyPressed() {
     int mNote = 45 + (int) random(0, 12);
     switch (key) {
-        case '0':
-            Tone.instrument(INSTRUMENT_DEFAULT);
-            break;
         case '1':
-            Tone.instrument(INSTRUMENT_SAMPLER);
+            Tone.instrument(INSTRUMENT_SNARE_DRUM);
+            Tone.note_on(mNote, 100);
             break;
         case '2':
             Tone.instrument(INSTRUMENT_KICK_DRUM);
+            Tone.note_on(mNote, 100);
             break;
         case '3':
-            Tone.instrument(INSTRUMENT_MULTIPLE_OSCILLATOR);
+            Tone.instrument(INSTRUMENT_HIHAT);
+            Tone.note_on(mNote, 25);
+            break;
+        case '4':
+            Tone.instrument(INSTRUMENT_FAT_LEAD);
+            Tone.note_on(mNote, 100);
+            break;
+        case '5':
+            Tone.instrument(INSTRUMENT_DEFAULT);
+            Tone.note_on(mNote, 100);
             break;
     }
-    Tone.note_on(mNote, 100);
 }
 
 void keyReleased() {
     Tone.note_off();
 }
 /**
- * custom DSP instrument that plays a pre-recorded sample ( "snare drum" ).
+ * custom DSP instrument that implements a snare drum by playing a pre-recorded sample.
  */
 
 static class CustomInstrumentSampler extends InstrumentInternal {
@@ -64,22 +102,49 @@ final Sampler mSampler;
     
 final Reverb mReverb;
     
+final float mGain;
+    /**
+     * the constructor of the custom instrument must call the *super constructor* passing the instrument’s ID with
+     * `super(int)`.
+     *
+     * @param pID instrument ID
+     */
+    
 CustomInstrumentSampler(int pID) {
         super(pID); /* call super constructor with instrument ID */
         mSampler = new Sampler();
         mSampler.load(SampleDataSNARE.data);
         mSampler.loop(false);
         mReverb = new Reverb();
+        mGain = 2.0f;
     }
+    /**
+     * called by tone engine to request the next audio sample of the instrument.
+     *
+     * @return returns next sample
+     */
     
 float output() {
-        /* `output()` is called to request a new sample */
-        return mReverb.process(mSampler.output() * get_amplitude());
+        /* `output()` is called to request a new sample: sampler returns a new sample which is then multiplied by
+         the amplitude. the result is processed by reverb and returned. */
+        return mReverb.process(mSampler.output() * get_amplitude()) * mGain;
     }
+    /**
+     * override this method to change the `note_off` behavior. in this case the interaction with the ADSR envelope
+     * is removed.
+     */
     
 void note_off() {
         mIsPlaying = false;
     }
+    /**
+     * override this method to change the `note_on` behavior. in this case the sampler is rewound, the ADSR is
+     * ignored, the velocity is interpreted, and the note value is ignored ( although it could be interpreted as
+     * sample playback speed ).
+     *
+     * @param pNote     ignored in this instrument
+     * @param pVelocity specifies the volume of the sampler with a value range [0, 127]
+     */
     
 void note_on(int pNote, int pVelocity) {
         mIsPlaying = true;
@@ -127,6 +192,10 @@ float output() {
         return mADSRAmp * mSample;
     }
 }
+/**
+ * custom DSP instrument that implements a kick drum. it uses a second ADSR envelope to control the frequency of the
+ * VCO to create a pitch slide when a note is triggered.
+ */
 
 static class CustomInstrumentKickDrum extends InstrumentInternal {
     
@@ -143,6 +212,7 @@ CustomInstrumentKickDrum(int pID) {
         set_frequency(90);
         /* this ADSR envelope is used to control the frequency instead of amplitude */
         mFrequencyEnvelope = new ADSR();
+        /* the *built-in* ADSR is still available and used to control the amplitude, as usual. */
         mADSR.set_attack(0.001f);
         mADSR.set_decay(mDecaySpeed);
         mADSR.set_sustain(0.0f);
@@ -171,5 +241,24 @@ void note_on(int pNote, int pVelocity) {
         /* make sure to trigger both ADSRs when a note is played */
         mADSR.start();
         mFrequencyEnvelope.start();
+    }
+}
+/**
+ * custom DSP instrument that implements a hi-hat. it uses the `random(float, float)` method to create noise and
+ * shapes it with the built-in ADSR.
+ */
+
+class CustomInstrumentNoise extends InstrumentInternal {
+    
+CustomInstrumentNoise(int pID) {
+        super(pID);
+        mADSR.set_attack(0.005f);
+        mADSR.set_decay(0.05f);
+        mADSR.set_sustain(0.0f);
+        mADSR.set_release(0.0f);
+    }
+    
+float output() {
+        return random(-get_amplitude(), get_amplitude()) * mADSR.output();
     }
 }

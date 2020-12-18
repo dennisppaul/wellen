@@ -91,9 +91,7 @@ public class ExampleInstruments09ADSRwithGUI extends PApplet {
         /* envelope */
         strokeWeight(3);
         stroke(mColor);
-        line(0, 0,
-             mSliderAttack.current_position_x(),
-             mSliderAttack.current_position_y());
+        line(0, 0, mSliderAttack.current_position_x(), mSliderAttack.current_position_y());
         line(mSliderAttack.current_position_x(),
              mSliderAttack.current_position_y(),
              mSliderDecay.current_position_x(),
