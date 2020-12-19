@@ -36,6 +36,13 @@ public class Wellen {
     public static final int OSC_SAWTOOTH = 2;
     public static final int OSC_SQUARE = 3;
     public static final int OSC_NOISE = 4;
+    public static final int NOISE_WHITE = 0;
+    public static final int NOISE_GAUSSIAN_WHITE = 1;
+    public static final int NOISE_GAUSSIAN_WHITE2 = 2;
+    public static final int NOISE_PINK = 3;
+    public static final int NOISE_PINK2 = 4;
+    public static final int NOISE_PINK3 = 5;
+    public static final int NOISE_SIMPLEX = 6;
     public static final int TONE_ENGINE_INTERNAL_WITH_NO_OUTPUT = -2;
     public static final String TONE_ENGINE_INTERNAL = "internal";
     public static final String TONE_ENGINE_MIDI = "midi";

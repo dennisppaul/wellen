@@ -91,7 +91,8 @@ public class DSP implements AudioBufferRenderer {
                 mCurrentBufferRight = pOutputSamples[1];
             }
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException ex) {
-//            ex.printStackTrace();
+            System.err.println("+++ @" + DSP.class.getSimpleName() + " / error in audioblock: " + ex.getCause());
+            ex.printStackTrace();
         }
     }
 

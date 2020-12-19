@@ -19,16 +19,16 @@
 
 package wellen;
 
-/**
+/*
  * Low Pass Filter ( Moog Ladder )
- *
+ * <p>
  * Ported from soundpipe
- *
+ * <p>
  * Original author(s) : Victor Lazzarini, John ffitch (fast tanh), Bob Moog
  */
 public class LowPassFilter implements DSPNodeProcess {
 
-    private final int mSamplingRate;
+    private final float mSamplingRate;
     private final float mIstor;
     private final float[] mDelay = new float[6];
     private final float[] mTanhstg = new float[3];
@@ -39,8 +39,8 @@ public class LowPassFilter implements DSPNodeProcess {
     private float mOldAcr;
     private float mOldTune;
 
-    public LowPassFilter(int sample_rate) {
-        mSamplingRate = sample_rate;
+    public LowPassFilter(int pSamplingRate) {
+        mSamplingRate = pSamplingRate;
         mIstor = 0.0f;
         mResonance = 0.4f;
         mCutoffFrequency = 1000.0f;
@@ -92,15 +92,12 @@ public class LowPassFilter implements DSPNodeProcess {
 
         for (int j = 0; j < 2; j++) {
             pSignal -= res4 * mDelay[5];
-            mDelay[0] = stg[0]
-                    = mDelay[0] + tune * (my_tanh(pSignal * THERMAL) - mTanhstg[0]);
+            mDelay[0] = stg[0] = mDelay[0] + tune * (my_tanh(pSignal * THERMAL) - mTanhstg[0]);
             for (int k = 1; k < 4; k++) {
                 pSignal = stg[k - 1];
-                stg[k] = mDelay[k]
-                        + tune
-                        * ((mTanhstg[k - 1] = my_tanh(pSignal * THERMAL))
-                        - (k != 3 ? mTanhstg[k]
-                        : my_tanh(mDelay[k] * THERMAL)));
+                stg[k] = mDelay[k] + tune * ((mTanhstg[k - 1] = my_tanh(pSignal * THERMAL)) - (k != 3 ? mTanhstg[k] :
+                        my_tanh(
+                        mDelay[k] * THERMAL)));
                 mDelay[k] = stg[k];
             }
             mDelay[5] = (stg[3] + mDelay[4]) * 0.5f;
