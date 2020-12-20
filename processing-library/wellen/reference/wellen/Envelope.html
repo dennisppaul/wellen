@@ -17,7 +17,7 @@
     catch(err) {
     }
 //-->
-var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10};
+var methods = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -206,38 +206,50 @@ implements <a href="../wellen/DSPNodeOutput.html" title="interface in wellen">DS
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Envelope.html#add_stage-float-">add_stage</a></span>(float&nbsp;pValue)</code>&nbsp;</td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Envelope.html#add_listener-wellen.EnvelopeListener-">add_listener</a></span>(<a href="../wellen/EnvelopeListener.html" title="interface in wellen">EnvelopeListener</a>&nbsp;pEnvelopeListener)</code>&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Envelope.html#add_stage-float-">add_stage</a></span>(float&nbsp;pValue)</code>&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Envelope.html#add_stage-float-float-">add_stage</a></span>(float&nbsp;pValue,
          float&nbsp;pDuration)</code>&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Envelope.html#clear_listeners--">clear_listeners</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Envelope.html#clear_stages--">clear_stages</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Envelope.html#enable_loop-boolean-">enable_loop</a></span>(boolean&nbsp;pLoop)</code>
 <div class="block">enable looping of envelope.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>float</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Envelope.html#get_current_value--">get_current_value</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>java.util.ArrayList&lt;<a href="../wellen/EnvelopeListener.html" title="interface in wellen">EnvelopeListener</a>&gt;</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Envelope.html#get_listeners--">get_listeners</a></span>()</code>&nbsp;</td>
+</tr>
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>float</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Envelope.html#get_time_scale--">get_time_scale</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>float</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Envelope.html#output--">output</a></span>()</code>
 <div class="block">advance envelope on step</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Envelope.html#ramp_to-float-float-">ramp_to</a></span>(float&nbsp;pValue,
        float&nbsp;pDuration)</code>
@@ -245,7 +257,7 @@ implements <a href="../wellen/DSPNodeOutput.html" title="interface in wellen">DS
  duration.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Envelope.html#ramp-float-float-float-">ramp</a></span>(float&nbsp;pStartValue,
     float&nbsp;pEndValue,
@@ -253,23 +265,27 @@ implements <a href="../wellen/DSPNodeOutput.html" title="interface in wellen">DS
 <div class="block">clears all current stages from the envelope and creates a ramp from start to end value in specified duration.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i12" class="altColor">
+<td class="colFirst"><code>boolean</code></td>
+<td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Envelope.html#remove_listener-wellen.EnvelopeListener-">remove_listener</a></span>(<a href="../wellen/EnvelopeListener.html" title="interface in wellen">EnvelopeListener</a>&nbsp;pEnvelopeListener)</code>&nbsp;</td>
+</tr>
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Envelope.html#set_current_value-float-">set_current_value</a></span>(float&nbsp;pValue)</code>&nbsp;</td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Envelope.html#set_time_scale-float-">set_time_scale</a></span>(float&nbsp;pTimeScale)</code>&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i15" class="rowColor">
 <td class="colFirst"><code>java.util.ArrayList&lt;<a href="../wellen/Envelope.Stage.html" title="class in wellen">Envelope.Stage</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Envelope.html#stages--">stages</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i16" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Envelope.html#start--">start</a></span>()</code>&nbsp;</td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i17" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../wellen/Envelope.html#stop--">stop</a></span>()</code>&nbsp;</td>
 </tr>
@@ -472,10 +488,46 @@ implements <a href="../wellen/DSPNodeOutput.html" title="interface in wellen">DS
 <a name="set_current_value-float-">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>set_current_value</h4>
 <pre>public&nbsp;void&nbsp;set_current_value(float&nbsp;pValue)</pre>
+</li>
+</ul>
+<a name="add_listener-wellen.EnvelopeListener-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>add_listener</h4>
+<pre>public&nbsp;void&nbsp;add_listener(<a href="../wellen/EnvelopeListener.html" title="interface in wellen">EnvelopeListener</a>&nbsp;pEnvelopeListener)</pre>
+</li>
+</ul>
+<a name="remove_listener-wellen.EnvelopeListener-">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>remove_listener</h4>
+<pre>public&nbsp;boolean&nbsp;remove_listener(<a href="../wellen/EnvelopeListener.html" title="interface in wellen">EnvelopeListener</a>&nbsp;pEnvelopeListener)</pre>
+</li>
+</ul>
+<a name="clear_listeners--">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>clear_listeners</h4>
+<pre>public&nbsp;void&nbsp;clear_listeners()</pre>
+</li>
+</ul>
+<a name="get_listeners--">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>get_listeners</h4>
+<pre>public&nbsp;java.util.ArrayList&lt;<a href="../wellen/EnvelopeListener.html" title="interface in wellen">EnvelopeListener</a>&gt;&nbsp;get_listeners()</pre>
 </li>
 </ul>
 </li>

@@ -84,11 +84,13 @@ public class Envelope implements DSPNodeOutput {
     private boolean mEnvelopeDone = true;
     private boolean mLoop = false;
     private final ArrayList<Stage> mEnvelopeStages;
+    private final ArrayList<EnvelopeListener> mEnvelopeListeners;
     private final float mSamplingRate;
 
     public Envelope(int pSamplingRate) {
         mSamplingRate = pSamplingRate;
         mEnvelopeStages = new ArrayList<>();
+        mEnvelopeListeners = new ArrayList<>();
     }
 
     public Envelope() {
@@ -176,7 +178,9 @@ public class Envelope implements DSPNodeOutput {
 
     public void start() {
         mEnvelopeDone = false;
-        prepareNextStage(0, 0.0f);
+        if (!mEnvelopeStages.isEmpty()) {
+            prepareNextStage(0, 0.0f);
+        }
         mStageDuration = 0.0f;
     }
 
@@ -200,11 +204,29 @@ public class Envelope implements DSPNodeOutput {
         mValue = pValue;
     }
 
+    public void add_listener(EnvelopeListener pEnvelopeListener) {
+        mEnvelopeListeners.add(pEnvelopeListener);
+    }
+
+    public boolean remove_listener(EnvelopeListener pEnvelopeListener) {
+        return mEnvelopeListeners.remove(pEnvelopeListener);
+    }
+
+    public void clear_listeners() {
+        mEnvelopeListeners.clear();
+    }
+
+    public ArrayList<EnvelopeListener> get_listeners() {
+        return mEnvelopeListeners;
+    }
+
     private void is_done() {
+        for (EnvelopeListener el : mEnvelopeListeners) {
+            el.envelope_done(this);
+        }
         if (mLoop) {
             start();
         }
-        // @TODO maybe fire event for listeners
     }
 
     private void prepareNextStage(int pEnvStage, float pFraction) {
