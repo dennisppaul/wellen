@@ -2,6 +2,9 @@ import wellen.*;
 
 /*
  * this example demonstrates how to use envelopes to change values over time.
+ *
+ * the left circle shows the amplitude controlled by an envelope, while the right circle visualizes the step size of
+ * the simplex noise generator.
  */
 
 Noise mNoise;
@@ -32,10 +35,14 @@ void draw() {
     background(255);
     DSP.draw_buffer(g, width, height);
     fill(0);
-    ellipse(map(mEnvelopeStepSize.get_current_value(), 0.001f, 0.02f, width * 0.1f, width * 0.9f),
+    ellipse(width * 0.33f,
             map(mEnvelopeAmplitude.get_current_value(), 0.0f, 1.0f, height * 0.1f, height * 0.9f),
             20,
             20);
+    ellipse(width * 0.66f,
+            map(mEnvelopeStepSize.get_current_value(), 0.001f, 0.02f, height * 0.1f, height * 0.9f),
+            40,
+            40);
 }
 
 void mousePressed() {

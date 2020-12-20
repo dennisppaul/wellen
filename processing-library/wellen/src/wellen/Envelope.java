@@ -57,7 +57,7 @@ import java.util.ArrayList;
  * <li>envelope is done
  * </ul>
  */
-public class Envelope implements DSPNodeProcess, DSPNodeOutput {
+public class Envelope implements DSPNodeOutput {
 
     /*
      *
@@ -95,10 +95,21 @@ public class Envelope implements DSPNodeProcess, DSPNodeOutput {
         this(Wellen.DEFAULT_SAMPLING_RATE);
     }
 
+    /**
+     * enable looping of envelope. once the last stage has completed the envelope is reset to the first stage and
+     * repeats.
+     *
+     * @param pLoop flag to enable looping.
+     */
     public void enable_loop(boolean pLoop) {
         mLoop = pLoop;
     }
 
+    /**
+     * advance envelope on step
+     *
+     * @return current value
+     */
     @Override
     public float output() {
         if (!mEnvelopeDone) {
@@ -121,9 +132,30 @@ public class Envelope implements DSPNodeProcess, DSPNodeOutput {
         return mValue;
     }
 
-    @Override
-    public float process(float pSignal) {
-        return pSignal * output();
+    /**
+     * clears all current stages from the envelope and creates a ramp from start to end value in specified duration.
+     *
+     * @param pStartValue start value of ramp
+     * @param pEndValue   end value of ramp
+     * @param pDuration   duration of ramp
+     */
+    public void ramp(float pStartValue, float pEndValue, float pDuration) {
+        mEnvelopeStages.clear();
+        add_stage(pStartValue, pDuration);
+        add_stage(pEndValue);
+    }
+
+    /**
+     * clears all current stages from envelope and creates a ramp from the current value to specified value in specified
+     * duration.
+     *
+     * @param pValue    end value of ramp
+     * @param pDuration duration of ramp
+     */
+    public void ramp_to(float pValue, float pDuration) {
+        mEnvelopeStages.clear();
+        add_stage(mValue, pDuration);
+        add_stage(pValue);
     }
 
     public ArrayList<Stage> stages() {
@@ -162,6 +194,10 @@ public class Envelope implements DSPNodeProcess, DSPNodeOutput {
 
     public float get_current_value() {
         return mValue;
+    }
+
+    public void set_current_value(float pValue) {
+        mValue = pValue;
     }
 
     private void is_done() {
