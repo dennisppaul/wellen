@@ -99,8 +99,45 @@ public class Noise implements DSPNodeOutput {
         return mSample * mAmplitude;
     }
 
-    private double getWhiteNoise() {
-        return random() * 2.0 - 1.0;
+    private double getGaussianWhiteNoise() {
+        // from [Gaussian White Noise](https://www.musicdsp.org/en/latest/Synthesis/113-gaussian-white-noise.html)
+        final double mScale = 0.5;
+        return mScale * (sqrt(-2.0 * log(Math.random())) * cos(2.0 * PI * random()));
+    }
+
+    private double getGaussianWhiteNoise2() {
+        // from [Gaussian White Noise](https://www.musicdsp.org/en/latest/Synthesis/109-gaussian-white-noise.html)
+        double y1;
+
+        if (mWN_pass) {
+            y1 = mWN_y2;
+        } else {
+            double x1;
+            double x2;
+            double w;
+            do {
+                x1 = 2.0 * random() - 1.0;
+                x2 = 2.0 * random() - 1.0;
+                w = x1 * x1 + x2 * x2;
+            } while (w >= 1.0);
+
+            w = (float) sqrt(-2.0 * log(w) / w);
+            y1 = x1 * w;
+            mWN_y2 = x2 * w;
+        }
+        mWN_pass = !mWN_pass;
+        final double mScale = 0.5;
+        return y1 * mScale;
+    }
+
+    private double getPinkNoise() {
+        double white = getWhiteNoise();
+        mPN_b[0] = 0.99765 * mPN_b[0] + white * 0.0990460;
+        mPN_b[1] = 0.96300 * mPN_b[1] + white * 0.2965164;
+        mPN_b[2] = 0.57000 * mPN_b[2] + white * 1.0526913;
+        double pink = mPN_b[0] + mPN_b[1] + mPN_b[2] + white * 0.1848;
+        final double mScale = 1.0 / 5.0;
+        return pink * mScale;
     }
 
     private double getPinkNoise2() {
@@ -154,16 +191,6 @@ public class Noise implements DSPNodeOutput {
         return pink * mScale;
     }
 
-    private double getPinkNoise() {
-        double white = getWhiteNoise();
-        mPN_b[0] = 0.99765 * mPN_b[0] + white * 0.0990460;
-        mPN_b[1] = 0.96300 * mPN_b[1] + white * 0.2965164;
-        mPN_b[2] = 0.57000 * mPN_b[2] + white * 1.0526913;
-        double pink = mPN_b[0] + mPN_b[1] + mPN_b[2] + white * 0.1848;
-        final double mScale = 1.0 / 5.0;
-        return pink * mScale;
-    }
-
     private double getPinkNoise3() {
         // from [Trammell Pink Noise](https://www.musicdsp.org/en/latest/Synthesis/220-trammell-pink-noise-c-class.html)
 
@@ -186,37 +213,6 @@ public class Noise implements DSPNodeOutput {
         return mScale * ((A[0] * mPN_state[0] + A[1] * mPN_state[1] + A[2] * mPN_state[2]) * RMI2 - offset);
     }
 
-    private double getGaussianWhiteNoise2() {
-        // from [Gaussian White Noise](https://www.musicdsp.org/en/latest/Synthesis/109-gaussian-white-noise.html)
-        double y1;
-
-        if (mWN_pass) {
-            y1 = mWN_y2;
-        } else {
-            double x1;
-            double x2;
-            double w;
-            do {
-                x1 = 2.0 * random() - 1.0;
-                x2 = 2.0 * random() - 1.0;
-                w = x1 * x1 + x2 * x2;
-            } while (w >= 1.0);
-
-            w = (float) sqrt(-2.0 * log(w) / w);
-            y1 = x1 * w;
-            mWN_y2 = x2 * w;
-        }
-        mWN_pass = !mWN_pass;
-        final double mScale = 0.5;
-        return y1 * mScale;
-    }
-
-    private double getGaussianWhiteNoise() {
-        // from [Gaussian White Noise](https://www.musicdsp.org/en/latest/Synthesis/113-gaussian-white-noise.html)
-        final double mScale = 0.5;
-        return mScale * (sqrt(-2.0 * log(Math.random())) * cos(2.0 * PI * random()));
-    }
-
     private double getSimplexNoise() {
         mSimplexStep += mSimplexStepSize;
         final double STEP_LIMIT = 1 << 16;
@@ -228,7 +224,18 @@ public class Noise implements DSPNodeOutput {
         return SimplexNoise.noise(mSimplexStep, 0.0);
     }
 
+    private double getWhiteNoise() {
+        return random() * 2.0 - 1.0;
+    }
+
     private static class SimplexNoise {
+        // Skewing and unskewing factors for 2, 3, and 4 dimensions
+        private static final double F2 = 0.5 * (Math.sqrt(3.0) - 1.0);
+        private static final double F3 = 1.0 / 3.0;
+        private static final double F4 = (Math.sqrt(5.0) - 1.0) / 4.0;
+        private static final double G2 = (3.0 - Math.sqrt(3.0)) / 6.0;
+        private static final double G3 = 1.0 / 6.0;
+        private static final double G4 = (5.0 - Math.sqrt(5.0)) / 20.0;
         /*
          * A speed-improved simplex noise algorithm for 2D, 3D and 4D in Java.
          *
@@ -249,39 +256,31 @@ public class Noise implements DSPNodeOutput {
         private static final Grad[] grad3 = {new Grad(1, 1, 0), new Grad(-1, 1, 0), new Grad(1, -1, 0), new Grad(-1,
                                                                                                                  -1,
                                                                                                                  0),
-                new Grad(
-                1,
-                0,
-                1), new Grad(-1, 0, 1), new Grad(1, 0, -1), new Grad(-1, 0, -1), new Grad(0, 1, 1), new Grad(0,
-                                                                                                             -1,
-                                                                                                             1),
-                new Grad(
-                0,
-                1,
-                -1), new Grad(0, -1, -1)};
-
+                                             new Grad(1, 0, 1), new Grad(-1, 0, 1), new Grad(1, 0, -1), new Grad(-1,
+                                                                                                                 0,
+                                                                                                                 -1),
+                                             new Grad(0, 1, 1), new Grad(0, -1, 1), new Grad(0, 1, -1), new Grad(0,
+                                                                                                                 -1,
+                                                                                                                 -1)};
         private static final short[] p = {151, 160, 137, 91, 90, 15, 131, 13, 201, 95, 96, 53, 194, 233, 7, 225, 140,
-                36, 103, 30, 69, 142, 8, 99, 37, 240, 21, 10, 23, 190, 6, 148, 247, 120, 234, 75, 0, 26, 197, 62, 94,
-                252, 219, 203, 117, 35, 11, 32, 57, 177, 33, 88, 237, 149, 56, 87, 174, 20, 125, 136, 171, 168, 68,
-                175, 74, 165, 71, 134, 139, 48, 27, 166, 77, 146, 158, 231, 83, 111, 229, 122, 60, 211, 133, 230, 220
-                , 105, 92, 41, 55, 46, 245, 40, 244, 102, 143, 54, 65, 25, 63, 161, 1, 216, 80, 73, 209, 76, 132, 187
-                , 208, 89, 18, 169, 200, 196, 135, 130, 116, 188, 159, 86, 164, 100, 109, 198, 173, 186, 3, 64, 52,
-                217, 226, 250, 124, 123, 5, 202, 38, 147, 118, 126, 255, 82, 85, 212, 207, 206, 59, 227, 47, 16, 58,
-                17, 182, 189, 28, 42, 223, 183, 170, 213, 119, 248, 152, 2, 44, 154, 163, 70, 221, 153, 101, 155, 167
-                , 43, 172, 9, 129, 22, 39, 253, 19, 98, 108, 110, 79, 113, 224, 232, 178, 185, 112, 104, 218, 246, 97
-                , 228, 251, 34, 242, 193, 238, 210, 144, 12, 191, 179, 162, 241, 81, 51, 145, 235, 249, 14, 239, 107,
-                49, 192, 214, 31, 181, 199, 106, 157, 184, 84, 204, 176, 115, 121, 50, 45, 127, 4, 150, 254, 138, 236
-                , 205, 93, 222, 114, 67, 29, 24, 72, 243, 141, 128, 195, 78, 66, 215, 61, 156, 180};
+                                          36, 103, 30, 69, 142, 8, 99, 37, 240, 21, 10, 23, 190, 6, 148, 247, 120, 234,
+                                          75, 0, 26, 197, 62, 94, 252, 219, 203, 117, 35, 11, 32, 57, 177, 33, 88, 237,
+                                          149, 56, 87, 174, 20, 125, 136, 171, 168, 68, 175, 74, 165, 71, 134, 139, 48,
+                                          27, 166, 77, 146, 158, 231, 83, 111, 229, 122, 60, 211, 133, 230, 220, 105,
+                                          92, 41, 55, 46, 245, 40, 244, 102, 143, 54, 65, 25, 63, 161, 1, 216, 80, 73,
+                                          209, 76, 132, 187, 208, 89, 18, 169, 200, 196, 135, 130, 116, 188, 159, 86,
+                                          164, 100, 109, 198, 173, 186, 3, 64, 52, 217, 226, 250, 124, 123, 5, 202, 38,
+                                          147, 118, 126, 255, 82, 85, 212, 207, 206, 59, 227, 47, 16, 58, 17, 182, 189,
+                                          28, 42, 223, 183, 170, 213, 119, 248, 152, 2, 44, 154, 163, 70, 221, 153, 101,
+                                          155, 167, 43, 172, 9, 129, 22, 39, 253, 19, 98, 108, 110, 79, 113, 224, 232,
+                                          178, 185, 112, 104, 218, 246, 97, 228, 251, 34, 242, 193, 238, 210, 144, 12,
+                                          191, 179, 162, 241, 81, 51, 145, 235, 249, 14, 239, 107, 49, 192, 214, 31,
+                                          181, 199, 106, 157, 184, 84, 204, 176, 115, 121, 50, 45, 127, 4, 150, 254,
+                                          138, 236, 205, 93, 222, 114, 67, 29, 24, 72, 243, 141, 128, 195, 78, 66, 215,
+                                          61, 156, 180};
         // To remove the need for index wrapping, double the permutation table length
         private static final short[] perm = new short[512];
         private static final short[] permMod12 = new short[512];
-        // Skewing and unskewing factors for 2, 3, and 4 dimensions
-        private static final double F2 = 0.5 * (Math.sqrt(3.0) - 1.0);
-        private static final double G2 = (3.0 - Math.sqrt(3.0)) / 6.0;
-        private static final double F3 = 1.0 / 3.0;
-        private static final double G3 = 1.0 / 6.0;
-        private static final double F4 = (Math.sqrt(5.0) - 1.0) / 4.0;
-        private static final double G4 = (5.0 - Math.sqrt(5.0)) / 20.0;
 
         static {
             for (int i = 0; i < 512; i++) {
