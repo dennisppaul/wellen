@@ -36,18 +36,18 @@ void mouseReleased() {
 
 void keyPressed() {
     if (key == '1') {
-        Tone.instrument().set_oscillator_type(Wellen.OSC_SINE);
+        Tone.instrument().set_oscillator_type(Wellen.WAVESHAPE_SINE);
     }
     if (key == '2') {
-        Tone.instrument().set_oscillator_type(Wellen.OSC_TRIANGLE);
+        Tone.instrument().set_oscillator_type(Wellen.WAVESHAPE_TRIANGLE);
     }
     if (key == '3') {
-        Tone.instrument().set_oscillator_type(Wellen.OSC_SAWTOOTH);
+        Tone.instrument().set_oscillator_type(Wellen.WAVESHAPE_SAWTOOTH);
     }
     if (key == '4') {
-        Tone.instrument().set_oscillator_type(Wellen.OSC_SQUARE);
+        Tone.instrument().set_oscillator_type(Wellen.WAVESHAPE_SQUARE);
     }
     if (key == '5') {
-        Tone.instrument().set_oscillator_type(Wellen.OSC_NOISE);
+        Tone.instrument().set_oscillator_type(Wellen.WAVESHAPE_NOISE);
     }
 }

@@ -46,7 +46,7 @@ public class InstrumentInternal extends Instrument implements DSPNodeOutput {
 
         mVCO = new Wavetable(pWavetableSize, pSamplingRate);
         mVCO.interpolate_samples(true);
-        set_oscillator_type(Wellen.OSC_SINE);
+        set_oscillator_type(Wellen.WAVESHAPE_SINE);
         set_amplitude(0.0f);
         set_frequency(DEFAULT_FREQUENCY);
 

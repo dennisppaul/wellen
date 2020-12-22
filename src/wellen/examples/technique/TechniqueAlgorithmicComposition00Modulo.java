@@ -15,7 +15,7 @@ public class TechniqueAlgorithmicComposition00Modulo extends PApplet {
     }
 
     public void setup() {
-        Tone.instrument().set_oscillator_type(Wellen.OSC_TRIANGLE);
+        Tone.instrument().set_oscillator_type(Wellen.WAVESHAPE_TRIANGLE);
         Beat.start(this, 120 * 4);
     }
 

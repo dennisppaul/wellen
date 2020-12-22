@@ -35,7 +35,7 @@ public class ExampleDSP15EnvelopeListener extends PApplet {
 
         mWavetable = new Wavetable();
         mWavetable.set_amplitude(0.25f);
-        Wavetable.fill(mWavetable.get_wavetable(), Wellen.OSC_SAWTOOTH);
+        Wavetable.fill(mWavetable.get_wavetable(), Wellen.WAVESHAPE_SAWTOOTH);
 
         DSP.start(this);
     }
@@ -58,10 +58,13 @@ public class ExampleDSP15EnvelopeListener extends PApplet {
     }
 
     private class MEnvelopeListener implements EnvelopeListener {
-        public void envelope_done(Envelope pEnvelope) {
+        public void finished_envelope(Envelope pEnvelope) {
             mWavetable.set_amplitude(random(0.1f, 0.4f));
             mRampFrequency.ramp_to(random(MIN_FREQ, MAX_FREQ), 0.0625f);
             mRampFrequency.start();
+        }
+
+        public void finished_stage(Envelope pEnvelope, int pStageID) {
         }
     }
 

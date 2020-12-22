@@ -40,7 +40,7 @@ public class TestWavetableInterpolation extends PApplet {
                 Wavetable.sawtooth(mWavetable.get_wavetable());
                 break;
             case '4':
-                Wavetable.fill(mWavetable.get_wavetable(), Wellen.OSC_SQUARE); /* alternative way to fill wavetable */
+                Wavetable.fill(mWavetable.get_wavetable(), Wellen.WAVESHAPE_SQUARE); /* alternative way to fill wavetable */
                 break;
             case '5':
                 randomize(mWavetable.get_wavetable());

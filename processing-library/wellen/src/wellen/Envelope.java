@@ -120,13 +120,14 @@ public class Envelope implements DSPNodeOutput {
                 mStageDuration += mTimeScale * 1.0f / mSamplingRate;
                 if (mStageDuration > mEnvelopeStages.get(mEnvStage).duration) {
                     final float mRemainder = mStageDuration - mEnvelopeStages.get(mEnvStage).duration;
+                    finished_stage(mEnvStage);
                     mEnvStage++;
                     if (mEnvStage < mEnvelopeStages.size() - 1) {
                         prepareNextStage(mEnvStage, mRemainder);
                     } else {
                         // @TODO(is it of interest to be able to loop envelopes?)
                         stop();
-                        is_done();
+                        finished_envelope();
                     }
                 }
             }
@@ -220,12 +221,22 @@ public class Envelope implements DSPNodeOutput {
         return mEnvelopeListeners;
     }
 
-    private void is_done() {
+    private float compute_delta_fraction(float pDelta, float pDuration) {
+        return pDuration > 0 ? (pDelta / mSamplingRate) / pDuration : pDelta;
+    }
+
+    private void finished_envelope() {
         for (EnvelopeListener el : mEnvelopeListeners) {
-            el.envelope_done(this);
+            el.finished_envelope(this);
         }
         if (mLoop) {
             start();
+        }
+    }
+
+    private void finished_stage(int mEnvStage) {
+        for (EnvelopeListener el : mEnvelopeListeners) {
+            el.finished_stage(this, mEnvStage);
         }
     }
 
@@ -243,10 +254,6 @@ public class Envelope implements DSPNodeOutput {
     private void setDelta(int pEnvStage) {
         final float mDeltaTMP = mEnvelopeStages.get(pEnvStage + 1).value - mEnvelopeStages.get(pEnvStage).value;
         mDelta = compute_delta_fraction(mDeltaTMP, mEnvelopeStages.get(mEnvStage).duration);
-    }
-
-    private float compute_delta_fraction(float pDelta, float pDuration) {
-        return pDuration > 0 ? (pDelta / mSamplingRate) / pDuration : pDelta;
     }
 
     public static class Stage {

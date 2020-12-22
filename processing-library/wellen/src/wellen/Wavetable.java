@@ -66,19 +66,19 @@ public class Wavetable implements DSPNodeOutput {
 
     public static void fill(float[] pWavetable, int pWavetableType) {
         switch (pWavetableType) {
-            case Wellen.OSC_SINE:
+            case Wellen.WAVESHAPE_SINE:
                 sine(pWavetable);
                 break;
-            case Wellen.OSC_TRIANGLE:
+            case Wellen.WAVESHAPE_TRIANGLE:
                 triangle(pWavetable);
                 break;
-            case Wellen.OSC_SAWTOOTH:
+            case Wellen.WAVESHAPE_SAWTOOTH:
                 sawtooth(pWavetable);
                 break;
-            case Wellen.OSC_SQUARE:
+            case Wellen.WAVESHAPE_SQUARE:
                 square(pWavetable);
                 break;
-            case Wellen.OSC_NOISE:
+            case Wellen.WAVESHAPE_NOISE:
                 noise(pWavetable);
                 break;
         }

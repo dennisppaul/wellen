@@ -27,7 +27,7 @@ void setup() {
     mRampFrequency.start();
     mWavetable = new Wavetable();
     mWavetable.set_amplitude(0.25f);
-    Wavetable.fill(mWavetable.get_wavetable(), Wellen.OSC_SAWTOOTH);
+    Wavetable.fill(mWavetable.get_wavetable(), Wellen.WAVESHAPE_SAWTOOTH);
     DSP.start(this);
 }
 
@@ -50,9 +50,12 @@ void audioblock(float[] pSamples) {
 
 class MEnvelopeListener implements EnvelopeListener {
     
-void envelope_done(Envelope pEnvelope) {
+void finished_envelope(Envelope pEnvelope) {
         mWavetable.set_amplitude(random(0.1f, 0.4f));
         mRampFrequency.ramp_to(random(MIN_FREQ, MAX_FREQ), 0.0625f);
         mRampFrequency.start();
+    }
+    
+void finished_stage(Envelope pEnvelope, int pStageID) {
     }
 }

@@ -31,32 +31,40 @@ import javax.sound.sampled.TargetDataLine;
 
 public class Wellen {
 
-    public static final int OSC_SINE = 0;
-    public static final int OSC_TRIANGLE = 1;
-    public static final int OSC_SAWTOOTH = 2;
-    public static final int OSC_SQUARE = 3;
-    public static final int OSC_NOISE = 4;
-    public static final int NOISE_WHITE = 0;
+    public static final float DEFAULT_ATTACK = 0.005f;
+    public static final int DEFAULT_AUDIOBLOCK_SIZE = 512;
+    public static final int DEFAULT_AUDIO_DEVICE = -1;
+    public static final float DEFAULT_DECAY = 0.01f;
+    public static final int DEFAULT_NUMBER_OF_INSTRUMENTS = 16;
+    public static final float DEFAULT_RELEASE = 0.075f;
+    public static final int DEFAULT_SAMPLING_RATE = 44100;
+    public static final float DEFAULT_SUSTAIN = 0.5f;
+    public static final int DEFAULT_WAVETABLE_SIZE = 512;
+    public static final int DISTORTION_CLIP = 0;
+    public static final int DISTORTION_FOLDBACK = 1;
+    public static final int DISTORTION_FOLDBACK_SINGLE = 2;
     public static final int NOISE_GAUSSIAN_WHITE = 1;
     public static final int NOISE_GAUSSIAN_WHITE2 = 2;
     public static final int NOISE_PINK = 3;
     public static final int NOISE_PINK2 = 4;
     public static final int NOISE_PINK3 = 5;
     public static final int NOISE_SIMPLEX = 6;
-    public static final int TONE_ENGINE_INTERNAL_WITH_NO_OUTPUT = -2;
+    public static final int NOISE_WHITE = 0;
+    public static final int NO_CHANNELS = 0;
+    public static final int WAVESHAPE_NOISE = 4;
+    public static final int WAVESHAPE_SAWTOOTH = 2;
+    public static final int WAVESHAPE_SINE = 0;
+    public static final int WAVESHAPE_SQUARE = 3;
+    public static final int WAVESHAPE_TRIANGLE = 1;
+    public static final int OSC_NOISE = WAVESHAPE_NOISE;
+    public static final int OSC_SAWTOOTH = WAVESHAPE_SAWTOOTH;
+    public static final int OSC_SINE = WAVESHAPE_SINE;
+    public static final int OSC_SQUARE = WAVESHAPE_SQUARE;
+    public static final int OSC_TRIANGLE = WAVESHAPE_TRIANGLE;
     public static final String TONE_ENGINE_INTERNAL = "internal";
+    public static final int TONE_ENGINE_INTERNAL_WITH_NO_OUTPUT = -2;
     public static final String TONE_ENGINE_MIDI = "midi";
     public static final String TONE_ENGINE_OSC = "osc";
-    public static final float DEFAULT_ATTACK = 0.005f;
-    public static final float DEFAULT_DECAY = 0.01f;
-    public static final float DEFAULT_RELEASE = 0.075f;
-    public static final float DEFAULT_SUSTAIN = 0.5f;
-    public static final int DEFAULT_SAMPLING_RATE = 44100;
-    public static final int DEFAULT_AUDIOBLOCK_SIZE = 512;
-    public static final int DEFAULT_AUDIO_DEVICE = -1;
-    public static final int DEFAULT_WAVETABLE_SIZE = 512;
-    public static final int DEFAULT_NUMBER_OF_INSTRUMENTS = 16;
-    public static final int NO_CHANNELS = 0;
 
     public static int clamp127(int pValue) {
         return Math.max(0, Math.min(127, pValue));
@@ -193,10 +201,7 @@ public class Wellen {
         }
     }
 
-    public static void draw_buffer(PGraphics g,
-                                   float pWidth,
-                                   float pHeight,
-                                   float[] pBufferLeft,
+    public static void draw_buffer(PGraphics g, float pWidth, float pHeight, float[] pBufferLeft,
                                    float[] pBufferRight) {
         g.pushMatrix();
         draw_buffer(g, pWidth, pHeight * 0.5f, pBufferLeft);

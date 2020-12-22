@@ -184,9 +184,9 @@ public class ExampleInstruments08CustomDSPInstrument extends PApplet {
             mLowerVCO.interpolate_samples(true);
             mVeryLowVCO = new Wavetable(DEFAULT_WAVETABLE_SIZE);
             mVeryLowVCO.interpolate_samples(true);
-            Wavetable.fill(mVCO.get_wavetable(), Wellen.OSC_TRIANGLE);
-            Wavetable.fill(mLowerVCO.get_wavetable(), Wellen.OSC_SINE);
-            Wavetable.fill(mVeryLowVCO.get_wavetable(), Wellen.OSC_SQUARE);
+            Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVESHAPE_TRIANGLE);
+            Wavetable.fill(mLowerVCO.get_wavetable(), Wellen.WAVESHAPE_SINE);
+            Wavetable.fill(mVeryLowVCO.get_wavetable(), Wellen.WAVESHAPE_SQUARE);
         }
 
         public float output() {
@@ -221,7 +221,7 @@ public class ExampleInstruments08CustomDSPInstrument extends PApplet {
         public CustomInstrumentKickDrum(int pID) {
             super(pID);
 
-            set_oscillator_type(Wellen.OSC_SINE);
+            set_oscillator_type(Wellen.WAVESHAPE_SINE);
             set_amplitude(0.5f);
             set_frequency(90);
 

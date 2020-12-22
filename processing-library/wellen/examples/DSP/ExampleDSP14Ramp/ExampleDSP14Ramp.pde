@@ -39,7 +39,7 @@ void setup() {
     mEnvelopeAmplitude.add_stage(0.2f, 0.24f);
     mEnvelopeAmplitude.add_stage(0.0f);
     mWavetable = new Wavetable();
-    Wavetable.fill(mWavetable.get_wavetable(), Wellen.OSC_SAWTOOTH);
+    Wavetable.fill(mWavetable.get_wavetable(), Wellen.WAVESHAPE_SAWTOOTH);
     DSP.start(this);
     Beat.start(this, 120);
 }

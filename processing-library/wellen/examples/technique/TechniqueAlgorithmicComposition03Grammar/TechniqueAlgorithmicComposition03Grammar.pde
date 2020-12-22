@@ -32,8 +32,8 @@ void settings() {
 
 void setup() {
     textFont(createFont("Helvetica-Bold", 10));
-    Tone.instrument(1).set_oscillator_type(Wellen.OSC_SAWTOOTH);
-    Tone.instrument(2).set_oscillator_type(Wellen.OSC_SINE);
+    Tone.instrument(1).set_oscillator_type(Wellen.WAVESHAPE_SAWTOOTH);
+    Tone.instrument(2).set_oscillator_type(Wellen.WAVESHAPE_SINE);
     Beat.start(this, 240);
 }
 

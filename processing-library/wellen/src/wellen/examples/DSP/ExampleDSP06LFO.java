@@ -63,40 +63,40 @@ public class ExampleDSP06LFO extends PApplet {
     public void keyPressed() {
         switch (key) {
             case '1':
-                Wavetable.fill(mFrequencyLFO.get_wavetable(), Wellen.OSC_SINE);
+                Wavetable.fill(mFrequencyLFO.get_wavetable(), Wellen.WAVESHAPE_SINE);
                 break;
             case '2':
-                Wavetable.fill(mFrequencyLFO.get_wavetable(), Wellen.OSC_TRIANGLE);
+                Wavetable.fill(mFrequencyLFO.get_wavetable(), Wellen.WAVESHAPE_TRIANGLE);
                 break;
             case '3':
-                Wavetable.fill(mFrequencyLFO.get_wavetable(), Wellen.OSC_SAWTOOTH);
+                Wavetable.fill(mFrequencyLFO.get_wavetable(), Wellen.WAVESHAPE_SAWTOOTH);
                 break;
             case '4':
-                Wavetable.fill(mFrequencyLFO.get_wavetable(), Wellen.OSC_SQUARE);
+                Wavetable.fill(mFrequencyLFO.get_wavetable(), Wellen.WAVESHAPE_SQUARE);
                 break;
             case 'q':
-                Wavetable.fill(mAmplitudeLFO.get_wavetable(), Wellen.OSC_SINE);
+                Wavetable.fill(mAmplitudeLFO.get_wavetable(), Wellen.WAVESHAPE_SINE);
                 break;
             case 'w':
-                Wavetable.fill(mAmplitudeLFO.get_wavetable(), Wellen.OSC_TRIANGLE);
+                Wavetable.fill(mAmplitudeLFO.get_wavetable(), Wellen.WAVESHAPE_TRIANGLE);
                 break;
             case 'e':
-                Wavetable.fill(mAmplitudeLFO.get_wavetable(), Wellen.OSC_SAWTOOTH);
+                Wavetable.fill(mAmplitudeLFO.get_wavetable(), Wellen.WAVESHAPE_SAWTOOTH);
                 break;
             case 'r':
-                Wavetable.fill(mAmplitudeLFO.get_wavetable(), Wellen.OSC_SQUARE);
+                Wavetable.fill(mAmplitudeLFO.get_wavetable(), Wellen.WAVESHAPE_SQUARE);
                 break;
             case 'a':
-                Wavetable.fill(mVCO.get_wavetable(), Wellen.OSC_SINE);
+                Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVESHAPE_SINE);
                 break;
             case 's':
-                Wavetable.fill(mVCO.get_wavetable(), Wellen.OSC_TRIANGLE);
+                Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVESHAPE_TRIANGLE);
                 break;
             case 'd':
-                Wavetable.fill(mVCO.get_wavetable(), Wellen.OSC_SAWTOOTH);
+                Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVESHAPE_SAWTOOTH);
                 break;
             case 'f':
-                Wavetable.fill(mVCO.get_wavetable(), Wellen.OSC_SQUARE);
+                Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVESHAPE_SQUARE);
                 break;
         }
     }

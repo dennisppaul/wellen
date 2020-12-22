@@ -178,9 +178,9 @@ CustomInstrumentMultipleOscillators(int pID) {
         mLowerVCO.interpolate_samples(true);
         mVeryLowVCO = new Wavetable(DEFAULT_WAVETABLE_SIZE);
         mVeryLowVCO.interpolate_samples(true);
-        Wavetable.fill(mVCO.get_wavetable(), Wellen.OSC_TRIANGLE);
-        Wavetable.fill(mLowerVCO.get_wavetable(), Wellen.OSC_SINE);
-        Wavetable.fill(mVeryLowVCO.get_wavetable(), Wellen.OSC_SQUARE);
+        Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVESHAPE_TRIANGLE);
+        Wavetable.fill(mLowerVCO.get_wavetable(), Wellen.WAVESHAPE_SINE);
+        Wavetable.fill(mVeryLowVCO.get_wavetable(), Wellen.WAVESHAPE_SQUARE);
     }
     
 float output() {
@@ -215,7 +215,7 @@ final float mDecaySpeed = 0.25f;
     
 CustomInstrumentKickDrum(int pID) {
         super(pID);
-        set_oscillator_type(Wellen.OSC_SINE);
+        set_oscillator_type(Wellen.WAVESHAPE_SINE);
         set_amplitude(0.5f);
         set_frequency(90);
         /* this ADSR envelope is used to control the frequency instead of amplitude */
