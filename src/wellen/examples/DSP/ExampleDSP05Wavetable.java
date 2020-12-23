@@ -21,7 +21,6 @@ public class ExampleDSP05Wavetable extends PApplet {
 
     public void setup() {
         Wavetable.sine(mWavetable.get_wavetable());
-        Wellen.dumpAudioInputAndOutputDevices();
         DSP.start(this);
     }
 

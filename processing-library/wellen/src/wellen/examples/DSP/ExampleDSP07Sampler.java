@@ -4,7 +4,6 @@ import processing.core.PApplet;
 import wellen.DSP;
 import wellen.SampleDataSNARE;
 import wellen.Sampler;
-import wellen.Wellen;
 
 public class ExampleDSP07Sampler extends PApplet {
 
@@ -30,7 +29,6 @@ public class ExampleDSP07Sampler extends PApplet {
         mSampler.load(mData);
         mSampler.loop(false);
 
-        Wellen.dumpAudioInputAndOutputDevices();
         DSP.start(this);
     }
 

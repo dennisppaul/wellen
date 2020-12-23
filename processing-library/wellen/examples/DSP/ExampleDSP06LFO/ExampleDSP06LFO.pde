@@ -34,7 +34,6 @@ void setup() {
     Wavetable.sine(mAmplitudeLFO.get_wavetable());
     mAmplitudeLFO.interpolate_samples(true);
     mAmplitudeLFO.set_frequency(0);
-    Wellen.dumpAudioInputAndOutputDevices();
     DSP.start(this);
 }
 

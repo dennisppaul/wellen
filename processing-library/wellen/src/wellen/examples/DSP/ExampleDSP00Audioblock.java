@@ -2,6 +2,7 @@ package wellen.examples.DSP;
 
 import processing.core.PApplet;
 import wellen.DSP;
+import wellen.Wellen;
 
 public class ExampleDSP00Audioblock extends PApplet {
 
@@ -10,6 +11,7 @@ public class ExampleDSP00Audioblock extends PApplet {
     }
 
     public void setup() {
+        Wellen.dumpAudioInputAndOutputDevices();
         DSP.start(this);
         frameRate(120);
     }

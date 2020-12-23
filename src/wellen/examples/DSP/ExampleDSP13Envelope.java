@@ -28,12 +28,15 @@ public class ExampleDSP13Envelope extends PApplet {
         mEnvelopeAmplitude.add_stage(0.0f, 2.0f);
         mEnvelopeAmplitude.add_stage(1.0f, 5.0f);
         mEnvelopeAmplitude.add_stage(0.0f);
+
         mEnvelopeStepSize = new Envelope();
         mEnvelopeStepSize.add_stage(0.001f, 7.0f);
         mEnvelopeStepSize.add_stage(0.02f);
+
         mNoise = new Noise();
         mNoise.set_amplitude(0.25f);
         mNoise.set_type(Wellen.NOISE_SIMPLEX);
+
         DSP.start(this);
     }
 

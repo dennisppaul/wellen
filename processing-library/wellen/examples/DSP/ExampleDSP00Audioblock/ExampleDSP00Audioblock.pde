@@ -6,6 +6,7 @@ void settings() {
 }
 
 void setup() {
+    Wellen.dumpAudioInputAndOutputDevices();
     DSP.start(this);
     frameRate(120);
 }

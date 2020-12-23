@@ -39,6 +39,10 @@ public class LowPassFilter implements DSPNodeProcess {
     private float mOldAcr;
     private float mOldTune;
 
+    public LowPassFilter() {
+        this(Wellen.DEFAULT_SAMPLING_RATE);
+    }
+
     public LowPassFilter(int pSamplingRate) {
         mSamplingRate = pSamplingRate;
         mIstor = 0.0f;
@@ -122,7 +126,7 @@ public class LowPassFilter implements DSPNodeProcess {
     }
 
     /**
-     * @param pResonance resonance factor [0.0, 1.0] ( becomes instable close to 1.0 )
+     * @param pResonance resonance factor [0.0, 1.0] ( becomes unstable close to 1.0 )
      */
     public void set_resonance(float pResonance) {
         mResonance = pResonance;

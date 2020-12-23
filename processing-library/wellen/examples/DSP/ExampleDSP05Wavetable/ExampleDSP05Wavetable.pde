@@ -14,7 +14,6 @@ void settings() {
 
 void setup() {
     Wavetable.sine(mWavetable.get_wavetable());
-    Wellen.dumpAudioInputAndOutputDevices();
     DSP.start(this);
 }
 

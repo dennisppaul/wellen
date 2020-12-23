@@ -12,18 +12,17 @@ public class ExampleDSP04LPF extends PApplet {
      * this example demonstrates how to use a *Low-Pass Filter* (LPF) on a sawtooth oscillator in DSP.
      */
 
-    private final Wavetable mWavetable = new Wavetable(512);
-    private final LowPassFilter mFilter = new LowPassFilter(Wellen.DEFAULT_SAMPLING_RATE);
+    private final Wavetable mWavetable = new Wavetable();
+    private final LowPassFilter mFilter = new LowPassFilter();
 
     public void settings() {
         size(640, 480);
     }
 
     public void setup() {
-        Wavetable.sawtooth(mWavetable.get_wavetable());
+        Wavetable.fill(mWavetable.get_wavetable(), Wellen.OSC_SAWTOOTH);
         mWavetable.set_frequency(2.0f * Wellen.DEFAULT_SAMPLING_RATE / Wellen.DEFAULT_AUDIOBLOCK_SIZE);
-        mWavetable.set_amplitude(0.5f);
-        Wellen.dumpAudioInputAndOutputDevices();
+        mWavetable.set_amplitude(0.33f);
         DSP.start(this);
     }
 
@@ -33,7 +32,7 @@ public class ExampleDSP04LPF extends PApplet {
     }
 
     public void mouseMoved() {
-        mFilter.set_frequency(map(mouseX, 0, width, 1.0f, 5000.0f));
+        mFilter.set_frequency(map(mouseX, 0, width, 1.0f, Wellen.DEFAULT_SAMPLING_RATE * 0.5f));
         mFilter.set_resonance(map(mouseY, 0, height, 0.0f, 0.97f));
     }
 

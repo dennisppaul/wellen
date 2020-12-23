@@ -21,8 +21,8 @@ package wellen;
 
 public class InstrumentInternal extends Instrument implements DSPNodeOutput {
 
-    public static final int DEFAULT_WAVETABLE_SIZE = 512;
     public static final float DEFAULT_FREQUENCY = 220.0f;
+    public static final int DEFAULT_WAVETABLE_SIZE = 512;
     protected final ADSR mADSR;
     protected final Wavetable mVCO;
     protected final Wavetable mFrequencyLFO;

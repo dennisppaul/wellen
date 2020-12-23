@@ -21,7 +21,6 @@ void setup() {
     mSampler = new Sampler();
     mSampler.load(mData);
     mSampler.loop(false);
-    Wellen.dumpAudioInputAndOutputDevices();
     DSP.start(this);
 }
 

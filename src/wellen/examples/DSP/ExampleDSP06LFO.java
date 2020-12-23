@@ -41,7 +41,6 @@ public class ExampleDSP06LFO extends PApplet {
         mAmplitudeLFO.interpolate_samples(true);
         mAmplitudeLFO.set_frequency(0);
 
-        Wellen.dumpAudioInputAndOutputDevices();
         DSP.start(this);
     }
 

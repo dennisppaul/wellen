@@ -2,6 +2,7 @@ package wellen.examples.DSP;
 
 import processing.core.PApplet;
 import wellen.DSP;
+import wellen.Wellen;
 
 public class ExampleDSP01StereoOutput extends PApplet {
 
@@ -19,6 +20,7 @@ public class ExampleDSP01StereoOutput extends PApplet {
     }
 
     public void setup() {
+        Wellen.dumpAudioInputAndOutputDevices();
         DSP.start(this, 2);
     }
 

@@ -21,7 +21,6 @@ public class ExampleDSP03Echo extends PApplet {
     }
 
     public void setup() {
-        Wellen.dumpAudioInputAndOutputDevices();
         DSP.start(this, 1, 1);
     }
 
