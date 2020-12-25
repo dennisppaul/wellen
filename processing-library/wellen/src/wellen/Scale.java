@@ -34,8 +34,9 @@ public class Scale {
     public static final int ID_MINOR_PENTATONIC = 9;
     public static final int ID_MAJOR_PENTATONIC = 10;
     public static final int ID_OCTAVE = 11;
-    public static final int ID_DIMINISHED = 12;
+    public static final int ID_DIMINISHED_7 = 12;
     public static final int ID_FIBONACCI = 13;
+    public static final int NUMBER_OF_SCALES = 14;
     public static final int[] CHROMATIC = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
     public static final int[] HALF_TONE = CHROMATIC;
     public static final int[] FIFTH = {0, 7};
@@ -49,9 +50,8 @@ public class Scale {
     public static final int[] MINOR_PENTATONIC = {0, 3, 5, 7, 10};
     public static final int[] MAJOR_PENTATONIC = {0, 4, 5, 7, 11};
     public static final int[] OCTAVE = {0};
-    public static final int[] DIMINISHED = {0, 3, 6, 9};
+    public static final int[] DIMINISHED_7 = {0, 3, 6, 9};
     public static final int[] FIBONACCI = {1 - 1, 1 - 1, 2 - 1, 3 - 1, 5 - 1, 8 - 1};
-    private static final int NUMBER_OF_SCALES = 14;
     private static final int[][] ALL_SCALES = new int[NUMBER_OF_SCALES][];
 
     static {
@@ -68,7 +68,7 @@ public class Scale {
         ALL_SCALES[ID_MINOR_PENTATONIC] = MINOR_PENTATONIC;
         ALL_SCALES[ID_MAJOR_PENTATONIC] = MAJOR_PENTATONIC;
         ALL_SCALES[ID_OCTAVE] = OCTAVE;
-        ALL_SCALES[ID_DIMINISHED] = DIMINISHED;
+        ALL_SCALES[ID_DIMINISHED_7] = DIMINISHED_7;
         ALL_SCALES[ID_FIBONACCI] = FIBONACCI;
     }
 
