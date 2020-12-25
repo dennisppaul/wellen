@@ -19,6 +19,8 @@
 
 package wellen;
 
+import processing.core.PApplet;
+
 /**
  * a collection of DSP instruments. these instruments can be used to replace the default instrument ( i.e
  * `InstrumentInternal` ) e.g by using the method `Tone.replace_instrument(InstrumentInternal)`.
@@ -30,31 +32,108 @@ package wellen;
  * library these instruments can also be integrated into `DSP` applications.
  */
 public class InstrumentInternalLibrary {
-    public static class SAMPLER extends InstrumentInternal {
+    public static class BELL extends InstrumentInternal {
 
-        private final Sampler mSampler;
+        private static final int NUM_OSC = 7;
+        private final Wavetable[] mVCOs;
+        private final ADSR[] mADSRs;
+        private final float[] mOscillatorDetune;
+        private final float[] mOscillatorAmplitudes;
+        private float mDetune;
+        private float mBaseRelease;
+        private float mReleaseFalloff;
+        private float mAmplitudeFalloff;
+        private float mAmplify = 2.5f;
+        private final boolean mUseTriangleForLowFrequencies = true;
 
-        public SAMPLER(int pID, float[] pSampleData) {
+        public BELL(int pID) {
             super(pID);
-
-            mSampler = new Sampler();
-            mSampler.set_data(pSampleData);
-            mSampler.loop(false);
+            mVCOs = new Wavetable[NUM_OSC];
+            mADSRs = new ADSR[NUM_OSC];
+            mOscillatorDetune = new float[NUM_OSC];
+            mOscillatorAmplitudes = new float[NUM_OSC];
+            for (int i = 0; i < NUM_OSC; i++) {
+                mVCOs[i] = new Wavetable();
+                mVCOs[i].interpolate_samples(true);
+                Wavetable.fill(mVCOs[i].get_wavetable(), Wellen.WAVESHAPE_SINE);
+                mADSRs[i] = new ADSR();
+            }
+            set_detune(0.23f);
+            set_amplitude_falloff(0.5f);
+            set_sustain(2.1f);
+            set_sustain_falloff(-0.4f);
+            set_attack(0.02f);
+            updateADSRs();
         }
 
-        public float output() {
-            return mSampler.output() * get_amplitude();
+        public void set_amplitude_falloff(float pAmplitudeFalloff) {
+            mAmplitudeFalloff = pAmplitudeFalloff;
+            for (int i = 0; i < NUM_OSC; i++) {
+                mOscillatorAmplitudes[i] = PApplet.map(i, 0, mVCOs.length - 1, 1.0f, 1.0f - mAmplitudeFalloff);
+            }
         }
 
+        public void set_amplification(float pAmplify) {
+            mAmplify = pAmplify;
+        }
 
-        public void note_off() {
-            mIsPlaying = false;
+        public void set_sustain_falloff(float pReleaseFalloff) {
+            mReleaseFalloff = pReleaseFalloff;
+            updateADSRs();
+        }
+
+        public void set_sustain(float pBaseRelease) {
+            mBaseRelease = pBaseRelease;
+            updateADSRs();
         }
 
         public void note_on(int pNote, int pVelocity) {
-            mIsPlaying = true;
-            set_amplitude(velocity_to_amplitude(pVelocity));
-            mSampler.rewind();
+            super.note_on(pNote, pVelocity);
+            for (ADSR mADSR : mADSRs) {
+                mADSR.start();
+            }
+        }
+
+        public void note_off() {
+            super.note_off();
+            /* never stop oscillators as they are stopped by their ADSR */
+        }
+
+        public float output() {
+            float mSample = 0.0f;
+            for (int i = 0; i < mVCOs.length; i++) {
+                mVCOs[i].set_frequency(get_frequency() * mOscillatorDetune[i]);
+                mVCOs[i].set_amplitude(get_amplitude() * mOscillatorAmplitudes[i]);
+                mSample += mVCOs[i].output() * mADSRs[i].output();
+            }
+            mSample /= mVCOs.length;
+            mSample *= mAmplify;
+            return mSample;
+        }
+
+        public void set_detune(float pDetune) {
+            mDetune = pDetune;
+            for (int i = 0; i < NUM_OSC; i++) {
+                mOscillatorDetune[i] = i + 2 + i * PApplet.pow(mDetune, 2);
+            }
+        }
+
+        public float get_attack() {
+            return mAttack;
+        }
+
+        public void set_attack(float pAttack) {
+            mAttack = pAttack;
+            updateADSRs();
+        }
+
+        private void updateADSRs() {
+            for (int i = 0; i < mVCOs.length; i++) {
+                mADSRs[i].set_attack(mAttack);
+                mADSRs[i].set_decay(mBaseRelease + PApplet.map(i, 0, mVCOs.length - 1, 0.0f, mReleaseFalloff));
+                mADSRs[i].set_sustain(0.0f);
+                mADSRs[i].set_release(0.0f);
+            }
         }
     }
 
@@ -88,6 +167,21 @@ public class InstrumentInternalLibrary {
             mSample += mLowerVCO.output();
             mSample += mVeryLowVCO.output();
             return mADSRAmp * mSample;
+        }
+    }
+
+    public static class HI_HAT extends InstrumentInternal {
+
+        public HI_HAT(int pID) {
+            super(pID);
+            mADSR.set_attack(0.005f);
+            mADSR.set_decay(0.05f);
+            mADSR.set_sustain(0.0f);
+            mADSR.set_release(0.0f);
+        }
+
+        public float output() {
+            return Wellen.random(-get_amplitude(), get_amplitude()) * mADSR.output();
         }
     }
 
@@ -139,18 +233,31 @@ public class InstrumentInternalLibrary {
 
     }
 
-    public static class HI_HAT extends InstrumentInternal {
+    public static class SAMPLER extends InstrumentInternal {
 
-        public HI_HAT(int pID) {
+        private final Sampler mSampler;
+
+        public SAMPLER(int pID, float[] pSampleData) {
             super(pID);
-            mADSR.set_attack(0.005f);
-            mADSR.set_decay(0.05f);
-            mADSR.set_sustain(0.0f);
-            mADSR.set_release(0.0f);
+
+            mSampler = new Sampler();
+            mSampler.set_data(pSampleData);
+            mSampler.loop(false);
         }
 
         public float output() {
-            return Wellen.random(-get_amplitude(), get_amplitude()) * mADSR.output();
+            return mSampler.output() * get_amplitude();
+        }
+
+
+        public void note_off() {
+            mIsPlaying = false;
+        }
+
+        public void note_on(int pNote, int pVelocity) {
+            mIsPlaying = true;
+            set_amplitude(velocity_to_amplitude(pVelocity));
+            mSampler.rewind();
         }
     }
 }
