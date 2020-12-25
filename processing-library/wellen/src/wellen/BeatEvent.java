@@ -45,6 +45,12 @@ public class BeatEvent {
         mTimer = new Timer();
     }
 
+    public static BeatEvent create(int pBPM) {
+        BeatEvent mBeatEvent = new BeatEvent(pBPM);
+        mBeatEvent.instance().pool.add(mBeatEvent);
+        return mBeatEvent;
+    }
+
     public void stop() {
         instance().end();
     }
@@ -69,15 +75,9 @@ public class BeatEvent {
         return instance;
     }
 
-    public static BeatEvent create(int pBPM) {
-        BeatEvent mBeatEvent = new BeatEvent(pBPM);
-        mBeatEvent.instance().pool.add(mBeatEvent);
-        return mBeatEvent;
-    }
-
     private static class BeatPool extends Thread {
 
-        final List<BeatEvent> pool = Collections.synchronizedList(new ArrayList<>());
+        final List<BeatEvent> pool = Collections.synchronizedList(new ArrayList<BeatEvent>());
         private boolean mActive = true;
 
         public BeatPool() {
@@ -103,7 +103,7 @@ public class BeatEvent {
                             }
                         }
                     }
-                    Thread.sleep(100);
+                    Thread.sleep(12);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
