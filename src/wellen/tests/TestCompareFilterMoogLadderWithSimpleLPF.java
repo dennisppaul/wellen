@@ -1,6 +1,7 @@
 package wellen.tests;
 
 import processing.core.PApplet;
+import wellen.Beat;
 import wellen.DSP;
 import wellen.Filter;
 import wellen.LowPassFilter;
@@ -11,6 +12,7 @@ public class TestCompareFilterMoogLadderWithSimpleLPF extends PApplet {
     private final Wavetable mWavetable = new Wavetable();
     private final Filter mFilter = new Filter();
     private final LowPassFilter mMoggLadder = new LowPassFilter();
+    private int mFreqOffset = 0;
 
     public void settings() {
         size(640, 480);
@@ -21,11 +23,32 @@ public class TestCompareFilterMoogLadderWithSimpleLPF extends PApplet {
         mWavetable.set_frequency(2.0f * Wellen.DEFAULT_SAMPLING_RATE / Wellen.DEFAULT_AUDIOBLOCK_SIZE);
         mWavetable.set_amplitude(0.33f);
         DSP.start(this);
+        Beat.start(this, 480);
     }
 
     public void draw() {
         background(255);
         DSP.draw_buffer(g, width, height);
+    }
+
+    public void beat(int pBeatCounter) {
+        if (pBeatCounter % 128 == 0) {
+            mFreqOffset = 0;
+        }
+        if (pBeatCounter % 128 == 32) {
+            mFreqOffset = 7;
+        }
+        if (pBeatCounter % 128 == 64) {
+            mFreqOffset = 0;
+        }
+        if (pBeatCounter % 128 == 96) {
+            mFreqOffset = 7-12;
+        }
+        if (pBeatCounter % 128 == 112) {
+            mFreqOffset = 10-12;
+        }
+        float mFreqMult = (pBeatCounter % 4) + 1;
+        mWavetable.set_frequency(mFreqMult * Wellen.DEFAULT_SAMPLING_RATE * ((12.0f + mFreqOffset) / 12.0f) / Wellen.DEFAULT_AUDIOBLOCK_SIZE);
     }
 
     public void keyPressed() {
@@ -35,12 +58,6 @@ public class TestCompareFilterMoogLadderWithSimpleLPF extends PApplet {
                 break;
             case '5':
                 Wavetable.fill(mWavetable.get_wavetable(), Wellen.OSC_SQUARE);
-                break;
-            case '6':
-                mWavetable.set_frequency(2.0f * Wellen.DEFAULT_SAMPLING_RATE / Wellen.DEFAULT_AUDIOBLOCK_SIZE);
-                break;
-            case '7':
-                mWavetable.set_frequency(1.0f * Wellen.DEFAULT_SAMPLING_RATE / Wellen.DEFAULT_AUDIOBLOCK_SIZE);
                 break;
         }
     }
