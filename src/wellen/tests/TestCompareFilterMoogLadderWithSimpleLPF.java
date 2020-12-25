@@ -53,10 +53,10 @@ public class TestCompareFilterMoogLadderWithSimpleLPF extends PApplet {
 
     public void keyPressed() {
         switch (key) {
-            case '4':
+            case '1':
                 Wavetable.fill(mWavetable.get_wavetable(), Wellen.OSC_SAWTOOTH);
                 break;
-            case '5':
+            case '2':
                 Wavetable.fill(mWavetable.get_wavetable(), Wellen.OSC_SQUARE);
                 break;
         }

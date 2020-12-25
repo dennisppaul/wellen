@@ -50,6 +50,15 @@ public class ADSR implements DSPNodeOutput {
     private float mAmp = 0.0f;
     private float mDelta = 0.0f;
 
+    private enum ENVELOPE_STATE {
+        IDLE,
+        ATTACK,
+        DECAY,
+        SUSTAIN,
+        RELEASE,
+        PRE_ATTACK_FADE_TO_ZERO
+    }
+
     public ADSR(int pSamplingRate) {
         mSamplingRate = pSamplingRate;
         FADE_TO_ZERO_RATE_SEC = 0.01f;
@@ -58,10 +67,6 @@ public class ADSR implements DSPNodeOutput {
 
     public ADSR() {
         this(Wellen.DEFAULT_SAMPLING_RATE);
-    }
-
-    private enum ENVELOPE_STATE {
-        IDLE, ATTACK, DECAY, SUSTAIN, RELEASE, PRE_ATTACK_FADE_TO_ZERO
     }
 
     @Override
@@ -84,6 +89,13 @@ public class ADSR implements DSPNodeOutput {
 
     public void set_attack(float pAttack) {
         mAttack = pAttack;
+    }
+
+    public void set_adsr(float pAttack, float pDecay, float pSustain, float pRelease) {
+        set_attack(pAttack);
+        set_decay(pDecay);
+        set_sustain(pSustain);
+        set_release(pRelease);
     }
 
     public float get_decay() {
@@ -138,6 +150,15 @@ public class ADSR implements DSPNodeOutput {
         }
     }
 
+    private void setState(ENVELOPE_STATE pState) {
+        if (DEBUG_ADSR) {
+            System.out.print(pState.name());
+            System.out.print(" : ");
+            System.out.println(mAmp);
+        }
+        mState = pState;
+    }
+
     private void step() {
         switch (mState) {
             case IDLE:
@@ -177,14 +198,5 @@ public class ADSR implements DSPNodeOutput {
                 }
                 break;
         }
-    }
-
-    private void setState(ENVELOPE_STATE pState) {
-        if (DEBUG_ADSR) {
-            System.out.print(pState.name());
-            System.out.print(" : ");
-            System.out.println(mAmp);
-        }
-        mState = pState;
     }
 }

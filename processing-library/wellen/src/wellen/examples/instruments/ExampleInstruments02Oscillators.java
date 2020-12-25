@@ -34,7 +34,7 @@ public class ExampleInstruments02Oscillators extends PApplet {
     }
 
     public void mousePressed() {
-        mNote = Scale.get_note(Scale.MAJOR_CHORD_7, Note.NOTE_A2, (int) random(0, 10));
+        mNote = Scale.get_note(Scale.CHORD_MAJOR_7TH, Note.NOTE_A2, (int) random(0, 10));
         Tone.note_on(mNote, 127);
     }
 

@@ -43,7 +43,7 @@ public class ExampleBasics02Scales extends PApplet {
             mScale = Scale.HALF_TONE;
         }
         if (key == '2') {
-            mScale = Scale.MINOR_CHORD_7;
+            mScale = Scale.CHORD_MINOR_7TH;
         }
         if (key == '3') {
             mScale = new int[]{0, 2, 3, 6, 7, 8, 11}; // Nawa Athar
