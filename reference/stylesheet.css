@@ -2,8 +2,6 @@
  * Javadoc style sheet
  */
 
-@import url('resources/fonts/dejavu.css');
-
 /*
  * Styles for individual HTML elements.
  *
@@ -13,8 +11,8 @@
 
 body {
     background-color:#ffffff;
-    color:#353833;
-    font-family:'DejaVu Sans', Arial, Helvetica, sans-serif;
+    color:#363636;
+    font-family:Helvetica, Arial, sans-serif;
     font-size:14px;
     margin:0;
     padding:0;
@@ -31,17 +29,17 @@ iframe {
 }
 a:link, a:visited {
     text-decoration:none;
-    color:#4A6782;
+    color:#666666;
 }
 a[href]:hover, a[href]:focus {
     text-decoration:none;
-    color:#bb7a2a;
+    color:#737373;
 }
 a[name] {
-    color:#353833;
+    color:#363636;
 }
 pre {
-    font-family:'DejaVu Sans Mono', monospace;
+    font-family:'SF Mono', Courier, monospace;
     font-size:14px;
 }
 h1 {
@@ -66,19 +64,19 @@ ul {
     list-style-type:disc;
 }
 code, tt {
-    font-family:'DejaVu Sans Mono', monospace;
+    font-family:'SF Mono', Courier, monospace;
     font-size:14px;
     padding-top:4px;
     margin-top:8px;
     line-height:1.4em;
 }
 dt code {
-    font-family:'DejaVu Sans Mono', monospace;
+    font-family:'SF Mono', Courier, monospace;
     font-size:14px;
     padding-top:4px;
 }
 table tr td dt code {
-    font-family:'DejaVu Sans Mono', monospace;
+    font-family:'SF Mono', Courier, monospace;
     font-size:14px;
     vertical-align:top;
     padding-top:4px;
@@ -87,7 +85,7 @@ sup {
     font-size:8px;
 }
 button {
-    font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
+    font-family: Helvetica, Arial, sans-serif;
     font-size: 14px;
 }
 /*
@@ -115,7 +113,7 @@ button {
     margin-left:.5em;
 }
 .tab {
-    background-color:#0066FF;
+    background-color:#808080;
     color:#ffffff;
     padding:8px;
     width:5em;
@@ -141,7 +139,7 @@ button {
     }
 }
 .top-nav {
-    background-color:#4D7A97;
+    background-color:#000000;
     color:#FFFFFF;
     float:left;
     padding:0;
@@ -154,7 +152,7 @@ button {
 }
 .bottom-nav {
     margin-top:10px;
-    background-color:#4D7A97;
+    background-color:#737373;
     color:#FFFFFF;
     float:left;
     padding:0;
@@ -166,7 +164,7 @@ button {
     font-size:12px;
 }
 .sub-nav {
-    background-color:#dee3e9;
+    background-color:#e3e3e3;
     float:left;
     width:100%;
     overflow:hidden;
@@ -214,12 +212,12 @@ ul.sub-nav-list li {
 }
 .top-nav a:hover, .bottom-nav a:hover {
     text-decoration:none;
-    color:#bb7a2a;
+    color:#737373;
     text-transform:uppercase;
 }
 .nav-bar-cell1-rev {
-    background-color:#F8981D;
-    color:#253441;
+    background-color:#8a8a8a;
+    color:#333333;
     margin: auto 5px;
 }
 .skip-nav {
@@ -240,7 +238,7 @@ ul.sub-nav-list li {
  * Styles for page header and footer.
  */
 .title {
-    color:#2c4557;
+    color:#424242;
     margin:10px 0;
 }
 .sub-title {
@@ -268,8 +266,8 @@ body.module-declaration-page  .block-list h2 {
 body.class-declaration-page .summary h3,
 body.class-declaration-page .details h3,
 body.class-declaration-page .summary .inherited-list h2 {
-    background-color:#dee3e9;
-    border:1px solid #d0d9e0;
+    background-color:#e3e3e3;
+    border:1px solid #d9d9d9;
     margin:0 0 6px -8px;
     padding:7px 5px;
 }
@@ -282,7 +280,7 @@ main {
     position:relative;
 }
 dl.notes > dt {
-    font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
+    font-family: Helvetica, Arial, sans-serif;
     font-size:12px;
     font-weight:bold;
     margin:10px 0 0 0;
@@ -291,7 +289,7 @@ dl.notes > dt {
 dl.notes > dd {
     margin:5px 0 10px 0px;
     font-size:14px;
-    font-family:'DejaVu Serif', Georgia, "Times New Roman", Times, serif;
+    font-family:"Times New Roman", Georgia, Times, serif;
 }
 dl.name-value > dt {
     margin-left:1px;
@@ -362,7 +360,7 @@ table tr td dl, table tr td dl dt, table tr td dl dd {
     position:relative;
     text-align:left;
     background-repeat:no-repeat;
-    color:#253441;
+    color:#333333;
     font-weight:bold;
     clear:none;
     overflow:hidden;
@@ -374,7 +372,7 @@ table tr td dl, table tr td dl dt, table tr td dl dd {
 }
 .constants-summary caption a:link, .constants-summary caption a:visited,
 .use-summary caption a:link, .use-summary caption a:visited {
-    color:#1f389c;
+    color:#5e5e5e;
 }
 .overview-summary caption a:link, .member-summary caption a:link, .type-summary caption a:link,
 .deprecated-summary caption a:link,
@@ -405,7 +403,7 @@ table tr td dl, table tr td dl dt, table tr td dl dd {
     padding-bottom:7px;
     display:inline-block;
     float:left;
-    background-color:#F8981D;
+    background-color:#8a8a8a;
     border: none;
     height:16px;
 }
@@ -418,11 +416,11 @@ div.table-tabs > button {
    margin-right: 3px;
 }
 div.table-tabs > button.active-table-tab {
-   background: #F8981D;
-   color: #253441;
+   background: #8a8a8a;
+   color: #333333;
 }
 div.table-tabs > button.table-tab {
-   background: #4D7A97;
+   background: #737373;
    color: #FFFFFF;
 }
 
@@ -447,7 +445,7 @@ th.col-first, th.col-second, th.col-last, th.col-constructor-name, th.col-deprec
 }
 th.col-first, th.col-second, th.col-last, th.col-constructor-name, th.col-deprecated-item-name, .constants-summary th,
 .packages-summary th {
-    background:#dee3e9;
+    background:#e3e3e3;
     text-align:left;
     padding:8px 3px 3px 7px;
 }
@@ -510,7 +508,7 @@ th.col-deprecated-item-name a:link, th.col-deprecated-item-name a:visited,
 }
 div.block {
     font-size:14px;
-    font-family:'DejaVu Serif', Georgia, "Times New Roman", Times, serif;
+    font-family:"Times New Roman", Georgia, Times, serif;
 }
 td.col-last div {
     padding-top:0px;
@@ -519,7 +517,7 @@ td.col-last a {
     padding-bottom:3px;
 }
 div.member-signature {
-    font-family:'DejaVu Sans Mono', monospace;
+    font-family:'SF Mono', Courier, monospace;
     font-size:14px;
     margin:14px 0;
     white-space: pre-wrap;
@@ -564,7 +562,7 @@ h1.hidden {
 }
 .deprecation-block {
     font-size:14px;
-    font-family:'DejaVu Serif', Georgia, "Times New Roman", Times, serif;
+    font-family:"Times New Roman", Georgia, Times, serif;
     border-style:solid;
     border-width:thin;
     border-radius:10px;
@@ -590,7 +588,7 @@ main, nav, header, footer, section {
     font-weight:bold;
     font-size:15px;
     padding:7px 0 7px 3px;
-    background-color:#4D7A97;
+    background-color:#737373;
     color:#FFFFFF;
 }
 .result-item {
