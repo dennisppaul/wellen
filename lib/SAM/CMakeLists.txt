@@ -29,7 +29,6 @@ find_package(JNI REQUIRED)
 
 include_directories(${JNI_INCLUDE_DIRS})
 include_directories(./cpp)
-include_directories(./java)
 
 set(SOURCE_FILES cpp/wellen_SAM_impl.cpp)
 

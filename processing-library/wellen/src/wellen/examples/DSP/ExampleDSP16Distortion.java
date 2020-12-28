@@ -23,6 +23,7 @@ public class ExampleDSP16Distortion extends PApplet {
     public void setup() {
         mDistortion = new Distortion();
         mToneEngine = Tone.start(Wellen.TONE_ENGINE_INTERNAL_WITH_NO_OUTPUT);
+        Tone.instrument().set_oscillator_type(Wellen.OSC_TRIANGLE);
         DSP.start(this);
     }
 
@@ -43,6 +44,12 @@ public class ExampleDSP16Distortion extends PApplet {
                 break;
             case '3':
                 mDistortion.set_type(Distortion.TYPE.FOLDBACK_SINGLE);
+                break;
+            case '4':
+                mDistortion.set_type(Distortion.TYPE.ARC_TANGENT);
+                break;
+            case '5':
+                mDistortion.set_type(Distortion.TYPE.ARC_HYPERBOLIC);
                 break;
         }
     }
@@ -66,7 +73,7 @@ public class ExampleDSP16Distortion extends PApplet {
         mToneEngine.audioblock(pSamples);
         for (int i = 0; i < pSamples.length; i++) {
             /* apply distortion to process sample. */
-            pSamples[i] = mDistortion.process(pSamples[i]);
+            pSamples[i] = Wellen.clamp(mDistortion.process(pSamples[i]));
             /* note that it might not be a good idea to apply the distortion *after* the ADSR envelope as this can
             cause quite step attacks. */
         }

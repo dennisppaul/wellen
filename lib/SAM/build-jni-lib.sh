@@ -1,20 +1,22 @@
 #!/bin/bash
 
+JAVA_SRC_PATH='../../src/'
 NATIVE_ACCESSER_PATH='wellen/SAM.java'
 NATIVE_ACCESSER_CLASS_NAME='wellen.SAM'
+NATIVE_HEADER_PATH='../cpp/'
 PWD=`pwd`
 
 echo
-echo 'Java Native Interface Helper'
-echo 'Options: '
-echo '--refresh-header     Refreshes the header'
-echo '--build              Tries CMake build'
-echo '--execute-java       Tests library'
+echo 'Wellen SAM JNI Builder'
+# echo 'Options:'
+# echo '--refresh-header     Refreshes the header'
+# echo '--build              Tries CMake build'
+# echo '--execute-java       Tests library'
 echo
 
 refresh_header () {
-    cd java
-    javac -h . $NATIVE_ACCESSER_PATH
+    cd java/
+    javac -h $NATIVE_HEADER_PATH $NATIVE_ACCESSER_PATH
     cd ../
     echo "Generation finished."
 }
@@ -37,6 +39,8 @@ exej () {
     cd ../
 }
 
+cp $JAVA_SRC_PATH/$NATIVE_ACCESSER_PATH java/$NATIVE_ACCESSER_PATH
+
 if [ "$1" != "" ]; then
     while [ "$1" != "" ]; do
         case $1 in
@@ -53,3 +57,7 @@ else
     buildj
     exej
 fi
+
+mv ./build/libjni_wellen_sam.dylib ../ # move library to lib folder
+
+rm java/$NATIVE_ACCESSER_PATH

@@ -3,5 +3,5 @@ IO_EXAMPLE_PATHS=( examples/basics examples/DSP examples/external examples/instr
 PROJECT_PACKAGE=wellen
 SKETCH_IMPORTS=( )
 BASE_COLOR=59
-ADDITIONAL_LIBS=( )
+ADDITIONAL_LIBS=( libjni_wellen_sam.dylib )
 RESOURCES=( audio.raw teilchen-beat.raw )
