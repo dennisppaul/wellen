@@ -28,7 +28,11 @@ public class Distortion implements DSPNodeProcess {
     private final boolean LOCK_GUARD = true;
 
     public enum TYPE {
-        CLIP, FOLDBACK, FOLDBACK_SINGLE
+        CLIP,
+        FOLDBACK,
+        FOLDBACK_SINGLE,
+        ARC_TANGENT,
+        ARC_HYPERBOLIC
     }
 
     public Distortion() {
@@ -69,9 +73,22 @@ public class Distortion implements DSPNodeProcess {
                 return limit_foldback(s * mAmplification);
             case FOLDBACK_SINGLE:
                 return limit_clip(limit_foldback_single(s * mAmplification));
+            case ARC_TANGENT:
+                return (float) (Math.atan(s * mAmplification)) * mClip;
+            case ARC_HYPERBOLIC:
+                return (float) Math.tanh(s * mAmplification) * mClip;
             default:
                 return 0.0f;
         }
+        // see [Hack Audio: Distortion Effects](https://www.hackaudio.com/digital-signal-processing/distortion-effects/)
+        // - Full-Wave Rectification ( i.e `f(x) = abs(x)` )
+        // - Half-Wave Rectification ( i.e `f(x) = x < 0.0 ? 0.0 : x` )
+        // - Infinite Clipping ( i.e `f(x) = x < 0.0 ? -1.0 : x > 0.0 ? 1.0 : 0.0` || `Math.signum(0.0f)` )
+        // - Hard Clipping ( i.e `f(x) = x > t ? t : x < -t ? -t : x (t=threshold)` )
+        // - Soft Clipping Cubic ( i.e `f(x) = x - s * pow(x, 3) (s=scaling_factor=[0,1]=default:0.33)` )
+        // - Soft Clipping Arc Tangent ( i.e `f(x) = (2.0 / PI) * atan(a*x) (a=amount=[1,10])` )
+        // - Bit Crushing ( i.e ` f(x) = floor(x * s) / s (s=steps=pow(2,bits-1))` ) ( instead of `floor use `round` )
+
     }
 
     private float limit_clip(float v) {

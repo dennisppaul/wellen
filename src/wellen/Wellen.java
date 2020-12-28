@@ -155,6 +155,17 @@ public class Wellen {
         return value;
     }
 
+    public static float clamp(float pValue) {
+        if (pValue > 1.0f) {
+            return 1.0f;
+        } else if (pValue < -1.0f) {
+            return -1.0f;
+        } else {
+            return pValue;
+        }
+//        return Math.max(pMin, Math.min(pMax, pValue));
+    }
+
     public static float clamp(float pValue, float pMin, float pMax) {
         if (pValue > pMax) {
             return pMax;
