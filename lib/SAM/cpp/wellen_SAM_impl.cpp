@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include <string>
+#include <string.h>
 #include <sstream>
 
 #include "wellen_SAM_impl.h"

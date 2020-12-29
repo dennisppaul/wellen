@@ -56,7 +56,7 @@ public class SAM implements DSPNodeOutput {
         } else if (System.getProperty("os.name").startsWith("Mac")) {
             mSuffix = "lib";
         } else {
-            mSuffix = "";
+            mSuffix = "lib";
         }
         return mSuffix;
     }
