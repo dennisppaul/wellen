@@ -39,7 +39,9 @@ exej () {
     cd ../
 }
 
+mkdir -p java/wellen
 cp $JAVA_SRC_PATH/$NATIVE_ACCESSER_PATH java/$NATIVE_ACCESSER_PATH
+cp $JAVA_SRC_PATH/wellen/DSPNodeOutput.java java/wellen/
 
 if [ "$1" != "" ]; then
     while [ "$1" != "" ]; do
@@ -60,4 +62,4 @@ fi
 
 mv ./build/libjni_wellen_sam.dylib ../ # move library to lib folder
 
-rm java/$NATIVE_ACCESSER_PATH
+rm -rf java
