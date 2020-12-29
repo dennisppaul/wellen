@@ -17,12 +17,21 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* from [SAM Software Automatic Mouth](https://github.com/s-macke/SAM) */
+
 package wellen;
 
 import java.net.URL;
 import java.nio.file.FileSystems;
 
-public class SAM {
+public class SAM implements DSPNodeOutput {
+
+    // @TODO(phonemes are not working atm. `say(String, boolean)`)
+
+    private float[] mBuffer;
+    private boolean mIsDoneSpeaking;
+    private float mSampleBufferCounter;
+    private float mSampleSpeed;
 
     public SAM() {
         this(getLibraryPath() + getLibraryPrefix() + getLibraryName() + getLibrarySuffix());
@@ -31,6 +40,9 @@ public class SAM {
     public SAM(String pNativeLibraryPath) {
         loadNativeLibrary(pNativeLibraryPath);
         defaults();
+        mIsDoneSpeaking = true;
+        mSampleBufferCounter = 0;
+        mBuffer = null;
     }
 
     private static String getLibraryName() {
@@ -38,30 +50,37 @@ public class SAM {
     }
 
     private static String getLibraryPrefix() {
-        return "lib";
+        final String mSuffix;
+        if (System.getProperty("os.name").startsWith("Windows")) {
+            mSuffix = "";
+        } else if (System.getProperty("os.name").startsWith("Mac")) {
+            mSuffix = "lib";
+        } else {
+            mSuffix = "";
+        }
+        return mSuffix;
     }
 
     private static String getLibrarySuffix() {
-        final String mExtension;
+        final String mSuffix;
         if (System.getProperty("os.name").startsWith("Windows")) {
-            mExtension = "dll";
+            mSuffix = "dll";
         } else if (System.getProperty("os.name").startsWith("Mac")) {
-            mExtension = "dylib";
+            mSuffix = "dylib";
         } else {
-            mExtension = "so";
+            mSuffix = "so";
         }
-        return "." + mExtension;
+        return "." + mSuffix;
     }
 
     private static String getLibraryPath() {
-        URL url = SAM.class.getResource(SAM.class.getSimpleName() + ".class");
+        final URL url = SAM.class.getResource(SAM.class.getSimpleName() + ".class");
         if (url != null) {
             String path = url.toString().replace("%20", " ");
             int n0 = path.indexOf('/');
             int n1 = path.indexOf("wellen.jar");
-            if (System.getProperty("os.name").startsWith("Windows")) { //platform Windows
-                // In Windows, path string starts with "jar file/C:/..."
-                // so the substring up to the first / is removed.
+            if (System.getProperty("os.name").startsWith("Windows")) {
+                // In Windows, path string starts with "jar file/C:/..." so the substring up to the first / is removed.
                 n0++;
             }
             if ((-1 < n0) && (-1 < n1)) {
@@ -85,15 +104,39 @@ public class SAM {
 
     public native void set_throat(int pThroat);
 
-    public native void speak(String pText, boolean pUsePhonemes);
+    public void say(String pText) {
+        say(pText, false);
+    }
 
-    public native void speak_ascii(int pASCIIValue);
+    @Override
+    public float output() {
+        if (!mIsDoneSpeaking && mBuffer != null && mBuffer.length > 0) {
+            float mSamples = mBuffer[(int) mSampleBufferCounter];
+            mSampleBufferCounter += mSampleSpeed;
+            if (mSampleBufferCounter > mBuffer.length - 1) {
+                mIsDoneSpeaking = true;
+            }
+            return mSamples;
+        } else {
+            return 0;
+        }
+    }
+
+    public void rewind() {
+        mIsDoneSpeaking = false;
+        mSampleBufferCounter = 0;
+    }
+
+    public void set_sample_speed(float pSampleSpeed) {
+        mSampleSpeed = pSampleSpeed;
+    }
 
     private void defaults() {
         set_pitch(64);
         set_throat(128);
         set_speed(72);
         set_mouth(128);
+        mSampleSpeed = 0.5f;
     }
 
     private void loadNativeLibrary(String pNativeLibraryPath) {
@@ -104,7 +147,19 @@ public class SAM {
         }
     }
 
+    private void say(String pText, boolean pUsePhonemes) {
+        speak(pText, pUsePhonemes);
+        mBuffer = get_samples();
+        mIsDoneSpeaking = (mBuffer == null) || mBuffer.length <= 0;
+        mSampleBufferCounter = 0;
+    }
+
+    private native void speak(String pText, boolean pUsePhonemes);
+
+    private native void speak_ascii(int pASCIIValue);
+
     public static void main(String[] args) {
+        /* test */
         SAM mSAM = new SAM("./../build/" + getLibraryPrefix() + getLibraryName() + getLibrarySuffix());
         mSAM.speak("hello my name is", false);
         float[] mSamples = mSAM.get_samples();
