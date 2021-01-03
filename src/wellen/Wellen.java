@@ -28,7 +28,9 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.Mixer;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.TargetDataLine;
-import java.util.ArrayList;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.util.Arrays;
 
 public class Wellen {
 
@@ -273,314 +275,69 @@ public class Wellen {
         }
     }
 
-    public static class TestWAVWriter extends PApplet {
+    public static void saveWAV(PApplet p, String pFilepath, float[][] pBuffer, int pBitsPerSample, int pSampleRate) {
+        final byte[] mWAVBytes = WAVConverter.convert_samples_to_bytes(pBuffer,
+                                                                       pBuffer.length,
+                                                                       pBitsPerSample,
+                                                                       pSampleRate);
+        p.saveBytes(pFilepath, mWAVBytes);
+    }
 
-        WAVStruct mWAVStruct;
+    public static void saveWAV(PApplet p, String pFilepath, float[] pBuffer, int pBitsPerSample, int pSampleRate) {
+        final byte[] mWAVBytes = WAVConverter.convert_samples_to_bytes(new float[][]{pBuffer},
+                                                                       1,
+                                                                       pBitsPerSample,
+                                                                       pSampleRate);
+        p.saveBytes(pFilepath, mWAVBytes);
+    }
 
-        public void settings() {
-            size(640, 480);
-        }
+    public static void saveWAVInfo(PApplet p, String pFilepath, WAVConverter.Info pWAVStruct) {
+        final byte[] mWAVBytes = WAVConverter.convert_samples_to_bytes(pWAVStruct.samples,
+                                                                       pWAVStruct.channels,
+                                                                       pWAVStruct.bits_per_sample,
+                                                                       pWAVStruct.sample_rate);
+        p.saveBytes(pFilepath, mWAVBytes);
+    }
 
-        public void setup() {
-            int size = 44100;
-            final float[][] buf = new float[2][size];
-            for (int i = 0; i < size; i++) {
-                final float r = 110.0f * PApplet.TWO_PI * i / 44100;
-                buf[0][i] = PApplet.sin(r);
-                buf[1][i] = PApplet.cos(r);
+    public static float[][] loadWAV(PApplet p, String pFilepath) {
+        byte[] mWAVBytes = p.loadBytes(pFilepath);
+        WAVConverter.Info mWAVStruct = WAVConverter.convert_bytes_to_samples(mWAVBytes);
+        return mWAVStruct.samples;
+    }
+
+    public static WAVConverter.Info loadWAVInfo(PApplet p, String pFilepath) {
+        byte[] mWAVBytes = p.loadBytes(pFilepath);
+        WAVConverter.Info mWAVStruct = WAVConverter.convert_bytes_to_samples(mWAVBytes);
+        return mWAVStruct;
+    }
+
+    public static void bytes_to_float32s(byte[] pBytes, float[] pSamples, boolean pLittleEndian) {
+        if (pBytes.length / 4 == pSamples.length) {
+            for (int i = 0; i < pSamples.length; i++) {
+                pSamples[i] = bytes_to_float32(pBytes, i * 4, (i + 1) * 4, pLittleEndian);
             }
-            byte[] mWAVStereo = WAVConverter.convert_samples_to_bytes(buf, 2, 16, 44100);
-            saveBytes("/Users/dennisppaul/Desktop/foobar/test-stereo.wav", mWAVStereo);
-            byte[] mWAVMono = WAVConverter.convert_samples_to_bytes(new float[][]{buf[0]}, 1, 24, 44100);
-            saveBytes("/Users/dennisppaul/Desktop/foobar/test-mono.wav", mWAVMono);
-//            WAVConverter.convert_bytes_to_samples(mWAVMono);
-//            WAVConverter.convert_bytes_to_samples(mWAVStereo);
-            System.out.println("------------- loading wave from disk --------------");
-            byte[] mWAVMonoF = loadBytes("/Users/dennisppaul/Desktop/foobar/test-mono_exp.wav");
-            mWAVStruct = WAVConverter.convert_bytes_to_samples(mWAVMonoF);
-            /*
-             * CHUNK: RIFF
-             *     file length: 88236
-             *     RIFF type  : WAVE
-             * CHUNK: fmt
-             *     chunk size : 16
-             *     comp code  : 1
-             *     channels   : 1
-             *     sample rate: 44100
-             *     byte/sec   : 88200
-             *     block align: 2
-             *     bits/sample: 16
-             * CHUNK: data
-             *     chunk size       : 88200
-             *     (samples/channel): 44100
-             */
-        }
-
-        public void draw() {
-            background(255);
-            stroke(0);
-            float[] mSamples = mWAVStruct.samples[0];
-            for (int i = 0; i < mSamples.length; i++) {
-                float x = map(i, 0, mSamples.length, 0, width * map(mouseX, 0, width, 1, 1000));
-                float y = map(mSamples[i], -1, 1, 0, height);
-                point(x, y);
-            }
+        } else {
+            System.err.println("+++ WARNING @ Wavetable.from_bytes / array sizes do not match. make sure the byte " + "array is exactly 4 times the size of the float array");
         }
     }
 
-    static class WAVConverter {
-
-        private static final int COMPRESSION_CODE_WAVE_FORMAT_PCM = 1;
-        public static boolean VERBOSE = true;
-        private final int mChannels;
-        private final int mBitsPerSample;
-        private final int mSampleRate;
-        private final ArrayList<Byte> mHeader;
-        private final ArrayList<Byte> mData;
-
-        private WAVConverter(int pChannels, int pBitsPerSample, int pSampleRate) {
-            mChannels = pChannels;
-            mBitsPerSample = pBitsPerSample;
-            mSampleRate = pSampleRate;
-            mData = new ArrayList<>();
-            mHeader = new ArrayList<>();
+    public static float bytes_to_float32(byte[] b, boolean pLittleEndian) {
+        if (b.length != 4) {
+            System.out.println("+++ WARNING @ Sampler.bytesToFloat32(byte[], boolean)");
         }
-
-        public static byte[] convert_samples_to_bytes(float[][] pBuffer, int pChannels, int pBitsPerSample,
-                                                      int pSampleRate) {
-            WAVConverter mWAVConverter = new WAVConverter(pChannels, pBitsPerSample, pSampleRate);
-            mWAVConverter.appendData(pBuffer);
-            mWAVConverter.writeHeader();
-            return mWAVConverter.getByteData();
-        }
-
-        public static WAVStruct convert_bytes_to_samples(byte[] pHeader) {
-            final WAVStruct mWAVStruct = new WAVStruct();
-            // from https://sites.google.com/site/musicgapi/technical-documents/wav-file-format
-            /* RIFF Chunk */
-            int mOffset = 0x00;
-            int mFileLength = read__int32(pHeader, mOffset + 0x04);
-            if (VERBOSE) {
-                System.out.println("CHUNK: " + WAVConverter.read_string(pHeader, 0, 4));
-                System.out.println("    file length: " + mFileLength);
-                System.out.println("    RIFF type  : " + WAVConverter.read_string(pHeader, mOffset + 0x08, 4));
-            }
-
-            /* format chunk */
-            mOffset = 0x0C;
-            final int mFormatChunkSize = WAVConverter.read__int32(pHeader, mOffset + 0x04);
-            final int mCompressionCode = WAVConverter.read__int16(pHeader,
-                                                                  mOffset + 0x08); // assert WAVE_FORMAT_PCM(=1)
-            mWAVStruct.channels = WAVConverter.read__int16(pHeader, mOffset + 0x0A);
-            mWAVStruct.sample_rate = WAVConverter.read__int32(pHeader, mOffset + 0x0C);
-            mWAVStruct.bits_per_sample = WAVConverter.read__int16(pHeader, mOffset + 0x16);
-            if (VERBOSE) {
-                System.out.println("CHUNK: " + WAVConverter.read_string(pHeader, mOffset + 0x00, 4));
-                System.out.println("    chunk size : " + mFormatChunkSize);
-                System.out.println("    comp code  : " + mCompressionCode);
-                System.out.println("    channels   : " + mWAVStruct.channels);
-                System.out.println("    sample rate: " + mWAVStruct.sample_rate);
-                System.out.println("    byte/sec   : " + WAVConverter.read__int32(pHeader, mOffset + 0x10));
-                System.out.println("    block align: " + WAVConverter.read__int16(pHeader, mOffset + 0x14));
-                System.out.println("    bits/sample: " + mWAVStruct.bits_per_sample);
-            }
-            if (mCompressionCode != COMPRESSION_CODE_WAVE_FORMAT_PCM) {
-                System.out.println(
-                        "+++ WARNING @ / compression code not supported. currently only `WAVE_FORMAT_PCM` works. (" + mCompressionCode + ")");
-            }
-
-            /* data chunk */
-            mOffset = 0x0C + 0x18;
-            if (WAVConverter.read_string(pHeader, mOffset + 0x00, 4).equalsIgnoreCase("fact")) {
-                // @TODO(hack! skipping `fact` chunk … handle this a bit more elegantly)
-                System.out.println("+++ skipping `fact` chunk");
-                final int mFactChunkSize = WAVConverter.read__int32(pHeader, mOffset + 0x04);
-                mOffset += 0x04 + mFactChunkSize * 0x08; // Chunk ID + Chunk Data Size + Format Dependant Data ( 4
-                // bytes )
-            }
-            final int mDataChunkSize = WAVConverter.read__int32(pHeader, mOffset + 0x04);
-            byte[] mInterlacedByteBuffer = WAVConverter.read__bytes(pHeader, mOffset + 0x08, mDataChunkSize);
-            int mDataSize = mInterlacedByteBuffer.length / mWAVStruct.channels / (mWAVStruct.bits_per_sample / 8);
-            if (VERBOSE) {
-                System.out.println("CHUNK: " + WAVConverter.read_string(pHeader, mOffset + 0x00, 4));
-                System.out.println("    chunk size       : " + mDataChunkSize);
-                System.out.println("    (samples/channel): " + mDataSize);
-            }
-
-            mWAVStruct.samples = new float[mWAVStruct.channels][mDataSize];
-            final int mBytesPerSample = mWAVStruct.bits_per_sample / 8;
-            final int mStride = mWAVStruct.channels * mBytesPerSample;
-            for (int j = 0; j < mWAVStruct.channels; j++) {
-                byte[] mByteSamples = new byte[mBytesPerSample * mDataSize];
-                int c = 0;
-                for (int i = 0; i < mInterlacedByteBuffer.length; i += mStride) {
-                    for (int l = 0; l < mBytesPerSample; l++) {
-                        byte b = mInterlacedByteBuffer[i + j * mBytesPerSample + l];
-                        mByteSamples[c] = b;
-                        c++;
-                    }
-                }
-                float[] mFloatSamples = mWAVStruct.samples[j];
-                bytes_to_floats(mByteSamples, mFloatSamples, mWAVStruct.bits_per_sample);
-            }
-            return mWAVStruct;
-        }
-
-        private static byte[] read__bytes(byte[] pBuffer, int pStart, int pLength) {
-            return PApplet.subset(pBuffer, pStart, pLength);
-        }
-
-        private static String read_string(byte[] pBuffer, int pStart, int pLength) {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < pLength; i++) {
-                sb.append((char) pBuffer[pStart + i]);
-            }
-            return sb.toString();
-        }
-
-        private static int read__int32(byte[] pBuffer, int pStart) {
-            return read____int(pBuffer, pStart, 4);
-        }
-
-        private static int read__int16(byte[] pBuffer, int pStart) {
-            return read____int(pBuffer, pStart, 2);
-        }
-
-        private static int read____int(byte[] pBuffer, int pStart, int pBytes) {
-            int v = 0;
-            for (int i = 0; i < pBytes; i++) {
-                v |= (pBuffer[i + pStart] & 0xFF) << (i * 8);
-            }
-            return v;
-        }
-
-        private static int findSingleBufferLength(float[][] pBuffer) {
-            if (pBuffer == null || pBuffer.length == 0) {
-                return -1;
-            } else if (pBuffer.length == 1) {
-                return pBuffer[0].length;
-            } else {
-                int mBufferLength = pBuffer[0].length;
-                for (int i = 1; i < pBuffer.length; i++) {
-                    if (mBufferLength != pBuffer[i].length) {
-                        System.err.println("+++ ERROR @" + Wellen.class.getSimpleName() + " / sample buffers have " + "different length.");
-                        return mBufferLength;
-                    }
-                }
-                return mBufferLength;
-            }
-        }
-
-        private static void write___byte(ArrayList<Byte> pBuffer, int b) {
-            pBuffer.add((byte) b);
-        }
-
-        private static void write__bytes(ArrayList<Byte> pBuffer, byte[] b) {
-            for (byte value : b) {
-                pBuffer.add(value);
-            }
-        }
-
-        private static void write__int16(ArrayList<Byte> pBuffer, int s) {
-            int b0, b1;
-            b0 = (s >>> 0) & 0xff;
-            b1 = (s >>> 8) & 0xff;
-            write_bytes2(pBuffer, b0, b1);
-        }
-
-        private static void write__int32(ArrayList<Byte> pBuffer, int i) {
-            int b0, b1, b2, b3;
-            b0 = (i >>> 0) & 0xff;
-            b1 = (i >>> 8) & 0xff;
-            b2 = (i >>> 16) & 0xff;
-            b3 = (i >>> 24) & 0xff;
-            write_bytes4(pBuffer, b0, b1, b2, b3);
-        }
-
-        private static void write_bytes2(ArrayList<Byte> pBuffer, int b0, int b1) {
-            write___byte(pBuffer, b0);
-            write___byte(pBuffer, b1);
-        }
-
-        private static void write_bytes4(ArrayList<Byte> pBuffer, int b0, int b1, int b2, int b3) {
-            write_bytes2(pBuffer, b0, b1);
-            write_bytes2(pBuffer, b2, b3);
-        }
-
-        private static void write_string(ArrayList<Byte> pBuffer, String s) {
-            final byte[] b = s.getBytes();
-            for (byte value : b) {
-                pBuffer.add(value);
-            }
-        }
-
-        public void appendData(float[][] pFloatBuffer) {
-            int mNumberOfFrames = findSingleBufferLength(pFloatBuffer);
-            float[] mInterleavedFloatBuffer = new float[mNumberOfFrames * mChannels];
-            byte[] mByteBuffer = new byte[mNumberOfFrames * mChannels * mBitsPerSample / 8];
-            for (int i = 0; i < mNumberOfFrames; i++) {
-                for (int mChannel = 0; mChannel < mChannels; mChannel++) {
-                    mInterleavedFloatBuffer[i * mChannels + mChannel] = pFloatBuffer[mChannel][i];
-                }
-            }
-            floats_to_bytes(mByteBuffer, mInterleavedFloatBuffer, mBitsPerSample);
-            write__bytes(mData, mByteBuffer);
-        }
-
-        public void writeHeader() {
-            mHeader.clear();
-            /* RIFF Chunk */
-            write_string(mHeader, "RIFF");
-            write__int32(mHeader, mData.size()); // file length ( without header )
-            write_string(mHeader, "WAVE");
-            /* format chunk */
-            write_string(mHeader, "fmt ");
-            write__int32(mHeader, 16); // chunk length
-            write__int16(mHeader, COMPRESSION_CODE_WAVE_FORMAT_PCM);
-            write__int16(mHeader, mChannels);
-            write__int32(mHeader, mSampleRate);
-            write__int32(mHeader, (mSampleRate * mChannels * mBitsPerSample / 8)); // bytes per second
-            write__int16(mHeader, (mChannels * mBitsPerSample / 8)); // block align
-            write__int16(mHeader, mBitsPerSample);
-            /* data chunk */
-            write_string(mHeader, "data");
-            write__int32(mHeader, mData.size()); // data length
-        }
-
-        public byte[] getByteData() {
-            byte[] mBuffer = new byte[mHeader.size() + mData.size()];
-            for (int i = 0; i < mHeader.size(); i++) {
-                mBuffer[i] = mHeader.get(i);
-            }
-            for (int i = 0; i < mData.size(); i++) {
-                mBuffer[i + mHeader.size()] = mData.get(i);
-            }
-            return mBuffer;
-        }
+        return ByteBuffer.wrap(b).order(pLittleEndian ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN).getFloat();
     }
 
-    public static class WAVStruct {
-        int channels;
-        int bits_per_sample;
-        int sample_rate;
-        byte[] data;
-        float[][] samples;
+    public static float bytes_to_float32(byte[] b) {
+        return bytes_to_float32(b, true);
     }
 
-    public static void main(String[] args) {
-//        float[] f = {0.45f, -0.5f, 2.0f, -0.99f};
-//        byte[] b = new byte[8];
-//        floats_to_bytes(b, f, 16);
-//        for (byte v : b) {
-//            System.out.println(v);
-//        }
-//
-//        float[] _f = new float[f.length];
-//        bytes_to_floats(b, _f, 16);
-//        for (float v : _f) {
-//            System.out.println(v);
-//        }
+    public static byte[] float32_to_byte(float f) {
+        return ByteBuffer.allocate(4).putFloat(f).array();
+    }
 
-        PApplet.main(TestWAVWriter.class.getName());
+    public static float bytes_to_float32(byte[] pBytes, int pStart, int pEnd, boolean pLittleEndian) {
+        final byte[] mBytes = Arrays.copyOfRange(pBytes, pStart, pEnd);
+        return bytes_to_float32(mBytes, pLittleEndian);
     }
 }
