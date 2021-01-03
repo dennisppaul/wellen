@@ -1,4 +1,4 @@
-package wellen.tests;
+package wellen.examples.DSP;
 
 import processing.core.PApplet;
 import wellen.DSP;
@@ -6,7 +6,16 @@ import wellen.Vocoder;
 import wellen.Wavetable;
 import wellen.Wellen;
 
-public class TestVocoder extends PApplet {
+public class ExampleDSP18Vocoder extends PApplet {
+
+    /*
+     * this example demonstrate how to use a vocoder.
+     *
+     * a vocoder superimposes a modulator signal ( e.g a human voice ) onto a carrier signal ( preferably a signal with
+     * a lot of harmonics e.g sawtooth oscillator or white noise or some instrument )
+     *
+     * this vocoder algorithm is an adaptation of [voclib](https://github.com/blastbay/voclib) by Philip Bennefall.
+     */
 
     private Vocoder mVocoder;
     private Wavetable mVocoderCarrierOsc;
@@ -17,11 +26,14 @@ public class TestVocoder extends PApplet {
 
     public void setup() {
         Wellen.dumpAudioInputAndOutputDevices();
+
         mVocoderCarrierOsc = new Wavetable();
         Wavetable.fill(mVocoderCarrierOsc.get_wavetable(), Wellen.WAVESHAPE_SAWTOOTH);
         mVocoderCarrierOsc.set_frequency(55);
         mVocoderCarrierOsc.set_amplitude(1.0f);
+
         mVocoder = new Vocoder(24, 4, Wellen.DEFAULT_SAMPLING_RATE, 1);
+        mVocoder.set_volume(8);
         DSP.start(this, 1, 1);
     }
 
@@ -32,17 +44,9 @@ public class TestVocoder extends PApplet {
         DSP.draw_buffer(g, width, height);
     }
 
-    public void audioblock(float[] pOutputSamples, float[] pInputSamples) {
-        float[] mCarrierBuffer = new float[Wellen.DEFAULT_AUDIOBLOCK_SIZE];
-        for (int i = 0; i < mCarrierBuffer.length; i++) {
-            mCarrierBuffer[i] = mVocoderCarrierOsc.output();
-        }
-        mVocoder.voclib_process(mCarrierBuffer, pInputSamples, pOutputSamples, Wellen.DEFAULT_AUDIOBLOCK_SIZE);
-    }
-
     public void mouseMoved() {
-        mVocoder.voclib_set_formant_shift(map(mouseX, 0, width, 0.25f, 2.25f));
-        mVocoder.voclib_set_reaction_time(map(mouseY, 0, height, 0.002f, 0.102f));
+        mVocoder.set_formant_shift(map(mouseX, 0, width, 0.25f, 2.5f));
+        mVocoder.set_reaction_time(map(mouseY, 0, height, 0.002f, 0.1f));
     }
 
     public void keyPressed() {
@@ -58,15 +62,17 @@ public class TestVocoder extends PApplet {
         if (key == '4') {
             mVocoderCarrierOsc.set_frequency(220.0f);
         }
-        if (key == '5') {
-            mVocoderCarrierOsc.set_frequency(440.0f);
+    }
+
+    public void audioblock(float[] pOutputSamples, float[] pInputSamples) {
+        for (int i = 0; i < pInputSamples.length; i++) {
+            float mCarrier = mVocoderCarrierOsc.output();
+            pOutputSamples[i] = mVocoder.process(mCarrier, pInputSamples[i]);
         }
-        if (key == '0') {
-            mVocoder.voclib_reset_history();
-        }
+        /* note, there is also a faster audio block processing method available `process(float[], float[], float[])` */
     }
 
     public static void main(String[] args) {
-        PApplet.main(TestVocoder.class.getName());
+        PApplet.main(ExampleDSP18Vocoder.class.getName());
     }
 }

@@ -1143,7 +1143,11 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="wellen/Reverb.html#process(float)">process(float)</a></span> - Method in class wellen.<a href="wellen/Reverb.html" title="class in wellen">Reverb</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="member-name-link"><a href="wellen/Vocoder.html#process(float%5B%5D,float%5B%5D,float%5B%5D)">process(float[], float[], float[])</a></span> - Method in class wellen.<a href="wellen/Vocoder.html" title="class in wellen">Vocoder</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="wellen/Reverb.html#process(float%5B%5D,float%5B%5D,float%5B%5D,float%5B%5D)">process(float[], float[], float[], float[])</a></span> - Method in class wellen.<a href="wellen/Reverb.html" title="class in wellen">Reverb</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="member-name-link"><a href="wellen/Vocoder.html#process(float,float)">process(float, float)</a></span> - Method in class wellen.<a href="wellen/Vocoder.html" title="class in wellen">Vocoder</a></dt>
 <dd>&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:R">R</h2>
@@ -1206,6 +1210,8 @@ loadScripts(document, 'script');</script>
 <dt><span class="member-name-link"><a href="wellen/Filter.html#reset()">reset()</a></span> - Method in class wellen.<a href="wellen/Filter.html" title="class in wellen">Filter</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="wellen/Sequencer.html#reset()">reset()</a></span> - Method in class wellen.<a href="wellen/Sequencer.html" title="class in wellen">Sequencer</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="member-name-link"><a href="wellen/Vocoder.html#reset_history()">reset_history()</a></span> - Method in class wellen.<a href="wellen/Vocoder.html" title="class in wellen">Vocoder</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/Reverb.html" title="class in wellen"><span class="type-name-link">Reverb</span></a> - Class in <a href="wellen/package-summary.html">wellen</a></dt>
 <dd>&nbsp;</dd>
@@ -1366,6 +1372,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="wellen/InstrumentInternal.html#set_filter_resonance(float)">set_filter_resonance(float)</a></span> - Method in class wellen.<a href="wellen/InstrumentInternal.html" title="class in wellen">InstrumentInternal</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="member-name-link"><a href="wellen/Vocoder.html#set_formant_shift(float)">set_formant_shift(float)</a></span> - Method in class wellen.<a href="wellen/Vocoder.html" title="class in wellen">Vocoder</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="wellen/Filter.html#set_frequency(float)">set_frequency(float)</a></span> - Method in class wellen.<a href="wellen/Filter.html" title="class in wellen">Filter</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="wellen/Instrument.html#set_frequency(float)">set_frequency(float)</a></span> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
@@ -1401,6 +1409,8 @@ loadScripts(document, 'script');</script>
 <dt><span class="member-name-link"><a href="wellen/Wavetable.html#set_phase_offset(int)">set_phase_offset(int)</a></span> - Method in class wellen.<a href="wellen/Wavetable.html" title="class in wellen">Wavetable</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="wellen/SAM.html#set_pitch(int)">set_pitch(int)</a></span> - Method in class wellen.<a href="wellen/SAM.html" title="class in wellen">SAM</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="member-name-link"><a href="wellen/Vocoder.html#set_reaction_time(float)">set_reaction_time(float)</a></span> - Method in class wellen.<a href="wellen/Vocoder.html" title="class in wellen">Vocoder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="wellen/ADSR.html#set_release(float)">set_release(float)</a></span> - Method in class wellen.<a href="wellen/ADSR.html" title="class in wellen">ADSR</a></dt>
 <dd>&nbsp;</dd>
@@ -1441,6 +1451,8 @@ loadScripts(document, 'script');</script>
 <dt><span class="member-name-link"><a href="wellen/Noise.html#set_type(int)">set_type(int)</a></span> - Method in class wellen.<a href="wellen/Noise.html" title="class in wellen">Noise</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="wellen/Distortion.html#set_type(wellen.Distortion.TYPE)">set_type(Distortion.TYPE)</a></span> - Method in class wellen.<a href="wellen/Distortion.html" title="class in wellen">Distortion</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="member-name-link"><a href="wellen/Vocoder.html#set_volume(float)">set_volume(float)</a></span> - Method in class wellen.<a href="wellen/Vocoder.html" title="class in wellen">Vocoder</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="wellen/Reverb.html#set_wet(float)">set_wet(float)</a></span> - Method in class wellen.<a href="wellen/Reverb.html" title="class in wellen">Reverb</a></dt>
 <dd>&nbsp;</dd>
@@ -1618,6 +1630,13 @@ the order they are declared.</div>
 <dt><span class="member-name-link"><a href="wellen/MidiIn.html#VERBOSE">VERBOSE</a></span> - Static variable in class wellen.<a href="wellen/MidiIn.html" title="class in wellen">MidiIn</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="wellen/WAVConverter.html#VERBOSE">VERBOSE</a></span> - Static variable in class wellen.<a href="wellen/WAVConverter.html" title="class in wellen">WAVConverter</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/Vocoder.html" title="class in wellen"><span class="type-name-link">Vocoder</span></a> - Class in <a href="wellen/package-summary.html">wellen</a></dt>
+<dd>
+<div class="block">*voclib* an implementation of a traditional channel vocoder by Philip Bennefall from
+ https://github.com/blastbay/voclib.</div>
+</dd>
+<dt><span class="member-name-link"><a href="wellen/Vocoder.html#%3Cinit%3E(int,int,int,int)">Vocoder(int, int, int, int)</a></span> - Constructor for class wellen.<a href="wellen/Vocoder.html" title="class in wellen">Vocoder</a></dt>
 <dd>&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:W">W</h2>
