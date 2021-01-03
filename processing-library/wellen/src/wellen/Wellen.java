@@ -28,6 +28,9 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.Mixer;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.TargetDataLine;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.util.Arrays;
 
 public class Wellen {
 
@@ -68,6 +71,8 @@ public class Wellen {
     public static final int OSC_SINE = WAVESHAPE_SINE;
     public static final int OSC_SQUARE = WAVESHAPE_SQUARE;
     public static final int OSC_TRIANGLE = WAVESHAPE_TRIANGLE;
+    public static final int WAV_COMPRESSION_CODE_WAVE_FORMAT_IEEE_FLOAT_32BIT = 3;
+    public static final int WAV_COMPRESSION_CODE_WAVE_FORMAT_PCM = 1;
 
     public static int clamp127(int pValue) {
         return Math.max(0, Math.min(127, pValue));
@@ -232,5 +237,110 @@ public class Wellen {
             final float mValue = (float) Math.random() * mDiff + pMin;
             return mValue;
         }
+    }
+
+    public static void floats_to_bytes(byte[] pBytes, float[] pFloats, int pBitsPerFloat) {
+        final int mBytesPerFloat = pBitsPerFloat / 8;
+        for (int i = 0; i < pFloats.length; i++) {
+            final float f = pFloats[i];
+            final int mScale = (1 << (pBitsPerFloat - 1)) - 1;
+            final long y = (long) (mScale * f);
+            for (int j = 0; j < mBytesPerFloat; j++) {
+                final int mBitShift = j * 8;
+                pBytes[i * mBytesPerFloat + j] = (byte) ((y >>> mBitShift) & 0xFF);
+            }
+        }
+    }
+
+    public static void bytes_to_floats(byte[] pBytes, float[] pFloats, int pBitsPerFloat) {
+        final int mBytesPerFloat = pBitsPerFloat / 8;
+        for (int i = 0; i < pFloats.length; i++) {
+            final double mScale = 1.0 / ((1 << (pBitsPerFloat - 1)) - 1);
+            long f = 0;
+            for (int j = 0; j < mBytesPerFloat; j++) {
+                final long mBitShift = j * 8;
+                long b = pBytes[i * mBytesPerFloat + j];
+                f += b << mBitShift;
+            }
+            pFloats[i] = (float) (f * mScale);
+        }
+    }
+
+    public static void saveWAV(PApplet p, String pFilepath, float[][] pBuffer, int pBitsPerSample, int pSampleRate) {
+        final byte[] mWAVBytes = WAVConverter.convert_samples_to_bytes(pBuffer,
+                                                                       pBuffer.length,
+                                                                       pBitsPerSample,
+                                                                       pSampleRate);
+        p.saveBytes(pFilepath, mWAVBytes);
+    }
+
+    public static void saveWAV(PApplet p, String pFilepath, float[] pBuffer, int pBitsPerSample, int pSampleRate) {
+        final byte[] mWAVBytes = WAVConverter.convert_samples_to_bytes(new float[][]{pBuffer},
+                                                                       1,
+                                                                       pBitsPerSample,
+                                                                       pSampleRate);
+        p.saveBytes(pFilepath, mWAVBytes);
+    }
+
+    public static void saveWAVInfo(PApplet p, String pFilepath, WAVConverter.Info pWAVStruct) {
+        final byte[] mWAVBytes = WAVConverter.convert_samples_to_bytes(pWAVStruct);
+        p.saveBytes(pFilepath, mWAVBytes);
+    }
+
+    public static float[][] loadWAV(PApplet p, String pFilepath) {
+        byte[] mWAVBytes = p.loadBytes(pFilepath);
+        WAVConverter.Info mWAVStruct = WAVConverter.convert_bytes_to_samples(mWAVBytes);
+        return mWAVStruct.samples;
+    }
+
+    public static WAVConverter.Info loadWAVInfo(PApplet p, String pFilepath) {
+        byte[] mWAVBytes = p.loadBytes(pFilepath);
+        WAVConverter.Info mWAVStruct = WAVConverter.convert_bytes_to_samples(mWAVBytes);
+        mWAVStruct.data = mWAVBytes;
+        return mWAVStruct;
+    }
+
+    public static void bytes_to_floatIEEEs(byte[] pBytes, float[] pSamples, boolean pLittleEndian) {
+        if (pBytes.length / 4 == pSamples.length) {
+            for (int i = 0; i < pSamples.length; i++) {
+                pSamples[i] = bytes_to_floatIEEE(pBytes, i * 4, (i + 1) * 4, pLittleEndian);
+            }
+        } else {
+            System.err.println("+++ WARNING @ " + Wellen.class.getSimpleName() + " / array sizes do not match. make " + "sure byte array is exactly 4 times the size of float array");
+        }
+    }
+
+    public static float bytes_to_floatIEEE(byte[] b, boolean pLittleEndian) {
+        if (b.length != 4) {
+            System.err.println("+++ WARNING @ " + Wellen.class.getSimpleName() + " / expected exactly 4 bytes.");
+        }
+        return ByteBuffer.wrap(b).order(pLittleEndian ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN).getFloat();
+    }
+
+    public static float bytes_to_floatIEEE(byte[] b) {
+        return bytes_to_floatIEEE(b, true);
+    }
+
+    public static byte[] floatIEEE_to_bytes(float f) {
+        return ByteBuffer.allocate(4).putFloat(f).array();
+    }
+
+    public static byte[] floatIEEEs_to_bytes(float[] pFloats) {
+        return floatIEEEs_to_bytes(pFloats, true);
+    }
+
+    public static byte[] floatIEEEs_to_bytes(float[] pFloats, boolean pLittleEndian) {
+        ByteBuffer buffer = ByteBuffer.allocate(4 * pFloats.length).order(pLittleEndian ? ByteOrder.LITTLE_ENDIAN :
+                                                                                  ByteOrder.BIG_ENDIAN);
+
+        for (float value : pFloats) {
+            buffer.putFloat(value);
+        }
+        return buffer.array();
+    }
+
+    public static float bytes_to_floatIEEE(byte[] pBytes, int pStart, int pEnd, boolean pLittleEndian) {
+        final byte[] mBytes = Arrays.copyOfRange(pBytes, pStart, pEnd);
+        return bytes_to_floatIEEE(mBytes, pLittleEndian);
     }
 }

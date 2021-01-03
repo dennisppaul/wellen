@@ -15,8 +15,8 @@
 <script type="text/javascript" src="../script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="class-declaration-page">
-<script type="text/javascript">var data = {"i0":9,"i1":9,"i2":9,"i3":10,"i4":10,"i5":9,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10};
-var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+<script type="text/javascript">var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10};
+var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "alt-color";
 var rowColor = "row-color";
 var tableTab = "table-tab";
@@ -128,7 +128,7 @@ float&nbsp;pSamplingRate)</code></th>
 <section class="method-summary" id="method.summary">
 <h2>Method Summary</h2>
 <div class="member-summary" id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" id="t0" class="active-table-tab">All Methods</button><button role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" id="t1" class="table-tab" onclick="show(1);">Static Methods</button><button role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" id="t2" class="table-tab" onclick="show(2);">Instance Methods</button><button role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" id="t4" class="table-tab" onclick="show(8);">Concrete Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" id="t0" class="active-table-tab">All Methods</button><button role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" id="t2" class="table-tab" onclick="show(2);">Instance Methods</button><button role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" id="t4" class="table-tab" onclick="show(8);">Concrete Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel">
 <table class="summary-table" aria-labelledby="t0">
 <thead>
@@ -140,51 +140,28 @@ float&nbsp;pSamplingRate)</code></th>
 </thead>
 <tbody>
 <tr class="alt-color" id="i0">
-<td class="col-first"><code>static float</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#bytes_to_float32(byte%5B%5D)">bytes_to_float32</a></span>&#8203;(byte[]&nbsp;b)</code></th>
-<td class="col-last">&nbsp;</td>
-</tr>
-<tr class="row-color" id="i1">
-<td class="col-first"><code>static float</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#bytes_to_float32(byte%5B%5D,boolean)">bytes_to_float32</a></span>&#8203;(byte[]&nbsp;b,
-boolean&nbsp;pLittleEndian)</code></th>
-<td class="col-last">&nbsp;</td>
-</tr>
-<tr class="alt-color" id="i2">
-<td class="col-first"><code>static void</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#bytes_to_float32(byte%5B%5D,float%5B%5D,boolean)">bytes_to_float32</a></span>&#8203;(byte[]&nbsp;pBytes,
-float[]&nbsp;pWavetable,
-boolean&nbsp;pLittleEndian)</code></th>
-<td class="col-last">&nbsp;</td>
-</tr>
-<tr class="row-color" id="i3">
 <td class="col-first"><code>float[]</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#data()">data</a></span>()</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="alt-color" id="i4">
+<tr class="row-color" id="i1">
 <td class="col-first"><code>void</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#enable_loop(boolean)">enable_loop</a></span>&#8203;(boolean&nbsp;pLoop)</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="row-color" id="i5">
-<td class="col-first"><code>static byte[]</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#float32_to_byte(float)">float32_to_byte</a></span>&#8203;(float&nbsp;f)</code></th>
-<td class="col-last">&nbsp;</td>
-</tr>
-<tr class="alt-color" id="i6">
+<tr class="alt-color" id="i2">
 <td class="col-first"><code>void</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#interpolate_samples(boolean)">interpolate_samples</a></span>&#8203;(boolean&nbsp;pInterpolateSamples)</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="row-color" id="i7">
+<tr class="row-color" id="i3">
 <td class="col-first"><code><a href="Sampler.html" title="class in wellen">Sampler</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#load(byte%5B%5D)">load</a></span>&#8203;(byte[]&nbsp;pData)</code></th>
 <td class="col-last">
 <div class="block">load the sample buffer from *raw* byte data.</div>
 </td>
 </tr>
-<tr class="alt-color" id="i8">
+<tr class="alt-color" id="i4">
 <td class="col-first"><code><a href="Sampler.html" title="class in wellen">Sampler</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#load(byte%5B%5D,boolean)">load</a></span>&#8203;(byte[]&nbsp;pData,
 boolean&nbsp;pLittleEndian)</code></th>
@@ -192,37 +169,37 @@ boolean&nbsp;pLittleEndian)</code></th>
 <div class="block">load the sample buffer from *raw* byte data.</div>
 </td>
 </tr>
-<tr class="row-color" id="i9">
+<tr class="row-color" id="i5">
 <td class="col-first"><code>void</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#loop(boolean)">loop</a></span>&#8203;(boolean&nbsp;pLoop)</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="alt-color" id="i10">
+<tr class="alt-color" id="i6">
 <td class="col-first"><code>float</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#output()">output</a></span>()</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="row-color" id="i11">
+<tr class="row-color" id="i7">
 <td class="col-first"><code>void</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#rewind()">rewind</a></span>()</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="alt-color" id="i12">
+<tr class="alt-color" id="i8">
 <td class="col-first"><code>void</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#set_amplitude(float)">set_amplitude</a></span>&#8203;(float&nbsp;pAmplitude)</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="row-color" id="i13">
+<tr class="row-color" id="i9">
 <td class="col-first"><code>void</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#set_data(float%5B%5D)">set_data</a></span>&#8203;(float[]&nbsp;pData)</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="alt-color" id="i14">
+<tr class="alt-color" id="i10">
 <td class="col-first"><code>void</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#set_frequency(float)">set_frequency</a></span>&#8203;(float&nbsp;pFrequency)</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="row-color" id="i15">
+<tr class="row-color" id="i11">
 <td class="col-first"><code>void</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#set_speed(float)">set_speed</a></span>&#8203;(float&nbsp;pSpeed)</code></th>
 <td class="col-last">&nbsp;</td>
@@ -286,7 +263,7 @@ float&nbsp;pSamplingRate)</span></div>
  from -1.0 to 1.0. from -1.0 to 1.0.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>pData</code> - raw byte data ( assuming 4 bytes per sample, 32-bit float )</dd>
+<dd><code>pData</code> - raw byte data ( assuming 4 bytes per sample, 32-bit float aka WAVE_FORMAT_IEEE_FLOAT_32BIT )</dd>
 <dt>Returns:</dt>
 <dd>instance with data loaded</dd>
 </dl>
@@ -301,7 +278,7 @@ boolean&nbsp;pLittleEndian)</span></div>
  from -1.0 to 1.0.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>pData</code> - raw byte data ( assuming 4 bytes per sample, 32-bit float )</dd>
+<dd><code>pData</code> - raw byte data ( assuming 4 bytes per sample, 32-bit float aka WAVE_FORMAT_IEEE_FLOAT_32BIT )</dd>
 <dd><code>pLittleEndian</code> - true if byte data is arranged in little endian order</dd>
 <dt>Returns:</dt>
 <dd>instance with data loaded</dd>
@@ -370,33 +347,6 @@ boolean&nbsp;pLittleEndian)</span></div>
 <section class="detail" id="enable_loop(boolean)">
 <h3>enable_loop</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">enable_loop</span>&#8203;(<span class="parameters">boolean&nbsp;pLoop)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="bytes_to_float32(byte[],float[],boolean)">
-<h3>bytes_to_float32</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">bytes_to_float32</span>&#8203;(<span class="parameters">byte[]&nbsp;pBytes,
-float[]&nbsp;pWavetable,
-boolean&nbsp;pLittleEndian)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="bytes_to_float32(byte[])">
-<h3>bytes_to_float32</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="member-name">bytes_to_float32</span>&#8203;(<span class="parameters">byte[]&nbsp;b)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="bytes_to_float32(byte[],boolean)">
-<h3>bytes_to_float32</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="member-name">bytes_to_float32</span>&#8203;(<span class="parameters">byte[]&nbsp;b,
-boolean&nbsp;pLittleEndian)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="float32_to_byte(float)">
-<h3>float32_to_byte</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="member-name">float32_to_byte</span>&#8203;(<span class="parameters">float&nbsp;f)</span></div>
 </section>
 </li>
 </ul>

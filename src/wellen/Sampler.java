@@ -60,7 +60,7 @@ public class Sampler implements DSPNodeOutput {
      * load the sample buffer from *raw* byte data. the method assumes a raw format with 32bit float in a value range
      * from -1.0 to 1.0. from -1.0 to 1.0.
      *
-     * @param pData raw byte data ( assuming 4 bytes per sample, 32-bit float )
+     * @param pData raw byte data ( assuming 4 bytes per sample, 32-bit float aka WAVE_FORMAT_IEEE_FLOAT_32BIT )
      * @return instance with data loaded
      */
     public Sampler load(byte[] pData) {
@@ -72,7 +72,7 @@ public class Sampler implements DSPNodeOutput {
      * load the sample buffer from *raw* byte data. the method assumes a raw format with 32bit float in a value range
      * from -1.0 to 1.0.
      *
-     * @param pData         raw byte data ( assuming 4 bytes per sample, 32-bit float )
+     * @param pData         raw byte data ( assuming 4 bytes per sample, 32-bit float aka WAVE_FORMAT_IEEE_FLOAT_32BIT )
      * @param pLittleEndian true if byte data is arranged in little endian order
      * @return instance with data loaded
      */
@@ -80,7 +80,7 @@ public class Sampler implements DSPNodeOutput {
         if (mData == null || mData.length != pData.length / 4) {
             mData = new float[pData.length / 4];
         }
-        Wellen.bytes_to_float32s(pData, data(), pLittleEndian);
+        Wellen.bytes_to_floatIEEEs(pData, data(), pLittleEndian);
         rewind();
         set_speed(mSpeed);
         return this;

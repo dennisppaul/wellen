@@ -15,7 +15,7 @@
 <script type="text/javascript" src="../script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="class-declaration-page">
-<script type="text/javascript">var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9};
+<script type="text/javascript">var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9,"i16":9,"i17":9,"i18":9,"i19":9,"i20":9,"i21":9,"i22":9,"i23":9,"i24":9,"i25":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "alt-color";
 var rowColor = "row-color";
@@ -259,6 +259,16 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="alt-color">
 <td class="col-first"><code>static int</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#WAV_COMPRESSION_CODE_WAVE_FORMAT_IEEE_FLOAT_32BIT">WAV_COMPRESSION_CODE_WAVE_FORMAT_IEEE_FLOAT_32BIT</a></span></code></th>
+<td class="col-last">&nbsp;</td>
+</tr>
+<tr class="row-color">
+<td class="col-first"><code>static int</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#WAV_COMPRESSION_CODE_WAVE_FORMAT_PCM">WAV_COMPRESSION_CODE_WAVE_FORMAT_PCM</a></span></code></th>
+<td class="col-last">&nbsp;</td>
+</tr>
+<tr class="alt-color">
+<td class="col-first"><code>static int</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#WAVESHAPE_NOISE">WAVESHAPE_NOISE</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
@@ -328,24 +338,62 @@ extends java.lang.Object</pre>
 <tbody>
 <tr class="alt-color" id="i0">
 <td class="col-first"><code>static float</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#bytes_to_floatIEEE(byte%5B%5D)">bytes_to_floatIEEE</a></span>&#8203;(byte[]&nbsp;b)</code></th>
+<td class="col-last">&nbsp;</td>
+</tr>
+<tr class="row-color" id="i1">
+<td class="col-first"><code>static float</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#bytes_to_floatIEEE(byte%5B%5D,boolean)">bytes_to_floatIEEE</a></span>&#8203;(byte[]&nbsp;b,
+boolean&nbsp;pLittleEndian)</code></th>
+<td class="col-last">&nbsp;</td>
+</tr>
+<tr class="alt-color" id="i2">
+<td class="col-first"><code>static float</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#bytes_to_floatIEEE(byte%5B%5D,int,int,boolean)">bytes_to_floatIEEE</a></span>&#8203;(byte[]&nbsp;pBytes,
+int&nbsp;pStart,
+int&nbsp;pEnd,
+boolean&nbsp;pLittleEndian)</code></th>
+<td class="col-last">&nbsp;</td>
+</tr>
+<tr class="row-color" id="i3">
+<td class="col-first"><code>static void</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#bytes_to_floatIEEEs(byte%5B%5D,float%5B%5D,boolean)">bytes_to_floatIEEEs</a></span>&#8203;(byte[]&nbsp;pBytes,
+float[]&nbsp;pSamples,
+boolean&nbsp;pLittleEndian)</code></th>
+<td class="col-last">&nbsp;</td>
+</tr>
+<tr class="alt-color" id="i4">
+<td class="col-first"><code>static void</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#bytes_to_floats(byte%5B%5D,float%5B%5D,int)">bytes_to_floats</a></span>&#8203;(byte[]&nbsp;pBytes,
+float[]&nbsp;pFloats,
+int&nbsp;pBitsPerFloat)</code></th>
+<td class="col-last">&nbsp;</td>
+</tr>
+<tr class="row-color" id="i5">
+<td class="col-first"><code>static float</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#clamp(float)">clamp</a></span>&#8203;(float&nbsp;pValue)</code></th>
+<td class="col-last">&nbsp;</td>
+</tr>
+<tr class="alt-color" id="i6">
+<td class="col-first"><code>static float</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#clamp(float,float,float)">clamp</a></span>&#8203;(float&nbsp;pValue,
 float&nbsp;pMin,
 float&nbsp;pMax)</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="row-color" id="i1">
+<tr class="row-color" id="i7">
 <td class="col-first"><code>static int</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#clamp127(int)">clamp127</a></span>&#8203;(int&nbsp;pValue)</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="alt-color" id="i2">
+<tr class="alt-color" id="i8">
 <td class="col-first"><code>static int</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#constrain(int,int,int)">constrain</a></span>&#8203;(int&nbsp;value,
 int&nbsp;min,
 int&nbsp;max)</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="row-color" id="i3">
+<tr class="row-color" id="i9">
 <td class="col-first"><code>static void</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#draw_buffer(processing.core.PGraphics,float,float,float%5B%5D)">draw_buffer</a></span>&#8203;(processing.core.PGraphics&nbsp;g,
 float&nbsp;pWidth,
@@ -353,7 +401,7 @@ float&nbsp;pHeight,
 float[]&nbsp;pBuffer)</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="alt-color" id="i4">
+<tr class="alt-color" id="i10">
 <td class="col-first"><code>static void</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#draw_buffer(processing.core.PGraphics,float,float,float%5B%5D,float%5B%5D)">draw_buffer</a></span>&#8203;(processing.core.PGraphics&nbsp;g,
 float&nbsp;pWidth,
@@ -362,35 +410,95 @@ float[]&nbsp;pBufferLeft,
 float[]&nbsp;pBufferRight)</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="row-color" id="i5">
+<tr class="row-color" id="i11">
 <td class="col-first"><code>static void</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#dumpAudioInputAndOutputDevices()">dumpAudioInputAndOutputDevices</a></span>()</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="alt-color" id="i6">
+<tr class="alt-color" id="i12">
 <td class="col-first"><code>static void</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#dumpMidiInputDevices()">dumpMidiInputDevices</a></span>()</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="row-color" id="i7">
+<tr class="row-color" id="i13">
 <td class="col-first"><code>static void</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#dumpMidiOutputDevices()">dumpMidiOutputDevices</a></span>()</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="alt-color" id="i8">
+<tr class="alt-color" id="i14">
 <td class="col-first"><code>static float</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#flip(float)">flip</a></span>&#8203;(float&nbsp;pValue)</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="row-color" id="i9">
+<tr class="row-color" id="i15">
+<td class="col-first"><code>static byte[]</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#floatIEEE_to_bytes(float)">floatIEEE_to_bytes</a></span>&#8203;(float&nbsp;f)</code></th>
+<td class="col-last">&nbsp;</td>
+</tr>
+<tr class="alt-color" id="i16">
+<td class="col-first"><code>static byte[]</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#floatIEEEs_to_bytes(float%5B%5D)">floatIEEEs_to_bytes</a></span>&#8203;(float[]&nbsp;pFloats)</code></th>
+<td class="col-last">&nbsp;</td>
+</tr>
+<tr class="row-color" id="i17">
+<td class="col-first"><code>static byte[]</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#floatIEEEs_to_bytes(float%5B%5D,boolean)">floatIEEEs_to_bytes</a></span>&#8203;(float[]&nbsp;pFloats,
+boolean&nbsp;pLittleEndian)</code></th>
+<td class="col-last">&nbsp;</td>
+</tr>
+<tr class="alt-color" id="i18">
+<td class="col-first"><code>static void</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#floats_to_bytes(byte%5B%5D,float%5B%5D,int)">floats_to_bytes</a></span>&#8203;(byte[]&nbsp;pBytes,
+float[]&nbsp;pFloats,
+int&nbsp;pBitsPerFloat)</code></th>
+<td class="col-last">&nbsp;</td>
+</tr>
+<tr class="row-color" id="i19">
 <td class="col-first"><code>static float[]</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#get_extremum(float%5B%5D)">get_extremum</a></span>&#8203;(float[]&nbsp;pSignal)</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="alt-color" id="i10">
+<tr class="alt-color" id="i20">
+<td class="col-first"><code>static float[][]</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#loadWAV(processing.core.PApplet,java.lang.String)">loadWAV</a></span>&#8203;(processing.core.PApplet&nbsp;p,
+java.lang.String&nbsp;pFilepath)</code></th>
+<td class="col-last">&nbsp;</td>
+</tr>
+<tr class="row-color" id="i21">
+<td class="col-first"><code>static <a href="WAVConverter.Info.html" title="class in wellen">WAVConverter.Info</a></code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#loadWAVInfo(processing.core.PApplet,java.lang.String)">loadWAVInfo</a></span>&#8203;(processing.core.PApplet&nbsp;p,
+java.lang.String&nbsp;pFilepath)</code></th>
+<td class="col-last">&nbsp;</td>
+</tr>
+<tr class="alt-color" id="i22">
 <td class="col-first"><code>static float</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#random(float,float)">random</a></span>&#8203;(float&nbsp;pMin,
 float&nbsp;pMax)</code></th>
+<td class="col-last">&nbsp;</td>
+</tr>
+<tr class="row-color" id="i23">
+<td class="col-first"><code>static void</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#saveWAV(processing.core.PApplet,java.lang.String,float%5B%5D%5B%5D,int,int)">saveWAV</a></span>&#8203;(processing.core.PApplet&nbsp;p,
+java.lang.String&nbsp;pFilepath,
+float[][]&nbsp;pBuffer,
+int&nbsp;pBitsPerSample,
+int&nbsp;pSampleRate)</code></th>
+<td class="col-last">&nbsp;</td>
+</tr>
+<tr class="alt-color" id="i24">
+<td class="col-first"><code>static void</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#saveWAV(processing.core.PApplet,java.lang.String,float%5B%5D,int,int)">saveWAV</a></span>&#8203;(processing.core.PApplet&nbsp;p,
+java.lang.String&nbsp;pFilepath,
+float[]&nbsp;pBuffer,
+int&nbsp;pBitsPerSample,
+int&nbsp;pSampleRate)</code></th>
+<td class="col-last">&nbsp;</td>
+</tr>
+<tr class="row-color" id="i25">
+<td class="col-first"><code>static void</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#saveWAVInfo(processing.core.PApplet,java.lang.String,wellen.WAVConverter.Info)">saveWAVInfo</a></span>&#8203;(processing.core.PApplet&nbsp;p,
+java.lang.String&nbsp;pFilepath,
+<a href="WAVConverter.Info.html" title="class in wellen">WAVConverter.Info</a>&nbsp;pWAVStruct)</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
 </tbody>
@@ -781,6 +889,26 @@ float&nbsp;pMax)</code></th>
 </dl>
 </section>
 </li>
+<li>
+<section class="detail" id="WAV_COMPRESSION_CODE_WAVE_FORMAT_IEEE_FLOAT_32BIT">
+<h3>WAV_COMPRESSION_CODE_WAVE_FORMAT_IEEE_FLOAT_32BIT</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="member-name">WAV_COMPRESSION_CODE_WAVE_FORMAT_IEEE_FLOAT_32BIT</span></div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd><a href="../constant-values.html#wellen.Wellen.WAV_COMPRESSION_CODE_WAVE_FORMAT_IEEE_FLOAT_32BIT">Constant Field Values</a></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="WAV_COMPRESSION_CODE_WAVE_FORMAT_PCM">
+<h3>WAV_COMPRESSION_CODE_WAVE_FORMAT_PCM</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="member-name">WAV_COMPRESSION_CODE_WAVE_FORMAT_PCM</span></div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd><a href="../constant-values.html#wellen.Wellen.WAV_COMPRESSION_CODE_WAVE_FORMAT_PCM">Constant Field Values</a></dd>
+</dl>
+</section>
+</li>
 </ul>
 </section>
 </li>
@@ -836,6 +964,12 @@ int&nbsp;max)</span></div>
 </section>
 </li>
 <li>
+<section class="detail" id="clamp(float)">
+<h3>clamp</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="member-name">clamp</span>&#8203;(<span class="parameters">float&nbsp;pValue)</span></div>
+</section>
+</li>
+<li>
 <section class="detail" id="clamp(float,float,float)">
 <h3>clamp</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="member-name">clamp</span>&#8203;(<span class="parameters">float&nbsp;pValue,
@@ -879,6 +1013,113 @@ float[]&nbsp;pBufferRight)</span></div>
 <h3>random</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="member-name">random</span>&#8203;(<span class="parameters">float&nbsp;pMin,
 float&nbsp;pMax)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="floats_to_bytes(byte[],float[],int)">
+<h3>floats_to_bytes</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">floats_to_bytes</span>&#8203;(<span class="parameters">byte[]&nbsp;pBytes,
+float[]&nbsp;pFloats,
+int&nbsp;pBitsPerFloat)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="bytes_to_floats(byte[],float[],int)">
+<h3>bytes_to_floats</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">bytes_to_floats</span>&#8203;(<span class="parameters">byte[]&nbsp;pBytes,
+float[]&nbsp;pFloats,
+int&nbsp;pBitsPerFloat)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="saveWAV(processing.core.PApplet,java.lang.String,float[][],int,int)">
+<h3>saveWAV</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">saveWAV</span>&#8203;(<span class="parameters">processing.core.PApplet&nbsp;p,
+java.lang.String&nbsp;pFilepath,
+float[][]&nbsp;pBuffer,
+int&nbsp;pBitsPerSample,
+int&nbsp;pSampleRate)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="saveWAV(processing.core.PApplet,java.lang.String,float[],int,int)">
+<h3>saveWAV</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">saveWAV</span>&#8203;(<span class="parameters">processing.core.PApplet&nbsp;p,
+java.lang.String&nbsp;pFilepath,
+float[]&nbsp;pBuffer,
+int&nbsp;pBitsPerSample,
+int&nbsp;pSampleRate)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="saveWAVInfo(processing.core.PApplet,java.lang.String,wellen.WAVConverter.Info)">
+<h3>saveWAVInfo</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">saveWAVInfo</span>&#8203;(<span class="parameters">processing.core.PApplet&nbsp;p,
+java.lang.String&nbsp;pFilepath,
+<a href="WAVConverter.Info.html" title="class in wellen">WAVConverter.Info</a>&nbsp;pWAVStruct)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="loadWAV(processing.core.PApplet,java.lang.String)">
+<h3>loadWAV</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float[][]</span>&nbsp;<span class="member-name">loadWAV</span>&#8203;(<span class="parameters">processing.core.PApplet&nbsp;p,
+java.lang.String&nbsp;pFilepath)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="loadWAVInfo(processing.core.PApplet,java.lang.String)">
+<h3>loadWAVInfo</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="WAVConverter.Info.html" title="class in wellen">WAVConverter.Info</a></span>&nbsp;<span class="member-name">loadWAVInfo</span>&#8203;(<span class="parameters">processing.core.PApplet&nbsp;p,
+java.lang.String&nbsp;pFilepath)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="bytes_to_floatIEEEs(byte[],float[],boolean)">
+<h3>bytes_to_floatIEEEs</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">bytes_to_floatIEEEs</span>&#8203;(<span class="parameters">byte[]&nbsp;pBytes,
+float[]&nbsp;pSamples,
+boolean&nbsp;pLittleEndian)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="bytes_to_floatIEEE(byte[],boolean)">
+<h3>bytes_to_floatIEEE</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="member-name">bytes_to_floatIEEE</span>&#8203;(<span class="parameters">byte[]&nbsp;b,
+boolean&nbsp;pLittleEndian)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="bytes_to_floatIEEE(byte[])">
+<h3>bytes_to_floatIEEE</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="member-name">bytes_to_floatIEEE</span>&#8203;(<span class="parameters">byte[]&nbsp;b)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="floatIEEE_to_bytes(float)">
+<h3>floatIEEE_to_bytes</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="member-name">floatIEEE_to_bytes</span>&#8203;(<span class="parameters">float&nbsp;f)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="floatIEEEs_to_bytes(float[])">
+<h3>floatIEEEs_to_bytes</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="member-name">floatIEEEs_to_bytes</span>&#8203;(<span class="parameters">float[]&nbsp;pFloats)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="floatIEEEs_to_bytes(float[],boolean)">
+<h3>floatIEEEs_to_bytes</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="member-name">floatIEEEs_to_bytes</span>&#8203;(<span class="parameters">float[]&nbsp;pFloats,
+boolean&nbsp;pLittleEndian)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="bytes_to_floatIEEE(byte[],int,int,boolean)">
+<h3>bytes_to_floatIEEE</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="member-name">bytes_to_floatIEEE</span>&#8203;(<span class="parameters">byte[]&nbsp;pBytes,
+int&nbsp;pStart,
+int&nbsp;pEnd,
+boolean&nbsp;pLittleEndian)</span></div>
 </section>
 </li>
 </ul>
