@@ -22,7 +22,7 @@ public class WAVConverter {
     private final int mCompressionFormat;
 
     public WAVConverter(Info pInfo) {
-        this(pInfo.channels, pInfo.bits_per_sample, pInfo.sample_rate, pInfo.compression_format);
+        this(pInfo.channels, pInfo.bits_per_sample, pInfo.sample_rate, pInfo.format);
     }
 
     public WAVConverter(int pChannels, int pBitsPerSample, int pSampleRate, int pCompressionFormat) {
@@ -34,13 +34,15 @@ public class WAVConverter {
         mHeader = new ArrayList<>();
     }
 
-    public static byte[] convert_samples_to_bytes(float[][] pBuffer, int pChannels, int pBitsPerSample,
+    public static byte[] convert_samples_to_bytes(float[][] pBuffer,
+                                                  int pChannels,
+                                                  int pBitsPerSample,
                                                   int pSampleRate) {
         return convert_samples_to_bytes(pBuffer,
                                         pChannels,
                                         pBitsPerSample,
                                         pSampleRate,
-                                        Wellen.WAV_COMPRESSION_CODE_WAVE_FORMAT_PCM);
+                                        Wellen.WAV_FORMAT_PCM);
     }
 
     public static byte[] convert_samples_to_bytes(Info pInfo) {
@@ -50,14 +52,17 @@ public class WAVConverter {
         return mWAVConverter.getByteData();
     }
 
-    public static byte[] convert_samples_to_bytes(float[][] pBuffer, int pChannels, int pBitsPerSample, int pSampleRate,
-                                                  int pCompressionFormat) {
+    public static byte[] convert_samples_to_bytes(float[][] pBuffer,
+                                                  int pChannels,
+                                                  int pBitsPerSample,
+                                                  int pSampleRate,
+                                                  int pCompressionCode) {
         Info mInfo = new Info();
         mInfo.samples = pBuffer;
         mInfo.channels = pChannels;
         mInfo.bits_per_sample = pBitsPerSample;
         mInfo.sample_rate = pSampleRate;
-        mInfo.compression_format = pCompressionFormat;
+        mInfo.format = pCompressionCode;
         return convert_samples_to_bytes(mInfo);
     }
 
@@ -89,23 +94,23 @@ public class WAVConverter {
             System.err.println("+++ WARNING @" + WAVConverter.class.getSimpleName() + " / expected `" + WAV_CHUNK_FMT_ + "` " + "in header.");
         }
         final int mFormatChunkSize = WAVConverter.read__int32(pHeader, mOffset + 0x04);
-        mWAVStruct.compression_format = WAVConverter.read__int16(pHeader, mOffset + 0x08);
+        mWAVStruct.format = WAVConverter.read__int16(pHeader, mOffset + 0x08);
         mWAVStruct.channels = WAVConverter.read__int16(pHeader, mOffset + 0x0A);
         mWAVStruct.sample_rate = WAVConverter.read__int32(pHeader, mOffset + 0x0C);
         mWAVStruct.bits_per_sample = WAVConverter.read__int16(pHeader, mOffset + 0x16);
         if (VERBOSE) {
             System.out.println("+++ CHUNK: " + mFormatChunkName);
             System.out.println("    chunk size : " + mFormatChunkSize);
-            System.out.println("    comp code  : " + mWAVStruct.compression_format);
+            System.out.println("    format code: " + mWAVStruct.format);
             System.out.println("    channels   : " + mWAVStruct.channels);
             System.out.println("    sample rate: " + mWAVStruct.sample_rate);
             System.out.println("    byte/sec   : " + WAVConverter.read__int32(pHeader, mOffset + 0x10));
             System.out.println("    block align: " + WAVConverter.read__int16(pHeader, mOffset + 0x14));
             System.out.println("    bits/sample: " + mWAVStruct.bits_per_sample);
         }
-        if (mWAVStruct.compression_format != Wellen.WAV_COMPRESSION_CODE_WAVE_FORMAT_PCM && mWAVStruct.compression_format != Wellen.WAV_COMPRESSION_CODE_WAVE_FORMAT_IEEE_FLOAT_32BIT) {
-            System.err.println("+++ WARNING @" + WAVConverter.class.getSimpleName() + " / compression code not " +
-                                       "supported. currently only `WAVE_FORMAT_PCM` + `WAVE_FORMAT_PCM_32BIT_FLOAT` " + "works. (" + mWAVStruct.compression_format + ")");
+        if (mWAVStruct.format != Wellen.WAV_FORMAT_PCM && mWAVStruct.format != Wellen.WAV_FORMAT_IEEE_FLOAT_32BIT) {
+            System.err.println("+++ WARNING @" + WAVConverter.class.getSimpleName() + " / format not " +
+                                       "supported. currently only `WAV_FORMAT_PCM` + `WAV_FORMAT_IEEE_FLOAT_32BIT` " + "works. (" + mWAVStruct.format + ")");
         }
 
         /* data chunk */
@@ -152,9 +157,9 @@ public class WAVConverter {
                 }
             }
             float[] mFloatSamples = mWAVStruct.samples[j];
-            if (mWAVStruct.compression_format == Wellen.WAV_COMPRESSION_CODE_WAVE_FORMAT_PCM) {
+            if (mWAVStruct.format == Wellen.WAV_FORMAT_PCM) {
                 Wellen.bytes_to_floats(mByteSamples, mFloatSamples, mWAVStruct.bits_per_sample);
-            } else if (mWAVStruct.compression_format == Wellen.WAV_COMPRESSION_CODE_WAVE_FORMAT_IEEE_FLOAT_32BIT) {
+            } else if (mWAVStruct.format == Wellen.WAV_FORMAT_IEEE_FLOAT_32BIT) {
                 Wellen.bytes_to_floatIEEEs(mByteSamples, mFloatSamples, true);
             }
         }
@@ -259,10 +264,10 @@ public class WAVConverter {
             }
         }
         byte[] mByteBuffer;
-        if (mCompressionFormat == Wellen.WAV_COMPRESSION_CODE_WAVE_FORMAT_PCM) {
+        if (mCompressionFormat == Wellen.WAV_FORMAT_PCM) {
             mByteBuffer = new byte[mNumberOfFrames * mChannels * mBitsPerSample / 8];
             Wellen.floats_to_bytes(mByteBuffer, mInterleavedFloatBuffer, mBitsPerSample);
-        } else if (mCompressionFormat == Wellen.WAV_COMPRESSION_CODE_WAVE_FORMAT_IEEE_FLOAT_32BIT) {
+        } else if (mCompressionFormat == Wellen.WAV_FORMAT_IEEE_FLOAT_32BIT) {
             mByteBuffer = Wellen.floatIEEEs_to_bytes(mInterleavedFloatBuffer);
         } else {
             System.err.println("+++ ERROR @" + WAVConverter.class.getSimpleName() + " / data format not supported.");
@@ -308,6 +313,6 @@ public class WAVConverter {
         public int sample_rate;
         public byte[] data;
         public float[][] samples;
-        public int compression_format;
+        public int format;
     }
 }

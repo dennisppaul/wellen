@@ -71,8 +71,8 @@ public class Wellen {
     public static final int OSC_SINE = WAVESHAPE_SINE;
     public static final int OSC_SQUARE = WAVESHAPE_SQUARE;
     public static final int OSC_TRIANGLE = WAVESHAPE_TRIANGLE;
-    public static final int WAV_COMPRESSION_CODE_WAVE_FORMAT_IEEE_FLOAT_32BIT = 3;
-    public static final int WAV_COMPRESSION_CODE_WAVE_FORMAT_PCM = 1;
+    public static final int WAV_FORMAT_IEEE_FLOAT_32BIT = 3;
+    public static final int WAV_FORMAT_PCM = 1;
 
     public static int clamp127(int pValue) {
         return Math.max(0, Math.min(127, pValue));
@@ -266,7 +266,22 @@ public class Wellen {
         }
     }
 
-    public static void saveWAV(PApplet p, String pFilepath, float[][] pBuffer, int pBitsPerSample, int pSampleRate) {
+    public static void exportWAV(PApplet p, String pFilepath, float[][] pBuffer, int pBitsPerSample, int pSampleRate,
+                                 int pCompressionType) {
+        if (pCompressionType == WAV_FORMAT_IEEE_FLOAT_32BIT && pBitsPerSample != 32) {
+            System.err.println("+++ WARNING @" + Wellen.class.getSimpleName() + ".exportWAV / if WAV format is *IEEE "
+                                       + "float* 32 bits per sample are required.");
+            pBitsPerSample = 32;
+        }
+        final byte[] mWAVBytes = WAVConverter.convert_samples_to_bytes(pBuffer,
+                                                                       pBuffer.length,
+                                                                       pBitsPerSample,
+                                                                       pSampleRate,
+                                                                       pCompressionType);
+        p.saveBytes(pFilepath, mWAVBytes);
+    }
+
+    public static void exportWAV(PApplet p, String pFilepath, float[][] pBuffer, int pBitsPerSample, int pSampleRate) {
         final byte[] mWAVBytes = WAVConverter.convert_samples_to_bytes(pBuffer,
                                                                        pBuffer.length,
                                                                        pBitsPerSample,
@@ -274,7 +289,7 @@ public class Wellen {
         p.saveBytes(pFilepath, mWAVBytes);
     }
 
-    public static void saveWAV(PApplet p, String pFilepath, float[] pBuffer, int pBitsPerSample, int pSampleRate) {
+    public static void exportWAV(PApplet p, String pFilepath, float[] pBuffer, int pBitsPerSample, int pSampleRate) {
         final byte[] mWAVBytes = WAVConverter.convert_samples_to_bytes(new float[][]{pBuffer},
                                                                        1,
                                                                        pBitsPerSample,
@@ -282,22 +297,22 @@ public class Wellen {
         p.saveBytes(pFilepath, mWAVBytes);
     }
 
-    public static void saveWAVInfo(PApplet p, String pFilepath, WAVConverter.Info pWAVStruct) {
-        final byte[] mWAVBytes = WAVConverter.convert_samples_to_bytes(pWAVStruct);
+    public static void exportWAVInfo(PApplet p, String pFilepath, WAVConverter.Info pWAVInfo) {
+        final byte[] mWAVBytes = WAVConverter.convert_samples_to_bytes(pWAVInfo);
         p.saveBytes(pFilepath, mWAVBytes);
     }
 
-    public static float[][] loadWAV(PApplet p, String pFilepath) {
+    public static float[][] importWAV(PApplet p, String pFilepath) {
         byte[] mWAVBytes = p.loadBytes(pFilepath);
         WAVConverter.Info mWAVStruct = WAVConverter.convert_bytes_to_samples(mWAVBytes);
         return mWAVStruct.samples;
     }
 
-    public static WAVConverter.Info loadWAVInfo(PApplet p, String pFilepath) {
+    public static WAVConverter.Info importWAVInfo(PApplet p, String pFilepath) {
         byte[] mWAVBytes = p.loadBytes(pFilepath);
-        WAVConverter.Info mWAVStruct = WAVConverter.convert_bytes_to_samples(mWAVBytes);
-        mWAVStruct.data = mWAVBytes;
-        return mWAVStruct;
+        WAVConverter.Info mWAVInfo = WAVConverter.convert_bytes_to_samples(mWAVBytes);
+        mWAVInfo.data = mWAVBytes;
+        return mWAVInfo;
     }
 
     public static void bytes_to_floatIEEEs(byte[] pBytes, float[] pSamples, boolean pLittleEndian) {

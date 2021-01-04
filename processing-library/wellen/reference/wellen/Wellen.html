@@ -15,7 +15,7 @@
 <script type="text/javascript" src="../script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="class-declaration-page">
-<script type="text/javascript">var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9,"i16":9,"i17":9,"i18":9,"i19":9,"i20":9,"i21":9,"i22":9,"i23":9,"i24":9,"i25":9};
+<script type="text/javascript">var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9,"i16":9,"i17":9,"i18":9,"i19":9,"i20":9,"i21":9,"i22":9,"i23":9,"i24":9,"i25":9,"i26":9};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
 var altColor = "alt-color";
 var rowColor = "row-color";
@@ -259,12 +259,12 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="alt-color">
 <td class="col-first"><code>static int</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#WAV_COMPRESSION_CODE_WAVE_FORMAT_IEEE_FLOAT_32BIT">WAV_COMPRESSION_CODE_WAVE_FORMAT_IEEE_FLOAT_32BIT</a></span></code></th>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#WAV_FORMAT_IEEE_FLOAT_32BIT">WAV_FORMAT_IEEE_FLOAT_32BIT</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
 <tr class="row-color">
 <td class="col-first"><code>static int</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#WAV_COMPRESSION_CODE_WAVE_FORMAT_PCM">WAV_COMPRESSION_CODE_WAVE_FORMAT_PCM</a></span></code></th>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#WAV_FORMAT_PCM">WAV_FORMAT_PCM</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
 <tr class="alt-color">
@@ -426,79 +426,89 @@ float[]&nbsp;pBufferRight)</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
 <tr class="alt-color" id="i14">
-<td class="col-first"><code>static float</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#flip(float)">flip</a></span>&#8203;(float&nbsp;pValue)</code></th>
-<td class="col-last">&nbsp;</td>
-</tr>
-<tr class="row-color" id="i15">
-<td class="col-first"><code>static byte[]</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#floatIEEE_to_bytes(float)">floatIEEE_to_bytes</a></span>&#8203;(float&nbsp;f)</code></th>
-<td class="col-last">&nbsp;</td>
-</tr>
-<tr class="alt-color" id="i16">
-<td class="col-first"><code>static byte[]</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#floatIEEEs_to_bytes(float%5B%5D)">floatIEEEs_to_bytes</a></span>&#8203;(float[]&nbsp;pFloats)</code></th>
-<td class="col-last">&nbsp;</td>
-</tr>
-<tr class="row-color" id="i17">
-<td class="col-first"><code>static byte[]</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#floatIEEEs_to_bytes(float%5B%5D,boolean)">floatIEEEs_to_bytes</a></span>&#8203;(float[]&nbsp;pFloats,
-boolean&nbsp;pLittleEndian)</code></th>
-<td class="col-last">&nbsp;</td>
-</tr>
-<tr class="alt-color" id="i18">
 <td class="col-first"><code>static void</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#floats_to_bytes(byte%5B%5D,float%5B%5D,int)">floats_to_bytes</a></span>&#8203;(byte[]&nbsp;pBytes,
-float[]&nbsp;pFloats,
-int&nbsp;pBitsPerFloat)</code></th>
-<td class="col-last">&nbsp;</td>
-</tr>
-<tr class="row-color" id="i19">
-<td class="col-first"><code>static float[]</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#get_extremum(float%5B%5D)">get_extremum</a></span>&#8203;(float[]&nbsp;pSignal)</code></th>
-<td class="col-last">&nbsp;</td>
-</tr>
-<tr class="alt-color" id="i20">
-<td class="col-first"><code>static float[][]</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#loadWAV(processing.core.PApplet,java.lang.String)">loadWAV</a></span>&#8203;(processing.core.PApplet&nbsp;p,
-java.lang.String&nbsp;pFilepath)</code></th>
-<td class="col-last">&nbsp;</td>
-</tr>
-<tr class="row-color" id="i21">
-<td class="col-first"><code>static <a href="WAVConverter.Info.html" title="class in wellen">WAVConverter.Info</a></code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#loadWAVInfo(processing.core.PApplet,java.lang.String)">loadWAVInfo</a></span>&#8203;(processing.core.PApplet&nbsp;p,
-java.lang.String&nbsp;pFilepath)</code></th>
-<td class="col-last">&nbsp;</td>
-</tr>
-<tr class="alt-color" id="i22">
-<td class="col-first"><code>static float</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#random(float,float)">random</a></span>&#8203;(float&nbsp;pMin,
-float&nbsp;pMax)</code></th>
-<td class="col-last">&nbsp;</td>
-</tr>
-<tr class="row-color" id="i23">
-<td class="col-first"><code>static void</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#saveWAV(processing.core.PApplet,java.lang.String,float%5B%5D%5B%5D,int,int)">saveWAV</a></span>&#8203;(processing.core.PApplet&nbsp;p,
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#exportWAV(processing.core.PApplet,java.lang.String,float%5B%5D%5B%5D,int,int)">exportWAV</a></span>&#8203;(processing.core.PApplet&nbsp;p,
 java.lang.String&nbsp;pFilepath,
 float[][]&nbsp;pBuffer,
 int&nbsp;pBitsPerSample,
 int&nbsp;pSampleRate)</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="alt-color" id="i24">
+<tr class="row-color" id="i15">
 <td class="col-first"><code>static void</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#saveWAV(processing.core.PApplet,java.lang.String,float%5B%5D,int,int)">saveWAV</a></span>&#8203;(processing.core.PApplet&nbsp;p,
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#exportWAV(processing.core.PApplet,java.lang.String,float%5B%5D%5B%5D,int,int,int)">exportWAV</a></span>&#8203;(processing.core.PApplet&nbsp;p,
+java.lang.String&nbsp;pFilepath,
+float[][]&nbsp;pBuffer,
+int&nbsp;pBitsPerSample,
+int&nbsp;pSampleRate,
+int&nbsp;pCompressionType)</code></th>
+<td class="col-last">&nbsp;</td>
+</tr>
+<tr class="alt-color" id="i16">
+<td class="col-first"><code>static void</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#exportWAV(processing.core.PApplet,java.lang.String,float%5B%5D,int,int)">exportWAV</a></span>&#8203;(processing.core.PApplet&nbsp;p,
 java.lang.String&nbsp;pFilepath,
 float[]&nbsp;pBuffer,
 int&nbsp;pBitsPerSample,
 int&nbsp;pSampleRate)</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="row-color" id="i25">
+<tr class="row-color" id="i17">
 <td class="col-first"><code>static void</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#saveWAVInfo(processing.core.PApplet,java.lang.String,wellen.WAVConverter.Info)">saveWAVInfo</a></span>&#8203;(processing.core.PApplet&nbsp;p,
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#exportWAVInfo(processing.core.PApplet,java.lang.String,wellen.WAVConverter.Info)">exportWAVInfo</a></span>&#8203;(processing.core.PApplet&nbsp;p,
 java.lang.String&nbsp;pFilepath,
-<a href="WAVConverter.Info.html" title="class in wellen">WAVConverter.Info</a>&nbsp;pWAVStruct)</code></th>
+<a href="WAVConverter.Info.html" title="class in wellen">WAVConverter.Info</a>&nbsp;pWAVInfo)</code></th>
+<td class="col-last">&nbsp;</td>
+</tr>
+<tr class="alt-color" id="i18">
+<td class="col-first"><code>static float</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#flip(float)">flip</a></span>&#8203;(float&nbsp;pValue)</code></th>
+<td class="col-last">&nbsp;</td>
+</tr>
+<tr class="row-color" id="i19">
+<td class="col-first"><code>static byte[]</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#floatIEEE_to_bytes(float)">floatIEEE_to_bytes</a></span>&#8203;(float&nbsp;f)</code></th>
+<td class="col-last">&nbsp;</td>
+</tr>
+<tr class="alt-color" id="i20">
+<td class="col-first"><code>static byte[]</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#floatIEEEs_to_bytes(float%5B%5D)">floatIEEEs_to_bytes</a></span>&#8203;(float[]&nbsp;pFloats)</code></th>
+<td class="col-last">&nbsp;</td>
+</tr>
+<tr class="row-color" id="i21">
+<td class="col-first"><code>static byte[]</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#floatIEEEs_to_bytes(float%5B%5D,boolean)">floatIEEEs_to_bytes</a></span>&#8203;(float[]&nbsp;pFloats,
+boolean&nbsp;pLittleEndian)</code></th>
+<td class="col-last">&nbsp;</td>
+</tr>
+<tr class="alt-color" id="i22">
+<td class="col-first"><code>static void</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#floats_to_bytes(byte%5B%5D,float%5B%5D,int)">floats_to_bytes</a></span>&#8203;(byte[]&nbsp;pBytes,
+float[]&nbsp;pFloats,
+int&nbsp;pBitsPerFloat)</code></th>
+<td class="col-last">&nbsp;</td>
+</tr>
+<tr class="row-color" id="i23">
+<td class="col-first"><code>static float[]</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#get_extremum(float%5B%5D)">get_extremum</a></span>&#8203;(float[]&nbsp;pSignal)</code></th>
+<td class="col-last">&nbsp;</td>
+</tr>
+<tr class="alt-color" id="i24">
+<td class="col-first"><code>static float[][]</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#importWAV(processing.core.PApplet,java.lang.String)">importWAV</a></span>&#8203;(processing.core.PApplet&nbsp;p,
+java.lang.String&nbsp;pFilepath)</code></th>
+<td class="col-last">&nbsp;</td>
+</tr>
+<tr class="row-color" id="i25">
+<td class="col-first"><code>static <a href="WAVConverter.Info.html" title="class in wellen">WAVConverter.Info</a></code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#importWAVInfo(processing.core.PApplet,java.lang.String)">importWAVInfo</a></span>&#8203;(processing.core.PApplet&nbsp;p,
+java.lang.String&nbsp;pFilepath)</code></th>
+<td class="col-last">&nbsp;</td>
+</tr>
+<tr class="alt-color" id="i26">
+<td class="col-first"><code>static float</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#random(float,float)">random</a></span>&#8203;(float&nbsp;pMin,
+float&nbsp;pMax)</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
 </tbody>
@@ -890,22 +900,22 @@ java.lang.String&nbsp;pFilepath,
 </section>
 </li>
 <li>
-<section class="detail" id="WAV_COMPRESSION_CODE_WAVE_FORMAT_IEEE_FLOAT_32BIT">
-<h3>WAV_COMPRESSION_CODE_WAVE_FORMAT_IEEE_FLOAT_32BIT</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="member-name">WAV_COMPRESSION_CODE_WAVE_FORMAT_IEEE_FLOAT_32BIT</span></div>
+<section class="detail" id="WAV_FORMAT_IEEE_FLOAT_32BIT">
+<h3>WAV_FORMAT_IEEE_FLOAT_32BIT</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="member-name">WAV_FORMAT_IEEE_FLOAT_32BIT</span></div>
 <dl class="notes">
 <dt>See Also:</dt>
-<dd><a href="../constant-values.html#wellen.Wellen.WAV_COMPRESSION_CODE_WAVE_FORMAT_IEEE_FLOAT_32BIT">Constant Field Values</a></dd>
+<dd><a href="../constant-values.html#wellen.Wellen.WAV_FORMAT_IEEE_FLOAT_32BIT">Constant Field Values</a></dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="WAV_COMPRESSION_CODE_WAVE_FORMAT_PCM">
-<h3>WAV_COMPRESSION_CODE_WAVE_FORMAT_PCM</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="member-name">WAV_COMPRESSION_CODE_WAVE_FORMAT_PCM</span></div>
+<section class="detail" id="WAV_FORMAT_PCM">
+<h3>WAV_FORMAT_PCM</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="member-name">WAV_FORMAT_PCM</span></div>
 <dl class="notes">
 <dt>See Also:</dt>
-<dd><a href="../constant-values.html#wellen.Wellen.WAV_COMPRESSION_CODE_WAVE_FORMAT_PCM">Constant Field Values</a></dd>
+<dd><a href="../constant-values.html#wellen.Wellen.WAV_FORMAT_PCM">Constant Field Values</a></dd>
 </dl>
 </section>
 </li>
@@ -1032,9 +1042,20 @@ int&nbsp;pBitsPerFloat)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="saveWAV(processing.core.PApplet,java.lang.String,float[][],int,int)">
-<h3>saveWAV</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">saveWAV</span>&#8203;(<span class="parameters">processing.core.PApplet&nbsp;p,
+<section class="detail" id="exportWAV(processing.core.PApplet,java.lang.String,float[][],int,int,int)">
+<h3>exportWAV</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">exportWAV</span>&#8203;(<span class="parameters">processing.core.PApplet&nbsp;p,
+java.lang.String&nbsp;pFilepath,
+float[][]&nbsp;pBuffer,
+int&nbsp;pBitsPerSample,
+int&nbsp;pSampleRate,
+int&nbsp;pCompressionType)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="exportWAV(processing.core.PApplet,java.lang.String,float[][],int,int)">
+<h3>exportWAV</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">exportWAV</span>&#8203;(<span class="parameters">processing.core.PApplet&nbsp;p,
 java.lang.String&nbsp;pFilepath,
 float[][]&nbsp;pBuffer,
 int&nbsp;pBitsPerSample,
@@ -1042,9 +1063,9 @@ int&nbsp;pSampleRate)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="saveWAV(processing.core.PApplet,java.lang.String,float[],int,int)">
-<h3>saveWAV</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">saveWAV</span>&#8203;(<span class="parameters">processing.core.PApplet&nbsp;p,
+<section class="detail" id="exportWAV(processing.core.PApplet,java.lang.String,float[],int,int)">
+<h3>exportWAV</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">exportWAV</span>&#8203;(<span class="parameters">processing.core.PApplet&nbsp;p,
 java.lang.String&nbsp;pFilepath,
 float[]&nbsp;pBuffer,
 int&nbsp;pBitsPerSample,
@@ -1052,24 +1073,24 @@ int&nbsp;pSampleRate)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="saveWAVInfo(processing.core.PApplet,java.lang.String,wellen.WAVConverter.Info)">
-<h3>saveWAVInfo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">saveWAVInfo</span>&#8203;(<span class="parameters">processing.core.PApplet&nbsp;p,
+<section class="detail" id="exportWAVInfo(processing.core.PApplet,java.lang.String,wellen.WAVConverter.Info)">
+<h3>exportWAVInfo</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">exportWAVInfo</span>&#8203;(<span class="parameters">processing.core.PApplet&nbsp;p,
 java.lang.String&nbsp;pFilepath,
-<a href="WAVConverter.Info.html" title="class in wellen">WAVConverter.Info</a>&nbsp;pWAVStruct)</span></div>
+<a href="WAVConverter.Info.html" title="class in wellen">WAVConverter.Info</a>&nbsp;pWAVInfo)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="loadWAV(processing.core.PApplet,java.lang.String)">
-<h3>loadWAV</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float[][]</span>&nbsp;<span class="member-name">loadWAV</span>&#8203;(<span class="parameters">processing.core.PApplet&nbsp;p,
+<section class="detail" id="importWAV(processing.core.PApplet,java.lang.String)">
+<h3>importWAV</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float[][]</span>&nbsp;<span class="member-name">importWAV</span>&#8203;(<span class="parameters">processing.core.PApplet&nbsp;p,
 java.lang.String&nbsp;pFilepath)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="loadWAVInfo(processing.core.PApplet,java.lang.String)">
-<h3>loadWAVInfo</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="WAVConverter.Info.html" title="class in wellen">WAVConverter.Info</a></span>&nbsp;<span class="member-name">loadWAVInfo</span>&#8203;(<span class="parameters">processing.core.PApplet&nbsp;p,
+<section class="detail" id="importWAVInfo(processing.core.PApplet,java.lang.String)">
+<h3>importWAVInfo</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="WAVConverter.Info.html" title="class in wellen">WAVConverter.Info</a></span>&nbsp;<span class="member-name">importWAVInfo</span>&#8203;(<span class="parameters">processing.core.PApplet&nbsp;p,
 java.lang.String&nbsp;pFilepath)</span></div>
 </section>
 </li>

@@ -51,8 +51,8 @@ public class Sampler implements DSPNodeOutput {
         mSamplingRate = pSamplingRate;
         mArrayPtr = 0;
         mInterpolateSamples = false;
-        set_speed(1);
-        set_amplitude(0.75f);
+        set_speed(1.0f);
+        set_amplitude(1.0f);
     }
 
 
@@ -109,6 +109,8 @@ public class Sampler implements DSPNodeOutput {
 
     public void set_data(float[] pData) {
         mData = pData;
+        rewind();
+        set_speed(mSpeed);
     }
 
     public void interpolate_samples(boolean pInterpolateSamples) {
