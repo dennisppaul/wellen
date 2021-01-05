@@ -25,6 +25,9 @@ import oscP5.OscP5;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+/**
+ * listens to incoming OSC messages.
+ */
 public class EventReceiverOSC {
 
     private static final String METHOD_NAME = "event_receive";
@@ -34,11 +37,11 @@ public class EventReceiverOSC {
     private final OscP5 mOscP5;
     private Method mMethod = null;
 
-    public EventReceiverOSC(Object pPApplet, int pPortReceive) {
-        mParent = pPApplet;
+    public EventReceiverOSC(Object pListener, int pPortReceive) {
+        mParent = pListener;
         mOscP5 = new OscP5(this, pPortReceive);
         try {
-            mMethod = pPApplet.getClass().getDeclaredMethod(METHOD_NAME, int.class, float[].class);
+            mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME, int.class, float[].class);
         } catch (NoSuchMethodException | SecurityException ex) {
             ex.printStackTrace();
         }
@@ -46,17 +49,17 @@ public class EventReceiverOSC {
 
     public void oscEvent(OscMessage pOSCMessage) {
         try {
-            int mEvent = TonEvent.EVENT_UNDEFINED;
+            int mEvent = Wellen.EVENT_UNDEFINED;
             int mNumOfArgs = pOSCMessage.typetag().length();
             final float[] mData = new float[mNumOfArgs];
             if (pOSCMessage.checkAddrPattern(ToneEngineOSC.OSC_ADDR_PATTERN_NOTE_ON)) {
-                mEvent = TonEvent.EVENT_NOTE_ON;
+                mEvent = Wellen.EVENT_NOTE_ON;
             } else if (pOSCMessage.checkAddrPattern(ToneEngineOSC.OSC_ADDR_PATTERN_NOTE_OFF)) {
-                mEvent = TonEvent.EVENT_NOTE_OFF;
+                mEvent = Wellen.EVENT_NOTE_OFF;
             } else if (pOSCMessage.checkAddrPattern(ToneEngineOSC.OSC_ADDR_PATTERN_CONTROLCHANGE)) {
-                mEvent = TonEvent.EVENT_CONTROLCHANGE;
+                mEvent = Wellen.EVENT_CONTROLCHANGE;
             } else if (pOSCMessage.checkAddrPattern(ToneEngineOSC.OSC_ADDR_PATTERN_PITCHBAND)) {
-                mEvent = TonEvent.EVENT_PITCHBEND;
+                mEvent = Wellen.EVENT_PITCHBEND;
             }
             for (int i = 0; i < mData.length; i++) {
                 if (pOSCMessage.typetag().charAt(i) == 'i') {
@@ -71,14 +74,14 @@ public class EventReceiverOSC {
         }
     }
 
-    public static EventReceiverOSC start(Object pParent, int pPortReceive) {
+    public static EventReceiverOSC start(Object pListener, int pPortReceive) {
         if (mInstance == null) {
-            mInstance = new EventReceiverOSC(pParent, pPortReceive);
+            mInstance = new EventReceiverOSC(pListener, pPortReceive);
         }
         return mInstance;
     }
 
-    public static EventReceiverOSC start(Object pParent) {
-        return start(pParent, DEFAULT_RECEIVE_PORT);
+    public static EventReceiverOSC start(Object pListener) {
+        return start(pListener, DEFAULT_RECEIVE_PORT);
     }
 }

@@ -22,6 +22,9 @@ package wellen;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+/**
+ * similar to {@link wellen.Beat} with the exception that events are triggered from {@link wellen.DSP}.
+ */
 public class BeatDSP implements DSPNodeInput {
 
     private static final String METHOD_NAME = "beat";
@@ -48,6 +51,14 @@ public class BeatDSP implements DSPNodeInput {
         }
     }
 
+    public static BeatDSP start(Object pListener, int pSamplingRate) {
+        return new BeatDSP(pListener);
+    }
+
+    public static BeatDSP start(Object pListener) {
+        return new BeatDSP(pListener, Wellen.DEFAULT_SAMPLING_RATE);
+    }
+
     public void set_bpm(float pBPM) {
         final float mPeriod = 60.0f / pBPM;
         mInterval = mSamplingRate * mPeriod;
@@ -72,13 +83,5 @@ public class BeatDSP implements DSPNodeInput {
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
             ex.printStackTrace();
         }
-    }
-
-    public static BeatDSP start(Object pListener, int pSamplingRate) {
-        return new BeatDSP(pListener);
-    }
-
-    public static BeatDSP start(Object pListener) {
-        return new BeatDSP(pListener, Wellen.DEFAULT_SAMPLING_RATE);
     }
 }

@@ -19,6 +19,9 @@
 
 package wellen;
 
+/**
+ * interface implemented by classes that process signals.
+ */
 public interface DSPNodeProcess {
 
     float process(float pSignal);

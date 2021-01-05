@@ -84,6 +84,8 @@ loadScripts(document, 'script');</script>
 <pre>public class <span class="type-name-label">DSP</span>
 extends java.lang.Object
 implements <a href="AudioBufferRenderer.html" title="interface in wellen">AudioBufferRenderer</a></pre>
+<div class="block">handles audio signal processing. after <code>start(...)</code> is called the processing continously calls
+ <code>audioblock(...)</code> requesting blocks of audio samples.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -175,25 +177,25 @@ float&nbsp;pHeight)</code></th>
 </tr>
 <tr class="alt-color" id="i8">
 <td class="col-first"><code>static <a href="DSP.html" title="class in wellen">DSP</a></code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#start(processing.core.PApplet)">start</a></span>&#8203;(processing.core.PApplet&nbsp;pPApplet)</code></th>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#start(java.lang.Object)">start</a></span>&#8203;(java.lang.Object&nbsp;pObject)</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
 <tr class="row-color" id="i9">
 <td class="col-first"><code>static <a href="DSP.html" title="class in wellen">DSP</a></code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#start(processing.core.PApplet,int)">start</a></span>&#8203;(processing.core.PApplet&nbsp;pPApplet,
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#start(java.lang.Object,int)">start</a></span>&#8203;(java.lang.Object&nbsp;pObject,
 int&nbsp;pNumberOutputChannels)</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
 <tr class="alt-color" id="i10">
 <td class="col-first"><code>static <a href="DSP.html" title="class in wellen">DSP</a></code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#start(processing.core.PApplet,int,int)">start</a></span>&#8203;(processing.core.PApplet&nbsp;pPApplet,
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#start(java.lang.Object,int,int)">start</a></span>&#8203;(java.lang.Object&nbsp;pObject,
 int&nbsp;pNumberOutputChannels,
 int&nbsp;pNumberInputChannels)</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
 <tr class="row-color" id="i11">
 <td class="col-first"><code>static <a href="DSP.html" title="class in wellen">DSP</a></code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#start(processing.core.PApplet,int,int,int,int)">start</a></span>&#8203;(processing.core.PApplet&nbsp;pPApplet,
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#start(java.lang.Object,int,int,int,int)">start</a></span>&#8203;(java.lang.Object&nbsp;pObject,
 int&nbsp;pOutputDevice,
 int&nbsp;pNumberOutputChannels,
 int&nbsp;pInputDevice,
@@ -235,41 +237,30 @@ int&nbsp;pNumberInputChannels)</span></div>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="audioblock(float[][],float[][])">
-<h3>audioblock</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">audioblock</span>&#8203;(<span class="parameters">float[][]&nbsp;pOutputSamples,
-float[][]&nbsp;pInputSamples)</span></div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="AudioBufferRenderer.html#audioblock(float%5B%5D%5B%5D,float%5B%5D%5B%5D)">audioblock</a></code>&nbsp;in interface&nbsp;<code><a href="AudioBufferRenderer.html" title="interface in wellen">AudioBufferRenderer</a></code></dd>
-</dl>
+<section class="detail" id="start(java.lang.Object)">
+<h3>start</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="DSP.html" title="class in wellen">DSP</a></span>&nbsp;<span class="member-name">start</span>&#8203;(<span class="parameters">java.lang.Object&nbsp;pObject)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="start(processing.core.PApplet)">
+<section class="detail" id="start(java.lang.Object,int)">
 <h3>start</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="DSP.html" title="class in wellen">DSP</a></span>&nbsp;<span class="member-name">start</span>&#8203;(<span class="parameters">processing.core.PApplet&nbsp;pPApplet)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="start(processing.core.PApplet,int)">
-<h3>start</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="DSP.html" title="class in wellen">DSP</a></span>&nbsp;<span class="member-name">start</span>&#8203;(<span class="parameters">processing.core.PApplet&nbsp;pPApplet,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="DSP.html" title="class in wellen">DSP</a></span>&nbsp;<span class="member-name">start</span>&#8203;(<span class="parameters">java.lang.Object&nbsp;pObject,
 int&nbsp;pNumberOutputChannels)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="start(processing.core.PApplet,int,int)">
+<section class="detail" id="start(java.lang.Object,int,int)">
 <h3>start</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="DSP.html" title="class in wellen">DSP</a></span>&nbsp;<span class="member-name">start</span>&#8203;(<span class="parameters">processing.core.PApplet&nbsp;pPApplet,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="DSP.html" title="class in wellen">DSP</a></span>&nbsp;<span class="member-name">start</span>&#8203;(<span class="parameters">java.lang.Object&nbsp;pObject,
 int&nbsp;pNumberOutputChannels,
 int&nbsp;pNumberInputChannels)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="start(processing.core.PApplet,int,int,int,int)">
+<section class="detail" id="start(java.lang.Object,int,int,int,int)">
 <h3>start</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="DSP.html" title="class in wellen">DSP</a></span>&nbsp;<span class="member-name">start</span>&#8203;(<span class="parameters">processing.core.PApplet&nbsp;pPApplet,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="DSP.html" title="class in wellen">DSP</a></span>&nbsp;<span class="member-name">start</span>&#8203;(<span class="parameters">java.lang.Object&nbsp;pObject,
 int&nbsp;pOutputDevice,
 int&nbsp;pNumberOutputChannels,
 int&nbsp;pInputDevice,
@@ -320,6 +311,17 @@ float&nbsp;pHeight)</span></div>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">draw_buffer</span>&#8203;(<span class="parameters">processing.core.PGraphics&nbsp;g,
 float&nbsp;pWidth,
 float&nbsp;pHeight)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="audioblock(float[][],float[][])">
+<h3>audioblock</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">audioblock</span>&#8203;(<span class="parameters">float[][]&nbsp;pOutputSamples,
+float[][]&nbsp;pInputSamples)</span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="AudioBufferRenderer.html#audioblock(float%5B%5D%5B%5D,float%5B%5D%5B%5D)">audioblock</a></code>&nbsp;in interface&nbsp;<code><a href="AudioBufferRenderer.html" title="interface in wellen">AudioBufferRenderer</a></code></dd>
+</dl>
 </section>
 </li>
 </ul>

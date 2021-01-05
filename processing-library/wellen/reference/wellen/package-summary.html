@@ -64,46 +64,60 @@ loadScripts(document, 'script');</script>
 <tbody>
 <tr class="alt-color">
 <th class="col-first" scope="row"><a href="AudioBufferRenderer.html" title="interface in wellen">AudioBufferRenderer</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">interface for audio callbacks of <a href="AudioBufferManager.html" title="class in wellen"><code>AudioBufferManager</code></a></div>
+</td>
 </tr>
 <tr class="row-color">
 <th class="col-first" scope="row"><a href="BeatListener.html" title="interface in wellen">BeatListener</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">interface for listeners of <a href="BeatEvent.html" title="class in wellen"><code>BeatEvent</code></a>.</div>
+</td>
 </tr>
 <tr class="alt-color">
 <th class="col-first" scope="row"><a href="DSPNodeInput.html" title="interface in wellen">DSPNodeInput</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">interface implemented by classes that accept input signals.</div>
+</td>
 </tr>
 <tr class="row-color">
 <th class="col-first" scope="row"><a href="DSPNodeOutput.html" title="interface in wellen">DSPNodeOutput</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">interface implemented by classes that create output signals.</div>
+</td>
 </tr>
 <tr class="alt-color">
 <th class="col-first" scope="row"><a href="DSPNodeProcess.html" title="interface in wellen">DSPNodeProcess</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">interface implemented by classes that process signals.</div>
+</td>
 </tr>
 <tr class="row-color">
 <th class="col-first" scope="row"><a href="EnvelopeListener.html" title="interface in wellen">EnvelopeListener</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">interface for listeners of events created by <a href="Envelope.html" title="class in wellen"><code>Envelope</code></a>.</div>
+</td>
 </tr>
 <tr class="alt-color">
 <th class="col-first" scope="row"><a href="MIDI.html" title="interface in wellen">MIDI</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">MIDI constants</div>
+</td>
 </tr>
 <tr class="row-color">
 <th class="col-first" scope="row"><a href="MidiInListener.html" title="interface in wellen">MidiInListener</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">interface for listeners of <a href="MidiIn.html" title="class in wellen"><code>MidiIn</code></a></div>
+</td>
 </tr>
 <tr class="alt-color">
 <th class="col-first" scope="row"><a href="SampleDataSNARE.html" title="interface in wellen">SampleDataSNARE</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">sample data of a recorded snare drum.</div>
+</td>
 </tr>
 <tr class="row-color">
 <th class="col-first" scope="row"><a href="ToneEngineInternal.AudioOutputCallback.html" title="interface in wellen">ToneEngineInternal.AudioOutputCallback</a></th>
-<td class="col-last">&nbsp;</td>
-</tr>
-<tr class="alt-color">
-<th class="col-first" scope="row"><a href="TonEvent.html" title="interface in wellen">TonEvent</a></th>
 <td class="col-last">&nbsp;</td>
 </tr>
 </tbody>
@@ -123,39 +137,57 @@ loadScripts(document, 'script');</script>
 <tbody>
 <tr class="alt-color">
 <th class="col-first" scope="row"><a href="ADSR.html" title="class in wellen">ADSR</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">envelope with (A)ttack (D)ecay (S)ustain (R)elease stages: <a href="ADSR.html" title="class in wellen"><code>ADSR</code></a></div>
+</td>
 </tr>
 <tr class="row-color">
 <th class="col-first" scope="row"><a href="Arpeggiator.html" title="class in wellen">Arpeggiator</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">creates a sequence of notes based on an input pattern.</div>
+</td>
 </tr>
 <tr class="alt-color">
 <th class="col-first" scope="row"><a href="AudioBufferManager.html" title="class in wellen">AudioBufferManager</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">communicates with the underlying audio systems.</div>
+</td>
 </tr>
 <tr class="row-color">
 <th class="col-first" scope="row"><a href="Beat.html" title="class in wellen">Beat</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">continuously triggers a <code>beat(int)</code> event.</div>
+</td>
 </tr>
 <tr class="alt-color">
 <th class="col-first" scope="row"><a href="BeatDSP.html" title="class in wellen">BeatDSP</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">similar to <a href="Beat.html" title="class in wellen"><code>Beat</code></a> with the exception that events are triggered from <a href="DSP.html" title="class in wellen"><code>DSP</code></a>.</div>
+</td>
 </tr>
 <tr class="row-color">
 <th class="col-first" scope="row"><a href="BeatEvent.html" title="class in wellen">BeatEvent</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">similar to <a href="Beat.html" title="class in wellen"><code>Beat</code></a> except that it handles multiple listeners.</div>
+</td>
 </tr>
 <tr class="alt-color">
 <th class="col-first" scope="row"><a href="BeatMIDI.html" title="class in wellen">BeatMIDI</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">similar to <a href="Beat.html" title="class in wellen"><code>Beat</code></a> except that beat events are triggered by an external MIDI CLOCK signal.</div>
+</td>
 </tr>
 <tr class="row-color">
 <th class="col-first" scope="row"><a href="Distortion.html" title="class in wellen">Distortion</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">distorts a signal with different distortion strategies.</div>
+</td>
 </tr>
 <tr class="alt-color">
 <th class="col-first" scope="row"><a href="DSP.html" title="class in wellen">DSP</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">handles audio signal processing.</div>
+</td>
 </tr>
 <tr class="row-color">
 <th class="col-first" scope="row"><a href="Envelope.html" title="class in wellen">Envelope</a></th>
@@ -169,29 +201,39 @@ loadScripts(document, 'script');</script>
 </tr>
 <tr class="row-color">
 <th class="col-first" scope="row"><a href="EventReceiverMIDI.html" title="class in wellen">EventReceiverMIDI</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">listens to incoming MIDI messages.</div>
+</td>
 </tr>
 <tr class="alt-color">
 <th class="col-first" scope="row"><a href="EventReceiverOSC.html" title="class in wellen">EventReceiverOSC</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">listens to incoming OSC messages.</div>
+</td>
 </tr>
 <tr class="row-color">
 <th class="col-first" scope="row"><a href="FFT.html" title="class in wellen">FFT</a></th>
 <td class="col-last">
-<div class="block">FFT stands for Fast Fourier Transform.</div>
+<div class="block">implements the Fast Fourier Transform (FFT).</div>
 </td>
 </tr>
 <tr class="alt-color">
 <th class="col-first" scope="row"><a href="Filter.html" title="class in wellen">Filter</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">supplies 3 kinds of filters: high-, low- and band-pass filtering with adjustable resonance and cutoff frequency.</div>
+</td>
 </tr>
 <tr class="row-color">
 <th class="col-first" scope="row"><a href="Instrument.html" title="class in wellen">Instrument</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">base class for all instruments</div>
+</td>
 </tr>
 <tr class="alt-color">
 <th class="col-first" scope="row"><a href="InstrumentInternal.html" title="class in wellen">InstrumentInternal</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">implementation of <a href="Instrument.html" title="class in wellen"><code>Instrument</code></a> for the internal tone engine.</div>
+</td>
 </tr>
 <tr class="row-color">
 <th class="col-first" scope="row"><a href="InstrumentInternalLibrary.html" title="class in wellen">InstrumentInternalLibrary</a></th>
@@ -221,82 +263,117 @@ loadScripts(document, 'script');</script>
 </tr>
 <tr class="row-color">
 <th class="col-first" scope="row"><a href="LowPassFilter.html" title="class in wellen">LowPassFilter</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">low-pass filter implementing the <em>Moog Ladder</em>.</div>
+</td>
 </tr>
 <tr class="alt-color">
 <th class="col-first" scope="row"><a href="MidiIn.html" title="class in wellen">MidiIn</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">handles communication with MIDI devices</div>
+</td>
 </tr>
 <tr class="row-color">
 <th class="col-first" scope="row"><a href="MidiOut.html" title="class in wellen">MidiOut</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">handles communication with MIDI devices</div>
+</td>
 </tr>
 <tr class="alt-color">
 <th class="col-first" scope="row"><a href="Noise.html" title="class in wellen">Noise</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">supplies a collection of noise generators: white, gaussian, pink and simplex/perlin noise.</div>
+</td>
 </tr>
 <tr class="row-color">
 <th class="col-first" scope="row"><a href="Note.html" title="class in wellen">Note</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">supplies a series of note constants and methods to convert note values to frequencies and vice versa.</div>
+</td>
 </tr>
 <tr class="alt-color">
 <th class="col-first" scope="row"><a href="Reverb.html" title="class in wellen">Reverb</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">applies reverb to a signal.</div>
+</td>
 </tr>
 <tr class="row-color">
 <th class="col-first" scope="row"><a href="SAM.html" title="class in wellen">SAM</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">generates low-fi text-to-speech audio synthesis.</div>
+</td>
 </tr>
 <tr class="alt-color">
 <th class="col-first" scope="row"><a href="Sampler.html" title="class in wellen">Sampler</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">plays back an array of samples at different speeds.</div>
+</td>
 </tr>
 <tr class="row-color">
 <th class="col-first" scope="row"><a href="Scale.html" title="class in wellen">Scale</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block"><a href="Scale.html" title="class in wellen"><code>Scale</code></a> supplies a collection of musical scales.</div>
+</td>
 </tr>
 <tr class="alt-color">
 <th class="col-first" scope="row"><a href="Sequencer.html" title="class in wellen">Sequencer</a>&lt;T&gt;</th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">a container for values ( e.g musical notes ) that can be played back step by step.</div>
+</td>
 </tr>
 <tr class="row-color">
 <th class="col-first" scope="row"><a href="SpeechSynthesis.html" title="class in wellen">SpeechSynthesis</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">makes use of the internal MacOS speech engine to produce text-to-speech output.</div>
+</td>
 </tr>
 <tr class="alt-color">
 <th class="col-first" scope="row"><a href="Tone.html" title="class in wellen">Tone</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block"><a href="Tone.html" title="class in wellen"><code>Tone</code></a> handles instruments and the playing of musical notes.</div>
+</td>
 </tr>
 <tr class="row-color">
 <th class="col-first" scope="row"><a href="ToneEngine.html" title="class in wellen">ToneEngine</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">the underlying engine that is used by <a href="Tone.html" title="class in wellen"><code>Tone</code></a> to handle instruments.</div>
+</td>
 </tr>
 <tr class="alt-color">
 <th class="col-first" scope="row"><a href="ToneEngineInternal.html" title="class in wellen">ToneEngineInternal</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">implementation of <a href="ToneEngine.html" title="class in wellen"><code>ToneEngine</code></a> using internal DSP audio processing.</div>
+</td>
 </tr>
 <tr class="row-color">
 <th class="col-first" scope="row"><a href="ToneEngineMIDI.html" title="class in wellen">ToneEngineMIDI</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">implementation of <a href="ToneEngine.html" title="class in wellen"><code>ToneEngine</code></a> sending MIDI messages to external MIDI devices.</div>
+</td>
 </tr>
 <tr class="alt-color">
 <th class="col-first" scope="row"><a href="ToneEngineOSC.html" title="class in wellen">ToneEngineOSC</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">implementation of <a href="ToneEngine.html" title="class in wellen"><code>ToneEngine</code></a> sending OSC messages to external network devices.</div>
+</td>
 </tr>
 <tr class="row-color">
 <th class="col-first" scope="row"><a href="Trigger.html" title="class in wellen">Trigger</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">generates an event from an oscillating input signal.</div>
+</td>
 </tr>
 <tr class="alt-color">
 <th class="col-first" scope="row"><a href="Vocoder.html" title="class in wellen">Vocoder</a></th>
 <td class="col-last">
-<div class="block">*voclib* an implementation of a traditional channel vocoder by Philip Bennefall from
- https://github.com/blastbay/voclib.</div>
+<div class="block">superimposes a modulator signal ( e.g a human voice ) onto a carrier signal ( e.g sawtooth oscillator ).</div>
 </td>
 </tr>
 <tr class="row-color">
 <th class="col-first" scope="row"><a href="WAVConverter.html" title="class in wellen">WAVConverter</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">parses sample data to WAV file format ( as bytes ) and vice versa.</div>
+</td>
 </tr>
 <tr class="alt-color">
 <th class="col-first" scope="row"><a href="WAVConverter.Info.html" title="class in wellen">WAVConverter.Info</a></th>
@@ -304,11 +381,15 @@ loadScripts(document, 'script');</script>
 </tr>
 <tr class="row-color">
 <th class="col-first" scope="row"><a href="Wavetable.html" title="class in wellen">Wavetable</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">plays back a chunk of samples ( e.g waveforms like sine, triangle, saw or square waves ) at different frequencies.</div>
+</td>
 </tr>
 <tr class="alt-color">
 <th class="col-first" scope="row"><a href="Wellen.html" title="class in wellen">Wellen</a></th>
-<td class="col-last">&nbsp;</td>
+<td class="col-last">
+<div class="block">contains constants and utility methods for the wellen library.</div>
+</td>
 </tr>
 </tbody>
 </table>

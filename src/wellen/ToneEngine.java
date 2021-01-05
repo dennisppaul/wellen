@@ -23,6 +23,9 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * the underlying engine that is used by {@link wellen.Tone} to handle instruments.
+ */
 public abstract class ToneEngine {
 
     // @TODO(add javadoc to abstract classes)
@@ -34,6 +37,36 @@ public abstract class ToneEngine {
 
     ToneEngine() {
         mTimer = new Timer();
+    }
+
+    public static ToneEngine create() {
+        return new ToneEngineInternal();
+    }
+
+    public static ToneEngine create(String... pName) {
+        if (pName.length > 0) {
+            if (pName[0].equalsIgnoreCase(Wellen.TONE_ENGINE_INTERNAL)) {
+                return new ToneEngineInternal();
+            } else if (pName[0].equalsIgnoreCase(Wellen.TONE_ENGINE_MIDI) && pName.length == 2) {
+                return new ToneEngineMIDI(pName[1]);
+            } else if (pName[0].equalsIgnoreCase(Wellen.TONE_ENGINE_OSC) && pName.length >= 2) {
+                if (pName.length == 2) {
+                    return new ToneEngineOSC(pName[1]);
+                } else if (pName.length == 3) {
+                    try {
+                        final String mIPTransmit = pName[1];
+                        final int mPortTransmit = Integer.parseInt(pName[2]);
+                        return new ToneEngineOSC(mIPTransmit, mPortTransmit);
+                    } catch (NumberFormatException e) {
+                        System.err.println("+++ WARNING @" + ToneEngine.class.getSimpleName() + ".createEngine" + " " + "/" + " could not parse ports");
+                    }
+                }
+                return new ToneEngineOSC();
+            }
+            System.err.println("+++ WARNING @" + ToneEngine.class.getSimpleName() + ".createEngine" + " / could not " + "find specified tone engine: " + pName[0]);
+            System.err.println("+++ hint: check engine name and number of parameters");
+        }
+        return create();
     }
 
     /**
@@ -93,38 +126,6 @@ public abstract class ToneEngine {
 
     public float[] get_buffer_right() {
         return null;
-    }
-
-    public static ToneEngine create() {
-        return new ToneEngineInternal();
-    }
-
-    public static ToneEngine create(String... pName) {
-        if (pName.length > 0) {
-            if (pName[0].equalsIgnoreCase(Wellen.TONE_ENGINE_INTERNAL)) {
-                return new ToneEngineInternal();
-            } else if (pName[0].equalsIgnoreCase(Wellen.TONE_ENGINE_MIDI) && pName.length == 2) {
-                return new ToneEngineMIDI(pName[1]);
-            } else if (pName[0].equalsIgnoreCase(Wellen.TONE_ENGINE_OSC) && pName.length >= 2) {
-                if (pName.length == 2) {
-                    return new ToneEngineOSC(pName[1]);
-                } else if (pName.length == 3) {
-                    try {
-                        final String mIPTransmit = pName[1];
-                        final int mPortTransmit = Integer.parseInt(pName[2]);
-                        return new ToneEngineOSC(mIPTransmit, mPortTransmit);
-                    } catch (NumberFormatException e) {
-                        System.err.println("+++ WARNING @" + ToneEngine.class.getSimpleName() + ".createEngine" + " /" +
-                                                   " could not parse ports");
-                    }
-                }
-                return new ToneEngineOSC();
-            }
-            System.err.println("+++ WARNING @" + ToneEngine.class.getSimpleName() + ".createEngine" + " / could not " +
-                                       "find specified tone engine: " + pName[0]);
-            System.err.println("+++ hint: check engine name and number of parameters");
-        }
-        return create();
     }
 
     private class NoteOffTask extends TimerTask {

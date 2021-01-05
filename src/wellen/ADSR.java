@@ -1,5 +1,24 @@
 package wellen;
 
+/**
+ * envelope with (A)ttack (D)ecay (S)ustain (R)elease stages: {@link wellen.ADSR}
+ * <p>
+ * it is usually used to control the amplitude of an *oscillator*.
+ *
+ * <pre><code>
+ *                |----->|-->|   |-->|
+ *                |---A--|-D-|-S-|-R-|
+ *                |      /\
+ *                |     /  \
+ *                |    /    \_____
+ *                |   /        ^  \
+ *                |  /         |   \
+ *                | /          |    \
+ *                |/___________|_____\
+ *                |
+ *                |Press          |Release
+ *  </code></pre>
+ */
 public class ADSR implements DSPNodeOutput {
 
     /*
@@ -11,9 +30,7 @@ public class ADSR implements DSPNodeOutput {
      *       +---------------------+
      *
      *       @description(
-     *          the ADSR node provides a envelope with four different stages:
-     *          (A)ttack (D)ecay (S)ustain (R)elease. it is usually used to
-     *          control the amplitude of an *oscillator*.
+     *
      *
      *          |----->|-->|   |-->|
      *          |---A--|-D-|-S-|-R-|
@@ -31,13 +48,9 @@ public class ADSR implements DSPNodeOutput {
      *
      */
 
-    public static final String ADSR_DIAGRAM = "    ^    /\\\n"
-                                              + "    |   /  \\\n"
-                                              + "    |  /    \\______\n"
-                                              + "    | /            \\\n"
-                                              + "    |/              \\\n"
-                                              + "    +---------------------->\n"
-                                              + "    [A   ][D][S   ][R]\n";
+    public static final String ADSR_DIAGRAM = "    ^    /\\\n" + "    |   /  \\\n" + "    |  /    \\______\n" + "    "
+            + "| /            \\\n" + "    |/              \\\n" + "    +---------------------->\n" + "    [A   " +
+            "][D][S " + "  ][R]\n";
     private static final boolean DEBUG_ADSR = false;
     private final int mSamplingRate;
     private final float FADE_TO_ZERO_RATE_SEC;

@@ -24,6 +24,9 @@ import java.util.Timer;
 
 import static processing.core.PApplet.constrain;
 
+/**
+ * implementation of {@link wellen.ToneEngine} sending MIDI messages to external MIDI devices.
+ */
 public class ToneEngineMIDI extends ToneEngine {
 
     // @TODO(add `InstrumentMIDI`)
@@ -44,6 +47,17 @@ public class ToneEngineMIDI extends ToneEngine {
         mTimer = new Timer();
         mMidiOut = new MidiOut(pMidiOutputDeviceID);
         prepareExitHandler();
+    }
+
+    public static String get_proper_device_name(String pMidiOutputDeviceName) {
+        String[] mDevices = MidiOut.availableOutputs();
+        for (String mDevice : mDevices) {
+            if (mDevice.startsWith(pMidiOutputDeviceName)) {
+                return mDevice;
+            }
+        }
+        System.err.println("+++ @" + ToneEngineMIDI.class.getSimpleName() + " / couldn't find MIDI device: " + pMidiOutputDeviceName);
+        return null;
     }
 
     public void note_on(int note, int velocity) {
@@ -103,16 +117,5 @@ public class ToneEngineMIDI extends ToneEngine {
                 mMidiOut.close();
             }
         }));
-    }
-
-    public static String get_proper_device_name(String pMidiOutputDeviceName) {
-        String[] mDevices = MidiOut.availableOutputs();
-        for (String mDevice : mDevices) {
-            if (mDevice.startsWith(pMidiOutputDeviceName)) {
-                return mDevice;
-            }
-        }
-        System.err.println("+++ @" + ToneEngineMIDI.class.getSimpleName() + " / couldn't find MIDI device: " + pMidiOutputDeviceName);
-        return null;
     }
 }

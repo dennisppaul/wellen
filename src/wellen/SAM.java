@@ -24,6 +24,9 @@ package wellen;
 import java.net.URL;
 import java.nio.file.FileSystems;
 
+/**
+ * generates low-fi text-to-speech audio synthesis.
+ */
 public class SAM implements DSPNodeOutput {
 
     // @TODO(phonemes are not working atm. `say(String, boolean)`)

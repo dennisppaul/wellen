@@ -84,6 +84,7 @@ loadScripts(document, 'script');</script>
 <pre>public class <span class="type-name-label">BeatDSP</span>
 extends java.lang.Object
 implements <a href="DSPNodeInput.html" title="interface in wellen">DSPNodeInput</a></pre>
+<div class="block">similar to <a href="Beat.html" title="class in wellen"><code>Beat</code></a> with the exception that events are triggered from <a href="DSP.html" title="class in wellen"><code>DSP</code></a>.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -197,6 +198,19 @@ int&nbsp;pSamplingRate)</span></div>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="start(java.lang.Object,int)">
+<h3>start</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="BeatDSP.html" title="class in wellen">BeatDSP</a></span>&nbsp;<span class="member-name">start</span>&#8203;(<span class="parameters">java.lang.Object&nbsp;pListener,
+int&nbsp;pSamplingRate)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="start(java.lang.Object)">
+<h3>start</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="BeatDSP.html" title="class in wellen">BeatDSP</a></span>&nbsp;<span class="member-name">start</span>&#8203;(<span class="parameters">java.lang.Object&nbsp;pListener)</span></div>
+</section>
+</li>
+<li>
 <section class="detail" id="set_bpm(float)">
 <h3>set_bpm</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">set_bpm</span>&#8203;(<span class="parameters">float&nbsp;pBPM)</span></div>
@@ -216,19 +230,6 @@ int&nbsp;pSamplingRate)</span></div>
 <dt>Specified by:</dt>
 <dd><code><a href="DSPNodeInput.html#input(float)">input</a></code>&nbsp;in interface&nbsp;<code><a href="DSPNodeInput.html" title="interface in wellen">DSPNodeInput</a></code></dd>
 </dl>
-</section>
-</li>
-<li>
-<section class="detail" id="start(java.lang.Object,int)">
-<h3>start</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="BeatDSP.html" title="class in wellen">BeatDSP</a></span>&nbsp;<span class="member-name">start</span>&#8203;(<span class="parameters">java.lang.Object&nbsp;pListener,
-int&nbsp;pSamplingRate)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="start(java.lang.Object)">
-<h3>start</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="BeatDSP.html" title="class in wellen">BeatDSP</a></span>&nbsp;<span class="member-name">start</span>&#8203;(<span class="parameters">java.lang.Object&nbsp;pListener)</span></div>
 </section>
 </li>
 </ul>

@@ -19,12 +19,15 @@
 
 package wellen;
 
-import processing.core.PApplet;
 import processing.core.PGraphics;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+/**
+ * handles audio signal processing. after <code>start(...)</code> is called the processing continously calls
+ * <code>audioblock(...)</code> requesting blocks of audio samples.
+ */
 public class DSP implements AudioBufferRenderer {
 
     private static final String METHOD_NAME = "audioblock";
@@ -69,56 +72,26 @@ public class DSP implements AudioBufferRenderer {
         }
     }
 
-    public void audioblock(float[][] pOutputSamples, float[][] pInputSamples) {
-        try {
-            if (mNumberOutputChannels == 1 && mNumberInputChannels == 0) {
-                mMethod.invoke(mListener, pOutputSamples[0]);
-                mCurrentBufferLeft = pOutputSamples[0];
-            } else if (mNumberOutputChannels == 1 && mNumberInputChannels == 1) {
-                mMethod.invoke(mListener, pOutputSamples[0], pInputSamples[0]);
-                mCurrentBufferLeft = pOutputSamples[0];
-            } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 0) {
-                mMethod.invoke(mListener, pOutputSamples[0], pOutputSamples[1]);
-                mCurrentBufferLeft = pOutputSamples[0];
-                mCurrentBufferRight = pOutputSamples[1];
-            } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 1) {
-                mMethod.invoke(mListener, pOutputSamples[0], pOutputSamples[1], pInputSamples[0]);
-                mCurrentBufferLeft = pOutputSamples[0];
-                mCurrentBufferRight = pOutputSamples[1];
-            } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 2) {
-                mMethod.invoke(mListener, pOutputSamples[0], pOutputSamples[1], pInputSamples[0], pInputSamples[1]);
-                mCurrentBufferLeft = pOutputSamples[0];
-                mCurrentBufferRight = pOutputSamples[1];
-            }
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException ex) {
-            System.err.println("+++ @" + DSP.class.getSimpleName() + " / error in audioblock: " + ex.getCause());
-            ex.printStackTrace();
-        }
+    public static DSP start(Object pObject) {
+        return start(pObject, 1, 0);
     }
 
-    public static DSP start(PApplet pPApplet) {
-        return start(pPApplet, 1, 0);
+    public static DSP start(Object pObject, int pNumberOutputChannels) {
+        return start(pObject, pNumberOutputChannels, 0);
     }
 
-    public static DSP start(PApplet pPApplet, int pNumberOutputChannels) {
-        return start(pPApplet, pNumberOutputChannels, 0);
-    }
-
-    public static DSP start(PApplet pPApplet, int pNumberOutputChannels, int pNumberInputChannels) {
-        return start(pPApplet,
+    public static DSP start(Object pObject, int pNumberOutputChannels, int pNumberInputChannels) {
+        return start(pObject,
                      AudioBufferManager.DEFAULT,
                      pNumberOutputChannels,
                      AudioBufferManager.DEFAULT,
                      pNumberInputChannels);
     }
 
-    public static DSP start(PApplet pPApplet,
-                            int pOutputDevice,
-                            int pNumberOutputChannels,
-                            int pInputDevice,
+    public static DSP start(Object pObject, int pOutputDevice, int pNumberOutputChannels, int pInputDevice,
                             int pNumberInputChannels) {
         if (mInstance == null) {
-            mInstance = new DSP(pPApplet, pNumberOutputChannels, pNumberInputChannels);
+            mInstance = new DSP(pObject, pNumberOutputChannels, pNumberInputChannels);
             mAudioPlayer = new AudioBufferManager(mInstance,
                                                   Wellen.DEFAULT_SAMPLING_RATE,
                                                   Wellen.DEFAULT_AUDIOBLOCK_SIZE,
@@ -156,6 +129,33 @@ public class DSP implements AudioBufferRenderer {
 
     public static void draw_buffer(PGraphics g, float pWidth, float pHeight) {
         Wellen.draw_buffer(g, pWidth, pHeight, DSP.get_buffer());
+    }
+
+    public void audioblock(float[][] pOutputSamples, float[][] pInputSamples) {
+        try {
+            if (mNumberOutputChannels == 1 && mNumberInputChannels == 0) {
+                mMethod.invoke(mListener, pOutputSamples[0]);
+                mCurrentBufferLeft = pOutputSamples[0];
+            } else if (mNumberOutputChannels == 1 && mNumberInputChannels == 1) {
+                mMethod.invoke(mListener, pOutputSamples[0], pInputSamples[0]);
+                mCurrentBufferLeft = pOutputSamples[0];
+            } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 0) {
+                mMethod.invoke(mListener, pOutputSamples[0], pOutputSamples[1]);
+                mCurrentBufferLeft = pOutputSamples[0];
+                mCurrentBufferRight = pOutputSamples[1];
+            } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 1) {
+                mMethod.invoke(mListener, pOutputSamples[0], pOutputSamples[1], pInputSamples[0]);
+                mCurrentBufferLeft = pOutputSamples[0];
+                mCurrentBufferRight = pOutputSamples[1];
+            } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 2) {
+                mMethod.invoke(mListener, pOutputSamples[0], pOutputSamples[1], pInputSamples[0], pInputSamples[1]);
+                mCurrentBufferLeft = pOutputSamples[0];
+                mCurrentBufferRight = pOutputSamples[1];
+            }
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException ex) {
+            System.err.println("+++ @" + DSP.class.getSimpleName() + " / error in audioblock: " + ex.getCause());
+            ex.printStackTrace();
+        }
     }
 }
 

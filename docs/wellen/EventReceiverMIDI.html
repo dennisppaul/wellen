@@ -84,6 +84,7 @@ loadScripts(document, 'script');</script>
 <pre>public class <span class="type-name-label">EventReceiverMIDI</span>
 extends java.lang.Object
 implements <a href="MidiInListener.html" title="interface in wellen">MidiInListener</a></pre>
+<div class="block">listens to incoming MIDI messages.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -217,6 +218,13 @@ java.lang.String&nbsp;pMidiInputDevice)</code></th>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="start(java.lang.Object,java.lang.String)">
+<h3>start</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="EventReceiverMIDI.html" title="class in wellen">EventReceiverMIDI</a></span>&nbsp;<span class="member-name">start</span>&#8203;(<span class="parameters">java.lang.Object&nbsp;pParent,
+java.lang.String&nbsp;pMidiInputDevice)</span></div>
+</section>
+</li>
+<li>
 <section class="detail" id="receiveProgramChange(int,int,int)">
 <h3>receiveProgramChange</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">receiveProgramChange</span>&#8203;(<span class="parameters">int&nbsp;channel,
@@ -311,13 +319,6 @@ int&nbsp;velocity)</span></div>
 <dt>Specified by:</dt>
 <dd><code><a href="MidiInListener.html#clock_song_position_pointer(int)">clock_song_position_pointer</a></code>&nbsp;in interface&nbsp;<code><a href="MidiInListener.html" title="interface in wellen">MidiInListener</a></code></dd>
 </dl>
-</section>
-</li>
-<li>
-<section class="detail" id="start(java.lang.Object,java.lang.String)">
-<h3>start</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="EventReceiverMIDI.html" title="class in wellen">EventReceiverMIDI</a></span>&nbsp;<span class="member-name">start</span>&#8203;(<span class="parameters">java.lang.Object&nbsp;pParent,
-java.lang.String&nbsp;pMidiInputDevice)</span></div>
 </section>
 </li>
 </ul>

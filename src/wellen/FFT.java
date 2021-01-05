@@ -40,10 +40,12 @@ package wellen;
 import java.lang.reflect.Array;
 
 /**
- * FFT stands for Fast Fourier Transform. It is an efficient way to calculate the Complex Discrete Fourier Transform.
- * There is not much to say about this class other than the fact that when you want to analyze the spectrum of an audio
- * buffer you will almost always use this class. One restriction of this class is that the audio buffers you want to
- * analyze must have a length that is a power of two. If you try to construct an FFT with a
+ * implements the Fast Fourier Transform (FFT).
+ * <p>
+ * It is an efficient way to calculate the Complex Discrete Fourier Transform. There is not much to say about this class
+ * other than the fact that when you want to analyze the spectrum of an audio buffer you will almost always use this
+ * class. One restriction of this class is that the audio buffers you want to analyze must have a length that is a power
+ * of two. If you try to construct an FFT with a
  * <code>timeSize</code> that is not a power of two, an IllegalArgumentException will be
  * thrown.
  *
@@ -70,8 +72,7 @@ public class FFT extends FourierTransform {
     public FFT(int timeSize, float sampleRate) {
         super(timeSize, sampleRate);
         if ((timeSize & (timeSize - 1)) != 0) {
-            throw new IllegalArgumentException(
-                    "FFT: timeSize must be a power of two.");
+            throw new IllegalArgumentException("FFT: timeSize must be a power of two.");
         }
         buildReverseTable();
         buildTrigTables();
@@ -191,6 +192,54 @@ public class FFT extends FourierTransform {
         imag = new float[timeSize];
     }
 
+    // bit reverse real[] and imag[]
+    private void bitReverseComplex() {
+        float[] revReal = new float[real.length];
+        float[] revImag = new float[imag.length];
+        for (int i = 0; i < real.length; i++) {
+            revReal[i] = real[reverse[i]];
+            revImag[i] = imag[reverse[i]];
+        }
+        real = revReal;
+        imag = revImag;
+    }
+
+    // copies the values in the samples array into the real array
+    // in bit reversed order. the imag array is filled with zeros.
+    private void bitReverseSamples(float[] samples) {
+        for (int i = 0; i < samples.length; i++) {
+            real[i] = samples[reverse[i]];
+            imag[i] = 0.0f;
+        }
+    }
+
+    private void buildReverseTable() {
+        int N = timeSize;
+        reverse = new int[N];
+
+        // set up the bit reversing table
+        reverse[0] = 0;
+        for (int limit = 1, bit = N / 2; limit < N; limit <<= 1, bit >>= 1) {
+            for (int i = 0; i < limit; i++) {
+                reverse[i + limit] = reverse[i] + bit;
+            }
+        }
+    }
+
+    private void buildTrigTables() {
+        int N = timeSize;
+        sinlookup = new float[N];
+        coslookup = new float[N];
+        for (int i = 0; i < N; i++) {
+            sinlookup[i] = (float) Math.sin(-(float) Math.PI / i);
+            coslookup[i] = (float) Math.cos(-(float) Math.PI / i);
+        }
+    }
+
+    private float cos(int i) {
+        return coslookup[i];
+    }
+
     // performs an in-place fft on the data in the real and imag arrays
     // bit reversing is not necessary as the data will already be bit reversed
     private void fft() {
@@ -222,56 +271,8 @@ public class FFT extends FourierTransform {
         }
     }
 
-    private void buildReverseTable() {
-        int N = timeSize;
-        reverse = new int[N];
-
-        // set up the bit reversing table
-        reverse[0] = 0;
-        for (int limit = 1, bit = N / 2; limit < N; limit <<= 1, bit >>= 1) {
-            for (int i = 0; i < limit; i++) {
-                reverse[i + limit] = reverse[i] + bit;
-            }
-        }
-    }
-
-    // copies the values in the samples array into the real array
-    // in bit reversed order. the imag array is filled with zeros.
-    private void bitReverseSamples(float[] samples) {
-        for (int i = 0; i < samples.length; i++) {
-            real[i] = samples[reverse[i]];
-            imag[i] = 0.0f;
-        }
-    }
-
-    // bit reverse real[] and imag[]
-    private void bitReverseComplex() {
-        float[] revReal = new float[real.length];
-        float[] revImag = new float[imag.length];
-        for (int i = 0; i < real.length; i++) {
-            revReal[i] = real[reverse[i]];
-            revImag[i] = imag[reverse[i]];
-        }
-        real = revReal;
-        imag = revImag;
-    }
-
     private float sin(int i) {
         return sinlookup[i];
-    }
-
-    private float cos(int i) {
-        return coslookup[i];
-    }
-
-    private void buildTrigTables() {
-        int N = timeSize;
-        sinlookup = new float[N];
-        coslookup = new float[N];
-        for (int i = 0; i < N; i++) {
-            sinlookup[i] = (float) Math.sin(-(float) Math.PI / i);
-            coslookup[i] = (float) Math.cos(-(float) Math.PI / i);
-        }
     }
 
     /**
@@ -711,8 +712,8 @@ public class FFT extends FourierTransform {
         public void forward(float[] buffer, int startAt) {
             if (buffer.length - startAt < timeSize) {
                 throw new IllegalArgumentException("FourierTransform.forward: not enough samples in the buffer " +
-                                                   "between " + startAt + " and " + buffer.length + " to perform a " +
-                                                   "transform.");
+                                                           "between " + startAt + " and " + buffer.length + " to " +
+                                                           "perform a " + "transform.");
             }
 
             // copy the section of samples we want to analyze
@@ -768,12 +769,11 @@ public class FFT extends FourierTransform {
         // this enforces that responsibility
         protected abstract void allocateArrays();
 
-        protected void setComplex(float[] r, float[] i) {
-            if (real.length != r.length && imag.length != i.length) {
-                throw new IllegalArgumentException("This won't work");
-            } else {
-                System.arraycopy(r, 0, real, 0, r.length);
-                System.arraycopy(i, 0, imag, 0, i.length);
+        protected void doWindow(float[] samples) {
+            switch (whichWindow) {
+                case HAMMING:
+                    hamming(samples);
+                    break;
             }
         }
 
@@ -821,18 +821,19 @@ public class FFT extends FourierTransform {
             }
         }
 
-        protected void doWindow(float[] samples) {
-            switch (whichWindow) {
-                case HAMMING:
-                    hamming(samples);
-                    break;
-            }
-        }
-
         // windows the data in samples with a Hamming window
         protected void hamming(float[] samples) {
             for (int i = 0; i < samples.length; i++) {
                 samples[i] *= (0.54f - 0.46f * Math.cos(TWO_PI * i / (samples.length - 1)));
+            }
+        }
+
+        protected void setComplex(float[] r, float[] i) {
+            if (real.length != r.length && imag.length != i.length) {
+                throw new IllegalArgumentException("This won't work");
+            } else {
+                System.arraycopy(r, 0, real, 0, r.length);
+                System.arraycopy(i, 0, imag, 0, i.length);
             }
         }
     }
@@ -1329,12 +1330,11 @@ abstract class FourierTransform {
     // this enforces that responsibility
     protected abstract void allocateArrays();
 
-    protected void setComplex(float[] r, float[] i) {
-        if (real.length != r.length && imag.length != i.length) {
-            throw new IllegalArgumentException("This won't work");
-        } else {
-            System.arraycopy(r, 0, real, 0, r.length);
-            System.arraycopy(i, 0, imag, 0, i.length);
+    protected void doWindow(float[] samples) {
+        switch (whichWindow) {
+            case HAMMING:
+                hamming(samples);
+                break;
         }
     }
 
@@ -1382,18 +1382,19 @@ abstract class FourierTransform {
         }
     }
 
-    protected void doWindow(float[] samples) {
-        switch (whichWindow) {
-            case HAMMING:
-                hamming(samples);
-                break;
-        }
-    }
-
     // windows the data in samples with a Hamming window
     protected void hamming(float[] samples) {
         for (int i = 0; i < samples.length; i++) {
             samples[i] *= (0.54f - 0.46f * Math.cos(TWO_PI * i / (samples.length - 1)));
+        }
+    }
+
+    protected void setComplex(float[] r, float[] i) {
+        if (real.length != r.length && imag.length != i.length) {
+            throw new IllegalArgumentException("This won't work");
+        } else {
+            System.arraycopy(r, 0, real, 0, r.length);
+            System.arraycopy(i, 0, imag, 0, i.length);
         }
     }
 }

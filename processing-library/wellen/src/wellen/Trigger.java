@@ -22,6 +22,9 @@ package wellen;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+/**
+ * generates an event from an oscillating input signal.
+ */
 public class Trigger implements DSPNodeInput {
 
     private static final String METHOD_NAME = "trigger";
@@ -38,6 +41,10 @@ public class Trigger implements DSPNodeInput {
         } catch (NoSuchMethodException | SecurityException ex) {
             System.err.println("+++ @" + getClass().getSimpleName() + " / could not find `" + METHOD_NAME + "`");
         }
+    }
+
+    public static Trigger start(Object pListener) {
+        return new Trigger(pListener);
     }
 
     public void trigger_rising_edge(boolean pEnableRisingEdge) {
@@ -64,9 +71,5 @@ public class Trigger implements DSPNodeInput {
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
             ex.printStackTrace();
         }
-    }
-
-    public static Trigger start(Object pListener) {
-        return new Trigger(pListener);
     }
 }

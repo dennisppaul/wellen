@@ -22,10 +22,13 @@ package wellen;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+/**
+ * similar to {@link wellen.Beat} except that beat events are triggered by an external MIDI CLOCK signal.
+ */
 public class BeatMIDI implements MidiInListener {
 
-    private static final String METHOD_NAME = "beat";
     private static final int BPM_SAMPLER_SIZE = 12;
+    private static final String METHOD_NAME = "beat";
     public static boolean VERBOSE = false;
     private final Object mListener;
     private final float[] mBPMSampler = new float[BPM_SAMPLER_SIZE];
@@ -36,11 +39,11 @@ public class BeatMIDI implements MidiInListener {
     private long mBPMMeasure;
     private int mBPMSamplerCounter = 0;
 
-    public BeatMIDI(Object pListener, int pBPM) {
+    private BeatMIDI(Object pListener, int pBPM) {
         this(pListener);
     }
 
-    public BeatMIDI(Object pListener) {
+    private BeatMIDI(Object pListener) {
         mListener = pListener;
         mTickPPQNCounter = -1;
         try {
@@ -50,6 +53,21 @@ public class BeatMIDI implements MidiInListener {
         }
         mBPMMeasure = _timer();
         start();
+    }
+
+    public static BeatMIDI start(Object pListener, String pMidiInput) {
+        final BeatMIDI mBeatMIDI = new BeatMIDI(pListener);
+        MidiIn mMidiIn = new MidiIn(pMidiInput);
+        mMidiIn.addListener(mBeatMIDI);
+        return mBeatMIDI;
+    }
+
+    private static long _timer() {
+        return System.nanoTime();
+    }
+
+    private static double _timer_divider() {
+        return 1000000000;
     }
 
     public boolean running() {
@@ -167,20 +185,5 @@ public class BeatMIDI implements MidiInListener {
         }
         mBPMEstimate /= BPM_SAMPLER_SIZE;
         mBPMMeasure = _timer();
-    }
-
-    public static BeatMIDI start(Object pListener, String pMidiInput) {
-        final BeatMIDI mBeatMIDI = new BeatMIDI(pListener);
-        MidiIn mMidiIn = new MidiIn(pMidiInput);
-        mMidiIn.addListener(mBeatMIDI);
-        return mBeatMIDI;
-    }
-
-    private static long _timer() {
-        return System.nanoTime();
-    }
-
-    private static double _timer_divider() {
-        return 1000000000;
     }
 }

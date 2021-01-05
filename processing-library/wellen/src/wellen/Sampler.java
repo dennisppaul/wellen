@@ -21,6 +21,9 @@ package wellen;
 
 import processing.core.PApplet;
 
+/**
+ * plays back an array of samples at different speeds.
+ */
 public class Sampler implements DSPNodeOutput {
 
     private final float mSamplingRate;
@@ -72,7 +75,8 @@ public class Sampler implements DSPNodeOutput {
      * load the sample buffer from *raw* byte data. the method assumes a raw format with 32bit float in a value range
      * from -1.0 to 1.0.
      *
-     * @param pData         raw byte data ( assuming 4 bytes per sample, 32-bit float aka WAVE_FORMAT_IEEE_FLOAT_32BIT )
+     * @param pData         raw byte data ( assuming 4 bytes per sample, 32-bit float aka WAVE_FORMAT_IEEE_FLOAT_32BIT
+     *                      )
      * @param pLittleEndian true if byte data is arranged in little endian order
      * @return instance with data loaded
      */

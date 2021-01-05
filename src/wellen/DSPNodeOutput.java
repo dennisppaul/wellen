@@ -19,6 +19,9 @@
 
 package wellen;
 
+/**
+ * interface implemented by classes that create output signals.
+ */
 public interface DSPNodeOutput {
     float output();
 }

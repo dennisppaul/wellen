@@ -79,6 +79,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <pre>public class <span class="type-name-label">Wellen</span>
 extends java.lang.Object</pre>
+<div class="block">contains constants and utility methods for the wellen library.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -159,135 +160,180 @@ extends java.lang.Object</pre>
 </tr>
 <tr class="alt-color">
 <td class="col-first"><code>static int</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#FILTER_MODE_BANDPASS">FILTER_MODE_BANDPASS</a></span></code></th>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#EVENT_CHANNEL">EVENT_CHANNEL</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
 <tr class="row-color">
+<td class="col-first"><code>static int</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#EVENT_CONTROLCHANGE">EVENT_CONTROLCHANGE</a></span></code></th>
+<td class="col-last">&nbsp;</td>
+</tr>
+<tr class="alt-color">
+<td class="col-first"><code>static int</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#EVENT_NOTE">EVENT_NOTE</a></span></code></th>
+<td class="col-last">&nbsp;</td>
+</tr>
+<tr class="row-color">
+<td class="col-first"><code>static int</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#EVENT_NOTE_OFF">EVENT_NOTE_OFF</a></span></code></th>
+<td class="col-last">&nbsp;</td>
+</tr>
+<tr class="alt-color">
+<td class="col-first"><code>static int</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#EVENT_NOTE_ON">EVENT_NOTE_ON</a></span></code></th>
+<td class="col-last">&nbsp;</td>
+</tr>
+<tr class="row-color">
+<td class="col-first"><code>static int</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#EVENT_PITCHBEND">EVENT_PITCHBEND</a></span></code></th>
+<td class="col-last">&nbsp;</td>
+</tr>
+<tr class="alt-color">
+<td class="col-first"><code>static int</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#EVENT_PROGRAMCHANGE">EVENT_PROGRAMCHANGE</a></span></code></th>
+<td class="col-last">&nbsp;</td>
+</tr>
+<tr class="row-color">
+<td class="col-first"><code>static int</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#EVENT_UNDEFINED">EVENT_UNDEFINED</a></span></code></th>
+<td class="col-last">&nbsp;</td>
+</tr>
+<tr class="alt-color">
+<td class="col-first"><code>static int</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#EVENT_VELOCITY">EVENT_VELOCITY</a></span></code></th>
+<td class="col-last">&nbsp;</td>
+</tr>
+<tr class="row-color">
+<td class="col-first"><code>static int</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#FILTER_MODE_BANDPASS">FILTER_MODE_BANDPASS</a></span></code></th>
+<td class="col-last">&nbsp;</td>
+</tr>
+<tr class="alt-color">
 <td class="col-first"><code>static int</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#FILTER_MODE_HIGHPASS">FILTER_MODE_HIGHPASS</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="alt-color">
+<tr class="row-color">
 <td class="col-first"><code>static int</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#FILTER_MODE_LOWPASS">FILTER_MODE_LOWPASS</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="row-color">
+<tr class="alt-color">
 <td class="col-first"><code>static int</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#NO_CHANNELS">NO_CHANNELS</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="alt-color">
+<tr class="row-color">
 <td class="col-first"><code>static int</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#NOISE_GAUSSIAN_WHITE">NOISE_GAUSSIAN_WHITE</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="row-color">
+<tr class="alt-color">
 <td class="col-first"><code>static int</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#NOISE_GAUSSIAN_WHITE2">NOISE_GAUSSIAN_WHITE2</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="alt-color">
+<tr class="row-color">
 <td class="col-first"><code>static int</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#NOISE_PINK">NOISE_PINK</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="row-color">
+<tr class="alt-color">
 <td class="col-first"><code>static int</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#NOISE_PINK2">NOISE_PINK2</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="alt-color">
+<tr class="row-color">
 <td class="col-first"><code>static int</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#NOISE_PINK3">NOISE_PINK3</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="row-color">
+<tr class="alt-color">
 <td class="col-first"><code>static int</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#NOISE_SIMPLEX">NOISE_SIMPLEX</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="alt-color">
+<tr class="row-color">
 <td class="col-first"><code>static int</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#NOISE_WHITE">NOISE_WHITE</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="row-color">
+<tr class="alt-color">
 <td class="col-first"><code>static int</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#OSC_NOISE">OSC_NOISE</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="alt-color">
+<tr class="row-color">
 <td class="col-first"><code>static int</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#OSC_SAWTOOTH">OSC_SAWTOOTH</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="row-color">
+<tr class="alt-color">
 <td class="col-first"><code>static int</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#OSC_SINE">OSC_SINE</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="alt-color">
+<tr class="row-color">
 <td class="col-first"><code>static int</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#OSC_SQUARE">OSC_SQUARE</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="row-color">
+<tr class="alt-color">
 <td class="col-first"><code>static int</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#OSC_TRIANGLE">OSC_TRIANGLE</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="alt-color">
+<tr class="row-color">
 <td class="col-first"><code>static java.lang.String</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#TONE_ENGINE_INTERNAL">TONE_ENGINE_INTERNAL</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="row-color">
+<tr class="alt-color">
 <td class="col-first"><code>static int</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#TONE_ENGINE_INTERNAL_WITH_NO_OUTPUT">TONE_ENGINE_INTERNAL_WITH_NO_OUTPUT</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="alt-color">
+<tr class="row-color">
 <td class="col-first"><code>static java.lang.String</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#TONE_ENGINE_MIDI">TONE_ENGINE_MIDI</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="row-color">
+<tr class="alt-color">
 <td class="col-first"><code>static java.lang.String</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#TONE_ENGINE_OSC">TONE_ENGINE_OSC</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="alt-color">
+<tr class="row-color">
 <td class="col-first"><code>static int</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#WAV_FORMAT_IEEE_FLOAT_32BIT">WAV_FORMAT_IEEE_FLOAT_32BIT</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="row-color">
+<tr class="alt-color">
 <td class="col-first"><code>static int</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#WAV_FORMAT_PCM">WAV_FORMAT_PCM</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="alt-color">
+<tr class="row-color">
 <td class="col-first"><code>static int</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#WAVESHAPE_NOISE">WAVESHAPE_NOISE</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="row-color">
+<tr class="alt-color">
 <td class="col-first"><code>static int</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#WAVESHAPE_SAWTOOTH">WAVESHAPE_SAWTOOTH</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="alt-color">
+<tr class="row-color">
 <td class="col-first"><code>static int</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#WAVESHAPE_SINE">WAVESHAPE_SINE</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="row-color">
+<tr class="alt-color">
 <td class="col-first"><code>static int</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#WAVESHAPE_SQUARE">WAVESHAPE_SQUARE</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="alt-color">
+<tr class="row-color">
 <td class="col-first"><code>static int</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#WAVESHAPE_TRIANGLE">WAVESHAPE_TRIANGLE</a></span></code></th>
 <td class="col-last">&nbsp;</td>
@@ -916,6 +962,96 @@ float&nbsp;pMax)</code></th>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd><a href="../constant-values.html#wellen.Wellen.WAV_FORMAT_PCM">Constant Field Values</a></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="EVENT_UNDEFINED">
+<h3>EVENT_UNDEFINED</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="member-name">EVENT_UNDEFINED</span></div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd><a href="../constant-values.html#wellen.Wellen.EVENT_UNDEFINED">Constant Field Values</a></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="EVENT_NOTE_ON">
+<h3>EVENT_NOTE_ON</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="member-name">EVENT_NOTE_ON</span></div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd><a href="../constant-values.html#wellen.Wellen.EVENT_NOTE_ON">Constant Field Values</a></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="EVENT_NOTE_OFF">
+<h3>EVENT_NOTE_OFF</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="member-name">EVENT_NOTE_OFF</span></div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd><a href="../constant-values.html#wellen.Wellen.EVENT_NOTE_OFF">Constant Field Values</a></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="EVENT_CONTROLCHANGE">
+<h3>EVENT_CONTROLCHANGE</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="member-name">EVENT_CONTROLCHANGE</span></div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd><a href="../constant-values.html#wellen.Wellen.EVENT_CONTROLCHANGE">Constant Field Values</a></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="EVENT_PITCHBEND">
+<h3>EVENT_PITCHBEND</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="member-name">EVENT_PITCHBEND</span></div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd><a href="../constant-values.html#wellen.Wellen.EVENT_PITCHBEND">Constant Field Values</a></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="EVENT_PROGRAMCHANGE">
+<h3>EVENT_PROGRAMCHANGE</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="member-name">EVENT_PROGRAMCHANGE</span></div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd><a href="../constant-values.html#wellen.Wellen.EVENT_PROGRAMCHANGE">Constant Field Values</a></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="EVENT_CHANNEL">
+<h3>EVENT_CHANNEL</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="member-name">EVENT_CHANNEL</span></div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd><a href="../constant-values.html#wellen.Wellen.EVENT_CHANNEL">Constant Field Values</a></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="EVENT_NOTE">
+<h3>EVENT_NOTE</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="member-name">EVENT_NOTE</span></div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd><a href="../constant-values.html#wellen.Wellen.EVENT_NOTE">Constant Field Values</a></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="EVENT_VELOCITY">
+<h3>EVENT_VELOCITY</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="member-name">EVENT_VELOCITY</span></div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd><a href="../constant-values.html#wellen.Wellen.EVENT_VELOCITY">Constant Field Values</a></dd>
 </dl>
 </section>
 </li>

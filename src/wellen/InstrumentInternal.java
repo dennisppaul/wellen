@@ -19,6 +19,9 @@
 
 package wellen;
 
+/**
+ * implementation of {@link wellen.Instrument} for the internal tone engine.
+ */
 public class InstrumentInternal extends Instrument implements DSPNodeOutput {
 
     public static final float DEFAULT_FREQUENCY = 220.0f;

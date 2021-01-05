@@ -79,6 +79,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <pre>public class <span class="type-name-label">SpeechSynthesis</span>
 extends java.lang.Object</pre>
+<div class="block">makes use of the internal MacOS speech engine to produce text-to-speech output.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -206,6 +207,12 @@ boolean&nbsp;remove_special_characters)</span></div>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="list()">
+<h3>list</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">java.lang.String[]</span>&nbsp;<span class="member-name">list</span>()</div>
+</section>
+</li>
+<li>
 <section class="detail" id="say(java.lang.String,java.lang.String,boolean,int,java.lang.String)">
 <h3>say</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">say</span>&#8203;(<span class="parameters">java.lang.String&nbsp;pVoice,
@@ -244,12 +251,6 @@ java.lang.String&nbsp;pFileName)</span></div>
 <h3>say</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">say</span>&#8203;(<span class="parameters">java.lang.String&nbsp;voice,
 java.lang.String&nbsp;message)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="list()">
-<h3>list</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">java.lang.String[]</span>&nbsp;<span class="member-name">list</span>()</div>
 </section>
 </li>
 </ul>

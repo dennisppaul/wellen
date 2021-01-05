@@ -19,6 +19,9 @@
 
 package wellen;
 
+/**
+ * MIDI constants
+ */
 public interface MIDI {
     int PPQN = 24;
 

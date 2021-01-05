@@ -19,6 +19,9 @@
 
 package wellen;
 
+/**
+ * applies reverb to a signal. {@link wellen.Reverb} uses an implementation of freeverb.
+ */
 public class Reverb implements DSPNodeProcess {
 
     /* a `FreeVerb` implementation taken from https://github.com/kmatheussen/soundengine */
@@ -156,8 +159,8 @@ public class Reverb implements DSPNodeProcess {
         wet = new GlideVar(fslider2, largest_diff);
     }
 
-    public void process(float[] pOutputSamplesLeft, float[] pOutputSamplesRight,
-                        float[] pInputSamplesLeft, float[] pInputSamplesRight) {
+    public void process(float[] pOutputSamplesLeft, float[] pOutputSamplesRight, float[] pInputSamplesLeft,
+                        float[] pInputSamplesRight) {
         fslider0 = damp.get();
         fslider1 = roomSize.get();
         fslider2 = wet.get();
@@ -197,8 +200,8 @@ public class Reverb implements DSPNodeProcess {
             fRec23_0 = ((fSlow1 * fRec22_1) + (fSlow0 * fRec23_1));
             fVec7[p] = (fTemp2 + (fSlow2 * fRec23_0));
             fRec22_0 = fVec7[(IOTA - 1116) & 2047];
-            float fTemp3 = (((((((fRec22_0 + fRec20_0) + fRec18_0) + fRec16_0
-                               ) + fRec14_0) + fRec12_0) + fRec10_0) + fRec8_0);
+            float fTemp3 =
+                    (((((((fRec22_0 + fRec20_0) + fRec18_0) + fRec16_0) + fRec14_0) + fRec12_0) + fRec10_0) + fRec8_0);
             fVec8[IOTA & 1023] = (fTemp3 + (0.5f * fRec6_1));
             fRec6_0 = fVec8[(IOTA - 556) & 1023];
             float fRec7 = (0 - (fTemp3 - fRec6_1));
@@ -236,8 +239,8 @@ public class Reverb implements DSPNodeProcess {
             fRec47_0 = ((fSlow1 * fRec46_1) + (fSlow0 * fRec47_1));
             fVec19[p] = (fTemp2 + (fSlow2 * fRec47_0));
             fRec46_0 = fVec19[(IOTA - 1139) & 2047];
-            float fTemp4 = (((((((fRec46_0 + fRec44_0) + fRec42_0) + fRec40_0
-                               ) + fRec38_0) + fRec36_0) + fRec34_0) + fRec32_0);
+            float fTemp4 =
+                    (((((((fRec46_0 + fRec44_0) + fRec42_0) + fRec40_0) + fRec38_0) + fRec36_0) + fRec34_0) + fRec32_0);
             fVec20[IOTA & 1023] = (fTemp4 + (0.5f * fRec30_1));
             fRec30_0 = fVec20[(IOTA - 579) & 1023];
             float fRec31 = (0 - (fTemp4 - fRec30_1));
@@ -340,10 +343,14 @@ public class Reverb implements DSPNodeProcess {
                 //
             } else if (to > current) {
                 current += largest_diff;
-                if (current > to) { current = to; }
+                if (current > to) {
+                    current = to;
+                }
             } else if (to < current) {
                 current -= largest_diff;
-                if (current < to) { current = to; }
+                if (current < to) {
+                    current = to;
+                }
             }
 
             return current;

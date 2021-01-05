@@ -26,6 +26,9 @@ import oscP5.OscP5;
 import java.util.ArrayList;
 import java.util.Timer;
 
+/**
+ * implementation of {@link wellen.ToneEngine} sending OSC messages to external network devices.
+ */
 public class ToneEngineOSC extends ToneEngine {
 
     // @TODO(add `InstrumentOSC`)

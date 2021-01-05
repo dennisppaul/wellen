@@ -84,6 +84,7 @@ loadScripts(document, 'script');</script>
 <pre>public class <span class="type-name-label">Sampler</span>
 extends java.lang.Object
 implements <a href="DSPNodeOutput.html" title="interface in wellen">DSPNodeOutput</a></pre>
+<div class="block">plays back an array of samples at different speeds.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -278,7 +279,8 @@ boolean&nbsp;pLittleEndian)</span></div>
  from -1.0 to 1.0.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>pData</code> - raw byte data ( assuming 4 bytes per sample, 32-bit float aka WAVE_FORMAT_IEEE_FLOAT_32BIT )</dd>
+<dd><code>pData</code> - raw byte data ( assuming 4 bytes per sample, 32-bit float aka WAVE_FORMAT_IEEE_FLOAT_32BIT
+                      )</dd>
 <dd><code>pLittleEndian</code> - true if byte data is arranged in little endian order</dd>
 <dt>Returns:</dt>
 <dd>instance with data loaded</dd>

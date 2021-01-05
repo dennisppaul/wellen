@@ -86,6 +86,7 @@ loadScripts(document, 'script');</script>
 <pre>public class <span class="type-name-label">ToneEngineInternal</span>
 extends <a href="ToneEngine.html" title="class in wellen">ToneEngine</a>
 implements <a href="AudioBufferRenderer.html" title="interface in wellen">AudioBufferRenderer</a></pre>
+<div class="block">implementation of <a href="ToneEngine.html" title="class in wellen"><code>ToneEngine</code></a> using internal DSP audio processing.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -354,6 +355,12 @@ int&nbsp;pNumberOfInstruments)</span></div>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="no_output()">
+<h3>no_output</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ToneEngineInternal.html" title="class in wellen">ToneEngineInternal</a></span>&nbsp;<span class="member-name">no_output</span>()</div>
+</section>
+</li>
+<li>
 <section class="detail" id="enable_reverb(boolean)">
 <h3>enable_reverb</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">enable_reverb</span>&#8203;(<span class="parameters">boolean&nbsp;pReverbEnabled)</span></div>
@@ -526,12 +533,6 @@ float[]&nbsp;pSamplesRight)</span></div>
 <section class="detail" id="register_audioblock_callback(wellen.ToneEngineInternal.AudioOutputCallback)">
 <h3>register_audioblock_callback</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">register_audioblock_callback</span>&#8203;(<span class="parameters"><a href="ToneEngineInternal.AudioOutputCallback.html" title="interface in wellen">ToneEngineInternal.AudioOutputCallback</a>&nbsp;pAudioblockCallback)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="no_output()">
-<h3>no_output</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ToneEngineInternal.html" title="class in wellen">ToneEngineInternal</a></span>&nbsp;<span class="member-name">no_output</span>()</div>
 </section>
 </li>
 </ul>

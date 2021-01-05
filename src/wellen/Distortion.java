@@ -19,6 +19,9 @@
 
 package wellen;
 
+/**
+ * distorts a signal with different distortion strategies.
+ */
 public class Distortion implements DSPNodeProcess {
 
     private static final int MAX_NUM_OF_ITERATIONS = 16;

@@ -21,6 +21,9 @@ package wellen;
 
 import processing.core.PApplet;
 
+/**
+ * supplies a series of note constants and methods to convert note values to frequencies and vice versa.
+ */
 public abstract class Note {
 
     public static final int NOTE_A0 = 9;
@@ -71,7 +74,7 @@ public abstract class Note {
         return (int) (Math.round(12 * log2(pFreq / pBaseFreq)) + pOffset);
     }
 
-    public static double log2(double num) {
+    private static double log2(double num) {
         return (Math.log(num) / Math.log(2));
     }
 }

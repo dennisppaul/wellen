@@ -32,6 +32,9 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
 
+/**
+ * contains constants and utility methods for the wellen library.
+ */
 public class Wellen {
 
     public static final int DEFAULT_AUDIOBLOCK_SIZE = 512;
@@ -73,6 +76,15 @@ public class Wellen {
     public static final int OSC_TRIANGLE = WAVESHAPE_TRIANGLE;
     public static final int WAV_FORMAT_IEEE_FLOAT_32BIT = 3;
     public static final int WAV_FORMAT_PCM = 1;
+    public static final int EVENT_UNDEFINED = -1;
+    public static final int EVENT_NOTE_ON = 0;
+    public static final int EVENT_NOTE_OFF = 1;
+    public static final int EVENT_CONTROLCHANGE = 2;
+    public static final int EVENT_PITCHBEND = 3;
+    public static final int EVENT_PROGRAMCHANGE = 4;
+    public static final int EVENT_CHANNEL = 0;
+    public static final int EVENT_NOTE = 1;
+    public static final int EVENT_VELOCITY = 2;
 
     public static int clamp127(int pValue) {
         return Math.max(0, Math.min(127, pValue));

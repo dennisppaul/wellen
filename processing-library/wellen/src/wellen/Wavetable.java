@@ -21,6 +21,9 @@ package wellen;
 
 import processing.core.PApplet;
 
+/**
+ * plays back a chunk of samples ( e.g waveforms like sine, triangle, saw or square waves ) at different frequencies.
+ */
 public class Wavetable implements DSPNodeOutput {
 
     public static final float DEFAULT_FREQUENCY = 220.0f;

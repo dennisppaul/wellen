@@ -25,6 +25,9 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.TargetDataLine;
 
+/**
+ * communicates with the underlying audio systems.
+ */
 public class AudioBufferManager extends Thread {
 
     /*
@@ -64,13 +67,8 @@ public class AudioBufferManager extends Thread {
              MONO);
     }
 
-    public AudioBufferManager(AudioBufferRenderer pSampleRenderer,
-                              int pSampleRate,
-                              int pSampleBufferSize,
-                              int pOutputDevice,
-                              int pNumOutputChannels,
-                              int pInputDevice,
-                              int pNumInputChannels) {
+    public AudioBufferManager(AudioBufferRenderer pSampleRenderer, int pSampleRate, int pSampleBufferSize,
+                              int pOutputDevice, int pNumOutputChannels, int pInputDevice, int pNumInputChannels) {
         mSampleRenderer = pSampleRenderer;
         mSampleRate = pSampleRate;
         mSampleBufferSize = pSampleBufferSize;

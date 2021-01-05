@@ -23,6 +23,9 @@ import java.util.Arrays;
 
 import static wellen.MIDI.PPQN;
 
+/**
+ * creates a sequence of notes based on an input pattern.
+ */
 public class Arpeggiator {
 
 // @TODO(add a `note_off` mechanism)
@@ -37,6 +40,23 @@ public class Arpeggiator {
         mPattern = new NoteStruct[pLengthInQuarterNotes];
         Arrays.fill(mPattern, new NoteStruct());
         reset();
+    }
+
+    public static boolean set(NoteStruct[] pPattern, int pPosition, int pScaler, int pNote, float pVelocity) {
+        return set(pPattern, pPosition * pScaler, pNote, pVelocity);
+    }
+
+    public static boolean set(NoteStruct[] pPattern, int pPosition, int pNote, float pVelocity) {
+        NoteStruct ns = new NoteStruct();
+        ns.active = true;
+        ns.note = pNote;
+        ns.velocity = pVelocity;
+        if (pPosition >= 0 && pPosition < pPattern.length) {
+            pPattern[pPosition] = ns;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public boolean step() {
@@ -94,23 +114,6 @@ public class Arpeggiator {
 
     public boolean pattern_32(int pPosition, int pNote, float pVelocity) {
         return set(mPattern, pPosition, PPQN / 8, pNote, pVelocity);
-    }
-
-    public static boolean set(NoteStruct[] pPattern, int pPosition, int pScaler, int pNote, float pVelocity) {
-        return set(pPattern, pPosition * pScaler, pNote, pVelocity);
-    }
-
-    public static boolean set(NoteStruct[] pPattern, int pPosition, int pNote, float pVelocity) {
-        NoteStruct ns = new NoteStruct();
-        ns.active = true;
-        ns.note = pNote;
-        ns.velocity = pVelocity;
-        if (pPosition >= 0 && pPosition < pPattern.length) {
-            pPattern[pPosition] = ns;
-            return true;
-        } else {
-            return false;
-        }
     }
 
     private static class NoteStruct {

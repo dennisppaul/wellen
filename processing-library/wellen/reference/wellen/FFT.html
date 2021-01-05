@@ -79,10 +79,12 @@ loadScripts(document, 'script');</script>
 <hr>
 <pre>public class <span class="type-name-label">FFT</span>
 extends java.lang.Object</pre>
-<div class="block">FFT stands for Fast Fourier Transform. It is an efficient way to calculate the Complex Discrete Fourier Transform.
- There is not much to say about this class other than the fact that when you want to analyze the spectrum of an audio
- buffer you will almost always use this class. One restriction of this class is that the audio buffers you want to
- analyze must have a length that is a power of two. If you try to construct an FFT with a
+<div class="block">implements the Fast Fourier Transform (FFT).
+ <p>
+ It is an efficient way to calculate the Complex Discrete Fourier Transform. There is not much to say about this class
+ other than the fact that when you want to analyze the spectrum of an audio buffer you will almost always use this
+ class. One restriction of this class is that the audio buffers you want to analyze must have a length that is a power
+ of two. If you try to construct an FFT with a
  <code>timeSize</code> that is not a power of two, an IllegalArgumentException will be
  thrown.</div>
 <dl class="notes">

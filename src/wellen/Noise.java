@@ -25,6 +25,9 @@ import static java.lang.Math.log;
 import static java.lang.Math.random;
 import static java.lang.Math.sqrt;
 
+/**
+ * supplies a collection of noise generators: white, gaussian, pink and simplex/perlin noise.
+ */
 public class Noise implements DSPNodeOutput {
     /*
      * @TODO( need(!) to understand noise in general and the implementations in detail ( i.e why do the gaussian and

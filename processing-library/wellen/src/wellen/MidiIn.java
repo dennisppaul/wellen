@@ -28,6 +28,9 @@ import javax.sound.midi.ShortMessage;
 import javax.sound.midi.Transmitter;
 import java.util.ArrayList;
 
+/**
+ * handles communication with MIDI devices
+ */
 public class MidiIn implements Receiver {
 
     private static final int SYSEX_START = 0xF0;
@@ -47,7 +50,7 @@ public class MidiIn implements Receiver {
             mMidiIn.setReceiver(this);
         } else {
             System.err.println("+++ Error @ MidiIn / could not find midi device: " + pMidiOutputDevice);
-            System.err.println("+++ availabel inputs are: ");
+            System.err.println("+++ available inputs are: ");
             Wellen.dumpMidiInputDevices();
         }
         mListener = new ArrayList<>();

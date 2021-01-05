@@ -19,6 +19,9 @@
 
 package wellen;
 
+/**
+ * interface for audio callbacks of {@link wellen.AudioBufferManager}
+ */
 public interface AudioBufferRenderer {
 
     void audioblock(float[][] pOutputSamples, float[][] pInputSamples);

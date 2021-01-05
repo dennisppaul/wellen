@@ -21,7 +21,9 @@ package wellen;
 
 
 /**
- * *voclib* an implementation of a traditional channel vocoder by Philip Bennefall from
+ * superimposes a modulator signal ( e.g a human voice ) onto a carrier signal ( e.g sawtooth oscillator ).
+ * <p>
+ * *voclib* is an implementation of a traditional channel vocoder by Philip Bennefall from
  * https://github.com/blastbay/voclib. java implementation created by Dennis P Paul.
  */
 public class Vocoder {

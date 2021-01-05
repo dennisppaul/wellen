@@ -24,6 +24,9 @@ import java.lang.reflect.Method;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * continuously triggers a <code>beat(int)</code> event.
+ */
 public class Beat {
 
     private static final String METHOD_NAME = "beat";

@@ -19,14 +19,18 @@
 
 package wellen;
 
-/*
- * Low Pass Filter ( Moog Ladder )
- * <p>
- * Ported from soundpipe
- * <p>
- * Original author(s) : Victor Lazzarini, John ffitch (fast tanh), Bob Moog
+/**
+ * low-pass filter implementing the <em>Moog Ladder</em>.
  */
 public class LowPassFilter implements DSPNodeProcess {
+
+    /*
+     * Low Pass Filter ( Moog Ladder )
+     * <p>
+     * Ported from soundpipe
+     * <p>
+     * Original author(s) : Victor Lazzarini, John ffitch (fast tanh), Bob Moog
+     */
 
     private final float mSamplingRate;
     private final float mIstor;

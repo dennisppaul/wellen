@@ -22,6 +22,9 @@ package wellen;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
+/**
+ * listens to incoming MIDI messages.
+ */
 public class EventReceiverMIDI implements MidiInListener {
 
     private static final String METHOD_NAME = "event_receive";
@@ -38,24 +41,33 @@ public class EventReceiverMIDI implements MidiInListener {
         }
     }
 
+    public static EventReceiverMIDI start(Object pParent, String pMidiInputDevice) {
+        if (mInstance == null) {
+            mInstance = new EventReceiverMIDI(pParent);
+            MidiIn mMidiIn = new MidiIn(pMidiInputDevice);
+            mMidiIn.addListener(mInstance);
+        }
+        return mInstance;
+    }
+
     @Override
     public void receiveProgramChange(int channel, int number, int value) {
-        sendEvent(TonEvent.EVENT_PROGRAMCHANGE, new float[]{channel, number, value});
+        sendEvent(Wellen.EVENT_PROGRAMCHANGE, new float[]{channel, number, value});
     }
 
     @Override
     public void receiveControlChange(int channel, int number, int value) {
-        sendEvent(TonEvent.EVENT_CONTROLCHANGE, new float[]{channel, number, value});
+        sendEvent(Wellen.EVENT_CONTROLCHANGE, new float[]{channel, number, value});
     }
 
     @Override
     public void receiveNoteOff(int channel, int pitch) {
-        sendEvent(TonEvent.EVENT_NOTE_OFF, new float[]{channel, pitch});
+        sendEvent(Wellen.EVENT_NOTE_OFF, new float[]{channel, pitch});
     }
 
     @Override
     public void receiveNoteOn(int channel, int pitch, int velocity) {
-        sendEvent(TonEvent.EVENT_NOTE_ON, new float[]{channel, pitch, velocity});
+        sendEvent(Wellen.EVENT_NOTE_ON, new float[]{channel, pitch, velocity});
     }
 
     @Override
@@ -91,14 +103,5 @@ public class EventReceiverMIDI implements MidiInListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public static EventReceiverMIDI start(Object pParent, String pMidiInputDevice) {
-        if (mInstance == null) {
-            mInstance = new EventReceiverMIDI(pParent);
-            MidiIn mMidiIn = new MidiIn(pMidiInputDevice);
-            mMidiIn.addListener(mInstance);
-        }
-        return mInstance;
     }
 }

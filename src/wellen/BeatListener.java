@@ -19,6 +19,9 @@
 
 package wellen;
 
+/**
+ * interface for listeners of {@link wellen.BeatEvent}.
+ */
 public interface BeatListener {
 
     void beat(int pBeatCount);

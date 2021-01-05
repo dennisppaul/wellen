@@ -84,6 +84,23 @@ loadScripts(document, 'script');</script>
 <pre>public class <span class="type-name-label">ADSR</span>
 extends java.lang.Object
 implements <a href="DSPNodeOutput.html" title="interface in wellen">DSPNodeOutput</a></pre>
+<div class="block">envelope with (A)ttack (D)ecay (S)ustain (R)elease stages: <a href="ADSR.html" title="class in wellen"><code>ADSR</code></a>
+ <p>
+ it is usually used to control the amplitude of an *oscillator*.
+
+ <pre><code>
+                |----->|-->|   |-->|
+                |---A--|-D-|-S-|-R-|
+                |      /\
+                |     /  \
+                |    /    \_____
+                |   /        ^  \
+                |  /         |   \
+                | /          |    \
+                |/___________|_____\
+                |
+                |Press          |Release
+  </code></pre></div>
 </section>
 <section class="summary">
 <ul class="summary-list">

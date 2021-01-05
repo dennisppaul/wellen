@@ -23,6 +23,9 @@ import java.util.ArrayList;
 
 import static processing.core.PApplet.constrain;
 
+/**
+ * implementation of {@link wellen.ToneEngine} using internal DSP audio processing.
+ */
 public class ToneEngineInternal extends ToneEngine implements AudioBufferRenderer {
 
     public boolean USE_AMP_FRACTION = false;
@@ -36,10 +39,7 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
     private boolean mReverbEnabled;
     private final int mNumberOfInstruments;
 
-    public ToneEngineInternal(int pSamplingRate,
-                              int pAudioblockSize,
-                              int pOutputDeviceID,
-                              int pOutputChannels,
+    public ToneEngineInternal(int pSamplingRate, int pAudioblockSize, int pOutputDeviceID, int pOutputChannels,
                               int pNumberOfInstruments) {
         mInstruments = new ArrayList<>();
         mNumberOfInstruments = pNumberOfInstruments;
@@ -65,6 +65,14 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
 
     public ToneEngineInternal() {
         this(Wellen.DEFAULT_SAMPLING_RATE, Wellen.DEFAULT_AUDIOBLOCK_SIZE, Wellen.DEFAULT_AUDIO_DEVICE, 2, 16);
+    }
+
+    public static ToneEngineInternal no_output() {
+        return new ToneEngineInternal(Wellen.DEFAULT_SAMPLING_RATE,
+                                      Wellen.DEFAULT_AUDIOBLOCK_SIZE,
+                                      Wellen.DEFAULT_AUDIO_DEVICE,
+                                      Wellen.NO_CHANNELS,
+                                      Wellen.DEFAULT_NUMBER_OF_INSTRUMENTS);
     }
 
     public void enable_reverb(boolean pReverbEnabled) {
@@ -198,14 +206,6 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
 
     private int getInstrumentID() {
         return Math.max(mCurrentInstrumentID, 0) % mInstruments.size();
-    }
-
-    public static ToneEngineInternal no_output() {
-        return new ToneEngineInternal(Wellen.DEFAULT_SAMPLING_RATE,
-                                      Wellen.DEFAULT_AUDIOBLOCK_SIZE,
-                                      Wellen.DEFAULT_AUDIO_DEVICE,
-                                      Wellen.NO_CHANNELS,
-                                      Wellen.DEFAULT_NUMBER_OF_INSTRUMENTS);
     }
 
     public interface AudioOutputCallback {

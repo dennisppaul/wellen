@@ -19,6 +19,9 @@
 
 package wellen;
 
+/**
+ * interface for listeners of {@link wellen.MidiIn}
+ */
 public interface MidiInListener {
     void receiveProgramChange(int channel, int number, int value);
     void receiveControlChange(int channel, int number, int value);

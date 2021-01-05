@@ -22,14 +22,16 @@ package wellen;
 import processing.core.PApplet;
 
 /**
- * a collection of DSP instruments. these instruments can be used to replace the default instrument ( i.e
- * `InstrumentInternal` ) e.g by using the method `Tone.replace_instrument(InstrumentInternal)`.
+ * a collection of DSP instruments.
  * <p>
- * all instruments are extended from `InstrumentInternal`, however some the original functionality is extended, changed
- * or even removed.
+ * these instruments can be used to replace the default instrument ( i.e {@link wellen.InstrumentInternal} ) e.g by
+ * using the method <code>Tone.replace_instrument(InstrumentInternal)</code>.
+ * <p>
+ * all instruments are extended from {@link wellen.InstrumentInternal}, however some the original functionality is
+ * extended, changed or even removed.
  * <p>
  * note that these instruments only work with the internal tone engine. however, due to the modular nature of the
- * library these instruments can also be integrated into `DSP` applications.
+ * library these instruments can also be integrated into {@link wellen.DSP} applications.
  */
 public class InstrumentInternalLibrary {
     public static class BELL extends InstrumentInternal {

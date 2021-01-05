@@ -19,6 +19,9 @@
 
 package wellen;
 
+/**
+ * base class for all instruments
+ */
 public abstract class Instrument {
 
     protected float mAttack = Wellen.DEFAULT_ATTACK;

@@ -24,6 +24,9 @@ import java.io.InputStreamReader;
 import java.text.Normalizer;
 import java.util.ArrayList;
 
+/**
+ * makes use of the internal MacOS speech engine to produce text-to-speech output.
+ */
 public class SpeechSynthesis {
 
     private final boolean mVerbose;
@@ -42,6 +45,30 @@ public class SpeechSynthesis {
         mRemoveSpecialChars = remove_special_characters;
     }
 
+    public static String[] list() {
+        String[] mCommand = new String[]{"say", "-v", "?"};
+        final Process p;
+        try {
+            p = Runtime.getRuntime().exec(mCommand);
+            int mExit = p.waitFor();
+            BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
+            BufferedReader error = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+
+            ArrayList<String> mVoices = new ArrayList<>();
+            String s;
+            while ((s = stdInput.readLine()) != null) {
+                String[] mNames = s.split(" ");
+                mVoices.add(mNames[0]);
+            }
+            String[] mVoiceNames = new String[mVoices.size()];
+            mVoices.toArray(mVoiceNames);
+            return mVoiceNames;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new String[]{};
+    }
+
     public void say(String pVoice, String pMessage, boolean pBlocking, int pWordsPerMinute, String pFileName) {
         if (mVerbose) {
             System.out.println("+++ saying: " + pMessage);
@@ -56,14 +83,12 @@ public class SpeechSynthesis {
                 pMessage = Normalizer.normalize(pMessage, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "");
                 pMessage = pMessage.replaceAll("/[^[:alnum:]]/", " ");
             }
-            String[] mCommand = new String[]{"say",
-                    pVoice.isEmpty() ? "" : "-v",
-                    pVoice.isEmpty() ? "" : pVoice,
-                    pWordsPerMinute > 0 ? "-r" : "",
-                    pWordsPerMinute > 0 ? "" + pWordsPerMinute : "",
-                    (pFileName != null && !pFileName.isEmpty()) ? "-o" : "",
-                    (pFileName != null && !pFileName.isEmpty()) ? pFileName : "",
-                    "\"" + pMessage + "\""};
+            String[] mCommand = new String[]{"say", pVoice.isEmpty() ? "" : "-v", pVoice.isEmpty() ? "" : pVoice,
+                                             pWordsPerMinute > 0 ? "-r" : "",
+                                             pWordsPerMinute > 0 ? "" + pWordsPerMinute : "",
+                                             (pFileName != null && !pFileName.isEmpty()) ? "-o" : "",
+                                             (pFileName != null && !pFileName.isEmpty()) ? pFileName : "",
+                                             "\"" + pMessage + "\""};
             if (mVerbose) {
                 System.out.print("+++ ");
                 for (String mCommandSeg : mCommand) {
@@ -102,30 +127,6 @@ public class SpeechSynthesis {
 
     public void say(String voice, String message) {
         say(voice, message, mBlocking, mWordsPerMinute, mFileName);
-    }
-
-    public static String[] list() {
-        String[] mCommand = new String[]{"say", "-v", "?"};
-        final Process p;
-        try {
-            p = Runtime.getRuntime().exec(mCommand);
-            int mExit = p.waitFor();
-            BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            BufferedReader error = new BufferedReader(new InputStreamReader(p.getErrorStream()));
-
-            ArrayList<String> mVoices = new ArrayList<>();
-            String s;
-            while ((s = stdInput.readLine()) != null) {
-                String[] mNames = s.split(" ");
-                mVoices.add(mNames[0]);
-            }
-            String[] mVoiceNames = new String[mVoices.size()];
-            mVoices.toArray(mVoiceNames);
-            return mVoiceNames;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return new String[]{};
     }
 
     /*

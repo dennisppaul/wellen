@@ -26,6 +26,9 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * similar to {@link wellen.Beat} except that it handles multiple listeners.
+ */
 public class BeatEvent {
 
     private final Timer mTimer;

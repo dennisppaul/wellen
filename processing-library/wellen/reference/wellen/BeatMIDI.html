@@ -45,13 +45,13 @@ loadScripts(document, 'script');</script>
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
 <li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
-<li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="sub-nav-list">
 <li>Detail:&nbsp;</li>
 <li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
-<li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
@@ -84,6 +84,7 @@ loadScripts(document, 'script');</script>
 <pre>public class <span class="type-name-label">BeatMIDI</span>
 extends java.lang.Object
 implements <a href="MidiInListener.html" title="interface in wellen">MidiInListener</a></pre>
+<div class="block">similar to <a href="Beat.html" title="class in wellen"><code>Beat</code></a> except that beat events are triggered by an external MIDI CLOCK signal.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -105,34 +106,6 @@ implements <a href="MidiInListener.html" title="interface in wellen">MidiInListe
 <tr class="alt-color">
 <td class="col-first"><code>static boolean</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#VERBOSE">VERBOSE</a></span></code></th>
-<td class="col-last">&nbsp;</td>
-</tr>
-</tbody>
-</table>
-</div>
-</section>
-</li>
-<!-- ======== CONSTRUCTOR SUMMARY ======== -->
-<li>
-<section class="constructor-summary" id="constructor.summary">
-<h2>Constructor Summary</h2>
-<div class="member-summary">
-<table class="summary-table">
-<caption><span>Constructors</span></caption>
-<thead>
-<tr>
-<th class="col-first" scope="col">Constructor</th>
-<th class="col-last" scope="col">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr class="alt-color">
-<th class="col-constructor-name" scope="row"><code><span class="member-name-link"><a href="#%3Cinit%3E(java.lang.Object)">BeatMIDI</a></span>&#8203;(java.lang.Object&nbsp;pListener)</code></th>
-<td class="col-last">&nbsp;</td>
-</tr>
-<tr class="row-color">
-<th class="col-constructor-name" scope="row"><code><span class="member-name-link"><a href="#%3Cinit%3E(java.lang.Object,int)">BeatMIDI</a></span>&#8203;(java.lang.Object&nbsp;pListener,
-int&nbsp;pBPM)</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
 </tbody>
@@ -273,32 +246,18 @@ java.lang.String&nbsp;pMidiInput)</code></th>
 </ul>
 </section>
 </li>
-<!-- ========= CONSTRUCTOR DETAIL ======== -->
-<li>
-<section class="constructor-details" id="constructor.detail">
-<h2>Constructor Details</h2>
-<ul class="member-list">
-<li>
-<section class="detail" id="&lt;init&gt;(java.lang.Object,int)">
-<h3>BeatMIDI</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="member-name">BeatMIDI</span>&#8203;(<span class="parameters">java.lang.Object&nbsp;pListener,
-int&nbsp;pBPM)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="&lt;init&gt;(java.lang.Object)">
-<h3>BeatMIDI</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="member-name">BeatMIDI</span>&#8203;(<span class="parameters">java.lang.Object&nbsp;pListener)</span></div>
-</section>
-</li>
-</ul>
-</section>
-</li>
 <!-- ============ METHOD DETAIL ========== -->
 <li>
 <section class="method-details" id="method.detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="start(java.lang.Object,java.lang.String)">
+<h3>start</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="BeatMIDI.html" title="class in wellen">BeatMIDI</a></span>&nbsp;<span class="member-name">start</span>&#8203;(<span class="parameters">java.lang.Object&nbsp;pListener,
+java.lang.String&nbsp;pMidiInput)</span></div>
+</section>
+</li>
 <li>
 <section class="detail" id="running()">
 <h3>running</h3>
@@ -437,13 +396,6 @@ int&nbsp;velocity)</span></div>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">start</span>()</div>
 </section>
 </li>
-<li>
-<section class="detail" id="start(java.lang.Object,java.lang.String)">
-<h3>start</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="BeatMIDI.html" title="class in wellen">BeatMIDI</a></span>&nbsp;<span class="member-name">start</span>&#8203;(<span class="parameters">java.lang.Object&nbsp;pListener,
-java.lang.String&nbsp;pMidiInput)</span></div>
-</section>
-</li>
 </ul>
 </section>
 </li>
@@ -469,13 +421,13 @@ java.lang.String&nbsp;pMidiInput)</span></div>
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
 <li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
-<li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="sub-nav-list">
 <li>Detail:&nbsp;</li>
 <li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
-<li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
 </div>

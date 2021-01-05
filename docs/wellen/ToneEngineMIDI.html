@@ -81,6 +81,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <pre>public class <span class="type-name-label">ToneEngineMIDI</span>
 extends <a href="ToneEngine.html" title="class in wellen">ToneEngine</a></pre>
+<div class="block">implementation of <a href="ToneEngine.html" title="class in wellen"><code>ToneEngine</code></a> sending MIDI messages to external MIDI devices.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -289,6 +290,12 @@ int&nbsp;velocity)</code></th>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="get_proper_device_name(java.lang.String)">
+<h3>get_proper_device_name</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">java.lang.String</span>&nbsp;<span class="member-name">get_proper_device_name</span>&#8203;(<span class="parameters">java.lang.String&nbsp;pMidiOutputDeviceName)</span></div>
+</section>
+</li>
+<li>
 <section class="detail" id="note_on(int,int)">
 <h3>note_on</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">note_on</span>&#8203;(<span class="parameters">int&nbsp;note,
@@ -399,12 +406,6 @@ int&nbsp;pValue)</span></div>
 <dt>Specified by:</dt>
 <dd><code><a href="ToneEngine.html#replace_instrument(wellen.Instrument)">replace_instrument</a></code>&nbsp;in class&nbsp;<code><a href="ToneEngine.html" title="class in wellen">ToneEngine</a></code></dd>
 </dl>
-</section>
-</li>
-<li>
-<section class="detail" id="get_proper_device_name(java.lang.String)">
-<h3>get_proper_device_name</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">java.lang.String</span>&nbsp;<span class="member-name">get_proper_device_name</span>&#8203;(<span class="parameters">java.lang.String&nbsp;pMidiOutputDeviceName)</span></div>
 </section>
 </li>
 </ul>

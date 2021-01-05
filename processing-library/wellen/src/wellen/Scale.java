@@ -19,6 +19,9 @@
 
 package wellen;
 
+/**
+ * {@link wellen.Scale} supplies a collection of musical scales.
+ */
 public class Scale {
 
     public static final int ID_CHROMATIC = 0;

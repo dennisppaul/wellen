@@ -19,6 +19,11 @@
 
 package wellen;
 
+/**
+ * a container for values ( e.g musical notes ) that can be played back step by step.
+ *
+ * @param <T>
+ */
 public class Sequencer<T> {
 
     // @TODO(should `T` be limited to `Number` e.g `T extends Number` )
@@ -77,5 +82,4 @@ public class Sequencer<T> {
     public int get_step() {
         return mStep;
     }
-
 }

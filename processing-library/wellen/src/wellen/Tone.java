@@ -22,6 +22,9 @@ package wellen;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 
+/**
+ * {@link wellen.Tone} handles instruments and the playing of musical notes.
+ */
 public abstract class Tone {
 
     private static ToneEngine instance = null;
