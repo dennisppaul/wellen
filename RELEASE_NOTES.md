@@ -1,5 +1,17 @@
 # wellen / release notes
 
+## v0.7
+
+- added instrument library
+- added example for multiple tone engines
+- added `Envelope` with multiple stages, ramp and loop option, and listeners ( for *stage end* and *envelope end* )
+- added noise generator ( white, gaussian white, pink, simplex )
+- added `Distortion` with different distortion strategies
+- added `Filter` another filter class that implements very simple low, high and bass-pass filters
+- added `SAM` ( Software Automatic Mouth ) a speech software first published in 1982 for Commodore C64
+- added very rudimentary WAV support for im- + export
+- added `Vocoder`
+
 ## v0.6 (20201215)
 
 - added jitter and phase offset to `Wavetable`
