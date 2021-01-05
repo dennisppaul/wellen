@@ -1,6 +1,6 @@
 # wellen / release notes
 
-## v0.7
+## v0.7 (20210105)
 
 - added instrument library
 - added example for multiple tone engines
