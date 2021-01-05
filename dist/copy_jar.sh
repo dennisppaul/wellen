@@ -12,3 +12,6 @@ fi
 mkdir -p "$DST"
 
 cp "$SRC" "$DST"
+
+# delete unwanted directories from jar 
+zip --quiet --delete $DST/$LIB_NAME.jar wellen_SAM.h wellen_SAM_impl.h wellen_SAM_impl.cpp "wellen/tests/*" "wellen/examples/*"
