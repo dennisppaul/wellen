@@ -61,3 +61,7 @@ with `Scale` values can be transformed into intervals based on musical scales ( 
 the `Sequencer` supplies a simple structure to facilitate the recording and recalling of note sequences ( see `ExampleTechnique01Sequencer` ). 
 
 `Arpeggiator` works in a similar way but schedules a series of notes based on a predefined pattern and a base note.
+
+## reference
+
+generated [reference](https://dennisppaul.github.io/wellen) of the wellen library
