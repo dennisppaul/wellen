@@ -275,6 +275,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="wellen/Tone.html#create_instrument(java.lang.Class,int)">create_instrument(Class&lt;T&gt;, int)</a></span> - Static method in class wellen.<a href="wellen/Tone.html" title="class in wellen">Tone</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="wellen/Crossfader.html" title="class in wellen"><span class="type-name-link">Crossfader</span></a> - Class in <a href="wellen/package-summary.html">wellen</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="member-name-link"><a href="wellen/Crossfader.html#%3Cinit%3E()">Crossfader()</a></span> - Constructor for class wellen.<a href="wellen/Crossfader.html" title="class in wellen">Crossfader</a></dt>
+<dd>&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:D">D</h2>
 <dl class="index">
@@ -1130,6 +1134,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="wellen/ADSR.html#output()">output()</a></span> - Method in class wellen.<a href="wellen/ADSR.html" title="class in wellen">ADSR</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="member-name-link"><a href="wellen/Crossfader.html#output()">output()</a></span> - Method in class wellen.<a href="wellen/Crossfader.html" title="class in wellen">Crossfader</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="wellen/DSPNodeOutput.html#output()">output()</a></span> - Method in interface wellen.<a href="wellen/DSPNodeOutput.html" title="interface in wellen">DSPNodeOutput</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="wellen/Envelope.html#output()">output()</a></span> - Method in class wellen.<a href="wellen/Envelope.html" title="class in wellen">Envelope</a></dt>
@@ -1220,6 +1226,8 @@ loadScripts(document, 'script');</script>
  duration.</div>
 </dd>
 <dt><span class="member-name-link"><a href="wellen/Wellen.html#random(float,float)">random(float, float)</a></span> - Static method in class wellen.<a href="wellen/Wellen.html" title="class in wellen">Wellen</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="member-name-link"><a href="wellen/Crossfader.html#ratio">ratio</a></span> - Variable in class wellen.<a href="wellen/Crossfader.html" title="class in wellen">Crossfader</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="wellen/BeatMIDI.html#receiveControlChange(int,int,int)">receiveControlChange(int, int, int)</a></span> - Method in class wellen.<a href="wellen/BeatMIDI.html" title="class in wellen">BeatMIDI</a></dt>
 <dd>&nbsp;</dd>
@@ -1531,6 +1539,10 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><span class="member-name-link"><a href="wellen/SpeechSynthesis.html#setWordsPerMinute(int)">setWordsPerMinute(int)</a></span> - Method in class wellen.<a href="wellen/SpeechSynthesis.html" title="class in wellen">SpeechSynthesis</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="member-name-link"><a href="wellen/Crossfader.html#signal_a">signal_a</a></span> - Variable in class wellen.<a href="wellen/Crossfader.html" title="class in wellen">Crossfader</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="member-name-link"><a href="wellen/Crossfader.html#signal_b">signal_b</a></span> - Variable in class wellen.<a href="wellen/Crossfader.html" title="class in wellen">Crossfader</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="wellen/AudioBufferManager.html#SIGNED">SIGNED</a></span> - Static variable in class wellen.<a href="wellen/AudioBufferManager.html" title="class in wellen">AudioBufferManager</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="member-name-link"><a href="wellen/Wavetable.html#sine(float%5B%5D)">sine(float[])</a></span> - Static method in class wellen.<a href="wellen/Wavetable.html" title="class in wellen">Wavetable</a></dt>
@@ -1740,7 +1752,8 @@ the order they are declared.</div>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/Wavetable.html" title="class in wellen"><span class="type-name-link">Wavetable</span></a> - Class in <a href="wellen/package-summary.html">wellen</a></dt>
 <dd>
-<div class="block">plays back a chunk of samples ( e.g waveforms like sine, triangle, saw or square waves ) at different frequencies.</div>
+<div class="block">plays back a chunk of samples ( i.e arbitrary, single-cycle waveform like sine, triangle, saw or square waves ) at
+ different frequencies and amplitudes.</div>
 </dd>
 <dt><span class="member-name-link"><a href="wellen/Wavetable.html#%3Cinit%3E()">Wavetable()</a></span> - Constructor for class wellen.<a href="wellen/Wavetable.html" title="class in wellen">Wavetable</a></dt>
 <dd>&nbsp;</dd>

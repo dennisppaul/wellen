@@ -6,7 +6,7 @@ import wellen.*;
  * wave shapes.
  */
 
-final Wavetable mWavetable = new Wavetable(512);
+final Wavetable mWavetable = new Wavetable();
 
 void settings() {
     size(640, 480);

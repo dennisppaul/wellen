@@ -22,7 +22,8 @@ package wellen;
 import processing.core.PApplet;
 
 /**
- * plays back a chunk of samples ( e.g waveforms like sine, triangle, saw or square waves ) at different frequencies.
+ * plays back a chunk of samples ( i.e arbitrary, single-cycle waveform like sine, triangle, saw or square waves ) at
+ * different frequencies and amplitudes.
  */
 public class Wavetable implements DSPNodeOutput {
 
@@ -68,6 +69,7 @@ public class Wavetable implements DSPNodeOutput {
     }
 
     public static void fill(float[] pWavetable, int pWavetableType) {
+        // @TODO(add some more interesting waveforms like pulse )
         switch (pWavetableType) {
             case Wellen.WAVESHAPE_SINE:
                 sine(pWavetable);

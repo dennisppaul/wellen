@@ -13,7 +13,7 @@ public class ExampleDSP05Wavetable extends PApplet {
      * wave shapes.
      */
 
-    private final Wavetable mWavetable = new Wavetable(512);
+    private final Wavetable mWavetable = new Wavetable();
 
     public void settings() {
         size(640, 480);
