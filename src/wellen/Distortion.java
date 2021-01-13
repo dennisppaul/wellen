@@ -19,6 +19,12 @@
 
 package wellen;
 
+import static wellen.Wellen.DISTORTION_ARC_HYPERBOLIC;
+import static wellen.Wellen.DISTORTION_ARC_TANGENT;
+import static wellen.Wellen.DISTORTION_CLIP;
+import static wellen.Wellen.DISTORTION_FOLDBACK;
+import static wellen.Wellen.DISTORTION_FOLDBACK_SINGLE;
+
 /**
  * distorts a signal with different distortion strategies.
  */
@@ -27,21 +33,13 @@ public class Distortion implements DSPNodeProcess {
     private static final int MAX_NUM_OF_ITERATIONS = 16;
     private float mClip;
     private float mAmplification;
-    private TYPE mDistortionType;
+    private int mDistortionType;
     private final boolean LOCK_GUARD = true;
-
-    public enum TYPE {
-        CLIP,
-        FOLDBACK,
-        FOLDBACK_SINGLE,
-        ARC_TANGENT,
-        ARC_HYPERBOLIC
-    }
 
     public Distortion() {
         set_clip(1.0f);
         set_amplification(1.0f);
-        set_type(TYPE.CLIP);
+        set_type(DISTORTION_CLIP);
     }
 
     public float get_amplification() {
@@ -60,25 +58,25 @@ public class Distortion implements DSPNodeProcess {
         mClip = pClip;
     }
 
-    public TYPE get_type() {
+    public int get_type() {
         return mDistortionType;
     }
 
-    public void set_type(TYPE pDistortionType) {
+    public void set_type(int pDistortionType) {
         mDistortionType = pDistortionType;
     }
 
     public float process(float s) {
         switch (mDistortionType) {
-            case CLIP:
+            case DISTORTION_CLIP:
                 return limit_clip(s * mAmplification);
-            case FOLDBACK:
+            case DISTORTION_FOLDBACK:
                 return limit_foldback(s * mAmplification);
-            case FOLDBACK_SINGLE:
+            case DISTORTION_FOLDBACK_SINGLE:
                 return limit_clip(limit_foldback_single(s * mAmplification));
-            case ARC_TANGENT:
+            case DISTORTION_ARC_TANGENT:
                 return (float) (Math.atan(s * mAmplification)) * mClip;
-            case ARC_HYPERBOLIC:
+            case DISTORTION_ARC_HYPERBOLIC:
                 return (float) Math.tanh(s * mAmplification) * mClip;
             default:
                 return 0.0f;
@@ -91,7 +89,6 @@ public class Distortion implements DSPNodeProcess {
         // - Soft Clipping Cubic ( i.e `f(x) = x - s * pow(x, 3) (s=scaling_factor=[0,1]=default:0.33)` )
         // - Soft Clipping Arc Tangent ( i.e `f(x) = (2.0 / PI) * atan(a*x) (a=amount=[1,10])` )
         // - Bit Crushing ( i.e ` f(x) = floor(x * s) / s (s=steps=pow(2,bits-1))` ) ( instead of `floor use `round` )
-
     }
 
     private float limit_clip(float v) {

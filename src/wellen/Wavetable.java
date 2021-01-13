@@ -45,6 +45,7 @@ public class Wavetable implements DSPNodeOutput {
     private float mInterpolateFrequencyDelta;
     private boolean mEnableJitter;
     private float mJitterRange;
+    private float mSignal;
 
     public Wavetable() {
         this(Wellen.DEFAULT_WAVETABLE_SIZE, Wellen.DEFAULT_SAMPLING_RATE);
@@ -215,10 +216,15 @@ public class Wavetable implements DSPNodeOutput {
             final float mNextSample = mWavetable[(j + 1) % mWavetable.length];
             final float mSample = mWavetable[j];
             final float mInterpolatedSample = mSample * (1.0f - mFrac) + mNextSample * mFrac;
-            return mInterpolatedSample * mTmpAmplitude;
+            mSignal = mInterpolatedSample * mTmpAmplitude;
         } else {
-            return mWavetable[j] * mTmpAmplitude;
+            mSignal = mWavetable[j] * mTmpAmplitude;
         }
+        return mSignal;
+    }
+
+    public float current() {
+        return mSignal;
     }
 
     private float computeStepSize() {

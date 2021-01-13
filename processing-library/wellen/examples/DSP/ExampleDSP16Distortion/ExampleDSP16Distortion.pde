@@ -29,19 +29,19 @@ void draw() {
 void keyPressed() {
     switch (key) {
         case '1':
-            mDistortion.set_type(Distortion.TYPE.CLIP);
+            mDistortion.set_type(Wellen.DISTORTION_CLIP);
             break;
         case '2':
-            mDistortion.set_type(Distortion.TYPE.FOLDBACK);
+            mDistortion.set_type(Wellen.DISTORTION_FOLDBACK);
             break;
         case '3':
-            mDistortion.set_type(Distortion.TYPE.FOLDBACK_SINGLE);
+            mDistortion.set_type(Wellen.DISTORTION_FOLDBACK_SINGLE);
             break;
         case '4':
-            mDistortion.set_type(Distortion.TYPE.ARC_TANGENT);
+            mDistortion.set_type(Wellen.DISTORTION_ARC_TANGENT);
             break;
         case '5':
-            mDistortion.set_type(Distortion.TYPE.ARC_HYPERBOLIC);
+            mDistortion.set_type(Wellen.DISTORTION_ARC_HYPERBOLIC);
             break;
     }
 }

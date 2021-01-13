@@ -90,11 +90,33 @@ public class DSP implements AudioBufferRenderer {
 
     public static DSP start(Object pObject, int pOutputDevice, int pNumberOutputChannels, int pInputDevice,
                             int pNumberInputChannels) {
+        return start(pObject,
+                     pOutputDevice,
+                     pNumberOutputChannels,
+                     pInputDevice,
+                     pNumberInputChannels,
+                     Wellen.DEFAULT_SAMPLING_RATE,
+                     Wellen.DEFAULT_AUDIOBLOCK_SIZE);
+//        if (mInstance == null) {
+//            mInstance = new DSP(pObject, pNumberOutputChannels, pNumberInputChannels);
+//            mAudioPlayer = new AudioBufferManager(mInstance,
+//                                                  Wellen.DEFAULT_SAMPLING_RATE,
+//                                                  Wellen.DEFAULT_AUDIOBLOCK_SIZE,
+//                                                  pOutputDevice,
+//                                                  pNumberOutputChannels,
+//                                                  pInputDevice,
+//                                                  pNumberInputChannels);
+//        }
+//        return mInstance;
+    }
+
+    public static DSP start(Object pObject, int pOutputDevice, int pNumberOutputChannels, int pInputDevice,
+                            int pNumberInputChannels, int pSamplingRate, int pAudioBlockSize) {
         if (mInstance == null) {
             mInstance = new DSP(pObject, pNumberOutputChannels, pNumberInputChannels);
             mAudioPlayer = new AudioBufferManager(mInstance,
-                                                  Wellen.DEFAULT_SAMPLING_RATE,
-                                                  Wellen.DEFAULT_AUDIOBLOCK_SIZE,
+                                                  pSamplingRate,
+                                                  pAudioBlockSize,
                                                   pOutputDevice,
                                                   pNumberOutputChannels,
                                                   pInputDevice,

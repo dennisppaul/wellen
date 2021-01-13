@@ -49,6 +49,8 @@ public class Wellen {
     public static final int DISTORTION_CLIP = 0;
     public static final int DISTORTION_FOLDBACK = 1;
     public static final int DISTORTION_FOLDBACK_SINGLE = 2;
+    public static final int DISTORTION_ARC_TANGENT = 3;
+    public static final int DISTORTION_ARC_HYPERBOLIC = 4;
     public static final int FILTER_MODE_LOWPASS = 0;
     public static final int FILTER_MODE_HIGHPASS = 1;
     public static final int FILTER_MODE_BANDPASS = 2;
