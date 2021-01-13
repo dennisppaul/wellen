@@ -3,6 +3,7 @@
 LIB_NAME=$1
 ROOT=$(pwd)
 
+SRC=$ROOT/../resources/$ADDITIONAL_LIB_NAME
 DST=$ROOT/../processing-library/$LIB_NAME/resources/
 
 source config.build
@@ -13,5 +14,6 @@ fi
 mkdir -p "$DST"
 
 for i in ${RESOURCES[@]}; do
-	sh copy_resource.sh $LIB_NAME $i
+    echo "# resource '"$i"'"
+    cp $SRC/$i $DST
 done
