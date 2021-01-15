@@ -82,9 +82,9 @@ public class DSP implements AudioBufferRenderer {
 
     public static DSP start(Object pObject, int pNumberOutputChannels, int pNumberInputChannels) {
         return start(pObject,
-                     AudioBufferManager.DEFAULT,
+                     Wellen.DEFAULT_AUDIO_DEVICE,
                      pNumberOutputChannels,
-                     AudioBufferManager.DEFAULT,
+                     Wellen.DEFAULT_AUDIO_DEVICE,
                      pNumberInputChannels);
     }
 

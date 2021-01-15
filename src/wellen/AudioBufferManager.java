@@ -45,7 +45,7 @@ public class AudioBufferManager extends Thread {
     public static final boolean BIG_ENDIAN = true;
     public static final boolean SIGNED = true;
     public static final boolean UNSIGNED = false;
-    public static final int DEFAULT = -1;
+//    public static final int DEFAULT = -1;
     private final AudioBufferRenderer mSampleRenderer;
     private final int mSampleRate;
     private final int mSampleBufferSize;
@@ -61,9 +61,9 @@ public class AudioBufferManager extends Thread {
         this(pSampleRenderer,
              Wellen.DEFAULT_SAMPLING_RATE,
              Wellen.DEFAULT_AUDIOBLOCK_SIZE,
-             DEFAULT,
+             Wellen.DEFAULT_AUDIO_DEVICE,
              STEREO,
-             DEFAULT,
+             Wellen.DEFAULT_AUDIO_DEVICE,
              MONO);
     }
 
@@ -82,7 +82,7 @@ public class AudioBufferManager extends Thread {
                                                               pNumOutputChannels,
                                                               SIGNED,
                                                               LITTLE_ENDIAN);
-            if (pOutputDevice == DEFAULT) {
+            if (pOutputDevice == Wellen.DEFAULT_AUDIO_DEVICE) {
                 mOutputLine = AudioSystem.getSourceDataLine(mOutputFormat);
             } else {
                 System.out.println("+ OUTPUT DEVICE: " + AudioSystem.getMixerInfo()[pOutputDevice]);
@@ -99,7 +99,7 @@ public class AudioBufferManager extends Thread {
                                                                  mNumInputChannels,
                                                                  SIGNED,
                                                                  LITTLE_ENDIAN);
-                if (pInputDevice == DEFAULT) {
+                if (pInputDevice == Wellen.DEFAULT_AUDIO_DEVICE) {
                     mInputLine = AudioSystem.getTargetDataLine(mInputFormat);
                 } else {
                     mInputLine = AudioSystem.getTargetDataLine(mInputFormat, AudioSystem.getMixerInfo()[pInputDevice]);
