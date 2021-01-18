@@ -29,24 +29,32 @@ import static processing.core.PApplet.constrain;
  */
 public class ToneEngineMIDI extends ToneEngine {
 
-    // @TODO(add `InstrumentMIDI`)
-
     public static final int CC_MODULATION = 1;
+    public static final int mNumberOfInstruments = 16;
+    public static boolean SEND_NOTE_OFF_TO_ALL = false;
     public final MidiOut mMidiOut;
     private final Timer mTimer;
-    private int mLastPlayedNote = -1;
-    private int mChannel;
+    private final ArrayList<InstrumentMIDI> mInstruments;
+    private int mCurrentInstrumentID;
 
     public ToneEngineMIDI(String pMidiOutputDeviceName) {
-        mTimer = new Timer();
-        mMidiOut = new MidiOut(get_proper_device_name(pMidiOutputDeviceName));
-        prepareExitHandler();
+        this(new MidiOut(get_proper_device_name(pMidiOutputDeviceName)));
     }
 
     public ToneEngineMIDI(int pMidiOutputDeviceID) {
+        this(new MidiOut(pMidiOutputDeviceID));
+    }
+
+    private ToneEngineMIDI(MidiOut pMidiOut) {
+        mMidiOut = pMidiOut;
+        mInstruments = new ArrayList<>();
         mTimer = new Timer();
-        mMidiOut = new MidiOut(pMidiOutputDeviceID);
         prepareExitHandler();
+        for (int i = 0; i < mNumberOfInstruments; i++) {
+            final InstrumentMIDI mInstrument = new InstrumentMIDI(i);
+            mInstruments.add(mInstrument);
+        }
+        mCurrentInstrumentID = 0;
     }
 
     public static String get_proper_device_name(String pMidiOutputDeviceName) {
@@ -61,21 +69,26 @@ public class ToneEngineMIDI extends ToneEngine {
     }
 
     public void note_on(int note, int velocity) {
-        mMidiOut.sendNoteOn(mChannel, note, velocity);
-        mLastPlayedNote = note;
+        mMidiOut.sendNoteOn(mCurrentInstrumentID, note, velocity);
+        mInstruments.get(mCurrentInstrumentID).note_on(note, velocity);
     }
 
     public void note_off(int note) {
-        mMidiOut.sendNoteOff(mChannel, note, 0);
-        mLastPlayedNote = -1;
+        mMidiOut.sendNoteOff(mCurrentInstrumentID, note, 0);
+        mInstruments.get(mCurrentInstrumentID).note_off();
     }
 
     public void note_off() {
-        note_off(mLastPlayedNote);
+        mInstruments.get(mCurrentInstrumentID).note_off();
+        if (SEND_NOTE_OFF_TO_ALL) {
+            for (int i = 0; i < 127; i++) {
+                mMidiOut.sendNoteOff(mCurrentInstrumentID, i, 0);
+            }
+        }
     }
 
     public void control_change(int pCC, int pValue) {
-        mMidiOut.sendControllerChange(mChannel, pCC, pValue);
+        mMidiOut.sendControllerChange(mCurrentInstrumentID, pCC, pValue);
     }
 
     public void pitch_bend(int pValue) {
@@ -84,35 +97,42 @@ public class ToneEngineMIDI extends ToneEngine {
         final int MSB_MASK = 0b11111110000000;
         final int msb = (mValue & MSB_MASK) / 128;
         final int lsb = mValue & LSB_MASK;
-        mMidiOut.sendPitchBend(mChannel, lsb, msb);
+        mMidiOut.sendPitchBend(mCurrentInstrumentID, lsb, msb);
     }
 
     public boolean is_playing() {
-        return (mLastPlayedNote != -1);
+        return mInstruments.get(mCurrentInstrumentID).is_playing();
     }
 
     public Instrument instrument(int pInstrumentID) {
-        mChannel = pInstrumentID;
-        return null;
+        mCurrentInstrumentID = pInstrumentID < 0 ? 0 : pInstrumentID % mNumberOfInstruments;
+        return instrument();
     }
 
     public Instrument instrument() {
-        return null;
+        return instruments().get(mCurrentInstrumentID);
     }
 
     public ArrayList<? extends Instrument> instruments() {
-        return null;
+        return mInstruments;
     }
 
     public void replace_instrument(Instrument pInstrument) {
+        if (pInstrument instanceof InstrumentMIDI) {
+            mInstruments.set(pInstrument.ID(), (InstrumentMIDI) pInstrument);
+        } else {
+            System.err.println("+++ WARNING @" + getClass().getSimpleName() + ".replace_instrument(Instrument) / " +
+                                       "instrument must be" + " of type `InstrumentMIDI`");
+        }
     }
 
     private void prepareExitHandler() {
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
             public void run() {
-                for (int i = 0; i < 127; i++) {
-                    mMidiOut.sendNoteOff(mChannel, i, 0);
-                    mLastPlayedNote = -1;
+                for (int j = 0; j < mNumberOfInstruments; j++) {
+                    for (int i = 0; i < 127; i++) {
+                        mMidiOut.sendNoteOff(j, i, 0);
+                    }
                 }
                 mMidiOut.close();
             }
