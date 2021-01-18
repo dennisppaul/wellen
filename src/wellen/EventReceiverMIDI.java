@@ -28,16 +28,50 @@ import java.lang.reflect.Method;
 public class EventReceiverMIDI implements MidiInListener {
 
     private static final String METHOD_NAME = "event_receive";
+    private static final String METHOD_NAME_CC = "midi_cc";
+    private static final String METHOD_NAME_CONTROL_CHANGE = "midi_control_change";
+    private static final String METHOD_NAME_NOTE_OFF = "midi_note_off";
+    private static final String METHOD_NAME_NOTE_ON = "midi_note_on";
     private static EventReceiverMIDI mInstance = null;
     private final Object mParent;
     private Method mMethod = null;
+    private Method mMethodNoteOn = null;
+    private Method mMethodNoteOff = null;
+    private Method mMethodControlChange = null;
+    private final boolean VERBOSE = false;
 
     public EventReceiverMIDI(Object pPApplet) {
         mParent = pPApplet;
         try {
             mMethod = pPApplet.getClass().getDeclaredMethod(METHOD_NAME, int.class, float[].class);
         } catch (NoSuchMethodException | SecurityException ex) {
-            ex.printStackTrace();
+            if (VERBOSE) {
+                ex.printStackTrace();
+            }
+        }
+        try {
+            mMethodNoteOn = pPApplet.getClass().getDeclaredMethod(METHOD_NAME_NOTE_ON, int.class, int.class, int.class);
+        } catch (NoSuchMethodException | SecurityException ex) {
+            if (VERBOSE) {
+                ex.printStackTrace();
+            }
+        }
+        try {
+            mMethodNoteOff = pPApplet.getClass().getDeclaredMethod(METHOD_NAME_NOTE_OFF, int.class, int.class);
+        } catch (NoSuchMethodException | SecurityException ex) {
+            if (VERBOSE) {
+                ex.printStackTrace();
+            }
+        }
+        try {
+            mMethodControlChange = pPApplet.getClass().getDeclaredMethod(METHOD_NAME_CONTROL_CHANGE,
+                                                                         int.class,
+                                                                         int.class,
+                                                                         int.class);
+        } catch (NoSuchMethodException | SecurityException ex) {
+            if (VERBOSE) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -58,16 +92,19 @@ public class EventReceiverMIDI implements MidiInListener {
     @Override
     public void receiveControlChange(int channel, int number, int value) {
         sendEvent(Wellen.EVENT_CONTROLCHANGE, new float[]{channel, number, value});
+        sendEventControlChange(channel, number, value);
     }
 
     @Override
     public void receiveNoteOff(int channel, int pitch) {
         sendEvent(Wellen.EVENT_NOTE_OFF, new float[]{channel, pitch});
+        sendEventNoteOff(channel, pitch);
     }
 
     @Override
     public void receiveNoteOn(int channel, int pitch, int velocity) {
         sendEvent(Wellen.EVENT_NOTE_ON, new float[]{channel, pitch, velocity});
+        sendEventNoteOn(channel, pitch, velocity);
     }
 
     @Override
@@ -96,12 +133,42 @@ public class EventReceiverMIDI implements MidiInListener {
     }
 
     private void sendEvent(int pEvent, float[] pData) {
-        try {
-            mMethod.invoke(mParent, pEvent, pData);
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-            ex.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (mMethod != null) {
+            try {
+                mMethod.invoke(mParent, pEvent, pData);
+            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    private void sendEventControlChange(int channel, int number, int value) {
+        if (mMethodControlChange != null) {
+            try {
+                mMethodControlChange.invoke(mParent, channel, number, value);
+            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    private void sendEventNoteOff(int channel, int pitch) {
+        if (mMethodNoteOff != null) {
+            try {
+                mMethodNoteOff.invoke(mParent, channel, pitch);
+            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    private void sendEventNoteOn(int channel, int pitch, int velocity) {
+        if (mMethodNoteOn != null) {
+            try {
+                mMethodNoteOn.invoke(mParent, channel, pitch, velocity);
+            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+                ex.printStackTrace();
+            }
         }
     }
 }
