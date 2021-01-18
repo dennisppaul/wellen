@@ -6,7 +6,6 @@ package wellen;
  *
  * @REF(https://en.wikipedia.org/wiki/Harmonic_table_note_layout)
  */
-
 public class HarmonicTable {
 
     public static final int UP = 0;

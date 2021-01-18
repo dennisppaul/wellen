@@ -45,7 +45,6 @@ public class ExampleDSP19FFT extends PApplet {
     }
 
     public static void main(String[] args) {
-        final String mResourcePath = Wellen.class.getResource("").getPath();
-        PApplet.runSketch(new String[]{"--sketch-path=" + mResourcePath, ExampleDSP19FFT.class.getName()}, null);
+        Wellen.run_sketch_with_resources(ExampleDSP19FFT.class);
     }
 }

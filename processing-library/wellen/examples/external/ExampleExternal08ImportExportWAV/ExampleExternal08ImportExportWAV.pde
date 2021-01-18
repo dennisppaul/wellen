@@ -42,7 +42,7 @@ void setup() {
 void draw() {
     background(255);
     stroke(0);
-    drawImportedSamples();
+    Wellen.draw_buffer(g, width, height, mSampler.data());
     DSP.draw_buffer(g, width, height);
 }
 
@@ -50,20 +50,4 @@ void audioblock(float[] pOutputSamples) {
     for (int i = 0; i < pOutputSamples.length; i++) {
         pOutputSamples[i] = mSampler.output();
     }
-}
-
-void drawImportedSamples() {
-    float[] mSamples = mSampler.data();
-    for (int i = 1; i < mSamples.length; i++) {
-        PVector p0 = mapSampleToScreen(mSamples, i - 1);
-        PVector p1 = mapSampleToScreen(mSamples, i);
-        line(p0.x, p0.y, p1.x, p1.y);
-    }
-}
-
-PVector mapSampleToScreen(float[] mSamples, int i) {
-    PVector p = new PVector();
-    p.x = map(i, 0, mSamples.length, 0, width);
-    p.y = map(mSamples[i], -1, 1, 0, height);
-    return p;
 }

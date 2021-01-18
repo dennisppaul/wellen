@@ -24,7 +24,7 @@ public class ExampleDSP07Sampler extends PApplet {
 
     public void setup() {
         byte[] mData = SampleDataSNARE.data;
-        // alternatively load data with `loadBytes("audio.raw")` ( raw format, 32bit float )
+        // alternatively load data with `loadBytes("audio.raw")` ( raw format, 32bit IEEE float )
         mSampler = new Sampler();
         mSampler.load(mData);
         mSampler.loop(false);
@@ -35,6 +35,7 @@ public class ExampleDSP07Sampler extends PApplet {
     public void draw() {
         background(255);
         DSP.draw_buffer(g, width, height);
+        line(width * 0.5f, height * 0.5f + 5, width * 0.5f, height * 0.5f - 5);
     }
 
     public void mousePressed() {
@@ -42,7 +43,7 @@ public class ExampleDSP07Sampler extends PApplet {
     }
 
     public void mouseMoved() {
-        mSampler.set_speed(map(mouseX, 0, width, 0, 32));
+        mSampler.set_speed(map(mouseX, 0, width, -8, 8));
         mSampler.set_amplitude(map(mouseY, 0, height, 0.0f, 0.9f));
     }
 
