@@ -2,6 +2,8 @@ import wellen.*;
 
 /*
  * this example demonstrates how to implement a basic echo effect in DSP.
+ *
+ * note that a microphone or some other line in must be available to run this example.
  */
 float[] mDelayBuffer = new float[4096];
 int mDelayID = 0;

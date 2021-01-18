@@ -2,12 +2,13 @@ package wellen.examples.DSP;
 
 import processing.core.PApplet;
 import wellen.DSP;
-import wellen.Wellen;
 
 public class ExampleDSP03Echo extends PApplet {
 
     /*
      * this example demonstrates how to implement a basic echo effect in DSP.
+     *
+     * note that a microphone or some other line in must be available to run this example.
      */
 
     float[] mDelayBuffer = new float[4096];

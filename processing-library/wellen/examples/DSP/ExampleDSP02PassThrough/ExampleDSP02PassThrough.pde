@@ -3,6 +3,8 @@ import wellen.*;
 /*
  * this example demonstrates how to receive audio data from the input device and pass it through to the output
  * device. this is somewhat the *hello world* of DSP.
+ *
+ * note that a microphone or some other line in must be available to run this example.
  */
 
 void settings() {

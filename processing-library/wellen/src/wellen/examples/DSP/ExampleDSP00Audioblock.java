@@ -6,6 +6,14 @@ import wellen.Wellen;
 
 public class ExampleDSP00Audioblock extends PApplet {
 
+    /*
+     * this example demonstrates how to write data directly into the audio buffer.
+     *
+     * by moving the mouse up and down values between [-1.0, 1.0] will be written into the audio buffer. while this
+     * example does not create much coherent sounds it serves to demonstrate that samples can be produced from all sorts
+     * of different sources.
+     */
+
     public void settings() {
         size(640, 480);
     }

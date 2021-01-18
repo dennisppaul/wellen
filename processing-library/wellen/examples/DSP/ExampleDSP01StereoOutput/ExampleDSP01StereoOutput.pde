@@ -3,6 +3,8 @@ import wellen.*;
 /*
  * this example demonstrates how to create stereo sounds with DSP. two slightly detuned sine waves are generated and
  * distributed to the left and right channel.
+ *
+ * note that the distortion in the signal stems from changing the frequency too abruptly.
  */
 
 float mFreq = 344.53125f;
