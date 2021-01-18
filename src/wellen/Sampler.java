@@ -36,6 +36,8 @@ public class Sampler implements DSPNodeOutput {
     private boolean mDirectionForward;
     private float mSpeed;
     private boolean mInterpolateSamples;
+    private int mIn = 0;
+    private int mOut = 0;
 
     public Sampler() {
         this(0);
@@ -56,6 +58,8 @@ public class Sampler implements DSPNodeOutput {
         mInterpolateSamples = false;
         set_speed(1.0f);
         set_amplitude(1.0f);
+        set_in(0);
+        set_out(mData.length - 1);
     }
 
 
@@ -63,7 +67,8 @@ public class Sampler implements DSPNodeOutput {
      * load the sample buffer from *raw* byte data. the method assumes a raw format with 32bit float in a value range
      * from -1.0 to 1.0. from -1.0 to 1.0.
      *
-     * @param pData raw byte data ( assuming 4 bytes per sample, 32-bit float aka WAVE_FORMAT_IEEE_FLOAT_32BIT )
+     * @param pData raw byte data ( assuming 4 bytes per sample, 32-bit float aka WAVE_FORMAT_IEEE_FLOAT_32BIT
+     *         )
      * @return instance with data loaded
      */
     public Sampler load(byte[] pData) {
@@ -75,8 +80,8 @@ public class Sampler implements DSPNodeOutput {
      * load the sample buffer from *raw* byte data. the method assumes a raw format with 32bit float in a value range
      * from -1.0 to 1.0.
      *
-     * @param pData         raw byte data ( assuming 4 bytes per sample, 32-bit float aka WAVE_FORMAT_IEEE_FLOAT_32BIT
-     *                      )
+     * @param pData raw byte data ( assuming 4 bytes per sample, 32-bit float aka WAVE_FORMAT_IEEE_FLOAT_32BIT
+     *         )
      * @param pLittleEndian true if byte data is arranged in little endian order
      * @return instance with data loaded
      */
@@ -87,7 +92,32 @@ public class Sampler implements DSPNodeOutput {
         Wellen.bytes_to_floatIEEEs(pData, data(), pLittleEndian);
         rewind();
         set_speed(mSpeed);
+        set_in(0);
+        set_out(mData.length - 1);
         return this;
+    }
+
+    public int get_in() {
+        return mIn;
+    }
+
+    public void set_in(int pIn) {
+        if (pIn > mOut) {
+            pIn = mOut;
+        }
+        mIn = pIn;
+    }
+
+    public int get_out() {
+        return mOut;
+    }
+
+    public void set_out(int pOut) {
+        mOut = pOut > last_index() ? last_index() : (pOut < mIn ? mIn : pOut);
+    }
+
+    public float get_speed() {
+        return mSpeed;
     }
 
     public void set_speed(float pSpeed) {
@@ -121,32 +151,34 @@ public class Sampler implements DSPNodeOutput {
         mInterpolateSamples = pInterpolateSamples;
     }
 
+    public int get_position() {
+        return (int) mArrayPtr;
+    }
+
     public float output() {
-        mArrayPtr += mStepSize;
+        mArrayPtr += mDirectionForward ? mStepSize : -mStepSize;
         final int i = (int) mArrayPtr;
-        if ((i > mData.length - 1 && !mLoop) || mData.length == 0) {
+        if (mData.length == 0 || mDirectionForward ? (i > mOut && !mLoop) : (i < mIn && !mLoop)) {
             return 0.0f;
         }
         final float mFrac = mArrayPtr - i;
-        final int j = i % mData.length;
+        final int j = wrapIndex(i);
         mArrayPtr = j + mFrac;
 
         if (mInterpolateSamples) {
-            final int mIndex = mDirectionForward ? j : (mData.length - 1) - j;
-            final int mNextIndex = mDirectionForward ? (mIndex + 1) % mData.length : (mIndex == 0 ? mData.length - 1
-                    : mIndex - 1);
+            final int mNextIndex = wrapIndex(j + 1);
             final float mNextSample = mData[mNextIndex];
-            final float mSample = mData[mIndex];
+            final float mSample = mData[j];
             final float mInterpolatedSample = mSample * (1.0f - mFrac) + mNextSample * mFrac;
             return mInterpolatedSample * mAmplitude;
         } else {
-            final float mSample = mDirectionForward ? mData[j] : mData[(mData.length - 1) - j];
+            final float mSample = mData[j];
             return mSample * mAmplitude;
         }
     }
 
     public void rewind() {
-        mArrayPtr = 0;
+        mArrayPtr = mDirectionForward ? mIn : mOut;
     }
 
     public void loop(boolean pLoop) {
@@ -155,5 +187,18 @@ public class Sampler implements DSPNodeOutput {
 
     public void enable_loop(boolean pLoop) {
         mLoop = pLoop;
+    }
+
+    private int last_index() {
+        return mData.length - 1;
+    }
+
+    private int wrapIndex(int i) {
+        if (i > mOut) {
+            i = mIn;
+        } else if (i < mIn) {
+            i = mOut;
+        }
+        return i;
     }
 }
