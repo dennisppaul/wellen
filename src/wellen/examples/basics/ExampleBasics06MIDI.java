@@ -17,10 +17,12 @@ public class ExampleBasics06MIDI extends PApplet {
 
     public void setup() {
         Wellen.dumpMidiOutputDevices();
-        /* ton engines can be selected with `start`. in this case MIDI engine is selected with the first argument.
-        the second argument selects the MIDI bus. note `start` must be the first call to `Ton` otherwise a default
-         engine is automatically selected. */
-        Tone.start("midi", "Bus 1");
+        /*
+         * tone engines can be selected with `start`. in this case MIDI engine is selected with the first argument. the
+         * second argument selects the MIDI bus. note `start` must be the first call to `Tone` otherwise the internal
+         * default engine is automatically selected.
+         */
+        Tone.start("midi", "Bus 13");
     }
 
     public void draw() {

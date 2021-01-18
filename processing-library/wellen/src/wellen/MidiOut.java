@@ -116,8 +116,14 @@ public class MidiOut {
         }
     }
 
+    public boolean is_initialized() {
+        return mMidiOut != null;
+    }
+
     public void close() {
-        mMidiOut.close();
+        if (mMidiOut != null) {
+            mMidiOut.close();
+        }
     }
 
     private Receiver find(String pMidiOutputDevice) {
@@ -158,7 +164,8 @@ public class MidiOut {
     }
 
     private synchronized void sendMessage(MidiMessage message) {
-        mMidiOut.send(message, 0);
+        if (mMidiOut != null) {
+            mMidiOut.send(message, 0);
+        }
     }
-
 }

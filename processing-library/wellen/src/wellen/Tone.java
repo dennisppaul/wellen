@@ -216,6 +216,14 @@ public abstract class Tone {
         }
     }
 
+    public static ToneEngineMIDI get_midi_engine() {
+        if (instance() instanceof ToneEngineMIDI) {
+            return (ToneEngineMIDI) instance();
+        } else {
+            return null;
+        }
+    }
+
     public static void set_engine(ToneEngine pEngine) {
         instance = pEngine;
     }

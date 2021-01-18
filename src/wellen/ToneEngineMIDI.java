@@ -65,7 +65,7 @@ public class ToneEngineMIDI extends ToneEngine {
             }
         }
         System.err.println("+++ @" + ToneEngineMIDI.class.getSimpleName() + " / couldn't find MIDI device: " + pMidiOutputDeviceName);
-        return null;
+        return "";
     }
 
     public void note_on(int note, int velocity) {
@@ -117,6 +117,10 @@ public class ToneEngineMIDI extends ToneEngine {
         return mInstruments;
     }
 
+    public boolean is_initialized() {
+        return mMidiOut.is_initialized();
+    }
+
     public void replace_instrument(Instrument pInstrument) {
         if (pInstrument instanceof InstrumentMIDI) {
             mInstruments.set(pInstrument.ID(), (InstrumentMIDI) pInstrument);
@@ -129,12 +133,14 @@ public class ToneEngineMIDI extends ToneEngine {
     private void prepareExitHandler() {
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
             public void run() {
-                for (int j = 0; j < mNumberOfInstruments; j++) {
-                    for (int i = 0; i < 127; i++) {
-                        mMidiOut.sendNoteOff(j, i, 0);
+                if (mMidiOut != null) {
+                    for (int j = 0; j < mNumberOfInstruments; j++) {
+                        for (int i = 0; i < 127; i++) {
+                            mMidiOut.sendNoteOff(j, i, 0);
+                        }
                     }
+                    mMidiOut.close();
                 }
-                mMidiOut.close();
             }
         }));
     }
