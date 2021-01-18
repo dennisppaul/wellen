@@ -34,7 +34,7 @@ public class ExampleBasics06MIDI extends PApplet {
         ( e.g `osc_type` ) are not available. */
         Tone.instrument(mouseX < width / 2.0 ? 0 : 1);
         int mNote = 45 + (int) random(0, 12);
-        Tone.note_on(mNote, 127);
+        Tone.note_on(mNote, 100);
     }
 
     public void mouseReleased() {
