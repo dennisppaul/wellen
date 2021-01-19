@@ -32,7 +32,7 @@ import java.util.TimerTask;
 public class BeatEvent {
 
     private final Timer mTimer;
-    private final ArrayList<BeatListener> pListeners;
+    private final ArrayList<BeatListener> mListeners;
     private BeatPool instance;
     private int mBeat = -1;
     private boolean mFlagged = false;
@@ -44,7 +44,7 @@ public class BeatEvent {
     }
 
     private BeatEvent() {
-        pListeners = new ArrayList<>();
+        mListeners = new ArrayList<>();
         mTimer = new Timer();
     }
 
@@ -59,7 +59,11 @@ public class BeatEvent {
     }
 
     public void add(BeatListener pListener) {
-        pListeners.add(pListener);
+        mListeners.add(pListener);
+    }
+
+    public void clear() {
+        mListeners.clear();
     }
 
     public void set_bpm(float pBPM) {
@@ -100,7 +104,7 @@ public class BeatEvent {
                             final BeatEvent mBeatEvent = i.next();
                             if (mBeatEvent.mFlagged) {
                                 mBeatEvent.mFlagged = false;
-                                for (BeatListener mListener : mBeatEvent.pListeners) {
+                                for (BeatListener mListener : mBeatEvent.mListeners) {
                                     mListener.beat(mBeatEvent.mBeat);
                                 }
                             }
