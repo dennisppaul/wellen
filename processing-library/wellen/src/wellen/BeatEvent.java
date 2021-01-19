@@ -58,12 +58,35 @@ public class BeatEvent {
         instance().end();
     }
 
+    /**
+     * add {@link wellen.BeatListener}
+     *
+     * @param pListener
+     */
     public void add(BeatListener pListener) {
         mListeners.add(pListener);
     }
 
+    /**
+     * removes all {@link wellen.BeatListener}
+     */
     public void clear() {
         mListeners.clear();
+    }
+
+    public int current_beat_count() {
+        return mBeat;
+    }
+
+    public void set_beat_count(int pBeatCounter) {
+        mBeat = pBeatCounter;
+    }
+
+    /**
+     * reset beat counter
+     */
+    public void reset() {
+        mBeat = 0;
     }
 
     public void set_bpm(float pBPM) {
