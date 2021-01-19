@@ -67,8 +67,10 @@ public class DSP implements AudioBufferRenderer {
             }
         } catch (NoSuchMethodException | SecurityException ex) {
             System.err.println("+++ @" + DSP.class.getSimpleName() + " / could not find callback `" + METHOD_NAME +
-                                       "()`.");
-            System.err.println("    hint: check the callback method parameters, they must match the number of input" + " and output channels. default is `" + METHOD_NAME + "(float[])` ( = MONO OUTPUT ).");
+                               "()`.");
+            System.err.println(
+            "    hint: check the callback method parameters, they must match the number of input" + " and output " +
+            "channels. default is `" + METHOD_NAME + "(float[])` ( = MONO OUTPUT ).");
         }
     }
 

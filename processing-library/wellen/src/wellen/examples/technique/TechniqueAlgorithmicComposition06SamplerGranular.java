@@ -1,4 +1,4 @@
-package wellen.examples.DSP;
+package wellen.examples.technique;
 
 import processing.core.PApplet;
 import wellen.DSP;
@@ -7,10 +7,10 @@ import wellen.Wellen;
 
 import java.util.ArrayList;
 
-public class ExampleDSP20SamplerGranular extends PApplet {
+public class TechniqueAlgorithmicComposition06SamplerGranular extends PApplet {
 
     private Sampler mSampler;
-    private final ArrayList<Sampler> mSamplers = new ArrayList<>();
+    private final ArrayList<Sampler> mSamplers = new ArrayList<Sampler>();
 
     public void settings() {
         size(640, 480, P3D);
@@ -99,6 +99,6 @@ public class ExampleDSP20SamplerGranular extends PApplet {
     }
 
     public static void main(String[] args) {
-        Wellen.run_sketch_with_resources(ExampleDSP20SamplerGranular.class);
+        Wellen.run_sketch_with_resources(TechniqueAlgorithmicComposition06SamplerGranular.class);
     }
 }
