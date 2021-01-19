@@ -29,8 +29,7 @@ import static processing.core.PApplet.constrain;
  */
 public class ToneEngineMIDI extends ToneEngine {
 
-    public static final int CC_MODULATION = 1;
-    public static final int mNumberOfInstruments = 16;
+    private static final int mNumberOfInstruments = Wellen.DEFAULT_NUMBER_OF_INSTRUMENTS;
     public static boolean SEND_NOTE_OFF_TO_ALL = false;
     public final MidiOut mMidiOut;
     private final Timer mTimer;
@@ -57,17 +56,6 @@ public class ToneEngineMIDI extends ToneEngine {
         mCurrentInstrumentID = 0;
     }
 
-    public static String get_proper_device_name(String pMidiOutputDeviceName) {
-        String[] mDevices = MidiOut.availableOutputs();
-        for (String mDevice : mDevices) {
-            if (mDevice.startsWith(pMidiOutputDeviceName)) {
-                return mDevice;
-            }
-        }
-        System.err.println("+++ @" + ToneEngineMIDI.class.getSimpleName() + " / couldn't find MIDI device: " + pMidiOutputDeviceName);
-        return "";
-    }
-
     public void note_on(int note, int velocity) {
         mMidiOut.sendNoteOn(mCurrentInstrumentID, note, velocity);
         mInstruments.get(mCurrentInstrumentID).note_on(note, velocity);
@@ -79,7 +67,7 @@ public class ToneEngineMIDI extends ToneEngine {
     }
 
     public void note_off() {
-        mInstruments.get(mCurrentInstrumentID).note_off();
+        note_off(0);
         if (SEND_NOTE_OFF_TO_ALL) {
             for (int i = 0; i < 127; i++) {
                 mMidiOut.sendNoteOff(mCurrentInstrumentID, i, 0);
@@ -125,8 +113,10 @@ public class ToneEngineMIDI extends ToneEngine {
         if (pInstrument instanceof InstrumentMIDI) {
             mInstruments.set(pInstrument.ID(), (InstrumentMIDI) pInstrument);
         } else {
-            System.err.println("+++ WARNING @" + getClass().getSimpleName() + ".replace_instrument(Instrument) / " +
-                                       "instrument must be" + " of type `InstrumentMIDI`");
+            System.err.println(
+            "+++ WARNING @" + getClass().getSimpleName() + ".replace_instrument(Instrument) / instrument must be" +
+            " of type `" + InstrumentMIDI.class.getSimpleName() +
+            "`");
         }
     }
 
@@ -143,5 +133,17 @@ public class ToneEngineMIDI extends ToneEngine {
                 }
             }
         }));
+    }
+
+    public static String get_proper_device_name(String pMidiOutputDeviceName) {
+        String[] mDevices = MidiOut.availableOutputs();
+        for (String mDevice : mDevices) {
+            if (mDevice.startsWith(pMidiOutputDeviceName)) {
+                return mDevice;
+            }
+        }
+        System.err.println(
+        "+++ @" + ToneEngineMIDI.class.getSimpleName() + " / couldn't find MIDI device: " + pMidiOutputDeviceName);
+        return "";
     }
 }

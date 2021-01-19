@@ -26,13 +26,15 @@ void setup() {
 }
 
 void draw() {
-    background(Tone.is_playing() ? 255 : 0);
+    background(255);
+    fill(0);
+    ellipse(width * 0.5f, height * 0.5f, Tone.is_playing() ? 100 : 5, Tone.is_playing() ? 100 : 5);
 }
 
 void mousePressed() {
     Tone.instrument(mouseX < width / 2.0 ? 0 : 1);
     mNote = 45 + (int) random(0, 12);
-    Tone.note_on(mNote, 127);
+    Tone.note_on(mNote, 100);
 }
 
 void mouseReleased() {

@@ -11,6 +11,8 @@ public class ExampleBasics06MIDI extends PApplet {
      * to a MIDI device ). make sure to set up the MIDI configuration properly in system control.
      */
 
+    private int mNote;
+
     public void settings() {
         size(640, 480);
     }
@@ -22,7 +24,7 @@ public class ExampleBasics06MIDI extends PApplet {
          * second argument selects the MIDI bus. note `start` must be the first call to `Tone` otherwise the internal
          * default engine is automatically selected.
          */
-        Tone.start("midi", "Bus 13");
+        Tone.start("midi", "Bus 1");
     }
 
     public void draw() {
@@ -35,12 +37,12 @@ public class ExampleBasics06MIDI extends PApplet {
         /* `instrument` in this context is equivalent to a *MIDI channel* ID. this also means that sound characteristics
         ( e.g `osc_type` ) are not available. */
         Tone.instrument(mouseX < width / 2.0 ? 0 : 1);
-        int mNote = 45 + (int) random(0, 12);
+        mNote = 45 + (int) random(0, 12);
         Tone.note_on(mNote, 100);
     }
 
     public void mouseReleased() {
-        Tone.note_off();
+        Tone.note_off(mNote);
     }
 
     public static void main(String[] args) {

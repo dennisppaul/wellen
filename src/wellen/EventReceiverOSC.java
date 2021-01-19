@@ -58,7 +58,7 @@ public class EventReceiverOSC {
                 mEvent = Wellen.EVENT_NOTE_OFF;
             } else if (pOSCMessage.checkAddrPattern(ToneEngineOSC.OSC_ADDR_PATTERN_CONTROLCHANGE)) {
                 mEvent = Wellen.EVENT_CONTROLCHANGE;
-            } else if (pOSCMessage.checkAddrPattern(ToneEngineOSC.OSC_ADDR_PATTERN_PITCHBAND)) {
+            } else if (pOSCMessage.checkAddrPattern(ToneEngineOSC.OSC_ADDR_PATTERN_PITCHBEND)) {
                 mEvent = Wellen.EVENT_PITCHBEND;
             }
             for (int i = 0; i < mData.length; i++) {

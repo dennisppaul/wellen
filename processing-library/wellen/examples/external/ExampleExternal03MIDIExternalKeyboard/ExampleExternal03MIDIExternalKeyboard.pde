@@ -22,7 +22,7 @@ void draw() {
     background(255);
     noStroke();
     fill(map(mVelocity, 0, 127, 255, 0));
-    float mScale = map(mNote, 24, 96, 5, height * 0.8f);
+    float mScale = Tone.is_playing() ? map(mNote, 24, 96, 5, height * 0.8f) : 5;
     ellipse(width * 0.5f, height * 0.5f, mScale, mScale);
 }
 

@@ -5,6 +5,8 @@ import wellen.*;
  * to a MIDI device ). make sure to set up the MIDI configuration properly in system control.
  */
 
+int mNote;
+
 void settings() {
     size(640, 480);
 }
@@ -16,7 +18,7 @@ void setup() {
      * second argument selects the MIDI bus. note `start` must be the first call to `Tone` otherwise the internal
      * default engine is automatically selected.
      */
-    Tone.start("midi", "Bus 13");
+    Tone.start("midi", "Bus 1");
 }
 
 void draw() {
@@ -29,10 +31,10 @@ void mousePressed() {
     /* `instrument` in this context is equivalent to a *MIDI channel* ID. this also means that sound characteristics
     ( e.g `osc_type` ) are not available. */
     Tone.instrument(mouseX < width / 2.0 ? 0 : 1);
-    int mNote = 45 + (int) random(0, 12);
+    mNote = 45 + (int) random(0, 12);
     Tone.note_on(mNote, 100);
 }
 
 void mouseReleased() {
-    Tone.note_off();
+    Tone.note_off(mNote);
 }
