@@ -3,7 +3,7 @@ import wellen.*;
 
 Sampler mSampler;
 
-final ArrayList<Sampler> mSamplers = new ArrayList();
+final ArrayList<Sampler> mSamplers = new ArrayList<Sampler>();
 
 void settings() {
     size(640, 480, P3D);

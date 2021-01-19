@@ -65,7 +65,7 @@ public class AppStepSequencerRandom extends PApplet {
                 mSequence[i] = OFF;
             } else {
                 mSequence[i] = (int) random(Note.NOTE_C3,
-                        Note.NOTE_C6);
+                                            Note.NOTE_C6);
             }
         }
     }

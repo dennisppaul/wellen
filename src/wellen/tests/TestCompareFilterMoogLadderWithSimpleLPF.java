@@ -42,13 +42,14 @@ public class TestCompareFilterMoogLadderWithSimpleLPF extends PApplet {
             mFreqOffset = 0;
         }
         if (pBeatCounter % 128 == 96) {
-            mFreqOffset = 7-12;
+            mFreqOffset = 7 - 12;
         }
         if (pBeatCounter % 128 == 112) {
-            mFreqOffset = 10-12;
+            mFreqOffset = 10 - 12;
         }
         float mFreqMult = (pBeatCounter % 4) + 1;
-        mWavetable.set_frequency(mFreqMult * Wellen.DEFAULT_SAMPLING_RATE * ((12.0f + mFreqOffset) / 12.0f) / Wellen.DEFAULT_AUDIOBLOCK_SIZE);
+        mWavetable.set_frequency(
+        mFreqMult * Wellen.DEFAULT_SAMPLING_RATE * ((12.0f + mFreqOffset) / 12.0f) / Wellen.DEFAULT_AUDIOBLOCK_SIZE);
     }
 
     public void keyPressed() {

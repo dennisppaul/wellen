@@ -1,4 +1,4 @@
-package wellen.tests;
+package wellen.examples.technique;
 
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -7,7 +7,7 @@ import wellen.HarmonicTable;
 import wellen.Note;
 import wellen.Tone;
 
-public class TestHarmonicTable extends PApplet {
+public class TechniqueBasics03HarmonicTable extends PApplet {
 
     private int mStep;
     private final HarmonicTable mHarmonicTable = new HarmonicTable();
@@ -75,6 +75,6 @@ public class TestHarmonicTable extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main(TestHarmonicTable.class.getName());
+        PApplet.main(TechniqueBasics03HarmonicTable.class.getName());
     }
 }
