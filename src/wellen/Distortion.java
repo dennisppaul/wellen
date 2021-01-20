@@ -91,7 +91,6 @@ public class Distortion implements DSPNodeProcess {
     public void set_bits(int pBits) {
         mBits = pBits;
         mSteps = (int) (Math.pow(2, mBits - 1));
-        System.out.println("steps: " + mSteps);
     }
 
     public float process(float pSignal) {

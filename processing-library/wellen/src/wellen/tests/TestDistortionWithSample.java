@@ -1,24 +1,15 @@
-package wellen.examples.DSP;
+package wellen.tests;
 
 import processing.core.PApplet;
 import wellen.DSP;
 import wellen.Distortion;
+import wellen.Sampler;
 import wellen.Tone;
-import wellen.ToneEngineInternal;
 import wellen.Wellen;
 
-public class ExampleDSP16Distortion extends PApplet {
+public class TestDistortionWithSample extends PApplet {
 
-    /*
-     * this example demonstrate how to use distortion. there is a series of different distortion types available. all
-     * types are capable of pre-amplifying the signal ( see `set_amplification(float)` ) most types then clip or distort
-     * the signal at a specified threshold ( `set_clip(float)` ).
-     *
-     * for distortion type `DISTORTION_BIT_CRUSHING` a number of bits needs to be specified through `set_bits(int)` to
-     * achieve distortion by artificially reducing the bit range.
-     */
-
-    private ToneEngineInternal mToneEngine;
+    private Sampler mSampler;
     private Distortion mDistortion;
 
     public void settings() {
@@ -26,9 +17,12 @@ public class ExampleDSP16Distortion extends PApplet {
     }
 
     public void setup() {
+        byte[] mData = loadBytes("../../../resources/a_portrait_in_reverse.raw");
+        mSampler = new Sampler();
+        mSampler.load(mData);
+        mSampler.loop(true);
+
         mDistortion = new Distortion();
-        mToneEngine = Tone.start(Wellen.TONE_ENGINE_INTERNAL_WITH_NO_OUTPUT);
-        Tone.instrument().set_oscillator_type(Wellen.OSC_TRIANGLE);
         DSP.start(this);
     }
 
@@ -73,32 +67,20 @@ public class ExampleDSP16Distortion extends PApplet {
         }
     }
 
-    public void mouseDragged() {
+    public void mouseMoved() {
         mDistortion.set_clip(map(mouseX, 0, width, 0.0f, 1.0f));
         mDistortion.set_bits((int) map(mouseX, 0, width, 1, 17));
         mDistortion.set_amplification(map(mouseY, 0, height, 0.0f, 10.0f));
     }
 
-    public void mousePressed() {
-        int mNote = 36 + (int) random(12);
-        Tone.instrument(0).note_on(mNote, 80);
-    }
-
-    public void mouseReleased() {
-        Tone.instrument(0).note_off();
-    }
-
     public void audioblock(float[] pSamples) {
-        mToneEngine.audioblock(pSamples);
         for (int i = 0; i < pSamples.length; i++) {
-            /* apply distortion to process sample. */
+            pSamples[i] = mSampler.output();
             pSamples[i] = Wellen.clamp(mDistortion.process(pSamples[i]));
-            /* note that it might not be a good idea to apply the distortion *after* the ADSR envelope as this can
-            cause quite step attacks. */
         }
     }
 
     public static void main(String[] args) {
-        PApplet.main(ExampleDSP16Distortion.class.getName());
+        Wellen.run_sketch_with_resources(TestDistortionWithSample.class);
     }
 }

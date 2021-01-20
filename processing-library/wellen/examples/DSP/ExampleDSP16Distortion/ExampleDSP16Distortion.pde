@@ -1,7 +1,12 @@
 import wellen.*; 
 
 /*
- * this example demonstrate how to use distortion.
+ * this example demonstrate how to use distortion. there is a series of different distortion types available. all
+ * types are capable of pre-amplifying the signal ( see `set_amplification(float)` ) most types then clip or distort
+ * the signal at a specified threshold ( `set_clip(float)` ).
+ *
+ * for distortion type `DISTORTION_BIT_CRUSHING` a number of bits needs to be specified through `set_bits(int)` to
+ * achieve distortion by artificially reducing the bit range.
  */
 
 ToneEngineInternal mToneEngine;
@@ -64,7 +69,6 @@ void mouseDragged() {
     mDistortion.set_clip(map(mouseX, 0, width, 0.0f, 1.0f));
     mDistortion.set_bits((int) map(mouseX, 0, width, 1, 17));
     mDistortion.set_amplification(map(mouseY, 0, height, 0.0f, 10.0f));
-    System.out.println("bits: " + mDistortion.get_bits());
 }
 
 void mousePressed() {
