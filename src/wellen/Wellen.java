@@ -46,11 +46,15 @@ public class Wellen {
     public static final float DEFAULT_DECAY = 0.01f;
     public static final float DEFAULT_RELEASE = 0.075f;
     public static final float DEFAULT_SUSTAIN = 0.5f;
-    public static final int DISTORTION_CLIP = 0;
+    public static final int DISTORTION_HARD_CLIPPING = 0;
     public static final int DISTORTION_FOLDBACK = 1;
     public static final int DISTORTION_FOLDBACK_SINGLE = 2;
-    public static final int DISTORTION_ARC_TANGENT = 3;
-    public static final int DISTORTION_ARC_HYPERBOLIC = 4;
+    public static final int DISTORTION_FULL_WAVE_RECTIFICATION = 3;
+    public static final int DISTORTION_HALF_WAVE_RECTIFICATION = 4;
+    public static final int DISTORTION_INFINITE_CLIPPING = 5;
+    public static final int DISTORTION_SOFT_CLIPPING_CUBIC = 6;
+    public static final int DISTORTION_SOFT_CLIPPING_ARC_TANGENT = 7;
+    public static final int DISTORTION_BIT_CRUSHING = 8;
     public static final int FILTER_MODE_LOWPASS = 0;
     public static final int FILTER_MODE_HIGHPASS = 1;
     public static final int FILTER_MODE_BANDPASS = 2;
@@ -157,7 +161,8 @@ public class Wellen {
             if (mInputChannels + mOutputChannels > 0) {
                 final String mID = PApplet.nf(i, 2);
                 final String mName = AudioSystem.getMixerInfo()[i].getName();
-                System.out.println("+ " + mID + " ( IN:" + mInputChannels + " / OUT:" + mOutputChannels + " ) : " + mName);
+                System.out.println(
+                "+ " + mID + " ( IN:" + mInputChannels + " / OUT:" + mOutputChannels + " ) : " + mName);
             }
         }
         System.out.println("+-------------------------------------------------------+");
@@ -284,7 +289,7 @@ public class Wellen {
                                  int pCompressionType) {
         if (pCompressionType == WAV_FORMAT_IEEE_FLOAT_32BIT && pBitsPerSample != 32) {
             System.err.println("+++ WARNING @" + Wellen.class.getSimpleName() + ".exportWAV / if WAV format is *IEEE "
-                                       + "float* 32 bits per sample are required.");
+                               + "float* 32 bits per sample are required.");
             pBitsPerSample = 32;
         }
         final byte[] mWAVBytes = WAVConverter.convert_samples_to_bytes(pBuffer,
@@ -335,7 +340,9 @@ public class Wellen {
                 pSamples[i] = bytes_to_floatIEEE(pBytes, i * 4, (i + 1) * 4, pLittleEndian);
             }
         } else {
-            System.err.println("+++ WARNING @ " + Wellen.class.getSimpleName() + " / array sizes do not match. make " + "sure byte array is exactly 4 times the size of float array");
+            System.err.println(
+            "+++ WARNING @ " + Wellen.class.getSimpleName() + " / array sizes do not match. make " + "sure byte array" +
+            " is exactly 4 times the size of float array");
         }
     }
 
@@ -360,7 +367,7 @@ public class Wellen {
 
     public static byte[] floatIEEEs_to_bytes(float[] pFloats, boolean pLittleEndian) {
         ByteBuffer buffer = ByteBuffer.allocate(4 * pFloats.length).order(pLittleEndian ? ByteOrder.LITTLE_ENDIAN :
-                                                                                  ByteOrder.BIG_ENDIAN);
+                                                                          ByteOrder.BIG_ENDIAN);
 
         for (float value : pFloats) {
             buffer.putFloat(value);

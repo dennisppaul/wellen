@@ -19,11 +19,15 @@
 
 package wellen;
 
-import static wellen.Wellen.DISTORTION_ARC_HYPERBOLIC;
-import static wellen.Wellen.DISTORTION_ARC_TANGENT;
-import static wellen.Wellen.DISTORTION_CLIP;
+import static wellen.Wellen.DISTORTION_BIT_CRUSHING;
 import static wellen.Wellen.DISTORTION_FOLDBACK;
 import static wellen.Wellen.DISTORTION_FOLDBACK_SINGLE;
+import static wellen.Wellen.DISTORTION_FULL_WAVE_RECTIFICATION;
+import static wellen.Wellen.DISTORTION_HALF_WAVE_RECTIFICATION;
+import static wellen.Wellen.DISTORTION_HARD_CLIPPING;
+import static wellen.Wellen.DISTORTION_INFINITE_CLIPPING;
+import static wellen.Wellen.DISTORTION_SOFT_CLIPPING_ARC_TANGENT;
+import static wellen.Wellen.DISTORTION_SOFT_CLIPPING_CUBIC;
 
 /**
  * distorts a signal with different distortion strategies.
@@ -35,17 +39,26 @@ public class Distortion implements DSPNodeProcess {
     private float mAmplification;
     private int mDistortionType;
     private final boolean LOCK_GUARD = true;
+    private int mBits;
+    private int mSteps;
 
     public Distortion() {
         set_clip(1.0f);
         set_amplification(1.0f);
-        set_type(DISTORTION_CLIP);
+        set_type(DISTORTION_HARD_CLIPPING);
+        set_bits(8);
     }
 
     public float get_amplification() {
         return mAmplification;
     }
 
+    /**
+     * set pre-amplification value. amplification only affects some distortion types e.g `DISTORTION_HARD_CLIPPING`,
+     * `DISTORTION_SOFT_CLIPPING_CUBIC`, `DISTORTION_SOFT_CLIPPING_ARC_TANGENT`.
+     *
+     * @param pAmplification the amplification factor. a value of `1.0f` has no effect on the signal.
+     */
     public void set_amplification(float pAmplification) {
         mAmplification = pAmplification;
     }
@@ -66,29 +79,54 @@ public class Distortion implements DSPNodeProcess {
         mDistortionType = pDistortionType;
     }
 
-    public float process(float s) {
+    public int get_bits() {
+        return mBits;
+    }
+
+    /**
+     * set the number of bits for `DISTORTION_BIT_CRUSHING`
+     *
+     * @param pBits number of bits to which the signal will be reduced to
+     */
+    public void set_bits(int pBits) {
+        mBits = pBits;
+        mSteps = (int) (Math.pow(2, mBits - 1));
+        System.out.println("steps: " + mSteps);
+    }
+
+    public float process(float pSignal) {
+        // @TODO(check if it makes sense to always hard clip all distortion types to [-1.0, 1.0])
+        final float mAmplifiedSignal = pSignal * mAmplification;
         switch (mDistortionType) {
-            case DISTORTION_CLIP:
-                return limit_clip(s * mAmplification);
+            case DISTORTION_HARD_CLIPPING:
+                // - Hard Clipping ( i.e `f(x) = x > t ? t : x < -t ? -t : x (t=threshold)` )
+                return limit_clip(mAmplifiedSignal);
             case DISTORTION_FOLDBACK:
-                return limit_foldback(s * mAmplification);
+                return limit_foldback(mAmplifiedSignal);
             case DISTORTION_FOLDBACK_SINGLE:
-                return limit_clip(limit_foldback_single(s * mAmplification));
-            case DISTORTION_ARC_TANGENT:
-                return (float) (Math.atan(s * mAmplification)) * mClip;
-            case DISTORTION_ARC_HYPERBOLIC:
-                return (float) Math.tanh(s * mAmplification) * mClip;
+                return limit_foldback_single(mAmplifiedSignal);
+            case DISTORTION_FULL_WAVE_RECTIFICATION:
+                // - Full-Wave Rectification ( i.e `f(x) = abs(x)` )
+                return Math.abs(mAmplifiedSignal);
+            case DISTORTION_HALF_WAVE_RECTIFICATION:
+                // - Half-Wave Rectification ( i.e `f(x) = x < 0.0 ? 0.0 : x` )
+                return mAmplifiedSignal < 0.0f ? 0.0f : mAmplifiedSignal;
+            case DISTORTION_INFINITE_CLIPPING:
+                // - Infinite Clipping ( i.e `f(x) = x < 0.0 ? -1.0 : x > 0.0 ? 1.0 : 0.0` || `Math.signum(x)` )
+                return mAmplifiedSignal < 0.0f ? -mClip : mAmplifiedSignal > 0.0f ? mClip : 0.0f;
+            case DISTORTION_SOFT_CLIPPING_CUBIC:
+                // - Soft Clipping Cubic ( i.e `f(x) = x - s * pow(x, 3) (s=scaling_factor=[0,1]=default:0.33)` )
+                return (float) (mAmplifiedSignal - mClip * Math.pow(mAmplifiedSignal, 3));
+            case DISTORTION_SOFT_CLIPPING_ARC_TANGENT:
+                // - Soft Clipping Arc Tangent ( i.e `f(x) = (2.0 / PI) * atan(a*x) (a=amount=[1,10])` )
+                return (float) ((2.0 / Math.PI) * Math.atan(mClip * mAmplifiedSignal));
+            case DISTORTION_BIT_CRUSHING:
+                // - Bit Crushing ( i.e ` f(x) = floor(x * s) / s (s=steps=pow(2,bits-1))` )
+                return (float) (Math.floor(mAmplifiedSignal * mSteps) / mSteps);
             default:
                 return 0.0f;
         }
         // see [Hack Audio: Distortion Effects](https://www.hackaudio.com/digital-signal-processing/distortion-effects/)
-        // - Full-Wave Rectification ( i.e `f(x) = abs(x)` )
-        // - Half-Wave Rectification ( i.e `f(x) = x < 0.0 ? 0.0 : x` )
-        // - Infinite Clipping ( i.e `f(x) = x < 0.0 ? -1.0 : x > 0.0 ? 1.0 : 0.0` || `Math.signum(0.0f)` )
-        // - Hard Clipping ( i.e `f(x) = x > t ? t : x < -t ? -t : x (t=threshold)` )
-        // - Soft Clipping Cubic ( i.e `f(x) = x - s * pow(x, 3) (s=scaling_factor=[0,1]=default:0.33)` )
-        // - Soft Clipping Arc Tangent ( i.e `f(x) = (2.0 / PI) * atan(a*x) (a=amount=[1,10])` )
-        // - Bit Crushing ( i.e ` f(x) = floor(x * s) / s (s=steps=pow(2,bits-1))` ) ( instead of `floor use `round` )
     }
 
     private float limit_clip(float v) {
