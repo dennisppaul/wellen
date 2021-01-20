@@ -51,8 +51,8 @@ void keyPressed() {
     }
 }
 
-void audioblock(float[] pOutputSamples) {
-    for (int i = 0; i < pOutputSamples.length; i++) {
-        pOutputSamples[i] = mNoise.output();
+void audioblock(float[] pOutputSignal) {
+    for (int i = 0; i < pOutputSignal.length; i++) {
+        pOutputSignal[i] = mNoise.output();
     }
 }

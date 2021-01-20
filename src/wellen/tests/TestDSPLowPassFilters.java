@@ -52,8 +52,8 @@ public class TestDSPLowPassFilters extends PApplet {
         mNaiveLowPassFilter.ratio(map(mouseX, 0, width, 0.0f, 0.1f));
     }
 
-    public void audioblock(float[] pOutputSamples) {
-        for (int i = 0; i < pOutputSamples.length; i++) {
+    public void audioblock(float[] pOutputSignal) {
+        for (int i = 0; i < pOutputSignal.length; i++) {
             /* square wave */
             mCounter += mFreq;
             mCounter = mCounter > DSP.get_sample_rate() ? mCounter - DSP.get_sample_rate() : mCounter;
@@ -68,7 +68,7 @@ public class TestDSPLowPassFilters extends PApplet {
                 mSample = mNaiveLowPassFilter.process(mSample);
             }
             mSample = Wellen.clamp(mSample, -1, 1);
-            pOutputSamples[i] = mSample;
+            pOutputSignal[i] = mSample;
         }
     }
 

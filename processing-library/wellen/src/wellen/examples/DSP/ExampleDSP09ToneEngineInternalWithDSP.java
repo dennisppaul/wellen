@@ -50,15 +50,15 @@ public class ExampleDSP09ToneEngineInternalWithDSP extends PApplet {
         Tone.instrument(2).note_off();
     }
 
-    public void audioblock(float[] pSamples) {
-        mToneEngine.audioblock(pSamples); /* populate buffer with samples from tone engine */
-        for (int i = 0; i < pSamples.length; i++) {
+    public void audioblock(float[] pOutputSignal) {
+        mToneEngine.audioblock(pOutputSignal); /* populate buffer with samples from tone engine */
+        for (int i = 0; i < pOutputSignal.length; i++) {
             mDelayID++;
             mDelayID %= mDelayBuffer.length;
             int mOffsetID = mDelayID + mDelayOffset;
             mOffsetID %= mDelayBuffer.length;
-            pSamples[i] = pSamples[i] * (1.0f - mMix) + mDelayBuffer[mOffsetID] * mMix;
-            mDelayBuffer[mDelayID] = pSamples[i] * mDecay;
+            pOutputSignal[i] = pOutputSignal[i] * (1.0f - mMix) + mDelayBuffer[mOffsetID] * mMix;
+            mDelayBuffer[mDelayID] = pOutputSignal[i] * mDecay;
         }
     }
 

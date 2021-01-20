@@ -82,13 +82,13 @@ public class TechniqueAlgorithmicComposition02VisualModel extends PApplet {
         return null;
     }
 
-    public void audioblock(float[] pOutputSamples) {
-        for (int i = 0; i < pOutputSamples.length; i++) {
+    public void audioblock(float[] pOutputSignal) {
+        for (int i = 0; i < pOutputSignal.length; i++) {
             for (CircleController c : mControllers) {
-                pOutputSamples[i] += c.process();
+                pOutputSignal[i] += c.process();
             }
-            pOutputSamples[i] /= mControllers.size();
-            pOutputSamples[i] = Wellen.clamp(pOutputSamples[i], -1.0f, 1.0f);
+            pOutputSignal[i] /= mControllers.size();
+            pOutputSignal[i] = Wellen.clamp(pOutputSignal[i], -1.0f, 1.0f);
         }
     }
 

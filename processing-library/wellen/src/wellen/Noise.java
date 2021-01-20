@@ -75,31 +75,31 @@ public class Noise implements DSPNodeOutput {
 
     @Override
     public float output() {
-        final float mSample;
+        final float mSignal;
         switch (mType) {
             case Wellen.NOISE_GAUSSIAN_WHITE:
-                mSample = (float) getGaussianWhiteNoise();
+                mSignal = (float) getGaussianWhiteNoise();
                 break;
             case Wellen.NOISE_GAUSSIAN_WHITE2:
-                mSample = (float) getGaussianWhiteNoise2();
+                mSignal = (float) getGaussianWhiteNoise2();
                 break;
             case Wellen.NOISE_PINK:
-                mSample = (float) getPinkNoise();
+                mSignal = (float) getPinkNoise();
                 break;
             case Wellen.NOISE_PINK2:
-                mSample = (float) getPinkNoise2();
+                mSignal = (float) getPinkNoise2();
                 break;
             case Wellen.NOISE_PINK3:
-                mSample = (float) getPinkNoise3();
+                mSignal = (float) getPinkNoise3();
                 break;
             case Wellen.NOISE_SIMPLEX:
-                mSample = (float) getSimplexNoise();
+                mSignal = (float) getSimplexNoise();
                 break;
             default:
-                mSample = (float) getWhiteNoise();
+                mSignal = (float) getWhiteNoise();
                 break;
         }
-        return mSample * mAmplitude;
+        return mSignal * mAmplitude;
     }
 
     private double getGaussianWhiteNoise() {

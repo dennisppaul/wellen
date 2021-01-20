@@ -159,8 +159,8 @@ public class Reverb implements DSPNodeProcess {
         wet = new GlideVar(fslider2, largest_diff);
     }
 
-    public void process(float[] pOutputSamplesLeft, float[] pOutputSamplesRight, float[] pInputSamplesLeft,
-                        float[] pInputSamplesRight) {
+    public void process(float[] pOutputSignalLeft, float[] pOutputSignalRight, float[] pInputSignalLeft,
+                        float[] pInputSignalRight) {
         fslider0 = damp.get();
         fslider1 = roomSize.get();
         fslider2 = wet.get();
@@ -170,11 +170,11 @@ public class Reverb implements DSPNodeProcess {
         float fSlow2 = (0.7f + (0.28f * fslider1));
         float fSlow3 = fslider2;
         float fSlow4 = (1 - fSlow3);
-        int count = pInputSamplesLeft.length;
+        int count = pInputSignalLeft.length;
         for (int i = 0; i < count; i++) {
             fRec9_0 = ((fSlow1 * fRec8_1) + (fSlow0 * fRec9_1));
-            float fTemp0 = pInputSamplesRight[i];
-            float fTemp1 = pInputSamplesLeft[i];
+            float fTemp0 = pInputSignalRight[i];
+            float fTemp1 = pInputSignalLeft[i];
             float fTemp2 = (1.500000e-02f * (fTemp1 + fTemp0));
             int p = IOTA & 2047;
             fVec0[p] = (fTemp2 + (fSlow2 * fRec9_0));
@@ -214,7 +214,7 @@ public class Reverb implements DSPNodeProcess {
             fVec11[IOTA & 255] = (fRec3 + (0.5f * fRec0_1));
             fRec0_0 = fVec11[(IOTA - 225) & 255];
             float fRec1 = (fRec0_1 - fRec3);
-            pOutputSamplesLeft[i] = ((fSlow4 * fTemp1) + (fSlow3 * fRec1));
+            pOutputSignalLeft[i] = ((fSlow4 * fTemp1) + (fSlow3 * fRec1));
             fRec33_0 = ((fSlow1 * fRec32_1) + (fSlow0 * fRec33_1));
             fVec12[p] = (fTemp2 + (fSlow2 * fRec33_0));
             fRec32_0 = fVec12[(IOTA - 1640) & 2047];
@@ -253,7 +253,7 @@ public class Reverb implements DSPNodeProcess {
             fVec23[IOTA & 255] = (fRec27 + (0.5f * fRec24_1));
             fRec24_0 = fVec23[(IOTA - 248) & 255];
             float fRec25 = (fRec24_1 - fRec27);
-            pOutputSamplesRight[i] = ((fSlow4 * fTemp0) + (fSlow3 * fRec25));
+            pOutputSignalRight[i] = ((fSlow4 * fTemp0) + (fSlow3 * fRec25));
             // post processing
             fRec24_1 = fRec24_0;
             fRec26_1 = fRec26_0;

@@ -63,17 +63,17 @@ public class TestToneEngineInteralWithDSPPostProcess extends PApplet {
         float[] buffer = null;
 
         @Override
-        public void audioblock(float[][] pOutputSamples) {
-            for (int i = 0; i < pOutputSamples[0].length; i++) {
+        public void audioblock(float[][] pOutputSignal) {
+            for (int i = 0; i < pOutputSignal[0].length; i++) {
                 mDelayID++;
                 mDelayID %= mDelayBuffer.length;
                 int mOffsetID = mDelayID + mDelayOffset;
                 mOffsetID %= mDelayBuffer.length;
-                pOutputSamples[0][i] = pOutputSamples[0][i] * (1.0f - mMix) + mDelayBuffer[mOffsetID] * mMix;
-                pOutputSamples[1][i] = pOutputSamples[0][i];
-                mDelayBuffer[mDelayID] = pOutputSamples[0][i] * mDecay;
+                pOutputSignal[0][i] = pOutputSignal[0][i] * (1.0f - mMix) + mDelayBuffer[mOffsetID] * mMix;
+                pOutputSignal[1][i] = pOutputSignal[0][i];
+                mDelayBuffer[mDelayID] = pOutputSignal[0][i] * mDecay;
             }
-            buffer = pOutputSamples[0];
+            buffer = pOutputSignal[0];
         }
     }
 

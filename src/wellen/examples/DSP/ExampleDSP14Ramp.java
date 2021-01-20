@@ -69,11 +69,11 @@ public class ExampleDSP14Ramp extends PApplet {
         mEnvelopeAmplitude.start();
     }
 
-    public void audioblock(float[] pSamples) {
-        for (int i = 0; i < pSamples.length; i++) {
+    public void audioblock(float[] pOutputSignal) {
+        for (int i = 0; i < pOutputSignal.length; i++) {
             mWavetable.set_frequency(mRampFrequency.output());
             mWavetable.set_amplitude(mEnvelopeAmplitude.output());
-            pSamples[i] = mWavetable.output();
+            pOutputSignal[i] = mWavetable.output();
         }
     }
 

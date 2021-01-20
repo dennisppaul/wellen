@@ -37,11 +37,11 @@ public class ExampleDSP19FFT extends PApplet {
         x %= width;
     }
 
-    public void audioblock(float[] pOutputSamples) {
-        for (int i = 0; i < pOutputSamples.length; i++) {
-            pOutputSamples[i] = mSampler.output();
+    public void audioblock(float[] pOutputSignal) {
+        for (int i = 0; i < pOutputSignal.length; i++) {
+            pOutputSignal[i] = mSampler.output();
         }
-        FFT.perform_forward_transform(pOutputSamples);
+        FFT.perform_forward_transform(pOutputSignal);
     }
 
     public static void main(String[] args) {

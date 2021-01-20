@@ -59,8 +59,8 @@ public class ExampleDSP08Trigger extends PApplet {
         mWavetable.set_frequency(1.0f / map(mouseX, 0, width, 0.1f, 5.0f));
     }
 
-    public void audioblock(float[] pOutputSamples) {
-        for (int i = 0; i < pOutputSamples.length; i++) {
+    public void audioblock(float[] pOutputSignal) {
+        for (int i = 0; i < pOutputSignal.length; i++) {
             mSignal = mWavetable.output();
             mTrigger.input(mSignal);
         }

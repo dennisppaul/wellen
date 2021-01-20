@@ -30,9 +30,9 @@ void mouseMoved() {
     mAmp = map(mouseY, 0, height, 0, 1);
 }
 
-void audioblock(float[] pSamples) {
-    for (int i = 0; i < pSamples.length; i++) {
+void audioblock(float[] pOutputSignal) {
+    for (int i = 0; i < pOutputSignal.length; i++) {
         mCounter++;
-        pSamples[i] = mAmp * sin(2 * PI * mFreq * mCounter / DSP.get_sample_rate());
+        pOutputSignal[i] = mAmp * sin(2 * PI * mFreq * mCounter / DSP.get_sample_rate());
     }
 }

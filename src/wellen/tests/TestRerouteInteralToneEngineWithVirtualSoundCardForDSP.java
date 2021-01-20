@@ -59,14 +59,14 @@ public class TestRerouteInteralToneEngineWithVirtualSoundCardForDSP extends PApp
         Tone.note_off();
     }
 
-    public void audioblock(float[] pOutputSamples, float[] pInputSamples) {
-        for (int i = 0; i < pInputSamples.length; i++) {
+    public void audioblock(float[] pOutputSignal, float[] pInputSignal) {
+        for (int i = 0; i < pInputSignal.length; i++) {
             mDelayID++;
             mDelayID %= mDelayBuffer.length;
             int mOffsetID = mDelayID + mDelayOffset;
             mOffsetID %= mDelayBuffer.length;
-            pOutputSamples[i] = pInputSamples[i] * (1.0f - mMix) + mDelayBuffer[mOffsetID] * mMix;
-            mDelayBuffer[mDelayID] = pOutputSamples[i] * mDecay;
+            pOutputSignal[i] = pInputSignal[i] * (1.0f - mMix) + mDelayBuffer[mOffsetID] * mMix;
+            mDelayBuffer[mDelayID] = pOutputSignal[i] * mDecay;
         }
     }
 

@@ -50,10 +50,10 @@ public class ExampleDSP15EnvelopeListener extends PApplet {
         point(x, y);
     }
 
-    public void audioblock(float[] pSamples) {
-        for (int i = 0; i < pSamples.length; i++) {
+    public void audioblock(float[] pOutputSignal) {
+        for (int i = 0; i < pOutputSignal.length; i++) {
             mWavetable.set_frequency(mRampFrequency.output());
-            pSamples[i] = mWavetable.output();
+            pOutputSignal[i] = mWavetable.output();
         }
     }
 

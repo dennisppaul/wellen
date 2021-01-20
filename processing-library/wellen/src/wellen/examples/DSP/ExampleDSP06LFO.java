@@ -100,8 +100,8 @@ public class ExampleDSP06LFO extends PApplet {
         }
     }
 
-    public void audioblock(float[] pOutputSamples) {
-        for (int i = 0; i < pOutputSamples.length; i++) {
+    public void audioblock(float[] pOutputSignal) {
+        for (int i = 0; i < pOutputSignal.length; i++) {
             /* get frequency from LFO, map value range from [-1.0, 1.0] to [-40.0, 40.0] */
             float mFreq = map(mFrequencyLFO.output(), -1.0f, 1.0f, -40, 40);
             /* get ampliude from LFO, map value range from [-1.0, 1.0] to [0.0, 1.0] */
@@ -109,7 +109,7 @@ public class ExampleDSP06LFO extends PApplet {
             /* set VCO */
             mVCO.set_frequency(mFreq + mBaseFrequency);
             mVCO.set_amplitude(mAmp);
-            pOutputSamples[i] = mVCO.output();
+            pOutputSignal[i] = mVCO.output();
         }
     }
 

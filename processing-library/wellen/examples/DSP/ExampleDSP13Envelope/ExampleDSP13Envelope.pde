@@ -50,9 +50,9 @@ void mousePressed() {
     mEnvelopeAmplitude.start();
 }
 
-void audioblock(float[] pOutputSamples) {
-    for (int i = 0; i < pOutputSamples.length; i++) {
-        pOutputSamples[i] = mEnvelopeAmplitude.output() * mNoise.output();
+void audioblock(float[] pOutputSignal) {
+    for (int i = 0; i < pOutputSignal.length; i++) {
+        pOutputSignal[i] = mEnvelopeAmplitude.output() * mNoise.output();
         mEnvelopeStepSize.output(); // we just need to update the envelope
         mNoise.set_step(mEnvelopeStepSize.get_current_value());
     }

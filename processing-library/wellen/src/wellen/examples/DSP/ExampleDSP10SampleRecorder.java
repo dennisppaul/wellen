@@ -56,12 +56,12 @@ public class ExampleDSP10SampleRecorder extends PApplet {
         mIsRecording = false;
     }
 
-    public void audioblock(float[] pOutputSamples, float[] pInputSamples) {
+    public void audioblock(float[] pOutputSignal, float[] pInputSignal) {
         if (mIsRecording) {
             if (mRecording == null) {
                 mRecording = new float[0];
             }
-            mRecording = concat(mRecording, pInputSamples);
+            mRecording = concat(mRecording, pInputSignal);
         } else {
             if (mRecording != null) {
                 System.out.println("+++ recorded " + mRecording.length + " samples.");
@@ -70,8 +70,8 @@ public class ExampleDSP10SampleRecorder extends PApplet {
                 mRecording = null;
             }
         }
-        for (int i = 0; i < pOutputSamples.length; i++) {
-            pOutputSamples[i] = mSampler.output();
+        for (int i = 0; i < pOutputSignal.length; i++) {
+            pOutputSignal[i] = mSampler.output();
         }
     }
 

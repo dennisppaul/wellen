@@ -74,13 +74,13 @@ void keyPressed() {
     }
 }
 
-void audioblock(float[] pOutputSamples) {
-    for (int i = 0; i < pOutputSamples.length; i++) {
-        pOutputSamples[i] = mSampler.output();
+void audioblock(float[] pOutputSignal) {
+    for (int i = 0; i < pOutputSignal.length; i++) {
+        pOutputSignal[i] = mSampler.output();
         for (Sampler s : mSamplers) {
-            pOutputSamples[i] += s.output();
+            pOutputSignal[i] += s.output();
         }
-        pOutputSamples[i] /= 1 + mSamplers.size() * 0.1f;
+        pOutputSignal[i] /= 1 + mSamplers.size() * 0.1f;
     }
 }
 

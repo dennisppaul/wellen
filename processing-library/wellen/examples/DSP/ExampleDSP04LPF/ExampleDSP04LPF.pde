@@ -29,8 +29,8 @@ void mouseMoved() {
     mFilter.set_resonance(map(mouseY, 0, height, 0.0f, 0.97f));
 }
 
-void audioblock(float[] pOutputSamples) {
-    for (int i = 0; i < pOutputSamples.length; i++) {
-        pOutputSamples[i] = mFilter.process(mWavetable.output());
+void audioblock(float[] pOutputSignal) {
+    for (int i = 0; i < pOutputSignal.length; i++) {
+        pOutputSignal[i] = mFilter.process(mWavetable.output());
     }
 }

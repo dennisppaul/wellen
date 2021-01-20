@@ -41,10 +41,10 @@ void draw() {
     point(x, y);
 }
 
-void audioblock(float[] pSamples) {
-    for (int i = 0; i < pSamples.length; i++) {
+void audioblock(float[] pOutputSignal) {
+    for (int i = 0; i < pOutputSignal.length; i++) {
         mWavetable.set_frequency(mRampFrequency.output());
-        pSamples[i] = mWavetable.output();
+        pOutputSignal[i] = mWavetable.output();
     }
 }
 

@@ -19,18 +19,24 @@
 
 package wellen;
 
-public class Crossfader implements DSPNodeOutput {
-    public float ratio = 0.5f;
-    public DSPNodeOutput signal_a;
-    public DSPNodeOutput signal_b;
+import static wellen.Wellen.SIGNAL_LEFT;
+import static wellen.Wellen.SIGNAL_RIGHT;
 
-    public float output() {
-        if (signal_a != null && signal_b != null) {
-            final float mSignalA = signal_a.output();
-            final float mSignalB = signal_b.output();
-            return mSignalA + (mSignalB - mSignalA) * ratio;
-        } else {
-            return 0.0f;
-        }
+public class Signal {
+
+    public final float[] signal;
+
+    public Signal(int pChannels) {
+        signal = new float[pChannels];
+    }
+
+    public Signal() {
+        signal = new float[2];
+    }
+
+    public Signal(float pLeft, float pRight) {
+        this();
+        signal[SIGNAL_LEFT] = pLeft;
+        signal[SIGNAL_RIGHT] = pRight;
     }
 }

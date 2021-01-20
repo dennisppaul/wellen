@@ -73,12 +73,12 @@ public class TestCompareFilterMoogLadderWithSimpleLPF extends PApplet {
         mFilter.set_resonance(map(mouseY, 0, height, 0.0f, 0.97f));
     }
 
-    public void audioblock(float[] pOutputSamples) {
-        for (int i = 0; i < pOutputSamples.length; i++) {
+    public void audioblock(float[] pOutputSignal) {
+        for (int i = 0; i < pOutputSignal.length; i++) {
             if (mousePressed) {
-                pOutputSamples[i] = mMoggLadder.process(mWavetable.output()) * 2.0f;
+                pOutputSignal[i] = mMoggLadder.process(mWavetable.output()) * 2.0f;
             } else {
-                pOutputSamples[i] = mFilter.process(mWavetable.output());
+                pOutputSignal[i] = mFilter.process(mWavetable.output());
             }
         }
     }

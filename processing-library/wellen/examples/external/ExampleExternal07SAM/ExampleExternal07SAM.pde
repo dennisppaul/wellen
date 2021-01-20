@@ -46,8 +46,8 @@ void beat(int pBeatCount) {
     mSAM.say(mWords[mWordIndex]);
 }
 
-void audioblock(float[] pSamples) {
-    for (int i = 0; i < pSamples.length; i++) {
-        pSamples[i] = mSAM.output() * 0.5f;
+void audioblock(float[] pOutputSignal) {
+    for (int i = 0; i < pOutputSignal.length; i++) {
+        pOutputSignal[i] = mSAM.output() * 0.5f;
     }
 }

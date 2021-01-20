@@ -26,9 +26,9 @@ public class Crossfader implements DSPNodeOutput {
 
     public float output() {
         if (signal_a != null && signal_b != null) {
-            final float mSampleA = signal_a.output();
-            final float mSampleB = signal_b.output();
-            return mSampleA + (mSampleB - mSampleA) * ratio;
+            final float mSignalA = signal_a.output();
+            final float mSignalB = signal_b.output();
+            return mSignalA + (mSignalB - mSignalA) * ratio;
         } else {
             return 0.0f;
         }

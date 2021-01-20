@@ -54,9 +54,9 @@ public class ExampleExternal07SAM extends PApplet {
         mSAM.say(mWords[mWordIndex]);
     }
 
-    public void audioblock(float[] pSamples) {
-        for (int i = 0; i < pSamples.length; i++) {
-            pSamples[i] = mSAM.output() * 0.5f;
+    public void audioblock(float[] pOutputSignal) {
+        for (int i = 0; i < pOutputSignal.length; i++) {
+            pOutputSignal[i] = mSAM.output() * 0.5f;
         }
     }
 

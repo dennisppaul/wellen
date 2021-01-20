@@ -51,9 +51,9 @@ public class TestWavetablePhaseOffset extends PApplet {
         mWavetable.set_phase_offset((int) map(mouseX, 0, width, 0, WAVETABLE_SIZE));
     }
 
-    public void audioblock(float[] pOutputSamples) {
-        for (int i = 0; i < pOutputSamples.length; i++) {
-            pOutputSamples[i] = mWavetable.output() + mWavetableRef.output();
+    public void audioblock(float[] pOutputSignal) {
+        for (int i = 0; i < pOutputSignal.length; i++) {
+            pOutputSignal[i] = mWavetable.output() + mWavetableRef.output();
         }
     }
 

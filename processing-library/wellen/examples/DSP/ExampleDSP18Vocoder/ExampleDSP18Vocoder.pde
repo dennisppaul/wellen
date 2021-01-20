@@ -55,10 +55,10 @@ void keyPressed() {
     }
 }
 
-void audioblock(float[] pOutputSamples, float[] pInputSamples) {
-    for (int i = 0; i < pInputSamples.length; i++) {
+void audioblock(float[] pOutputSignal, float[] pInputSignal) {
+    for (int i = 0; i < pInputSignal.length; i++) {
         float mCarrier = mVocoderCarrierOsc.output();
-        pOutputSamples[i] = mVocoder.process(mCarrier, pInputSamples[i]);
+        pOutputSignal[i] = mVocoder.process(mCarrier, pInputSignal[i]);
     }
     /* note, there is also a faster audio block processing method available `process(float[], float[], float[])` */
 }

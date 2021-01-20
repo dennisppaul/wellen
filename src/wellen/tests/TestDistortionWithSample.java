@@ -73,10 +73,10 @@ public class TestDistortionWithSample extends PApplet {
         mDistortion.set_amplification(map(mouseY, 0, height, 0.0f, 10.0f));
     }
 
-    public void audioblock(float[] pSamples) {
-        for (int i = 0; i < pSamples.length; i++) {
-            pSamples[i] = mSampler.output();
-            pSamples[i] = Wellen.clamp(mDistortion.process(pSamples[i]));
+    public void audioblock(float[] pOutputSignal) {
+        for (int i = 0; i < pOutputSignal.length; i++) {
+            pOutputSignal[i] = mSampler.output();
+            pOutputSignal[i] = Wellen.clamp(mDistortion.process(pOutputSignal[i]));
         }
     }
 

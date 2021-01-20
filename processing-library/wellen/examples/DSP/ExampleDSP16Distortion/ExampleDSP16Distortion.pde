@@ -80,11 +80,11 @@ void mouseReleased() {
     Tone.instrument(0).note_off();
 }
 
-void audioblock(float[] pSamples) {
-    mToneEngine.audioblock(pSamples);
-    for (int i = 0; i < pSamples.length; i++) {
+void audioblock(float[] pOutputSignal) {
+    mToneEngine.audioblock(pOutputSignal);
+    for (int i = 0; i < pOutputSignal.length; i++) {
         /* apply distortion to process sample. */
-        pSamples[i] = Wellen.clamp(mDistortion.process(pSamples[i]));
+        pOutputSignal[i] = Wellen.clamp(mDistortion.process(pOutputSignal[i]));
         /* note that it might not be a good idea to apply the distortion *after* the ADSR envelope as this can
         cause quite step attacks. */
     }
