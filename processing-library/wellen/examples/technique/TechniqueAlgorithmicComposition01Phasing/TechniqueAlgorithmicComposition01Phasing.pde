@@ -1,5 +1,10 @@
 import wellen.*; 
 
+/*
+ * this example demonstrate how to use loops to achieve phasing @see
+ * <a href="https://en.wikipedia.org/wiki/Phase_music">Phase
+ * Music</a>.
+ */
 
 BeatEvent mBeatA;
 

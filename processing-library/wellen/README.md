@@ -22,7 +22,7 @@ muscial notes can be played with a single call to `Tone.note_on(int, int)` and e
 
 by default a simple software-based synthesizer is used as a *tone engine* to produce the sound. however, there are quite a lot of options ( i.e an oscillator with different waveshapes, a low-pass filter (LPF), an attack-decay-sustain-release envelope (ADSR), and two low-frequency oscillators (LFOs) one for frequency and one for amplitude modulation ) to change the sound characteristics ( see `ExampleBasics05Instruments` + `ExampleInstruments01ADSR` ff. ). 
 
-note that the default *tone engine* is monophonic i.e a single *instrument* can play only one note at a time. however, there are 16 instruments available which can be combined into a polyphonic setup with 16 voices.
+the default *tone engine* is monophonic i.e a single *instrument* can play only one note at a time. however, there are 16 instruments available which can be combined into a polyphonic setup with 16 voices. instruments are handled in a state machine i.e that an instrument selected with `Tone.instrument(int)` will remain selected until another instrument is selected. it is common to select an instrument right before turning a note on or off e.g `Tone.instrument(0); Tone.note_on(48, 85);`. note that other *tone engines* might be polyphonic e.g in some MIDI applications.
 
 although `Tone` is designed to play musical notes ( arranged in half-tone steps ) trigger by the `note_on` + `note_off` paradigm, it can also be used to controll the frequency and amplitude of the generated sounds directly ( see `ExampleInstruments03FrequencyAndAmplitude` ).
 

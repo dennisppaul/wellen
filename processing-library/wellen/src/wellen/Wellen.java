@@ -21,7 +21,6 @@ package wellen;
 
 import processing.core.PApplet;
 import processing.core.PGraphics;
-import wellen.examples.DSP.ExampleDSP19FFT;
 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Line;
@@ -379,9 +378,15 @@ public class Wellen {
     }
 
     public static void run_sketch_with_resources(Class<? extends PApplet> pSketch) {
-        PApplet.runSketch(new String[]{"--sketch-path=" + Wellen.get_resource_path(), pSketch.getName()},
-                          null);
+        PApplet.runSketch(new String[]{"--sketch-path=" + Wellen.get_resource_path(), pSketch.getName()}, null);
 
     }
 
+    public static float to_sec(int pMilliSeconds) {
+        return pMilliSeconds / 1000.0f;
+    }
+
+    public static int to_millis(float pSeconds) {
+        return (int) (pSeconds * 1000);
+    }
 }

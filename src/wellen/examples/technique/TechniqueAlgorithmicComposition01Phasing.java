@@ -6,7 +6,13 @@ import wellen.BeatListener;
 import wellen.Note;
 import wellen.Tone;
 
-public class TechniqueAlgorithmicComposition01Loops extends PApplet {
+public class TechniqueAlgorithmicComposition01Phasing extends PApplet {
+
+    /*
+     * this example demonstrate how to use loops to achieve phasing @see
+     * <a href="https://en.wikipedia.org/wiki/Phase_music">Phase
+     * Music</a>.
+     */
 
     private BeatEvent mBeatA;
     private BeatEvent mBeatB;
@@ -74,6 +80,6 @@ public class TechniqueAlgorithmicComposition01Loops extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main(TechniqueAlgorithmicComposition01Loops.class.getName());
+        PApplet.main(TechniqueAlgorithmicComposition01Phasing.class.getName());
     }
 }
