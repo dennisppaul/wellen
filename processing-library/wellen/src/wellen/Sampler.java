@@ -30,14 +30,15 @@ public class Sampler implements DSPNodeOutput {
     private float[] mData;
     private float mFrequency;
     private float mStepSize;
-    private float mArrayPtr;
+    private float mDataIndex;
     private float mAmplitude;
-    private boolean mLoop = false;
+    private boolean mLoop;
     private boolean mDirectionForward;
     private float mSpeed;
     private boolean mInterpolateSamples;
-    private int mIn = 0;
-    private int mOut = 0;
+    private int mIn;
+    private int mOut;
+    private int mEdgeFadePadding;
 
     public Sampler() {
         this(0);
@@ -54,8 +55,12 @@ public class Sampler implements DSPNodeOutput {
     public Sampler(float[] pWavetable, float pSamplingRate) {
         mData = pWavetable;
         mSamplingRate = pSamplingRate;
-        mArrayPtr = 0;
+        mDataIndex = 0;
+        mLoop = false;
         mInterpolateSamples = false;
+        mEdgeFadePadding = 0;
+        mIn = 0;
+        mOut = 0;
         set_speed(1.0f);
         set_amplitude(1.0f);
         set_in(0);
@@ -67,8 +72,7 @@ public class Sampler implements DSPNodeOutput {
      * load the sample buffer from *raw* byte data. the method assumes a raw format with 32bit float in a value range
      * from -1.0 to 1.0. from -1.0 to 1.0.
      *
-     * @param pData raw byte data ( assuming 4 bytes per sample, 32-bit float aka WAVE_FORMAT_IEEE_FLOAT_32BIT
-     *         )
+     * @param pData raw byte data ( assuming 4 bytes per sample, 32-bit float aka WAVE_FORMAT_IEEE_FLOAT_32BIT )
      * @return instance with data loaded
      */
     public Sampler load(byte[] pData) {
@@ -80,8 +84,8 @@ public class Sampler implements DSPNodeOutput {
      * load the sample buffer from *raw* byte data. the method assumes a raw format with 32bit float in a value range
      * from -1.0 to 1.0.
      *
-     * @param pData raw byte data ( assuming 4 bytes per sample, 32-bit float aka WAVE_FORMAT_IEEE_FLOAT_32BIT
-     *         )
+     * @param pData         raw byte data ( assuming 4 bytes per sample, 32-bit float aka WAVE_FORMAT_IEEE_FLOAT_32BIT
+     *                      )
      * @param pLittleEndian true if byte data is arranged in little endian order
      * @return instance with data loaded
      */
@@ -152,33 +156,54 @@ public class Sampler implements DSPNodeOutput {
     }
 
     public int get_position() {
-        return (int) mArrayPtr;
+        return (int) mDataIndex;
     }
 
     public float output() {
-        mArrayPtr += mDirectionForward ? mStepSize : -mStepSize;
-        final int i = (int) mArrayPtr;
-        if (mData.length == 0 || mDirectionForward ? (i > mOut && !mLoop) : (i < mIn && !mLoop)) {
+        mDataIndex += mDirectionForward ? mStepSize : -mStepSize;
+        final int mPreviousIndex = (int) mDataIndex;
+        if (mData.length == 0 || mDirectionForward ? (mPreviousIndex > mOut && !mLoop) :
+            (mPreviousIndex < mIn && !mLoop)) {
             return 0.0f;
         }
-        final float mFrac = mArrayPtr - i;
-        final int j = wrapIndex(i);
-        mArrayPtr = j + mFrac;
+        final float mFrac = mDataIndex - mPreviousIndex;
+        final int mCurrentIndex = wrapIndex(mPreviousIndex);
+        mDataIndex = mCurrentIndex + mFrac;
 
+        /* interpolate */
+        float mSample;
+        mSample = mData[mCurrentIndex];
         if (mInterpolateSamples) {
-            final int mNextIndex = wrapIndex(j + 1);
+            final int mNextIndex = wrapIndex(mCurrentIndex + 1);
             final float mNextSample = mData[mNextIndex];
-            final float mSample = mData[j];
-            final float mInterpolatedSample = mSample * (1.0f - mFrac) + mNextSample * mFrac;
-            return mInterpolatedSample * mAmplitude;
-        } else {
-            final float mSample = mData[j];
-            return mSample * mAmplitude;
+            mSample = mSample * (1.0f - mFrac) + mNextSample * mFrac;
         }
+        mSample *= mAmplitude;
+
+        /* fade edges */
+        if (mEdgeFadePadding > 0) {
+            final int mRelativeIndex = mData.length - mCurrentIndex;
+            if (mCurrentIndex < mEdgeFadePadding) {
+                final float mFadeInAmount = (float) mCurrentIndex / mEdgeFadePadding;
+                mSample *= mFadeInAmount;
+            } else if (mRelativeIndex < mEdgeFadePadding) {
+                final float mFadeOutAmount = (float) mRelativeIndex / mEdgeFadePadding;
+                mSample *= mFadeOutAmount;
+            }
+        }
+        return mSample;
+    }
+
+    public int get_edge_fading() {
+        return mEdgeFadePadding;
+    }
+
+    public void set_edge_fading(int pEdgeFadePadding) {
+        mEdgeFadePadding = pEdgeFadePadding;
     }
 
     public void rewind() {
-        mArrayPtr = mDirectionForward ? mIn : mOut;
+        mDataIndex = mDirectionForward ? mIn : mOut;
     }
 
     public void loop(boolean pLoop) {
