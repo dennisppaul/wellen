@@ -21,6 +21,9 @@ package wellen;
 
 import processing.core.PApplet;
 
+import static processing.core.PApplet.sin;
+import static processing.core.PConstants.TWO_PI;
+
 /**
  * a collection of DSP instruments.
  * <p>
@@ -34,6 +37,9 @@ import processing.core.PApplet;
  * library these instruments can also be integrated into {@link wellen.DSP} applications.
  */
 public class InstrumentInternalLibrary {
+
+
+
     public static class BELL extends InstrumentInternal {
 
         private static final int NUM_OSC = 7;

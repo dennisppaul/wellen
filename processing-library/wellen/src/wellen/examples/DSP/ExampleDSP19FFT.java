@@ -8,6 +8,9 @@ import wellen.Wellen;
 
 public class ExampleDSP19FFT extends PApplet {
 
+    /*
+     * this example demonstrate how to perform Fast Fourier Transformation (FFT).
+     */
 
     private int x = 0;
     private Sampler mSampler;

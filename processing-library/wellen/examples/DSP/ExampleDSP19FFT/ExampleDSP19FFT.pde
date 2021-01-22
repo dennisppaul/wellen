@@ -1,5 +1,8 @@
 import wellen.*; 
 
+/*
+ * this example demonstrate how to perform Fast Fourier Transformation (FFT).
+ */
 
 int x = 0;
 
