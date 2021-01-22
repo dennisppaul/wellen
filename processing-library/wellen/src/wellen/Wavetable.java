@@ -223,6 +223,11 @@ public class Wavetable implements DSPNodeOutput {
         return mSignal;
     }
 
+    public void reset() {
+        mSignal = 0.0f;
+        mArrayPtr = 0.0f;
+    }
+
     public float current() {
         return mSignal;
     }

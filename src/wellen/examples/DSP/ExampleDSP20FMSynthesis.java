@@ -24,7 +24,7 @@ public class ExampleDSP20FMSynthesis extends PApplet {
     public void setup() {
         Wavetable mCarrier = new Wavetable(2048);
         mCarrier.interpolate_samples(true);
-        Wavetable.fill(mCarrier.get_wavetable(), Wellen.OSC_SAWTOOTH);
+        Wavetable.fill(mCarrier.get_wavetable(), Wellen.OSC_SINE);
         mCarrier.set_frequency(2.0f * mVisuallyStableFrequency);
 
         Wavetable mModulator = new Wavetable(2048);
