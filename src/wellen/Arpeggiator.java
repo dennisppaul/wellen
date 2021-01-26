@@ -30,7 +30,7 @@ public class Arpeggiator {
 
 // @TODO(add a `note_off` mechanism)
 
-    private final NoteStruct[] mPattern;
+    private NoteStruct[] mPattern;
     private NoteStruct mCurrentNote;
     private int mStep;
     private int mBaseNote;
@@ -42,23 +42,6 @@ public class Arpeggiator {
         reset();
     }
 
-    public static boolean set(NoteStruct[] pPattern, int pPosition, int pScaler, int pNote, float pVelocity) {
-        return set(pPattern, pPosition * pScaler, pNote, pVelocity);
-    }
-
-    public static boolean set(NoteStruct[] pPattern, int pPosition, int pNote, float pVelocity) {
-        NoteStruct ns = new NoteStruct();
-        ns.active = true;
-        ns.note = pNote;
-        ns.velocity = pVelocity;
-        if (pPosition >= 0 && pPosition < pPattern.length) {
-            pPattern[pPosition] = ns;
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public boolean step() {
         if (mStep < mPattern.length) {
             mCurrentNote = mPattern[mStep];
@@ -66,6 +49,17 @@ public class Arpeggiator {
             return trigger();
         } else {
             return false;
+        }
+    }
+
+    public void replace_pattern(NoteStruct[] pPattern) {
+        mPattern = pPattern;
+        reset();
+    }
+
+    public void clear_pattern() {
+        for (int i = 0; i < mPattern.length; i++) {
+            Arrays.fill(mPattern, new NoteStruct());
         }
     }
 
@@ -116,7 +110,24 @@ public class Arpeggiator {
         return set(mPattern, pPosition, PPQN / 8, pNote, pVelocity);
     }
 
-    private static class NoteStruct {
+    public static boolean set(NoteStruct[] pPattern, int pPosition, int pScaler, int pNote, float pVelocity) {
+        return set(pPattern, pPosition * pScaler, pNote, pVelocity);
+    }
+
+    public static boolean set(NoteStruct[] pPattern, int pPosition, int pNote, float pVelocity) {
+        NoteStruct ns = new NoteStruct();
+        ns.active = true;
+        ns.note = pNote;
+        ns.velocity = pVelocity;
+        if (pPosition >= 0 && pPosition < pPattern.length) {
+            pPattern[pPosition] = ns;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static class NoteStruct {
         boolean active;
         int note;
         float velocity;
