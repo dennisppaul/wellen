@@ -296,4 +296,13 @@ public class EventReceiverMIDI implements MidiInListener {
         }
         return mInstance;
     }
+
+    public static EventReceiverMIDI start(Object pParent, int pMidiInputDeviceID) {
+        if (mInstance == null) {
+            mInstance = new EventReceiverMIDI(pParent);
+            MidiIn mMidiIn = new MidiIn(pMidiInputDeviceID);
+            mMidiIn.addListener(mInstance);
+        }
+        return mInstance;
+    }
 }

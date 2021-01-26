@@ -109,7 +109,7 @@ public class Wellen {
         System.out.println("+-------------------------------------------------------+");
         for (int i = 0; i < mOutputNames.length; i++) {
             final String mOutputName = mOutputNames[i];
-            System.out.println("+ " + PApplet.nf(i, 2) + " : " + mOutputName);
+            System.out.println("+ " + i + "\t: " + mOutputName);
         }
         System.out.println("+-------------------------------------------------------+");
         System.out.println();
@@ -122,7 +122,7 @@ public class Wellen {
         System.out.println("+-------------------------------------------------------+");
         for (int i = 0; i < mInputNames.length; i++) {
             final String mInputName = mInputNames[i];
-            System.out.println("+ " + PApplet.nf(i, 2) + " : " + mInputName);
+            System.out.println("+ " + i + "\t: " + mInputName);
         }
         System.out.println("+-------------------------------------------------------+");
         System.out.println();
@@ -165,7 +165,7 @@ public class Wellen {
             }
 
             if (mInputChannels + mOutputChannels > 0) {
-                final String mID = PApplet.nf(i, 2);
+                final String mID = i + "\t";
                 final String mName = AudioSystem.getMixerInfo()[i].getName();
                 System.out.println(
                 "+ " + mID + " ( IN:" + mInputChannels + " / OUT:" + mOutputChannels + " ) : " + mName);
