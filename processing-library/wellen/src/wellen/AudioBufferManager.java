@@ -37,6 +37,8 @@ public class AudioBufferManager extends Thread {
      * - TARGET == input
      */
 
+    //@TODO(make BITS_PER_SAMPLE more flexible)
+
     public static final float MAX_16_BIT = 32768;
     public static final int BITS_PER_SAMPLE = 16;
     public static final int MONO = 1;
@@ -45,7 +47,7 @@ public class AudioBufferManager extends Thread {
     public static final boolean BIG_ENDIAN = true;
     public static final boolean SIGNED = true;
     public static final boolean UNSIGNED = false;
-//    public static final int DEFAULT = -1;
+    public static boolean VERBOSE = false;
     private final AudioBufferRenderer mSampleRenderer;
     private final int mSampleRate;
     private final int mSampleBufferSize;
@@ -56,6 +58,7 @@ public class AudioBufferManager extends Thread {
     private byte[] mOutputByteBuffer;
     private byte[] mInputByteBuffer;
     private final boolean mRunBuffer = true;
+    private int mFrameCounter = 0;
 
     public AudioBufferManager(AudioBufferRenderer pSampleRenderer) {
         this(pSampleRenderer,
@@ -124,6 +127,7 @@ public class AudioBufferManager extends Thread {
 
     public void run() {
         while (mRunBuffer) {
+            boolean mLockAudioBlock;
             /* input */
             float[][] mInputBuffers = new float[mNumInputChannels][];
             for (int j = 0; j < mNumInputChannels; j++) {
@@ -167,7 +171,26 @@ public class AudioBufferManager extends Thread {
                     writeSample16(mOutputBuffers[j][i], i * mNumOutputChannels + j);
                 }
             }
+
+            /* detect buffer underrun */
+            if (VERBOSE) {
+                if (mFrameCounter > 0) {
+                    // SourceDataLine
+                    if (mOutputLine.available() == mOutputLine.getBufferSize()) {
+                        System.out.println(
+                        "+++ @" + getClass().getSimpleName() + " / buffer underrun in SourceDataLine `mOutputLine" +
+                        ".available() == mOutputLine.getBufferSize()`" + "(" + mFrameCounter + ")");
+                    }
+//                    if (!mOutputLine.isRunning()) {
+//                        System.out.println(
+//                        "+++ @" + getClass().getSimpleName() + " / buffer underrun in SourceDataLine `!mOutputLine" +
+//                        ".isRunning()`" + "(" + mFrameCounter + ")");
+//                    }
+                }
+            }
+
             mOutputLine.write(mOutputByteBuffer, 0, mOutputByteBuffer.length);
+            mFrameCounter++;
         }
     }
 

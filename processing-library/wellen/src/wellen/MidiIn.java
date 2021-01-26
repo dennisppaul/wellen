@@ -44,7 +44,24 @@ public class MidiIn implements Receiver {
 
     private final ArrayList<MidiInListener> mListener;
 
+    private MidiIn() {
+        mListener = new ArrayList<>();
+    }
+
+    public MidiIn(int pMidiOutputDeviceID) {
+        this();
+        final Transmitter mMidiIn = find(pMidiOutputDeviceID);
+        if (mMidiIn != null) {
+            mMidiIn.setReceiver(this);
+        } else {
+            System.err.println("+++ Error @ MidiIn / could not find midi device: " + pMidiOutputDeviceID);
+            System.err.println("+++ available inputs are: ");
+            Wellen.dumpMidiInputDevices();
+        }
+    }
+
     public MidiIn(String pMidiOutputDevice) {
+        this();
         final Transmitter mMidiIn = find(pMidiOutputDevice);
         if (mMidiIn != null) {
             mMidiIn.setReceiver(this);
@@ -53,7 +70,6 @@ public class MidiIn implements Receiver {
             System.err.println("+++ available inputs are: ");
             Wellen.dumpMidiInputDevices();
         }
-        mListener = new ArrayList<>();
     }
 
     public void addListener(MidiInListener pMidiInListener) {
@@ -92,7 +108,7 @@ public class MidiIn implements Receiver {
                     if (VERBOSE) {
                         // int POLY_PRESSURE = 0xA0; // Polyphonic Key Pressure (Aftertouch)
                         System.err.println("+++ MidiIn / could not parse command: " + mShortMessage.getCommand() + " " +
-                                ": " + mShortMessage);
+                                           ": " + mShortMessage);
                     }
             }
         } else {
@@ -134,7 +150,8 @@ public class MidiIn implements Receiver {
             }
         } else {
             if (VERBOSE) {
-                System.err.println("+++ MidiIn / unrecognized system message: " + mShortMessage + " (" + mShortMessage.getLength() + ")");
+                System.err.println(
+                "+++ MidiIn / unrecognized system message: " + mShortMessage + " (" + mShortMessage.getLength() + ")");
             }
         }
     }
@@ -189,6 +206,35 @@ public class MidiIn implements Receiver {
             } catch (MidiUnavailableException e) {
                 e.printStackTrace();
             }
+        }
+        return null;
+    }
+
+    private Transmitter find(int pMidiOutputDeviceID) {
+        try {
+            MidiDevice.Info[] mInfos = MidiSystem.getMidiDeviceInfo();
+            ArrayList<MidiDevice.Info> mMidiInInfos = new ArrayList<>();
+            for (MidiDevice.Info mInfo : mInfos) {
+                MidiDevice mDevice = MidiSystem.getMidiDevice(mInfo);
+                if (mDevice.getMaxTransmitters() != 0) {
+                    mMidiInInfos.add(mInfo);
+                }
+            }
+            if (pMidiOutputDeviceID >= mMidiInInfos.size()) {
+                return null;
+            }
+
+            final MidiDevice.Info mInfo = mMidiInInfos.get(pMidiOutputDeviceID);
+            if (VERBOSE) {
+                System.out.println("+++ Info @ MidiIn / found midi device: " + mInfo.getName());
+            }
+            final MidiDevice mDevice = MidiSystem.getMidiDevice(mInfo);
+            if (!mDevice.isOpen()) {
+                mDevice.open();
+            }
+            return mDevice.getTransmitter();
+        } catch (MidiUnavailableException e) {
+            e.printStackTrace();
         }
         return null;
     }
