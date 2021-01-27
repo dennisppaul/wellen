@@ -22,7 +22,8 @@ package wellen;
 /**
  * a container for values ( e.g musical notes ) that can be played back step by step.
  *
- * @param <T>
+ * @param <T> type of sequenced data. usually, <code>int</code> or <code>float</code> but could be also be a complex
+ *            data types.
  */
 public class Sequencer<T> {
 

@@ -123,6 +123,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="wellen/Arpeggiator.html#%3Cinit%3E(int)">Arpeggiator(int)</a></span> - Constructor for class wellen.<a href="wellen/Arpeggiator.html" title="class in wellen">Arpeggiator</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="wellen/Arpeggiator.NoteStruct.html" title="class in wellen"><span class="typeNameLink">Arpeggiator.NoteStruct</span></a> - Class in <a href="wellen/package-summary.html">wellen</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/ToneEngineInternal.html#audioblock(float%5B%5D)">audioblock(float[])</a></span> - Method in class wellen.<a href="wellen/ToneEngineInternal.html" title="class in wellen">ToneEngineInternal</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/ToneEngineInternal.AudioOutputCallback.html#audioblock(float%5B%5D%5B%5D)">audioblock(float[][])</a></span> - Method in interface wellen.<a href="wellen/ToneEngineInternal.AudioOutputCallback.html" title="interface in wellen">ToneEngineInternal.AudioOutputCallback</a></dt>
@@ -247,6 +249,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="wellen/Envelope.html#clear_listeners()">clear_listeners()</a></span> - Method in class wellen.<a href="wellen/Envelope.html" title="class in wellen">Envelope</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/Arpeggiator.html#clear_pattern()">clear_pattern()</a></span> - Method in class wellen.<a href="wellen/Arpeggiator.html" title="class in wellen">Arpeggiator</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/Envelope.html#clear_stages()">clear_stages()</a></span> - Method in class wellen.<a href="wellen/Envelope.html" title="class in wellen">Envelope</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/BeatMIDI.html#clock_continue()">clock_continue()</a></span> - Method in class wellen.<a href="wellen/BeatMIDI.html" title="class in wellen">BeatMIDI</a></dt>
@@ -302,6 +306,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="wellen/WAVConverter.html#convert_samples_to_bytes(float%5B%5D%5B%5D,int,int,int,int)">convert_samples_to_bytes(float[][], int, int, int, int)</a></span> - Static method in class wellen.<a href="wellen/WAVConverter.html" title="class in wellen">WAVConverter</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/WAVConverter.html#convert_samples_to_bytes(wellen.WAVConverter.Info)">convert_samples_to_bytes(WAVConverter.Info)</a></span> - Static method in class wellen.<a href="wellen/WAVConverter.html" title="class in wellen">WAVConverter</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/Arpeggiator.NoteStruct.html#copy()">copy()</a></span> - Method in class wellen.<a href="wellen/Arpeggiator.NoteStruct.html" title="class in wellen">Arpeggiator.NoteStruct</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/ToneEngine.html#create()">create()</a></span> - Static method in class wellen.<a href="wellen/ToneEngine.html" title="class in wellen">ToneEngine</a></dt>
 <dd>&nbsp;</dd>
@@ -367,15 +373,23 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dd>
 <dt><span class="memberNameLink"><a href="wellen/Distortion.html#%3Cinit%3E()">Distortion()</a></span> - Constructor for class wellen.<a href="wellen/Distortion.html" title="class in wellen">Distortion</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="wellen/Wellen.html#DISTORTION_ARC_HYPERBOLIC">DISTORTION_ARC_HYPERBOLIC</a></span> - Static variable in class wellen.<a href="wellen/Wellen.html" title="class in wellen">Wellen</a></dt>
-<dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="wellen/Wellen.html#DISTORTION_ARC_TANGENT">DISTORTION_ARC_TANGENT</a></span> - Static variable in class wellen.<a href="wellen/Wellen.html" title="class in wellen">Wellen</a></dt>
-<dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="wellen/Wellen.html#DISTORTION_CLIP">DISTORTION_CLIP</a></span> - Static variable in class wellen.<a href="wellen/Wellen.html" title="class in wellen">Wellen</a></dt>
+<dt><span class="memberNameLink"><a href="wellen/Wellen.html#DISTORTION_BIT_CRUSHING">DISTORTION_BIT_CRUSHING</a></span> - Static variable in class wellen.<a href="wellen/Wellen.html" title="class in wellen">Wellen</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/Wellen.html#DISTORTION_FOLDBACK">DISTORTION_FOLDBACK</a></span> - Static variable in class wellen.<a href="wellen/Wellen.html" title="class in wellen">Wellen</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/Wellen.html#DISTORTION_FOLDBACK_SINGLE">DISTORTION_FOLDBACK_SINGLE</a></span> - Static variable in class wellen.<a href="wellen/Wellen.html" title="class in wellen">Wellen</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/Wellen.html#DISTORTION_FULL_WAVE_RECTIFICATION">DISTORTION_FULL_WAVE_RECTIFICATION</a></span> - Static variable in class wellen.<a href="wellen/Wellen.html" title="class in wellen">Wellen</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/Wellen.html#DISTORTION_HALF_WAVE_RECTIFICATION">DISTORTION_HALF_WAVE_RECTIFICATION</a></span> - Static variable in class wellen.<a href="wellen/Wellen.html" title="class in wellen">Wellen</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/Wellen.html#DISTORTION_HARD_CLIPPING">DISTORTION_HARD_CLIPPING</a></span> - Static variable in class wellen.<a href="wellen/Wellen.html" title="class in wellen">Wellen</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/Wellen.html#DISTORTION_INFINITE_CLIPPING">DISTORTION_INFINITE_CLIPPING</a></span> - Static variable in class wellen.<a href="wellen/Wellen.html" title="class in wellen">Wellen</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/Wellen.html#DISTORTION_SOFT_CLIPPING_ARC_TANGENT">DISTORTION_SOFT_CLIPPING_ARC_TANGENT</a></span> - Static variable in class wellen.<a href="wellen/Wellen.html" title="class in wellen">Wellen</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/Wellen.html#DISTORTION_SOFT_CLIPPING_CUBIC">DISTORTION_SOFT_CLIPPING_CUBIC</a></span> - Static variable in class wellen.<a href="wellen/Wellen.html" title="class in wellen">Wellen</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/HarmonicTable.html#DOWN">DOWN</a></span> - Static variable in class wellen.<a href="wellen/HarmonicTable.html" title="class in wellen">HarmonicTable</a></dt>
 <dd>&nbsp;</dd>
@@ -388,6 +402,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="wellen/Wellen.html#draw_buffer(processing.core.PGraphics,float,float,float%5B%5D)">draw_buffer(PGraphics, float, float, float[])</a></span> - Static method in class wellen.<a href="wellen/Wellen.html" title="class in wellen">Wellen</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/Wellen.html#draw_buffer(processing.core.PGraphics,float,float,float%5B%5D,float%5B%5D)">draw_buffer(PGraphics, float, float, float[], float[])</a></span> - Static method in class wellen.<a href="wellen/Wellen.html" title="class in wellen">Wellen</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/Wellen.html#draw_buffer(processing.core.PGraphics,float,float,float%5B%5D,int)">draw_buffer(PGraphics, float, float, float[], int)</a></span> - Static method in class wellen.<a href="wellen/Wellen.html" title="class in wellen">Wellen</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/DSP.html#draw_buffer_stereo(processing.core.PGraphics,float,float)">draw_buffer_stereo(PGraphics, float, float)</a></span> - Static method in class wellen.<a href="wellen/DSP.html" title="class in wellen">DSP</a></dt>
 <dd>&nbsp;</dd>
@@ -547,6 +563,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/Wellen.html#floats_to_bytes(byte%5B%5D,float%5B%5D,int)">floats_to_bytes(byte[], float[], int)</a></span> - Static method in class wellen.<a href="wellen/Wellen.html" title="class in wellen">Wellen</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="wellen/FMSynthesis.html" title="class in wellen"><span class="typeNameLink">FMSynthesis</span></a> - Class in <a href="wellen/package-summary.html">wellen</a></dt>
+<dd>
+<div class="block">FM synthesis with two oscillators, carrier ( e.g fundamental or *pitch* ) and modulator.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="wellen/FMSynthesis.html#%3Cinit%3E()">FMSynthesis()</a></span> - Constructor for class wellen.<a href="wellen/FMSynthesis.html" title="class in wellen">FMSynthesis</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/FMSynthesis.html#%3Cinit%3E(wellen.Wavetable,wellen.Wavetable)">FMSynthesis(Wavetable, Wavetable)</a></span> - Constructor for class wellen.<a href="wellen/FMSynthesis.html" title="class in wellen">FMSynthesis</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/WAVConverter.Info.html#format">format</a></span> - Variable in class wellen.<a href="wellen/WAVConverter.Info.html" title="class in wellen">WAVConverter.Info</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/FFT.html#forward(float%5B%5D)">forward(float[])</a></span> - Method in class wellen.<a href="wellen/FFT.html" title="class in wellen">FFT</a></dt>
@@ -568,6 +592,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="wellen/Sequencer.html#get(int)">get(int)</a></span> - Method in class wellen.<a href="wellen/Sequencer.html" title="class in wellen">Sequencer</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/Distortion.html#get_amplification()">get_amplification()</a></span> - Method in class wellen.<a href="wellen/Distortion.html" title="class in wellen">Distortion</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/FMSynthesis.html#get_amplitude()">get_amplitude()</a></span> - Method in class wellen.<a href="wellen/FMSynthesis.html" title="class in wellen">FMSynthesis</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/Instrument.html#get_amplitude()">get_amplitude()</a></span> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
 <dd>&nbsp;</dd>
@@ -605,6 +631,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/Beat.html#get_beat_count()">get_beat_count()</a></span> - Method in class wellen.<a href="wellen/Beat.html" title="class in wellen">Beat</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/Distortion.html#get_bits()">get_bits()</a></span> - Method in class wellen.<a href="wellen/Distortion.html" title="class in wellen">Distortion</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/DSP.html#get_buffer()">get_buffer()</a></span> - Static method in class wellen.<a href="wellen/DSP.html" title="class in wellen">DSP</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/Tone.html#get_buffer()">get_buffer()</a></span> - Static method in class wellen.<a href="wellen/Tone.html" title="class in wellen">Tone</a></dt>
@@ -629,6 +657,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/DSP.html#get_buffer_size()">get_buffer_size()</a></span> - Static method in class wellen.<a href="wellen/DSP.html" title="class in wellen">DSP</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/FMSynthesis.html#get_carrier()">get_carrier()</a></span> - Method in class wellen.<a href="wellen/FMSynthesis.html" title="class in wellen">FMSynthesis</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/Distortion.html#get_clip()">get_clip()</a></span> - Method in class wellen.<a href="wellen/Distortion.html" title="class in wellen">Distortion</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/Sequencer.html#get_current()">get_current()</a></span> - Method in class wellen.<a href="wellen/Sequencer.html" title="class in wellen">Sequencer</a></dt>
@@ -638,6 +668,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="wellen/ADSR.html#get_decay()">get_decay()</a></span> - Method in class wellen.<a href="wellen/ADSR.html" title="class in wellen">ADSR</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/Instrument.html#get_decay()">get_decay()</a></span> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/Sampler.html#get_edge_fading()">get_edge_fading()</a></span> - Method in class wellen.<a href="wellen/Sampler.html" title="class in wellen">Sampler</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/Wellen.html#get_extremum(float%5B%5D)">get_extremum(float[])</a></span> - Static method in class wellen.<a href="wellen/Wellen.html" title="class in wellen">Wellen</a></dt>
 <dd>&nbsp;</dd>
@@ -698,6 +730,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="wellen/Envelope.html#get_listeners()">get_listeners()</a></span> - Method in class wellen.<a href="wellen/Envelope.html" title="class in wellen">Envelope</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/Tone.html#get_midi_engine()">get_midi_engine()</a></span> - Static method in class wellen.<a href="wellen/Tone.html" title="class in wellen">Tone</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/FMSynthesis.html#get_modulation_depth()">get_modulation_depth()</a></span> - Method in class wellen.<a href="wellen/FMSynthesis.html" title="class in wellen">FMSynthesis</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/FMSynthesis.html#get_modulator()">get_modulator()</a></span> - Method in class wellen.<a href="wellen/FMSynthesis.html" title="class in wellen">FMSynthesis</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/HarmonicTable.html#get_note()">get_note()</a></span> - Method in class wellen.<a href="wellen/HarmonicTable.html" title="class in wellen">HarmonicTable</a></dt>
 <dd>&nbsp;</dd>
@@ -1012,6 +1048,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">handles communication with MIDI devices</div>
 </dd>
+<dt><span class="memberNameLink"><a href="wellen/MidiIn.html#%3Cinit%3E(int)">MidiIn(int)</a></span> - Constructor for class wellen.<a href="wellen/MidiIn.html" title="class in wellen">MidiIn</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/MidiIn.html#%3Cinit%3E(java.lang.String)">MidiIn(String)</a></span> - Constructor for class wellen.<a href="wellen/MidiIn.html" title="class in wellen">MidiIn</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/MidiInListener.html" title="interface in wellen"><span class="typeNameLink">MidiInListener</span></a> - Interface in <a href="wellen/package-summary.html">wellen</a></dt>
@@ -1190,6 +1228,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/Note.html#note_to_string(int)">note_to_string(int)</a></span> - Static method in class wellen.<a href="wellen/Note.html" title="class in wellen">Note</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/Arpeggiator.NoteStruct.html#%3Cinit%3E()">NoteStruct()</a></span> - Constructor for class wellen.<a href="wellen/Arpeggiator.NoteStruct.html" title="class in wellen">Arpeggiator.NoteStruct</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/Arpeggiator.NoteStruct.html#%3Cinit%3E(boolean,int,float)">NoteStruct(boolean, int, float)</a></span> - Constructor for class wellen.<a href="wellen/Arpeggiator.NoteStruct.html" title="class in wellen">Arpeggiator.NoteStruct</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/Scale.html#NUMBER_OF_SCALES">NUMBER_OF_SCALES</a></span> - Static variable in class wellen.<a href="wellen/Scale.html" title="class in wellen">Scale</a></dt>
 <dd>&nbsp;</dd>
 </dl>
@@ -1232,6 +1274,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">advance envelope on step</div>
 </dd>
+<dt><span class="memberNameLink"><a href="wellen/FMSynthesis.html#output()">output()</a></span> - Method in class wellen.<a href="wellen/FMSynthesis.html" title="class in wellen">FMSynthesis</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/InstrumentInternal.html#output()">output()</a></span> - Method in class wellen.<a href="wellen/InstrumentInternal.html" title="class in wellen">InstrumentInternal</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/InstrumentInternalLibrary.BELL.html#output()">output()</a></span> - Method in class wellen.<a href="wellen/InstrumentInternalLibrary.BELL.html" title="class in wellen">InstrumentInternalLibrary.BELL</a></dt>
@@ -1258,6 +1302,18 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </a>
 <h2 class="title">P</h2>
 <dl>
+<dt><a href="wellen/Pan.html" title="class in wellen"><span class="typeNameLink">Pan</span></a> - Class in <a href="wellen/package-summary.html">wellen</a></dt>
+<dd>
+<div class="block">position a mono signal somewhere in a stereo space.</div>
+</dd>
+<dt><span class="memberNameLink"><a href="wellen/Pan.html#%3Cinit%3E()">Pan()</a></span> - Constructor for class wellen.<a href="wellen/Pan.html" title="class in wellen">Pan</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/Wellen.html#PAN_LINEAR">PAN_LINEAR</a></span> - Static variable in class wellen.<a href="wellen/Wellen.html" title="class in wellen">Wellen</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/Wellen.html#PAN_SINE_LAW">PAN_SINE_LAW</a></span> - Static variable in class wellen.<a href="wellen/Wellen.html" title="class in wellen">Wellen</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/Wellen.html#PAN_SQUARE_LAW">PAN_SQUARE_LAW</a></span> - Static variable in class wellen.<a href="wellen/Wellen.html" title="class in wellen">Wellen</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/Arpeggiator.html#pattern(int,int,float)">pattern(int, int, float)</a></span> - Method in class wellen.<a href="wellen/Arpeggiator.html" title="class in wellen">Arpeggiator</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/Arpeggiator.html#pattern(int,int,int,float)">pattern(int, int, int, float)</a></span> - Method in class wellen.<a href="wellen/Arpeggiator.html" title="class in wellen">Arpeggiator</a></dt>
@@ -1301,6 +1357,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="wellen/Filter.html#process(float)">process(float)</a></span> - Method in class wellen.<a href="wellen/Filter.html" title="class in wellen">Filter</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/LowPassFilter.html#process(float)">process(float)</a></span> - Method in class wellen.<a href="wellen/LowPassFilter.html" title="class in wellen">LowPassFilter</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/Pan.html#process(float)">process(float)</a></span> - Method in class wellen.<a href="wellen/Pan.html" title="class in wellen">Pan</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/Reverb.html#process(float)">process(float)</a></span> - Method in class wellen.<a href="wellen/Reverb.html" title="class in wellen">Reverb</a></dt>
 <dd>&nbsp;</dd>
@@ -1371,6 +1429,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/ToneEngineOSC.html#replace_instrument(wellen.Instrument)">replace_instrument(Instrument)</a></span> - Method in class wellen.<a href="wellen/ToneEngineOSC.html" title="class in wellen">ToneEngineOSC</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/Arpeggiator.html#replace_pattern(wellen.Arpeggiator.NoteStruct%5B%5D)">replace_pattern(Arpeggiator.NoteStruct[])</a></span> - Method in class wellen.<a href="wellen/Arpeggiator.html" title="class in wellen">Arpeggiator</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/Arpeggiator.html#reset()">reset()</a></span> - Method in class wellen.<a href="wellen/Arpeggiator.html" title="class in wellen">Arpeggiator</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/BeatEvent.html#reset()">reset()</a></span> - Method in class wellen.<a href="wellen/BeatEvent.html" title="class in wellen">BeatEvent</a></dt>
@@ -1380,6 +1440,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="wellen/Filter.html#reset()">reset()</a></span> - Method in class wellen.<a href="wellen/Filter.html" title="class in wellen">Filter</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/Sequencer.html#reset()">reset()</a></span> - Method in class wellen.<a href="wellen/Sequencer.html" title="class in wellen">Sequencer</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/Wavetable.html#reset()">reset()</a></span> - Method in class wellen.<a href="wellen/Wavetable.html" title="class in wellen">Wavetable</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/Vocoder.html#reset_history()">reset_history()</a></span> - Method in class wellen.<a href="wellen/Vocoder.html" title="class in wellen">Vocoder</a></dt>
 <dd>&nbsp;</dd>
@@ -1488,8 +1550,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="wellen/ADSR.html#set_adsr(float,float,float,float)">set_adsr(float, float, float, float)</a></span> - Method in class wellen.<a href="wellen/ADSR.html" title="class in wellen">ADSR</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/Distortion.html#set_amplification(float)">set_amplification(float)</a></span> - Method in class wellen.<a href="wellen/Distortion.html" title="class in wellen">Distortion</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="block">set pre-amplification value.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="wellen/InstrumentInternalLibrary.BELL.html#set_amplification(float)">set_amplification(float)</a></span> - Method in class wellen.<a href="wellen/InstrumentInternalLibrary.BELL.html" title="class in wellen">InstrumentInternalLibrary.BELL</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/FMSynthesis.html#set_amplitude(float)">set_amplitude(float)</a></span> - Method in class wellen.<a href="wellen/FMSynthesis.html" title="class in wellen">FMSynthesis</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/Instrument.html#set_amplitude(float)">set_amplitude(float)</a></span> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
 <dd>&nbsp;</dd>
@@ -1533,11 +1599,17 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/BeatEvent.html#set_beat_count(int)">set_beat_count(int)</a></span> - Method in class wellen.<a href="wellen/BeatEvent.html" title="class in wellen">BeatEvent</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/Distortion.html#set_bits(int)">set_bits(int)</a></span> - Method in class wellen.<a href="wellen/Distortion.html" title="class in wellen">Distortion</a></dt>
+<dd>
+<div class="block">set the number of bits for `DISTORTION_BIT_CRUSHING`</div>
+</dd>
 <dt><span class="memberNameLink"><a href="wellen/Beat.html#set_bpm(float)">set_bpm(float)</a></span> - Method in class wellen.<a href="wellen/Beat.html" title="class in wellen">Beat</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/BeatDSP.html#set_bpm(float)">set_bpm(float)</a></span> - Method in class wellen.<a href="wellen/BeatDSP.html" title="class in wellen">BeatDSP</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/BeatEvent.html#set_bpm(float)">set_bpm(float)</a></span> - Method in class wellen.<a href="wellen/BeatEvent.html" title="class in wellen">BeatEvent</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/FMSynthesis.html#set_carrier(wellen.Wavetable)">set_carrier(Wavetable)</a></span> - Method in class wellen.<a href="wellen/FMSynthesis.html" title="class in wellen">FMSynthesis</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/Distortion.html#set_clip(float)">set_clip(float)</a></span> - Method in class wellen.<a href="wellen/Distortion.html" title="class in wellen">Distortion</a></dt>
 <dd>&nbsp;</dd>
@@ -1556,6 +1628,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="wellen/InstrumentInternal.html#set_decay(float)">set_decay(float)</a></span> - Method in class wellen.<a href="wellen/InstrumentInternal.html" title="class in wellen">InstrumentInternal</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/InstrumentInternalLibrary.BELL.html#set_detune(float)">set_detune(float)</a></span> - Method in class wellen.<a href="wellen/InstrumentInternalLibrary.BELL.html" title="class in wellen">InstrumentInternalLibrary.BELL</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/Sampler.html#set_edge_fading(int)">set_edge_fading(int)</a></span> - Method in class wellen.<a href="wellen/Sampler.html" title="class in wellen">Sampler</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/Tone.html#set_engine(wellen.ToneEngine)">set_engine(ToneEngine)</a></span> - Static method in class wellen.<a href="wellen/Tone.html" title="class in wellen">Tone</a></dt>
 <dd>&nbsp;</dd>
@@ -1615,6 +1689,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/Filter.html#set_mode(int)">set_mode(int)</a></span> - Method in class wellen.<a href="wellen/Filter.html" title="class in wellen">Filter</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/FMSynthesis.html#set_modulation_depth(float)">set_modulation_depth(float)</a></span> - Method in class wellen.<a href="wellen/FMSynthesis.html" title="class in wellen">FMSynthesis</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/FMSynthesis.html#set_modulator(wellen.Wavetable)">set_modulator(Wavetable)</a></span> - Method in class wellen.<a href="wellen/FMSynthesis.html" title="class in wellen">FMSynthesis</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/SAM.html#set_mouth(int)">set_mouth(int)</a></span> - Method in class wellen.<a href="wellen/SAM.html" title="class in wellen">SAM</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/HarmonicTable.html#set_note(int)">set_note(int)</a></span> - Method in class wellen.<a href="wellen/HarmonicTable.html" title="class in wellen">HarmonicTable</a></dt>
@@ -1631,6 +1709,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/Instrument.html#set_pan(float)">set_pan(float)</a></span> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/Pan.html#set_pan_type(int)">set_pan_type(int)</a></span> - Method in class wellen.<a href="wellen/Pan.html" title="class in wellen">Pan</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/Pan.html#set_panning(float)">set_panning(float)</a></span> - Method in class wellen.<a href="wellen/Pan.html" title="class in wellen">Pan</a></dt>
+<dd>
+<div class="block">set the panning value to position the signal in stereo space.</div>
+</dd>
 <dt><span class="memberNameLink"><a href="wellen/Wavetable.html#set_phase_offset(int)">set_phase_offset(int)</a></span> - Method in class wellen.<a href="wellen/Wavetable.html" title="class in wellen">Wavetable</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/SAM.html#set_pitch(int)">set_pitch(int)</a></span> - Method in class wellen.<a href="wellen/SAM.html" title="class in wellen">SAM</a></dt>
@@ -1687,9 +1771,25 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/SpeechSynthesis.html#setWordsPerMinute(int)">setWordsPerMinute(int)</a></span> - Method in class wellen.<a href="wellen/SpeechSynthesis.html" title="class in wellen">SpeechSynthesis</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/Signal.html#signal">signal</a></span> - Variable in class wellen.<a href="wellen/Signal.html" title="class in wellen">Signal</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/Signal.html" title="class in wellen"><span class="typeNameLink">Signal</span></a> - Class in <a href="wellen/package-summary.html">wellen</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/Signal.html#%3Cinit%3E()">Signal()</a></span> - Constructor for class wellen.<a href="wellen/Signal.html" title="class in wellen">Signal</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/Signal.html#%3Cinit%3E(float,float)">Signal(float, float)</a></span> - Constructor for class wellen.<a href="wellen/Signal.html" title="class in wellen">Signal</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/Signal.html#%3Cinit%3E(int)">Signal(int)</a></span> - Constructor for class wellen.<a href="wellen/Signal.html" title="class in wellen">Signal</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/Crossfader.html#signal_a">signal_a</a></span> - Variable in class wellen.<a href="wellen/Crossfader.html" title="class in wellen">Crossfader</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/Crossfader.html#signal_b">signal_b</a></span> - Variable in class wellen.<a href="wellen/Crossfader.html" title="class in wellen">Crossfader</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/Wellen.html#SIGNAL_LEFT">SIGNAL_LEFT</a></span> - Static variable in class wellen.<a href="wellen/Wellen.html" title="class in wellen">Wellen</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/Wellen.html#SIGNAL_MONO">SIGNAL_MONO</a></span> - Static variable in class wellen.<a href="wellen/Wellen.html" title="class in wellen">Wellen</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/Wellen.html#SIGNAL_RIGHT">SIGNAL_RIGHT</a></span> - Static variable in class wellen.<a href="wellen/Wellen.html" title="class in wellen">Wellen</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/AudioBufferManager.html#SIGNED">SIGNED</a></span> - Static variable in class wellen.<a href="wellen/AudioBufferManager.html" title="class in wellen">AudioBufferManager</a></dt>
 <dd>&nbsp;</dd>
@@ -1730,6 +1830,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="wellen/BeatDSP.html#start(java.lang.Object,int)">start(Object, int)</a></span> - Static method in class wellen.<a href="wellen/BeatDSP.html" title="class in wellen">BeatDSP</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/DSP.html#start(java.lang.Object,int)">start(Object, int)</a></span> - Static method in class wellen.<a href="wellen/DSP.html" title="class in wellen">DSP</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/EventReceiverMIDI.html#start(java.lang.Object,int)">start(Object, int)</a></span> - Static method in class wellen.<a href="wellen/EventReceiverMIDI.html" title="class in wellen">EventReceiverMIDI</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/EventReceiverOSC.html#start(java.lang.Object,int)">start(Object, int)</a></span> - Static method in class wellen.<a href="wellen/EventReceiverOSC.html" title="class in wellen">EventReceiverOSC</a></dt>
 <dd>&nbsp;</dd>
@@ -1864,6 +1966,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="block">stage starting value</div>
 </dd>
 <dt><span class="memberNameLink"><a href="wellen/Arpeggiator.html#velocity()">velocity()</a></span> - Method in class wellen.<a href="wellen/Arpeggiator.html" title="class in wellen">Arpeggiator</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="wellen/AudioBufferManager.html#VERBOSE">VERBOSE</a></span> - Static variable in class wellen.<a href="wellen/AudioBufferManager.html" title="class in wellen">AudioBufferManager</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="wellen/BeatMIDI.html#VERBOSE">VERBOSE</a></span> - Static variable in class wellen.<a href="wellen/BeatMIDI.html" title="class in wellen">BeatMIDI</a></dt>
 <dd>&nbsp;</dd>

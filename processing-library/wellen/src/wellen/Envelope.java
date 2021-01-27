@@ -125,7 +125,6 @@ public class Envelope implements DSPNodeOutput {
                     if (mEnvStage < mEnvelopeStages.size() - 1) {
                         prepareNextStage(mEnvStage, mRemainder);
                     } else {
-                        // @TODO(is it of interest to be able to loop envelopes?)
                         stop();
                         finished_envelope();
                     }

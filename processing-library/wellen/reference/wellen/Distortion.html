@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -182,31 +182,45 @@ implements <a href="DSPNodeProcess.html" title="interface in wellen">DSPNodeProc
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#get_bits()">get_bits</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>float</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#get_clip()">get_clip</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#get_type()">get_type</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
-<td class="colFirst"><code>float</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#process(float)">process</a></span>&#8203;(float&nbsp;s)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set_amplification(float)">set_amplification</a></span>&#8203;(float&nbsp;pAmplification)</code></th>
+<td class="colFirst"><code>float</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#process(float)">process</a></span>&#8203;(float&nbsp;pSignal)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set_amplification(float)">set_amplification</a></span>&#8203;(float&nbsp;pAmplification)</code></th>
+<td class="colLast">
+<div class="block">set pre-amplification value.</div>
+</td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set_bits(int)">set_bits</a></span>&#8203;(int&nbsp;pBits)</code></th>
+<td class="colLast">
+<div class="block">set the number of bits for `DISTORTION_BIT_CRUSHING`</div>
+</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set_clip(float)">set_clip</a></span>&#8203;(float&nbsp;pClip)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set_type(int)">set_type</a></span>&#8203;(int&nbsp;pDistortionType)</code></th>
 <td class="colLast">&nbsp;</td>
@@ -270,6 +284,12 @@ implements <a href="DSPNodeProcess.html" title="interface in wellen">DSPNodeProc
 <li class="blockList">
 <h4>set_amplification</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;set_amplification&#8203;(float&nbsp;pAmplification)</pre>
+<div class="block">set pre-amplification value. amplification only affects some distortion types e.g `DISTORTION_HARD_CLIPPING`,
+ `DISTORTION_SOFT_CLIPPING_CUBIC`, `DISTORTION_SOFT_CLIPPING_ARC_TANGENT`.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>pAmplification</code> - the amplification factor. a value of `1.0f` has no effect on the signal.</dd>
+</dl>
 </li>
 </ul>
 <a id="get_clip()">
@@ -308,13 +328,36 @@ implements <a href="DSPNodeProcess.html" title="interface in wellen">DSPNodeProc
 <pre class="methodSignature">public&nbsp;void&nbsp;set_type&#8203;(int&nbsp;pDistortionType)</pre>
 </li>
 </ul>
+<a id="get_bits()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>get_bits</h4>
+<pre class="methodSignature">public&nbsp;int&nbsp;get_bits()</pre>
+</li>
+</ul>
+<a id="set_bits(int)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>set_bits</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;set_bits&#8203;(int&nbsp;pBits)</pre>
+<div class="block">set the number of bits for `DISTORTION_BIT_CRUSHING`</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>pBits</code> - number of bits to which the signal will be reduced to</dd>
+</dl>
+</li>
+</ul>
 <a id="process(float)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>process</h4>
-<pre class="methodSignature">public&nbsp;float&nbsp;process&#8203;(float&nbsp;s)</pre>
+<pre class="methodSignature">public&nbsp;float&nbsp;process&#8203;(float&nbsp;pSignal)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="DSPNodeProcess.html#process(float)">process</a></code>&nbsp;in interface&nbsp;<code><a href="DSPNodeProcess.html" title="interface in wellen">DSPNodeProcess</a></code></dd>

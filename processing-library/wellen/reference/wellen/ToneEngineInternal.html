@@ -244,19 +244,19 @@ implements <a href="AudioBufferRenderer.html" title="interface in wellen">AudioB
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#audioblock(float%5B%5D)">audioblock</a></span>&#8203;(float[]&nbsp;pSamples)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#audioblock(float%5B%5D)">audioblock</a></span>&#8203;(float[]&nbsp;pSignal)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#audioblock(float%5B%5D%5B%5D,float%5B%5D%5B%5D)">audioblock</a></span>&#8203;(float[][]&nbsp;pOutputSamples,
-          float[][]&nbsp;pInputSamples)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#audioblock(float%5B%5D%5B%5D,float%5B%5D%5B%5D)">audioblock</a></span>&#8203;(float[][]&nbsp;pOutputSignal,
+          float[][]&nbsp;pInputSignal)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#audioblock(float%5B%5D,float%5B%5D)">audioblock</a></span>&#8203;(float[]&nbsp;pSamplesLeft,
-          float[]&nbsp;pSamplesRight)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#audioblock(float%5B%5D,float%5B%5D)">audioblock</a></span>&#8203;(float[]&nbsp;pSignalLeft,
+          float[]&nbsp;pSignalRight)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i3" class="rowColor">
@@ -429,15 +429,6 @@ implements <a href="AudioBufferRenderer.html" title="interface in wellen">AudioB
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="no_output()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>no_output</h4>
-<pre class="methodSignature">public static&nbsp;<a href="ToneEngineInternal.html" title="class in wellen">ToneEngineInternal</a>&nbsp;no_output()</pre>
-</li>
-</ul>
 <a id="enable_reverb(boolean)">
 <!--   -->
 </a>
@@ -631,8 +622,8 @@ implements <a href="AudioBufferRenderer.html" title="interface in wellen">AudioB
 <ul class="blockList">
 <li class="blockList">
 <h4>audioblock</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;audioblock&#8203;(float[][]&nbsp;pOutputSamples,
-                       float[][]&nbsp;pInputSamples)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;audioblock&#8203;(float[][]&nbsp;pOutputSignal,
+                       float[][]&nbsp;pInputSignal)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="AudioBufferRenderer.html#audioblock(float%5B%5D%5B%5D,float%5B%5D%5B%5D)">audioblock</a></code>&nbsp;in interface&nbsp;<code><a href="AudioBufferRenderer.html" title="interface in wellen">AudioBufferRenderer</a></code></dd>
@@ -645,8 +636,8 @@ implements <a href="AudioBufferRenderer.html" title="interface in wellen">AudioB
 <ul class="blockList">
 <li class="blockList">
 <h4>audioblock</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;audioblock&#8203;(float[]&nbsp;pSamplesLeft,
-                       float[]&nbsp;pSamplesRight)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;audioblock&#8203;(float[]&nbsp;pSignalLeft,
+                       float[]&nbsp;pSignalRight)</pre>
 </li>
 </ul>
 <a id="audioblock(float[])">
@@ -655,16 +646,25 @@ implements <a href="AudioBufferRenderer.html" title="interface in wellen">AudioB
 <ul class="blockList">
 <li class="blockList">
 <h4>audioblock</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;audioblock&#8203;(float[]&nbsp;pSamples)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;audioblock&#8203;(float[]&nbsp;pSignal)</pre>
 </li>
 </ul>
 <a id="register_audioblock_callback(wellen.ToneEngineInternal.AudioOutputCallback)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>register_audioblock_callback</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;register_audioblock_callback&#8203;(<a href="ToneEngineInternal.AudioOutputCallback.html" title="interface in wellen">ToneEngineInternal.AudioOutputCallback</a>&nbsp;pAudioblockCallback)</pre>
+</li>
+</ul>
+<a id="no_output()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>no_output</h4>
+<pre class="methodSignature">public static&nbsp;<a href="ToneEngineInternal.html" title="class in wellen">ToneEngineInternal</a>&nbsp;no_output()</pre>
 </li>
 </ul>
 </li>
