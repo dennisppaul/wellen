@@ -71,6 +71,13 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
         this(Wellen.DEFAULT_SAMPLING_RATE, Wellen.DEFAULT_AUDIOBLOCK_SIZE, Wellen.DEFAULT_AUDIO_DEVICE, 2, 16);
     }
 
+    public void stop() {
+        super.stop();
+        if (mAudioPlayer != null) {
+            mAudioPlayer.exit();
+        }
+    }
+
     public void enable_reverb(boolean pReverbEnabled) {
         mReverbEnabled = pReverbEnabled;
     }

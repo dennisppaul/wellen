@@ -32,7 +32,6 @@ public class ToneEngineMIDI extends ToneEngine {
     private static final int mNumberOfInstruments = Wellen.DEFAULT_NUMBER_OF_INSTRUMENTS;
     public static boolean SEND_NOTE_OFF_TO_ALL = false;
     public final MidiOut mMidiOut;
-    private final Timer mTimer;
     private final ArrayList<InstrumentMIDI> mInstruments;
     private int mCurrentInstrumentID;
 
@@ -47,13 +46,19 @@ public class ToneEngineMIDI extends ToneEngine {
     private ToneEngineMIDI(MidiOut pMidiOut) {
         mMidiOut = pMidiOut;
         mInstruments = new ArrayList<>();
-        mTimer = new Timer();
         prepareExitHandler();
         for (int i = 0; i < mNumberOfInstruments; i++) {
             final InstrumentMIDI mInstrument = new InstrumentMIDI(i);
             mInstruments.add(mInstrument);
         }
         mCurrentInstrumentID = 0;
+    }
+
+    public void stop() {
+        super.stop();
+        if (mMidiOut != null) {
+            mMidiOut.close();
+        }
     }
 
     public void note_on(int note, int velocity) {

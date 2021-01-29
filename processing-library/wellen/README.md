@@ -64,4 +64,4 @@ the `Sequencer` supplies a simple structure to facilitate the recording and reca
 
 ## reference
 
-generated [reference](https://dennisppaul.github.io/wellen) of the wellen library
+generated [reference](https://dennisppaul.github.io/wellen) of the library

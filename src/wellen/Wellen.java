@@ -396,7 +396,6 @@ public class Wellen {
 
     public static void run_sketch_with_resources(Class<? extends PApplet> pSketch) {
         PApplet.runSketch(new String[]{"--sketch-path=" + Wellen.get_resource_path(), pSketch.getName()}, null);
-
     }
 
     public static float to_sec(int pMilliSeconds) {

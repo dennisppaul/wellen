@@ -39,6 +39,10 @@ public abstract class ToneEngine {
         mTimer = new Timer();
     }
 
+    public void stop() {
+        mTimer.cancel();
+    }
+
     public static ToneEngine create() {
         return new ToneEngineInternal();
     }

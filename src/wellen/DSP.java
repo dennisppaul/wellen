@@ -74,6 +74,41 @@ public class DSP implements AudioBufferRenderer {
         }
     }
 
+    public void audioblock(float[][] pOutputSignal, float[][] pInputSignal) {
+        try {
+            if (mNumberOutputChannels == 1 && mNumberInputChannels == 0) {
+                mMethod.invoke(mListener, pOutputSignal[0]);
+                mCurrentBufferLeft = pOutputSignal[0];
+            } else if (mNumberOutputChannels == 1 && mNumberInputChannels == 1) {
+                mMethod.invoke(mListener, pOutputSignal[0], pInputSignal[0]);
+                mCurrentBufferLeft = pOutputSignal[0];
+            } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 0) {
+                mMethod.invoke(mListener, pOutputSignal[0], pOutputSignal[1]);
+                mCurrentBufferLeft = pOutputSignal[0];
+                mCurrentBufferRight = pOutputSignal[1];
+            } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 1) {
+                mMethod.invoke(mListener, pOutputSignal[0], pOutputSignal[1], pInputSignal[0]);
+                mCurrentBufferLeft = pOutputSignal[0];
+                mCurrentBufferRight = pOutputSignal[1];
+            } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 2) {
+                mMethod.invoke(mListener, pOutputSignal[0], pOutputSignal[1], pInputSignal[0], pInputSignal[1]);
+                mCurrentBufferLeft = pOutputSignal[0];
+                mCurrentBufferRight = pOutputSignal[1];
+            }
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException ex) {
+            System.err.println("+++ @" + DSP.class.getSimpleName() + " / error in audioblock: " + ex.getCause());
+            ex.printStackTrace();
+        }
+    }
+
+    public static void stop() {
+        if (mAudioPlayer != null) {
+            mAudioPlayer.exit();
+        }
+        mInstance = null;
+        mAudioPlayer = null;
+    }
+
     public static DSP start(Object pObject) {
         return start(pObject, 1, 0);
     }
@@ -153,33 +188,6 @@ public class DSP implements AudioBufferRenderer {
 
     public static void draw_buffer(PGraphics g, float pWidth, float pHeight) {
         Wellen.draw_buffer(g, pWidth, pHeight, DSP.get_buffer());
-    }
-
-    public void audioblock(float[][] pOutputSignal, float[][] pInputSignal) {
-        try {
-            if (mNumberOutputChannels == 1 && mNumberInputChannels == 0) {
-                mMethod.invoke(mListener, pOutputSignal[0]);
-                mCurrentBufferLeft = pOutputSignal[0];
-            } else if (mNumberOutputChannels == 1 && mNumberInputChannels == 1) {
-                mMethod.invoke(mListener, pOutputSignal[0], pInputSignal[0]);
-                mCurrentBufferLeft = pOutputSignal[0];
-            } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 0) {
-                mMethod.invoke(mListener, pOutputSignal[0], pOutputSignal[1]);
-                mCurrentBufferLeft = pOutputSignal[0];
-                mCurrentBufferRight = pOutputSignal[1];
-            } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 1) {
-                mMethod.invoke(mListener, pOutputSignal[0], pOutputSignal[1], pInputSignal[0]);
-                mCurrentBufferLeft = pOutputSignal[0];
-                mCurrentBufferRight = pOutputSignal[1];
-            } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 2) {
-                mMethod.invoke(mListener, pOutputSignal[0], pOutputSignal[1], pInputSignal[0], pInputSignal[1]);
-                mCurrentBufferLeft = pOutputSignal[0];
-                mCurrentBufferRight = pOutputSignal[1];
-            }
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException ex) {
-            System.err.println("+++ @" + DSP.class.getSimpleName() + " / error in audioblock: " + ex.getCause());
-            ex.printStackTrace();
-        }
     }
 }
 

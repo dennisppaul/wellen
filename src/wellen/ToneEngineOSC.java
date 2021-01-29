@@ -24,7 +24,6 @@ import oscP5.OscMessage;
 import oscP5.OscP5;
 
 import java.util.ArrayList;
-import java.util.Timer;
 
 /**
  * implementation of {@link wellen.ToneEngine} sending OSC messages to external network devices.
@@ -43,7 +42,6 @@ public class ToneEngineOSC extends ToneEngine {
     private static final String DEFAULT_TRANSMIT_IP = "127.0.0.1";
     private final OscP5 mOscP5;
     private final NetAddress mRemoteLocation;
-    private final Timer mTimer;
     private final ArrayList<InstrumentOSC> mInstruments;
     private int mCurrentInstrumentID;
 
@@ -51,7 +49,6 @@ public class ToneEngineOSC extends ToneEngine {
         final int pPortReceive = 0; // @TODO do we need to supply a *listening port* although it is never used?
         mOscP5 = new OscP5(this, pPortReceive);
         mRemoteLocation = new NetAddress(pTransmitIP, pPortTransmit);
-        mTimer = new Timer();
 
         mInstruments = new ArrayList<>();
         for (int i = 0; i < mNumberOfInstruments; i++) {
@@ -67,6 +64,13 @@ public class ToneEngineOSC extends ToneEngine {
 
     public ToneEngineOSC() {
         this(DEFAULT_TRANSMIT_IP);
+    }
+
+    public void stop() {
+        super.stop();
+        if (mOscP5 != null) {
+            mOscP5.stop();
+        }
     }
 
     public void note_on(int note, int velocity) {

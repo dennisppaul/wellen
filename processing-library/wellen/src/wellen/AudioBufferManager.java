@@ -57,7 +57,7 @@ public class AudioBufferManager extends Thread {
     private TargetDataLine mInputLine;
     private byte[] mOutputByteBuffer;
     private byte[] mInputByteBuffer;
-    private final boolean mRunBuffer = true;
+    private boolean mRunBuffer = true;
     private int mFrameCounter = 0;
 
     public AudioBufferManager(AudioBufferRenderer pSampleRenderer) {
@@ -123,6 +123,16 @@ public class AudioBufferManager extends Thread {
 
     public int sample_rate() {
         return mSampleRate;
+    }
+
+    public void exit() {
+        mRunBuffer = false;
+        if (mInputLine != null) {
+            mInputLine.stop();
+        }
+        if (mOutputLine != null) {
+            mOutputLine.stop();
+        }
     }
 
     public void run() {
