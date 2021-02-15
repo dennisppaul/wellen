@@ -3,6 +3,7 @@ package wellen.examples.instruments;
 import processing.core.PApplet;
 import wellen.ADSR;
 import wellen.InstrumentInternal;
+import wellen.InstrumentInternalLibrary;
 import wellen.Reverb;
 import wellen.SampleDataSNARE;
 import wellen.Sampler;
@@ -42,7 +43,9 @@ public class ExampleInstruments08CustomDSPInstrument extends PApplet {
      * an in-depth explanation of the behavior of each custom instrument can be found in the source code below as inline
      * comments.
      *
-     * use keys `1`, `2`, or `3` to play a custom instrument.
+     * alternatively, instruments from the collection `InstrumentInternalLibrary` can be used.
+     *
+     * use keys `1` – `6` to play a custom instrument.
      */
 
     private static final int INSTRUMENT_DEFAULT = 0;
@@ -50,7 +53,8 @@ public class ExampleInstruments08CustomDSPInstrument extends PApplet {
     private static final int INSTRUMENT_KICK_DRUM = 2;
     private static final int INSTRUMENT_HIHAT = 3;
     private static final int INSTRUMENT_FAT_LEAD = 4;
-    private static final int NUM_OF_INSTRUMENTS = 5;
+    private static final int INSTRUMENT_BELL = 5;
+    private static final int NUM_OF_INSTRUMENTS = 6;
 
     public void settings() {
         size(640, 480);
@@ -61,12 +65,14 @@ public class ExampleInstruments08CustomDSPInstrument extends PApplet {
         Tone.replace_instrument(new CustomInstrumentSampler(INSTRUMENT_SNARE_DRUM));
         Tone.replace_instrument(new CustomInstrumentMultipleOscillators(INSTRUMENT_FAT_LEAD));
         Tone.replace_instrument(new CustomInstrumentNoise(INSTRUMENT_HIHAT));
+        /* instrument from the collection `InstrumentInternalLibrary` */
+        Tone.replace_instrument(new InstrumentInternalLibrary.BELL(INSTRUMENT_BELL));
     }
 
     public void draw() {
         background(255);
         fill(0);
-        final float mTranslate = width / 6.0f;
+        final float mTranslate = width / (NUM_OF_INSTRUMENTS + 1.0f);
         for (int i = 0; i < NUM_OF_INSTRUMENTS; i++) {
             Tone.instrument(i);
             translate(mTranslate, 0);
@@ -96,6 +102,10 @@ public class ExampleInstruments08CustomDSPInstrument extends PApplet {
             case '5':
                 Tone.instrument(INSTRUMENT_FAT_LEAD);
                 Tone.note_on(mNote, 100);
+                break;
+            case '6':
+                Tone.instrument(INSTRUMENT_BELL);
+                Tone.note_on(mNote - 12, 100);
                 break;
         }
     }

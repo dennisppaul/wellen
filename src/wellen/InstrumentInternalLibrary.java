@@ -51,7 +51,7 @@ public class InstrumentInternalLibrary {
         private float mBaseRelease;
         private float mReleaseFalloff;
         private float mAmplitudeFalloff;
-        private float mAmplify = 2.5f;
+        private float mAmplify = 1.0f;
         private final boolean mUseTriangleForLowFrequencies = true;
 
         public BELL(int pID) {
@@ -70,7 +70,7 @@ public class InstrumentInternalLibrary {
             set_amplitude_falloff(0.5f);
             set_sustain(2.1f);
             set_sustain_falloff(-0.4f);
-            set_attack(0.02f);
+            set_attack(0.005f);
             updateADSRs();
         }
 
