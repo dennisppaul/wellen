@@ -19,7 +19,7 @@
 package wellen;
 
 /**
- * supplies 3 kinds of filters: high-, low- and band-pass filtering with adjustable resonance and cutoff frequency.
+ * provides 3 kinds of filters: high-, low- and band-pass filtering with adjustable resonance and cutoff frequency.
  */
 public class Filter implements DSPNodeProcess {
 
