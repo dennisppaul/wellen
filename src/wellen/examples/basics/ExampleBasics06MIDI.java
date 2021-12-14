@@ -24,7 +24,7 @@ public class ExampleBasics06MIDI extends PApplet {
          * second argument selects the MIDI bus. note `start` must be the first call to `Tone` otherwise the internal
          * default engine is automatically selected.
          */
-        Tone.start("midi", "Bus 1");
+        Tone.start("midi", "Arturia KeyStep 37");
     }
 
     public void draw() {
