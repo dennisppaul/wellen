@@ -30,11 +30,12 @@ import java.util.TimerTask;
 public class Beat {
 
     private static final String METHOD_NAME = "beat";
-    private final Object mListener;
-    private final Timer mTimer;
+    private static Beat mInstance = null;
     private int mBeat;
+    private final Object mListener;
     private Method mMethod = null;
     private TimerTask mTask;
+    private final Timer mTimer;
 
     public Beat(Object pListener, int pBPM) {
         this(pListener);
@@ -52,14 +53,6 @@ public class Beat {
         mTimer = new Timer();
     }
 
-    public static Beat start(Object pListener, int pBPM) {
-        return new Beat(pListener, pBPM);
-    }
-
-    public static Beat start(Object pListener) {
-        return new Beat(pListener);
-    }
-
     public void set_bpm(float pBPM) {
         final int mPeriod = (int) (60.0f / pBPM * 1000.0f);
         if (mTask != null) {
@@ -71,6 +64,28 @@ public class Beat {
 
     public int get_beat_count() {
         return mBeat;
+    }
+
+    public void clean_up() {
+        mTimer.cancel();
+        mTimer.purge();
+        mTask.cancel();
+    }
+
+    public static Beat start(Object pListener, int pBPM) {
+        mInstance = new Beat(pListener, pBPM);
+        return mInstance;
+    }
+
+    public static Beat start(Object pListener) {
+        mInstance = new Beat(pListener);
+        return mInstance;
+    }
+
+    public static void stop() {
+        if (mInstance!=null) {
+            mInstance.clean_up();
+        }
     }
 
     private class BeatTimerTaskP5 extends TimerTask {
