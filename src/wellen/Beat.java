@@ -72,8 +72,10 @@ public class Beat {
         mTask.cancel();
     }
 
-    public static Beat start(Object pListener, int pBPM) {
-        mInstance = new Beat(pListener, pBPM);
+    public static Beat instance() {
+        if (mInstance == null) {
+            System.err.println("+++ no `Beat` instantiated or started.");
+        }
         return mInstance;
     }
 
@@ -82,8 +84,13 @@ public class Beat {
         return mInstance;
     }
 
+    public static Beat start(Object pListener, int pBPM) {
+        mInstance = new Beat(pListener, pBPM);
+        return mInstance;
+    }
+
     public static void stop() {
-        if (mInstance!=null) {
+        if (mInstance != null) {
             mInstance.clean_up();
         }
     }
