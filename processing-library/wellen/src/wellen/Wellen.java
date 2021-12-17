@@ -37,7 +37,7 @@ import java.util.Arrays;
  */
 public class Wellen {
 
-    public static final int DEFAULT_AUDIOBLOCK_SIZE = 512;
+    public static final int DEFAULT_AUDIOBLOCK_SIZE = 1024;
     public static final int DEFAULT_AUDIO_DEVICE = -1;
     public static final int DEFAULT_NUMBER_OF_INSTRUMENTS = 16;
     public static final int DEFAULT_SAMPLING_RATE = 44100;

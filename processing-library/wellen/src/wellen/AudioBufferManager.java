@@ -47,27 +47,23 @@ public class AudioBufferManager extends Thread {
     public static final boolean BIG_ENDIAN = true;
     public static final boolean SIGNED = true;
     public static final boolean UNSIGNED = false;
+    public static boolean WAIT_FOR_OUTPUT_DATA_LINE = true;
     public static boolean VERBOSE = false;
-    private final AudioBufferRenderer mSampleRenderer;
-    private final int mSampleRate;
-    private final int mSampleBufferSize;
-    private final int mNumOutputChannels;
-    private final int mNumInputChannels;
-    private SourceDataLine mOutputLine;
-    private TargetDataLine mInputLine;
-    private byte[] mOutputByteBuffer;
-    private byte[] mInputByteBuffer;
-    private boolean mRunBuffer = true;
     private int mFrameCounter = 0;
+    private byte[] mInputByteBuffer;
+    private TargetDataLine mInputLine;
+    private final int mNumInputChannels;
+    private final int mNumOutputChannels;
+    private byte[] mOutputByteBuffer;
+    private SourceDataLine mOutputLine;
+    private boolean mRunBuffer = true;
+    private final int mSampleBufferSize;
+    private final int mSampleRate;
+    private final AudioBufferRenderer mSampleRenderer;
 
     public AudioBufferManager(AudioBufferRenderer pSampleRenderer) {
-        this(pSampleRenderer,
-             Wellen.DEFAULT_SAMPLING_RATE,
-             Wellen.DEFAULT_AUDIOBLOCK_SIZE,
-             Wellen.DEFAULT_AUDIO_DEVICE,
-             STEREO,
-             Wellen.DEFAULT_AUDIO_DEVICE,
-             MONO);
+        this(pSampleRenderer, Wellen.DEFAULT_SAMPLING_RATE, Wellen.DEFAULT_AUDIOBLOCK_SIZE, Wellen.DEFAULT_AUDIO_DEVICE,
+             STEREO, Wellen.DEFAULT_AUDIO_DEVICE, MONO);
     }
 
     public AudioBufferManager(AudioBufferRenderer pSampleRenderer, int pSampleRate, int pSampleBufferSize,
@@ -80,10 +76,7 @@ public class AudioBufferManager extends Thread {
 
         try {
             /* output */
-            final AudioFormat mOutputFormat = new AudioFormat(pSampleRate,
-                                                              BITS_PER_SAMPLE,
-                                                              pNumOutputChannels,
-                                                              SIGNED,
+            final AudioFormat mOutputFormat = new AudioFormat(pSampleRate, BITS_PER_SAMPLE, pNumOutputChannels, SIGNED,
                                                               LITTLE_ENDIAN);
             if (pOutputDevice == Wellen.DEFAULT_AUDIO_DEVICE) {
                 mOutputLine = AudioSystem.getSourceDataLine(mOutputFormat);
@@ -97,11 +90,8 @@ public class AudioBufferManager extends Thread {
 
             /* input */
             if (mNumInputChannels > 0) {
-                final AudioFormat mInputFormat = new AudioFormat(pSampleRate,
-                                                                 BITS_PER_SAMPLE,
-                                                                 mNumInputChannels,
-                                                                 SIGNED,
-                                                                 LITTLE_ENDIAN);
+                final AudioFormat mInputFormat = new AudioFormat(pSampleRate, BITS_PER_SAMPLE, mNumInputChannels,
+                                                                 SIGNED, LITTLE_ENDIAN);
                 if (pInputDevice == Wellen.DEFAULT_AUDIO_DEVICE) {
                     mInputLine = AudioSystem.getTargetDataLine(mInputFormat);
                 } else {
@@ -199,7 +189,22 @@ public class AudioBufferManager extends Thread {
                 }
             }
 
-            mOutputLine.write(mOutputByteBuffer, 0, mOutputByteBuffer.length);
+            if (WAIT_FOR_OUTPUT_DATA_LINE) {
+                while (mOutputLine.available() < mOutputByteBuffer.length) {
+                    try {
+                        // MAX_MS_PER_AUDIOBLOCK = 1000 * AUDIOBLOCK_SIZE / SAMPLING_RATE ( = 1000*512/44100 ≈ 11ms )
+                        final int REASONABLE_SLEEP_TIME_MS = 2;
+                        sleep(2);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            final int mNumOfBytesWritten = mOutputLine.write(mOutputByteBuffer, 0, mOutputByteBuffer.length);
+            if (VERBOSE && mNumOfBytesWritten != mOutputByteBuffer.length) {
+                System.out.println(
+                "+++ number of bytes written: " + mNumOfBytesWritten + "( expected " + mOutputByteBuffer.length + " )");
+            }
             mFrameCounter++;
         }
     }
