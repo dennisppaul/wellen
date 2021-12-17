@@ -31,8 +31,7 @@ import javax.sound.sampled.TargetDataLine;
 public class AudioBufferManager extends Thread {
 
     /*
-     * - @REF([Java Sound Resources: FAQ: Audio Programming](http://jsresources.sourceforge.net/faq_audio
-     * .html#sync_playback_recording))
+     * - @REF([Java Sound Resources: FAQ: Audio Programming](http://jsresources.sourceforge.net/faq_audio.html#sync_playback_recording))
      * - SOURCE == output
      * - TARGET == input
      */
