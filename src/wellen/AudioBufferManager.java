@@ -47,7 +47,6 @@ public class AudioBufferManager extends Thread {
     public static final boolean BIG_ENDIAN = true;
     public static final boolean SIGNED = true;
     public static final boolean UNSIGNED = false;
-    public static boolean WAIT_FOR_OUTPUT_DATA_LINE = true;
     public static boolean VERBOSE = false;
     private int mFrameCounter = 0;
     private byte[] mInputByteBuffer;
@@ -189,17 +188,6 @@ public class AudioBufferManager extends Thread {
                 }
             }
 
-            if (WAIT_FOR_OUTPUT_DATA_LINE) {
-                while (mOutputLine.available() < mOutputByteBuffer.length) {
-                    try {
-                        // MAX_MS_PER_AUDIOBLOCK = 1000 * AUDIOBLOCK_SIZE / SAMPLING_RATE ( = 1000*512/44100 ≈ 11ms )
-                        final int REASONABLE_SLEEP_TIME_MS = 2;
-                        sleep(2);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
             final int mNumOfBytesWritten = mOutputLine.write(mOutputByteBuffer, 0, mOutputByteBuffer.length);
             if (VERBOSE && mNumOfBytesWritten != mOutputByteBuffer.length) {
                 System.out.println(
