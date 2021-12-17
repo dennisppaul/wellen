@@ -22,6 +22,7 @@ package wellen;
 import java.util.ArrayList;
 
 import static processing.core.PApplet.constrain;
+import static wellen.Wellen.clamp;
 
 /**
  * implementation of {@link wellen.ToneEngine} using internal DSP audio processing.
@@ -199,7 +200,7 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
             for (InstrumentInternal mInstrument : mInstruments) {
                 mSignal += mInstrument.output();
             }
-            pSignal[i] = mSignal;
+            pSignal[i] = clamp(mSignal);
         }
         if (mReverbEnabled) {
             mReverb.process(pSignal, pSignal, pSignal, pSignal);
