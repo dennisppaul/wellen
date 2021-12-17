@@ -1,10 +1,12 @@
 # wellen
 
+![](./resources/wellen-logo.png)
+
 *wellen* is a framework for exploring and teaching generative music making and algorithmic compositions. it facilitates simple ways of playing musical notes, facilitates easy access to low-level digital signal processing (DSP) and supplies rhythm and timing as well as some *standard* muscial mechanics. the library acts as an adapter to various sound in- + outputs like MIDI, OSC, or digital/analog audio. the library is hosted on github [wellen](https://github.com/dennisppaul/wellen).
 
 ## installation
 
-the library can be installed as a [Processing library](https://processing.org/reference/libraries/) by unpacking the `wellen.zip` archive in the Processing library folder. a step-by-step introduction to the library as well as extended applications can be found under `examples`.
+the library can be installed as a [Processing library](https://processing.org/reference/libraries/) via the libray manager ( `Sketch > Import Library… > Add Library…` ) or by unpacking the `wellen.zip` archive into the Processing library folder. a step-by-step introduction to the library as well as extended applications can be found under `examples`.
 
 ### dependencies
 
