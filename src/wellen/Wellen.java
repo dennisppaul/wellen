@@ -46,6 +46,8 @@ public class Wellen {
     public static final float DEFAULT_DECAY = 0.01f;
     public static final float DEFAULT_RELEASE = 0.075f;
     public static final float DEFAULT_SUSTAIN = 0.5f;
+    public static final int VERSION_MINOR = 8;
+    public static final int VERSION_MAJOR = 0;
     public static final int DISTORTION_HARD_CLIPPING = 0;
     public static final int DISTORTION_FOLDBACK = 1;
     public static final int DISTORTION_FOLDBACK_SINGLE = 2;
@@ -98,34 +100,106 @@ public class Wellen {
     public static final int SIGNAL_LEFT = 0;
     public static final int SIGNAL_RIGHT = 1;
 
+    public static float bytes_to_floatIEEE(byte[] b, boolean pLittleEndian) {
+        if (b.length != 4) {
+            System.err.println("+++ WARNING @ " + Wellen.class.getSimpleName() + " / expected exactly 4 bytes.");
+        }
+        return ByteBuffer.wrap(b).order(pLittleEndian ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN).getFloat();
+    }
+
+    public static float bytes_to_floatIEEE(byte[] b) {
+        return bytes_to_floatIEEE(b, true);
+    }
+
+    public static float bytes_to_floatIEEE(byte[] pBytes, int pStart, int pEnd, boolean pLittleEndian) {
+        final byte[] mBytes = Arrays.copyOfRange(pBytes, pStart, pEnd);
+        return bytes_to_floatIEEE(mBytes, pLittleEndian);
+    }
+
+    public static void bytes_to_floatIEEEs(byte[] pBytes, float[] pSignal, boolean pLittleEndian) {
+        if (pBytes.length / 4 == pSignal.length) {
+            for (int i = 0; i < pSignal.length; i++) {
+                pSignal[i] = bytes_to_floatIEEE(pBytes, i * 4, (i + 1) * 4, pLittleEndian);
+            }
+        } else {
+            System.err.println(
+            "+++ WARNING @ " + Wellen.class.getSimpleName() + " / array sizes do not match. make " + "sure byte " +
+            "array" + " is exactly 4 times the size of float array");
+        }
+    }
+
+    public static void bytes_to_floats(byte[] pBytes, float[] pFloats, int pBitsPerFloat) {
+        final int mBytesPerFloat = pBitsPerFloat / 8;
+        for (int i = 0; i < pFloats.length; i++) {
+            final double mScale = 1.0 / ((1 << (pBitsPerFloat - 1)) - 1);
+            long f = 0;
+            for (int j = 0; j < mBytesPerFloat; j++) {
+                final long mBitShift = j * 8;
+                long b = pBytes[i * mBytesPerFloat + j];
+                f += b << mBitShift;
+            }
+            pFloats[i] = (float) (f * mScale);
+        }
+    }
+
+    public static float clamp(float pValue) {
+        if (pValue > 1.0f) {
+            return 1.0f;
+        } else if (pValue < -1.0f) {
+            return -1.0f;
+        } else {
+            return pValue;
+        }
+//        return Math.max(pMin, Math.min(pMax, pValue));
+    }
+
+    public static float clamp(float pValue, float pMin, float pMax) {
+        if (pValue > pMax) {
+            return pMax;
+        } else if (pValue < pMin) {
+            return pMin;
+        } else {
+            return pValue;
+        }
+//        return Math.max(pMin, Math.min(pMax, pValue));
+    }
+
     public static int clamp127(int pValue) {
         return Math.max(0, Math.min(127, pValue));
     }
 
-    public static void dumpMidiOutputDevices() {
-        final String[] mOutputNames = MidiOut.availableOutputs();
-        System.out.println("+-------------------------------------------------------+");
-        System.out.println("+ MIDI OUTPUT DEVICES ( aka Ports or Buses )");
-        System.out.println("+-------------------------------------------------------+");
-        for (int i = 0; i < mOutputNames.length; i++) {
-            final String mOutputName = mOutputNames[i];
-            System.out.println("+ " + i + "\t: \"" + mOutputName + "\"");
+    public static int constrain(int value, int min, int max) {
+        if (value > max) {
+            value = max;
         }
-        System.out.println("+-------------------------------------------------------+");
-        System.out.println();
+        if (value < min) {
+            value = min;
+        }
+        return value;
     }
 
-    public static void dumpMidiInputDevices() {
-        final String[] mInputNames = MidiIn.availableInputs();
-        System.out.println("+-------------------------------------------------------+");
-        System.out.println("+ MIDI INPUT DEVICES ( aka Ports or Buses )");
-        System.out.println("+-------------------------------------------------------+");
-        for (int i = 0; i < mInputNames.length; i++) {
-            final String mInputName = mInputNames[i];
-            System.out.println("+ " + i + "\t: \"" + mInputName + "\"");
+    public static void draw_buffer(PGraphics g, float pWidth, float pHeight, float[] pBuffer, int pStride) {
+        g.line(0, pHeight * 0.5f, pWidth, pHeight * 0.5f);
+        if (pBuffer != null) {
+            for (int i = 0; i < pBuffer.length - pStride; i += pStride) {
+                g.line(PApplet.map(i, 0, pBuffer.length, 0, pWidth), PApplet.map(pBuffer[i], -1.0f, 1.0f, 0, pHeight),
+                       PApplet.map(i + pStride, 0, pBuffer.length, 0, pWidth),
+                       PApplet.map(pBuffer[i + pStride], -1.0f, 1.0f, 0, pHeight));
+            }
         }
-        System.out.println("+-------------------------------------------------------+");
-        System.out.println();
+    }
+
+    public static void draw_buffer(PGraphics g, float pWidth, float pHeight, float[] pBuffer) {
+        draw_buffer(g, pWidth, pHeight, pBuffer, 1);
+    }
+
+    public static void draw_buffer(PGraphics g, float pWidth, float pHeight, float[] pBufferLeft,
+                                   float[] pBufferRight) {
+        g.pushMatrix();
+        draw_buffer(g, pWidth, pHeight * 0.5f, pBufferLeft);
+        g.translate(0, pHeight * 0.5f);
+        draw_buffer(g, pWidth, pHeight * 0.5f, pBufferRight);
+        g.popMatrix();
     }
 
     public static void dumpAudioInputAndOutputDevices() {
@@ -175,36 +249,103 @@ public class Wellen {
         System.out.println();
     }
 
-    public static int constrain(int value, int min, int max) {
-        if (value > max) {
-            value = max;
+    public static void dumpMidiInputDevices() {
+        final String[] mInputNames = MidiIn.availableInputs();
+        System.out.println("+-------------------------------------------------------+");
+        System.out.println("+ MIDI INPUT DEVICES ( aka Ports or Buses )");
+        System.out.println("+-------------------------------------------------------+");
+        for (int i = 0; i < mInputNames.length; i++) {
+            final String mInputName = mInputNames[i];
+            System.out.println("+ " + i + "\t: \"" + mInputName + "\"");
         }
-        if (value < min) {
-            value = min;
-        }
-        return value;
+        System.out.println("+-------------------------------------------------------+");
+        System.out.println();
     }
 
-    public static float clamp(float pValue) {
-        if (pValue > 1.0f) {
-            return 1.0f;
-        } else if (pValue < -1.0f) {
-            return -1.0f;
-        } else {
-            return pValue;
+    public static void dumpMidiOutputDevices() {
+        final String[] mOutputNames = MidiOut.availableOutputs();
+        System.out.println("+-------------------------------------------------------+");
+        System.out.println("+ MIDI OUTPUT DEVICES ( aka Ports or Buses )");
+        System.out.println("+-------------------------------------------------------+");
+        for (int i = 0; i < mOutputNames.length; i++) {
+            final String mOutputName = mOutputNames[i];
+            System.out.println("+ " + i + "\t: \"" + mOutputName + "\"");
         }
-//        return Math.max(pMin, Math.min(pMax, pValue));
+        System.out.println("+-------------------------------------------------------+");
+        System.out.println();
     }
 
-    public static float clamp(float pValue, float pMin, float pMax) {
+    public static void exportWAV(PApplet p, String pFilepath, float[][] pBuffer, int pBitsPerSignal, int pSignalRate,
+                                 int pCompressionType) {
+        if (pCompressionType == WAV_FORMAT_IEEE_FLOAT_32BIT && pBitsPerSignal != 32) {
+            System.err.println(
+            "+++ WARNING @" + Wellen.class.getSimpleName() + ".exportWAV / if WAV format is *IEEE " + "float* 32 " +
+            "bits" + " per sample are required.");
+            pBitsPerSignal = 32;
+        }
+        final byte[] mWAVBytes = WAVConverter.convert_samples_to_bytes(pBuffer, pBuffer.length, pBitsPerSignal,
+                                                                       pSignalRate, pCompressionType);
+        p.saveBytes(pFilepath, mWAVBytes);
+    }
+
+    public static void exportWAV(PApplet p, String pFilepath, float[][] pBuffer, int pBitsPerSignal, int pSignalRate) {
+        final byte[] mWAVBytes = WAVConverter.convert_samples_to_bytes(pBuffer, pBuffer.length, pBitsPerSignal,
+                                                                       pSignalRate);
+        p.saveBytes(pFilepath, mWAVBytes);
+    }
+
+    public static void exportWAV(PApplet p, String pFilepath, float[] pBuffer, int pBitsPerSignal, int pSignalRate) {
+        final byte[] mWAVBytes = WAVConverter.convert_samples_to_bytes(new float[][]{pBuffer}, 1, pBitsPerSignal,
+                                                                       pSignalRate);
+        p.saveBytes(pFilepath, mWAVBytes);
+    }
+
+    public static void exportWAVInfo(PApplet p, String pFilepath, WAVConverter.Info pWAVInfo) {
+        final byte[] mWAVBytes = WAVConverter.convert_samples_to_bytes(pWAVInfo);
+        p.saveBytes(pFilepath, mWAVBytes);
+    }
+
+    public static float flip(float pValue) {
+        float pMin = -1.0f;
+        float pMax = 1.0f;
         if (pValue > pMax) {
-            return pMax;
+            return pValue - PApplet.floor(pValue);
         } else if (pValue < pMin) {
-            return pMin;
+            return -PApplet.ceil(pValue) + pValue;
         } else {
             return pValue;
         }
-//        return Math.max(pMin, Math.min(pMax, pValue));
+    }
+
+    public static byte[] floatIEEE_to_bytes(float f) {
+        return ByteBuffer.allocate(4).putFloat(f).array();
+    }
+
+    public static byte[] floatIEEEs_to_bytes(float[] pFloats) {
+        return floatIEEEs_to_bytes(pFloats, true);
+    }
+
+    public static byte[] floatIEEEs_to_bytes(float[] pFloats, boolean pLittleEndian) {
+        ByteBuffer buffer = ByteBuffer.allocate(4 * pFloats.length).order(
+        pLittleEndian ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN);
+
+        for (float value : pFloats) {
+            buffer.putFloat(value);
+        }
+        return buffer.array();
+    }
+
+    public static void floats_to_bytes(byte[] pBytes, float[] pFloats, int pBitsPerFloat) {
+        final int mBytesPerFloat = pBitsPerFloat / 8;
+        for (int i = 0; i < pFloats.length; i++) {
+            final float f = pFloats[i];
+            final int mScale = (1 << (pBitsPerFloat - 1)) - 1;
+            final long y = (long) (mScale * f);
+            for (int j = 0; j < mBytesPerFloat; j++) {
+                final int mBitShift = j * 8;
+                pBytes[i * mBytesPerFloat + j] = (byte) ((y >>> mBitShift) & 0xFF);
+            }
+        }
     }
 
     public static float[] get_extremum(float[] pSignal) {
@@ -221,114 +362,8 @@ public class Wellen {
         return new float[]{mMinimum, mMaximum};
     }
 
-    public static float flip(float pValue) {
-        float pMin = -1.0f;
-        float pMax = 1.0f;
-        if (pValue > pMax) {
-            return pValue - PApplet.floor(pValue);
-        } else if (pValue < pMin) {
-            return -PApplet.ceil(pValue) + pValue;
-        } else {
-            return pValue;
-        }
-    }
-
-    public static void draw_buffer(PGraphics g, float pWidth, float pHeight, float[] pBuffer, int pStride) {
-        g.line(0, pHeight * 0.5f, pWidth, pHeight * 0.5f);
-        if (pBuffer != null) {
-            for (int i = 0; i < pBuffer.length - pStride; i += pStride) {
-                g.line(PApplet.map(i, 0, pBuffer.length, 0, pWidth),
-                       PApplet.map(pBuffer[i], -1.0f, 1.0f, 0, pHeight),
-                       PApplet.map(i + pStride, 0, pBuffer.length, 0, pWidth),
-                       PApplet.map(pBuffer[i + pStride], -1.0f, 1.0f, 0, pHeight));
-            }
-        }
-    }
-
-    public static void draw_buffer(PGraphics g, float pWidth, float pHeight, float[] pBuffer) {
-        draw_buffer(g, pWidth, pHeight, pBuffer, 1);
-    }
-
-    public static void draw_buffer(PGraphics g, float pWidth, float pHeight, float[] pBufferLeft,
-                                   float[] pBufferRight) {
-        g.pushMatrix();
-        draw_buffer(g, pWidth, pHeight * 0.5f, pBufferLeft);
-        g.translate(0, pHeight * 0.5f);
-        draw_buffer(g, pWidth, pHeight * 0.5f, pBufferRight);
-        g.popMatrix();
-    }
-
-    public static float random(float pMin, float pMax) {
-        if (pMin >= pMax) {
-            return pMin;
-        } else {
-            final float mDiff = pMax - pMin;
-            final float mValue = (float) Math.random() * mDiff + pMin;
-            return mValue;
-        }
-    }
-
-    public static void floats_to_bytes(byte[] pBytes, float[] pFloats, int pBitsPerFloat) {
-        final int mBytesPerFloat = pBitsPerFloat / 8;
-        for (int i = 0; i < pFloats.length; i++) {
-            final float f = pFloats[i];
-            final int mScale = (1 << (pBitsPerFloat - 1)) - 1;
-            final long y = (long) (mScale * f);
-            for (int j = 0; j < mBytesPerFloat; j++) {
-                final int mBitShift = j * 8;
-                pBytes[i * mBytesPerFloat + j] = (byte) ((y >>> mBitShift) & 0xFF);
-            }
-        }
-    }
-
-    public static void bytes_to_floats(byte[] pBytes, float[] pFloats, int pBitsPerFloat) {
-        final int mBytesPerFloat = pBitsPerFloat / 8;
-        for (int i = 0; i < pFloats.length; i++) {
-            final double mScale = 1.0 / ((1 << (pBitsPerFloat - 1)) - 1);
-            long f = 0;
-            for (int j = 0; j < mBytesPerFloat; j++) {
-                final long mBitShift = j * 8;
-                long b = pBytes[i * mBytesPerFloat + j];
-                f += b << mBitShift;
-            }
-            pFloats[i] = (float) (f * mScale);
-        }
-    }
-
-    public static void exportWAV(PApplet p, String pFilepath, float[][] pBuffer, int pBitsPerSignal, int pSignalRate,
-                                 int pCompressionType) {
-        if (pCompressionType == WAV_FORMAT_IEEE_FLOAT_32BIT && pBitsPerSignal != 32) {
-            System.err.println("+++ WARNING @" + Wellen.class.getSimpleName() + ".exportWAV / if WAV format is *IEEE "
-                               + "float* 32 bits per sample are required.");
-            pBitsPerSignal = 32;
-        }
-        final byte[] mWAVBytes = WAVConverter.convert_samples_to_bytes(pBuffer,
-                                                                       pBuffer.length,
-                                                                       pBitsPerSignal,
-                                                                       pSignalRate,
-                                                                       pCompressionType);
-        p.saveBytes(pFilepath, mWAVBytes);
-    }
-
-    public static void exportWAV(PApplet p, String pFilepath, float[][] pBuffer, int pBitsPerSignal, int pSignalRate) {
-        final byte[] mWAVBytes = WAVConverter.convert_samples_to_bytes(pBuffer,
-                                                                       pBuffer.length,
-                                                                       pBitsPerSignal,
-                                                                       pSignalRate);
-        p.saveBytes(pFilepath, mWAVBytes);
-    }
-
-    public static void exportWAV(PApplet p, String pFilepath, float[] pBuffer, int pBitsPerSignal, int pSignalRate) {
-        final byte[] mWAVBytes = WAVConverter.convert_samples_to_bytes(new float[][]{pBuffer},
-                                                                       1,
-                                                                       pBitsPerSignal,
-                                                                       pSignalRate);
-        p.saveBytes(pFilepath, mWAVBytes);
-    }
-
-    public static void exportWAVInfo(PApplet p, String pFilepath, WAVConverter.Info pWAVInfo) {
-        final byte[] mWAVBytes = WAVConverter.convert_samples_to_bytes(pWAVInfo);
-        p.saveBytes(pFilepath, mWAVBytes);
+    public static String get_resource_path() {
+        return Wellen.class.getResource("").getPath();
     }
 
     public static float[][] importWAV(PApplet p, String pFilepath) {
@@ -344,65 +379,29 @@ public class Wellen {
         return mWAVInfo;
     }
 
-    public static void bytes_to_floatIEEEs(byte[] pBytes, float[] pSignal, boolean pLittleEndian) {
-        if (pBytes.length / 4 == pSignal.length) {
-            for (int i = 0; i < pSignal.length; i++) {
-                pSignal[i] = bytes_to_floatIEEE(pBytes, i * 4, (i + 1) * 4, pLittleEndian);
-            }
+    public static float random(float pMin, float pMax) {
+        if (pMin >= pMax) {
+            return pMin;
         } else {
-            System.err.println(
-            "+++ WARNING @ " + Wellen.class.getSimpleName() + " / array sizes do not match. make " + "sure byte array" +
-            " is exactly 4 times the size of float array");
+            final float mDiff = pMax - pMin;
+            final float mValue = (float) Math.random() * mDiff + pMin;
+            return mValue;
         }
-    }
-
-    public static float bytes_to_floatIEEE(byte[] b, boolean pLittleEndian) {
-        if (b.length != 4) {
-            System.err.println("+++ WARNING @ " + Wellen.class.getSimpleName() + " / expected exactly 4 bytes.");
-        }
-        return ByteBuffer.wrap(b).order(pLittleEndian ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN).getFloat();
-    }
-
-    public static float bytes_to_floatIEEE(byte[] b) {
-        return bytes_to_floatIEEE(b, true);
-    }
-
-    public static byte[] floatIEEE_to_bytes(float f) {
-        return ByteBuffer.allocate(4).putFloat(f).array();
-    }
-
-    public static byte[] floatIEEEs_to_bytes(float[] pFloats) {
-        return floatIEEEs_to_bytes(pFloats, true);
-    }
-
-    public static byte[] floatIEEEs_to_bytes(float[] pFloats, boolean pLittleEndian) {
-        ByteBuffer buffer = ByteBuffer.allocate(4 * pFloats.length).order(pLittleEndian ? ByteOrder.LITTLE_ENDIAN :
-                                                                          ByteOrder.BIG_ENDIAN);
-
-        for (float value : pFloats) {
-            buffer.putFloat(value);
-        }
-        return buffer.array();
-    }
-
-    public static float bytes_to_floatIEEE(byte[] pBytes, int pStart, int pEnd, boolean pLittleEndian) {
-        final byte[] mBytes = Arrays.copyOfRange(pBytes, pStart, pEnd);
-        return bytes_to_floatIEEE(mBytes, pLittleEndian);
-    }
-
-    public static String get_resource_path() {
-        return Wellen.class.getResource("").getPath();
     }
 
     public static void run_sketch_with_resources(Class<? extends PApplet> pSketch) {
         PApplet.runSketch(new String[]{"--sketch-path=" + Wellen.get_resource_path(), pSketch.getName()}, null);
     }
 
+    public static int to_millis(float pSeconds) {
+        return (int) (pSeconds * 1000);
+    }
+
     public static float to_sec(int pMilliSeconds) {
         return pMilliSeconds / 1000.0f;
     }
 
-    public static int to_millis(float pSeconds) {
-        return (int) (pSeconds * 1000);
+    public static String version_string() {
+        return VERSION_MAJOR + "." + VERSION_MINOR;
     }
 }
