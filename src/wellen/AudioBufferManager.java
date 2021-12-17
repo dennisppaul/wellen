@@ -48,17 +48,17 @@ public class AudioBufferManager extends Thread {
     public static final boolean SIGNED = true;
     public static final boolean UNSIGNED = false;
     public static boolean VERBOSE = false;
-    private final AudioBufferRenderer mSampleRenderer;
-    private final int mSampleRate;
-    private final int mSampleBufferSize;
-    private final int mNumOutputChannels;
-    private final int mNumInputChannels;
-    private SourceDataLine mOutputLine;
-    private TargetDataLine mInputLine;
-    private byte[] mOutputByteBuffer;
-    private byte[] mInputByteBuffer;
-    private boolean mRunBuffer = true;
     private int mFrameCounter = 0;
+    private byte[] mInputByteBuffer;
+    private TargetDataLine mInputLine;
+    private final int mNumInputChannels;
+    private final int mNumOutputChannels;
+    private byte[] mOutputByteBuffer;
+    private SourceDataLine mOutputLine;
+    private boolean mRunBuffer = true;
+    private final int mSampleBufferSize;
+    private final int mSampleRate;
+    private final AudioBufferRenderer mSampleRenderer;
 
     public AudioBufferManager(AudioBufferRenderer pSampleRenderer) {
         this(pSampleRenderer,
@@ -70,8 +70,13 @@ public class AudioBufferManager extends Thread {
              MONO);
     }
 
-    public AudioBufferManager(AudioBufferRenderer pSampleRenderer, int pSampleRate, int pSampleBufferSize,
-                              int pOutputDevice, int pNumOutputChannels, int pInputDevice, int pNumInputChannels) {
+    public AudioBufferManager(AudioBufferRenderer pSampleRenderer,
+                              int pSampleRate,
+                              int pSampleBufferSize,
+                              int pOutputDevice,
+                              int pNumOutputChannels,
+                              int pInputDevice,
+                              int pNumInputChannels) {
         mSampleRenderer = pSampleRenderer;
         mSampleRate = pSampleRate;
         mSampleBufferSize = pSampleBufferSize;
@@ -97,11 +102,8 @@ public class AudioBufferManager extends Thread {
 
             /* input */
             if (mNumInputChannels > 0) {
-                final AudioFormat mInputFormat = new AudioFormat(pSampleRate,
-                                                                 BITS_PER_SAMPLE,
-                                                                 mNumInputChannels,
-                                                                 SIGNED,
-                                                                 LITTLE_ENDIAN);
+                final AudioFormat mInputFormat = new AudioFormat(pSampleRate, BITS_PER_SAMPLE, mNumInputChannels,
+                                                                 SIGNED, LITTLE_ENDIAN);
                 if (pInputDevice == Wellen.DEFAULT_AUDIO_DEVICE) {
                     mInputLine = AudioSystem.getTargetDataLine(mInputFormat);
                 } else {
@@ -199,7 +201,11 @@ public class AudioBufferManager extends Thread {
                 }
             }
 
-            mOutputLine.write(mOutputByteBuffer, 0, mOutputByteBuffer.length);
+            final int mNumOfBytesWritten = mOutputLine.write(mOutputByteBuffer, 0, mOutputByteBuffer.length);
+            if (VERBOSE && mNumOfBytesWritten != mOutputByteBuffer.length) {
+                System.out.println("+++ number of bytes written: " + mNumOfBytesWritten +
+                                   "( expected " + mOutputByteBuffer.length + " )");
+            }
             mFrameCounter++;
         }
     }
