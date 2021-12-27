@@ -1,0 +1,358 @@
+package wellen.tests.rakarrack;
+
+import static wellen.tests.rakarrack.RRAnalogFilter.TYPE_HPF_2_POLE;
+import static wellen.tests.rakarrack.RRAnalogFilter.TYPE_LPF_2_POLE;
+import static wellen.tests.rakarrack.RRMath.PERIOD;
+import static wellen.tests.rakarrack.RRMath.dB2rap;
+import static wellen.tests.rakarrack.RRMath.powf;
+
+public class RRDistortion {
+
+    public static final int PRESET_OVERDRIVE_1 = 0;
+    public static final int PRESET_OVERDRIVE_2 = 1;
+    public static final int PRESET_DISTORSION_1 = 2;
+    public static final int PRESET_DISTORSION_2 = 3;
+    public static final int PRESET_DISTORSION_3 = 4;
+    public static final int PRESET_GUITAR_AMP = 5;
+    private final RRAnalogFilter DCl;
+    private final RRAnalogFilter DCr;
+    private int Pdrive;         //the input amplification
+    private int Phpf;           //highpass filter
+    private int Plevel;         //the ouput amplification
+    private int Plpf;           //lowpass filter
+    private int Plrcross;       // L/R Mixing
+    private int Pnegate;        //if the input is negated
+    private int Poctave;        //mix sub octave
+    private int Ppanning;       //Panning
+    private int Pprefiltering;  //if you want to do the filtering before the distorsion
+    private int Ppreset;
+    private boolean Pstereo;    //false=mono,true=stereo
+    private int Ptype;          //Distorsion type
+    private int Pvolume;        //Volumul or E/R
+    private final RRAnalogFilter blockDCl;
+    private final RRAnalogFilter blockDCr;
+    private final RRWaveshaper dwshapel;
+    private final RRWaveshaper dwshaper;
+    private final float[] efxoutl;
+    private final float[] efxoutr;
+    private final RRAnalogFilter hpfl;
+    private final RRAnalogFilter hpfr;
+    private final RRAnalogFilter lpfl;
+    private final RRAnalogFilter lpfr;
+    private final float[] octoutl;
+    private final float[] octoutr;
+    private float outvolume;
+    private float panning, lrcross, octave_memoryl, togglel, octave_memoryr, toggler, octmix;
+
+    public RRDistortion(float[] efxoutl_, float[] efxoutr_) {
+        efxoutl = efxoutl_;
+        efxoutr = efxoutr_;
+
+        octoutl = new float[PERIOD];
+        octoutr = new float[PERIOD];
+
+        lpfl = new RRAnalogFilter(TYPE_LPF_2_POLE, 22000, 1, 0);
+        lpfr = new RRAnalogFilter(TYPE_LPF_2_POLE, 22000, 1, 0);
+        hpfl = new RRAnalogFilter(TYPE_HPF_2_POLE, 20, 1, 0);
+        hpfr = new RRAnalogFilter(TYPE_HPF_2_POLE, 20, 1, 0);
+        blockDCl = new RRAnalogFilter(TYPE_LPF_2_POLE, 440.0f, 1, 0);
+        blockDCr = new RRAnalogFilter(TYPE_LPF_2_POLE, 440.0f, 1, 0);
+        blockDCl.setfreq(75.0f);
+        blockDCr.setfreq(75.0f);
+        DCl = new RRAnalogFilter(TYPE_HPF_2_POLE, 30, 1, 0);
+        DCr = new RRAnalogFilter(TYPE_HPF_2_POLE, 30, 1, 0);
+        DCl.setfreq(30.0f);
+        DCr.setfreq(30.0f);
+
+        dwshapel = new RRWaveshaper();
+        dwshaper = new RRWaveshaper();
+
+        //default values
+        Ppreset = 0;
+        Pvolume = 50;
+        Plrcross = 40;
+        Pdrive = 90;
+        Plevel = 64;
+        Ptype = 0;
+        Pnegate = 0;
+        Plpf = 127;
+        Phpf = 0;
+        Pstereo = false;
+        Pprefiltering = 0;
+        Poctave = 0;
+        togglel = 1.0f;
+        octave_memoryl = -1.0f;
+        toggler = 1.0f;
+        octave_memoryr = -1.0f;
+        octmix = 0.0f;
+
+        setpreset(Ppreset);
+        cleanup();
+    }
+
+    public void setpreset(int npreset) {
+        int[][] presets = {
+        //Overdrive 1
+        {84, 64, 35, 56, 40, 0, 0, 6703, 21, 0, 0},
+        //Overdrive 2
+        {85, 64, 35, 29, 45, 1, 0, 25040, 21, 0, 0},
+        //Distorsion 1
+        {0, 64, 0, 87, 14, 6, 0, 3134, 157, 0, 1},
+        //Distorsion 2
+        {0, 64, 127, 87, 14, 0, 1, 3134, 102, 0, 0},
+        //Distorsion 3
+        {0, 64, 127, 127, 12, 13, 0, 5078, 56, 0, 1},
+        //Guitar Amp
+        {84, 64, 35, 63, 50, 2, 0, 824, 21, 0, 0}
+        };
+        for (int n = 0; n < presets[npreset].length; n++) {
+            changepar(n, presets[npreset][n]);
+        }
+
+        Ppreset = npreset;
+        cleanup();
+    }
+
+    public void out(float[] smpsl, float[] smpsr) {
+        int i;
+        float l, r, lout, rout;
+
+        float inputvol = powf(5.0f, ((float) Pdrive - 32.0f) / 127.0f);
+        if (Pnegate != 0) {
+            inputvol *= -1.0f;
+        }
+        if (Pstereo) {                //Stereo
+            for (i = 0; i < PERIOD; i++) {
+                efxoutl[i] = smpsl[i] * inputvol * 2.0f;
+                efxoutr[i] = smpsr[i] * inputvol * 2.0f;
+            }
+        } else {
+            for (i = 0; i < PERIOD; i++) {
+                efxoutl[i] = (smpsl[i] + (smpsr == null ? 0.0f : smpsr[i])) * inputvol;
+            }
+        }
+
+        if (Pprefiltering != 0) {
+            applyfilters(efxoutl, efxoutr);
+        }
+
+        //no optimised, yet (no look table)
+
+        dwshapel.waveshapesmps(PERIOD, efxoutl, Ptype, Pdrive, true);
+        if (Pstereo) {
+            dwshaper.waveshapesmps(PERIOD, efxoutr, Ptype, Pdrive, true);
+        }
+
+        if (Pprefiltering == 0) {
+            applyfilters(efxoutl, efxoutr);
+        }
+
+        if (!Pstereo) {
+            System.arraycopy(efxoutl, 0, efxoutr, 0, efxoutr.length);
+        }
+
+        if (octmix > 0.01f) {
+            for (i = 0; i < PERIOD; i++) {
+                lout = efxoutl[i];
+                rout = efxoutr[i];
+
+
+                if ((octave_memoryl < 0.0f) && (lout > 0.0f)) {
+                    togglel *= -1.0f;
+                }
+
+                octave_memoryl = lout;
+
+                if ((octave_memoryr < 0.0f) && (rout > 0.0f)) {
+                    toggler *= -1.0f;
+                }
+
+                octave_memoryr = rout;
+
+                octoutl[i] = lout * togglel;
+                octoutr[i] = rout * toggler;
+            }
+
+            blockDCr.filterout(octoutr);
+            blockDCl.filterout(octoutl);
+        }
+
+
+        float level = dB2rap(60.0f * (float) Plevel / 127.0f - 40.0f);
+
+        for (i = 0; i < PERIOD; i++) {
+            lout = efxoutl[i];
+            rout = efxoutr[i];
+
+            l = lout * (1.0f - lrcross) + rout * lrcross;
+            r = rout * (1.0f - lrcross) + lout * lrcross;
+
+            if (octmix > 0.01f) {
+                lout = l * (1.0f - octmix) + octoutl[i] * octmix;
+                rout = r * (1.0f - octmix) + octoutr[i] * octmix;
+            } else {
+                lout = l;
+                rout = r;
+            }
+
+            efxoutl[i] = lout * 2.0f * level * panning;
+            efxoutr[i] = rout * 2.0f * level * (1.0f - panning);
+        }
+
+        DCr.filterout(efxoutr);
+        DCl.filterout(efxoutl);
+
+        // TODO optimize this!
+        System.arraycopy(efxoutl, 0, smpsl, 0, efxoutl.length);
+        if (smpsr != null) {
+            System.arraycopy(efxoutr, 0, smpsr, 0, efxoutr.length);
+        }
+    }
+
+    public void out(float[] smpsl) {
+        out(smpsl, null);
+    }
+
+    public void setoctave(int pPoctave) {
+        Poctave = pPoctave;
+        octmix = (float) (Poctave) / 127.0f;
+    }
+
+    public void changepar(int npar, int value) {
+        switch (npar) {
+            case 0:
+                setvolume(value);
+                break;
+            case 1:
+                setpanning(value);
+                break;
+            case 2:
+                setlrcross(value);
+                break;
+            case 3:
+                Pdrive = value;
+                break;
+            case 4:
+                Plevel = value;
+                break;
+            case 5:
+                Ptype = value;
+                break;
+            case 6:
+                if (value > 1) {
+                    value = 1;
+                }
+                Pnegate = value;
+                break;
+            case 7:
+                setlpf(value);
+                break;
+            case 8:
+                sethpf(value);
+                break;
+            case 9:
+                if (value > 1) {
+                    value = 1;
+                }
+                Pstereo = (value != 0);
+                break;
+            case 10:
+                Pprefiltering = value;
+                break;
+            case 11:
+                break;
+            case 12:
+                setoctave(value);
+                break;
+        }
+    }
+
+    public void setvolume(int Pvolume) {
+        this.Pvolume = Pvolume;
+
+        outvolume = (float) Pvolume / 127.0f;
+        if (Pvolume == 0) {
+            cleanup();
+        }
+
+    }
+
+    public void setpanning(int Ppanning) {
+        this.Ppanning = Ppanning;
+        panning = ((float) Ppanning + 0.5f) / 127.0f;
+    }
+
+    public void setlrcross(int Plrcross) {
+        this.Plrcross = Plrcross;
+        lrcross = (float) Plrcross / 127.0f * 1.0f;
+    }
+
+    public void setlpf(int value) {
+        Plpf = value;
+        float fr = (float) Plpf;
+        lpfl.setfreq(fr);
+        lpfr.setfreq(fr);
+    }
+
+    public void sethpf(int value) {
+        Phpf = value;
+        float fr = (float) Phpf;
+
+        hpfl.setfreq(fr);
+        hpfr.setfreq(fr);
+        //Prefiltering of 51 is approx 630 Hz. 50 - 60 generally good for OD pedal.
+    }
+
+    public int getpar(int npar) {
+        switch (npar) {
+            case 0:
+                return (Pvolume);
+            case 1:
+                return (Ppanning);
+            case 2:
+                return (Plrcross);
+            case 3:
+                return (Pdrive);
+            case 4:
+                return (Plevel);
+            case 5:
+                return (Ptype);
+            case 6:
+                return (Pnegate);
+            case 7:
+                return (Plpf);
+            case 8:
+                return (Phpf);
+            case 9:
+                return (Pstereo ? 1 : 0);
+            case 10:
+                return (Pprefiltering);
+            case 11:
+                return (0);
+            case 12:
+                return (Poctave);
+        }
+        return (0);            //in case of bogus parameter number
+    }
+
+    private void applyfilters(float[] efxoutl, float[] efxoutr) {
+        lpfl.filterout(efxoutl);
+        hpfl.filterout(efxoutl);
+
+        if (Pstereo) {                //stereo
+            lpfr.filterout(efxoutr);
+            hpfr.filterout(efxoutr);
+        }
+    }
+
+    private void cleanup() {
+        lpfl.cleanup();
+        hpfl.cleanup();
+        lpfr.cleanup();
+        hpfr.cleanup();
+        blockDCr.cleanup();
+        blockDCl.cleanup();
+        DCl.cleanup();
+        DCr.cleanup();
+    }
+}
