@@ -125,7 +125,10 @@ public class DSP implements AudioBufferRenderer {
                      pNumberInputChannels);
     }
 
-    public static DSP start(Object pObject, int pOutputDevice, int pNumberOutputChannels, int pInputDevice,
+    public static DSP start(Object pObject,
+                            int pOutputDevice,
+                            int pNumberOutputChannels,
+                            int pInputDevice,
                             int pNumberInputChannels) {
         return start(pObject,
                      pOutputDevice,

@@ -2,14 +2,14 @@ import wellen.*;
 
 /*
  * this example demonstrates how to use the filter class as low-pass, high-pass and band-pass filter.
- * <p>
- * pressing keys 1 – 3 select filter modes, keys 4 + 5 change the oscillator waveform and keys 6 + 7 change the
+ *
+ * keys `1 – 3` select filter modes, keys `4 + 5` change the oscillator waveform and keys `6 + 7` change the
  * oscillator frequency.
  */
 
-final Wavetable mWavetable = new Wavetable();
-
 final Filter mFilter = new Filter();
+
+final Wavetable mWavetable = new Wavetable();
 
 void settings() {
     size(640, 480);

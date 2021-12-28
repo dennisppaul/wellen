@@ -26,7 +26,7 @@ by default a simple software-based synthesizer is used as a *tone engine* to pro
 
 the default *tone engine* is monophonic i.e a single *instrument* can play only one note at a time. however, there are 16 instruments available which can be combined into a polyphonic setup with 16 voices. instruments are handled in a state machine i.e that an instrument selected with `Tone.instrument(int)` will remain selected until another instrument is selected. it is common to select an instrument right before turning a note on or off e.g `Tone.instrument(0); Tone.note_on(48, 85);`. note that other *tone engines* might be polyphonic e.g in some MIDI applications.
 
-although `Tone` is designed to play musical notes ( arranged in half-tone steps ) trigger by the `note_on` + `note_off` paradigm, it can also be used to controll the frequency and amplitude of the generated sounds directly ( see `ExampleInstruments03FrequencyAndAmplitude` ).
+although `Tone` is designed to play musical notes ( arranged in half-tone steps ) triggered by the `note_on` + `note_off` paradigm, it can also be used to controll the frequency and amplitude of the generated sounds directly ( see `ExampleInstruments03FrequencyAndAmplitude` ).
 
 ![](./resources/wellen-schematics-instrument.png)
 

@@ -31,14 +31,14 @@ import javax.sound.sampled.TargetDataLine;
 public class AudioBufferManager extends Thread {
 
     /*
-     * - @REF([Java Sound Resources: FAQ: Audio Programming](http://jsresources.sourceforge.net/faq_audio.html#sync_playback_recording))
+     * - @REF([Java Sound Resources: FAQ: Audio Programming](http://jsresources.sourceforge.net/faq_audio
+     * .html#sync_playback_recording))
      * - SOURCE == output
      * - TARGET == input
      */
 
     //@TODO(make BITS_PER_SAMPLE more flexible)
 
-    public static final float MAX_16_BIT = 32768;
     public static final int BITS_PER_SAMPLE = 16;
     public static final int MONO = 1;
     public static final int STEREO = 2;
@@ -46,6 +46,24 @@ public class AudioBufferManager extends Thread {
     public static final boolean BIG_ENDIAN = true;
     public static final boolean SIGNED = true;
     public static final boolean UNSIGNED = false;
+    private static final float SIG_8BIT_MAX = 128.0f;
+    private static final float SIG_16BIT_MAX = 32768.0f;
+    private static final float SIG_24BIT_MAX = 8388608.0f;
+    private static final float SIG_32BIT_MAX = 2147483648.0f;
+    private static final float SIG_8BIT_MAX_INVERSE = 1.0f / SIG_8BIT_MAX;
+    private static final float SIG_16BIT_MAX_INVERSE = 1.0f / SIG_16BIT_MAX;
+    private static final float SIG_24BIT_MAX_INVERSE = 1.0f / SIG_24BIT_MAX;
+    private static final float SIG_32BIT_MAX_INVERSE = 1.0f / SIG_32BIT_MAX;
+    private static final int SIG_INT8 = 0;
+    private static final int SIG_UINT8 = 1;
+    private static final int SIG_INT16_BIG_ENDIAN = 2;
+    private static final int SIG_INT16_LITTLE_ENDIAN = 3;
+    private static final int SIG_INT24_3_BIG_ENDIAN = 4;
+    private static final int SIG_INT24_3_LITTLE_ENDIAN = 5;
+    private static final int SIG_INT24_4_BIG_ENDIAN = 6;
+    private static final int SIG_INT24_4_LITTLE_ENDIAN = 7;
+    private static final int SIG_INT32_BIG_ENDIAN = 8;
+    private static final int SIG_INT32_LITTLE_ENDIAN = 9;
     public static boolean VERBOSE = false;
     private int mFrameCounter = 0;
     private byte[] mInputByteBuffer;
@@ -88,10 +106,34 @@ public class AudioBufferManager extends Thread {
 
             /* input */
             if (mNumInputChannels > 0) {
-                final AudioFormat mInputFormat = new AudioFormat(pSampleRate, BITS_PER_SAMPLE, mNumInputChannels,
-                                                                 SIGNED, LITTLE_ENDIAN);
+                final AudioFormat mInputFormat = new AudioFormat(pSampleRate,
+                                                                 BITS_PER_SAMPLE,
+                                                                 mNumInputChannels,
+                                                                 SIGNED,
+                                                                 LITTLE_ENDIAN);
                 if (pInputDevice == Wellen.DEFAULT_AUDIO_DEVICE) {
                     mInputLine = AudioSystem.getTargetDataLine(mInputFormat);
+                    if (mNumInputChannels != mInputLine.getFormat().getChannels()) {
+                        System.err.println(
+                        "+++ @" + getClass().getSimpleName() +
+                        " / input line channel numbers do not match: " +
+                        "REQUESTED: " + mNumInputChannels +
+                        " RECEIVED: " + mInputLine.getFormat().getChannels());
+                    }
+                    if (BITS_PER_SAMPLE != mInputLine.getFormat().getSampleSizeInBits()) {
+                        System.err.println(
+                        "+++ @" + getClass().getSimpleName() +
+                        " / input line BITS_PER_SAMPLE do not match: " +
+                        "REQUESTED: " + BITS_PER_SAMPLE +
+                        " RECEIVED: " + mInputLine.getFormat().getSampleSizeInBits());
+                    }
+                    if (pSampleRate != mInputLine.getFormat().getSampleRate()) {
+                        System.err.println(
+                        "+++ @" + getClass().getSimpleName() +
+                        " / sample rates do not match: " +
+                        "REQUESTED: " + pSampleRate +
+                        " RECEIVED: " + mInputLine.getFormat().getSampleRate());
+                    }
                 } else {
                     mInputLine = AudioSystem.getTargetDataLine(mInputFormat, AudioSystem.getMixerInfo()[pInputDevice]);
                     System.out.println("+ INPUT DEVICE: " + AudioSystem.getMixerInfo()[pInputDevice]);
@@ -116,10 +158,14 @@ public class AudioBufferManager extends Thread {
     public void exit() {
         mRunBuffer = false;
         if (mInputLine != null) {
+            mInputLine.flush();
             mInputLine.stop();
+            mInputLine.close();
         }
         if (mOutputLine != null) {
+            mOutputLine.flush();
             mOutputLine.stop();
+            mOutputLine.close();
         }
     }
 
@@ -132,9 +178,13 @@ public class AudioBufferManager extends Thread {
                 mInputBuffers[j] = new float[mSampleBufferSize];
             }
             if (mInputLine != null) {
-                mInputLine.read(mInputByteBuffer, 0, mInputByteBuffer.length);
+                final int mBytesRead = mInputLine.read(mInputByteBuffer, 0, mInputByteBuffer.length);
+                if (VERBOSE) {
+                    if (mBytesRead != mInputByteBuffer.length) {
+                        System.err.println("+++ @" + getClass().getSimpleName() + " / input buffer underrun.");
+                    }
+                }
                 final int BYTES_PER_SAMPLE = BITS_PER_SAMPLE / 8;
-
                 for (int i = 0; i < mSampleBufferSize; i++) {
                     final int k = i * mNumInputChannels * BYTES_PER_SAMPLE;
                     for (int j = 0; j < mNumInputChannels; j++) {
@@ -154,7 +204,7 @@ public class AudioBufferManager extends Thread {
 //                    }
 //                }
 
-                mInputLine.flush();
+//                mInputLine.flush();
             }
             /* output */
             float[][] mOutputBuffers = new float[mNumOutputChannels][];
@@ -201,16 +251,80 @@ public class AudioBufferManager extends Thread {
     }
 
     private float readSample16(byte l, byte h) {
-        float v = ((int) h << 8) + (int) l;
-        return v / MAX_16_BIT;
+        final float v = ((h << 8) | (l & 0xFF));
+        return v * SIG_16BIT_MAX_INVERSE;
     }
 
     private void writeSample16(final float sample, final int i) {
-        short s = (short) (MAX_16_BIT * sample);
+        short s = (short) (SIG_16BIT_MAX * sample);
         if (sample == 1.0) {
             s = Short.MAX_VALUE; // special case since 32768 not a short
         }
         mOutputByteBuffer[i * 2 + 0] = (byte) s;
         mOutputByteBuffer[i * 2 + 1] = (byte) (s >> 8); // little endian
+    }
+
+    private static float convert_bytes_to_float(int pFormat, byte[] pInput, int pIndex) {
+        float f;
+        switch (pFormat) {
+            case SIG_INT8:
+                f = pInput[pIndex] * SIG_8BIT_MAX_INVERSE;
+                break;
+            case SIG_UINT8:
+                f = ((pInput[pIndex] & 0xFF) - 128)
+                    * SIG_8BIT_MAX_INVERSE;
+                break;
+            case SIG_INT16_BIG_ENDIAN:
+                f = ((pInput[pIndex] << 8)
+                     | (pInput[pIndex + 1] & 0xFF))
+                    * SIG_16BIT_MAX_INVERSE;
+                break;
+            case SIG_INT16_LITTLE_ENDIAN:
+                f = ((pInput[pIndex + 1] << 8)
+                     | (pInput[pIndex] & 0xFF))
+                    * SIG_16BIT_MAX_INVERSE;
+                break;
+            case SIG_INT24_3_BIG_ENDIAN:
+                f = ((pInput[pIndex] << 16)
+                     | ((pInput[pIndex + 1] & 0xFF) << 8)
+                     | (pInput[pIndex + 2] & 0xFF))
+                    * SIG_24BIT_MAX_INVERSE;
+                break;
+            case SIG_INT24_3_LITTLE_ENDIAN:
+                f = ((pInput[pIndex + 2] << 16)
+                     | ((pInput[pIndex + 1] & 0xFF) << 8)
+                     | (pInput[pIndex] & 0xFF))
+                    * SIG_24BIT_MAX_INVERSE;
+                break;
+            case SIG_INT24_4_BIG_ENDIAN:
+                f = ((pInput[pIndex + 1] << 16)
+                     | ((pInput[pIndex + 2] & 0xFF) << 8)
+                     | (pInput[pIndex + 3] & 0xFF))
+                    * SIG_24BIT_MAX_INVERSE;
+                break;
+            case SIG_INT24_4_LITTLE_ENDIAN:
+                f = ((pInput[pIndex + 3] << 16)
+                     | ((pInput[pIndex + 2] & 0xFF) << 8)
+                     | (pInput[pIndex + 1] & 0xFF))
+                    * SIG_24BIT_MAX_INVERSE;
+                break;
+            case SIG_INT32_BIG_ENDIAN:
+                f = ((pInput[pIndex] << 24)
+                     | ((pInput[pIndex + 1] & 0xFF) << 16)
+                     | ((pInput[pIndex + 2] & 0xFF) << 8)
+                     | (pInput[pIndex + 3] & 0xFF))
+                    * SIG_32BIT_MAX_INVERSE;
+                break;
+            case SIG_INT32_LITTLE_ENDIAN:
+                f = ((pInput[pIndex + 3] << 24)
+                     | ((pInput[pIndex + 2] & 0xFF) << 16)
+                     | ((pInput[pIndex + 1] & 0xFF) << 8)
+                     | (pInput[pIndex] & 0xFF))
+                    * SIG_32BIT_MAX_INVERSE;
+                break;
+            default:
+                f = 0.0f;
+        }
+        return f;
     }
 }

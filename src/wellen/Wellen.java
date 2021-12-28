@@ -40,7 +40,7 @@ public class Wellen {
     public static final int DEFAULT_AUDIOBLOCK_SIZE = 1024;
     public static final int DEFAULT_AUDIO_DEVICE = -1;
     public static final int DEFAULT_NUMBER_OF_INSTRUMENTS = 16;
-    public static final int DEFAULT_SAMPLING_RATE = 44100;
+    public static final int DEFAULT_SAMPLING_RATE = 48000;
     public static final int DEFAULT_WAVETABLE_SIZE = 512;
     public static final float DEFAULT_ATTACK = 0.005f;
     public static final float DEFAULT_DECAY = 0.01f;

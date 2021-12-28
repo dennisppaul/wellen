@@ -149,6 +149,8 @@ public class Sampler implements DSPNodeOutput {
         mData = pData;
         rewind();
         set_speed(mSpeed);
+        set_in(0);
+        set_out(mData.length - 1);
     }
 
     public void interpolate_samples(boolean pInterpolateSamples) {

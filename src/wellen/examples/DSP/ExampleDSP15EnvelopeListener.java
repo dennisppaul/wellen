@@ -10,10 +10,10 @@ import wellen.Wellen;
 
 public class ExampleDSP15EnvelopeListener extends PApplet {
 
-    /**
+    /*
      * this example demonstrates how to use envelope listeners with envelopes. envelope listeners are informed by the
      * envelope once it completed the last stage.
-     * <p>
+     *
      * in this example the end of envelope event is used to restart the envelope as well as randomly resetting amplitude
      * and frequency of the oscillator.
      */

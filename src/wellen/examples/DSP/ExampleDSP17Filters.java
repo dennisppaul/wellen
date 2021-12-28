@@ -10,13 +10,13 @@ public class ExampleDSP17Filters extends PApplet {
 
     /*
      * this example demonstrates how to use the filter class as low-pass, high-pass and band-pass filter.
-     * <p>
-     * pressing keys 1 – 3 select filter modes, keys 4 + 5 change the oscillator waveform and keys 6 + 7 change the
+     *
+     * keys `1 – 3` select filter modes, keys `4 + 5` change the oscillator waveform and keys `6 + 7` change the
      * oscillator frequency.
      */
 
-    private final Wavetable mWavetable = new Wavetable();
     private final Filter mFilter = new Filter();
+    private final Wavetable mWavetable = new Wavetable();
 
     public void settings() {
         size(640, 480);
