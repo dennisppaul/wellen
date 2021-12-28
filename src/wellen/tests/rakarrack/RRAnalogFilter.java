@@ -1,9 +1,9 @@
 package wellen.tests.rakarrack;
 
-import static wellen.tests.rakarrack.RRMath.DENORMAL_GUARD;
-import static wellen.tests.rakarrack.RRMath.D_PI;
-import static wellen.tests.rakarrack.RRMath.SAMPLE_RATE;
-import static wellen.tests.rakarrack.RRMath.dB2rap;
+import static wellen.tests.rakarrack.RRUtilities.DENORMAL_GUARD;
+import static wellen.tests.rakarrack.RRUtilities.D_PI;
+import static wellen.tests.rakarrack.RRUtilities.SAMPLE_RATE;
+import static wellen.tests.rakarrack.RRUtilities.dB2rap;
 
 public class RRAnalogFilter extends RRFilter {
     public static final int TYPE_LPF_1_POLE = 0;
@@ -164,7 +164,7 @@ public class RRAnalogFilter extends RRFilter {
         return (smp);
     }
 
-    private void cleanup() {
+    public void cleanup() {
         for (int i = 0; i < MAX_FILTER_STAGES + 1; i++) {
             x[i].c1 = 0.0f;
             x[i].c2 = 0.0f;
@@ -470,7 +470,7 @@ public class RRAnalogFilter extends RRFilter {
         order = 1;
     }
 
-    private void setstages(int stages_) {
+    public void setstages(int stages_) {
         if (stages_ >= MAX_FILTER_STAGES) {
             stages_ = MAX_FILTER_STAGES - 1;
         }

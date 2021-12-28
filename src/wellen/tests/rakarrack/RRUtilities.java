@@ -2,7 +2,7 @@ package wellen.tests.rakarrack;
 
 import static wellen.Wellen.DEFAULT_AUDIOBLOCK_SIZE;
 
-public class RRMath {
+public class RRUtilities {
     public static final float DENORMAL_GUARD = 1e-18f;
     public static final float SAMPLE_RATE = 48000;
     public static final float LOG_2 = 0.693147f;
@@ -55,6 +55,10 @@ public class RRMath {
 
     public static float logf(float v) {
         return (float) Math.log(v);
+    }
+
+    public static void memcpy(float[] dest, float[] src, int n) {
+        System.arraycopy(src, 0, dest, 0, n);
     }
 
     public static float powf(float v, float w) {

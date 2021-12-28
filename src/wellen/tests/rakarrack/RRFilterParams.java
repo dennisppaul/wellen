@@ -1,6 +1,6 @@
 package wellen.tests.rakarrack;
 
-import static wellen.tests.rakarrack.RRMath.*;
+import static wellen.tests.rakarrack.RRUtilities.*;
 
 public class RRFilterParams {
 
@@ -17,15 +17,15 @@ public class RRFilterParams {
     //Formant filter parameters
     private int Pnumformants;    //how many formants are used
     private int Pq;        // Q parameters (resonance or bandwidth)
-    private Sequence[] Psequence = new Sequence[FF_MAX_SEQUENCE];
-    // "stretched")
+    private final Sequence[] Psequence = new Sequence[FF_MAX_SEQUENCE];
     private int Psequencereversed;    //if the input from filter envelopes/LFOs/etc. is reversed(negated)
     private int Psequencesize;    //how many vowels are in the sequence
-    private int Psequencestretch;    //how the sequence is stretched (how the input from filter envelopes/LFOs/etc. is
+    private int Psequencestretch;    //how the sequence is stretched (how the input from filter envelopes/LFOs/etc.
+    // is "stretched")
     private int Pstages;    //filter stages+1
     private int Ptype;        // Filter type  (for analog lpf,hpf,bpf..)
     private int Pvowelclearness;    //how vowels are kept clean (how much try to avoid "mixed" vowels)
-    private Vowel[] Pvowels = new Vowel[FF_MAX_VOWELS];
+    private final Vowel[] Pvowels = new Vowel[FF_MAX_VOWELS];
     private boolean changed;
 
     public RRFilterParams() {
@@ -149,7 +149,7 @@ public class RRFilterParams {
                     break;
                 }
 
-                float fr = freq / SAMPLE_RATE * (float) PI * 2.0f;
+                float fr = freq / SAMPLE_RATE * PI * 2.0f;
                 float x = c[0], y = 0.0f;
                 for (int n = 1; n < 3; n++) {
                     x += cosf((float) n * fr) * c[n];

@@ -2,9 +2,10 @@ package wellen.tests.rakarrack;
 
 import static wellen.tests.rakarrack.RRAnalogFilter.TYPE_HPF_2_POLE;
 import static wellen.tests.rakarrack.RRAnalogFilter.TYPE_LPF_2_POLE;
-import static wellen.tests.rakarrack.RRMath.PERIOD;
-import static wellen.tests.rakarrack.RRMath.dB2rap;
-import static wellen.tests.rakarrack.RRMath.powf;
+import static wellen.tests.rakarrack.RRUtilities.PERIOD;
+import static wellen.tests.rakarrack.RRUtilities.dB2rap;
+import static wellen.tests.rakarrack.RRUtilities.memcpy;
+import static wellen.tests.rakarrack.RRUtilities.powf;
 
 public class RRDistortion {
 
@@ -31,8 +32,8 @@ public class RRDistortion {
     private int Pvolume;        //Volumul or E/R
     private final RRAnalogFilter blockDCl;
     private final RRAnalogFilter blockDCr;
-    private final RRWaveshaper dwshapel;
-    private final RRWaveshaper dwshaper;
+    private final RRWaveShaper dwshapel;
+    private final RRWaveShaper dwshaper;
     private final float[] efxoutl;
     private final float[] efxoutr;
     private final RRAnalogFilter hpfl;
@@ -64,8 +65,8 @@ public class RRDistortion {
         DCl.setfreq(30.0f);
         DCr.setfreq(30.0f);
 
-        dwshapel = new RRWaveshaper();
-        dwshaper = new RRWaveshaper();
+        dwshapel = new RRWaveShaper();
+        dwshaper = new RRWaveShaper();
 
         //default values
         Ppreset = 0;
@@ -148,7 +149,7 @@ public class RRDistortion {
         }
 
         if (!Pstereo) {
-            System.arraycopy(efxoutl, 0, efxoutr, 0, efxoutr.length);
+            memcpy(efxoutr, efxoutl, efxoutr.length);
         }
 
         if (octmix > 0.01f) {
@@ -203,9 +204,9 @@ public class RRDistortion {
         DCl.filterout(efxoutl);
 
         // TODO optimize this!
-        System.arraycopy(efxoutl, 0, smpsl, 0, efxoutl.length);
+        memcpy(smpsl, efxoutl, efxoutl.length);
         if (smpsr != null) {
-            System.arraycopy(efxoutr, 0, smpsr, 0, efxoutr.length);
+            memcpy(smpsr, efxoutr, efxoutr.length);
         }
     }
 
@@ -335,17 +336,7 @@ public class RRDistortion {
         return (0);            //in case of bogus parameter number
     }
 
-    private void applyfilters(float[] efxoutl, float[] efxoutr) {
-        lpfl.filterout(efxoutl);
-        hpfl.filterout(efxoutl);
-
-        if (Pstereo) {                //stereo
-            lpfr.filterout(efxoutr);
-            hpfr.filterout(efxoutr);
-        }
-    }
-
-    private void cleanup() {
+    public void cleanup() {
         lpfl.cleanup();
         hpfl.cleanup();
         lpfr.cleanup();
@@ -354,5 +345,15 @@ public class RRDistortion {
         blockDCl.cleanup();
         DCl.cleanup();
         DCr.cleanup();
+    }
+
+    private void applyfilters(float[] efxoutl, float[] efxoutr) {
+        lpfl.filterout(efxoutl);
+        hpfl.filterout(efxoutl);
+
+        if (Pstereo) {                //stereo
+            lpfr.filterout(efxoutr);
+            hpfr.filterout(efxoutr);
+        }
     }
 }
