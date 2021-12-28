@@ -8,24 +8,21 @@ import wellen.Wavetable;
 import wellen.Wellen;
 
 import static wellen.Wellen.DEFAULT_AUDIOBLOCK_SIZE;
-import static wellen.Wellen.clamp;
-import static wellen.tests.rakarrack.RRStompBox.PRESET_CLASSIC_DISTORTION;
-import static wellen.tests.rakarrack.RRStompBox.PRESET_FUZZ;
-import static wellen.tests.rakarrack.RRStompBox.PRESET_GRUNGER;
-import static wellen.tests.rakarrack.RRStompBox.PRESET_HARD_DISTORTION;
-import static wellen.tests.rakarrack.RRStompBox.PRESET_MID_ELVE;
-import static wellen.tests.rakarrack.RRStompBox.PRESET_MORBIND_IMPALEMENT;
-import static wellen.tests.rakarrack.RRStompBox.PRESET_ODIE;
-import static wellen.tests.rakarrack.RRStompBox.PRESET_RATTY;
+import static wellen.tests.rakarrack.RRDistortion.PRESET_DISTORSION_1;
+import static wellen.tests.rakarrack.RRDistortion.PRESET_DISTORSION_2;
+import static wellen.tests.rakarrack.RRDistortion.PRESET_DISTORSION_3;
+import static wellen.tests.rakarrack.RRDistortion.PRESET_GUITAR_AMP;
+import static wellen.tests.rakarrack.RRDistortion.PRESET_OVERDRIVE_1;
+import static wellen.tests.rakarrack.RRDistortion.PRESET_OVERDRIVE_2;
 
-public class TestRRStompBox extends PApplet {
+public class TestRRDistortion extends PApplet {
 
     private ADSR mADSR;
     private final float mBaseFrequency = 4.0f * Wellen.DEFAULT_SAMPLING_RATE / DEFAULT_AUDIOBLOCK_SIZE;
+    private RRDistortion mDistortion;
     private boolean mEnableDistortion = true;
     private float mFreqOffset = 5;
-    private final float mMasterVolume = 0.5f;
-    private RRStompBox mStompBox;
+    private final float mMasterVolume = 0.3f;
     private final Wavetable mVCO1 = new Wavetable(512);
     private final Wavetable mVCO2 = new Wavetable(512);
 
@@ -44,10 +41,10 @@ public class TestRRStompBox extends PApplet {
 
         mADSR = new ADSR();
 
-        mStompBox = new RRStompBox();
+        mDistortion = new RRDistortion(new float[DEFAULT_AUDIOBLOCK_SIZE], new float[DEFAULT_AUDIOBLOCK_SIZE]);
 
         DSP.start(this);
-        Beat.start(this, 120 * 8);
+        Beat.start(this, 120 * 4);
     }
 
     public void draw() {
@@ -104,31 +101,37 @@ public class TestRRStompBox extends PApplet {
                 Wavetable.fill(mVCO1.get_wavetable(), Wellen.WAVESHAPE_SQUARE);
                 break;
             case '1':
-                mStompBox.setpreset(PRESET_ODIE);
+                mDistortion.setpreset(PRESET_OVERDRIVE_1);
                 break;
             case '2':
-                mStompBox.setpreset(PRESET_GRUNGER);
+                mDistortion.setpreset(PRESET_OVERDRIVE_2);
                 break;
             case '3':
-                mStompBox.setpreset(PRESET_HARD_DISTORTION);
+                mDistortion.setpreset(PRESET_DISTORSION_1);
                 break;
             case '4':
-                mStompBox.setpreset(PRESET_RATTY);
+                mDistortion.setpreset(PRESET_DISTORSION_2);
                 break;
             case '5':
-                mStompBox.setpreset(PRESET_CLASSIC_DISTORTION);
+                mDistortion.setpreset(PRESET_DISTORSION_3);
                 break;
             case '6':
-                mStompBox.setpreset(PRESET_MORBIND_IMPALEMENT);
+                mDistortion.setpreset(PRESET_GUITAR_AMP);
                 break;
             case '7':
-                mStompBox.setpreset(PRESET_MID_ELVE);
-                break;
-            case '8':
-                mStompBox.setpreset(PRESET_FUZZ);
-                break;
-            case '9':
                 mEnableDistortion = !mEnableDistortion;
+                break;
+            case 'z':
+                mDistortion.setoctave(0);
+                break;
+            case 'x':
+                mDistortion.setoctave(63);
+                break;
+            case 'c':
+                mDistortion.setoctave(91);
+                break;
+            case 'v':
+                mDistortion.setoctave(126);
                 break;
         }
     }
@@ -141,17 +144,14 @@ public class TestRRStompBox extends PApplet {
             pOutputSignal[i] *= 0.5f;
             final float mADSRValue = mADSR.output();
             pOutputSignal[i] *= mADSRValue;
+            pOutputSignal[i] *= mMasterVolume;
         }
         if (mEnableDistortion) {
-            mStompBox.out(pOutputSignal, new float[DEFAULT_AUDIOBLOCK_SIZE]);
-        }
-        for (int i = 0; i < pOutputSignal.length; i++) {
-            pOutputSignal[i] = clamp(pOutputSignal[i]);
-            pOutputSignal[i] *= mMasterVolume;
+            mDistortion.out(pOutputSignal);
         }
     }
 
     public static void main(String[] args) {
-        PApplet.main(TestRRStompBox.class.getName());
+        PApplet.main(TestRRDistortion.class.getName());
     }
 }
