@@ -41,7 +41,7 @@ public class TestRRDistortion extends PApplet {
 
         mADSR = new ADSR();
 
-        mDistortion = new RRDistortion(new float[DEFAULT_AUDIOBLOCK_SIZE], new float[DEFAULT_AUDIOBLOCK_SIZE]);
+        mDistortion = new RRDistortion();
 
         DSP.start(this);
         Beat.start(this, 120 * 4);

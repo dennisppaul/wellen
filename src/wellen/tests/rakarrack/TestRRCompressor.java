@@ -2,7 +2,6 @@ package wellen.tests.rakarrack;
 
 import processing.core.PApplet;
 import wellen.DSP;
-import wellen.Wellen;
 
 import static wellen.Wellen.DEFAULT_AUDIOBLOCK_SIZE;
 import static wellen.Wellen.clamp;
@@ -27,16 +26,12 @@ public class TestRRCompressor extends PApplet {
 
     public void setup() {
         mCompressor = new RRCompressor();
-        Wellen.dumpAudioInputAndOutputDevices();
         DSP.start(this, 1, 1);
     }
 
     public void draw() {
         background(255);
         DSP.draw_buffer(g, width, height);
-    }
-
-    public void mouseMoved() {
     }
 
     public void keyPressed() {

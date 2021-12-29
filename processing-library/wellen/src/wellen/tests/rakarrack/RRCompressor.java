@@ -10,7 +10,7 @@ import static wellen.tests.rakarrack.RRUtilities.fabsf;
 import static wellen.tests.rakarrack.RRUtilities.logf;
 import static wellen.tests.rakarrack.RRUtilities.rap2dB;
 
-public class Compressor {
+public class RRCompressor {
 
     /*
     "Compressor A.Time","142","1",
@@ -85,7 +85,7 @@ public class Compressor {
     private float thres_db;        // threshold
     private float thres_mx;
 
-    public Compressor() {
+    public RRCompressor() {
         rvolume = 0.0f;
         rvolume_db = 0.0f;
         lvolume = 0.0f;

@@ -26,6 +26,8 @@ public class RRDistortion {
     public static final int PRESET_DISTORSION_2 = 3;
     public static final int PRESET_DISTORSION_3 = 4;
     public static final int PRESET_GUITAR_AMP = 5;
+    public static final int NUM_PRESETS = 6;
+    public static final int PARAM_STEREO = 9;
     private final RRAnalogFilter DCl;
     private final RRAnalogFilter DCr;
     private int Pdrive;         //the input amplification
@@ -45,8 +47,6 @@ public class RRDistortion {
     private final RRAnalogFilter blockDCr;
     private final RRWaveShaper dwshapel;
     private final RRWaveShaper dwshaper;
-    private final float[] efxoutl;
-    private final float[] efxoutr;
     private final RRAnalogFilter hpfl;
     private final RRAnalogFilter hpfr;
     private final RRAnalogFilter lpfl;
@@ -56,10 +56,7 @@ public class RRDistortion {
     private float outvolume;
     private float panning, lrcross, octave_memoryl, togglel, octave_memoryr, toggler, octmix;
 
-    public RRDistortion(float[] efxoutl_, float[] efxoutr_) {
-        efxoutl = efxoutl_;
-        efxoutr = efxoutr_;
-
+    public RRDistortion() {
         octoutl = new float[PERIOD];
         octoutr = new float[PERIOD];
 
@@ -126,20 +123,25 @@ public class RRDistortion {
     }
 
     public void out(float[] smpsl, float[] smpsr) {
-        int i;
-        float l, r, lout, rout;
+        final float[] efxoutl = smpsl;
+        final float[] efxoutr = smpsr;
 
+        float l;
+        float r;
+        float lout;
+        float rout;
         float inputvol = powf(5.0f, ((float) Pdrive - 32.0f) / 127.0f);
+
         if (Pnegate != 0) {
             inputvol *= -1.0f;
         }
         if (Pstereo) {                //Stereo
-            for (i = 0; i < PERIOD; i++) {
+            for (int i = 0; i < PERIOD; i++) {
                 efxoutl[i] = smpsl[i] * inputvol * 2.0f;
                 efxoutr[i] = smpsr[i] * inputvol * 2.0f;
             }
         } else {
-            for (i = 0; i < PERIOD; i++) {
+            for (int i = 0; i < PERIOD; i++) {
                 efxoutl[i] = (smpsl[i] + (smpsr == null ? 0.0f : smpsr[i])) * inputvol;
             }
         }
@@ -164,7 +166,7 @@ public class RRDistortion {
         }
 
         if (octmix > 0.01f) {
-            for (i = 0; i < PERIOD; i++) {
+            for (int i = 0; i < PERIOD; i++) {
                 lout = efxoutl[i];
                 rout = efxoutr[i];
 
@@ -189,10 +191,9 @@ public class RRDistortion {
             blockDCl.filterout(octoutl);
         }
 
-
         float level = dB2rap(60.0f * (float) Plevel / 127.0f - 40.0f);
 
-        for (i = 0; i < PERIOD; i++) {
+        for (int i = 0; i < PERIOD; i++) {
             lout = efxoutl[i];
             rout = efxoutr[i];
 
@@ -262,7 +263,7 @@ public class RRDistortion {
             case 8:
                 sethpf(value);
                 break;
-            case 9:
+            case PARAM_STEREO:
                 if (value > 1) {
                     value = 1;
                 }
@@ -335,7 +336,7 @@ public class RRDistortion {
                 return (Plpf);
             case 8:
                 return (Phpf);
-            case 9:
+            case PARAM_STEREO:
                 return (Pstereo ? 1 : 0);
             case 10:
                 return (Pprefiltering);

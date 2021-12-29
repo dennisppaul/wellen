@@ -2,23 +2,22 @@ package wellen.tests.rakarrack;
 
 import processing.core.PApplet;
 import wellen.DSP;
-import wellen.Wellen;
 
 import static wellen.Wellen.DEFAULT_AUDIOBLOCK_SIZE;
 import static wellen.Wellen.clamp;
-import static wellen.tests.rakarrack.Compressor.PRESET_2_to_1;
-import static wellen.tests.rakarrack.Compressor.PRESET_4_to_1;
-import static wellen.tests.rakarrack.Compressor.PRESET_8_to_1;
-import static wellen.tests.rakarrack.Compressor.PRESET_BAND_COMP_BAND;
-import static wellen.tests.rakarrack.Compressor.PRESET_END_COMP_BAND;
-import static wellen.tests.rakarrack.Compressor.PRESET_FINAL_LIMITER;
-import static wellen.tests.rakarrack.Compressor.PRESET_HARMONIC_ENHANCER;
+import static wellen.tests.rakarrack.RRCompressor.PRESET_2_to_1;
+import static wellen.tests.rakarrack.RRCompressor.PRESET_4_to_1;
+import static wellen.tests.rakarrack.RRCompressor.PRESET_8_to_1;
+import static wellen.tests.rakarrack.RRCompressor.PRESET_BAND_COMP_BAND;
+import static wellen.tests.rakarrack.RRCompressor.PRESET_END_COMP_BAND;
+import static wellen.tests.rakarrack.RRCompressor.PRESET_FINAL_LIMITER;
+import static wellen.tests.rakarrack.RRCompressor.PRESET_HARMONIC_ENHANCER;
 import static wellen.tests.rakarrack.RRUtilities.memcpy;
 
 public class TestRRCompressor extends PApplet {
 
-    private Compressor mCompressor;
-    private boolean mEnableCompressor = false;
+    private RRCompressor mCompressor;
+    private boolean mEnableCompressor = true;
     private final float mMasterVolume = 0.5f;
 
     public void settings() {
@@ -26,17 +25,13 @@ public class TestRRCompressor extends PApplet {
     }
 
     public void setup() {
-        mCompressor = new Compressor();
-        Wellen.dumpAudioInputAndOutputDevices();
+        mCompressor = new RRCompressor();
         DSP.start(this, 1, 1);
     }
 
     public void draw() {
         background(255);
         DSP.draw_buffer(g, width, height);
-    }
-
-    public void mouseMoved() {
     }
 
     public void keyPressed() {
