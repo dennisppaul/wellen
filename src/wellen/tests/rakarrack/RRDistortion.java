@@ -30,19 +30,19 @@ public class RRDistortion {
     public static final int PARAM_STEREO = 9;
     private final RRAnalogFilter DCl;
     private final RRAnalogFilter DCr;
-    private int Pdrive;         //the input amplification
-    private int Phpf;           //highpass filter
-    private int Plevel;         //the ouput amplification
-    private int Plpf;           //lowpass filter
-    private int Plrcross;       // L/R Mixing
-    private int Pnegate;        //if the input is negated
-    private int Poctave;        //mix sub octave
-    private int Ppanning;       //Panning
-    private int Pprefiltering;  //if you want to do the filtering before the distorsion
+    private int Pdrive;             //the input amplification
+    private int Phpf;               //highpass filter
+    private int Plevel;             //the ouput amplification
+    private int Plpf;               //lowpass filter
+    private int Plrcross;           // L/R Mixing
+    private int Pnegate;            //if the input is negated
+    private int Poctave;            //mix sub octave
+    private int Ppanning;           //Panning
+    private boolean Pprefiltering;  //if you want to do the filtering before the distorsion
     private int Ppreset;
-    private boolean Pstereo;    //false=mono,true=stereo
-    private int Ptype;          //Distorsion type
-    private int Pvolume;        //Volumul or E/R
+    private boolean Pstereo;        //false=mono,true=stereo
+    private int Ptype;              //Distorsion type
+    private int Pvolume;            //Volumul or E/R
     private final RRAnalogFilter blockDCl;
     private final RRAnalogFilter blockDCr;
     private final RRWaveShaper dwshapel;
@@ -51,10 +51,16 @@ public class RRDistortion {
     private final RRAnalogFilter hpfr;
     private final RRAnalogFilter lpfl;
     private final RRAnalogFilter lpfr;
+    private float lrcross;
+    private float octave_memoryl;
+    private float octave_memoryr;
+    private float octmix;
     private final float[] octoutl;
     private final float[] octoutr;
     private float outvolume;
-    private float panning, lrcross, octave_memoryl, togglel, octave_memoryr, toggler, octmix;
+    private float panning;
+    private float togglel;
+    private float toggler;
 
     public RRDistortion() {
         octoutl = new float[PERIOD];
@@ -87,7 +93,7 @@ public class RRDistortion {
         Plpf = 127;
         Phpf = 0;
         Pstereo = false;
-        Pprefiltering = 0;
+        Pprefiltering = false;
         Poctave = 0;
         togglel = 1.0f;
         octave_memoryl = -1.0f;
@@ -124,81 +130,75 @@ public class RRDistortion {
 
     public void out(float[] smpsl, float[] smpsr) {
         final float[] efxoutl = smpsl;
+//        // @TODO(optimize this and do not process right channel when not in stereo mode)
+//        final float[] efxoutr = (smpsr == null) ? new float[efxoutl.length] : smpsr;
         final float[] efxoutr = smpsr;
-
-        float l;
-        float r;
-        float lout;
-        float rout;
         float inputvol = powf(5.0f, ((float) Pdrive - 32.0f) / 127.0f);
 
         if (Pnegate != 0) {
             inputvol *= -1.0f;
         }
-        if (Pstereo) {                //Stereo
+        if (Pstereo) {
             for (int i = 0; i < PERIOD; i++) {
-                efxoutl[i] = smpsl[i] * inputvol * 2.0f;
-                efxoutr[i] = smpsr[i] * inputvol * 2.0f;
+                efxoutl[i] *= inputvol * 2.0f;
+                efxoutr[i] *= inputvol * 2.0f;
             }
         } else {
             for (int i = 0; i < PERIOD; i++) {
-                efxoutl[i] = (smpsl[i] + (smpsr == null ? 0.0f : smpsr[i])) * inputvol;
+                efxoutl[i] = (efxoutl[i] + (efxoutr == null ? 0.0f : efxoutr[i])) * inputvol;
             }
         }
 
-        if (Pprefiltering != 0) {
+        if (Pprefiltering) {
             applyfilters(efxoutl, efxoutr);
         }
 
-        //no optimised, yet (no look table)
-
         dwshapel.waveshapesmps(PERIOD, efxoutl, Ptype, Pdrive, true);
-        if (Pstereo) {
+        if (efxoutr != null && Pstereo) {
             dwshaper.waveshapesmps(PERIOD, efxoutr, Ptype, Pdrive, true);
         }
 
-        if (Pprefiltering == 0) {
+        if (!Pprefiltering) {
             applyfilters(efxoutl, efxoutr);
         }
 
-        if (!Pstereo) {
+        if (efxoutr != null && !Pstereo) {
             memcpy(efxoutr, efxoutl, efxoutr.length);
         }
 
         if (octmix > 0.01f) {
             for (int i = 0; i < PERIOD; i++) {
-                lout = efxoutl[i];
-                rout = efxoutr[i];
-
-
+                float lout = efxoutl[i];
                 if ((octave_memoryl < 0.0f) && (lout > 0.0f)) {
                     togglel *= -1.0f;
                 }
-
                 octave_memoryl = lout;
-
-                if ((octave_memoryr < 0.0f) && (rout > 0.0f)) {
-                    toggler *= -1.0f;
-                }
-
-                octave_memoryr = rout;
-
                 octoutl[i] = lout * togglel;
-                octoutr[i] = rout * toggler;
+
+                if (efxoutr != null) {
+                    float rout = efxoutr[i];
+                    if ((octave_memoryr < 0.0f) && (rout > 0.0f)) {
+                        toggler *= -1.0f;
+                    }
+                    octave_memoryr = rout;
+                    octoutr[i] = rout * toggler;
+                }
             }
 
-            blockDCr.filterout(octoutr);
             blockDCl.filterout(octoutl);
+            if (efxoutr != null) {
+                blockDCr.filterout(octoutr);
+            }
         }
 
         float level = dB2rap(60.0f * (float) Plevel / 127.0f - 40.0f);
 
         for (int i = 0; i < PERIOD; i++) {
-            lout = efxoutl[i];
-            rout = efxoutr[i];
+            float lout = efxoutl[i];
+            float rout = (efxoutr != null) ? efxoutr[i] : lout;
 
-            l = lout * (1.0f - lrcross) + rout * lrcross;
-            r = rout * (1.0f - lrcross) + lout * lrcross;
+            float l = lout * (1.0f - lrcross) + rout * lrcross;
+            float r = rout * (1.0f - lrcross) + lout * lrcross;
 
             if (octmix > 0.01f) {
                 lout = l * (1.0f - octmix) + octoutl[i] * octmix;
@@ -209,16 +209,18 @@ public class RRDistortion {
             }
 
             efxoutl[i] = lout * 2.0f * level * panning;
-            efxoutr[i] = rout * 2.0f * level * (1.0f - panning);
+            if (efxoutr != null) {
+                efxoutr[i] = rout * 2.0f * level * (1.0f - panning);
+            }
         }
 
-        DCr.filterout(efxoutr);
         DCl.filterout(efxoutl);
+        if (efxoutr != null) {
+            DCr.filterout(efxoutr);
+        }
 
-        // TODO optimize this!
-        memcpy(smpsl, efxoutl, efxoutl.length);
-        if (smpsr != null) {
-            memcpy(smpsr, efxoutr, efxoutr.length);
+        if (efxoutr != null) {
+            memcpy(efxoutr, efxoutl, efxoutl.length);
         }
     }
 
@@ -270,7 +272,7 @@ public class RRDistortion {
                 Pstereo = (value != 0);
                 break;
             case 10:
-                Pprefiltering = value;
+                Pprefiltering = value > 0;
                 break;
             case 11:
                 break;
@@ -339,7 +341,7 @@ public class RRDistortion {
             case PARAM_STEREO:
                 return (Pstereo ? 1 : 0);
             case 10:
-                return (Pprefiltering);
+                return (Pprefiltering ? 1 : 0);
             case 11:
                 return (0);
             case 12:
@@ -363,7 +365,7 @@ public class RRDistortion {
         lpfl.filterout(efxoutl);
         hpfl.filterout(efxoutl);
 
-        if (Pstereo) {                //stereo
+        if (Pstereo && efxoutr != null) {
             lpfr.filterout(efxoutr);
             hpfr.filterout(efxoutr);
         }

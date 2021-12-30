@@ -8,22 +8,22 @@ public class RRFilterParams {
     private int Dq;
     //stored default parameters
     private int Dtype;
-    private int Pcategory;    //Filter category (Analog/Formant/StVar)
+    public int Pcategory;    //Filter category (Analog/Formant/StVar)
     private int Pcenterfreq, Poctavesfreq;    //the center frequency of the res. func., and the number of octaves
     private int Pformantslowness;    //how slow varies the formants
-    private int Pfreq;        // Frequency (64-central frequency)
+    public int Pfreq;        // Frequency (64-central frequency)
     private int Pfreqtrack;    //how the filter frequency is changing according the note frequency
-    private int Pgain;        //filter's output gain
+    public int Pgain;        //filter's output gain
     //Formant filter parameters
     private int Pnumformants;    //how many formants are used
-    private int Pq;        // Q parameters (resonance or bandwidth)
+    public int Pq;        // Q parameters (resonance or bandwidth)
     private final Sequence[] Psequence = new Sequence[FF_MAX_SEQUENCE];
     private int Psequencereversed;    //if the input from filter envelopes/LFOs/etc. is reversed(negated)
     private int Psequencesize;    //how many vowels are in the sequence
     private int Psequencestretch;    //how the sequence is stretched (how the input from filter envelopes/LFOs/etc.
     // is "stretched")
-    private int Pstages;    //filter stages+1
-    private int Ptype;        // Filter type  (for analog lpf,hpf,bpf..)
+    public int Pstages;    //filter stages+1
+    public int Ptype;        // Filter type  (for analog lpf,hpf,bpf..)
     private int Pvowelclearness;    //how vowels are kept clean (how much try to avoid "mixed" vowels)
     private final Vowel[] Pvowels = new Vowel[FF_MAX_VOWELS];
     private boolean changed;
@@ -38,6 +38,7 @@ public class RRFilterParams {
     }
 
     public RRFilterParams(int Ptype_, int Pfreq_, int Pq_) {
+        this();
         // setpresettype("Pfilter");
         Dtype = Ptype_;
         Dfreq = Pfreq_;
@@ -57,7 +58,7 @@ public class RRFilterParams {
     /*
      * Get the parameters from other FilterParams
      */
-    private float getq() {
+    public float getq() {
         return (expf(powf((float) Pq / 127.0f, 2) * logf(1000.0f)) - 0.9f);
     }
 
@@ -65,7 +66,7 @@ public class RRFilterParams {
         return (logf(notefreq / 440.0f) * ((float) Pfreqtrack - 64.0f) / (64.0f * LOG_2));
     }
 
-    private float getgain() {
+    public float getgain() {
         return (((float) Pgain / 64.0f - 1.0f) * 30.0f);    //-30..30dB
     }
 

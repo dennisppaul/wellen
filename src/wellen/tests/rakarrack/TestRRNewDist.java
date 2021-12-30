@@ -9,30 +9,20 @@ import wellen.Wellen;
 
 import static wellen.Wellen.DEFAULT_AUDIOBLOCK_SIZE;
 import static wellen.Wellen.clamp;
-import static wellen.tests.rakarrack.RRStompBox.PRESET_CLASSIC_DISTORTION;
-import static wellen.tests.rakarrack.RRStompBox.PRESET_FUZZ;
-import static wellen.tests.rakarrack.RRStompBox.PRESET_GRUNGER;
-import static wellen.tests.rakarrack.RRStompBox.PRESET_HARD_DISTORTION;
-import static wellen.tests.rakarrack.RRStompBox.PRESET_MID_ELVE;
-import static wellen.tests.rakarrack.RRStompBox.PRESET_MORBIND_IMPALEMENT;
-import static wellen.tests.rakarrack.RRStompBox.PRESET_ODIE;
-import static wellen.tests.rakarrack.RRStompBox.PRESET_RATTY;
+import static wellen.tests.rakarrack.RRNewDist.PRESET_NEW_DIST_1;
+import static wellen.tests.rakarrack.RRNewDist.PRESET_NEW_DIST_2;
+import static wellen.tests.rakarrack.RRNewDist.PRESET_NEW_DIST_3;
 
-public class TestRRStompBox extends PApplet {
+public class TestRRNewDist extends PApplet {
 
-    private static final float[] mFreqNotes = {
-    1.0f,
-    1.0f,
-    1.19661538f,
-    1.34315385f
-    };
+    private static final float[] mFreqNotes = {1.0f, 1.0f, 1.19661538f, 1.34315385f};
     private ADSR mADSR;
     private final float mBaseFrequency = 2.0f * Wellen.DEFAULT_SAMPLING_RATE / DEFAULT_AUDIOBLOCK_SIZE;
     private boolean mEnableDistortion = true;
     private int mFreqNotesCounter = mFreqNotes.length - 1;
     private float mFreqOffset = 1;
-    private final float mMasterVolume = 0.5f;
-    private RRStompBox mStompBox;
+    private final float mMasterVolume = 0.85f;
+    private RRNewDist mNewDist;
     private final Wavetable mVCO1 = new Wavetable(512);
     private final Wavetable mVCO2 = new Wavetable(512);
 
@@ -51,7 +41,7 @@ public class TestRRStompBox extends PApplet {
 
         mADSR = new ADSR();
 
-        mStompBox = new RRStompBox();
+        mNewDist = new RRNewDist();
 
         DSP.start(this, 2);
         Beat.start(this, 120 * 8);
@@ -115,30 +105,15 @@ public class TestRRStompBox extends PApplet {
                 Wavetable.fill(mVCO1.get_wavetable(), Wellen.WAVESHAPE_SQUARE);
                 break;
             case '1':
-                mStompBox.setpreset(PRESET_ODIE);
+                mNewDist.setpreset(PRESET_NEW_DIST_1);
                 break;
             case '2':
-                mStompBox.setpreset(PRESET_GRUNGER);
+                mNewDist.setpreset(PRESET_NEW_DIST_2);
                 break;
             case '3':
-                mStompBox.setpreset(PRESET_HARD_DISTORTION);
+                mNewDist.setpreset(PRESET_NEW_DIST_3);
                 break;
-            case '4':
-                mStompBox.setpreset(PRESET_RATTY);
-                break;
-            case '5':
-                mStompBox.setpreset(PRESET_CLASSIC_DISTORTION);
-                break;
-            case '6':
-                mStompBox.setpreset(PRESET_MORBIND_IMPALEMENT);
-                break;
-            case '7':
-                mStompBox.setpreset(PRESET_MID_ELVE);
-                break;
-            case '8':
-                mStompBox.setpreset(PRESET_FUZZ);
-                break;
-            case '9':
+            case '0':
                 mEnableDistortion = !mEnableDistortion;
                 break;
         }
@@ -160,9 +135,9 @@ public class TestRRStompBox extends PApplet {
         }
         if (mEnableDistortion) {
             if (mousePressed) {
-                mStompBox.out(pOutputSignalLeft);
+                mNewDist.out(pOutputSignalLeft, new float[pOutputSignalLeft.length]);
             } else {
-                mStompBox.out(pOutputSignalLeft, pOutputSignalRight);
+                mNewDist.out(pOutputSignalLeft, pOutputSignalRight);
             }
         }
         for (int i = 0; i < pOutputSignalLeft.length; i++) {
@@ -178,6 +153,6 @@ public class TestRRStompBox extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main(TestRRStompBox.class.getName());
+        PApplet.main(TestRRNewDist.class.getName());
     }
 }

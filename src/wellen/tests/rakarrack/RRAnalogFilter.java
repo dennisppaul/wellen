@@ -6,7 +6,7 @@ import static wellen.tests.rakarrack.RRUtilities.MAX_FILTER_STAGES;
 import static wellen.tests.rakarrack.RRUtilities.SAMPLE_RATE;
 import static wellen.tests.rakarrack.RRUtilities.dB2rap;
 
-public class RRAnalogFilter extends RRFilter {
+public class RRAnalogFilter extends RRFilterI {
     public static final int TYPE_LPF_1_POLE = 0;
     public static final int TYPE_HPF_1_POLE = 1;
     public static final int TYPE_LPF_2_POLE = 2;

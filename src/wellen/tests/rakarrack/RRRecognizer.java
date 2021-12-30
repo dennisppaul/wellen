@@ -6,7 +6,7 @@ public class RRRecognizer {
 
     private static final String[] englishNotes = {"A", "A#", "B", "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#"};
     public float trigfact;
-    private final Sustainer Sus;
+    private final RRSustainer Sus;
     private float afreq;
     private final RRAnalogFilter hpfl;
     private final RRAnalogFilter hpfr;
@@ -30,7 +30,7 @@ public class RRRecognizer {
         trigfact = trig;
         reconota = -1;
 
-        Sus = new Sustainer();
+        Sus = new RRSustainer();
         Sus.changepar(1, 64);
         Sus.changepar(2, 127);
 

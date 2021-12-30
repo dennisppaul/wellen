@@ -6,7 +6,7 @@ import static wellen.tests.rakarrack.RRUtilities.cSAMPLE_RATE;
 import static wellen.tests.rakarrack.RRUtilities.dB2rap;
 import static wellen.tests.rakarrack.RRUtilities.fabs;
 
-public class Sustainer {
+public class RRSustainer {
 
     private int Ppreset;
     private int Psustain;       //Compression amount
@@ -28,7 +28,7 @@ public class Sustainer {
     private int timer;
     private float tmpgain;
 
-    public Sustainer() {
+    public RRSustainer() {
         Pvolume = 64;
         Psustain = 64;
         fsustain = 0.5f;

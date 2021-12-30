@@ -3,7 +3,7 @@ package wellen.tests.rakarrack;
 
 import static wellen.tests.rakarrack.RRUtilities.*;
 
-public class RRRBFilter extends RRFilter {
+public class RRRBFilter extends RRFilterI {
 
     private final float a_smooth_tc;
     private boolean abovenq;                //this is 1 if the frequency is above the nyquist
