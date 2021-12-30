@@ -37,11 +37,11 @@ public class RRChorus {
     public static final int PARAM_FLANGE_MODE = 10;
     public static final int PARAM_OUT_SUB = 11;
     public static final int NUM_PARAMS = 12;
-    private int Pdelay;         //the delay (ms)
-    private int Pdepth;         //the depth of the Chorus(ms)
-    private int Pfb;            //feedback
+    private int Pdelay;             //the delay (ms)
+    private int Pdepth;             //the depth of the Chorus(ms)
+    private int Pfb;                //feedback
     private boolean Pflangemode;    //how the LFO is scaled, to result chorus or flange
-    private int Plrcross;       //feedback
+    private int Plrcross;           //feedback
     private boolean Poutsub;        //if I wish to substract the output instead of the adding it
     private int Ppanning;
     private int Ppreset;
@@ -53,19 +53,19 @@ public class RRChorus {
     //    private float dl1;
     private float dl2;
     //    private int dlhi;
-//    private int dlhi2;
+    //    private int dlhi2;
     private int dlk;
     //    private float dllo;
     //    private float dr1;
     private float dr2;
     private int drk;
     private float fb;
-    private final RREffectLFO lfo;        //lfo-ul chorus
+    private final RREffectLFO lfo;  //lfo-ul chorus
     private final SampleStereo lfo_sample;
     private float lrcross;
     private final int maxdelay;
     //    private float mdel;
-    private float outvolume;     //this is the volume of effect and is public because need it in system effect.
+    private float outvolume;        //this is the volume of effect and is public because need it in system effect.
     private float panning;
 
     public RRChorus() {

@@ -19,6 +19,12 @@ public class RRUtilities {
     public static final int FF_MAX_SEQUENCE = 8;
     public static final int PERIOD = DEFAULT_AUDIOBLOCK_SIZE;
     public static final int fPERIOD = PERIOD;
+    public static final int MAX_FILTER_STAGES = 5;
+    public static final float[] freqs = new float[12];
+    public static final float[] lfreqs = new float[12];
+    public static final float D_NOTE = 1.059463f;
+    public static final float LOG_D_NOTE = 0.057762f;
+    public static final float D_NOTE_SQRT = 1.029302f;
     public static float Thi = 0.67f;                //High threshold for limiting onset
     public static float Tlo = -0.65f;               //Low threshold for limiting onset
     public static float Tlc = -0.6139445f;          //Tlo + sqrt(Tlo/500)
@@ -26,6 +32,11 @@ public class RRUtilities {
     public static float CRUNCH_GAIN = 100.0f;       //Typical voltage gain for most OD stompboxes
     public static float DIV_TLC_CONST = 0.002f;     // 1/300
     public static float DIV_THC_CONST = 0.0016666f; // 1/600 (approximately)
+    public static float aFreq;
+
+    static {
+        update_freqs(440.0f);
+    }
 
     public static int F2I(float f) {
         return ((f > 0) ? ((int) (f)) : ((int) (f - 1.0f)));
@@ -76,7 +87,7 @@ public class RRUtilities {
     }
 
     public static float fmod(float v, float w) {
-        return fmod(v, w);
+        return fmodf(v, w);
     }
 
     public static float fmodf(float v, float w) {
@@ -129,6 +140,16 @@ public class RRUtilities {
 
     public static float sqrtf(float v) {
         return (float) Math.sqrt(v);
+    }
+
+    public static void update_freqs(float val) {
+        aFreq = val;
+        freqs[0] = aFreq;
+        lfreqs[0] = logf(freqs[0]);
+        for (int i = 1; i < 12; i++) {
+            freqs[i] = freqs[i - 1] * D_NOTE;
+            lfreqs[i] = lfreqs[i - 1] + LOG_D_NOTE;
+        }
     }
 
     public static final class SampleStereo {

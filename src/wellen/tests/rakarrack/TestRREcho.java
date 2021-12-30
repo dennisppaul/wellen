@@ -52,7 +52,7 @@ public class TestRREcho extends PApplet {
 
     public void draw() {
         background(255);
-        DSP.draw_buffer(g, width, height);
+        DSP.draw_buffer_stereo(g, width, height);
     }
 
     public void mouseMoved() {

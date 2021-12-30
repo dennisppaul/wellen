@@ -2,6 +2,7 @@ package wellen.tests.rakarrack;
 
 import static wellen.tests.rakarrack.RRUtilities.DENORMAL_GUARD;
 import static wellen.tests.rakarrack.RRUtilities.D_PI;
+import static wellen.tests.rakarrack.RRUtilities.MAX_FILTER_STAGES;
 import static wellen.tests.rakarrack.RRUtilities.SAMPLE_RATE;
 import static wellen.tests.rakarrack.RRUtilities.dB2rap;
 
@@ -15,7 +16,6 @@ public class RRAnalogFilter extends RRFilter {
     public static final int TYPE_PEAK_2_POLE = 6;
     public static final int TYPE_LOW_SHELF_2_POLE = 7;
     public static final int TYPE_HIGH_SHELF_2_POLE = 8;
-    private static final int MAX_FILTER_STAGES = 5;
     private boolean abovenq; //this is 1 if the frequency is above the nyquist
     private final float[] c = new float[3];
     private final float[] d = new float[3];        //coefficients
@@ -174,6 +174,15 @@ public class RRAnalogFilter extends RRFilter {
             oldy[i] = y[i];
         }
         needsinterpolation = 0;
+    }
+
+    public void setstages(int stages_) {
+        if (stages_ >= MAX_FILTER_STAGES) {
+            stages_ = MAX_FILTER_STAGES - 1;
+        }
+        stages = stages_;
+        cleanup();
+        computefiltercoefs();
     }
 
     private void computefiltercoefs() {
@@ -468,15 +477,6 @@ public class RRAnalogFilter extends RRFilter {
         d[1] = tmp;
         d[2] = 0.0f;
         order = 1;
-    }
-
-    public void setstages(int stages_) {
-        if (stages_ >= MAX_FILTER_STAGES) {
-            stages_ = MAX_FILTER_STAGES - 1;
-        }
-        stages = stages_;
-        cleanup();
-        computefiltercoefs();
     }
 
     private void singlefilterout(float[] smp, fstage x, fstage y, float[] c, float[] d) {
