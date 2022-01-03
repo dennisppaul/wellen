@@ -3,7 +3,6 @@ package wellen.tests.rakarrack;
 import static wellen.tests.rakarrack.RRUtilities.PERIOD;
 import static wellen.tests.rakarrack.RRUtilities.dB2rap;
 import static wellen.tests.rakarrack.RRUtilities.fabs;
-import static wellen.tests.rakarrack.RRUtilities.memcpy;
 
 public class RRStompBox {
 
@@ -47,8 +46,6 @@ public class RRStompBox {
     private int Pvolume;
     private float RGP2;
     private float RGPST;
-    private final float[] efxoutl;
-    private final float[] efxoutr;
     private float gain;
     private float highb;
     private final RRAnalogFilter lanti;
@@ -79,9 +76,6 @@ public class RRStompBox {
     private float volume;
 
     public RRStompBox() {
-        efxoutl = new float[PERIOD];
-        efxoutr = new float[PERIOD];
-
         //default values
         Ppreset = PRESET_ODIE;
         Pvolume = 50;
@@ -148,9 +142,10 @@ public class RRStompBox {
         lwshape2.cleanup();
     }
 
-    /*
-     * Effect output
-     */
+    public void out(float[] smpsl) {
+        out(smpsl, null);
+    }
+
     public void out(float[] smpsl, float[] smpsr) {
         switch (Pmode) {
             case TYPE_ODIE:
@@ -172,8 +167,6 @@ public class RRStompBox {
                 sb_classic_fuzz(smpsl, smpsr);
                 break;
         }
-        memcpy(smpsl, efxoutl, efxoutl.length);
-        memcpy(smpsr, efxoutr, efxoutr.length);
     }
 
     public void changepar(int npar, int value) {
@@ -262,7 +255,7 @@ public class RRStompBox {
         final int PRESET_SIZE = 6;
         int[][] presets = {
         //Odie
-        {80, 32, 0, 32, 10, TYPE_PRO_CO_RAT},
+        {80, 32, 0, 32, 10, TYPE_ODIE},
         //Grunger
         {48, 10, -6, 55, 85, TYPE_GRUNGE},
         //Hard Dist.
@@ -292,47 +285,51 @@ public class RRStompBox {
         float lfilter;
         float hfilter;
         lpre1.filterout(smpsl);
-        rpre1.filterout(smpsr);
         linput.filterout(smpsl);
-        rinput.filterout(smpsr);
-        rwshape.waveshapesmps(PERIOD, smpsr, 19, 25, true);  //compress
         lwshape.waveshapesmps(PERIOD, smpsl, 19, 25, true);
 
-        for (int i = 0; i < PERIOD; i++) {
+        if (smpsr != null) {
+            rpre1.filterout(smpsr);
+            rinput.filterout(smpsr);
+            rwshape.waveshapesmps(PERIOD, smpsr, 19, 25, true);  //compress
+        }
 
+        for (int i = 0; i < PERIOD; i++) {
             //left channel
             mfilter = ltonemd.filterout_s(smpsl[i]);
-
             templ = lpost.filterout_s(fabs(smpsl[i]));
-            tempr = rpost.filterout_s(fabs(smpsr[i]));   //dynamic symmetry
-
             smpsl[i] += lowb * templ + midb * mfilter;      //In this case, lowb control tweaks symmetry
 
             //Right channel
-            mfilter = rtonemd.filterout_s(smpsr[i]);
-            smpsr[i] += lowb * tempr + midb * mfilter;
-
+            if (smpsr != null) {
+                mfilter = rtonemd.filterout_s(smpsr[i]);
+                tempr = rpost.filterout_s(fabs(smpsr[i]));   //dynamic symmetry
+                smpsr[i] += lowb * tempr + midb * mfilter;
+            }
         }
 
-        ranti.filterout(smpsr);
         lanti.filterout(smpsl);
-        rwshape2.waveshapesmps(PERIOD, smpsr, 25, Pgain, true);  //JFET
         lwshape2.waveshapesmps(PERIOD, smpsl, 25, Pgain, true);
         lpre2.filterout(smpsl);
-        rpre2.filterout(smpsr);
+
+        if (smpsr != null) {
+            ranti.filterout(smpsr);
+            rwshape2.waveshapesmps(PERIOD, smpsr, 25, Pgain, true);  //JFET
+            rpre2.filterout(smpsr);
+        }
 
         for (int i = 0; i < PERIOD; i++) {
             //left channel
             lfilter = ltonelw.filterout_s(smpsl[i]);
             hfilter = ltonehg.filterout_s(smpsl[i]);
-
-            efxoutl[i] = volume * ((1.0f - highb) * lfilter + highb * hfilter);  //classic BMP tone stack
+            smpsl[i] = volume * ((1.0f - highb) * lfilter + highb * hfilter);  //classic BMP tone stack
 
             //Right channel
-            lfilter = rtonelw.filterout_s(smpsr[i]);
-            hfilter = rtonehg.filterout_s(smpsr[i]);
-
-            efxoutr[i] = volume * ((1.0f - highb) * lfilter + highb * hfilter);
+            if (smpsr != null) {
+                lfilter = rtonelw.filterout_s(smpsr[i]);
+                hfilter = rtonehg.filterout_s(smpsr[i]);
+                smpsr[i] = volume * ((1.0f - highb) * lfilter + highb * hfilter);
+            }
         }
     }
 
@@ -342,38 +339,41 @@ public class RRStompBox {
         float templ;
         float lfilter;
         linput.filterout(smpsl);
-        rinput.filterout(smpsr);
+        if (smpsr != null) {
+            rinput.filterout(smpsr);
+        }
 
         for (int i = 0; i < PERIOD; i++) {
             templ = smpsl[i];
-            tempr = smpsr[i];
             smpsl[i] += lpre1.filterout_s(pre1gain * gain * templ);
-            smpsr[i] += rpre1.filterout_s(pre1gain * gain * tempr);  //Low freq gain stage
+            if (smpsr != null) {
+                tempr = smpsr[i];
+                smpsr[i] += rpre1.filterout_s(pre1gain * gain * tempr);  //Low freq gain stage
+            }
         }
 
-
-        rwshape.waveshapesmps(PERIOD, smpsl, 24, 1, true);  // Op amp limiting
-        lwshape.waveshapesmps(PERIOD, smpsr, 24, 1, true);
-
-        ranti.filterout(smpsr);
+        lwshape.waveshapesmps(PERIOD, smpsl, 24, 1, true);
         lanti.filterout(smpsl);
+        lwshape2.waveshapesmps(PERIOD, smpsl, 29, 1, false);
 
-        rwshape2.waveshapesmps(PERIOD, smpsl, 29, 1, false);  // diode limit
-        lwshape2.waveshapesmps(PERIOD, smpsr, 29, 1, false);
-
+        if (smpsr != null) {
+            rwshape.waveshapesmps(PERIOD, smpsr, 24, 1, true);  // Op amp limiting
+            ranti.filterout(smpsr);
+            rwshape2.waveshapesmps(PERIOD, smpsr, 29, 1, false);  // diode limit
+        }
 
         for (int i = 0; i < PERIOD; i++) {
             //left channel
             lfilter = ltonelw.filterout_s(smpsl[i]);
             mfilter = ltonemd.filterout_s(smpsl[i]);
+            smpsl[i] = 0.5f * ltonehg.filterout_s(volume * (smpsl[i] + lowb * lfilter + midb * mfilter));
 
-            efxoutl[i] = 0.5f * ltonehg.filterout_s(volume * (smpsl[i] + lowb * lfilter + midb * mfilter));
-
-            //Right channel
-            lfilter = rtonelw.filterout_s(smpsr[i]);
-            mfilter = rtonemd.filterout_s(smpsr[i]);
-
-            efxoutr[i] = 0.5f * rtonehg.filterout_s(volume * (smpsr[i] + lowb * lfilter + midb * mfilter));
+            if (smpsr != null) {
+                //Right channel
+                lfilter = rtonelw.filterout_s(smpsr[i]);
+                mfilter = rtonemd.filterout_s(smpsr[i]);
+                smpsr[i] = 0.5f * rtonehg.filterout_s(volume * (smpsr[i] + lowb * lfilter + midb * mfilter));
+            }
         }
     }
 
@@ -383,39 +383,43 @@ public class RRStompBox {
         float tempr;
         float lfilter;
         linput.filterout(smpsl);
-        rinput.filterout(smpsr);
+        if (smpsr != null) {
+            rinput.filterout(smpsr);
+        }
 
         for (int i = 0; i < PERIOD; i++) {
             templ = smpsl[i];
-            tempr = smpsr[i];
             smpsl[i] += lpre1.filterout_s(pre1gain * gain * templ);
-            smpsr[i] += rpre1.filterout_s(pre1gain * gain * tempr);  //Low freq gain stage
             smpsl[i] += lpre2.filterout_s(pre2gain * gain * templ);
-            smpsr[i] += rpre2.filterout_s(pre2gain * gain * tempr); //High freq gain stage
-
+            if (smpsr != null) {
+                tempr = smpsr[i];
+                smpsr[i] += rpre1.filterout_s(pre1gain * gain * tempr); // low freq gain stage
+                smpsr[i] += rpre2.filterout_s(pre2gain * gain * tempr); // high freq gain stage
+            }
         }
 
-        rwshape.waveshapesmps(PERIOD, smpsl, 24, 1, true);  // Op amp limiting
-        lwshape.waveshapesmps(PERIOD, smpsr, 24, 1, true);
-
-        ranti.filterout(smpsr);
+        lwshape.waveshapesmps(PERIOD, smpsl, 24, 1, true);
         lanti.filterout(smpsl);
+        lwshape2.waveshapesmps(PERIOD, smpsl, 23, 1, false);
 
-        rwshape2.waveshapesmps(PERIOD, smpsl, 23, 1, false);  // hard comp
-        lwshape2.waveshapesmps(PERIOD, smpsr, 23, 1, false);
+        if (smpsr != null) {
+            rwshape.waveshapesmps(PERIOD, smpsr, 24, 1, true);  // Op amp limiting
+            ranti.filterout(smpsr);
+            rwshape2.waveshapesmps(PERIOD, smpsr, 23, 1, false);  // hard comp
+        }
 
         for (int i = 0; i < PERIOD; i++) {
             //left channel
             lfilter = ltonelw.filterout_s(smpsl[i]);
             mfilter = ltonemd.filterout_s(smpsl[i]);
+            smpsl[i] = 0.5f * ltonehg.filterout_s(volume * (smpsl[i] + lowb * lfilter + midb * mfilter));
 
-            efxoutl[i] = 0.5f * ltonehg.filterout_s(volume * (smpsl[i] + lowb * lfilter + midb * mfilter));
-
-            //Right channel
-            lfilter = rtonelw.filterout_s(smpsr[i]);
-            mfilter = rtonemd.filterout_s(smpsr[i]);
-
-            efxoutr[i] = 0.5f * rtonehg.filterout_s(volume * (smpsr[i] + lowb * lfilter + midb * mfilter));
+            if (smpsr != null) {
+                //Right channel
+                lfilter = rtonelw.filterout_s(smpsr[i]);
+                mfilter = rtonemd.filterout_s(smpsr[i]);
+                smpsr[i] = 0.5f * rtonehg.filterout_s(volume * (smpsr[i] + lowb * lfilter + midb * mfilter));
+            }
         }
     }
 
@@ -426,85 +430,83 @@ public class RRStompBox {
         float mfilter;
         float tempr;
         linput.filterout(smpsl);
-        rinput.filterout(smpsr);
+        if (smpsr != null) {
+            rinput.filterout(smpsr);
+        }
 
         for (int i = 0; i < PERIOD; i++) {
             templ = smpsl[i] * (gain * pgain + 0.01f);
-            tempr = smpsr[i] * (gain * pgain + 0.01f);
             smpsl[i] += lpre1.filterout_s(templ);
-            smpsr[i] += rpre1.filterout_s(tempr);
+            if (smpsr != null) {
+                tempr = smpsr[i] * (gain * pgain + 0.01f);
+                smpsr[i] += rpre1.filterout_s(tempr);
+            }
         }
-        rwshape.waveshapesmps(PERIOD, smpsl, 24, 1, true);  // Op amp limiting
-        lwshape.waveshapesmps(PERIOD, smpsr, 24, 1, true);
-
-        ranti.filterout(smpsr);
+        lwshape.waveshapesmps(PERIOD, smpsl, 24, 1, true);
         lanti.filterout(smpsl);
+        lwshape2.waveshapesmps(PERIOD, smpsl, 23, Pgain, true);
 
-        rwshape2.waveshapesmps(PERIOD, smpsl, 23, Pgain, true);  // hard comp
-        lwshape2.waveshapesmps(PERIOD, smpsr, 23, Pgain, true);
-
+        if (smpsr != null) {
+            rwshape.waveshapesmps(PERIOD, smpsr, 24, 1, true);  // Op amp limiting
+            ranti.filterout(smpsr);
+            rwshape2.waveshapesmps(PERIOD, smpsr, 23, Pgain, true);  // hard comp
+        }
 
         for (int i = 0; i < PERIOD; i++) {
-            smpsl[i] = smpsl[i] + RGP2 * lpre2.filterout_s(smpsl[i]);
-            smpsr[i] = smpsr[i] + RGP2 * rpre2.filterout_s(smpsr[i]);
-            smpsl[i] = smpsl[i] + RGPST * lpost.filterout_s(smpsl[i]);
-            smpsr[i] = smpsr[i] + RGPST * rpost.filterout_s(smpsr[i]);
-
             //left channel
+            smpsl[i] = smpsl[i] + RGP2 * lpre2.filterout_s(smpsl[i]);
+            smpsl[i] = smpsl[i] + RGPST * lpost.filterout_s(smpsl[i]);
             lfilter = ltonelw.filterout_s(smpsl[i]);
             mfilter = ltonemd.filterout_s(smpsl[i]);
             hfilter = ltonehg.filterout_s(smpsl[i]);
-
-            efxoutl[i] = 0.1f * volume * (smpsl[i] + lowb * lfilter + midb * mfilter + highb * hfilter);
+            smpsl[i] = 0.1f * volume * (smpsl[i] + lowb * lfilter + midb * mfilter + highb * hfilter);
 
             //Right channel
-            lfilter = rtonelw.filterout_s(smpsr[i]);
-            mfilter = rtonemd.filterout_s(smpsr[i]);
-            hfilter = rtonehg.filterout_s(smpsr[i]);
-
-            efxoutr[i] = 0.1f * volume * (smpsr[i] + lowb * lfilter + midb * mfilter + highb * hfilter);
-
+            if (smpsr != null) {
+                smpsr[i] = smpsr[i] + RGP2 * rpre2.filterout_s(smpsr[i]);
+                smpsr[i] = smpsr[i] + RGPST * rpost.filterout_s(smpsr[i]);
+                lfilter = rtonelw.filterout_s(smpsr[i]);
+                mfilter = rtonemd.filterout_s(smpsr[i]);
+                hfilter = rtonehg.filterout_s(smpsr[i]);
+                smpsr[i] = 0.1f * volume * (smpsr[i] + lowb * lfilter + midb * mfilter + highb * hfilter);
+            }
         }
     }
 
     private void sb_odie(float[] smpsl, float[] smpsr) {
-        float lfilter;
-        float hfilter;
-        float mfilter;
         lpre2.filterout(smpsl);
-        rpre2.filterout(smpsr);
-        rwshape.waveshapesmps(PERIOD, smpsl, 28, 20, true);  //Valve2
-        lwshape.waveshapesmps(PERIOD, smpsr, 28, 20, true);
-        ranti.filterout(smpsr);
+        lwshape.waveshapesmps(PERIOD, smpsl, 28, 20, true);
         lanti.filterout(smpsl);
         lpre1.filterout(smpsl);
-        rpre1.filterout(smpsr);
-        rwshape2.waveshapesmps(PERIOD, smpsl, 28, Pgain, true);  //Valve2
-        lwshape2.waveshapesmps(PERIOD, smpsr, 28, Pgain, true);
-
+        lwshape2.waveshapesmps(PERIOD, smpsl, 28, Pgain, true);
         lpost.filterout(smpsl);
-        rpost.filterout(smpsr);
+
+        if (smpsr != null) {
+            rpre2.filterout(smpsr);
+            rwshape.waveshapesmps(PERIOD, smpsr, 28, 20, true);  //Valve2
+            ranti.filterout(smpsr);
+            rpre1.filterout(smpsr);
+            rwshape2.waveshapesmps(PERIOD, smpsr, 28, Pgain, true);  //Valve2
+            rpost.filterout(smpsr);
+        }
 
         for (int i = 0; i < PERIOD; i++) {
             //left channel
-            lfilter = ltonelw.filterout_s(smpsl[i]);
-            mfilter = ltonemd.filterout_s(smpsl[i]);
-            hfilter = ltonehg.filterout_s(smpsl[i]);
-
-            efxoutl[i] = 0.5f * volume * (smpsl[i] + lowb * lfilter + midb * mfilter + highb * hfilter);
+            float lfilter = ltonelw.filterout_s(smpsl[i]);
+            float mfilter = ltonemd.filterout_s(smpsl[i]);
+            float hfilter = ltonehg.filterout_s(smpsl[i]);
+            smpsl[i] = 0.5f * volume * (smpsl[i] + lowb * lfilter + midb * mfilter + highb * hfilter);
 
             //Right channel
-            lfilter = rtonelw.filterout_s(smpsr[i]);
-            mfilter = rtonemd.filterout_s(smpsr[i]);
-            hfilter = rtonehg.filterout_s(smpsr[i]);
-
-            efxoutr[i] = 0.5f * volume * (smpsr[i] + lowb * lfilter + midb * mfilter + highb * hfilter);
+            if (smpsr != null) {
+                lfilter = rtonelw.filterout_s(smpsr[i]);
+                mfilter = rtonemd.filterout_s(smpsr[i]);
+                hfilter = rtonehg.filterout_s(smpsr[i]);
+                smpsr[i] = 0.5f * volume * (smpsr[i] + lowb * lfilter + midb * mfilter + highb * hfilter);
+            }
         }
     }
 
-    /*
-     * Parameter control
-     */
     private void init_mode(int value) {
         int tinput = 1;
         float finput = 80.0f;

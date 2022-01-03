@@ -26,14 +26,15 @@ public abstract class Instrument {
 
     protected float mAttack = Wellen.DEFAULT_ATTACK;
     protected float mDecay = Wellen.DEFAULT_DECAY;
-    protected float mSustain = Wellen.DEFAULT_SUSTAIN;
-    protected float mRelease = Wellen.DEFAULT_RELEASE;
-    protected float mPan = 0.0f;
-    protected boolean mEnableFrequencyLFO = false;
-    protected boolean mEnableAmplitudeLFO = false;
     protected boolean mEnableADSR = false;
+    protected boolean mEnableAdditionalOscillator = false;
+    protected boolean mEnableAmplitudeLFO = false;
+    protected boolean mEnableFrequencyLFO = false;
     protected boolean mEnableLPF = false;
     protected boolean mIsPlaying = false;
+    protected float mPan = 0.0f;
+    protected float mRelease = Wellen.DEFAULT_RELEASE;
+    protected float mSustain = Wellen.DEFAULT_SUSTAIN;
     private final int mID;
 
     public Instrument(int pID) {
@@ -126,6 +127,27 @@ public abstract class Instrument {
 
     public abstract void set_frequency(float pFrequency);
 
+    public int get_additional_oscillator_type() {
+        return 0;
+    }
+
+    public void set_additional_oscillator_type(int pOscillator) {
+    }
+
+    public float get_additional_oscillator_frequency() {
+        return 0;
+    }
+
+    public void set_additional_oscillator_frequency(float pFrequency) {
+    }
+
+    public float get_additional_oscillator_amplitude() {
+        return 0;
+    }
+
+    public void set_additional_oscillator_amplitude(float pAmplitude) {
+    }
+
     public float get_pan() {
         return mPan;
     }
@@ -157,9 +179,12 @@ public abstract class Instrument {
 
     public abstract void note_on(int pNote, int pVelocity);
 
-
     public boolean is_playing() {
         return mIsPlaying;
+    }
+
+    public void enable_additional_oscillator(boolean pEnableAdditionalOscillator) {
+        mEnableAdditionalOscillator = pEnableAdditionalOscillator;
     }
 
     protected float note_to_frequency(int pNote) {

@@ -1,17 +1,9 @@
 package wellen.examples.instruments;
 
 import processing.core.PApplet;
-import wellen.ADSR;
-import wellen.InstrumentInternal;
-import wellen.InstrumentInternalLibrary;
-import wellen.Reverb;
-import wellen.SampleDataSNARE;
-import wellen.Sampler;
-import wellen.Tone;
-import wellen.Wavetable;
-import wellen.Wellen;
+import wellen.*;
 
-public class ExampleInstruments08CustomDSPInstrument extends PApplet {
+public class ExampleInstruments09CustomDSPInstrument extends PApplet {
 
     /*
      * this example demonstrates how to implement custom instruments by extending default internal instruments.
@@ -29,16 +21,15 @@ public class ExampleInstruments08CustomDSPInstrument extends PApplet {
      *             super(pID);
      *         }
      *
-     *         public float output() {
-     *             float mSample = 0.0f;
-     *             return mSample;
+     *         public void output(Signal pSignal) {
+     *             pSignal[0] = 0.0f;
      *         }
      *     }
      * ```
      *
      * note that the modules of `InstrumentInternal` ( e.g ADSR, VCO, LPF, LFOs, amplitude, frequency ) are still
      * available in the custom instrument but must be explicitly used in `output`. the implementation of the `output`
-     * method in `InstrumentInternal` is a good starting point.
+     * method in `InstrumentInternal` is a good starting point for understanding how these modules work together.
      *
      * an in-depth explanation of the behavior of each custom instrument can be found in the source code below as inline
      * comments.
@@ -53,18 +44,20 @@ public class ExampleInstruments08CustomDSPInstrument extends PApplet {
     private static final int INSTRUMENT_KICK_DRUM = 2;
     private static final int INSTRUMENT_HIHAT = 3;
     private static final int INSTRUMENT_FAT_LEAD = 4;
-    private static final int INSTRUMENT_BELL = 5;
-    private static final int NUM_OF_INSTRUMENTS = 6;
+    private static final int INSTRUMENT_DETUNED = 5;
+    private static final int INSTRUMENT_BELL = 6;
+    private static final int NUM_OF_INSTRUMENTS = 7;
 
     public void settings() {
         size(640, 480);
     }
 
     public void setup() {
-        Tone.replace_instrument(new CustomInstrumentKickDrum(INSTRUMENT_KICK_DRUM));
         Tone.replace_instrument(new CustomInstrumentSampler(INSTRUMENT_SNARE_DRUM));
-        Tone.replace_instrument(new CustomInstrumentMultipleOscillators(INSTRUMENT_FAT_LEAD));
+        Tone.replace_instrument(new CustomInstrumentKickDrum(INSTRUMENT_KICK_DRUM));
         Tone.replace_instrument(new CustomInstrumentNoise(INSTRUMENT_HIHAT));
+        Tone.replace_instrument(new CustomInstrumentMultipleOscillators(INSTRUMENT_FAT_LEAD));
+        Tone.replace_instrument(new CustomInstrumentDetunedOscillatorsStereo(INSTRUMENT_DETUNED));
         /* instrument from the collection `InstrumentInternalLibrary` */
         Tone.replace_instrument(new InstrumentInternalLibrary.BELL(INSTRUMENT_BELL));
     }
@@ -104,6 +97,10 @@ public class ExampleInstruments08CustomDSPInstrument extends PApplet {
                 Tone.note_on(mNote, 100);
                 break;
             case '6':
+                Tone.instrument(INSTRUMENT_DETUNED);
+                Tone.note_on(mNote, 100);
+                break;
+            case '7':
                 Tone.instrument(INSTRUMENT_BELL);
                 Tone.note_on(mNote - 12, 100);
                 break;
@@ -121,9 +118,9 @@ public class ExampleInstruments08CustomDSPInstrument extends PApplet {
      */
     private static class CustomInstrumentSampler extends InstrumentInternal {
 
-        private final Sampler mSampler;
-        private final Reverb mReverb;
         private final float mGain;
+        private final Reverb mReverb;
+        private final Sampler mSampler;
 
         /**
          * the constructor of the custom instrument must call the *super constructor* passing the instrument’s ID with
@@ -145,13 +142,12 @@ public class ExampleInstruments08CustomDSPInstrument extends PApplet {
 
         /**
          * called by tone engine to request the next audio sample of the instrument.
-         *
-         * @return returns next sample
          */
-        public float output() {
-            /* `output()` is called to request a new sample: sampler returns a new sample which is then multiplied by
-             the amplitude. the result is processed by reverb and returned. */
-            return mReverb.process(mSampler.output() * get_amplitude()) * mGain;
+        public void output(Signal pSignal) {
+            /* `output(Signal)` is called to request a new sample: sampler returns a new sample which is then
+            multiplied by the amplitude. the result is processed by reverb and returned. the final sample is stored
+            in the supplied signal container. */
+            pSignal.signal[0] = mReverb.process(mSampler.output() * get_amplitude()) * mGain;
         }
 
         /**
@@ -199,7 +195,7 @@ public class ExampleInstruments08CustomDSPInstrument extends PApplet {
             Wavetable.fill(mVeryLowVCO.get_wavetable(), Wellen.WAVESHAPE_SQUARE);
         }
 
-        public float output() {
+        public void output(Signal pSignal) {
             /* this custom instrument ignores LFOs and LPF */
             mVCO.set_frequency(get_frequency());
             mVCO.set_amplitude(get_amplitude() * 0.2f);
@@ -214,7 +210,7 @@ public class ExampleInstruments08CustomDSPInstrument extends PApplet {
             float mSample = mVCO.output();
             mSample += mLowerVCO.output();
             mSample += mVeryLowVCO.output();
-            return mADSRAmp * mSample;
+            pSignal.signal[0] = mADSRAmp * mSample;
         }
     }
 
@@ -224,9 +220,9 @@ public class ExampleInstruments08CustomDSPInstrument extends PApplet {
      */
     private static class CustomInstrumentKickDrum extends InstrumentInternal {
 
+        private final float mDecaySpeed = 0.25f;
         private final ADSR mFrequencyEnvelope;
         private final float mFrequencyRange = 80;
-        private final float mDecaySpeed = 0.25f;
 
         public CustomInstrumentKickDrum(int pID) {
             super(pID);
@@ -250,14 +246,14 @@ public class ExampleInstruments08CustomDSPInstrument extends PApplet {
             mFrequencyEnvelope.set_release(0.0f);
         }
 
-        public float output() {
+        public void output(Signal pSignal) {
             final float mFrequencyOffset = mFrequencyEnvelope.output() * mFrequencyRange;
             mVCO.set_frequency(get_frequency() + mFrequencyOffset);
             mVCO.set_amplitude(get_amplitude());
 
             float mSample = mVCO.output();
             final float mADSRAmp = mADSR.output();
-            return mSample * mADSRAmp;
+            pSignal.signal[0] = mSample * mADSRAmp;
         }
 
         public void note_off() {
@@ -270,7 +266,6 @@ public class ExampleInstruments08CustomDSPInstrument extends PApplet {
             mADSR.start();
             mFrequencyEnvelope.start();
         }
-
     }
 
     /**
@@ -287,12 +282,85 @@ public class ExampleInstruments08CustomDSPInstrument extends PApplet {
             mADSR.set_release(0.0f);
         }
 
-        public float output() {
-            return Wellen.random(-get_amplitude(), get_amplitude()) * mADSR.output();
+        public void output(Signal pSignal) {
+            pSignal.signal[0] = Wellen.random(-get_amplitude(), get_amplitude()) * mADSR.output();
+        }
+    }
+
+    /**
+     * custom instrument that produces a stereo signal from 2 slightly detunes oscillators.
+     */
+    private static class CustomInstrumentDetunedOscillatorsStereo extends InstrumentInternal {
+
+        /**
+         * detunes the oscillators in percentage of the main frequency. one oscillator is detuned below the main
+         * frequency and the other above.
+         * <p>
+         * e.g `detune = 0.01, main_frequency = 220.0`
+         * <p>
+         * > `osc_a_frequency = main_frequency * ( 1.0 - detune) = 217.8`
+         * <p>
+         * > `osc_a_frequency = main_frequency * ( 1.0 + detune) = 222.2`
+         */
+        private float mDetune;
+        /**
+         * spreads the oscillators over left and right channel: `0.0` no spread, `1.0` fully spread over both channels
+         */
+        private float mSpread;
+        private final Wavetable mVCOSecond;
+
+        public CustomInstrumentDetunedOscillatorsStereo(int pID) {
+            super(pID);
+            set_channels(2);
+            set_detune(0.01f);
+            set_spread(0.5f);
+
+            Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVESHAPE_TRIANGLE);
+
+            mVCOSecond = new Wavetable(DEFAULT_WAVETABLE_SIZE);
+            mVCOSecond.interpolate_samples(true);
+            Wavetable.fill(mVCOSecond.get_wavetable(), Wellen.WAVESHAPE_TRIANGLE);
+        }
+
+        public float get_detune() {
+            return mDetune;
+        }
+
+        public void set_detune(float pDetune) {
+            mDetune = pDetune;
+        }
+
+        public float get_spread() {
+            return mSpread;
+        }
+
+        public void set_spread(float pSpread) {
+            mSpread = pSpread;
+        }
+
+        public void output(Signal pSignal) {
+            /* this custom instrument ignores LFOs and LPF */
+            mVCO.set_frequency(get_frequency() * (1.0f - mDetune));
+            mVCO.set_amplitude(get_amplitude());
+            mVCOSecond.set_frequency(get_frequency() * (1.0f + mDetune));
+            mVCOSecond.set_amplitude(get_amplitude());
+
+            /* use inherited ADSR envelope to control the amplitude */
+            final float mADSRAmp = mADSR.output();
+
+            /* spread signal across stereo channels */
+            final float mSignalA = mVCO.output();
+            final float mSignalB = mVCOSecond.output();
+            final float mMix = mSpread * 0.5f + 0.5f;
+            final float mInvMix = 1.0f - mMix;
+            pSignal.signal[0] = (mSignalA * mMix + mSignalB * mInvMix);
+            pSignal.signal[1] = (mSignalA * mInvMix + mSignalB * mMix);
+            pSignal.signal[0] *= mADSRAmp;
+            pSignal.signal[1] *= mADSRAmp;
         }
     }
 
     public static void main(String[] args) {
-        PApplet.main(ExampleInstruments08CustomDSPInstrument.class.getName());
+        PApplet.main(ExampleInstruments09CustomDSPInstrument.class.getName());
     }
 }

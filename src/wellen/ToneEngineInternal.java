@@ -29,17 +29,18 @@ import static wellen.Wellen.clamp;
  */
 public class ToneEngineInternal extends ToneEngine implements AudioBufferRenderer {
 
+    public static boolean VERBOSE = true;
     public boolean USE_AMP_FRACTION = false;
-    private final ArrayList<InstrumentInternal> mInstruments;
     private final AudioBufferManager mAudioPlayer;
-    private final Reverb mReverb;
-    private int mCurrentInstrumentID;
     private AudioOutputCallback mAudioblockCallback = null;
     private float[] mCurrentBufferLeft;
     private float[] mCurrentBufferRight;
-    private boolean mReverbEnabled;
+    private int mCurrentInstrumentID;
+    private final ArrayList<InstrumentInternal> mInstruments;
     private final int mNumberOfInstruments;
     private final Pan mPan;
+    private final Reverb mReverb;
+    private boolean mReverbEnabled;
 
     public ToneEngineInternal(int pSamplingRate, int pAudioblockSize, int pOutputDeviceID, int pOutputChannels,
                               int pNumberOfInstruments) {
@@ -163,7 +164,7 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
             audioblock(pOutputSignal[0], pOutputSignal[1]);
         } else {
             System.err.println("+++ WARNING @" + getClass().getSimpleName() + ".audioblock / multiple output " +
-                               "channels" + " are " + "not supported.");
+                               "channels are not supported.");
         }
         if (mAudioblockCallback != null) {
             mAudioblockCallback.audioblock(pOutputSignal);
@@ -175,14 +176,26 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
             float mSignalL = 0;
             float mSignalR = 0;
             for (InstrumentInternal mInstrument : mInstruments) {
-                final float mSignal = mInstrument.output();
-                mPan.set_panning(mInstrument.get_pan());
-                Signal mStereoSignal = mPan.process(mSignal);
-                mSignalL += mStereoSignal.signal[Wellen.SIGNAL_LEFT];
-                mSignalR += mStereoSignal.signal[Wellen.SIGNAL_RIGHT];
-//                final float mPan = mInstrument.get_pan() * 0.5f + 0.5f;
-//                mSignalR += mSignal * mPan;
-//                mSignalL += mSignal * (1.0f - mPan);
+                final Signal mSignals = new Signal(mInstrument.get_channels());
+                mInstrument.output(mSignals);
+                if (mInstrument.get_channels() == 1) {
+                    /* mono (default) */
+                    final float mSignal = mSignals.signal[0];
+                    mPan.set_panning(mInstrument.get_pan());
+                    Signal mStereoSignal = mPan.process(mSignal);
+                    mSignalL += mStereoSignal.signal[Wellen.SIGNAL_LEFT];
+                    mSignalR += mStereoSignal.signal[Wellen.SIGNAL_RIGHT];
+                } else if (mInstrument.get_channels() == 2) {
+                    /* stereo */
+                    mSignalL += mSignals.signal[0];
+                    mSignalR += mSignals.signal[1];
+                } else {
+                    if (VERBOSE) {
+                        System.err.println("+++ @WARNING " + getClass().getSimpleName() +
+                                           ".audioblock(stereo) / instruments with more than 2 channels are " +
+                                           "not supported in this tone engine.");
+                    }
+                }
             }
             pSignalLeft[i] = mSignalL;
             pSignalRight[i] = mSignalR;
@@ -198,7 +211,12 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
         for (int i = 0; i < pSignal.length; i++) {
             float mSignal = 0;
             for (InstrumentInternal mInstrument : mInstruments) {
-                mSignal += mInstrument.output();
+                final Signal mSignals = new Signal(mInstrument.get_channels());
+                mInstrument.output(mSignals);
+                /* if instrument has multiple channels accumulate them into one */
+                for (int j = 0; j < mSignals.signal.length; j++) {
+                    mSignal += mSignals.signal[j];
+                }
             }
             pSignal[i] = clamp(mSignal);
         }

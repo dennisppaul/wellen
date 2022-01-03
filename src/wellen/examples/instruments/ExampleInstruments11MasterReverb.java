@@ -3,7 +3,7 @@ package wellen.examples.instruments;
 import processing.core.PApplet;
 import wellen.Tone;
 
-public class ExampleInstruments10MasterReverb extends PApplet {
+public class ExampleInstruments11MasterReverb extends PApplet {
 
     /*
      * this example demonstrates how to add a reverb effect to tone output.
@@ -34,6 +34,6 @@ public class ExampleInstruments10MasterReverb extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main(ExampleInstruments10MasterReverb.class.getName());
+        PApplet.main(ExampleInstruments11MasterReverb.class.getName());
     }
 }

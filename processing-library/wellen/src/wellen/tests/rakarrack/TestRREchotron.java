@@ -37,7 +37,7 @@ public class TestRREchotron extends PApplet {
         mEchotron = new RREchotron();
 
         DSP.start(this, 2);
-        Beat.start(this, 120 * 6);
+        Beat.start(this, 120 * 4);
     }
 
     public void draw() {

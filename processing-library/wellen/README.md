@@ -30,7 +30,7 @@ although `Tone` is designed to play musical notes ( arranged in half-tone steps 
 
 ![](./resources/wellen-schematics-instrument.png)
 
-this schematic summarizes the relation of the different components that comprise an instrument in *wellen*. all components can be dis- + enabled ( see `ExampleInstruments04LFOs` + `ExampleInstruments05LPF` ) and overridden to implement custom behaviors ( see `ExampleInstruments08CustomDSPInstrument` ).
+this schematic summarizes the relation of the different components that comprise an instrument in *wellen*. all components can be dis- + enabled ( see `ExampleInstruments04LFOs` + `ExampleInstruments05LPF` ) and overridden to implement custom behaviors ( see `ExampleInstruments09CustomDSPInstrument` ).
 
 *wellen* comes with mechanisms to send messages to other applications or machines via MIDI ( see `ExampleBasics06MIDI` ) or OSC ( see `ExampleInstruments07OSCToneEngine` ) or can even use multiple *tone engines* at the same time ( see `ExampleExternal01MultipleToneEngines` ). likewise *wellen* can also receive events from other applications or machines with `EventReceiverMIDI` via MIDI and `EventReceiverOSC` via OSC ( see `ExampleExternal05ReceiveMIDIandOSC` ).
 

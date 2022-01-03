@@ -8,7 +8,7 @@ import wellen.Note;
 import wellen.Scale;
 import wellen.Tone;
 
-public class ExampleInstruments09ADSRwithGUI extends PApplet {
+public class ExampleInstruments10ADSRwithGUI extends PApplet {
 
     /*
      * this example shows how to use an instrument with an amplitude envelope ( ADSR ). the envelope controls the
@@ -206,6 +206,6 @@ public class ExampleInstruments09ADSRwithGUI extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main(ExampleInstruments09ADSRwithGUI.class.getName());
+        PApplet.main(ExampleInstruments10ADSRwithGUI.class.getName());
     }
 }

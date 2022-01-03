@@ -38,16 +38,16 @@ public class InstrumentInternalLibrary {
     public static class BELL extends InstrumentInternal {
 
         private static final int NUM_OSC = 7;
-        private final Wavetable[] mVCOs;
         private final ADSR[] mADSRs;
-        private final float[] mOscillatorDetune;
-        private final float[] mOscillatorAmplitudes;
-        private float mDetune;
-        private float mBaseRelease;
-        private float mReleaseFalloff;
-        private float mAmplitudeFalloff;
         private float mAmplify = 1.0f;
+        private float mAmplitudeFalloff;
+        private float mBaseRelease;
+        private float mDetune;
+        private final float[] mOscillatorAmplitudes;
+        private final float[] mOscillatorDetune;
+        private float mReleaseFalloff;
         private final boolean mUseTriangleForLowFrequencies = true;
+        private final Wavetable[] mVCOs;
 
         public BELL(int pID) {
             super(pID);
@@ -102,7 +102,8 @@ public class InstrumentInternalLibrary {
             /* never stop oscillators as they are stopped by their ADSR */
         }
 
-        public float output() {
+        @Override
+        public void output(Signal pSignal) {
             float mSample = 0.0f;
             for (int i = 0; i < mVCOs.length; i++) {
                 mVCOs[i].set_frequency(get_frequency() * mOscillatorDetune[i]);
@@ -111,7 +112,7 @@ public class InstrumentInternalLibrary {
             }
             mSample /= mVCOs.length;
             mSample *= mAmplify;
-            return mSample;
+            pSignal.signal[0] = mSample;
         }
 
         public void set_detune(float pDetune) {
@@ -157,7 +158,8 @@ public class InstrumentInternalLibrary {
             Wavetable.fill(mVeryLowVCO.get_wavetable(), Wellen.WAVESHAPE_SQUARE);
         }
 
-        public float output() {
+        @Override
+        public void output(Signal pSignal) {
             mVCO.set_frequency(get_frequency());
             mVCO.set_amplitude(get_amplitude() * 0.2f);
             mLowerVCO.set_frequency(get_frequency() * 0.5f);
@@ -169,7 +171,7 @@ public class InstrumentInternalLibrary {
             float mSample = mVCO.output();
             mSample += mLowerVCO.output();
             mSample += mVeryLowVCO.output();
-            return mADSRAmp * mSample;
+            pSignal.signal[0] = mADSRAmp * mSample;
         }
     }
 
@@ -183,16 +185,17 @@ public class InstrumentInternalLibrary {
             mADSR.set_release(0.0f);
         }
 
-        public float output() {
-            return Wellen.random(-get_amplitude(), get_amplitude()) * mADSR.output();
+        @Override
+        public void output(Signal pSignal) {
+            pSignal.signal[0] = Wellen.random(-get_amplitude(), get_amplitude()) * mADSR.output();
         }
     }
 
     public static class KICK_DRUM extends InstrumentInternal {
 
+        private final float mDecaySpeed = 0.25f;
         private final ADSR mFrequencyEnvelope;
         private final float mFrequencyRange = 80;
-        private final float mDecaySpeed = 0.25f;
 
         public KICK_DRUM(int pID) {
             super(pID);
@@ -214,14 +217,15 @@ public class InstrumentInternalLibrary {
             mFrequencyEnvelope.set_release(0.0f);
         }
 
-        public float output() {
+        @Override
+        public void output(Signal pSignal) {
             final float mFrequencyOffset = mFrequencyEnvelope.output() * mFrequencyRange;
             mVCO.set_frequency(get_frequency() + mFrequencyOffset);
             mVCO.set_amplitude(get_amplitude());
 
             float mSample = mVCO.output();
             final float mADSRAmp = mADSR.output();
-            return mSample * mADSRAmp;
+            pSignal.signal[0] = mSample * mADSRAmp;
         }
 
         public void note_off() {
@@ -233,7 +237,6 @@ public class InstrumentInternalLibrary {
             mADSR.start();
             mFrequencyEnvelope.start();
         }
-
     }
 
     public static class SAMPLER extends InstrumentInternal {
@@ -248,8 +251,9 @@ public class InstrumentInternalLibrary {
             mSampler.loop(false);
         }
 
-        public float output() {
-            return mSampler.output() * get_amplitude();
+        @Override
+        public void output(Signal pSignal) {
+            pSignal.signal[0] = mSampler.output() * get_amplitude();
         }
 
 

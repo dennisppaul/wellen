@@ -20,8 +20,8 @@
 package wellen;
 
 /**
- * interface implemented by classes that create mono output signals.
+ * interface implemented by classes that create output signals with multiple channels.
  */
-public interface DSPNodeOutput {
-    float output();
+public interface DSPNodeOutputSignal {
+    void output(Signal pSignal);
 }
