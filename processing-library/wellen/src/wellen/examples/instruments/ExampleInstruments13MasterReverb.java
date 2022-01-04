@@ -2,11 +2,14 @@ package wellen.examples.instruments;
 
 import processing.core.PApplet;
 import wellen.Tone;
+import wellen.ToneEngineInternal;
 
-public class ExampleInstruments11MasterReverb extends PApplet {
+public class ExampleInstruments13MasterReverb extends PApplet {
 
     /*
      * this example demonstrates how to add a reverb effect to tone output.
+     * @deprecated note that this mechanism will slowly be replaced by the more
+     * flexible master effects.
      */
 
     public void settings() {
@@ -14,8 +17,9 @@ public class ExampleInstruments11MasterReverb extends PApplet {
     }
 
     public void setup() {
-        Tone.get_internal_engine().enable_reverb(true);
-        Tone.get_internal_engine().get_reverb().set_roomsize(0.9f);
+        ToneEngineInternal mToneEngine = Tone.get_internal_engine();
+        mToneEngine.enable_reverb(true);
+        mToneEngine.get_reverb().set_roomsize(0.9f);
     }
 
     public void draw() {
@@ -34,6 +38,6 @@ public class ExampleInstruments11MasterReverb extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main(ExampleInstruments11MasterReverb.class.getName());
+        PApplet.main(ExampleInstruments13MasterReverb.class.getName());
     }
 }

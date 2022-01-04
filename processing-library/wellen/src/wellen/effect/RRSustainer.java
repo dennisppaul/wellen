@@ -41,6 +41,8 @@ package wellen.effect;
 
 */
 
+import wellen.EffectStereo;
+
 import static wellen.effect.RRUtilities.PERIOD;
 import static wellen.effect.RRUtilities.SAMPLE_RATE;
 import static wellen.effect.RRUtilities.cSAMPLE_RATE;

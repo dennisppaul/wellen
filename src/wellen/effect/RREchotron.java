@@ -42,6 +42,9 @@ package wellen.effect;
 
 */
 
+import wellen.EffectMono;
+import wellen.EffectStereo;
+
 import static wellen.effect.RRUtilities.*;
 
 public class RREchotron implements EffectMono, EffectStereo {
@@ -186,7 +189,7 @@ public class RREchotron implements EffectMono, EffectStereo {
         initparams = false;
 
         //default values
-        Ppreset = 0;
+        Ppreset = PRESET_SUMMER;
         Pvolume = 50;
         Ppanning = 64;
         Plrcross = 100;

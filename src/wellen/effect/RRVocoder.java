@@ -42,6 +42,8 @@ package wellen.effect;
 
 */
 
+import wellen.EffectStereo;
+
 import static wellen.Wellen.clamp;
 
 public class RRVocoder implements EffectStereo {

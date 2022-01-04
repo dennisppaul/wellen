@@ -25,7 +25,7 @@ import static processing.core.PConstants.TWO_PI;
 /**
  * FM synthesis with two oscillators, carrier ( e.g fundamental or *pitch* ) and modulator.
  * <p>
- * formula taken from [Anders Øland & Roger B. Dannenberg: FM Synthesis -- Introduction to Computer Music Carnegie
+ * formula taken from [Anders Øland &amp; Roger B. Dannenberg: FM Synthesis -- Introduction to Computer Music Carnegie
  * Mellon University](http://www.cs.cmu.edu/~music/icm-online/readings/fm-synthesis/fm_synthesis.pdf)
  *
  * <pre>

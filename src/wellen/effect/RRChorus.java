@@ -43,6 +43,8 @@ package wellen.effect;
 
 */
 
+import wellen.EffectStereo;
+
 import static wellen.effect.RRUtilities.F2I;
 import static wellen.effect.RRUtilities.MAX_CHORUS_DELAY;
 import static wellen.effect.RRUtilities.PERIOD;

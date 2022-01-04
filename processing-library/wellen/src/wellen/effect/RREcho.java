@@ -45,6 +45,9 @@ package wellen.effect;
 
 */
 
+import wellen.EffectMono;
+import wellen.EffectStereo;
+
 import static wellen.effect.RRUtilities.*;
 
 public class RREcho implements EffectMono, EffectStereo {

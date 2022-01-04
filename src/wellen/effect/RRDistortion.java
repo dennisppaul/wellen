@@ -43,6 +43,9 @@ package wellen.effect;
 
 */
 
+import wellen.EffectMono;
+import wellen.EffectStereo;
+
 import static wellen.effect.RRAnalogFilter.TYPE_HPF_2_POLE;
 import static wellen.effect.RRAnalogFilter.TYPE_LPF_2_POLE;
 import static wellen.effect.RRUtilities.PERIOD;

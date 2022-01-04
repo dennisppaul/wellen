@@ -40,6 +40,8 @@ package wellen.effect;
 
 */
 
+import wellen.EffectStereo;
+
 public class RRStompBox implements EffectStereo {
 
     /*

@@ -17,7 +17,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package wellen.effect;
+package wellen;
 
 public interface EffectStereo {
     void out(float[] pOutputSignalLeft, float[] pOutputSignalRight);

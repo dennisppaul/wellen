@@ -43,6 +43,9 @@ package wellen.effect;
 
 */
 
+import wellen.EffectMono;
+import wellen.EffectStereo;
+
 import static wellen.effect.RRUtilities.PERIOD;
 import static wellen.effect.RRUtilities.dB2rap;
 import static wellen.effect.RRUtilities.expf;

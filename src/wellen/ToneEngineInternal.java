@@ -36,6 +36,8 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
     private float[] mCurrentBufferLeft;
     private float[] mCurrentBufferRight;
     private int mCurrentInstrumentID;
+    private final ArrayList<EffectStereo> mEffects;
+    private Gain mGain;
     private final ArrayList<InstrumentInternal> mInstruments;
     private final int mNumberOfInstruments;
     private final Pan mPan;
@@ -45,25 +47,22 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
     public ToneEngineInternal(int pSamplingRate, int pAudioblockSize, int pOutputDeviceID, int pOutputChannels,
                               int pNumberOfInstruments) {
         mInstruments = new ArrayList<>();
+        mEffects = new ArrayList<>();
         mNumberOfInstruments = pNumberOfInstruments;
         for (int i = 0; i < mNumberOfInstruments; i++) {
             final InstrumentInternal mInstrument = new InstrumentInternal(i, pSamplingRate);
             mInstruments.add(mInstrument);
         }
 
+        mGain = new Gain();
         mReverb = new Reverb();
         mReverbEnabled = false;
         mPan = new Pan();
         mPan.set_pan_type(Wellen.PAN_SINE_LAW);
 
         if (pOutputChannels > 0) {
-            mAudioPlayer = new AudioBufferManager(this,
-                                                  pSamplingRate,
-                                                  pAudioblockSize,
-                                                  pOutputDeviceID,
-                                                  pOutputChannels,
-                                                  0,
-                                                  0);
+            mAudioPlayer = new AudioBufferManager(this, pSamplingRate, pAudioblockSize, pOutputDeviceID,
+                                                  pOutputChannels, 0, 0);
         } else {
             mAudioPlayer = null;
         }
@@ -80,10 +79,18 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
         }
     }
 
+    /**
+     * @deprecated
+     * @param pReverbEnabled enable reverb
+     */
     public void enable_reverb(boolean pReverbEnabled) {
         mReverbEnabled = pReverbEnabled;
     }
 
+    /**
+     * @deprecated
+     * @return reference to reverb
+     */
     public Reverb get_reverb() {
         return mReverb;
     }
@@ -143,8 +150,9 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
         if (pInstrument instanceof InstrumentInternal) {
             mInstruments.set(pInstrument.ID(), (InstrumentInternal) pInstrument);
         } else {
-            System.err.println("+++ WARNING @" + getClass().getSimpleName() + ".replace_instrument(Instrument) / " +
-                               "instrument must be" + " of type `InstrumentInternal`");
+            System.err.println(
+            "+++ WARNING @" + getClass().getSimpleName() + ".replace_instrument(Instrument) / " + "instrument must " +
+            "be" + " of type `InstrumentInternal`");
         }
     }
 
@@ -163,8 +171,9 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
         } else if (pOutputSignal.length == 2) {
             audioblock(pOutputSignal[0], pOutputSignal[1]);
         } else {
-            System.err.println("+++ WARNING @" + getClass().getSimpleName() + ".audioblock / multiple output " +
-                               "channels are not supported.");
+            System.err.println(
+            "+++ WARNING @" + getClass().getSimpleName() + ".audioblock / multiple output " + "channels are not " +
+            "supported.");
         }
         if (mAudioblockCallback != null) {
             mAudioblockCallback.audioblock(pOutputSignal);
@@ -191,20 +200,43 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
                     mSignalR += mSignals.signal[1];
                 } else {
                     if (VERBOSE) {
-                        System.err.println("+++ @WARNING " + getClass().getSimpleName() +
-                                           ".audioblock(stereo) / instruments with more than 2 channels are " +
-                                           "not supported in this tone engine.");
+                        System.err.println(
+                        "+++ @WARNING " + getClass().getSimpleName() + ".audioblock(stereo) / instruments with more " +
+                        "than 2 channels are " + "not supported in this tone engine.");
                     }
                 }
             }
             pSignalLeft[i] = mSignalL;
             pSignalRight[i] = mSignalR;
         }
+
+        for (EffectStereo mEffect : mEffects) {
+            mEffect.out(pSignalLeft, pSignalRight);
+        }
+
+        mGain.out(pSignalLeft, pSignalRight);
+
         if (mReverbEnabled) {
             mReverb.process(pSignalLeft, pSignalRight, pSignalLeft, pSignalRight);
         }
         mCurrentBufferLeft = pSignalLeft;
         mCurrentBufferRight = pSignalRight;
+    }
+
+    public float get_gain() {
+        return mGain.get_gain();
+    }
+
+    public void set_gain(float pGain) {
+        mGain.set_gain(pGain);
+    }
+
+    public void add_effect(EffectStereo pEffect) {
+        mEffects.add(pEffect);
+    }
+
+    public boolean remove_effect(EffectStereo pEffect) {
+        return mEffects.remove(pEffect);
     }
 
     public void audioblock(float[] pSignal) {
@@ -235,10 +267,8 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
     }
 
     public static ToneEngineInternal no_output() {
-        return new ToneEngineInternal(Wellen.DEFAULT_SAMPLING_RATE,
-                                      Wellen.DEFAULT_AUDIOBLOCK_SIZE,
-                                      Wellen.DEFAULT_AUDIO_DEVICE,
-                                      Wellen.NO_CHANNELS,
+        return new ToneEngineInternal(Wellen.DEFAULT_SAMPLING_RATE, Wellen.DEFAULT_AUDIOBLOCK_SIZE,
+                                      Wellen.DEFAULT_AUDIO_DEVICE, Wellen.NO_CHANNELS,
                                       Wellen.DEFAULT_NUMBER_OF_INSTRUMENTS);
     }
 

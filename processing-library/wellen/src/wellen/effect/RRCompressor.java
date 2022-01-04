@@ -53,6 +53,8 @@ package wellen.effect;
 
 */
 
+import wellen.EffectStereo;
+
 import static wellen.effect.RRUtilities.LOG_2;
 import static wellen.effect.RRUtilities.PERIOD;
 import static wellen.effect.RRUtilities.SAMPLE_RATE;

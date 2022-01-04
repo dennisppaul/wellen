@@ -2,6 +2,8 @@ import wellen.*;
 
 /*
  * this example demonstrates how to add a reverb effect to tone output.
+ * @deprecated note that this mechanism will slowly be replaced by the more
+ * flexible master effects.
  */
 
 void settings() {
@@ -9,8 +11,9 @@ void settings() {
 }
 
 void setup() {
-    Tone.get_internal_engine().enable_reverb(true);
-    Tone.get_internal_engine().get_reverb().set_roomsize(0.9f);
+    ToneEngineInternal mToneEngine = Tone.get_internal_engine();
+    mToneEngine.enable_reverb(true);
+    mToneEngine.get_reverb().set_roomsize(0.9f);
 }
 
 void draw() {

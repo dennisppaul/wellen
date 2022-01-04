@@ -22,7 +22,7 @@ package wellen;
 /**
  * applies reverb to a signal. {@link wellen.Reverb} uses an implementation of freeverb.
  */
-public class Reverb implements DSPNodeProcess {
+public class Reverb implements DSPNodeProcess, EffectStereo {
 
     /* a `FreeVerb` implementation taken from https://github.com/kmatheussen/soundengine */
 
@@ -36,20 +36,90 @@ public class Reverb implements DSPNodeProcess {
     // Code generated with Faust 0.9.9.5b2 (http://faust.grame.fr)
     //-----------------------------------------------------
 
-    private final float largest_diff = 0.01f;
+    private int IOTA;
     private final GlideVar damp;
-    private final GlideVar roomSize;
-    private final GlideVar wet;
+    private float fRec0_0;
+    private float fRec0_1;
+    private float fRec10_0;
+    private float fRec10_1;
+    private float fRec11_0;
+    private float fRec11_1;
+    private float fRec12_0;
+    private float fRec12_1;
+    private float fRec13_0;
+    private float fRec13_1;
+    private float fRec14_0;
+    private float fRec14_1;
+    private float fRec15_0;
+    private float fRec15_1;
+    private float fRec16_0;
+    private float fRec16_1;
+    private float fRec17_0;
+    private float fRec17_1;
+    private float fRec18_0;
+    private float fRec18_1;
+    private float fRec19_0;
+    private float fRec19_1;
+    private float fRec20_0;
+    private float fRec20_1;
+    private float fRec21_0;
+    private float fRec21_1;
+    private float fRec22_0;
+    private float fRec22_1;
+    private float fRec23_0;
+    private float fRec23_1;
+    private float fRec24_0;
+    private float fRec24_1;
+    private float fRec26_0;
+    private float fRec26_1;
+    private float fRec28_0;
+    private float fRec28_1;
+    private float fRec2_0;
+    private float fRec2_1;
+    private float fRec30_0;
+    private float fRec30_1;
+    private float fRec32_0;
+    private float fRec32_1;
+    private float fRec33_0;
+    private float fRec33_1;
+    private float fRec34_0;
+    private float fRec34_1;
+    private float fRec35_0;
+    private float fRec35_1;
+    private float fRec36_0;
+    private float fRec36_1;
+    private float fRec37_0;
+    private float fRec37_1;
+    private float fRec38_0;
+    private float fRec38_1;
+    private float fRec39_0;
+    private float fRec39_1;
+    private float fRec40_0;
+    private float fRec40_1;
+    private float fRec41_0;
+    private float fRec41_1;
+    private float fRec42_0;
+    private float fRec42_1;
+    private float fRec43_0;
+    private float fRec43_1;
+    private float fRec44_0;
+    private float fRec44_1;
+    private float fRec45_0;
+    private float fRec45_1;
+    private float fRec46_0;
+    private float fRec46_1;
+    private float fRec47_0;
+    private float fRec47_1;
+    private float fRec4_0;
+    private float fRec4_1;
+    private float fRec6_0;
+    private float fRec6_1;
+    private float fRec8_0;
+    private float fRec8_1;
+    private float fRec9_0;
+    private float fRec9_1;
     private final float[] fVec0 = new float[2048];
     private final float[] fVec1 = new float[2048];
-    private final float[] fVec2 = new float[2048];
-    private final float[] fVec3 = new float[2048];
-    private final float[] fVec4 = new float[2048];
-    private final float[] fVec5 = new float[2048];
-    private final float[] fVec6 = new float[2048];
-    private final float[] fVec7 = new float[2048];
-    private final float[] fVec8 = new float[1024];
-    private final float[] fVec9 = new float[512];
     private final float[] fVec10 = new float[512];
     private final float[] fVec11 = new float[256];
     private final float[] fVec12 = new float[2048];
@@ -60,94 +130,24 @@ public class Reverb implements DSPNodeProcess {
     private final float[] fVec17 = new float[2048];
     private final float[] fVec18 = new float[2048];
     private final float[] fVec19 = new float[2048];
+    private final float[] fVec2 = new float[2048];
     private final float[] fVec20 = new float[1024];
     private final float[] fVec21 = new float[512];
     private final float[] fVec22 = new float[512];
     private final float[] fVec23 = new float[256];
+    private final float[] fVec3 = new float[2048];
+    private final float[] fVec4 = new float[2048];
+    private final float[] fVec5 = new float[2048];
+    private final float[] fVec6 = new float[2048];
+    private final float[] fVec7 = new float[2048];
+    private final float[] fVec8 = new float[1024];
+    private final float[] fVec9 = new float[512];
     private float fslider0;
-    private float fRec9_0;
-    private float fRec9_1;
     private float fslider1;
-    private int IOTA;
-    private float fRec8_0;
-    private float fRec8_1;
-    private float fRec11_0;
-    private float fRec11_1;
-    private float fRec10_0;
-    private float fRec10_1;
-    private float fRec13_0;
-    private float fRec13_1;
-    private float fRec12_0;
-    private float fRec12_1;
-    private float fRec15_0;
-    private float fRec15_1;
-    private float fRec14_0;
-    private float fRec14_1;
-    private float fRec17_0;
-    private float fRec17_1;
-    private float fRec16_0;
-    private float fRec16_1;
-    private float fRec19_0;
-    private float fRec19_1;
-    private float fRec18_0;
-    private float fRec18_1;
-    private float fRec21_0;
-    private float fRec21_1;
-    private float fRec20_0;
-    private float fRec20_1;
-    private float fRec23_0;
-    private float fRec23_1;
-    private float fRec22_0;
-    private float fRec22_1;
-    private float fRec6_0;
-    private float fRec6_1;
-    private float fRec4_0;
-    private float fRec4_1;
-    private float fRec2_0;
-    private float fRec2_1;
-    private float fRec0_0;
-    private float fRec0_1;
     private float fslider2;
-    private float fRec33_0;
-    private float fRec33_1;
-    private float fRec32_0;
-    private float fRec32_1;
-    private float fRec35_0;
-    private float fRec35_1;
-    private float fRec34_0;
-    private float fRec34_1;
-    private float fRec37_0;
-    private float fRec37_1;
-    private float fRec36_0;
-    private float fRec36_1;
-    private float fRec39_0;
-    private float fRec39_1;
-    private float fRec38_0;
-    private float fRec38_1;
-    private float fRec41_0;
-    private float fRec41_1;
-    private float fRec40_0;
-    private float fRec40_1;
-    private float fRec43_0;
-    private float fRec43_1;
-    private float fRec42_0;
-    private float fRec42_1;
-    private float fRec45_0;
-    private float fRec45_1;
-    private float fRec44_0;
-    private float fRec44_1;
-    private float fRec47_0;
-    private float fRec47_1;
-    private float fRec46_0;
-    private float fRec46_1;
-    private float fRec30_0;
-    private float fRec30_1;
-    private float fRec28_0;
-    private float fRec28_1;
-    private float fRec26_0;
-    private float fRec26_1;
-    private float fRec24_0;
-    private float fRec24_1;
+    private final float largest_diff = 0.01f;
+    private final GlideVar roomSize;
+    private final GlideVar wet;
 
     public Reverb() {
         fslider0 = 0.5f;
@@ -159,8 +159,12 @@ public class Reverb implements DSPNodeProcess {
         wet = new GlideVar(fslider2, largest_diff);
     }
 
-    public void process(float[] pOutputSignalLeft, float[] pOutputSignalRight, float[] pInputSignalLeft,
-                        float[] pInputSignalRight) {
+    public void out(float[] pOutputSignalLeft, float[] pOutputSignalRight) {
+        process(pOutputSignalLeft, pOutputSignalRight, pOutputSignalLeft, pOutputSignalRight);
+    }
+
+    public void process(float[] pOutputSignalLeft, float[] pOutputSignalRight,
+                        float[] pInputSignalLeft, float[] pInputSignalRight) {
         fslider0 = damp.get();
         fslider1 = roomSize.get();
         fslider2 = wet.get();
@@ -201,7 +205,7 @@ public class Reverb implements DSPNodeProcess {
             fVec7[p] = (fTemp2 + (fSlow2 * fRec23_0));
             fRec22_0 = fVec7[(IOTA - 1116) & 2047];
             float fTemp3 =
-                    (((((((fRec22_0 + fRec20_0) + fRec18_0) + fRec16_0) + fRec14_0) + fRec12_0) + fRec10_0) + fRec8_0);
+            (((((((fRec22_0 + fRec20_0) + fRec18_0) + fRec16_0) + fRec14_0) + fRec12_0) + fRec10_0) + fRec8_0);
             fVec8[IOTA & 1023] = (fTemp3 + (0.5f * fRec6_1));
             fRec6_0 = fVec8[(IOTA - 556) & 1023];
             float fRec7 = (0 - (fTemp3 - fRec6_1));
@@ -240,7 +244,7 @@ public class Reverb implements DSPNodeProcess {
             fVec19[p] = (fTemp2 + (fSlow2 * fRec47_0));
             fRec46_0 = fVec19[(IOTA - 1139) & 2047];
             float fTemp4 =
-                    (((((((fRec46_0 + fRec44_0) + fRec42_0) + fRec40_0) + fRec38_0) + fRec36_0) + fRec34_0) + fRec32_0);
+            (((((((fRec46_0 + fRec44_0) + fRec42_0) + fRec40_0) + fRec38_0) + fRec36_0) + fRec34_0) + fRec32_0);
             fVec20[IOTA & 1023] = (fTemp4 + (0.5f * fRec30_1));
             fRec30_0 = fVec20[(IOTA - 579) & 1023];
             float fRec31 = (0 - (fTemp4 - fRec30_1));
@@ -328,8 +332,8 @@ public class Reverb implements DSPNodeProcess {
      */
     private static class GlideVar {
 
-        private final float largest_diff;
         private float current;
+        private final float largest_diff;
         private float to;
 
         public GlideVar(float init_val, float largest_diff) {

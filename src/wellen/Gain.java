@@ -17,8 +17,35 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package wellen.effect;
+package wellen;
 
-public interface EffectMono {
-    void out(float[] pOutputSignal);
+public class Gain implements EffectMono, EffectStereo {
+    private float mGain;
+
+    public Gain() {
+        mGain = 1.0f;
+    }
+
+    public float get_gain() {
+        return mGain;
+    }
+
+    public void set_gain(float pGain) {
+        mGain = pGain;
+    }
+
+    @Override
+    public void out(float[] pOutputSignalLeft, float[] pOutputSignalRight) {
+        for (int i = 0; i < pOutputSignalLeft.length; i++) {
+            pOutputSignalLeft[i] *= mGain;
+            if (pOutputSignalRight != null) {
+                pOutputSignalRight[i] *= mGain;
+            }
+        }
+    }
+
+    @Override
+    public void out(float[] pOutputSignal) {
+        out(pOutputSignal, null);
+    }
 }

@@ -61,7 +61,7 @@ public class BeatEvent {
     /**
      * add {@link wellen.BeatListener}
      *
-     * @param pListener
+     * @param pListener listener
      */
     public void add(BeatListener pListener) {
         mListeners.add(pListener);
