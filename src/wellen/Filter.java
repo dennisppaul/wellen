@@ -2,7 +2,7 @@
  * Wellen
  *
  * This file is part of the *wellen* library (https://github.com/dennisppaul/wellen).f
- * Copyright (c) 2020 Dennis P Paul.f
+ * Copyright (c) 2022 Dennis P Paul.f
  *
  * This library is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

@@ -5,9 +5,9 @@ import wellen.DSP;
 import wellen.Tone;
 import wellen.ToneEngineInternal;
 import wellen.Wellen;
-import wellen.tests.rakarrack.RRRecognizer;
+import wellen.effect.RRRecognizer;
 
-import static wellen.tests.rakarrack.RRUtilities.memcpy;
+import static wellen.effect.RRUtilities.memcpy;
 
 public class TestNoteRecognizer extends PApplet {
 

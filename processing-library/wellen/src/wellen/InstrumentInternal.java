@@ -2,7 +2,7 @@
  * Wellen
  *
  * This file is part of the *wellen* library (https://github.com/dennisppaul/wellen).
- * Copyright (c) 2020 Dennis P Paul.
+ * Copyright (c) 2022 Dennis P Paul.
  *
  * This library is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,23 +22,25 @@ package wellen;
 /**
  * implementation of {@link wellen.Instrument} for the internal tone engine.
  */
-public class InstrumentInternal extends Instrument implements DSPNodeOutput {
+public class InstrumentInternal extends Instrument implements DSPNodeOutputSignal {
 
     public static final float DEFAULT_FREQUENCY = 220.0f;
     public static final int DEFAULT_WAVETABLE_SIZE = 512;
     protected final ADSR mADSR;
-    protected final Wavetable mVCO;
-    protected final Wavetable mFrequencyLFO;
     protected final Wavetable mAmplitudeLFO;
+    protected final Wavetable mFrequencyLFO;
     protected final LowPassFilter mLPF;
-    private final int mSamplingRate;
+    protected final Wavetable mVCO;
     private float mAmp;
     private float mFreq;
     private float mFreqOffset;
+    private int mNumChannels;
     private int mOscType;
+    private final int mSamplingRate;
 
     public InstrumentInternal(int pID, int pSamplingRate, int pWavetableSize) {
         super(pID);
+        mNumChannels = 1;
         mSamplingRate = pSamplingRate;
         mADSR = new ADSR(pSamplingRate);
         mADSR.set_attack(Wellen.DEFAULT_ATTACK);
@@ -82,22 +84,30 @@ public class InstrumentInternal extends Instrument implements DSPNodeOutput {
         this(pID, Wellen.DEFAULT_SAMPLING_RATE, DEFAULT_WAVETABLE_SIZE);
     }
 
+//    @Override
+//    public float output() {
+//        final Signal mSignal = new Signal(1);
+//        output(mSignal);
+//        return mSignal.signal[0];
+//    }
+
     @Override
-    public float output() {
-        final float mLFOFreq = mEnableFrequencyLFO ? mFrequencyLFO.output() : 0.0f;
-        final float mLFOAmp = mEnableAmplitudeLFO ? mAmplitudeLFO.output() : 0.0f;
+    public void output(Signal pSignal) {
+        if (pSignal.signal.length > 0) {
+            final float mLFOFreq = mEnableFrequencyLFO ? mFrequencyLFO.output() : 0.0f;
+            final float mLFOAmp = mEnableAmplitudeLFO ? mAmplitudeLFO.output() : 0.0f;
 
-        mVCO.set_frequency(mFreq + mLFOFreq + mFreqOffset);
-        mVCO.set_amplitude((mAmp + mLFOAmp) * (mEnableAmplitudeLFO ? 0.5f : 1.0f));
+            mVCO.set_frequency(mFreq + mLFOFreq + mFreqOffset);
+            mVCO.set_amplitude((mAmp + mLFOAmp) * (mEnableAmplitudeLFO ? 0.5f : 1.0f));
 
-        final float mADSRAmp = mEnableADSR ? mADSR.output() : 1.0f;
-        float mSample = mVCO.output();
-        if (mEnableLPF) {
-            mSample = mLPF.process(mSample);
+            final float mADSRAmp = mEnableADSR ? mADSR.output() : 1.0f;
+            float mSample = mVCO.output();
+            if (mEnableLPF) {
+                mSample = mLPF.process(mSample);
+            }
+            mSample = Wellen.clamp(mSample, -1.0f, 1.0f);
+            pSignal.signal[0] = mADSRAmp * mSample;
         }
-        mSample = Wellen.clamp(mSample, -1.0f, 1.0f);
-
-        return mADSRAmp * mSample;
     }
 
     @Override
@@ -236,5 +246,13 @@ public class InstrumentInternal extends Instrument implements DSPNodeOutput {
 
     public Wavetable get_VCO() {
         return mVCO;
+    }
+
+    public int get_channels() {
+        return mNumChannels;
+    }
+
+    public void set_channels(int pNumChannels) {
+        mNumChannels = pNumChannels;
     }
 }
