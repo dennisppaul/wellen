@@ -76,9 +76,9 @@ public class RRCompressor implements EffectStereo {
     "Compressor Threshold","146","1",
     */
 
-    public static final int PRESET_2_to_1 = 0;
-    public static final int PRESET_4_to_1 = 1;
-    public static final int PRESET_8_to_1 = 2;
+    public static final int PRESET_2_TO_1 = 0;
+    public static final int PRESET_4_TO_1 = 1;
+    public static final int PRESET_8_TO_1 = 2;
     public static final int PRESET_FINAL_LIMITER = 3;
     public static final int PRESET_HARMONIC_ENHANCER = 4;
     public static final int PRESET_BAND_COMP_BAND = 5;
@@ -171,7 +171,7 @@ public class RRCompressor implements EffectStereo {
         clipping = 0;
         limit = 0;
 
-        Ppreset = PRESET_2_to_1;
+        Ppreset = PRESET_2_TO_1;
         setpreset(Ppreset);
     }
 
