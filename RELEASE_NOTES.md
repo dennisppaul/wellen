@@ -1,5 +1,21 @@
 # wellen / release notes
 
+## v0.8 (20220427)
+
+- added `HarmonicTable`
+- added in- and out-point in `Sampler`
+- added convenience methods to `EventReceiverMIDI` ( i.e `midi_note_on(channel, note, velocity)`, `midi_note_off(channel, note)`, `midi_control_change(channel, number, value)`, `midi_program_change(channel, number, value)`, `midi_clock_tick()`, `midi_clock_start()`, `midi_clock_continue()`, `midi_clock_stop()`, `midi_clock_song_position_pointer(offset)` )
+- added new distortion types to `Distortion`
+- added `Pan` with three different panning strategies
+- added `FMSynthesis`
+- added mechanism to clean up `Beat` timers
+- fixed a conversion error which caused noise line input
+- changed default sampling rate to 48KHz
+- added example `ExampleExternal09RecordWAV` for recording line input into WAV files
+- added a series of effects e.g echo, distorion, compressor ( adapted from [rakarrack](http://rakarrack.sourceforge.net) a guitar effect processor app written in C/C++ which in turn is using source code adpated from [ZynAddSubFX](https://en.wikipedia.org/wiki/ZynAddSubFX) )
+- added master effects to `ToneEngineInternal`
+- added master volume to `ToneEngineInternal`
+
 ## v0.7 (20210105)
 
 - added instrument library
