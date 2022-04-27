@@ -6,9 +6,9 @@ import wellen.effect.RRCompressor;
 
 import static wellen.Wellen.DEFAULT_AUDIOBLOCK_SIZE;
 import static wellen.Wellen.clamp;
-import static wellen.effect.RRCompressor.PRESET_2_to_1;
-import static wellen.effect.RRCompressor.PRESET_4_to_1;
-import static wellen.effect.RRCompressor.PRESET_8_to_1;
+import static wellen.effect.RRCompressor.PRESET_2_TO_1;
+import static wellen.effect.RRCompressor.PRESET_4_TO_1;
+import static wellen.effect.RRCompressor.PRESET_8_TO_1;
 import static wellen.effect.RRCompressor.PRESET_BAND_COMP_BAND;
 import static wellen.effect.RRCompressor.PRESET_END_COMP_BAND;
 import static wellen.effect.RRCompressor.PRESET_FINAL_LIMITER;
@@ -38,13 +38,13 @@ public class ExampleRRCompressor extends PApplet {
     public void keyPressed() {
         switch (key) {
             case '1':
-                mCompressor.setpreset(PRESET_2_to_1);
+                mCompressor.setpreset(PRESET_2_TO_1);
                 break;
             case '2':
-                mCompressor.setpreset(PRESET_4_to_1);
+                mCompressor.setpreset(PRESET_4_TO_1);
                 break;
             case '3':
-                mCompressor.setpreset(PRESET_8_to_1);
+                mCompressor.setpreset(PRESET_8_TO_1);
                 break;
             case '4':
                 mCompressor.setpreset(PRESET_FINAL_LIMITER);
