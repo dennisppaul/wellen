@@ -5,7 +5,7 @@ import wellen.DSP;
 import wellen.Sampler;
 import wellen.Wellen;
 
-public class ExampleExternal08ImportExportWAV extends PApplet {
+public class ExampleExternal09ImportExportWAV extends PApplet {
 
     /**
      * this example demonstrates how to export sample data to a WAV file and then import the WAV file to play it back
@@ -64,6 +64,6 @@ public class ExampleExternal08ImportExportWAV extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main(ExampleExternal08ImportExportWAV.class.getName());
+        PApplet.main(ExampleExternal09ImportExportWAV.class.getName());
     }
 }

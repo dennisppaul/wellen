@@ -4,7 +4,7 @@ package wellen;
  * "The Harmonic Table note-layout, or tonal array, is a key layout for musical instruments that offers interesting
  * advantages over the traditional keyboard layout."
  *
- * @REF(https://en.wikipedia.org/wiki/Harmonic_table_note_layout)
+ * {@literal @}REF(https://en.wikipedia.org/wiki/Harmonic_table_note_layout)
  */
 public class HarmonicTable {
 

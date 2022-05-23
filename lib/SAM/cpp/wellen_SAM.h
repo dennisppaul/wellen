@@ -57,6 +57,14 @@ JNIEXPORT void JNICALL Java_wellen_SAM_set_1throat
 
 /*
  * Class:     wellen_SAM
+ * Method:    convert_text_to_phonemes
+ * Signature: (Ljava/lang/String;)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_wellen_SAM_convert_1text_1to_1phonemes
+  (JNIEnv *, jobject, jstring);
+
+/*
+ * Class:     wellen_SAM
  * Method:    speak
  * Signature: (Ljava/lang/String;Z)V
  */

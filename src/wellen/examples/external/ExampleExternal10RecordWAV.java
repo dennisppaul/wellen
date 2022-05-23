@@ -6,7 +6,7 @@ import wellen.Wellen;
 
 import java.util.ArrayList;
 
-public class ExampleExternal09RecordWAV extends PApplet {
+public class ExampleExternal10RecordWAV extends PApplet {
 
     /*
      * this example demonstrates how to record an input signal into a WAV file.
@@ -78,6 +78,6 @@ public class ExampleExternal09RecordWAV extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main(ExampleExternal09RecordWAV.class.getName());
+        PApplet.main(ExampleExternal10RecordWAV.class.getName());
     }
 }

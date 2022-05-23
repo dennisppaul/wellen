@@ -6,7 +6,7 @@ package wellen;
  * it is usually used to control the amplitude of an *oscillator*.
  *
  * <pre><code>
- *                |----->|-->|   |-->|
+ *                |-----›|--›|   |--›|
  *                |---A--|-D-|-S-|-R-|
  *                |      /\
  *                |     /  \

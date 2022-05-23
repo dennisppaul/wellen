@@ -24,6 +24,22 @@ import java.lang.reflect.Method;
 
 /**
  * listens to incoming MIDI messages.
+ * <p>
+ * the following callback methods are available:
+ *
+ * <pre>
+ * <code>
+ * midi_note_on(int channel, int pitch, int velocity)
+ * midi_note_off(int channel, int pitch)
+ * midi_control_change(int channel, int number, int value)
+ * midi_program_change(int channel, int number, int value)
+ * midi_clock_tick()
+ * midi_clock_start()
+ * midi_clock_continue()
+ * midi_clock_stop()
+ * event_receive(int command, float[] data)
+ * </code>
+ * </pre>
  */
 public class EventReceiverMIDI implements MidiInListener {
 

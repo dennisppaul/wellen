@@ -13,16 +13,16 @@ using namespace std;
 
 void speak(string pText, bool pUsePhonemes=false) {
     char input[256];
+    for(uint8_t i=0; i<255; i++) input[i] = 0;
     if (pUsePhonemes) {
-        strcpy(input, pText.c_str());
+        input[0] = ' ';
+        strcat(input, pText.c_str());
+        strcat(input, "\x9b\0");
     } else {
-        char mText[256];
-        strcpy(mText, pText.c_str());
-        for(uint8_t i=0; i<255; i++) input[i] = 0;
-        strncat(input, mText, 255);
-        strncat(input, "[", 255);
+        strcat(input, pText.c_str());
+        strcat(input, "[");
         TextToPhonemes(input);
-        //                cout << "TextToPhonemes: " << input << endl;
+//         cout << "TextToPhonemes: " << input << endl;
     }
     SetInput(input);
     SAMMain();
@@ -101,6 +101,24 @@ JNIEXPORT void JNICALL Java_wellen_SAM_set_1speed
 JNIEXPORT void JNICALL Java_wellen_SAM_set_1throat
   (JNIEnv *, jobject, jint pThroat) {
     SetThroat(pThroat); // default: throat = 128
+}
+
+/*
+ * Class:     wellen_SAM
+ * Method:    convert_text_to_phonemes
+ * Signature: (Ljava/lang/String;)Ljava/lang/String;
+ */
+JNIEXPORT jstring JNICALL Java_wellen_SAM_convert_1text_1to_1phonemes
+  (JNIEnv *env, jobject jobj, jstring text) {
+    const char * textStr;
+    textStr = env->GetStringUTFChars( text, NULL ) ;
+
+    char phonemes[256];
+    for(uint8_t i=0; i<255; i++) phonemes[i] = 0;
+    strcat(phonemes, textStr);
+    strcat(phonemes, "[");
+    TextToPhonemes(phonemes);
+    return(env->NewStringUTF(phonemes));
 }
 
 /*

@@ -9,7 +9,7 @@ public class ExampleExternal07SAM extends PApplet {
 
     /*
      * this example demonstrates how to use the SAM ( Software Automatic Mouth ) a speech software first published in
-     * 1982 for Commodore C64 ( MacOS only ).
+     * 1982 for Commodore C64 ( macOS only ).
      *
      * move and drag mouse to change parameters.
      */
