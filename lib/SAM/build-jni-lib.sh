@@ -65,9 +65,11 @@ fi
 MACOS_DYLIB=libjni_wellen_sam.dylib
 if [ -f "$BUILD_PATH/$MACOS_DYLIB" ]; then
     mv $BUILD_PATH/$MACOS_DYLIB ../ 
+    echo "copying library: "$BUILD_PATH/$MACOS_DYLIB
 fi
 LINUX_DYLIB=libjni_wellen_sam.so
-if [ -f "$BUILD_PATH/$MACOS_DYLIB" ]; then
+if [ -f "$BUILD_PATH/$LINUX_DYLIB" ]; then
+    echo "copying library: "$BUILD_PATH/$LINUX_DYLIB
     mv $BUILD_PATH/$LINUX_DYLIB ../ 
 fi
 
