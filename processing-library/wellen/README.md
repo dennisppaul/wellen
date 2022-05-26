@@ -1,18 +1,18 @@
-# wellen
+# Wellen
 
 ![](./resources/wellen-logo.png)
 
 *wellen* is a framework for exploring and teaching generative music making and algorithmic compositions. it facilitates simple ways of playing musical notes, facilitates easy access to low-level digital signal processing (DSP) and supplies rhythm and timing as well as some *standard* muscial mechanics. the library acts as an adapter to various sound in- + outputs like MIDI, OSC, or digital/analog audio. the library is hosted on github [wellen](https://github.com/dennisppaul/wellen).
 
-## installation
+## Installation
 
 the library can be installed as a [Processing library](https://processing.org/reference/libraries/) via the libray manager ( `Sketch > Import Library… > Add Library…` ) or by unpacking the `wellen.zip` archive into the Processing library folder. a step-by-step introduction to the library as well as extended applications can be found under `examples`.
 
-### dependencies
+### Dependencies
 
 *wellen* makes use of the [oscP5](http://sojamo.de/code/) library to communicate over network with OSC ( see e.g `ExampleExternal04OSCToneEngine` ). the library can be installed via the processing library installer.
 
-## concepts
+## Concepts
 
 in the screencast series [Wellen](https://www.youtube.com/playlist?list=PLXJNr6N-Bu4NzkP4UJ5m-9721MdaZ6v-q) some of the examples are explained in more detail. the text below explains the core concepts of the *wellen* library:
 
@@ -32,7 +32,7 @@ although `Tone` is designed to play musical notes ( arranged in half-tone steps 
 
 this schematic summarizes the relation of the different components that comprise an instrument in *wellen*. all components can be dis- + enabled ( see `ExampleInstruments04LFOs` + `ExampleInstruments05LPF` ) and overridden to implement custom behaviors ( see `ExampleInstruments09CustomDSPInstrument` ).
 
-*wellen* comes with mechanisms to send messages to other applications or machines via MIDI ( see `ExampleBasics06MIDI` ) or OSC ( see `ExampleExternal04OSCToneEngine` ) or can even use multiple *tone engines* at the same time ( see `ExampleExternal01MultipleToneEngines` ). likewise *wellen* can also receive events from other applications or machines with `EventReceiverMIDI` via MIDI and `EventReceiverOSC` via OSC ( see `ExampleExternal05ReceiveMIDIandOSC` ).
+*wellen* comes with mechanisms to send messages to other applications or machines via MIDI ( see `ExampleBasics06MIDI` ) or OSC ( see `ExampleExternal04OSCToneEngine` ) or can even use multiple *tone engines* at the same time ( see `ExampleExternal01MIDIToneEngineWithInternalToneEngine` ). likewise *wellen* can also receive events from other applications or machines with `EventReceiverMIDI` via MIDI and `EventReceiverOSC` via OSC ( see `ExampleExternal05ReceiveMIDIandOSC` ).
 
 ### `DSP`
 
@@ -56,7 +56,7 @@ a beat can also be triggered by an external MIDI clock ( see `ExampleExternal02M
 
 to synchronize a beat to `DSP` it can also be triggered by audio system requests ( see `ExampleDSP11BeatDSP` ).
 
-### other *muscial* techniques
+### Other *Muscial* Techniques
 
 with `Scale` values can be transformed into intervals based on musical scales ( see `ExampleBasics02Scales` ).
 
@@ -64,6 +64,41 @@ the `Sequencer` supplies a simple structure to facilitate the recording and reca
 
 `Arpeggiator` works in a similar way but schedules a series of notes based on a predefined pattern and a base note.
 
-## reference
+## Reference
 
 generated [reference](https://dennisppaul.github.io/wellen) of the library
+
+## Setup Internal MIDI Communication 
+
+### macOS
+
+macOS provides a mechanism to send *virtual* MIDI messages internally. the technique is called *Inter-Application Communication* (IAC). IAC can be used to send and receive MIDI messages ( e.g `Note On/Off`, `Control Changes` + `MIDI Clock` ). to configure IAC follow the steps below:
+
+- start application *Audio MIDI Setup* located in `/System/Applications/Utilities/Audio MIDI Setup.app`
+- open *MIDI Studio* from menu `Window > Show MIDI Studio` ( or `CMD+2` )
+- double click the icon `IAC Driver`
+- check the box `Device is online`
+- make sure there is at least one port in the `Ports` section ( default name is `Bus 1` )
+- optionally add additional ports
+- close *Audio MIDI Setup*
+
+now the configured ports are avialable as virtual MIDI ports in macOS.
+
+### linux
+
+@todo
+
+### windows
+
+@todo
+
+### Using IAC in *wellen* 
+
+in a *wellen* application the available MIDI ports can be listed with `Wellen.dumpMidiInputDevices()` + `Wellen.dumpMidiOutputDevices()`.
+
+the following examples demonstrate how to send and receive MIDI messages:
+
+- `ExampleBasics06MIDI`
+- `ExampleExternal01MIDIToneEngineWithInternalToneEngine`
+- `ExampleExternal02MIDIClock`
+- `ExampleExternal03MIDIExternalKeyboard`
