@@ -126,6 +126,22 @@ public class DSP implements AudioBufferRenderer {
     }
 
     public static DSP start(Object pObject,
+                            String pOutputDeviceName,
+                            int pNumberOutputChannels,
+                            String pInputDeviceName,
+                            int pNumberInputChannels,
+                            int pSamplingRate,
+                            int pAudioBlockSize) {
+        return start(pObject,
+                     Wellen.queryAudioInputAndOutputDevices(pOutputDeviceName, false),
+                     pNumberOutputChannels,
+                     Wellen.queryAudioInputAndOutputDevices(pInputDeviceName, false),
+                     pNumberInputChannels,
+                     pSamplingRate,
+                     pAudioBlockSize);
+    }
+
+    public static DSP start(Object pObject,
                             int pOutputDevice,
                             int pNumberOutputChannels,
                             int pInputDevice,
@@ -150,8 +166,13 @@ public class DSP implements AudioBufferRenderer {
 //        return mInstance;
     }
 
-    public static DSP start(Object pObject, int pOutputDevice, int pNumberOutputChannels, int pInputDevice,
-                            int pNumberInputChannels, int pSamplingRate, int pAudioBlockSize) {
+    public static DSP start(Object pObject,
+                            int pOutputDevice,
+                            int pNumberOutputChannels,
+                            int pInputDevice,
+                            int pNumberInputChannels,
+                            int pSamplingRate,
+                            int pAudioBlockSize) {
         if (mInstance == null) {
             mInstance = new DSP(pObject, pNumberOutputChannels, pNumberInputChannels);
             mAudioPlayer = new AudioBufferManager(mInstance,

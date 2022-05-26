@@ -5,7 +5,7 @@ import wellen.ToneEngineInternal;
 import wellen.ToneEngineMIDI;
 import wellen.Wellen;
 
-public class ExampleExternal01MultipleToneEngines extends PApplet {
+public class ExampleExternal01MIDIToneEngineWithInternalToneEngine extends PApplet {
 
     /*
      * this example demonstrates how to use multiple tone engines ( i.e midi + internal ) at the same time.
@@ -38,18 +38,20 @@ public class ExampleExternal01MultipleToneEngines extends PApplet {
                 mToneEngineMIDI.is_playing() ? 100 : 5);
     }
 
+    int mNote;
+
     public void mousePressed() {
-        int mNote = 45 + (int) random(0, 12);
+        mNote = 45 + (int) random(0, 12);
         mToneEngineInternal.note_on(mNote, 100);
         mToneEngineMIDI.note_on(mNote, 100);
     }
 
     public void mouseReleased() {
         mToneEngineInternal.note_off();
-        mToneEngineMIDI.note_off();
+        mToneEngineMIDI.note_off(mNote);
     }
 
     public static void main(String[] args) {
-        PApplet.main(ExampleExternal01MultipleToneEngines.class.getName());
+        PApplet.main(ExampleExternal01MIDIToneEngineWithInternalToneEngine.class.getName());
     }
 }

@@ -203,10 +203,17 @@ public class Wellen {
     }
 
     public static void dumpAudioInputAndOutputDevices() {
-        System.out.println("+-------------------------------------------------------+");
-        System.out.println("+ AUDIO DEVICES ( Audio System )");
-        System.out.println("+-------------------------------------------------------+");
+        queryAudioInputAndOutputDevices(null, true);
+    }
 
+    public static int queryAudioInputAndOutputDevices(String pDeviceName, boolean pPrintDevices) {
+        if (pPrintDevices) {
+            System.out.println("+-------------------------------------------------------+");
+            System.out.println("+ AUDIO DEVICES ( Audio System )");
+            System.out.println("+-------------------------------------------------------+");
+        }
+
+        int mSelectedID = Wellen.DEFAULT_AUDIO_DEVICE;
         for (int i = 0; i < AudioSystem.getMixerInfo().length; i++) {
             int mInputChannels = 0;
             int mOutputChannels = 0;
@@ -239,17 +246,36 @@ public class Wellen {
             }
 
             if (mInputChannels + mOutputChannels > 0) {
-                final String mID = i + "\t:";
+                final String mID = i + getSpacesFrom(i, 3) + ":";
                 final String mName = AudioSystem.getMixerInfo()[i].getName();
-                System.out.println(
-                "+ " + mID + " ( IN:" + mInputChannels + " / OUT:" + mOutputChannels + " ) : \"" + mName + "\"");
+                if (pPrintDevices) {
+                    System.out.println("+ " + mID +
+                                       " ( IN:" + mInputChannels +
+                                       " / OUT:" + mOutputChannels +
+                                       " ) : \"" + mName + "\"");
+                }
+                if (pDeviceName != null && pDeviceName.equalsIgnoreCase(mName)) {
+                    mSelectedID = i;
+                }
             }
         }
-        System.out.println("+-------------------------------------------------------+");
-        System.out.println();
+        if (pPrintDevices) {
+            System.out.println("+-------------------------------------------------------+");
+            System.out.println();
+        }
+        return mSelectedID;
     }
 
-    public static void dumpMidiInputDevices() {
+    private static String getSpacesFrom(int pNumbers, int pTotalNumberOfCharacters) {
+        int l = pTotalNumberOfCharacters - String.valueOf(pNumbers).length();
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < l; i++) {
+            sb.append(' ');
+        }
+        return sb.toString();
+    }
+
+    public static String[] dumpMidiInputDevices() {
         final String[] mInputNames = MidiIn.availableInputs();
         System.out.println("+-------------------------------------------------------+");
         System.out.println("+ MIDI INPUT DEVICES ( aka Ports or Buses )");
@@ -260,9 +286,10 @@ public class Wellen {
         }
         System.out.println("+-------------------------------------------------------+");
         System.out.println();
+        return mInputNames;
     }
 
-    public static void dumpMidiOutputDevices() {
+    public static String[] dumpMidiOutputDevices() {
         final String[] mOutputNames = MidiOut.availableOutputs();
         System.out.println("+-------------------------------------------------------+");
         System.out.println("+ MIDI OUTPUT DEVICES ( aka Ports or Buses )");
@@ -273,6 +300,7 @@ public class Wellen {
         }
         System.out.println("+-------------------------------------------------------+");
         System.out.println();
+        return mOutputNames;
     }
 
     public static void exportWAV(PApplet p, String pFilepath, float[][] pBuffer, int pBitsPerSignal, int pSignalRate,

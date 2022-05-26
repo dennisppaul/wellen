@@ -2,7 +2,7 @@ import wellen.*;
 
 /*
  * this example demonstrates how to use the SAM ( Software Automatic Mouth ) a speech software first published in
- * 1982 for Commodore C64 ( macOS only ).
+ * 1982 for Commodore C64 ( macOS + linux only ).
  *
  * move and drag mouse to change parameters.
  */

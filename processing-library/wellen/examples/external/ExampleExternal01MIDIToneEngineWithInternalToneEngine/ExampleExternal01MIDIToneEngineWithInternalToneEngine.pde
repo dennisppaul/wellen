@@ -31,14 +31,15 @@ void draw() {
             mToneEngineMIDI.is_playing() ? 100 : 5,
             mToneEngineMIDI.is_playing() ? 100 : 5);
 }
+int mNote;
 
 void mousePressed() {
-    int mNote = 45 + (int) random(0, 12);
+    mNote = 45 + (int) random(0, 12);
     mToneEngineInternal.note_on(mNote, 100);
     mToneEngineMIDI.note_on(mNote, 100);
 }
 
 void mouseReleased() {
     mToneEngineInternal.note_off();
-    mToneEngineMIDI.note_off();
+    mToneEngineMIDI.note_off(mNote);
 }

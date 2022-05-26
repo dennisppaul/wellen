@@ -10,9 +10,9 @@ import wellen.Tone;
 public class ExampleExternal08SAMSinging extends PApplet {
 
     /*
-     * this example demonstrates how to use the SAM ( Software Automatic Mouth ) a speech software first published in
-     * 1982 for Commodore C64 ( macOS only ).
+     * this example demonstrates how to make SAM sing.
      *
+     * move and drag mouse to change parameters.
      */
 
     private SAM mSAM;
