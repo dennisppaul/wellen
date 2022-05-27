@@ -35,6 +35,7 @@ public class BeatMIDI implements MidiInListener {
     private Method mMethod = null;
     private int mTickPPQNCounter = 0;
     private boolean mIsRunning = false;
+    private boolean mResetBeatCounterAtStop = true;
     private float mBPMEstimate = 0;
     private long mBPMMeasure;
     private int mBPMSamplerCounter = 0;
@@ -60,6 +61,10 @@ public class BeatMIDI implements MidiInListener {
         MidiIn mMidiIn = new MidiIn(pMidiInput);
         mMidiIn.addListener(mBeatMIDI);
         return mBeatMIDI;
+    }
+
+    public void reset_beat_counter_at_stop(boolean pResetBeatCounterAtStop) {
+        mResetBeatCounterAtStop = pResetBeatCounterAtStop;
     }
 
     private static long _timer() {
@@ -166,6 +171,9 @@ public class BeatMIDI implements MidiInListener {
     }
 
     public void stop() {
+        if (mResetBeatCounterAtStop) {
+            mTickPPQNCounter = 0;
+        }
         mIsRunning = false;
     }
 
