@@ -31,6 +31,8 @@ for i in ${ADDITIONAL_LIBS[@]}; do
 done
 printJob "copying resources"
 sh copy_resources.sh $LIB_NAME
+printJob "copying tools"
+sh copy_tools.sh $LIB_NAME
 printJob "copying src"
 sh copy_src.sh $LIB_NAME
 printJob "copying README"

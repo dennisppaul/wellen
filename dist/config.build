@@ -5,3 +5,4 @@ SKETCH_IMPORTS=( )
 BASE_COLOR=59
 ADDITIONAL_LIBS=( libjni_wellen_sam.dylib libjni_wellen_sam.so )
 RESOURCES=( teilchen.raw a_portrait_in_reverse.raw )
+TOOLS=( midiclock.macos )

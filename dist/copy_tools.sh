@@ -5,8 +5,8 @@ source config.build
 #####################################################
 
 LIB_NAME=$1
-DIR_NAME=resources
-FILE_LIST=${RESOURCES[@]}
+DIR_NAME=tools
+FILE_LIST=${TOOLS[@]}
 
 #####################################################
 
