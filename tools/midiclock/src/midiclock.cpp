@@ -17,6 +17,11 @@ typedef std::chrono::high_resolution_clock Clock;
     #define SLEEP( mikroseconds ) usleep( (unsigned long) ( mikroseconds ) )
 #endif
 
+#ifdef __LINUX_ALSA__
+#endif
+#ifdef __MACOSX_CORE__
+#endif
+
 // These functions should be embedded in a try/catch block in case of
 // an exception.  It offers the user a choice of MIDI ports to open.
 // It returns false if there are no ports available.
@@ -281,11 +286,28 @@ int main( int argc, const char *argv[] ) {
     InputParser input(argc, argv);
     if (input.cmdOptionExists("-h")) {
         std::cout << "MIDI clock generator" << std::endl;
-        std::cout << "Usage: midiclock.macos [OPTION]" << std::endl;
+        std::cout << std::endl;
+        std::cout << "Usage:" << std::endl;
+#ifdef __LINUX_ALSA__
+        std::cout << "  midiclock.linux [OPTION]" << std::endl;
+#endif
+#ifdef __MACOSX_CORE__
+        std::cout << "  midiclock.macos [OPTION]" << std::endl;
+#endif
         std::cout << std::endl;
         std::cout << "Options:" << std::endl;
-        std::cout << "  -s                  speed in beats per minute" << std::endl;
-        std::cout << "  -p                  full name of MIDI port ( use quotes or escape spaces )" << std::endl;
+        std::cout << "  -s                  set speed in beats per minute (BPM)" << std::endl;
+        std::cout << "  -p                  MIDI port as string ( use quotes or escape spaces ) or index" << std::endl;
+        std::cout << "  -d                  print MIDI ports" << std::endl;
+        std::cout << "  -v                  run in verbose mode" << std::endl;
+        std::cout << std::endl;
+        std::cout << "Example:" << std::endl;
+#ifdef __LINUX_ALSA__
+        std::cout << "  midiclock.linux -s 140 -p \"Midi Through:Midi Through Port-0 14:0\""<< std::endl;
+#endif
+#ifdef __MACOSX_CORE__
+        std::cout << "  midiclock.macos -s 140 -p \"IAC Driver Bus 1\""<< std::endl;
+#endif
         return 0;
     }
 
