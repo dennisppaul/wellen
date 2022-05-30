@@ -21,6 +21,8 @@ package wellen;
 
 import processing.core.PApplet;
 
+import java.util.ArrayList;
+
 /**
  * plays back an array of samples at different speeds.
  */
@@ -28,6 +30,7 @@ public class Sampler implements DSPNodeOutput {
 
     public static final int NO_LOOP_POINT = -1;
     private boolean mIsPlaying;
+    private boolean mIsDone;
     private final float mSamplingRate;
     private float[] mData;
     private float mFrequency;
@@ -43,6 +46,7 @@ public class Sampler implements DSPNodeOutput {
     private int mLoopIn;
     private int mLoopOut;
     private int mEdgeFadePadding;
+    private ArrayList<SamplerListener> mSamplerListeners;
 
     public Sampler() {
         this(0);
@@ -72,8 +76,16 @@ public class Sampler implements DSPNodeOutput {
         set_amplitude(1.0f);
         set_in(0);
         set_out(mData.length - 1);
+        mSamplerListeners = new ArrayList<>();
     }
 
+    public boolean add_listener(SamplerListener pSamplerListener) {
+        return mSamplerListeners.add(pSamplerListener);
+    }
+
+    public boolean remove_listener(SamplerListener pSamplerListener) {
+        return mSamplerListeners.remove(pSamplerListener);
+    }
 
     /**
      * load the sample buffer from *raw* byte data. the method assumes a raw format with 32bit float in a value range
@@ -158,6 +170,8 @@ public class Sampler implements DSPNodeOutput {
         set_speed(mSpeed);
         set_in(0);
         set_out(mData.length - 1);
+        mLoopIn = NO_LOOP_POINT;
+        mLoopOut = NO_LOOP_POINT;
     }
 
     public void interpolate_samples(boolean pInterpolateSamples) {
@@ -168,13 +182,25 @@ public class Sampler implements DSPNodeOutput {
         return (int) mDataIndex;
     }
 
+    public boolean done() {
+        return mIsDone;
+    }
+
     public float output() {
         float mSample;
         mDataIndex += mDirectionForward ? mStepSize : -mStepSize;
         final int mPreviousIndex = (int) mDataIndex;
         if (mData.length == 0 || mDirectionForward ? (mPreviousIndex > mOut && !mLoop) :
             (mPreviousIndex < mIn && !mLoop)) {
+            if (!mIsDone) {
+                for (SamplerListener l : mSamplerListeners) {
+                    l.is_done();
+                }
+            }
+            mIsDone = true;
             return 0.0f;
+        } else {
+            mIsDone = false;
         }
         final float mFrac = mDataIndex - mPreviousIndex;
         final int mCurrentIndex = wrapIndex(mPreviousIndex);
