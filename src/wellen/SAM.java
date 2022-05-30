@@ -107,8 +107,8 @@ public class SAM implements DSPNodeOutput {
 
     public native String convert_text_to_phonemes(String pText);
 
-    public void say(String pText) {
-        say(pText, false);
+    public float[] say(String pText) {
+        return say(pText, false);
     }
 
     @Override
@@ -154,11 +154,12 @@ public class SAM implements DSPNodeOutput {
         return mBuffer;
     }
 
-    public void say(String pText, boolean pUsePhonemes) {
+    public float[] say(String pText, boolean pUsePhonemes) {
         speak(pText, pUsePhonemes);
         mBuffer = get_samples();
         mIsDoneSpeaking = (mBuffer == null) || mBuffer.length <= 0;
         mSampleBufferCounter = 0;
+        return mBuffer;
     }
 
     private native void speak(String pText, boolean pUsePhonemes);
