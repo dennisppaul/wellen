@@ -44,15 +44,17 @@ public class ExampleDSP21SamplerWithLoopPoints extends PApplet {
         /* selection */
         float x0 = map(mSampler.get_loop_in(), 0, mSampler.data().length, 0, width);
         float x1 = map(mSampler.get_loop_out(), 0, mSampler.data().length, 0, width);
-        if (mSampler.get_loop_in() < mSampler.get_loop_out()) {
-            fill(255, 127);
-            noStroke();
-            beginShape();
-            vertex(x0, 0);
-            vertex(x1, 0);
-            vertex(x1, height);
-            vertex(x0, height);
-            endShape();
+        if (mSampler.get_loop_in() >= 0 && mSampler.get_loop_out() >= 0) {
+            if (mSampler.get_loop_in() < mSampler.get_loop_out()) {
+                fill(255, 127);
+                noStroke();
+                beginShape();
+                vertex(x0, 0);
+                vertex(x1, 0);
+                vertex(x1, height);
+                vertex(x0, height);
+                endShape();
+            }
         }
         stroke(255);
         line(x0, 0, x0, height);
@@ -100,8 +102,10 @@ public class ExampleDSP21SamplerWithLoopPoints extends PApplet {
                 int[] mLoopPoints = Wellen.find_zero_crossings(mSampler.data(),
                                                                mSampler.get_loop_in(),
                                                                mSampler.get_loop_out());
-                mSampler.set_loop_in(mLoopPoints[0]);
-                mSampler.set_loop_out(mLoopPoints[1]);
+                if (mLoopPoints[0] > 0 && mLoopPoints[1] > 0) {
+                    mSampler.set_loop_in(mLoopPoints[0]);
+                    mSampler.set_loop_out(mLoopPoints[1]);
+                }
                 break;
             case ' ':
                 mSampler.set_loop_in(Sampler.NO_LOOP_POINT);

@@ -443,35 +443,37 @@ public class Wellen {
         final int ZERO_CROSSING_EDGE_FALLING = -1;
         int mAdaptedInPoint = pInPoint;
         int mAdaptedOutPoint = pOutPoint;
-        int mInPointEdgeKind = ZERO_CROSSING_EDGE_NONE;
-        {
-            float mInValue = pSampleData[pInPoint];
-            if (mInValue != 0.0f) {
-                for (int i = pInPoint + 1; i < pSampleData.length; i++) {
-                    float v = pSampleData[i];
-                    boolean mRisingEdge = (mInValue < 0 && v >= 0);
-                    boolean mFallingEdge = (mInValue > 0 && v <= 0);
-                    if (mRisingEdge || mFallingEdge) {
-                        mAdaptedInPoint = i;
-                        mInPointEdgeKind = mRisingEdge ? ZERO_CROSSING_EDGE_RISING : ZERO_CROSSING_EDGE_FALLING;
-                        break;
+        if (pInPoint > 0 && pOutPoint > 0 && pInPoint < pSampleData.length - 1 && pOutPoint < pSampleData.length - 1) {
+            int mInPointEdgeKind = ZERO_CROSSING_EDGE_NONE;
+            {
+                float mInValue = pSampleData[pInPoint];
+                if (mInValue != 0.0f) {
+                    for (int i = pInPoint + 1; i < pSampleData.length; i++) {
+                        float v = pSampleData[i];
+                        boolean mRisingEdge = (mInValue < 0 && v >= 0);
+                        boolean mFallingEdge = (mInValue > 0 && v <= 0);
+                        if (mRisingEdge || mFallingEdge) {
+                            mAdaptedInPoint = i;
+                            mInPointEdgeKind = mRisingEdge ? ZERO_CROSSING_EDGE_RISING : ZERO_CROSSING_EDGE_FALLING;
+                            break;
+                        }
                     }
                 }
             }
-        }
-        {
-            float mOutValue = pSampleData[pOutPoint];
-            if (mOutValue != 0.0f && pOutPoint > 0) {
-                for (int i = pOutPoint - 1; i > 0; i--) {
-                    float v = pSampleData[i];
-                    boolean mRisingEdge = (mOutValue < 0 && v >= 0);
-                    boolean mFallingEdge = (mOutValue > 0 && v <= 0);
-                    if (mInPointEdgeKind == 0 && (mRisingEdge || mFallingEdge)) {
-                        mAdaptedOutPoint = i;
-                        break;
-                    } else if ((mRisingEdge && mInPointEdgeKind == -1) || (mFallingEdge && mInPointEdgeKind == 1)) {
-                        mAdaptedOutPoint = i;
-                        break;
+            {
+                float mOutValue = pSampleData[pOutPoint];
+                if (mOutValue != 0.0f && pOutPoint > 0) {
+                    for (int i = pOutPoint - 1; i > 0; i--) {
+                        float v = pSampleData[i];
+                        boolean mRisingEdge = (mOutValue < 0 && v >= 0);
+                        boolean mFallingEdge = (mOutValue > 0 && v <= 0);
+                        if (mInPointEdgeKind == 0 && (mRisingEdge || mFallingEdge)) {
+                            mAdaptedOutPoint = i;
+                            break;
+                        } else if ((mRisingEdge && mInPointEdgeKind == -1) || (mFallingEdge && mInPointEdgeKind == 1)) {
+                            mAdaptedOutPoint = i;
+                            break;
+                        }
                     }
                 }
             }

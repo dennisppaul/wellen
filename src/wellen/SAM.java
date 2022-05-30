@@ -150,6 +150,10 @@ public class SAM implements DSPNodeOutput {
         }
     }
 
+    public float[] get_buffer() {
+        return mBuffer;
+    }
+
     public void say(String pText, boolean pUsePhonemes) {
         speak(pText, pUsePhonemes);
         mBuffer = get_samples();

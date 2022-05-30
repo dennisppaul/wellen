@@ -271,7 +271,9 @@ public class Sampler implements DSPNodeOutput {
     }
 
     public void set_loop_in(int pLoopIn) {
-        mLoopIn = pLoopIn;
+        if (pLoopIn >= 0 && pLoopIn < mData.length) {
+            mLoopIn = pLoopIn;
+        }
     }
 
     public int get_loop_out() {
@@ -279,6 +281,8 @@ public class Sampler implements DSPNodeOutput {
     }
 
     public void set_loop_out(int pLoopOut) {
-        mLoopOut = pLoopOut;
+        if (pLoopOut >= 0 && pLoopOut < mData.length) {
+            mLoopOut = pLoopOut;
+        }
     }
 }
