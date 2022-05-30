@@ -1,12 +1,13 @@
-package wellen.examples.external;
+package wellen.tests;
 
 import processing.core.PApplet;
 import wellen.DSP;
+import wellen.SAM;
 import wellen.Wellen;
 
 import java.util.ArrayList;
 
-public class ExampleExternal10RecordWAV extends PApplet {
+public class TestExportSAM extends PApplet {
 
     /*
      * this example demonstrates how to record an input signal into a WAV file.
@@ -15,13 +16,18 @@ public class ExampleExternal10RecordWAV extends PApplet {
 
     private boolean mIsRecording = false;
     private final ArrayList<Float> mRecordedSamples = new ArrayList<>();
+    private SAM mSAM;
 
     public void settings() {
         size(640, 480);
     }
 
     public void setup() {
-        DSP.start(this, 1, 1);
+        mSAM = new SAM();
+        mSAM.say("hello");
+
+        mIsRecording = true;
+        DSP.start(this, 1);
     }
 
     public void draw() {
@@ -30,24 +36,20 @@ public class ExampleExternal10RecordWAV extends PApplet {
         DSP.draw_buffer(g, width, height);
     }
 
-    public void audioblock(float[] pOutputSignal, float[] pInputSignal) {
+    public void audioblock(float[] pOutputSignal) {
         for (int i = 0; i < pOutputSignal.length; i++) {
-            pOutputSignal[i] = pInputSignal[i];
+            pOutputSignal[i] = mSAM.output() * 0.5f;
             if (mIsRecording) {
-                mRecordedSamples.add(pInputSignal[i]);
+                mRecordedSamples.add(pOutputSignal[i]);
             }
         }
     }
 
     public void keyPressed() {
-        if (key == 's') {
-            mRecordedSamples.clear();
-            mIsRecording = true;
-        }
-        if (key == 'e') {
+        if (key == ' ') {
             mIsRecording = false;
             /* export samples to WAV file */
-            final String WAV_FILE_NAME = "recording-" + Wellen.now() + ".wav";
+            final String WAV_FILE_NAME = "SAM-recording-" + Wellen.now() + ".wav";
             final int WAV_FILE_LENGTH = mRecordedSamples.size();
             final int NUM_OF_CHANNELS = 1;
             final float[][] mExportSamples = new float[NUM_OF_CHANNELS][WAV_FILE_LENGTH];
@@ -66,6 +68,6 @@ public class ExampleExternal10RecordWAV extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main(ExampleExternal10RecordWAV.class.getName());
+        Wellen.run_sketch_with_resources(TestExportSAM.class);
     }
 }

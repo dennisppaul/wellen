@@ -62,30 +62,33 @@ public class TestFindZeroCrossingInSampleData extends PApplet {
         mSampler.set_out(mAdaptedInOutPoints[1]);
     }
 
-    private static int[] find_zero_crossings(float[] pData, int pInPoint, int pOutPoint) {
+    private static int[] find_zero_crossings(float[] pSampleData, int pInPoint, int pOutPoint) {
+        final int ZERO_CROSSING_EDGE_NONE = 0;
+        final int ZERO_CROSSING_EDGE_RISING = 1;
+        final int ZERO_CROSSING_EDGE_FALLING = -1;
         int mAdaptedInPoint = pInPoint;
         int mAdaptedOutPoint = pOutPoint;
-        int mInPointEdgeKind = 0;
+        int mInPointEdgeKind = ZERO_CROSSING_EDGE_NONE;
         {
-            float mInValue = pData[pInPoint];
+            float mInValue = pSampleData[pInPoint];
             if (mInValue != 0.0f) {
-                for (int i = pInPoint + 1; i < pData.length; i++) {
-                    float v = pData[i];
+                for (int i = pInPoint + 1; i < pSampleData.length; i++) {
+                    float v = pSampleData[i];
                     boolean mRisingEdge = (mInValue < 0 && v >= 0);
                     boolean mFallingEdge = (mInValue > 0 && v <= 0);
                     if (mRisingEdge || mFallingEdge) {
                         mAdaptedInPoint = i;
-                        mInPointEdgeKind = mRisingEdge ? 1 : -1;
+                        mInPointEdgeKind = mRisingEdge ? ZERO_CROSSING_EDGE_RISING : ZERO_CROSSING_EDGE_FALLING;
                         break;
                     }
                 }
             }
         }
         {
-            float mOutValue = pData[pOutPoint];
+            float mOutValue = pSampleData[pOutPoint];
             if (mOutValue != 0.0f && pOutPoint > 0) {
                 for (int i = pOutPoint - 1; i > 0; i--) {
-                    float v = pData[i];
+                    float v = pSampleData[i];
                     boolean mRisingEdge = (mOutValue < 0 && v >= 0);
                     boolean mFallingEdge = (mOutValue > 0 && v <= 0);
                     if (mInPointEdgeKind == 0 && (mRisingEdge || mFallingEdge)) {
@@ -122,6 +125,6 @@ public class TestFindZeroCrossingInSampleData extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main(TestFindZeroCrossingInSampleData.class.getName());
+        Wellen.run_sketch_with_resources(TestFindZeroCrossingInSampleData.class);
     }
 }

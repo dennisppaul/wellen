@@ -32,6 +32,14 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
 
+import static processing.core.PApplet.day;
+import static processing.core.PApplet.hour;
+import static processing.core.PApplet.minute;
+import static processing.core.PApplet.month;
+import static processing.core.PApplet.nf;
+import static processing.core.PApplet.second;
+import static processing.core.PApplet.year;
+
 /**
  * contains constants and utility methods for the wellen library.
  */
@@ -415,6 +423,60 @@ public class Wellen {
             final float mValue = (float) Math.random() * mDiff + pMin;
             return mValue;
         }
+    }
+
+    public static String now() {
+        return
+        nf(year(), 4) +
+        nf(month(), 2) +
+        nf(day(), 2) +
+        "_" +
+        nf(hour(), 2) +
+        nf(minute(), 2) +
+        nf(second(), 2)
+        ;
+    }
+
+    public static int[] find_zero_crossings(float[] pSampleData, int pInPoint, int pOutPoint) {
+        final int ZERO_CROSSING_EDGE_NONE = 0;
+        final int ZERO_CROSSING_EDGE_RISING = 1;
+        final int ZERO_CROSSING_EDGE_FALLING = -1;
+        int mAdaptedInPoint = pInPoint;
+        int mAdaptedOutPoint = pOutPoint;
+        int mInPointEdgeKind = ZERO_CROSSING_EDGE_NONE;
+        {
+            float mInValue = pSampleData[pInPoint];
+            if (mInValue != 0.0f) {
+                for (int i = pInPoint + 1; i < pSampleData.length; i++) {
+                    float v = pSampleData[i];
+                    boolean mRisingEdge = (mInValue < 0 && v >= 0);
+                    boolean mFallingEdge = (mInValue > 0 && v <= 0);
+                    if (mRisingEdge || mFallingEdge) {
+                        mAdaptedInPoint = i;
+                        mInPointEdgeKind = mRisingEdge ? ZERO_CROSSING_EDGE_RISING : ZERO_CROSSING_EDGE_FALLING;
+                        break;
+                    }
+                }
+            }
+        }
+        {
+            float mOutValue = pSampleData[pOutPoint];
+            if (mOutValue != 0.0f && pOutPoint > 0) {
+                for (int i = pOutPoint - 1; i > 0; i--) {
+                    float v = pSampleData[i];
+                    boolean mRisingEdge = (mOutValue < 0 && v >= 0);
+                    boolean mFallingEdge = (mOutValue > 0 && v <= 0);
+                    if (mInPointEdgeKind == 0 && (mRisingEdge || mFallingEdge)) {
+                        mAdaptedOutPoint = i;
+                        break;
+                    } else if ((mRisingEdge && mInPointEdgeKind == -1) || (mFallingEdge && mInPointEdgeKind == 1)) {
+                        mAdaptedOutPoint = i;
+                        break;
+                    }
+                }
+            }
+        }
+        return new int[]{mAdaptedInPoint, mAdaptedOutPoint};
     }
 
     public static void run_sketch_with_resources(Class<? extends PApplet> pSketch) {

@@ -25,7 +25,7 @@ import java.text.Normalizer;
 import java.util.ArrayList;
 
 /**
- * makes use of the internal MacOS speech engine to produce text-to-speech output.
+ * makes use of the internal macOS speech engine to produce text-to-speech output.
  */
 public class SpeechSynthesis {
 

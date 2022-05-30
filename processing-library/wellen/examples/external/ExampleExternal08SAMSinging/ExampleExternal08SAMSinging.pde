@@ -1,7 +1,8 @@
 import wellen.*; 
 
 /*
- * this example demonstrates how to make SAM sing.
+ * this example demonstrates how to make SAM sing. it also demonstrates how to use phonemes instead of text. for
+ * more information on SAM see the manual: http://www.retrobits.net/atari/sam.shtml +
  *
  * move and drag mouse to change parameters.
  */

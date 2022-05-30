@@ -23,7 +23,7 @@ public class TestRerouteInteralToneEngineWithVirtualSoundCardForDSP extends PApp
     }
 
     public void setup() {
-        /* by sending the output of `Ton` to a virtual soundcard ( e.g *Blackhole* in MacOS ) the generated sounds
+        /* by sending the output of `Ton` to a virtual soundcard ( e.g *Blackhole* in macOS ) the generated sounds
          * can be used as an input for `DSP`. this presents a pipeline to apply e.g filters and effects ( e.g an echo )
          * to internally generated sounds.
          */

@@ -12,8 +12,11 @@ public class ExampleDSP07Sampler extends PApplet {
      * and amplitudes. the sample data can also be loaded from external sources. the `load` method assumes a raw audio
      * format with 32-bit floats and a value range from [-1.0, 1.0].
      *
+     * use mouse to change playback speed and amplitude. toggle looping behavior by pressing 'L'. press mouse to
+     * rewind sample ( if not set to looping ).
+     *
      * note that samples can either be played once or looped. if a sample is played once it must be rewound before it
-     * can be played again.
+     * can be played again. also note that a sample buffer can be cropped with `set_in()` + `set_out()`.
      */
 
     private Sampler mSampler;
@@ -27,7 +30,8 @@ public class ExampleDSP07Sampler extends PApplet {
         // alternatively load data with `loadBytes("audio.raw")` ( raw format, 32bit IEEE float )
         mSampler = new Sampler();
         mSampler.load(mData);
-        mSampler.loop(false);
+        mSampler.loop(true);
+        mSampler.start();
 
         DSP.start(this);
     }
@@ -51,10 +55,8 @@ public class ExampleDSP07Sampler extends PApplet {
         switch (key) {
             case 'l':
             case 'L':
-                mSampler.loop(true);
+                mSampler.loop(!mSampler.is_looping());
                 break;
-            default:
-                mSampler.loop(false);
         }
     }
 

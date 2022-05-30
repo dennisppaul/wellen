@@ -40,7 +40,7 @@ void keyPressed() {
     if (key == 'e') {
         mIsRecording = false;
         /* export samples to WAV file */
-        final String WAV_FILE_NAME = "recording-" + now() + ".wav";
+        final String WAV_FILE_NAME = "recording-" + Wellen.now() + ".wav";
         final int WAV_FILE_LENGTH = mRecordedSamples.size();
         final int NUM_OF_CHANNELS = 1;
         final float[][] mExportSamples = new float[NUM_OF_CHANNELS][WAV_FILE_LENGTH];
@@ -56,16 +56,4 @@ void keyPressed() {
         println("+++ recorded file ...... : " + WAV_FILE_NAME);
         println("+++ recorded samples ... : " + WAV_FILE_LENGTH);
     }
-}
-
-String now() {
-    return
-    nf(year(), 4) +
-    nf(month(), 2) +
-    nf(day(), 2) +
-    "_" +
-    nf(hour(), 2) +
-    nf(minute(), 2) +
-    nf(second(), 2)
-    ;
 }

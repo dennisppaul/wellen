@@ -1,7 +1,7 @@
 import wellen.*; 
 
 /*
- * this example demonstrates how to use the built-in speech synthesis engine ( MacOS only ).
+ * this example demonstrates how to use the built-in speech synthesis engine ( macOS only ).
  */
 
 SpeechSynthesis mSpeech;

@@ -26,6 +26,8 @@ import processing.core.PApplet;
  */
 public class Sampler implements DSPNodeOutput {
 
+    public static final int NO_LOOP_POINT = -1;
+    private boolean mIsPlaying;
     private final float mSamplingRate;
     private float[] mData;
     private float mFrequency;
@@ -38,6 +40,8 @@ public class Sampler implements DSPNodeOutput {
     private boolean mInterpolateSamples;
     private int mIn;
     private int mOut;
+    private int mLoopIn;
+    private int mLoopOut;
     private int mEdgeFadePadding;
 
     public Sampler() {
@@ -61,6 +65,9 @@ public class Sampler implements DSPNodeOutput {
         mEdgeFadePadding = 0;
         mIn = 0;
         mOut = 0;
+        mLoopIn = NO_LOOP_POINT;
+        mLoopOut = NO_LOOP_POINT;
+        mIsPlaying = false;
         set_speed(1.0f);
         set_amplitude(1.0f);
         set_in(0);
@@ -162,6 +169,7 @@ public class Sampler implements DSPNodeOutput {
     }
 
     public float output() {
+        float mSample;
         mDataIndex += mDirectionForward ? mStepSize : -mStepSize;
         final int mPreviousIndex = (int) mDataIndex;
         if (mData.length == 0 || mDirectionForward ? (mPreviousIndex > mOut && !mLoop) :
@@ -173,7 +181,6 @@ public class Sampler implements DSPNodeOutput {
         mDataIndex = mCurrentIndex + mFrac;
 
         /* interpolate */
-        float mSample;
         mSample = mData[mCurrentIndex];
         if (mInterpolateSamples) {
             final int mNextIndex = wrapIndex(mCurrentIndex + 1);
@@ -208,24 +215,70 @@ public class Sampler implements DSPNodeOutput {
         mDataIndex = mDirectionForward ? mIn : mOut;
     }
 
+
+    public void forward() {
+        mDataIndex = mDirectionForward ? mOut : mIn;
+    }
+
     public void loop(boolean pLoop) {
         enable_loop(pLoop);
+    }
+
+    public boolean is_looping() {
+        return mLoop;
     }
 
     public void enable_loop(boolean pLoop) {
         mLoop = pLoop;
     }
 
+
     private int last_index() {
         return mData.length - 1;
     }
 
     private int wrapIndex(int i) {
-        if (i > mOut) {
-            i = mIn;
-        } else if (i < mIn) {
-            i = mOut;
+        if (mIsPlaying && mLoopIn != NO_LOOP_POINT && mLoopOut != NO_LOOP_POINT) {
+            if (mDirectionForward) {
+                if (i > mLoopOut) {
+                    i = mLoopIn;
+                }
+            } else {
+                if (i < mLoopIn) {
+                    i = mLoopOut;
+                }
+            }
+        } else {
+            if (i > mOut) {
+                i = mIn;
+            } else if (i < mIn) {
+                i = mOut;
+            }
         }
         return i;
+    }
+
+    public void start() {
+        mIsPlaying = true;
+    }
+
+    public void stop() {
+        mIsPlaying = false;
+    }
+
+    public int get_loop_in() {
+        return mLoopIn;
+    }
+
+    public void set_loop_in(int pLoopIn) {
+        mLoopIn = pLoopIn;
+    }
+
+    public int get_loop_out() {
+        return mLoopOut;
+    }
+
+    public void set_loop_out(int pLoopOut) {
+        mLoopOut = pLoopOut;
     }
 }
