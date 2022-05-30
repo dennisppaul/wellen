@@ -1,7 +1,9 @@
 #include <iostream>
 #include <cstdlib>
 #include <chrono>
+#include <thread>
 #include <algorithm>
+#include <math.h>
 #include "RtMidi.h"
 
 using namespace std::chrono;
@@ -135,6 +137,38 @@ void MIDI_clock() {
     midiout->sendMessage( &message );
 }
 
+// from https://blat-blatnik.github.io/computerBear/making-accurate-sleep-function/
+void precise_SLEEP(uint32_t mMicroSeconds) {
+    double seconds = mMicroSeconds / 1000000.0;
+    using namespace std;
+    using namespace std::chrono;
+
+    static double estimate = 5e-3;
+    static double mean = 5e-3;
+    static double m2 = 0;
+    static int64_t count = 1;
+
+    while (seconds > estimate) {
+        auto start = high_resolution_clock::now();
+        this_thread::sleep_for(milliseconds(1));
+        auto end = high_resolution_clock::now();
+
+        double observed = (end - start).count() / 1e9;
+        seconds -= observed;
+
+        ++count;
+        double delta = observed - mean;
+        mean += delta / count;
+        m2   += delta * (observed - mean);
+        double stddev = sqrt(m2 / (count - 1));
+        estimate = mean + stddev;
+    }
+
+    // spin lock
+    auto start = high_resolution_clock::now();
+    while ((high_resolution_clock::now() - start).count() / 1e9 < seconds);
+}
+
 int init_clock_out(uint8_t pMIDIPort, uint8_t pBPM) {
  
     midiout->openPort( pMIDIPort );
@@ -167,7 +201,8 @@ int init_clock_out(uint8_t pMIDIPort, uint8_t pBPM) {
 
         end_time = Clock::now();
         auto mDelta = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time).count();
-        SLEEP(mSleepMicroSec - mDelta);
+//         SLEEP(mSleepMicroSec - mDelta);
+        precise_SLEEP(mSleepMicroSec - mDelta);
         start_time = Clock::now();
     }
 
