@@ -93,10 +93,10 @@ public class ExampleDSP21SamplerWithLoopPoints extends PApplet {
     public void keyPressed() {
         switch (key) {
             case '1':
-                mSampler.set_loop_in((int) map(mouseX, BORDER, width - BORDER, 0, mSampler.data().length));
+                mSampler.set_loop_in((int) map(mouseX, BORDER, width - BORDER, 0, mSampler.data().length - 1));
                 break;
             case '2':
-                mSampler.set_loop_out((int) map(mouseX, BORDER, width - BORDER, 0, mSampler.data().length));
+                mSampler.set_loop_out((int) map(mouseX, BORDER, width - BORDER, 0, mSampler.data().length - 1));
                 break;
             case 'z':
                 int[] mLoopPoints = Wellen.find_zero_crossings(mSampler.data(),

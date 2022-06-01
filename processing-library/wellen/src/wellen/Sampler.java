@@ -23,6 +23,8 @@ import processing.core.PApplet;
 
 import java.util.ArrayList;
 
+import static wellen.Wellen.clamp;
+
 /**
  * plays back an array of samples at different speeds.
  */
@@ -190,8 +192,8 @@ public class Sampler implements DSPNodeOutput {
         float mSample;
         mDataIndex += mDirectionForward ? mStepSize : -mStepSize;
         final int mPreviousIndex = (int) mDataIndex;
-        if (mData.length == 0 || mDirectionForward ? (mPreviousIndex > mOut && !mLoop) :
-            (mPreviousIndex < mIn && !mLoop)) {
+        if ((mData.length == 0) ||
+            (mDirectionForward ? (mPreviousIndex > mOut && !mLoop) : (mPreviousIndex < mIn && !mLoop))) {
             if (!mIsDone) {
                 for (SamplerListener l : mSamplerListeners) {
                     l.is_done();
@@ -297,9 +299,11 @@ public class Sampler implements DSPNodeOutput {
     }
 
     public void set_loop_in(int pLoopIn) {
-        if (pLoopIn >= 0 && pLoopIn < mData.length) {
-            mLoopIn = pLoopIn;
-        }
+        mLoopIn = clamp(pLoopIn, 0, mData.length - 1);
+    }
+
+    public void set_loop_in(float pLoopIn) {
+        set_loop_in((int) (pLoopIn * mData.length - 1));
     }
 
     public int get_loop_out() {
@@ -307,8 +311,10 @@ public class Sampler implements DSPNodeOutput {
     }
 
     public void set_loop_out(int pLoopOut) {
-        if (pLoopOut >= 0 && pLoopOut < mData.length) {
-            mLoopOut = pLoopOut;
-        }
+        mLoopOut = clamp(pLoopOut, 0, mData.length - 1);
+    }
+
+    public void set_loop_out(float pLoopOut) {
+        set_loop_out((int) (pLoopOut * mData.length - 1));
     }
 }

@@ -172,6 +172,17 @@ public class Wellen {
 //        return Math.max(pMin, Math.min(pMax, pValue));
     }
 
+    public static int clamp(int pValue, int pMin, int pMax) {
+        if (pValue > pMax) {
+            return pMax;
+        } else if (pValue < pMin) {
+            return pMin;
+        } else {
+            return pValue;
+        }
+//        return Math.max(pMin, Math.min(pMax, pValue));
+    }
+
     public static int clamp127(int pValue) {
         return Math.max(0, Math.min(127, pValue));
     }
