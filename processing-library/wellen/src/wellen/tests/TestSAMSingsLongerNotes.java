@@ -13,6 +13,7 @@ public class TestSAMSingsLongerNotes extends PApplet {
     private SAM mSAM;
     private SingFragment[] mWords;
     private Sampler mSampler;
+    private static final float BORDER = 32;
 
     public void settings() {
         size(640, 480);
@@ -24,25 +25,25 @@ public class TestSAMSingsLongerNotes extends PApplet {
         mSAM = new SAM();
         mSAM.set_sing_mode(true);
 
-        mWords = new SingFragment[]{new SingFragment("EH", Note.NOTE_C3, 2),
-                                    new SingFragment("VERIY", Note.NOTE_D3, 2),
-                                    new SingFragment("TAYM", Note.NOTE_D3 + 1, 1),
-                                    new SingFragment("AY", Note.NOTE_F3, 2),
-                                    new SingFragment("SIYIY", Note.NOTE_G3, 2),
-                                    new SingFragment("YUW", Note.NOTE_F3, 2),
-                                    new SingFragment("FAO", Note.NOTE_D3 + 1, 2),
-                                    new SingFragment("LIHNX", Note.NOTE_F3, 1),
-                                    new SingFragment("", Note.NOTE_F3, 1),
+        mWords = new SingFragment[]{new SingFragment("EH", Note.NOTE_C3, 2, 0.50241286f, 0.8981233f),
+                                    new SingFragment("VERIY", Note.NOTE_D3, 2, 0.85431075f, 0.9947749f),
+                                    new SingFragment("TAYM", Note.NOTE_D3 + 1, 1, 0.2726049f, 0.43558058f),
+                                    new SingFragment("AY", Note.NOTE_F3, 2, 0.021214172f, 0.42992553f),
+                                    new SingFragment("SIYIY", Note.NOTE_G3, 2, 0.5f, 0.9f),
+                                    new SingFragment("YUW", Note.NOTE_F3, 2, 0.5f, 0.9f),
+                                    new SingFragment("FAO", Note.NOTE_D3 + 1, 2, 0.5f, 0.9f),
+                                    new SingFragment("LIHNX", Note.NOTE_F3, 1, 0.5f, 0.9f),
+                                    new SingFragment("", Note.NOTE_F3, 1, 0.5f, 0.9f),
 
-                                    new SingFragment("AY", Note.NOTE_C3, 1),
-                                    new SingFragment("GEHT", Note.NOTE_A3 + 1, 2),
-                                    new SingFragment("DAWN", Note.NOTE_G3 + 1, 2),
-                                    new SingFragment("AAN", Note.NOTE_G3, 1),
-                                    new SingFragment("MAY", Note.NOTE_F3, 2),
-                                    new SingFragment("NIYZ", Note.NOTE_D3 + 1, 2),
-                                    new SingFragment("AEND", Note.NOTE_F3, 2),
-                                    new SingFragment("PREY", Note.NOTE_C3, 2),
-                                    new SingFragment("", Note.NOTE_C3, 3),
+                                    new SingFragment("AY", Note.NOTE_C3, 1, 0.5f, 0.9f),
+                                    new SingFragment("GEHT", Note.NOTE_A3 + 1, 2, 0.5f, 0.9f),
+                                    new SingFragment("DAWN", Note.NOTE_G3 + 1, 2, 0.5f, 0.9f),
+                                    new SingFragment("AAN", Note.NOTE_G3, 1, 0.5f, 0.9f),
+                                    new SingFragment("MAY", Note.NOTE_F3, 2, 0.5f, 0.9f),
+                                    new SingFragment("NIYZ", Note.NOTE_D3 + 1, 2, 0.5f, 0.9f),
+                                    new SingFragment("AEND", Note.NOTE_F3, 2, 0.5f, 0.9f),
+                                    new SingFragment("PREY", Note.NOTE_C3, 2, 0.5f, 0.9f),
+                                    new SingFragment("", Note.NOTE_C3, 3, 0.5f, 0.9f),
                                     };
 
         // | 1     |       | 2     |       | 3     |       | 4     |       |
@@ -65,20 +66,31 @@ public class TestSAMSingsLongerNotes extends PApplet {
         final String text;
         final int pitch;
         final int duration;
+        final float loop_in;
+        final float loop_out;
 
-        SingFragment(String pText, int pPitch, int pDuration) {
+        SingFragment(String pText, int pPitch, int pDuration, float pLoopIn, float pLoopOut) {
             text = pText;
             pitch = pPitch;
             duration = pDuration;
+            loop_in = pLoopIn;
+            loop_out = pLoopOut;
         }
     }
 
     public void draw() {
         background(255);
+        translate(BORDER, BORDER);
+        scale((width - BORDER * 2.0f) / width, (height - BORDER * 2.0f) / height);
+
+        /* backdrop */
+        noStroke();
+        fill(0, 31);
+        rect(0, 0, width, height);
 
         /* selection */
         noStroke();
-        fill(255, 127, 0, 63);
+        fill(191);
         float x0 = map(mSampler.get_loop_in(), 0, mSampler.data().length - 1, 0, width);
         float x1 = map(mSampler.get_loop_out(), 0, mSampler.data().length - 1, 0, width);
         if (mSampler.get_loop_in() >= 0 && mSampler.get_loop_out() >= 0) {
@@ -92,14 +104,16 @@ public class TestSAMSingsLongerNotes extends PApplet {
                 endShape();
             }
         }
-        stroke(255, 127, 0, 127);
+        strokeWeight(4);
+        stroke(0);
         line(x0, 0, x0, height);
-        stroke(255, 127, 0, 191);
+        strokeWeight(1);
+        stroke(0);
         line(x1, 0, x1, height);
 
         /* samples */
         noFill();
-        stroke(255, 127, 0);
+        stroke(0);
         beginShape();
         for (int i = 0; i < mSampler.data().length; i++) {
             float x = map(i, 0, mSampler.data().length, 0, width);
@@ -109,7 +123,7 @@ public class TestSAMSingsLongerNotes extends PApplet {
         endShape();
 
         /* draw audio buffer */
-        stroke(0);
+        stroke(0, 63);
         DSP.draw_buffer(g, width, height);
     }
 
@@ -117,11 +131,11 @@ public class TestSAMSingsLongerNotes extends PApplet {
         switch (key) {
             case '1':
                 mLoopIn = map(mouseX, 0, width, 0, 1);
-                mSampler.set_loop_in(mLoopIn);
+                mSampler.set_loop_in_normalized(mLoopIn);
                 break;
             case '2':
                 mLoopOut = map(mouseX, 0, width, 0, 1);
-                mSampler.set_loop_out(mLoopOut);
+                mSampler.set_loop_out_normalized(mLoopOut);
                 break;
         }
     }
@@ -143,8 +157,10 @@ public class TestSAMSingsLongerNotes extends PApplet {
             } else {
                 mSAM.set_pitch(SAM.get_pitch_from_MIDI_note(mWords[mWordIndex].pitch));
                 mSampler.set_data(mSAM.say(mWords[mWordIndex].text, true));
-                mSampler.set_loop_in((int) (mLoopIn * mSampler.data().length - 1));
-                mSampler.set_loop_out((int) (mLoopOut * mSampler.data().length - 1));
+                mLoopIn = mWords[mWordIndex].loop_in;
+                mLoopOut = mWords[mWordIndex].loop_out;
+                mSampler.set_loop_in_normalized(mLoopIn);
+                mSampler.set_loop_out_normalized(mLoopOut);
                 mSampler.start();
             }
         }

@@ -21,6 +21,8 @@ void setup() {
     mSampler = new Sampler();
     mSampler.load(mData);
     mSampler.forward();
+    mSampler.set_loop_in_normalized(0.58241546f);
+    mSampler.set_loop_out_normalized(0.65975845f);
     DSP.start(this);
 }
 
@@ -30,14 +32,14 @@ void draw() {
     scale((width - BORDER * 2.0f) / width, (height - BORDER * 2.0f) / height);
     /* backdrop */
     noStroke();
-    fill(255, 127, 0, 63);
+    fill(0, 31);
     rect(0, 0, width, height);
     /* selection */
+    fill(0, 31);
     float x0 = map(mSampler.get_loop_in(), 0, mSampler.data().length, 0, width);
     float x1 = map(mSampler.get_loop_out(), 0, mSampler.data().length, 0, width);
     if (mSampler.get_loop_in() >= 0 && mSampler.get_loop_out() >= 0) {
         if (mSampler.get_loop_in() < mSampler.get_loop_out()) {
-            fill(255, 127);
             noStroke();
             beginShape();
             vertex(x0, 0);
@@ -47,12 +49,14 @@ void draw() {
             endShape();
         }
     }
-    stroke(255);
+    stroke(0);
+    strokeWeight(4);
     line(x0, 0, x0, height);
+    strokeWeight(1);
     line(x1, 0, x1, height);
     /* samples */
     noFill();
-    stroke(255, 127, 0);
+    stroke(0);
     beginShape();
     for (int i = 0; i < mSampler.data().length; i++) {
         float x = map(i, 0, mSampler.data().length, 0, width);
@@ -61,11 +65,7 @@ void draw() {
     }
     endShape();
     /* draw audio buffer */
-    fill(255, 127, 0, 63);
-    noStroke();
-    scale(0.1f);
-    rect(0, 0, width, height);
-    stroke(0);
+    stroke(0, 63);
     noFill();
     DSP.draw_buffer(g, width, height);
 }
@@ -82,14 +82,13 @@ void mouseReleased() {
 void keyPressed() {
     switch (key) {
         case '1':
-            mSampler.set_loop_in((int) map(mouseX, BORDER, width - BORDER, 0, mSampler.data().length - 1));
+            mSampler.set_loop_in_normalized(map(mouseX, BORDER, width - BORDER, 0, 1));
             break;
         case '2':
-            mSampler.set_loop_out((int) map(mouseX, BORDER, width - BORDER, 0, mSampler.data().length - 1));
+            mSampler.set_loop_out_normalized(map(mouseX, BORDER, width - BORDER, 0, 1));
             break;
         case 'z':
-            int[] mLoopPoints = Wellen.find_zero_crossings(mSampler.data(),
-                                                           mSampler.get_loop_in(),
+            int[] mLoopPoints = Wellen.find_zero_crossings(mSampler.data(), mSampler.get_loop_in(),
                                                            mSampler.get_loop_out());
             if (mLoopPoints[0] > 0 && mLoopPoints[1] > 0) {
                 mSampler.set_loop_in(mLoopPoints[0]);

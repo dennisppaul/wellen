@@ -302,7 +302,14 @@ public class Sampler implements DSPNodeOutput {
         mLoopIn = clamp(pLoopIn, 0, mData.length - 1);
     }
 
-    public void set_loop_in(float pLoopIn) {
+    public float get_loop_in_normalized() {
+        if (mData.length < 2) {
+            return 0.0f;
+        }
+        return (float) mLoopIn / (mData.length - 1);
+    }
+
+    public void set_loop_in_normalized(float pLoopIn) {
         set_loop_in((int) (pLoopIn * mData.length - 1));
     }
 
@@ -314,7 +321,14 @@ public class Sampler implements DSPNodeOutput {
         mLoopOut = clamp(pLoopOut, 0, mData.length - 1);
     }
 
-    public void set_loop_out(float pLoopOut) {
+    public float get_loop_out_normalized() {
+        if (mData.length < 2) {
+            return 0.0f;
+        }
+        return (float) mLoopOut / (mData.length - 1);
+    }
+
+    public void set_loop_out_normalized(float pLoopOut) {
         set_loop_out((int) (pLoopOut * mData.length - 1));
     }
 }

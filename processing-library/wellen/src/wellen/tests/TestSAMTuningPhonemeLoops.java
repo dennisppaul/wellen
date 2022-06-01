@@ -1,18 +1,20 @@
 package wellen.tests;
 
 import processing.core.PApplet;
-import wellen.Beat;
 import wellen.DSP;
 import wellen.Note;
 import wellen.SAM;
 import wellen.Sampler;
-import wellen.Tone;
+import wellen.Wellen;
 
-public class TestSAMSingsLongerNotes extends PApplet {
+public class TestSAMTuningPhonemeLoops extends PApplet {
 
     private SAM mSAM;
     private SingFragment[] mWords;
     private Sampler mSampler;
+    private int mWordIndex = -1;
+    private float mLoopIn = 0.5f;
+    private float mLoopOut = 0.9f;
     private static final float BORDER = 32;
 
     public void settings() {
@@ -45,21 +47,8 @@ public class TestSAMSingsLongerNotes extends PApplet {
                                     new SingFragment("PREY", Note.NOTE_C3, 2, 0.5f, 0.9f),
                                     new SingFragment("", Note.NOTE_C3, 3, 0.5f, 0.9f),
                                     };
-
-        // | 1     |       | 2     |       | 3     |       | 4     |       |
-        // | EH----------- | VERIY-------- | TAYM- | AY ---------- | SIY----
-
-        // | 5     |       | 6     |       | 7     |       | 8     |       |
-        // ------- |YUW----------- | FAO---------- | LIHNX-------- | AY--- |
-
-        // | 9     |       | 10    |       | 11    |       | 12    |       |
-        // | GEHT--------- | DAWN--------- | AAN-- | MAY---------- | NIYZ---
-
-        // | 13    |       | 14    |       | 15    |       | 16    |       |
-        // ------- | AEND--------- | PREY--------- |                       |
-
+        step();
         DSP.start(this);
-        Beat.start(this, 240);
     }
 
     static class SingFragment {
@@ -130,41 +119,55 @@ public class TestSAMSingsLongerNotes extends PApplet {
     public void keyPressed() {
         switch (key) {
             case '1':
-                mLoopIn = map(mouseX, 0, width, 0, 1);
+                mLoopIn = get_value_from_mouse_X();
                 mSampler.set_loop_in_normalized(mLoopIn);
                 break;
             case '2':
-                mLoopOut = map(mouseX, 0, width, 0, 1);
+                mLoopOut = get_value_from_mouse_X();
                 mSampler.set_loop_out_normalized(mLoopOut);
+                break;
+            case ' ':
+                println(
+                mWords[mWordIndex].text + ": " +
+                mSampler.get_loop_in_normalized() + "f" +
+                ", " +
+                mSampler.get_loop_out_normalized() + "f");
+                step();
+                break;
+            case 'z':
+                int[] mLoopPoints = Wellen.find_zero_crossings(mSampler.data(), mSampler.get_loop_in(),
+                                                               mSampler.get_loop_out());
+                if (mLoopPoints[0] > 0 && mLoopPoints[1] > 0) {
+                    mSampler.set_loop_in(mLoopPoints[0]);
+                    mSampler.set_loop_out(mLoopPoints[1]);
+                }
                 break;
         }
     }
 
-    private int mWordIndex = -1;
-    private int mWordCounter = 0;
-    private float mLoopIn = 0.5f;
-    private float mLoopOut = 0.9f;
+    private float get_value_from_mouse_X() {
+        return map(mouseX, BORDER, width - BORDER, 0, 1);
+    }
 
-    public void beat(int pBeatCount) {
-        Tone.note_on(pBeatCount % 2 == 0 ? Note.NOTE_C2 : Note.NOTE_C3, 50, 0.1f);
+    public void mousePressed() {
+        mSampler.rewind();
+        mSampler.start();
+    }
 
-        if (mWordCounter == 0) {
-            mWordIndex++;
-            mWordIndex %= mWords.length;
-            mWordCounter = mWords[mWordIndex].duration;
-            if (mWords[mWordIndex].text.isEmpty()) {
-                mSampler.stop();
-            } else {
-                mSAM.set_pitch(SAM.get_pitch_from_MIDI_note(mWords[mWordIndex].pitch));
-                mSampler.set_data(mSAM.say(mWords[mWordIndex].text, true));
-                mLoopIn = mWords[mWordIndex].loop_in;
-                mLoopOut = mWords[mWordIndex].loop_out;
-                mSampler.set_loop_in_normalized(mLoopIn);
-                mSampler.set_loop_out_normalized(mLoopOut);
-                mSampler.start();
-            }
-        }
-        mWordCounter--;
+    public void mouseReleased() {
+        mSampler.stop();
+    }
+
+    private void step() {
+        mWordIndex++;
+        mWordIndex %= mWords.length;
+        mSAM.set_pitch(SAM.get_pitch_from_MIDI_note(mWords[mWordIndex].pitch));
+        mSampler.set_data(mSAM.say(mWords[mWordIndex].text, true));
+        mLoopIn = mWords[mWordIndex].loop_in;
+        mLoopOut = mWords[mWordIndex].loop_out;
+        mSampler.set_loop_in_normalized(mLoopIn);
+        mSampler.set_loop_out_normalized(mLoopOut);
+        mSampler.forward();
     }
 
     public void audioblock(float[] pOutputSignal) {
@@ -174,6 +177,6 @@ public class TestSAMSingsLongerNotes extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main(TestSAMSingsLongerNotes.class.getName());
+        PApplet.main(TestSAMTuningPhonemeLoops.class.getName());
     }
 }
