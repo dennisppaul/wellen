@@ -74,6 +74,10 @@ public class Pluck {
         mTrigger = true;
     }
 
+    public void ResetTrig() {
+        mTrigger = false;
+    }
+
     /**
      * Processes the waveform to be generated, returning one sample. This should be called once per sample period.
      */

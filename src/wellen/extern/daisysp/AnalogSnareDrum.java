@@ -24,7 +24,7 @@ public class AnalogSnareDrum {
     private float noise_envelope_;
     private float sustain_gain_;
     private final Svf[] resonator_ = new Svf[kNumModes];
-    private Svf noise_filter_;
+    private final Svf noise_filter_ = new Svf();
 
     // Replace the resonators in "free running" (sustain) mode.
     private final float[] phase_ = new float[kNumModes];
@@ -56,7 +56,6 @@ public class AnalogSnareDrum {
             resonator_[i].Init(sample_rate_);
             phase_[i] = 0.f;
         }
-        noise_filter_ = new Svf();
         noise_filter_.Init(sample_rate_);
     }
 

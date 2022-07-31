@@ -69,12 +69,6 @@ public class TestDaisySPOscillator extends PApplet {
         }
     }
 
-    private void randomize(float[] pWavetable) {
-        for (int i = 0; i < pWavetable.length; i++) {
-            pWavetable[i] = random(-1, 1);
-        }
-    }
-
     public static void main(String[] args) {
         PApplet.main(TestDaisySPOscillator.class.getName());
     }

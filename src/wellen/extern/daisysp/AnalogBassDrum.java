@@ -24,7 +24,7 @@ public class AnalogBassDrum {
     private float lp_out_;
     private float tone_lp_;
     private float sustain_gain_;
-    private Svf resonator_;
+    private final Svf resonator_ = new Svf();
 
     //for use in sin + cos osc. in sustain mode
     private float phase_;
@@ -57,7 +57,6 @@ public class AnalogBassDrum {
         SetSelfFmAmount(1.f);
         SetAttackFmAmount(.5f);
 
-        resonator_ = new Svf();
         resonator_.Init(sample_rate_);
     }
 

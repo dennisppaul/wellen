@@ -22,7 +22,9 @@ public class Overdrive {
     }
 
     /**
-     * Get the next sample \param in Input to be overdriven
+     * Get the next sample
+     *
+     * @param in Input to be overdriven
      */
     public float Process(float in) {
         float pre = pre_gain_ * in;
@@ -30,7 +32,9 @@ public class Overdrive {
     }
 
     /**
-     * Set the amount of drive \param drive Works from 0-1
+     * Set the amount of drive
+     *
+     * @param drive Works from 0-1
      */
     public void SetDrive(float drive) {
         drive = DSP.fclamp(drive, 0.f, 1.f);

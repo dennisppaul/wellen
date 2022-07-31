@@ -287,6 +287,10 @@ public abstract class DSP {
         return (float) Math.random();
     }
 
+    public static float rand_kRandFrac() {
+        return (float) Math.random();
+    }
+
     public static int rand() {
         return randomNumberGenerator.nextInt();
     }
@@ -297,5 +301,13 @@ public abstract class DSP {
 
     public static float logf(float v) {
         return (float) Math.log(v);
+    }
+
+    public static float atanf(float v) {
+        return (float) Math.atan(v);
+    }
+
+    public static float pow(float f, float n) {
+        return (float) Math.pow(f, n);
     }
 }
