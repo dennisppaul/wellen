@@ -1,4 +1,4 @@
-package wellen.examples.effects;
+package wellen.tests.rakarrack;
 
 import processing.core.PApplet;
 import wellen.ADSR;
@@ -6,34 +6,34 @@ import wellen.Beat;
 import wellen.DSP;
 import wellen.Wavetable;
 import wellen.Wellen;
-import wellen.rakarrack.RREchotron;
+import wellen.rakarrack.RREcho;
 
 import static wellen.Wellen.DEFAULT_AUDIOBLOCK_SIZE;
 import static wellen.Wellen.clamp;
 
-public class ExampleRREchotron extends PApplet {
+public class ExampleRREcho extends PApplet {
 
     private ADSR mADSR;
-    private final float mBaseFrequency = 2.0f * Wellen.DEFAULT_SAMPLING_RATE / DEFAULT_AUDIOBLOCK_SIZE;
-    private RREchotron mEchotron;
-    private boolean mEnableEchotron = true;
+    private final float mBaseFrequency = 4.0f * Wellen.DEFAULT_SAMPLING_RATE / DEFAULT_AUDIOBLOCK_SIZE;
+    private RREcho mEcho;
+    private boolean mEnableEcho = true;
     private boolean mIsPlaying = false;
-    private final float mMasterVolume = 0.8f;
-    private final Wavetable mVCO = new Wavetable();
+    private final float mMasterVolume = 0.75f;
+    private final Wavetable mVCO = new Wavetable(512);
 
     public void settings() {
         size(640, 480);
     }
 
     public void setup() {
-        Wavetable.triangle(mVCO.get_wavetable());
+        Wavetable.sine(mVCO.get_wavetable());
         mVCO.set_frequency(mBaseFrequency);
         mVCO.set_amplitude(0.5f);
         mADSR = new ADSR();
-        mEchotron = new RREchotron();
+        mEcho = new RREcho();
 
         DSP.start(this, 2);
-        Beat.start(this, 120 * 4);
+        Beat.start(this, 120 * 8);
     }
 
     public void draw() {
@@ -41,14 +41,17 @@ public class ExampleRREchotron extends PApplet {
         DSP.draw_buffer_stereo(g, width, height);
     }
 
+    public void mouseMoved() {
+        mEcho.Tempo2Delay((int) map(mouseX, 0, width, 10, 300));
+    }
+
     public void beat(int pBeat) {
-        if (random(1) > 0.4f) {
+        if (random(1) > 0.8f) {
             if (mIsPlaying) {
                 mADSR.stop();
             } else {
                 mADSR.start();
-                final float mFifth = (random(1) > 0.4f) ? 1 : 2.0f / 3.0f;
-                mVCO.set_frequency(mBaseFrequency * (int) random(1, 5) / mFifth);
+                mVCO.set_frequency(mBaseFrequency * (int) random(1, 5));
             }
             mIsPlaying = !mIsPlaying;
         }
@@ -69,22 +72,34 @@ public class ExampleRREchotron extends PApplet {
                 Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVESHAPE_SQUARE);
                 break;
             case '1':
-                mEchotron.setpreset(RREchotron.PRESET_SUMMER);
+                mEcho.setpreset(RREcho.PRESET_ECHO_1);
                 break;
             case '2':
-                mEchotron.setpreset(RREchotron.PRESET_AMBIENCE);
+                mEcho.setpreset(RREcho.PRESET_ECHO_2);
                 break;
             case '3':
-                mEchotron.setpreset(RREchotron.PRESET_ARRANJER);
+                mEcho.setpreset(RREcho.PRESET_ECHO_3);
                 break;
             case '4':
-                mEchotron.setpreset(RREchotron.PRESET_SUCTION);
+                mEcho.setpreset(RREcho.PRESET_SIMPLE_ECHO);
                 break;
             case '5':
-                mEchotron.setpreset(RREchotron.PRESET_SUCFLANGE);
+                mEcho.setpreset(RREcho.PRESET_CANYON);
+                break;
+            case '6':
+                mEcho.setpreset(RREcho.PRESET_PANNING_ECHO_1);
+                break;
+            case '7':
+                mEcho.setpreset(RREcho.PRESET_PANNING_ECHO_2);
+                break;
+            case '8':
+                mEcho.setpreset(RREcho.PRESET_PANNING_ECHO_3);
+                break;
+            case '9':
+                mEcho.setpreset(RREcho.PRESET_FEEDBACK_ECHO);
                 break;
             case '0':
-                mEnableEchotron = !mEnableEchotron;
+                mEnableEcho = !mEnableEcho;
                 break;
         }
     }
@@ -96,8 +111,13 @@ public class ExampleRREchotron extends PApplet {
             pOutputSignalLeft[i] *= mADSRValue;
             pOutputSignalRight[i] = pOutputSignalLeft[i];
         }
-        if (mEnableEchotron) {
-            mEchotron.out(pOutputSignalLeft, pOutputSignalRight);
+        if (mEnableEcho) {
+            for (int i = 0; i < pOutputSignalLeft.length; i++) {
+                float mGain = 3.0f;
+                pOutputSignalLeft[i] *= mGain;
+                pOutputSignalRight[i] *= mGain;
+            }
+            mEcho.out(pOutputSignalLeft, pOutputSignalRight);
         }
         for (int i = 0; i < pOutputSignalLeft.length; i++) {
             pOutputSignalLeft[i] = clamp(pOutputSignalLeft[i]);
@@ -108,6 +128,7 @@ public class ExampleRREchotron extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main(ExampleRREchotron.class.getName());
+        PApplet.main(ExampleRREcho.class.getName());
     }
 }
+

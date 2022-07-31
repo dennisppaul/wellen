@@ -6,15 +6,15 @@ import wellen.Beat;
 import wellen.DSP;
 import wellen.Wavetable;
 import wellen.Wellen;
-import wellen.effect.RRDistortion;
+import wellen.rakarrack.RRDistortion;
 
 import static wellen.Wellen.DEFAULT_AUDIOBLOCK_SIZE;
-import static wellen.effect.RRDistortion.PRESET_DISTORSION_1;
-import static wellen.effect.RRDistortion.PRESET_DISTORSION_2;
-import static wellen.effect.RRDistortion.PRESET_DISTORSION_3;
-import static wellen.effect.RRDistortion.PRESET_GUITAR_AMP;
-import static wellen.effect.RRDistortion.PRESET_OVERDRIVE_1;
-import static wellen.effect.RRDistortion.PRESET_OVERDRIVE_2;
+import static wellen.rakarrack.RRDistortion.PRESET_DISTORSION_1;
+import static wellen.rakarrack.RRDistortion.PRESET_DISTORSION_2;
+import static wellen.rakarrack.RRDistortion.PRESET_DISTORSION_3;
+import static wellen.rakarrack.RRDistortion.PRESET_GUITAR_AMP;
+import static wellen.rakarrack.RRDistortion.PRESET_OVERDRIVE_1;
+import static wellen.rakarrack.RRDistortion.PRESET_OVERDRIVE_2;
 
 public class ExampleRRDistortion extends PApplet {
 
