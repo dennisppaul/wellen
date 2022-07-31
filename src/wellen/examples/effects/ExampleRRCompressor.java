@@ -2,18 +2,18 @@ package wellen.examples.effects;
 
 import processing.core.PApplet;
 import wellen.DSP;
-import wellen.rakarrack.RRCompressor;
+import wellen.extern.rakarrack.RRCompressor;
 
 import static wellen.Wellen.DEFAULT_AUDIOBLOCK_SIZE;
 import static wellen.Wellen.clamp;
-import static wellen.rakarrack.RRCompressor.PRESET_2_TO_1;
-import static wellen.rakarrack.RRCompressor.PRESET_4_TO_1;
-import static wellen.rakarrack.RRCompressor.PRESET_8_TO_1;
-import static wellen.rakarrack.RRCompressor.PRESET_BAND_COMP_BAND;
-import static wellen.rakarrack.RRCompressor.PRESET_END_COMP_BAND;
-import static wellen.rakarrack.RRCompressor.PRESET_FINAL_LIMITER;
-import static wellen.rakarrack.RRCompressor.PRESET_HARMONIC_ENHANCER;
-import static wellen.rakarrack.RRUtilities.memcpy;
+import static wellen.extern.rakarrack.RRCompressor.PRESET_2_TO_1;
+import static wellen.extern.rakarrack.RRCompressor.PRESET_4_TO_1;
+import static wellen.extern.rakarrack.RRCompressor.PRESET_8_TO_1;
+import static wellen.extern.rakarrack.RRCompressor.PRESET_BAND_COMP_BAND;
+import static wellen.extern.rakarrack.RRCompressor.PRESET_END_COMP_BAND;
+import static wellen.extern.rakarrack.RRCompressor.PRESET_FINAL_LIMITER;
+import static wellen.extern.rakarrack.RRCompressor.PRESET_HARMONIC_ENHANCER;
+import static wellen.extern.rakarrack.RRUtilities.memcpy;
 
 public class ExampleRRCompressor extends PApplet {
 

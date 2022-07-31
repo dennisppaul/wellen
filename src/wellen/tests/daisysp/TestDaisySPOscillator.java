@@ -3,16 +3,19 @@ package wellen.tests.daisysp;
 import processing.core.PApplet;
 import wellen.DSP;
 import wellen.Wellen;
-import wellen.daisysp.Oscillator;
+import wellen.extern.daisysp.Oscillator;
 
 public class TestDaisySPOscillator extends PApplet {
-    private final Oscillator mOscillator = new Oscillator();
+
+    private Oscillator mOscillator;
 
     public void settings() {
         size(640, 480);
     }
 
     public void setup() {
+        mOscillator = new Oscillator();
+        mOscillator.Init(Wellen.DEFAULT_SAMPLING_RATE);
         DSP.start(this);
     }
 
@@ -62,7 +65,7 @@ public class TestDaisySPOscillator extends PApplet {
 
     public void audioblock(float[] pOutputSignal) {
         for (int i = 0; i < pOutputSignal.length; i++) {
-            pOutputSignal[i] = mOscillator.output();
+            pOutputSignal[i] = mOscillator.Process();
         }
     }
 

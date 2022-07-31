@@ -5,7 +5,7 @@ import wellen.DSP;
 import wellen.SampleDataSNARE;
 import wellen.Sampler;
 import wellen.Wellen;
-import wellen.daisysp.PitchShifter;
+import wellen.extern.daisysp.PitchShifter;
 
 public class TestDaisySPPitchShifter extends PApplet {
 

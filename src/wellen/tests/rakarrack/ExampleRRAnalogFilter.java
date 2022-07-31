@@ -4,7 +4,7 @@ import processing.core.PApplet;
 import wellen.DSP;
 import wellen.Wavetable;
 import wellen.Wellen;
-import wellen.rakarrack.RRAnalogFilter;
+import wellen.extern.rakarrack.RRAnalogFilter;
 
 import static wellen.Wellen.DEFAULT_AUDIOBLOCK_SIZE;
 

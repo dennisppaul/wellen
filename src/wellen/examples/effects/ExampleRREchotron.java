@@ -6,7 +6,7 @@ import wellen.Beat;
 import wellen.DSP;
 import wellen.Wavetable;
 import wellen.Wellen;
-import wellen.rakarrack.RREchotron;
+import wellen.extern.rakarrack.RREchotron;
 
 import static wellen.Wellen.DEFAULT_AUDIOBLOCK_SIZE;
 import static wellen.Wellen.clamp;

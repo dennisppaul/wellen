@@ -3,7 +3,7 @@ package wellen.tests.daisysp;
 import processing.core.PApplet;
 import wellen.Beat;
 import wellen.DSP;
-import wellen.daisysp.Pluck;
+import wellen.extern.daisysp.Pluck;
 
 public class TestDaisySPPluck extends PApplet {
 
@@ -52,7 +52,7 @@ public class TestDaisySPPluck extends PApplet {
 
     public void beat(int pBeatCount) {
         mTrigger = true;
-        mPluck.SetFreq(wellen.daisysp.DSP.mtof(mMIDINotes[mMIDINoteCounter]));
+        mPluck.SetFreq(wellen.extern.daisysp.DSP.mtof(mMIDINotes[mMIDINoteCounter]));
         mMIDINoteCounter++;
         mMIDINoteCounter %= mMIDINotes.length;
     }

@@ -3,8 +3,9 @@ package wellen.tests.daisysp;
 import processing.core.PApplet;
 import wellen.Beat;
 import wellen.DSP;
-import wellen.daisysp.AnalogBassDrum;
-import wellen.daisysp.AnalogSnareDrum;
+import wellen.Wellen;
+import wellen.extern.daisysp.AnalogBassDrum;
+import wellen.extern.daisysp.AnalogSnareDrum;
 
 public class TestDaisySPSnareAndBass extends PApplet {
 
@@ -18,7 +19,9 @@ public class TestDaisySPSnareAndBass extends PApplet {
 
     public void setup() {
         mAnalogBassDrum = new AnalogBassDrum();
+        mAnalogBassDrum.Init(Wellen.DEFAULT_SAMPLING_RATE);
         mAnalogSnareDrum = new AnalogSnareDrum();
+        mAnalogSnareDrum.Init(Wellen.DEFAULT_SAMPLING_RATE);
         mAnalogSnareDrum.SetSustain(false);
         DSP.start(this);
         Beat.start(this, 120);
@@ -28,8 +31,10 @@ public class TestDaisySPSnareAndBass extends PApplet {
         background(255);
         noStroke();
         fill(0);
-        float mScale = (mBeatCount % 2) * 0.25f + 0.25f;
-        ellipse(width * 0.5f, height * 0.5f, width * mScale, width * mScale);
+        float mScale = 0.98f * height - (mBeatCount % 2) * 50;
+        circle(width * 0.5f, height * 0.5f, mScale);
+        stroke(255);
+        DSP.draw_buffer(g, width, height);
     }
 
     public void mouseMoved() {
@@ -47,7 +52,7 @@ public class TestDaisySPSnareAndBass extends PApplet {
 
     public void audioblock(float[] pOutputSignal) {
         for (int i = 0; i < pOutputSignal.length; i++) {
-            pOutputSignal[i] = mAnalogBassDrum.Process() * 0.7f + mAnalogSnareDrum.Process() * 0.3f;
+            pOutputSignal[i] = mAnalogBassDrum.Process() * 1.7f + mAnalogSnareDrum.Process() * 0.3f;
         }
     }
 

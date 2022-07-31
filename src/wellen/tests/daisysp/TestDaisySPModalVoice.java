@@ -3,7 +3,8 @@ package wellen.tests.daisysp;
 import processing.core.PApplet;
 import wellen.Beat;
 import wellen.DSP;
-import wellen.daisysp.ModalVoice;
+import wellen.Wellen;
+import wellen.extern.daisysp.ModalVoice;
 
 public class TestDaisySPModalVoice extends PApplet {
 
@@ -15,6 +16,7 @@ public class TestDaisySPModalVoice extends PApplet {
 
     public void setup() {
         mModalVoice = new ModalVoice();
+        mModalVoice.Init(Wellen.DEFAULT_SAMPLING_RATE);
         DSP.start(this);
         Beat.start(this, 120);
     }

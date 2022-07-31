@@ -4,7 +4,7 @@ import processing.core.PApplet;
 import wellen.Beat;
 import wellen.DSP;
 import wellen.Wellen;
-import wellen.daisysp.Drip;
+import wellen.extern.daisysp.Drip;
 
 public class TestDaisySPDrip extends PApplet {
 

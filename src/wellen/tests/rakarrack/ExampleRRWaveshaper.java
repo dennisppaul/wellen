@@ -4,11 +4,11 @@ import processing.core.PApplet;
 import wellen.DSP;
 import wellen.Wavetable;
 import wellen.Wellen;
-import wellen.rakarrack.RRWaveShaper;
+import wellen.extern.rakarrack.RRWaveShaper;
 
 import static wellen.Wellen.DEFAULT_AUDIOBLOCK_SIZE;
-import static wellen.rakarrack.RRWaveShaper.NUM_WAVESHAPE_TYPES;
-import static wellen.rakarrack.RRWaveShaper.TYPE_ARCTANGENT;
+import static wellen.extern.rakarrack.RRWaveShaper.NUM_WAVESHAPE_TYPES;
+import static wellen.extern.rakarrack.RRWaveShaper.TYPE_ARCTANGENT;
 
 public class ExampleRRWaveshaper extends PApplet {
 

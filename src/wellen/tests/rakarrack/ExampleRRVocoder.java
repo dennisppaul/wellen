@@ -4,8 +4,8 @@ import processing.core.PApplet;
 import wellen.DSP;
 import wellen.Wavetable;
 import wellen.Wellen;
-import wellen.rakarrack.RRUtilities;
-import wellen.rakarrack.RRVocoder;
+import wellen.extern.rakarrack.RRUtilities;
+import wellen.extern.rakarrack.RRVocoder;
 
 import static wellen.Wellen.DEFAULT_AUDIOBLOCK_SIZE;
 import static wellen.Wellen.clamp;
