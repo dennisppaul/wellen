@@ -84,7 +84,6 @@ public class HiHat {
 
         cutoff = fclamp(cutoff, 0.0f, 16000.0f / sample_rate_);
 
-
         noise_coloration_svf_.SetFreq(cutoff * sample_rate_);
         noise_coloration_svf_.SetRes(resonance ? 3.0f + 6.0f * tone_ : 1.0f);
 
@@ -119,8 +118,7 @@ public class HiHat {
     }
 
     public float Process() {
-        float s = Process(mTrigger);
-        mTrigger = false;
+        float s = Process(false);
         return s;
     }
 
@@ -129,7 +127,40 @@ public class HiHat {
      */
     public void Trig() {
         trig_ = true;
-        mTrigger = true;
+    }
+
+    public static final int VCA_LINEAR = 0;
+    public static final int VCA_SWING = 1;
+
+    public void SetVCA(int pVCA) {
+        switch (pVCA) {
+            case VCA_LINEAR:
+                vca = new LinearVCA();
+                break;
+            case VCA_SWING:
+                vca = new SwingVCA();
+                break;
+        }
+    }
+
+    public static final int METALLIC_NOISE_SQUARE = 0;
+    public static final int METALLIC_NOISE_RING_MOD = 1;
+
+    public void SetMetallicNoise(int pMetallicNoise) {
+        switch (pMetallicNoise) {
+            case METALLIC_NOISE_SQUARE:
+                metallic_noise_ = new SquareNoise();
+                metallic_noise_.Init(sample_rate_);
+                break;
+            case METALLIC_NOISE_RING_MOD:
+                metallic_noise_ = new RingModNoise();
+                metallic_noise_.Init(sample_rate_);
+                break;
+        }
+    }
+
+    public void SetResonance(boolean pResonance) {
+        resonance = pResonance;
     }
 
     /**
@@ -204,13 +235,11 @@ public class HiHat {
     private float noise_sample_;
     private float sustain_gain_;
 
-    private final boolean resonance;
-    private final MetallicNoiseSource metallic_noise_;
-    private final VCA vca;
+    private boolean resonance;
+    private MetallicNoiseSource metallic_noise_;
+    private VCA vca;
     private final Svf noise_coloration_svf_ = new Svf();
     private final Svf hpf_ = new Svf();
-
-    private boolean mTrigger = false;
 
     private interface VCA {
 
