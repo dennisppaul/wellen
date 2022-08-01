@@ -1,4 +1,4 @@
-package wellen.examples.effects;
+package wellen.examples.extra.rakarrack;
 
 import processing.core.PApplet;
 import wellen.ADSR;
@@ -6,35 +6,34 @@ import wellen.Beat;
 import wellen.DSP;
 import wellen.Wavetable;
 import wellen.Wellen;
-import wellen.extra.rakarrack.RRChorus;
+import wellen.extra.rakarrack.RREcho;
 
 import static wellen.Wellen.DEFAULT_AUDIOBLOCK_SIZE;
 import static wellen.Wellen.clamp;
-import static wellen.extra.rakarrack.RRChorus.*;
 
-public class ExampleRRChorus extends PApplet {
+public class ExampleRREcho extends PApplet {
 
     private ADSR mADSR;
     private final float mBaseFrequency = 4.0f * Wellen.DEFAULT_SAMPLING_RATE / DEFAULT_AUDIOBLOCK_SIZE;
-    private RRChorus mChorus;
-    private boolean mEnableChorus = true;
+    private RREcho mEcho;
+    private boolean mEnableEcho = true;
     private boolean mIsPlaying = false;
     private final float mMasterVolume = 0.75f;
-    private final Wavetable mVCO = new Wavetable();
+    private final Wavetable mVCO = new Wavetable(512);
 
     public void settings() {
         size(640, 480);
     }
 
     public void setup() {
-        Wavetable.triangle(mVCO.get_wavetable());
+        Wavetable.sine(mVCO.get_wavetable());
         mVCO.set_frequency(mBaseFrequency);
-        mVCO.set_amplitude(0.75f);
+        mVCO.set_amplitude(0.5f);
         mADSR = new ADSR();
-        mChorus = new RRChorus();
+        mEcho = new RREcho();
 
         DSP.start(this, 2);
-        Beat.start(this, 120 * 4);
+        Beat.start(this, 120 * 8);
     }
 
     public void draw() {
@@ -42,8 +41,12 @@ public class ExampleRRChorus extends PApplet {
         DSP.draw_buffer_stereo(g, width, height);
     }
 
+    public void mouseMoved() {
+        mEcho.Tempo2Delay((int) map(mouseX, 0, width, 10, 300));
+    }
+
     public void beat(int pBeat) {
-        if (random(1) > (mIsPlaying ? 0.4f : 0.2f)) {
+        if (random(1) > 0.8f) {
             if (mIsPlaying) {
                 mADSR.stop();
             } else {
@@ -69,37 +72,34 @@ public class ExampleRRChorus extends PApplet {
                 Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVESHAPE_SQUARE);
                 break;
             case '1':
-                mChorus.setpreset(PRESET_CHORUS_1);
+                mEcho.setpreset(RREcho.PRESET_ECHO_1);
                 break;
             case '2':
-                mChorus.setpreset(PRESET_CHORUS_2);
+                mEcho.setpreset(RREcho.PRESET_ECHO_2);
                 break;
             case '3':
-                mChorus.setpreset(PRESET_CHORUS_3);
+                mEcho.setpreset(RREcho.PRESET_ECHO_3);
                 break;
             case '4':
-                mChorus.setpreset(PRESET_CELESTE_1);
+                mEcho.setpreset(RREcho.PRESET_SIMPLE_ECHO);
                 break;
             case '5':
-                mChorus.setpreset(PRESET_CELESTE_2);
+                mEcho.setpreset(RREcho.PRESET_CANYON);
                 break;
             case '6':
-                mChorus.setpreset(PRESET_FLANGE_1);
+                mEcho.setpreset(RREcho.PRESET_PANNING_ECHO_1);
                 break;
             case '7':
-                mChorus.setpreset(PRESET_FLANGE_2);
+                mEcho.setpreset(RREcho.PRESET_PANNING_ECHO_2);
                 break;
             case '8':
-                mChorus.setpreset(PRESET_FLANGE_3);
+                mEcho.setpreset(RREcho.PRESET_PANNING_ECHO_3);
                 break;
             case '9':
-                mChorus.setpreset(PRESET_FLANGE_4);
+                mEcho.setpreset(RREcho.PRESET_FEEDBACK_ECHO);
                 break;
             case '0':
-                mChorus.setpreset(PRESET_FLANGE_5);
-                break;
-            case ' ':
-                mEnableChorus = !mEnableChorus;
+                mEnableEcho = !mEnableEcho;
                 break;
         }
     }
@@ -111,8 +111,13 @@ public class ExampleRRChorus extends PApplet {
             pOutputSignalLeft[i] *= mADSRValue;
             pOutputSignalRight[i] = pOutputSignalLeft[i];
         }
-        if (mEnableChorus) {
-            mChorus.out(pOutputSignalLeft, pOutputSignalRight);
+        if (mEnableEcho) {
+            for (int i = 0; i < pOutputSignalLeft.length; i++) {
+                float mGain = 3.0f;
+                pOutputSignalLeft[i] *= mGain;
+                pOutputSignalRight[i] *= mGain;
+            }
+            mEcho.out(pOutputSignalLeft, pOutputSignalRight);
         }
         for (int i = 0; i < pOutputSignalLeft.length; i++) {
             pOutputSignalLeft[i] = clamp(pOutputSignalLeft[i]);
@@ -123,6 +128,7 @@ public class ExampleRRChorus extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main(ExampleRRChorus.class.getName());
+        PApplet.main(ExampleRREcho.class.getName());
     }
 }
+

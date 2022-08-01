@@ -6,13 +6,13 @@ import wellen.Beat;
 import wellen.DSP;
 import wellen.Wavetable;
 import wellen.Wellen;
-import wellen.extern.rakarrack.RRNewDist;
+import wellen.extra.rakarrack.RRNewDist;
 
 import static wellen.Wellen.DEFAULT_AUDIOBLOCK_SIZE;
 import static wellen.Wellen.clamp;
-import static wellen.extern.rakarrack.RRNewDist.PRESET_NEW_DIST_1;
-import static wellen.extern.rakarrack.RRNewDist.PRESET_NEW_DIST_2;
-import static wellen.extern.rakarrack.RRNewDist.PRESET_NEW_DIST_3;
+import static wellen.extra.rakarrack.RRNewDist.PRESET_NEW_DIST_1;
+import static wellen.extra.rakarrack.RRNewDist.PRESET_NEW_DIST_2;
+import static wellen.extra.rakarrack.RRNewDist.PRESET_NEW_DIST_3;
 
 public class ExampleRRNewDist extends PApplet {
 
