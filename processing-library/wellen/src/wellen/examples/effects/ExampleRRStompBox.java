@@ -6,18 +6,18 @@ import wellen.Beat;
 import wellen.DSP;
 import wellen.Wavetable;
 import wellen.Wellen;
-import wellen.effect.RRStompBox;
+import wellen.extra.rakarrack.RRStompBox;
 
 import static wellen.Wellen.DEFAULT_AUDIOBLOCK_SIZE;
 import static wellen.Wellen.clamp;
-import static wellen.effect.RRStompBox.PRESET_CLASSIC_DISTORTION;
-import static wellen.effect.RRStompBox.PRESET_FUZZ;
-import static wellen.effect.RRStompBox.PRESET_GRUNGER;
-import static wellen.effect.RRStompBox.PRESET_HARD_DISTORTION;
-import static wellen.effect.RRStompBox.PRESET_MID_ELVE;
-import static wellen.effect.RRStompBox.PRESET_MORBIND_IMPALEMENT;
-import static wellen.effect.RRStompBox.PRESET_ODIE;
-import static wellen.effect.RRStompBox.PRESET_RATTY;
+import static wellen.extra.rakarrack.RRStompBox.PRESET_CLASSIC_DISTORTION;
+import static wellen.extra.rakarrack.RRStompBox.PRESET_FUZZ;
+import static wellen.extra.rakarrack.RRStompBox.PRESET_GRUNGER;
+import static wellen.extra.rakarrack.RRStompBox.PRESET_HARD_DISTORTION;
+import static wellen.extra.rakarrack.RRStompBox.PRESET_MID_ELVE;
+import static wellen.extra.rakarrack.RRStompBox.PRESET_MORBIND_IMPALEMENT;
+import static wellen.extra.rakarrack.RRStompBox.PRESET_ODIE;
+import static wellen.extra.rakarrack.RRStompBox.PRESET_RATTY;
 
 public class ExampleRRStompBox extends PApplet {
 

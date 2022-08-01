@@ -6,11 +6,11 @@ import wellen.Beat;
 import wellen.DSP;
 import wellen.Wavetable;
 import wellen.Wellen;
-import wellen.effect.RRChorus;
+import wellen.extra.rakarrack.RRChorus;
 
 import static wellen.Wellen.DEFAULT_AUDIOBLOCK_SIZE;
 import static wellen.Wellen.clamp;
-import static wellen.effect.RRChorus.*;
+import static wellen.extra.rakarrack.RRChorus.*;
 
 public class ExampleRRChorus extends PApplet {
 

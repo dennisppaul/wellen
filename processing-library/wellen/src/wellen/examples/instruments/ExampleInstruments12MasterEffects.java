@@ -6,8 +6,8 @@ import wellen.Reverb;
 import wellen.Tone;
 import wellen.ToneEngineInternal;
 import wellen.Wellen;
-import wellen.effect.RREchotron;
-import wellen.effect.RRStompBox;
+import wellen.extra.rakarrack.RREchotron;
+import wellen.extra.rakarrack.RRStompBox;
 
 public class ExampleInstruments12MasterEffects extends PApplet {
 

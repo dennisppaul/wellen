@@ -58,7 +58,7 @@ do
 				D
 			}
 			# remove add-comment
-			s/\/\/@add//
+			s/\/\/@add\ //
 			# remove first and last line
 			/^\nclass/ d
 			/^}/ d

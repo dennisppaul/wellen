@@ -68,6 +68,10 @@ public class Wellen {
     public static final int FILTER_MODE_LOWPASS = 0;
     public static final int FILTER_MODE_HIGHPASS = 1;
     public static final int FILTER_MODE_BANDPASS = 2;
+    public static final int FILTER_MODE_NOTCH = 3;
+    public static final int FILTER_MODE_PEAK = 4;
+    public static final int FILTER_MODE_LOWSHELF = 5;
+    public static final int FILTER_MODE_HIGHSHELF = 6;
     public static final int NOISE_WHITE = 0;
     public static final int NOISE_GAUSSIAN_WHITE = 1;
     public static final int NOISE_GAUSSIAN_WHITE2 = 2;
