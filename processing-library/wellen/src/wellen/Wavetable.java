@@ -25,10 +25,11 @@ import processing.core.PApplet;
  * plays back a chunk of samples ( i.e arbitrary, single-cycle waveform like sine, triangle, saw or square waves ) at
  * different frequencies and amplitudes.
  */
-public class Wavetable implements DSPNodeOutput {
+public class Wavetable extends Oscillator {
 
     public static final float DEFAULT_FREQUENCY = 220.0f;
     public static final float DEFAULT_AMPLITUDE = 0.75f;
+    private float mOffset;
     private final int mSamplingRate;
     private final float[] mWavetable;
     private int mPhaseOffset;
@@ -67,6 +68,11 @@ public class Wavetable implements DSPNodeOutput {
         mAmplitude = DEFAULT_AMPLITUDE;
         mPhaseOffset = 0;
         set_frequency(DEFAULT_FREQUENCY);
+    }
+
+    @Override
+    public void set_waveform(int pWaveform) {
+        fill(mWavetable, pWaveform);
     }
 
     public static void fill(float[] pWavetable, int pWavetableType) {
@@ -126,10 +132,12 @@ public class Wavetable implements DSPNodeOutput {
         }
     }
 
+    @Override
     public float get_frequency() {
         return mFrequency;
     }
 
+    @Override
     public void set_frequency(float pFrequency) {
         if (mFrequency != PApplet.abs(pFrequency)) {
             mFrequency = PApplet.abs(pFrequency);
@@ -141,6 +149,16 @@ public class Wavetable implements DSPNodeOutput {
                 mStepSize = computeStepSize();
             }
         }
+    }
+
+    @Override
+    public void set_offset(float pOffset) {
+        mOffset = pOffset;
+    }
+
+    @Override
+    public float get_offset() {
+        return mOffset;
     }
 
     public void interpolate_samples(boolean pInterpolateSamples) {
@@ -155,10 +173,12 @@ public class Wavetable implements DSPNodeOutput {
         mInterpolateAmplitudeChangeFactor = pInterpolateAmplitudeChangeFactor;
     }
 
+    @Override
     public float get_amplitude() {
         return mAmplitude;
     }
 
+    @Override
     public void set_amplitude(float pAmplitude) {
         mAmplitude = pAmplitude;
     }
@@ -187,6 +207,7 @@ public class Wavetable implements DSPNodeOutput {
         mJitterRange = pJitterRange;
     }
 
+    @Override
     public float output() {
         if (mInterpolateFrequencyChangeFactor > 0.0f) {
             if (mStepSize != mDesiredStepSize) {
@@ -220,6 +241,7 @@ public class Wavetable implements DSPNodeOutput {
         } else {
             mSignal = mWavetable[j] * mTmpAmplitude;
         }
+        mSignal += mOffset;
         return mSignal;
     }
 

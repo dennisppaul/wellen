@@ -20,15 +20,19 @@ void draw() {
 }
 
 void mouseMoved() {
-    mOscillator.SetFreq(map(mouseX, 0, width, 27.5f, 880));
-    mOscillator.SetRandomFreq(map(mouseY, 0, height, 0.1f, 880));
-    if (keyCode == SHIFT) {
-        mOscillator.SetGain(map(mouseX, 0, width, 0, 1));
-        mOscillator.SetSpread(map(mouseY, 0, height, 0, 100));
-    }
-    if (keyCode == ALT) {
-        mOscillator.SetResonance(map(mouseX, 0, width, 0, 1));
-        mOscillator.SetDensity(map(mouseY, 0, height, 0, 3));
+    switch (keyCode) {
+        case CONTROL:
+            mOscillator.SetFreq(map(mouseX, 0, width, 27.5f, 880));
+            mOscillator.SetRandomFreq(map(mouseY, 0, height, 0.1f, 880));
+            break;
+        case SHIFT:
+            mOscillator.SetGain(map(mouseX, 0, width, 0, 1));
+            mOscillator.SetSpread(map(mouseY, 0, height, 0, 100));
+            break;
+        case ALT:
+            mOscillator.SetResonance(map(mouseX, 0, width, 0, 1));
+            mOscillator.SetDensity(map(mouseY, 0, height, 0, 3));
+            break;
     }
 }
 

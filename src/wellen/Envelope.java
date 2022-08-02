@@ -149,7 +149,7 @@ public class Envelope implements DSPNodeOutput {
 
     /**
      * clears all current stages from envelope and creates a ramp from the current value to specified value in specified
-     * duration.
+     * duration. note, that the envelope might need to be restarted with `start()`.
      *
      * @param pValue    end value of ramp
      * @param pDuration duration of ramp

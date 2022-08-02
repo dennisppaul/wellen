@@ -112,6 +112,10 @@ public class Wellen {
     public static final int SIGNAL_LEFT = 0;
     public static final int SIGNAL_RIGHT = 1;
 
+    public static final float TWO_PI = PApplet.TWO_PI;
+    public static final float SIGNAL_MIN = -1.0f;
+    public static final float SIGNAL_MAX = 1.0f;
+
     public static float bytes_to_floatIEEE(byte[] b, boolean pLittleEndian) {
         if (b.length != 4) {
             System.err.println("+++ WARNING @ " + Wellen.class.getSimpleName() + " / expected exactly 4 bytes.");
