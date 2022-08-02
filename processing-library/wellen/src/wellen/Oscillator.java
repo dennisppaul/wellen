@@ -13,23 +13,22 @@ public abstract class Oscillator implements DSPNodeOutput {
     /**
      * set speed of oscillator in seconds
      *
-     * @param pOscillator
-     * @param pFrequency  in seconds
+     * @param pFrequency
      */
-    public static void set_oscillation_speed(Oscillator pOscillator, float pFrequency) {
-        pOscillator.set_frequency(1.0f / pFrequency);
+    public void set_oscillation_speed(float pFrequency) {
+        set_frequency(1.0f / pFrequency);
     }
 
     /**
-     * set output value range of oscillator in minimum and maximum
+     * set output value range of oscillator in minimum and maximum. this method affects the oscillator’s amplitude and
+     * offset.
      *
-     * @param pOscillator
      * @param pMin
      * @param pMax
      */
-    public static void set_oscillation_range(Oscillator pOscillator, float pMin, float pMax) {
+    public void set_oscillation_range(float pMin, float pMax) {
         final float mDelta = pMax - pMin;
-        pOscillator.set_amplitude(mDelta * 0.5f);
-        pOscillator.set_offset(mDelta * 0.5f + pMin);
+        set_amplitude(mDelta * 0.5f);
+        set_offset(mDelta * 0.5f + pMin);
     }
 }

@@ -39,4 +39,29 @@ public class Signal {
         signal[SIGNAL_LEFT] = pLeft;
         signal[SIGNAL_RIGHT] = pRight;
     }
+
+    public float left() {
+        return signal[SIGNAL_LEFT];
+    }
+
+    public float right() {
+        return signal[SIGNAL_RIGHT];
+    }
+
+    public void left(float pSignal) {
+        signal[SIGNAL_LEFT] = pSignal;
+    }
+
+    public void right(float pSignal) {
+        signal[SIGNAL_RIGHT] = pSignal;
+    }
+
+    public float[] signal() {
+        return signal;
+    }
+
+    public void signal(float pSignal) {
+        signal[SIGNAL_LEFT] = pSignal;
+        signal[SIGNAL_RIGHT] = pSignal;
+    }
 }

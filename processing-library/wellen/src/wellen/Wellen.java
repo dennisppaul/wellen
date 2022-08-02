@@ -111,6 +111,8 @@ public class Wellen {
     public static final int SIGNAL_MONO = 0;
     public static final int SIGNAL_LEFT = 0;
     public static final int SIGNAL_RIGHT = 1;
+    public static final int NO_IN_OUTPOINT = -1;
+    public static final int IGNORE_IN_OUTPOINTS = -1;
 
     public static final float TWO_PI = PApplet.TWO_PI;
     public static final float SIGNAL_MIN = -1.0f;
