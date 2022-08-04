@@ -1,4 +1,4 @@
-package wellen.examples.effects;
+package wellen.examples.extra.rakarrack;
 
 import processing.core.PApplet;
 import wellen.ADSR;
@@ -8,18 +8,11 @@ import wellen.Wavetable;
 import wellen.Wellen;
 import wellen.extra.rakarrack.RRDistortion;
 
-import static wellen.Wellen.DEFAULT_AUDIOBLOCK_SIZE;
-import static wellen.extra.rakarrack.RRDistortion.PRESET_DISTORSION_1;
-import static wellen.extra.rakarrack.RRDistortion.PRESET_DISTORSION_2;
-import static wellen.extra.rakarrack.RRDistortion.PRESET_DISTORSION_3;
-import static wellen.extra.rakarrack.RRDistortion.PRESET_GUITAR_AMP;
-import static wellen.extra.rakarrack.RRDistortion.PRESET_OVERDRIVE_1;
-import static wellen.extra.rakarrack.RRDistortion.PRESET_OVERDRIVE_2;
-
 public class ExampleRRDistortion extends PApplet {
+    //@add import wellen.extra.rakarrack.*;
 
     private ADSR mADSR;
-    private final float mBaseFrequency = 4.0f * Wellen.DEFAULT_SAMPLING_RATE / DEFAULT_AUDIOBLOCK_SIZE;
+    private final float mBaseFrequency = 4.0f * Wellen.DEFAULT_SAMPLING_RATE / Wellen.DEFAULT_AUDIOBLOCK_SIZE;
     private RRDistortion mDistortion;
     private boolean mEnableDistortion = true;
     private float mFreqOffset = 5;
@@ -102,22 +95,22 @@ public class ExampleRRDistortion extends PApplet {
                 Wavetable.fill(mVCO1.get_wavetable(), Wellen.WAVESHAPE_SQUARE);
                 break;
             case '1':
-                mDistortion.setpreset(PRESET_OVERDRIVE_1);
+                mDistortion.setpreset(RRDistortion.PRESET_OVERDRIVE_1);
                 break;
             case '2':
-                mDistortion.setpreset(PRESET_OVERDRIVE_2);
+                mDistortion.setpreset(RRDistortion.PRESET_OVERDRIVE_2);
                 break;
             case '3':
-                mDistortion.setpreset(PRESET_DISTORSION_1);
+                mDistortion.setpreset(RRDistortion.PRESET_DISTORSION_1);
                 break;
             case '4':
-                mDistortion.setpreset(PRESET_DISTORSION_2);
+                mDistortion.setpreset(RRDistortion.PRESET_DISTORSION_2);
                 break;
             case '5':
-                mDistortion.setpreset(PRESET_DISTORSION_3);
+                mDistortion.setpreset(RRDistortion.PRESET_DISTORSION_3);
                 break;
             case '6':
-                mDistortion.setpreset(PRESET_GUITAR_AMP);
+                mDistortion.setpreset(RRDistortion.PRESET_GUITAR_AMP);
                 break;
             case '7':
                 mEnableDistortion = !mEnableDistortion;

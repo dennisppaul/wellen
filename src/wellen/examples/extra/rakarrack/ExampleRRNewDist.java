@@ -1,4 +1,4 @@
-package wellen.examples.effects;
+package wellen.examples.extra.rakarrack;
 
 import processing.core.PApplet;
 import wellen.ADSR;
@@ -8,17 +8,12 @@ import wellen.Wavetable;
 import wellen.Wellen;
 import wellen.extra.rakarrack.RRNewDist;
 
-import static wellen.Wellen.DEFAULT_AUDIOBLOCK_SIZE;
-import static wellen.Wellen.clamp;
-import static wellen.extra.rakarrack.RRNewDist.PRESET_NEW_DIST_1;
-import static wellen.extra.rakarrack.RRNewDist.PRESET_NEW_DIST_2;
-import static wellen.extra.rakarrack.RRNewDist.PRESET_NEW_DIST_3;
-
 public class ExampleRRNewDist extends PApplet {
+    //@add import wellen.extra.rakarrack.*;
 
     private static final float[] mFreqNotes = {1.0f, 1.0f, 1.19661538f, 1.34315385f};
     private ADSR mADSR;
-    private final float mBaseFrequency = 2.0f * Wellen.DEFAULT_SAMPLING_RATE / DEFAULT_AUDIOBLOCK_SIZE;
+    private final float mBaseFrequency = 2.0f * Wellen.DEFAULT_SAMPLING_RATE / Wellen.DEFAULT_AUDIOBLOCK_SIZE;
     private boolean mEnableDistortion = true;
     private int mFreqNotesCounter = mFreqNotes.length - 1;
     private float mFreqOffset = 1;
@@ -106,13 +101,13 @@ public class ExampleRRNewDist extends PApplet {
                 Wavetable.fill(mVCO1.get_wavetable(), Wellen.WAVESHAPE_SQUARE);
                 break;
             case '1':
-                mNewDist.setpreset(PRESET_NEW_DIST_1);
+                mNewDist.setpreset(RRNewDist.PRESET_NEW_DIST_1);
                 break;
             case '2':
-                mNewDist.setpreset(PRESET_NEW_DIST_2);
+                mNewDist.setpreset(RRNewDist.PRESET_NEW_DIST_2);
                 break;
             case '3':
-                mNewDist.setpreset(PRESET_NEW_DIST_3);
+                mNewDist.setpreset(RRNewDist.PRESET_NEW_DIST_3);
                 break;
             case '0':
                 mEnableDistortion = !mEnableDistortion;
@@ -142,12 +137,12 @@ public class ExampleRRNewDist extends PApplet {
             }
         }
         for (int i = 0; i < pOutputSignalLeft.length; i++) {
-            pOutputSignalLeft[i] = clamp(pOutputSignalLeft[i]);
+            pOutputSignalLeft[i] = Wellen.clamp(pOutputSignalLeft[i]);
             pOutputSignalLeft[i] *= mMasterVolume;
             if (mousePressed) {
                 pOutputSignalRight[i] = pOutputSignalLeft[i];
             } else {
-                pOutputSignalRight[i] = clamp(pOutputSignalRight[i]);
+                pOutputSignalRight[i] = Wellen.clamp(pOutputSignalRight[i]);
                 pOutputSignalRight[i] *= mMasterVolume;
             }
         }

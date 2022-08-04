@@ -1,21 +1,13 @@
-package wellen.examples.effects;
+package wellen.examples.extra.rakarrack;
 
 import processing.core.PApplet;
 import wellen.DSP;
+import wellen.Wellen;
 import wellen.extra.rakarrack.RRCompressor;
-
-import static wellen.Wellen.DEFAULT_AUDIOBLOCK_SIZE;
-import static wellen.Wellen.clamp;
-import static wellen.extra.rakarrack.RRCompressor.PRESET_2_TO_1;
-import static wellen.extra.rakarrack.RRCompressor.PRESET_4_TO_1;
-import static wellen.extra.rakarrack.RRCompressor.PRESET_8_TO_1;
-import static wellen.extra.rakarrack.RRCompressor.PRESET_BAND_COMP_BAND;
-import static wellen.extra.rakarrack.RRCompressor.PRESET_END_COMP_BAND;
-import static wellen.extra.rakarrack.RRCompressor.PRESET_FINAL_LIMITER;
-import static wellen.extra.rakarrack.RRCompressor.PRESET_HARMONIC_ENHANCER;
-import static wellen.extra.rakarrack.RRUtilities.memcpy;
+import wellen.extra.rakarrack.RRUtilities;
 
 public class ExampleRRCompressor extends PApplet {
+    //@add import wellen.extra.rakarrack.*;
 
     private RRCompressor mCompressor;
     private boolean mEnableCompressor = true;
@@ -38,25 +30,25 @@ public class ExampleRRCompressor extends PApplet {
     public void keyPressed() {
         switch (key) {
             case '1':
-                mCompressor.setpreset(PRESET_2_TO_1);
+                mCompressor.setpreset(RRCompressor.PRESET_2_TO_1);
                 break;
             case '2':
-                mCompressor.setpreset(PRESET_4_TO_1);
+                mCompressor.setpreset(RRCompressor.PRESET_4_TO_1);
                 break;
             case '3':
-                mCompressor.setpreset(PRESET_8_TO_1);
+                mCompressor.setpreset(RRCompressor.PRESET_8_TO_1);
                 break;
             case '4':
-                mCompressor.setpreset(PRESET_FINAL_LIMITER);
+                mCompressor.setpreset(RRCompressor.PRESET_FINAL_LIMITER);
                 break;
             case '5':
-                mCompressor.setpreset(PRESET_HARMONIC_ENHANCER);
+                mCompressor.setpreset(RRCompressor.PRESET_HARMONIC_ENHANCER);
                 break;
             case '6':
-                mCompressor.setpreset(PRESET_BAND_COMP_BAND);
+                mCompressor.setpreset(RRCompressor.PRESET_BAND_COMP_BAND);
                 break;
             case '7':
-                mCompressor.setpreset(PRESET_END_COMP_BAND);
+                mCompressor.setpreset(RRCompressor.PRESET_END_COMP_BAND);
                 break;
             case ' ':
                 mEnableCompressor = !mEnableCompressor;
@@ -66,14 +58,14 @@ public class ExampleRRCompressor extends PApplet {
     }
 
     public void audioblock(float[] pOutputSignal, float[] pInputSignal) {
-        memcpy(pOutputSignal, pInputSignal, pInputSignal.length);
+        RRUtilities.memcpy(pOutputSignal, pInputSignal, pInputSignal.length);
 
         if (mEnableCompressor) {
-            mCompressor.out(pOutputSignal, new float[DEFAULT_AUDIOBLOCK_SIZE]);
+            mCompressor.out(pOutputSignal, new float[Wellen.DEFAULT_AUDIOBLOCK_SIZE]);
         }
 
         for (int i = 0; i < pOutputSignal.length; i++) {
-            pOutputSignal[i] = clamp(pOutputSignal[i]);
+            pOutputSignal[i] = Wellen.clamp(pOutputSignal[i]);
             pOutputSignal[i] *= mMasterVolume;
         }
     }
