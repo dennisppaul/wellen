@@ -1,19 +1,16 @@
 import wellen.*; 
 
 /*
- * this example demonstrates how to build a composition with DSP tracks.
+ * this example demonstrates how to build a composition with tracks.
  */
 
 final DSPComposition mComposition = new DSPComposition();
-
-float mMasterVolume;
 
 void settings() {
     size(640, 480);
 }
 
 void setup() {
-    mMasterVolume = 0.75f;
     mComposition.tracks().add(new Track_0());
     mComposition.tracks().add(new Track_1());
     Beat.start(this, 120 * 4);
@@ -26,7 +23,7 @@ void draw() {
 }
 
 void mouseMoved() {
-    mMasterVolume = map(mouseX, 0, width, 0.25f, 1.0f);
+    mComposition.track(1).volume = map(mouseX, 0, width, 0, 0.5f);
     mComposition.track(0).volume = map(mouseY, 0, height, 0, 0.5f);
 }
 
@@ -37,8 +34,8 @@ void beat(int pBeat) {
 void audioblock(float[] pOutputSignalLeft, float[] pOutputSignalRight) {
     for (int i = 0; i < pOutputSignalLeft.length; i++) {
         Signal s = mComposition.output_signal();
-        pOutputSignalLeft[i] = s.left() * mMasterVolume;
-        pOutputSignalRight[i] = s.right() * mMasterVolume;
+        pOutputSignalLeft[i] = s.left();
+        pOutputSignalRight[i] = s.right();
     }
 }
 

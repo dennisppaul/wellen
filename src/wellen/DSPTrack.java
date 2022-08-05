@@ -19,7 +19,8 @@
 
 package wellen;
 
-import static wellen.Wellen.NO_IN_OUTPOINT;
+import static wellen.Wellen.NO_INPOINT;
+import static wellen.Wellen.NO_OUTPOINT;
 
 /**
  * a track allows to compose complex DSP modules. it is a container that may be managed by a {@link DSPComposition}.
@@ -32,17 +33,19 @@ public abstract class DSPTrack implements DSPNodeOutputSignal {
     public int in;
     public int out;
     public final int ID;
+    public boolean loop;
 
     private static int oTrackUID;
 
     public DSPTrack() {
-        this(1.0f, NO_IN_OUTPOINT, NO_IN_OUTPOINT);
+        this(1.0f, NO_INPOINT, NO_OUTPOINT);
     }
 
     public DSPTrack(float pVolume, int pIn, int pOut) {
         volume = pVolume;
         in = pIn;
         out = pOut;
+        loop = false;
         ID = oTrackUID++;
     }
 
@@ -51,10 +54,31 @@ public abstract class DSPTrack implements DSPNodeOutputSignal {
         out = pOut;
     }
 
+    public void set_inpoint(int pIn) {
+        in = pIn;
+    }
+
+    public void set_outpoint(int pOut) {
+        out = pOut;
+    }
+
     public void beat(int pBeat) {
     }
 
     public int get_relative_position(int pAbsolutPosition) {
-        return pAbsolutPosition - in;
+        if (!loop || out == NO_OUTPOINT) {
+            if (in != NO_INPOINT) {
+                return pAbsolutPosition - in;
+            }
+        } else {
+            int mSanitizedInPoint = (in < 0 ? 0 : in);
+            int mTrackDuration = 1 + out - mSanitizedInPoint;
+            if (mTrackDuration > 0) {
+                int mRelativePosition = (pAbsolutPosition - mSanitizedInPoint);
+                mRelativePosition %= mTrackDuration;
+                return mRelativePosition;
+            }
+        }
+        return pAbsolutPosition;
     }
 }

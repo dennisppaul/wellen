@@ -120,7 +120,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
+<li><a href="DSPTrack.html" title="class in wellen">wellen.DSPTrack</a></li>
+<li>
+<ul class="inheritance">
 <li>wellen.DSPComposition</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -133,10 +138,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dl>
 <hr>
 <pre>public class <span class="typeNameLabel">DSPComposition</span>
-extends java.lang.Object
-implements <a href="DSPNodeOutputSignal.html" title="interface in wellen">DSPNodeOutputSignal</a></pre>
+extends <a href="DSPTrack.html" title="class in wellen">DSPTrack</a></pre>
 <div class="block">manages a collection of <a href="DSPTrack.html" title="class in wellen"><code>DSPTrack</code></a>s. each track processes audio signals and is updated via the method
- <pre><code>void&nbsp;beat(int)</code></pre>.</div>
+ <pre><code>void&nbsp;beat(int)</code></pre>.
+ <p>
+ note, that since <a href="DSPComposition.html" title="class in wellen"><code>DSPComposition</code></a> implements <a href="DSPTrack.html" title="class in wellen"><code>DSPTrack</code></a> it can also be added as a track to another
+ composition.</div>
 </li>
 </ul>
 </div>
@@ -163,6 +170,13 @@ implements <a href="DSPNodeOutputSignal.html" title="interface in wellen">DSPNod
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
+<ul class="blockList">
+<li class="blockList"><a id="fields.inherited.from.class.wellen.DSPTrack">
+<!--   -->
+</a>
+<h3>Fields inherited from class&nbsp;wellen.<a href="DSPTrack.html" title="class in wellen">DSPTrack</a></h3>
+<code><a href="DSPTrack.html#ID">ID</a>, <a href="DSPTrack.html#in">in</a>, <a href="DSPTrack.html#loop">loop</a>, <a href="DSPTrack.html#out">out</a>, <a href="DSPTrack.html#volume">volume</a></code></li>
+</ul>
 </li>
 </ul>
 </section>
@@ -222,6 +236,13 @@ implements <a href="DSPNodeOutputSignal.html" title="interface in wellen">DSPNod
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
+<ul class="blockList">
+<li class="blockList"><a id="methods.inherited.from.class.wellen.DSPTrack">
+<!--   -->
+</a>
+<h3>Methods inherited from class&nbsp;wellen.<a href="DSPTrack.html" title="class in wellen">DSPTrack</a></h3>
+<code><a href="DSPTrack.html#get_relative_position(int)">get_relative_position</a>, <a href="DSPTrack.html#set_in_outpoint(int,int)">set_in_outpoint</a>, <a href="DSPTrack.html#set_inpoint(int)">set_inpoint</a>, <a href="DSPTrack.html#set_outpoint(int)">set_outpoint</a></code></li>
+</ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
@@ -308,10 +329,6 @@ implements <a href="DSPNodeOutputSignal.html" title="interface in wellen">DSPNod
 <li class="blockList">
 <h4>output_signal</h4>
 <pre class="methodSignature">public&nbsp;<a href="Signal.html" title="class in wellen">Signal</a>&nbsp;output_signal()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="DSPNodeOutputSignal.html#output_signal()">output_signal</a></code>&nbsp;in interface&nbsp;<code><a href="DSPNodeOutputSignal.html" title="interface in wellen">DSPNodeOutputSignal</a></code></dd>
-</dl>
 </li>
 </ul>
 <a id="beat(int)">
@@ -321,6 +338,10 @@ implements <a href="DSPNodeOutputSignal.html" title="interface in wellen">DSPNod
 <li class="blockList">
 <h4>beat</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;beat&#8203;(int&nbsp;pBeat)</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dd><code><a href="DSPTrack.html#beat(int)">beat</a></code>&nbsp;in class&nbsp;<code><a href="DSPTrack.html" title="class in wellen">DSPTrack</a></code></dd>
+</dl>
 </li>
 </ul>
 </li>

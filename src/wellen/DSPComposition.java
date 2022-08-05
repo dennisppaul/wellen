@@ -21,18 +21,22 @@ package wellen;
 
 import java.util.ArrayList;
 
-import static wellen.Wellen.IGNORE_IN_OUTPOINTS;
-import static wellen.Wellen.NO_IN_OUTPOINT;
+import static wellen.Wellen.NO_INPOINT;
+import static wellen.Wellen.NO_OUTPOINT;
+import static wellen.Wellen.SIGNAL_PROCESSING_IGNORE_IN_OUTPOINTS;
 
 /**
  * manages a collection of {@link DSPTrack}s. each track processes audio signals and is updated via the method
  * <pre><code>void&nbsp;beat(int)</code></pre>.
+ * <p>
+ * note, that since {@link DSPComposition} implements {@link DSPTrack} it can also be added as a track to another
+ * composition.
  */
-public class DSPComposition implements DSPNodeOutputSignal {
+public class DSPComposition extends DSPTrack {
     public static boolean VERBOSE = false;
 
     private final ArrayList<DSPTrack> mTracks = new ArrayList<>();
-    private int mBeat = IGNORE_IN_OUTPOINTS;
+    private int mBeat = SIGNAL_PROCESSING_IGNORE_IN_OUTPOINTS;
 
     public ArrayList<DSPTrack> tracks() {
         return mTracks;
@@ -43,9 +47,9 @@ public class DSPComposition implements DSPNodeOutputSignal {
     }
 
     public Signal output_signal() {
-        Signal mSignalSum = new Signal();
+        final Signal mSignalSum = new Signal();
         for (DSPTrack t : mTracks) {
-            if (mBeat == IGNORE_IN_OUTPOINTS || evaluate_in_outpoints(t, mBeat)) {
+            if (mBeat == SIGNAL_PROCESSING_IGNORE_IN_OUTPOINTS || evaluate_in_outpoints(t, mBeat)) {
                 final Signal mSignal = t.output_signal();
                 if (mSignal.num_channels() == 1) {
                     mSignalSum.left_add(mSignal.left() * t.volume);
@@ -70,15 +74,22 @@ public class DSPComposition implements DSPNodeOutputSignal {
         return mSignalSum;
     }
 
-    private boolean evaluate_in_outpoints(DSPTrack c, int mBeat) {
-        return (c.in == NO_IN_OUTPOINT && c.out == NO_IN_OUTPOINT) || (c.in <= mBeat && (c.out >= mBeat || c.out == NO_IN_OUTPOINT));
+    private boolean evaluate_in_outpoints(DSPTrack pTrack, int pBeat) {
+        final boolean mNoInOutPoint = (pTrack.in == NO_INPOINT && pTrack.out == NO_OUTPOINT);
+        if (mNoInOutPoint) {
+            return true;
+        }
+        final boolean mIsBeyondInPoint = (pBeat >= pTrack.in);
+        final boolean mIsBeforeOutPoint = (pBeat <= pTrack.out) || (pTrack.out == NO_OUTPOINT) || pTrack.loop;
+        final boolean mWithinInOutPoint = mIsBeyondInPoint && mIsBeforeOutPoint;
+        return mWithinInOutPoint;
     }
 
     public void beat(int pBeat) {
-        mBeat = pBeat;
+        mBeat = get_relative_position(pBeat);
         for (DSPTrack c : mTracks) {
             if (evaluate_in_outpoints(c, mBeat)) {
-                c.beat(pBeat);
+                c.beat(mBeat);
             }
         }
     }

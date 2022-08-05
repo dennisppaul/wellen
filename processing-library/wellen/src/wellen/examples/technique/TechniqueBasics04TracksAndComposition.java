@@ -10,21 +10,19 @@ import wellen.OscillatorFunction;
 import wellen.Signal;
 import wellen.Wellen;
 
-public class TechniqueBasics04Composition extends PApplet {
+public class TechniqueBasics04TracksAndComposition extends PApplet {
 
     /*
-     * this example demonstrates how to build a composition with DSP tracks.
+     * this example demonstrates how to build a composition with tracks.
      */
 
     private final DSPComposition mComposition = new DSPComposition();
-    private float mMasterVolume;
 
     public void settings() {
         size(640, 480);
     }
 
     public void setup() {
-        mMasterVolume = 0.75f;
         mComposition.tracks().add(new Track_0());
         mComposition.tracks().add(new Track_1());
         Beat.start(this, 120 * 4);
@@ -37,7 +35,7 @@ public class TechniqueBasics04Composition extends PApplet {
     }
 
     public void mouseMoved() {
-        mMasterVolume = map(mouseX, 0, width, 0.25f, 1.0f);
+        mComposition.track(1).volume = map(mouseX, 0, width, 0, 0.5f);
         mComposition.track(0).volume = map(mouseY, 0, height, 0, 0.5f);
     }
 
@@ -48,8 +46,8 @@ public class TechniqueBasics04Composition extends PApplet {
     public void audioblock(float[] pOutputSignalLeft, float[] pOutputSignalRight) {
         for (int i = 0; i < pOutputSignalLeft.length; i++) {
             Signal s = mComposition.output_signal();
-            pOutputSignalLeft[i] = s.left() * mMasterVolume;
-            pOutputSignalRight[i] = s.right() * mMasterVolume;
+            pOutputSignalLeft[i] = s.left();
+            pOutputSignalRight[i] = s.right();
         }
     }
 
@@ -102,7 +100,7 @@ public class TechniqueBasics04Composition extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main(TechniqueBasics04Composition.class.getName());
+        PApplet.main(TechniqueBasics04TracksAndComposition.class.getName());
     }
 }
 
