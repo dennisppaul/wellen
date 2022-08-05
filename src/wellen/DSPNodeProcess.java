@@ -20,7 +20,7 @@
 package wellen;
 
 /**
- * interface implemented by classes that process signals.
+ * interface implemented by classes that process mono signals.
  */
 public interface DSPNodeProcess {
 

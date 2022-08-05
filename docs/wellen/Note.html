@@ -92,7 +92,7 @@ loadScripts(document, 'script');</script>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
@@ -127,9 +127,14 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <div class="description">
 <ul class="blockList">
 <li class="blockList">
+<dl>
+<dt>All Implemented Interfaces:</dt>
+<dd><code><a href="MIDI.html" title="interface in wellen">MIDI</a></code></dd>
+</dl>
 <hr>
 <pre>public abstract class <span class="typeNameLabel">Note</span>
-extends java.lang.Object</pre>
+extends java.lang.Object
+implements <a href="MIDI.html" title="interface in wellen">MIDI</a></pre>
 <div class="block">supplies a series of note constants and methods to convert note values to frequencies and vice versa.</div>
 </li>
 </ul>
@@ -144,114 +149,13 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Field Summary</h3>
-<table class="memberSummary">
-<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colSecond" scope="col">Field</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#NOTE_A0">NOTE_A0</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#NOTE_A1">NOTE_A1</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#NOTE_A2">NOTE_A2</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#NOTE_A3">NOTE_A3</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#NOTE_A4">NOTE_A4</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#NOTE_A5">NOTE_A5</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#NOTE_A6">NOTE_A6</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#NOTE_A7">NOTE_A7</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#NOTE_A8">NOTE_A8</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#NOTE_A9">NOTE_A9</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#NOTE_C1">NOTE_C1</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#NOTE_C10">NOTE_C10</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#NOTE_C2">NOTE_C2</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#NOTE_C3">NOTE_C3</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#NOTE_C4">NOTE_C4</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#NOTE_C5">NOTE_C5</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#NOTE_C6">NOTE_C6</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#NOTE_C7">NOTE_C7</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#NOTE_C8">NOTE_C8</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#NOTE_C9">NOTE_C9</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-</table>
+<ul class="blockList">
+<li class="blockList"><a id="fields.inherited.from.class.wellen.MIDI">
+<!--   -->
+</a>
+<h3>Fields inherited from interface&nbsp;wellen.<a href="MIDI.html" title="interface in wellen">MIDI</a></h3>
+<code><a href="MIDI.html#MIDI_CLOCK_CONTINUE">MIDI_CLOCK_CONTINUE</a>, <a href="MIDI.html#MIDI_CLOCK_START">MIDI_CLOCK_START</a>, <a href="MIDI.html#MIDI_CLOCK_STOP">MIDI_CLOCK_STOP</a>, <a href="MIDI.html#MIDI_CLOCK_TICK">MIDI_CLOCK_TICK</a>, <a href="MIDI.html#MIDI_SONG_POSITION_POINTER">MIDI_SONG_POSITION_POINTER</a>, <a href="MIDI.html#NOTE_A0">NOTE_A0</a>, <a href="MIDI.html#NOTE_A1">NOTE_A1</a>, <a href="MIDI.html#NOTE_A2">NOTE_A2</a>, <a href="MIDI.html#NOTE_A3">NOTE_A3</a>, <a href="MIDI.html#NOTE_A4">NOTE_A4</a>, <a href="MIDI.html#NOTE_A5">NOTE_A5</a>, <a href="MIDI.html#NOTE_A6">NOTE_A6</a>, <a href="MIDI.html#NOTE_A7">NOTE_A7</a>, <a href="MIDI.html#NOTE_A8">NOTE_A8</a>, <a href="MIDI.html#NOTE_B0">NOTE_B0</a>, <a href="MIDI.html#NOTE_B1">NOTE_B1</a>, <a href="MIDI.html#NOTE_B2">NOTE_B2</a>, <a href="MIDI.html#NOTE_B3">NOTE_B3</a>, <a href="MIDI.html#NOTE_B4">NOTE_B4</a>, <a href="MIDI.html#NOTE_B5">NOTE_B5</a>, <a href="MIDI.html#NOTE_B6">NOTE_B6</a>, <a href="MIDI.html#NOTE_B7">NOTE_B7</a>, <a href="MIDI.html#NOTE_B8">NOTE_B8</a>, <a href="MIDI.html#NOTE_C1">NOTE_C1</a>, <a href="MIDI.html#NOTE_C2">NOTE_C2</a>, <a href="MIDI.html#NOTE_C3">NOTE_C3</a>, <a href="MIDI.html#NOTE_C4">NOTE_C4</a>, <a href="MIDI.html#NOTE_C5">NOTE_C5</a>, <a href="MIDI.html#NOTE_C6">NOTE_C6</a>, <a href="MIDI.html#NOTE_C7">NOTE_C7</a>, <a href="MIDI.html#NOTE_C8">NOTE_C8</a>, <a href="MIDI.html#NOTE_C9">NOTE_C9</a>, <a href="MIDI.html#NOTE_D1">NOTE_D1</a>, <a href="MIDI.html#NOTE_D2">NOTE_D2</a>, <a href="MIDI.html#NOTE_D3">NOTE_D3</a>, <a href="MIDI.html#NOTE_D4">NOTE_D4</a>, <a href="MIDI.html#NOTE_D5">NOTE_D5</a>, <a href="MIDI.html#NOTE_D6">NOTE_D6</a>, <a href="MIDI.html#NOTE_D7">NOTE_D7</a>, <a href="MIDI.html#NOTE_D8">NOTE_D8</a>, <a href="MIDI.html#NOTE_D9">NOTE_D9</a>, <a href="MIDI.html#NOTE_E1">NOTE_E1</a>, <a href="MIDI.html#NOTE_E2">NOTE_E2</a>, <a href="MIDI.html#NOTE_E3">NOTE_E3</a>, <a href="MIDI.html#NOTE_E4">NOTE_E4</a>, <a href="MIDI.html#NOTE_E5">NOTE_E5</a>, <a href="MIDI.html#NOTE_E6">NOTE_E6</a>, <a href="MIDI.html#NOTE_E7">NOTE_E7</a>, <a href="MIDI.html#NOTE_E8">NOTE_E8</a>, <a href="MIDI.html#NOTE_E9">NOTE_E9</a>, <a href="MIDI.html#NOTE_F1">NOTE_F1</a>, <a href="MIDI.html#NOTE_F2">NOTE_F2</a>, <a href="MIDI.html#NOTE_F3">NOTE_F3</a>, <a href="MIDI.html#NOTE_F4">NOTE_F4</a>, <a href="MIDI.html#NOTE_F5">NOTE_F5</a>, <a href="MIDI.html#NOTE_F6">NOTE_F6</a>, <a href="MIDI.html#NOTE_F7">NOTE_F7</a>, <a href="MIDI.html#NOTE_F8">NOTE_F8</a>, <a href="MIDI.html#NOTE_F9">NOTE_F9</a>, <a href="MIDI.html#NOTE_G1">NOTE_G1</a>, <a href="MIDI.html#NOTE_G2">NOTE_G2</a>, <a href="MIDI.html#NOTE_G3">NOTE_G3</a>, <a href="MIDI.html#NOTE_G4">NOTE_G4</a>, <a href="MIDI.html#NOTE_G5">NOTE_G5</a>, <a href="MIDI.html#NOTE_G6">NOTE_G6</a>, <a href="MIDI.html#NOTE_G7">NOTE_G7</a>, <a href="MIDI.html#NOTE_G8">NOTE_G8</a>, <a href="MIDI.html#NOTE_G9">NOTE_G9</a>, <a href="MIDI.html#PPQN">PPQN</a></code></li>
+</ul>
 </li>
 </ul>
 </section>
@@ -335,276 +239,6 @@ extends java.lang.Object</pre>
 <div class="details">
 <ul class="blockList">
 <li class="blockList">
-<!-- ============ FIELD DETAIL =========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="field.detail">
-<!--   -->
-</a>
-<h3>Field Detail</h3>
-<a id="NOTE_A0">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>NOTE_A0</h4>
-<pre>public static final&nbsp;int NOTE_A0</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../constant-values.html#wellen.Note.NOTE_A0">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a id="NOTE_A1">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>NOTE_A1</h4>
-<pre>public static final&nbsp;int NOTE_A1</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../constant-values.html#wellen.Note.NOTE_A1">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a id="NOTE_A2">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>NOTE_A2</h4>
-<pre>public static final&nbsp;int NOTE_A2</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../constant-values.html#wellen.Note.NOTE_A2">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a id="NOTE_A3">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>NOTE_A3</h4>
-<pre>public static final&nbsp;int NOTE_A3</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../constant-values.html#wellen.Note.NOTE_A3">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a id="NOTE_A4">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>NOTE_A4</h4>
-<pre>public static final&nbsp;int NOTE_A4</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../constant-values.html#wellen.Note.NOTE_A4">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a id="NOTE_A5">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>NOTE_A5</h4>
-<pre>public static final&nbsp;int NOTE_A5</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../constant-values.html#wellen.Note.NOTE_A5">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a id="NOTE_A6">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>NOTE_A6</h4>
-<pre>public static final&nbsp;int NOTE_A6</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../constant-values.html#wellen.Note.NOTE_A6">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a id="NOTE_A7">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>NOTE_A7</h4>
-<pre>public static final&nbsp;int NOTE_A7</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../constant-values.html#wellen.Note.NOTE_A7">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a id="NOTE_A8">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>NOTE_A8</h4>
-<pre>public static final&nbsp;int NOTE_A8</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../constant-values.html#wellen.Note.NOTE_A8">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a id="NOTE_A9">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>NOTE_A9</h4>
-<pre>public static final&nbsp;int NOTE_A9</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../constant-values.html#wellen.Note.NOTE_A9">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a id="NOTE_C1">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>NOTE_C1</h4>
-<pre>public static final&nbsp;int NOTE_C1</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../constant-values.html#wellen.Note.NOTE_C1">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a id="NOTE_C2">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>NOTE_C2</h4>
-<pre>public static final&nbsp;int NOTE_C2</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../constant-values.html#wellen.Note.NOTE_C2">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a id="NOTE_C3">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>NOTE_C3</h4>
-<pre>public static final&nbsp;int NOTE_C3</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../constant-values.html#wellen.Note.NOTE_C3">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a id="NOTE_C4">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>NOTE_C4</h4>
-<pre>public static final&nbsp;int NOTE_C4</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../constant-values.html#wellen.Note.NOTE_C4">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a id="NOTE_C5">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>NOTE_C5</h4>
-<pre>public static final&nbsp;int NOTE_C5</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../constant-values.html#wellen.Note.NOTE_C5">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a id="NOTE_C6">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>NOTE_C6</h4>
-<pre>public static final&nbsp;int NOTE_C6</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../constant-values.html#wellen.Note.NOTE_C6">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a id="NOTE_C7">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>NOTE_C7</h4>
-<pre>public static final&nbsp;int NOTE_C7</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../constant-values.html#wellen.Note.NOTE_C7">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a id="NOTE_C8">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>NOTE_C8</h4>
-<pre>public static final&nbsp;int NOTE_C8</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../constant-values.html#wellen.Note.NOTE_C8">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a id="NOTE_C9">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>NOTE_C9</h4>
-<pre>public static final&nbsp;int NOTE_C9</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../constant-values.html#wellen.Note.NOTE_C9">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a id="NOTE_C10">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>NOTE_C10</h4>
-<pre>public static final&nbsp;int NOTE_C10</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../constant-values.html#wellen.Note.NOTE_C10">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-</li>
-</ul>
-</section>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <section role="region">
 <ul class="blockList">
@@ -735,7 +369,7 @@ extends java.lang.Object</pre>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>

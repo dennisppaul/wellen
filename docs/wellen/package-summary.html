@@ -117,25 +117,37 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <tr class="altColor">
 <th class="colFirst" scope="row"><a href="DSPNodeInput.html" title="interface in wellen">DSPNodeInput</a></th>
 <td class="colLast">
-<div class="block">interface implemented by classes that accept input signals.</div>
+<div class="block">interface implemented by classes that accept mono input signals.</div>
 </td>
 </tr>
 <tr class="rowColor">
-<th class="colFirst" scope="row"><a href="DSPNodeOutput.html" title="interface in wellen">DSPNodeOutput</a></th>
+<th class="colFirst" scope="row"><a href="DSPNodeInputSignal.html" title="interface in wellen">DSPNodeInputSignal</a></th>
 <td class="colLast">
-<div class="block">interface implemented by classes that create mono output signals.</div>
+<div class="block">interface implemented by classes that accept stereo ( or more multi-channel ) input signals.</div>
 </td>
 </tr>
 <tr class="altColor">
-<th class="colFirst" scope="row"><a href="DSPNodeOutputSignal.html" title="interface in wellen">DSPNodeOutputSignal</a></th>
+<th class="colFirst" scope="row"><a href="DSPNodeOutput.html" title="interface in wellen">DSPNodeOutput</a></th>
 <td class="colLast">
-<div class="block">interface implemented by classes that create output signals with multiple channels.</div>
+<div class="block">interface implemented by classes that produce mono output signals.</div>
 </td>
 </tr>
 <tr class="rowColor">
+<th class="colFirst" scope="row"><a href="DSPNodeOutputSignal.html" title="interface in wellen">DSPNodeOutputSignal</a></th>
+<td class="colLast">
+<div class="block">interface implemented by classes that create stereo ( or more multi-channel ) output signals.</div>
+</td>
+</tr>
+<tr class="altColor">
 <th class="colFirst" scope="row"><a href="DSPNodeProcess.html" title="interface in wellen">DSPNodeProcess</a></th>
 <td class="colLast">
-<div class="block">interface implemented by classes that process signals.</div>
+<div class="block">interface implemented by classes that process mono signals.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="DSPNodeProcessSignal.html" title="interface in wellen">DSPNodeProcessSignal</a></th>
+<td class="colLast">
+<div class="block">interface implemented by classes that process stereo ( or more multi-channel ) signals.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -171,6 +183,10 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="altColor">
+<th class="colFirst" scope="row"><a href="SamplerListener.html" title="interface in wellen">SamplerListener</a></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <th class="colFirst" scope="row"><a href="ToneEngineInternal.AudioOutputCallback.html" title="interface in wellen">ToneEngineInternal.AudioOutputCallback</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
@@ -248,6 +264,18 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="rowColor">
+<th class="colFirst" scope="row"><a href="DSPComposition.html" title="class in wellen">DSPComposition</a></th>
+<td class="colLast">
+<div class="block">manages a collection of <a href="DSPTrack.html" title="class in wellen"><code>DSPTrack</code></a>s.</div>
+</td>
+</tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="DSPTrack.html" title="class in wellen">DSPTrack</a></th>
+<td class="colLast">
+<div class="block">a track allows to compose complex DSP modules.</div>
+</td>
+</tr>
+<tr class="rowColor">
 <th class="colFirst" scope="row"><a href="Envelope.html" title="class in wellen">Envelope</a></th>
 <td class="colLast">
 <div class="block">envelope with multiple stages.</div>
@@ -282,16 +310,22 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="rowColor">
+<th class="colFirst" scope="row"><a href="FilterBiquad.html" title="class in wellen">FilterBiquad</a></th>
+<td class="colLast">
+<div class="block">biquad filter inspired by <a href="https://www.musicdsp.org/en/latest/_downloads/3e1dc886e7849251d6747b194d482272/Audio-EQ-Cookbook.txt">Audio-EQ-Cookbook.txt</a></div>
+</td>
+</tr>
+<tr class="altColor">
 <th class="colFirst" scope="row"><a href="FMSynthesis.html" title="class in wellen">FMSynthesis</a></th>
 <td class="colLast">
 <div class="block">FM synthesis with two oscillators, carrier ( e.g fundamental or *pitch* ) and modulator.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><a href="Gain.html" title="class in wellen">Gain</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><a href="HarmonicTable.html" title="class in wellen">HarmonicTable</a></th>
 <td class="colLast">
 <div class="block">"The Harmonic Table note-layout, or tonal array, is a key layout for musical instruments that offers interesting
@@ -300,69 +334,73 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
  @REF(https://en.wikipedia.org/wiki/Harmonic_table_note_layout)</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><a href="Instrument.html" title="class in wellen">Instrument</a></th>
 <td class="colLast">
 <div class="block">base class for all instruments</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><a href="InstrumentInternal.html" title="class in wellen">InstrumentInternal</a></th>
 <td class="colLast">
 <div class="block">implementation of <a href="Instrument.html" title="class in wellen"><code>Instrument</code></a> for the internal tone engine.</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><a href="InstrumentInternalLibrary.html" title="class in wellen">InstrumentInternalLibrary</a></th>
 <td class="colLast">
 <div class="block">a collection of DSP instruments.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><a href="InstrumentInternalLibrary.BELL.html" title="class in wellen">InstrumentInternalLibrary.BELL</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><a href="InstrumentInternalLibrary.FAT_LEAD.html" title="class in wellen">InstrumentInternalLibrary.FAT_LEAD</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><a href="InstrumentInternalLibrary.HI_HAT.html" title="class in wellen">InstrumentInternalLibrary.HI_HAT</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><a href="InstrumentInternalLibrary.KICK_DRUM.html" title="class in wellen">InstrumentInternalLibrary.KICK_DRUM</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><a href="InstrumentInternalLibrary.SAMPLER.html" title="class in wellen">InstrumentInternalLibrary.SAMPLER</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><a href="InstrumentMIDI.html" title="class in wellen">InstrumentMIDI</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><a href="InstrumentOSC.html" title="class in wellen">InstrumentOSC</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><a href="LowPassFilter.html" title="class in wellen">LowPassFilter</a></th>
 <td class="colLast">
 <div class="block">low-pass filter implementing the <em>Moog Ladder</em>.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><a href="MidiIn.html" title="class in wellen">MidiIn</a></th>
 <td class="colLast">
 <div class="block">handles communication with MIDI devices</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><a href="MidiOut.html" title="class in wellen">MidiOut</a></th>
 <td class="colLast">
 <div class="block">handles communication with MIDI devices</div>
 </td>
+</tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="MidiUtilities.html" title="class in wellen">MidiUtilities</a></th>
+<td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
 <th class="colFirst" scope="row"><a href="Noise.html" title="class in wellen">Noise</a></th>
@@ -374,6 +412,17 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <th class="colFirst" scope="row"><a href="Note.html" title="class in wellen">Note</a></th>
 <td class="colLast">
 <div class="block">supplies a series of note constants and methods to convert note values to frequencies and vice versa.</div>
+</td>
+</tr>
+<tr class="rowColor">
+<th class="colFirst" scope="row"><a href="Oscillator.html" title="class in wellen">Oscillator</a></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<th class="colFirst" scope="row"><a href="OscillatorFunction.html" title="class in wellen">OscillatorFunction</a></th>
+<td class="colLast">
+<div class="block">generates a signal from a mathematical function ( e.g sine, triangle, saw or square waveform ) at different
+ frequencies and amplitudes.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -419,7 +468,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <tr class="altColor">
 <th class="colFirst" scope="row"><a href="SpeechSynthesis.html" title="class in wellen">SpeechSynthesis</a></th>
 <td class="colLast">
-<div class="block">makes use of the internal MacOS speech engine to produce text-to-speech output.</div>
+<div class="block">makes use of the internal macOS speech engine to produce text-to-speech output.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -459,29 +508,33 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </td>
 </tr>
 <tr class="rowColor">
+<th class="colFirst" scope="row"><a href="Trigger.Listener.html" title="class in wellen">Trigger.Listener</a></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
 <th class="colFirst" scope="row"><a href="Vocoder.html" title="class in wellen">Vocoder</a></th>
 <td class="colLast">
 <div class="block">superimposes a modulator signal ( e.g a human voice ) onto a carrier signal ( e.g sawtooth oscillator ).</div>
 </td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><a href="WAVConverter.html" title="class in wellen">WAVConverter</a></th>
 <td class="colLast">
 <div class="block">parses sample data to WAV file format ( as bytes ) and vice versa.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><a href="WAVConverter.Info.html" title="class in wellen">WAVConverter.Info</a></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr class="altColor">
+<tr class="rowColor">
 <th class="colFirst" scope="row"><a href="Wavetable.html" title="class in wellen">Wavetable</a></th>
 <td class="colLast">
 <div class="block">plays back a chunk of samples ( i.e arbitrary, single-cycle waveform like sine, triangle, saw or square waves ) at
  different frequencies and amplitudes.</div>
 </td>
 </tr>
-<tr class="rowColor">
+<tr class="altColor">
 <th class="colFirst" scope="row"><a href="Wellen.html" title="class in wellen">Wellen</a></th>
 <td class="colLast">
 <div class="block">contains constants and utility methods for the wellen library.</div>

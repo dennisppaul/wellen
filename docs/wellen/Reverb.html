@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -129,12 +129,12 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li class="blockList">
 <dl>
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="DSPNodeProcess.html" title="interface in wellen">DSPNodeProcess</a></code>, <code><a href="EffectStereo.html" title="interface in wellen">EffectStereo</a></code></dd>
+<dd><code><a href="DSPNodeProcess.html" title="interface in wellen">DSPNodeProcess</a></code>, <code><a href="DSPNodeProcessSignal.html" title="interface in wellen">DSPNodeProcessSignal</a></code>, <code><a href="EffectStereo.html" title="interface in wellen">EffectStereo</a></code></dd>
 </dl>
 <hr>
 <pre>public class <span class="typeNameLabel">Reverb</span>
 extends java.lang.Object
-implements <a href="DSPNodeProcess.html" title="interface in wellen">DSPNodeProcess</a>, <a href="EffectStereo.html" title="interface in wellen">EffectStereo</a></pre>
+implements <a href="DSPNodeProcessSignal.html" title="interface in wellen">DSPNodeProcessSignal</a>, <a href="DSPNodeProcess.html" title="interface in wellen">DSPNodeProcess</a>, <a href="EffectStereo.html" title="interface in wellen">EffectStereo</a></pre>
 <div class="block">applies reverb to a signal. <a href="Reverb.html" title="class in wellen"><code>Reverb</code></a> uses an implementation of freeverb.</div>
 </li>
 </ul>
@@ -202,16 +202,21 @@ implements <a href="DSPNodeProcess.html" title="interface in wellen">DSPNodeProc
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i4" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set_damp(float)">set_damp</a></span>&#8203;(float&nbsp;pDamp)</code></th>
+<td class="colFirst"><code><a href="Signal.html" title="class in wellen">Signal</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#process_signal(wellen.Signal)">process_signal</a></span>&#8203;(<a href="Signal.html" title="class in wellen">Signal</a>&nbsp;pSignal)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set_roomsize(float)">set_roomsize</a></span>&#8203;(float&nbsp;pSize)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set_damp(float)">set_damp</a></span>&#8203;(float&nbsp;pDamp)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set_roomsize(float)">set_roomsize</a></span>&#8203;(float&nbsp;pSize)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set_wet(float)">set_wet</a></span>&#8203;(float&nbsp;wet)</code></th>
 <td class="colLast">&nbsp;</td>
@@ -324,13 +329,26 @@ implements <a href="DSPNodeProcess.html" title="interface in wellen">DSPNodeProc
 <a id="process(float)">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>process</h4>
 <pre class="methodSignature">public&nbsp;float&nbsp;process&#8203;(float&nbsp;pSignal)</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="DSPNodeProcess.html#process(float)">process</a></code>&nbsp;in interface&nbsp;<code><a href="DSPNodeProcess.html" title="interface in wellen">DSPNodeProcess</a></code></dd>
+</dl>
+</li>
+</ul>
+<a id="process_signal(wellen.Signal)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>process_signal</h4>
+<pre class="methodSignature">public&nbsp;<a href="Signal.html" title="class in wellen">Signal</a>&nbsp;process_signal&#8203;(<a href="Signal.html" title="class in wellen">Signal</a>&nbsp;pSignal)</pre>
+<dl>
+<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dd><code><a href="DSPNodeProcessSignal.html#process_signal(wellen.Signal)">process_signal</a></code>&nbsp;in interface&nbsp;<code><a href="DSPNodeProcessSignal.html" title="interface in wellen">DSPNodeProcessSignal</a></code></dd>
 </dl>
 </li>
 </ul>

@@ -20,7 +20,9 @@
 package wellen;
 
 /**
- * interface implemented by classes that accept input signals.
+ * interface implemented by classes that accept stereo ( or more multi-channel ) input signals.
+ * <p>
+ * note that the input signal is not guaranteed to be left unchanged.
  */
 public interface DSPNodeInputSignal {
     void input_signal(Signal pSignal);

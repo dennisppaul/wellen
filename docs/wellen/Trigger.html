@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":9,"i2":10,"i3":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":9,"i5":10,"i6":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -85,14 +85,14 @@ loadScripts(document, 'script');</script>
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>
@@ -142,6 +142,57 @@ implements <a href="DSPNodeInput.html" title="interface in wellen">DSPNodeInput<
 <div class="summary">
 <ul class="blockList">
 <li class="blockList">
+<!-- ======== NESTED CLASS SUMMARY ======== -->
+<section role="region">
+<ul class="blockList">
+<li class="blockList"><a id="nested.class.summary">
+<!--   -->
+</a>
+<h3>Nested Class Summary</h3>
+<table class="memberSummary">
+<caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Class</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static class&nbsp;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="Trigger.Listener.html" title="class in wellen">Trigger.Listener</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</table>
+</li>
+</ul>
+</section>
+<!-- =========== FIELD SUMMARY =========== -->
+<section role="region">
+<ul class="blockList">
+<li class="blockList"><a id="field.summary">
+<!--   -->
+</a>
+<h3>Field Summary</h3>
+<table class="memberSummary">
+<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Field</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>static int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#EVENT_FALLING_EDGE">EVENT_FALLING_EDGE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>static int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#EVENT_RISING_EDGE">EVENT_RISING_EDGE</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</table>
+</li>
+</ul>
+</section>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <section role="region">
 <ul class="blockList">
@@ -156,6 +207,10 @@ implements <a href="DSPNodeInput.html" title="interface in wellen">DSPNodeInput<
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">Trigger</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(java.lang.Object)">Trigger</a></span>&#8203;(java.lang.Object&nbsp;pListener)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
@@ -179,20 +234,35 @@ implements <a href="DSPNodeInput.html" title="interface in wellen">DSPNodeInput<
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#input(float)">input</a></span>&#8203;(float&nbsp;pSignal)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#add(wellen.Trigger.Listener)">add</a></span>&#8203;(<a href="Trigger.Listener.html" title="class in wellen">Trigger.Listener</a>&nbsp;pTriggerListener)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#input(float)">input</a></span>&#8203;(float&nbsp;pSignal)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>java.util.ArrayList&lt;<a href="Trigger.Listener.html" title="class in wellen">Trigger.Listener</a>&gt;</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#listeners()">listeners</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>boolean</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#remove(wellen.Trigger.Listener)">remove</a></span>&#8203;(<a href="Trigger.Listener.html" title="class in wellen">Trigger.Listener</a>&nbsp;pTriggerListener)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>static <a href="Trigger.html" title="class in wellen">Trigger</a></code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#start(java.lang.Object)">start</a></span>&#8203;(java.lang.Object&nbsp;pListener)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#trigger_falling_edge(boolean)">trigger_falling_edge</a></span>&#8203;(boolean&nbsp;pEnableFallingEdge)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#trigger_rising_edge(boolean)">trigger_rising_edge</a></span>&#8203;(boolean&nbsp;pEnableRisingEdge)</code></th>
 <td class="colLast">&nbsp;</td>
@@ -214,6 +284,42 @@ implements <a href="DSPNodeInput.html" title="interface in wellen">DSPNodeInput<
 <div class="details">
 <ul class="blockList">
 <li class="blockList">
+<!-- ============ FIELD DETAIL =========== -->
+<section role="region">
+<ul class="blockList">
+<li class="blockList"><a id="field.detail">
+<!--   -->
+</a>
+<h3>Field Detail</h3>
+<a id="EVENT_RISING_EDGE">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>EVENT_RISING_EDGE</h4>
+<pre>public static final&nbsp;int EVENT_RISING_EDGE</pre>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../constant-values.html#wellen.Trigger.EVENT_RISING_EDGE">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
+<a id="EVENT_FALLING_EDGE">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>EVENT_FALLING_EDGE</h4>
+<pre>public static final&nbsp;int EVENT_FALLING_EDGE</pre>
+<dl>
+<dt><span class="seeLabel">See Also:</span></dt>
+<dd><a href="../constant-values.html#wellen.Trigger.EVENT_FALLING_EDGE">Constant Field Values</a></dd>
+</dl>
+</li>
+</ul>
+</li>
+</ul>
+</section>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <section role="region">
 <ul class="blockList">
@@ -221,6 +327,15 @@ implements <a href="DSPNodeInput.html" title="interface in wellen">DSPNodeInput<
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
+<a id="&lt;init&gt;()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>Trigger</h4>
+<pre>public&nbsp;Trigger()</pre>
+</li>
+</ul>
 <a id="&lt;init&gt;(java.lang.Object)">
 <!--   -->
 </a>
@@ -247,6 +362,33 @@ implements <a href="DSPNodeInput.html" title="interface in wellen">DSPNodeInput<
 <li class="blockList">
 <h4>start</h4>
 <pre class="methodSignature">public static&nbsp;<a href="Trigger.html" title="class in wellen">Trigger</a>&nbsp;start&#8203;(java.lang.Object&nbsp;pListener)</pre>
+</li>
+</ul>
+<a id="listeners()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>listeners</h4>
+<pre class="methodSignature">public&nbsp;java.util.ArrayList&lt;<a href="Trigger.Listener.html" title="class in wellen">Trigger.Listener</a>&gt;&nbsp;listeners()</pre>
+</li>
+</ul>
+<a id="add(wellen.Trigger.Listener)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>add</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;add&#8203;(<a href="Trigger.Listener.html" title="class in wellen">Trigger.Listener</a>&nbsp;pTriggerListener)</pre>
+</li>
+</ul>
+<a id="remove(wellen.Trigger.Listener)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>remove</h4>
+<pre class="methodSignature">public&nbsp;boolean&nbsp;remove&#8203;(<a href="Trigger.Listener.html" title="class in wellen">Trigger.Listener</a>&nbsp;pTriggerListener)</pre>
 </li>
 </ul>
 <a id="trigger_rising_edge(boolean)">
@@ -329,14 +471,14 @@ implements <a href="DSPNodeInput.html" title="interface in wellen">DSPNodeInput<
 <div>
 <ul class="subNavList">
 <li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
+<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.summary">Method</a></li>
 </ul>
 <ul class="subNavList">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method.detail">Method</a></li>
 </ul>

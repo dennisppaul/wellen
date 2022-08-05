@@ -26,6 +26,12 @@
     catch(err) {
     }
 //-->
+var data = {"i0":9,"i1":9,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10};
+var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
+var altColor = "altColor";
+var rowColor = "rowColor";
+var tableTab = "tableTab";
+var activeTableTab = "activeTableTab";
 var pathtoroot = "../";
 var useModuleDirectories = true;
 loadScripts(document, 'script');</script>
@@ -88,7 +94,7 @@ loadScripts(document, 'script');</script>
 <li>Detail:&nbsp;</li>
 <li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
-<li>Method</li>
+<li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
 <a id="skip.navbar.top">
@@ -179,6 +185,10 @@ extends java.lang.Object</pre>
 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(int)">Signal</a></span>&#8203;(int&nbsp;pChannels)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
+<tr class="rowColor">
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(wellen.Signal)">Signal</a></span>&#8203;(<a href="Signal.html" title="class in wellen">Signal</a>&nbsp;pSignal)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
 </table>
 </li>
 </ul>
@@ -190,6 +200,86 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Summary</h3>
+<table class="memberSummary">
+<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
+<tr>
+<th class="colFirst" scope="col">Modifier and Type</th>
+<th class="colSecond" scope="col">Method</th>
+<th class="colLast" scope="col">Description</th>
+</tr>
+<tr id="i0" class="altColor">
+<td class="colFirst"><code>static <a href="Signal.html" title="class in wellen">Signal</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#create(float)">create</a></span>&#8203;(float&nbsp;pSignal)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>static <a href="Signal.html" title="class in wellen">Signal</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#create(float,float)">create</a></span>&#8203;(float&nbsp;pSignalLeft,
+      float&nbsp;pSignalRight)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>float</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#left()">left</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#left(float)">left</a></span>&#8203;(float&nbsp;pSignal)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i4" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#left_add(float)">left_add</a></span>&#8203;(float&nbsp;pSignal)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i5" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#left_mult(float)">left_mult</a></span>&#8203;(float&nbsp;pSignal)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i6" class="altColor">
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#num_channels()">num_channels</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i7" class="rowColor">
+<td class="colFirst"><code>float</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#right()">right</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i8" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#right(float)">right</a></span>&#8203;(float&nbsp;pSignal)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i9" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#right_add(float)">right_add</a></span>&#8203;(float&nbsp;pSignal)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i10" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#right_mult(float)">right_mult</a></span>&#8203;(float&nbsp;pSignal)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i11" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set(float)">set</a></span>&#8203;(float&nbsp;pSignal)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i12" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set(float,float)">set</a></span>&#8203;(float&nbsp;pSignalLeft,
+   float&nbsp;pSignalRight)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i13" class="rowColor">
+<td class="colFirst"><code>float[]</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#signal()">signal</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+</table>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
 <!--   -->
@@ -241,6 +331,16 @@ extends java.lang.Object</pre>
 <pre>public&nbsp;Signal&#8203;(int&nbsp;pChannels)</pre>
 </li>
 </ul>
+<a id="&lt;init&gt;(float,float)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>Signal</h4>
+<pre>public&nbsp;Signal&#8203;(float&nbsp;pLeft,
+              float&nbsp;pRight)</pre>
+</li>
+</ul>
 <a id="&lt;init&gt;()">
 <!--   -->
 </a>
@@ -250,14 +350,151 @@ extends java.lang.Object</pre>
 <pre>public&nbsp;Signal()</pre>
 </li>
 </ul>
-<a id="&lt;init&gt;(float,float)">
+<a id="&lt;init&gt;(wellen.Signal)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>Signal</h4>
-<pre>public&nbsp;Signal&#8203;(float&nbsp;pLeft,
-              float&nbsp;pRight)</pre>
+<pre>public&nbsp;Signal&#8203;(<a href="Signal.html" title="class in wellen">Signal</a>&nbsp;pSignal)</pre>
+</li>
+</ul>
+</li>
+</ul>
+</section>
+<!-- ============ METHOD DETAIL ========== -->
+<section role="region">
+<ul class="blockList">
+<li class="blockList"><a id="method.detail">
+<!--   -->
+</a>
+<h3>Method Detail</h3>
+<a id="create(float,float)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>create</h4>
+<pre class="methodSignature">public static&nbsp;<a href="Signal.html" title="class in wellen">Signal</a>&nbsp;create&#8203;(float&nbsp;pSignalLeft,
+                            float&nbsp;pSignalRight)</pre>
+</li>
+</ul>
+<a id="create(float)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>create</h4>
+<pre class="methodSignature">public static&nbsp;<a href="Signal.html" title="class in wellen">Signal</a>&nbsp;create&#8203;(float&nbsp;pSignal)</pre>
+</li>
+</ul>
+<a id="signal()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>signal</h4>
+<pre class="methodSignature">public&nbsp;float[]&nbsp;signal()</pre>
+</li>
+</ul>
+<a id="set(float)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>set</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;set&#8203;(float&nbsp;pSignal)</pre>
+</li>
+</ul>
+<a id="set(float,float)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>set</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;set&#8203;(float&nbsp;pSignalLeft,
+                float&nbsp;pSignalRight)</pre>
+</li>
+</ul>
+<a id="num_channels()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>num_channels</h4>
+<pre class="methodSignature">public&nbsp;int&nbsp;num_channels()</pre>
+</li>
+</ul>
+<a id="left()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>left</h4>
+<pre class="methodSignature">public&nbsp;float&nbsp;left()</pre>
+</li>
+</ul>
+<a id="right()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>right</h4>
+<pre class="methodSignature">public&nbsp;float&nbsp;right()</pre>
+</li>
+</ul>
+<a id="left(float)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>left</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;left&#8203;(float&nbsp;pSignal)</pre>
+</li>
+</ul>
+<a id="right(float)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>right</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;right&#8203;(float&nbsp;pSignal)</pre>
+</li>
+</ul>
+<a id="left_mult(float)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>left_mult</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;left_mult&#8203;(float&nbsp;pSignal)</pre>
+</li>
+</ul>
+<a id="right_mult(float)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>right_mult</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;right_mult&#8203;(float&nbsp;pSignal)</pre>
+</li>
+</ul>
+<a id="left_add(float)">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>left_add</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;left_add&#8203;(float&nbsp;pSignal)</pre>
+</li>
+</ul>
+<a id="right_add(float)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>right_add</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;right_add&#8203;(float&nbsp;pSignal)</pre>
 </li>
 </ul>
 </li>
@@ -318,7 +555,7 @@ extends java.lang.Object</pre>
 <li>Detail:&nbsp;</li>
 <li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
-<li>Method</li>
+<li><a href="#method.detail">Method</a></li>
 </ul>
 </div>
 <a id="skip.navbar.bottom">

@@ -20,7 +20,9 @@
 package wellen;
 
 /**
- * interface implemented by classes that process signals.
+ * interface implemented by classes that process stereo ( or more multi-channel ) signals.
+ * <p>
+ * note that the input signal is not guaranteed to be left unchanged.
  */
 public interface DSPNodeProcessSignal {
 

@@ -450,7 +450,7 @@ implements <a href="DSPNodeOutput.html" title="interface in wellen">DSPNodeOutpu
 <pre class="methodSignature">public&nbsp;void&nbsp;ramp_to&#8203;(float&nbsp;pValue,
                     float&nbsp;pDuration)</pre>
 <div class="block">clears all current stages from envelope and creates a ramp from the current value to specified value in specified
- duration.</div>
+ duration. note, that the envelope might need to be restarted with `start()`.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>pValue</code> - end value of ramp</dd>

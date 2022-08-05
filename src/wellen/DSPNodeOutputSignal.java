@@ -20,7 +20,7 @@
 package wellen;
 
 /**
- * interface implemented by classes that create output signals with multiple channels.
+ * interface implemented by classes that create stereo ( or more multi-channel ) output signals.
  */
 public interface DSPNodeOutputSignal {
     Signal output_signal();
