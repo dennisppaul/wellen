@@ -25,10 +25,12 @@ import static wellen.Wellen.IGNORE_IN_OUTPOINTS;
 import static wellen.Wellen.NO_IN_OUTPOINT;
 
 /**
- * manages a collection of {@link DSPTrack} objects. each track is updated to process audio signals and updated via the
- * method <pre><code>void&nbsp;beat(int)</code></pre>.
+ * manages a collection of {@link DSPTrack}s. each track processes audio signals and is updated via the method
+ * <pre><code>void&nbsp;beat(int)</code></pre>.
  */
 public class DSPComposition implements DSPNodeOutputSignal {
+    public static boolean VERBOSE = false;
+
     private final ArrayList<DSPTrack> mTracks = new ArrayList<>();
     private int mBeat = IGNORE_IN_OUTPOINTS;
 
@@ -40,21 +42,32 @@ public class DSPComposition implements DSPNodeOutputSignal {
         return mTracks.get(pID);
     }
 
-    public Signal output() {
-        Signal s = new Signal();
-        output(s);
-        return s;
-    }
-
-    public void output(Signal pSignal) {
-        for (DSPTrack c : mTracks) {
-            if (mBeat == IGNORE_IN_OUTPOINTS || evaluate_in_outpoints(c, mBeat)) {
-                final Signal s = new Signal();
-                c.output(s);
-                pSignal.signal[Wellen.SIGNAL_LEFT] += s.left() * c.volume;
-                pSignal.signal[Wellen.SIGNAL_RIGHT] += s.right() * c.volume;
+    public Signal output_signal() {
+        Signal mSignalSum = new Signal();
+        for (DSPTrack t : mTracks) {
+            if (mBeat == IGNORE_IN_OUTPOINTS || evaluate_in_outpoints(t, mBeat)) {
+                final Signal mSignal = t.output_signal();
+                if (mSignal.num_channels() == 1) {
+                    mSignalSum.left_add(mSignal.left() * t.volume);
+                    mSignalSum.right_add(mSignal.left() * t.volume);
+                } else if (mSignal.num_channels() == 2) {
+                    mSignalSum.left_add(mSignal.left() * t.volume);
+                    mSignalSum.right_add(mSignal.right() * t.volume);
+                } else if (mSignal.num_channels() > 2) {
+                    mSignalSum.left_add(mSignal.left() * t.volume);
+                    mSignalSum.right_add(mSignal.right() * t.volume);
+                    if (VERBOSE) {
+                        System.out.println(
+                        "+++ track ID" + t.ID + " does not emit mono or stereo signal. number of channels is: " + mSignal.num_channels());
+                    }
+                } else {
+                    if (VERBOSE) {
+                        System.out.println("+++ track ID" + t.ID + " does not emit a signals number of channels is 0");
+                    }
+                }
             }
         }
+        return mSignalSum;
     }
 
     private boolean evaluate_in_outpoints(DSPTrack c, int mBeat) {

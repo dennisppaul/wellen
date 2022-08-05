@@ -86,7 +86,7 @@ public class ExampleInstruments08StereoInstruments extends PApplet {
             mSpread = pSpread;
         }
 
-        public void output(Signal pSignal) {
+        public Signal output_signal() {
             /* this custom instrument ignores LFOs and LPF */
             mVCO.set_frequency(get_frequency() * (1.0f - mDetune));
             mVCO.set_amplitude(get_amplitude());
@@ -99,10 +99,12 @@ public class ExampleInstruments08StereoInstruments extends PApplet {
             final float mSignalB = mVCOSecond.output();
             final float mMix = mSpread * 0.5f + 0.5f;
             final float mInvMix = 1.0f - mMix;
-            pSignal.signal[0] = (mSignalA * mMix + mSignalB * mInvMix);
-            pSignal.signal[1] = (mSignalA * mInvMix + mSignalB * mMix);
-            pSignal.signal[0] *= mADSRAmp;
-            pSignal.signal[1] *= mADSRAmp;
+            final Signal pSignal = new Signal();
+            pSignal.left(mSignalA * mMix + mSignalB * mInvMix);
+            pSignal.right(mSignalA * mInvMix + mSignalB * mMix);
+            pSignal.left_mult(mADSRAmp);
+            pSignal.right_mult(mADSRAmp);
+            return pSignal;
         }
     }
 

@@ -26,42 +26,113 @@ public class Signal {
 
     public final float[] signal;
 
+    public static Signal create(float pSignalLeft, float pSignalRight) {
+        return new Signal(pSignalLeft, pSignalRight);
+    }
+
+    public static Signal create(float pSignal) {
+        return new Signal(pSignal, pSignal);
+    }
+
     public Signal(int pChannels) {
         signal = new float[pChannels];
     }
 
-    public Signal() {
-        signal = new float[2];
-    }
-
     public Signal(float pLeft, float pRight) {
-        this();
-        signal[SIGNAL_LEFT] = pLeft;
-        signal[SIGNAL_RIGHT] = pRight;
+        this(2);
+        left(pLeft);
+        right(pRight);
     }
 
-    public float left() {
-        return signal[SIGNAL_LEFT];
+    public Signal() {
+        this(2);
     }
 
-    public float right() {
-        return signal[SIGNAL_RIGHT];
-    }
-
-    public void left(float pSignal) {
-        signal[SIGNAL_LEFT] = pSignal;
-    }
-
-    public void right(float pSignal) {
-        signal[SIGNAL_RIGHT] = pSignal;
+    public Signal(Signal pSignal) {
+        this(pSignal.signal.length);
+        System.arraycopy(pSignal.signal, 0, signal, 0, signal.length);
     }
 
     public float[] signal() {
         return signal;
     }
 
-    public void signal(float pSignal) {
+    public void set(float pSignal) {
+        if (signal.length > 0) {
+            signal[SIGNAL_LEFT] = pSignal;
+        }
+        if (signal.length > 1) {
+            signal[SIGNAL_RIGHT] = pSignal;
+        }
+    }
+
+    public void set(float pSignalLeft, float pSignalRight) {
+        if (signal.length > 0) {
+            signal[SIGNAL_LEFT] = pSignalLeft;
+        }
+        if (signal.length > 1) {
+            signal[SIGNAL_RIGHT] = pSignalRight;
+        }
+    }
+
+    public int num_channels() {
+        return signal.length;
+    }
+
+
+    public float left() {
+        if (signal.length < 1) {
+            return 0;
+        }
+        return signal[SIGNAL_LEFT];
+    }
+
+    public float right() {
+        if (signal.length < 2) {
+            return 0;
+        }
+        return signal[SIGNAL_RIGHT];
+    }
+
+    public void left(float pSignal) {
+        if (signal.length < 1) {
+            return;
+        }
         signal[SIGNAL_LEFT] = pSignal;
+    }
+
+    public void right(float pSignal) {
+        if (signal.length < 2) {
+            return;
+        }
         signal[SIGNAL_RIGHT] = pSignal;
+    }
+
+    public void left_mult(float pSignal) {
+        if (signal.length < 1) {
+            return;
+        }
+        signal[SIGNAL_LEFT] *= pSignal;
+    }
+
+    public void right_mult(float pSignal) {
+        if (signal.length < 2) {
+            return;
+        }
+        signal[SIGNAL_RIGHT] *= pSignal;
+    }
+
+    public void left_add(float pSignal) {
+        if (signal.length < 1) {
+            return;
+        }
+        signal[SIGNAL_LEFT] += pSignal;
+    }
+
+    public void right_add(float pSignal) {
+        if (signal.length < 2) {
+            return;
+        }
+        signal[SIGNAL_RIGHT] += pSignal;
     }
 }

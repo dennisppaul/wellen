@@ -20,8 +20,10 @@
 package wellen;
 
 /**
- * interface implemented by classes that create output signals with multiple channels.
+ * interface implemented by classes that process signals.
  */
-public interface DSPNodeOutputSignal {
-    Signal output_signal();
+public interface DSPNodeProcessSignal {
+
+    Signal process_signal(Signal pSignal);
 }
+

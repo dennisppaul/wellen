@@ -27,17 +27,18 @@ import static wellen.Wellen.clamp;
 /**
  * implementation of {@link wellen.ToneEngine} using internal DSP audio processing.
  */
-public class ToneEngineInternal extends ToneEngine implements AudioBufferRenderer {
+public class ToneEngineInternal extends ToneEngine implements AudioBufferRenderer, DSPNodeOutput {
 
     public static boolean VERBOSE = true;
     public boolean USE_AMP_FRACTION = false;
     private final AudioBufferManager mAudioPlayer;
     private AudioOutputCallback mAudioblockCallback = null;
     private float[] mCurrentBufferLeft;
+    private int mCurrentBufferCounter;
     private float[] mCurrentBufferRight;
     private int mCurrentInstrumentID;
     private final ArrayList<EffectStereo> mEffects;
-    private Gain mGain;
+    private final Gain mGain;
     private final ArrayList<InstrumentInternal> mInstruments;
     private final int mNumberOfInstruments;
     private final Pan mPan;
@@ -80,16 +81,16 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
     }
 
     /**
-     * @deprecated
      * @param pReverbEnabled enable reverb
+     * @deprecated
      */
     public void enable_reverb(boolean pReverbEnabled) {
         mReverbEnabled = pReverbEnabled;
     }
 
     /**
-     * @deprecated
      * @return reference to reverb
+     * @deprecated
      */
     public Reverb get_reverb() {
         return mReverb;
@@ -151,8 +152,7 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
             mInstruments.set(pInstrument.ID(), (InstrumentInternal) pInstrument);
         } else {
             System.err.println(
-            "+++ WARNING @" + getClass().getSimpleName() + ".replace_instrument(Instrument) / " + "instrument must " +
-            "be" + " of type `InstrumentInternal`");
+            "+++ WARNING @" + getClass().getSimpleName() + ".replace_instrument(Instrument) / " + "instrument must " + "be" + " of type `InstrumentInternal`");
         }
     }
 
@@ -180,34 +180,76 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
         }
     }
 
+    public float output() {
+        float mSignal = getNextInstrumentSampleMono();
+
+        if (mReverbEnabled) {
+            mSignal = mReverb.process(mSignal);
+        }
+
+        mSignal *= mGain.get_gain();
+
+        if (mCurrentBufferLeft == null) {
+            mCurrentBufferLeft = new float[Wellen.DEFAULT_AUDIOBLOCK_SIZE];
+        }
+        mCurrentBufferLeft[mCurrentBufferCounter] = mSignal;
+        mCurrentBufferCounter++;
+        mCurrentBufferCounter %= mCurrentBufferLeft.length;
+
+        return mSignal;
+    }
+
+    public void audioblock(float[] pSignal) {
+        for (int i = 0; i < pSignal.length; i++) {
+            pSignal[i] = getNextInstrumentSampleMono();
+        }
+
+        if (mReverbEnabled) {
+            mReverb.process(pSignal, pSignal, pSignal, pSignal);
+        }
+
+        mGain.out(pSignal, null);
+
+        mCurrentBufferLeft = pSignal;
+    }
+
+    public Signal output_signal() {
+        Signal mSignalSum = getNextInstrumentSampleStereo();
+
+        float[] pSignalLeft = new float[]{mSignalSum.left()};
+        float[] pSignalRight = new float[]{mSignalSum.left()};
+        for (EffectStereo mEffect : mEffects) {
+            mEffect.out(pSignalLeft, pSignalRight);
+        }
+
+        mGain.out(pSignalLeft, pSignalRight);
+
+        if (mReverbEnabled) {
+            mReverb.process(pSignalLeft, pSignalRight, pSignalLeft, pSignalRight);
+        }
+
+        mSignalSum.left(pSignalLeft[0]);
+        mSignalSum.right(pSignalRight[0]);
+
+        if (mCurrentBufferLeft == null) {
+            mCurrentBufferLeft = new float[Wellen.DEFAULT_AUDIOBLOCK_SIZE];
+        }
+        if (mCurrentBufferRight == null) {
+            mCurrentBufferRight = new float[Wellen.DEFAULT_AUDIOBLOCK_SIZE];
+        }
+        mCurrentBufferLeft[mCurrentBufferCounter] = mSignalSum.left();
+        mCurrentBufferRight[mCurrentBufferCounter] = mSignalSum.right();
+        mCurrentBufferCounter++;
+        mCurrentBufferCounter %= mCurrentBufferLeft.length;
+
+        return mSignalSum;
+    }
+
     public void audioblock(float[] pSignalLeft, float[] pSignalRight) {
         for (int i = 0; i < pSignalLeft.length; i++) {
-            float mSignalL = 0;
-            float mSignalR = 0;
-            for (InstrumentInternal mInstrument : mInstruments) {
-                final Signal mSignals = new Signal(mInstrument.get_channels());
-                mInstrument.output(mSignals);
-                if (mInstrument.get_channels() == 1) {
-                    /* mono (default) */
-                    final float mSignal = mSignals.signal[0];
-                    mPan.set_panning(mInstrument.get_pan());
-                    Signal mStereoSignal = mPan.process(mSignal);
-                    mSignalL += mStereoSignal.signal[Wellen.SIGNAL_LEFT];
-                    mSignalR += mStereoSignal.signal[Wellen.SIGNAL_RIGHT];
-                } else if (mInstrument.get_channels() == 2) {
-                    /* stereo */
-                    mSignalL += mSignals.signal[0];
-                    mSignalR += mSignals.signal[1];
-                } else {
-                    if (VERBOSE) {
-                        System.err.println(
-                        "+++ @WARNING " + getClass().getSimpleName() + ".audioblock(stereo) / instruments with more " +
-                        "than 2 channels are " + "not supported in this tone engine.");
-                    }
-                }
-            }
-            pSignalLeft[i] = mSignalL;
-            pSignalRight[i] = mSignalR;
+            Signal mSignalSum = getNextInstrumentSampleStereo();
+            pSignalLeft[i] = mSignalSum.left();
+            pSignalRight[i] = mSignalSum.right();
         }
 
         for (EffectStereo mEffect : mEffects) {
@@ -221,6 +263,45 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
         }
         mCurrentBufferLeft = pSignalLeft;
         mCurrentBufferRight = pSignalRight;
+    }
+
+    private float getNextInstrumentSampleMono() {
+        float mSignal = 0;
+        for (InstrumentInternal mInstrument : mInstruments) {
+            final Signal mSignals = mInstrument.output_signal();
+            /* if instrument has multiple channels accumulate them into one */
+            for (int j = 0; j < mSignals.signal.length; j++) {
+                mSignal += mSignals.signal[j];
+            }
+        }
+        mSignal = clamp(mSignal);
+        return mSignal;
+    }
+
+    private Signal getNextInstrumentSampleStereo() {
+        final Signal mSignalSum = new Signal();
+        for (InstrumentInternal mInstrument : mInstruments) {
+            Signal mSignal = mInstrument.output_signal();
+            if (mInstrument.get_channels() == 1) {
+                /* convert mono instrument to stereo (default) */
+                mPan.set_panning(mInstrument.get_pan());
+                /* pan takes only left channel as input */
+                mSignal = mPan.process(mSignal.left());
+            } else if (mInstrument.get_channels() == 0) {
+                mSignal = new Signal();
+            } else if (mInstrument.get_channels() > 2) {
+                if (VERBOSE) {
+                    System.err.println(
+                    "+++ @WARNING " + getClass().getSimpleName() + ".audioblock(stereo) /" + " instruments with " +
+                    "more than 2 channels are " + "not supported in this tone engine. all extra channels are " +
+                    "ignored.");
+                }
+            }
+            /* stereo -- more than 2 channels are ignored */
+            mSignalSum.left_add(mSignal.left());
+            mSignalSum.right_add(mSignal.right());
+        }
+        return mSignalSum;
     }
 
     public float get_gain() {
@@ -237,25 +318,6 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
 
     public boolean remove_effect(EffectStereo pEffect) {
         return mEffects.remove(pEffect);
-    }
-
-    public void audioblock(float[] pSignal) {
-        for (int i = 0; i < pSignal.length; i++) {
-            float mSignal = 0;
-            for (InstrumentInternal mInstrument : mInstruments) {
-                final Signal mSignals = new Signal(mInstrument.get_channels());
-                mInstrument.output(mSignals);
-                /* if instrument has multiple channels accumulate them into one */
-                for (int j = 0; j < mSignals.signal.length; j++) {
-                    mSignal += mSignals.signal[j];
-                }
-            }
-            pSignal[i] = clamp(mSignal);
-        }
-        if (mReverbEnabled) {
-            mReverb.process(pSignal, pSignal, pSignal, pSignal);
-        }
-        mCurrentBufferLeft = pSignal;
     }
 
     public void register_audioblock_callback(AudioOutputCallback pAudioblockCallback) {

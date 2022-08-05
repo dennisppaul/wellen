@@ -92,22 +92,26 @@ public class InstrumentInternal extends Instrument implements DSPNodeOutputSigna
 //    }
 
     @Override
-    public void output(Signal pSignal) {
-        if (pSignal.signal.length > 0) {
-            final float mLFOFreq = mEnableFrequencyLFO ? mFrequencyLFO.output() : 0.0f;
-            final float mLFOAmp = mEnableAmplitudeLFO ? mAmplitudeLFO.output() : 0.0f;
+    public Signal output_signal() {
+        final float mLFOFreq = mEnableFrequencyLFO ? mFrequencyLFO.output() : 0.0f;
+        final float mLFOAmp = mEnableAmplitudeLFO ? mAmplitudeLFO.output() : 0.0f;
 
-            mVCO.set_frequency(mFreq + mLFOFreq + mFreqOffset);
-            mVCO.set_amplitude((mAmp + mLFOAmp) * (mEnableAmplitudeLFO ? 0.5f : 1.0f));
+        mVCO.set_frequency(mFreq + mLFOFreq + mFreqOffset);
+        mVCO.set_amplitude((mAmp + mLFOAmp) * (mEnableAmplitudeLFO ? 0.5f : 1.0f));
 
-            final float mADSRAmp = mEnableADSR ? mADSR.output() : 1.0f;
-            float mSample = mVCO.output();
-            if (mEnableLPF) {
-                mSample = mLPF.process(mSample);
-            }
-            mSample = Wellen.clamp(mSample, -1.0f, 1.0f);
-            pSignal.signal[0] = mADSRAmp * mSample;
+        final float mADSRAmp = mEnableADSR ? mADSR.output() : 1.0f;
+        float mSample = mVCO.output();
+        if (mEnableLPF) {
+            mSample = mLPF.process(mSample);
         }
+        mSample = Wellen.clamp(mSample, -1.0f, 1.0f);
+
+        Signal pSignal = new Signal(get_channels());
+        final float s = mADSRAmp * mSample;
+        for (int i = 0; i < get_channels(); i++) {
+            pSignal.signal[i] = s;
+        }
+        return pSignal;
     }
 
     @Override

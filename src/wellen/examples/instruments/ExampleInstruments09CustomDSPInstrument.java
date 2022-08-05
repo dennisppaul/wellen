@@ -142,12 +142,14 @@ public class ExampleInstruments09CustomDSPInstrument extends PApplet {
 
         /**
          * called by tone engine to request the next audio sample of the instrument.
+         *
+         * @return
          */
-        public void output(Signal pSignal) {
+        public Signal output_signal() {
             /* `output(Signal)` is called to request a new sample: sampler returns a new sample which is then
             multiplied by the amplitude. the result is processed by reverb and returned. the final sample is stored
             in the supplied signal container. */
-            pSignal.signal[0] = mReverb.process(mSampler.output() * get_amplitude()) * mGain;
+            return Signal.create(mReverb.process(mSampler.output() * get_amplitude()) * mGain);
         }
 
         /**
@@ -195,7 +197,7 @@ public class ExampleInstruments09CustomDSPInstrument extends PApplet {
             Wavetable.fill(mVeryLowVCO.get_wavetable(), Wellen.WAVESHAPE_SQUARE);
         }
 
-        public void output(Signal pSignal) {
+        public Signal output_signal() {
             /* this custom instrument ignores LFOs and LPF */
             mVCO.set_frequency(get_frequency());
             mVCO.set_amplitude(get_amplitude() * 0.2f);
@@ -210,7 +212,8 @@ public class ExampleInstruments09CustomDSPInstrument extends PApplet {
             float mSample = mVCO.output();
             mSample += mLowerVCO.output();
             mSample += mVeryLowVCO.output();
-            pSignal.signal[0] = mADSRAmp * mSample;
+
+            return Signal.create(mADSRAmp * mSample);
         }
     }
 
@@ -246,14 +249,15 @@ public class ExampleInstruments09CustomDSPInstrument extends PApplet {
             mFrequencyEnvelope.set_release(0.0f);
         }
 
-        public void output(Signal pSignal) {
+        public Signal output_signal() {
             final float mFrequencyOffset = mFrequencyEnvelope.output() * mFrequencyRange;
             mVCO.set_frequency(get_frequency() + mFrequencyOffset);
             mVCO.set_amplitude(get_amplitude());
 
-            float mSample = mVCO.output();
+            final float mSample = mVCO.output();
             final float mADSRAmp = mADSR.output();
-            pSignal.signal[0] = mSample * mADSRAmp;
+
+            return Signal.create(mSample * mADSRAmp);
         }
 
         public void note_off() {
@@ -282,8 +286,8 @@ public class ExampleInstruments09CustomDSPInstrument extends PApplet {
             mADSR.set_release(0.0f);
         }
 
-        public void output(Signal pSignal) {
-            pSignal.signal[0] = Wellen.random(-get_amplitude(), get_amplitude()) * mADSR.output();
+        public Signal output_signal() {
+            return Signal.create(Wellen.random(-get_amplitude(), get_amplitude()) * mADSR.output());
         }
     }
 
@@ -338,7 +342,7 @@ public class ExampleInstruments09CustomDSPInstrument extends PApplet {
             mSpread = pSpread;
         }
 
-        public void output(Signal pSignal) {
+        public Signal output_signal() {
             /* this custom instrument ignores LFOs and LPF */
             mVCO.set_frequency(get_frequency() * (1.0f - mDetune));
             mVCO.set_amplitude(get_amplitude());
@@ -353,10 +357,12 @@ public class ExampleInstruments09CustomDSPInstrument extends PApplet {
             final float mSignalB = mVCOSecond.output();
             final float mMix = mSpread * 0.5f + 0.5f;
             final float mInvMix = 1.0f - mMix;
-            pSignal.signal[0] = (mSignalA * mMix + mSignalB * mInvMix);
-            pSignal.signal[1] = (mSignalA * mInvMix + mSignalB * mMix);
-            pSignal.signal[0] *= mADSRAmp;
-            pSignal.signal[1] *= mADSRAmp;
+            final Signal pSignal = new Signal();
+            pSignal.left(mSignalA * mMix + mSignalB * mInvMix);
+            pSignal.right(mSignalA * mInvMix + mSignalB * mMix);
+            pSignal.left_mult(mADSRAmp);
+            pSignal.right_mult(mADSRAmp);
+            return pSignal;
         }
     }
 

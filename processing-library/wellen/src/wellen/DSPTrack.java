@@ -22,8 +22,7 @@ package wellen;
 import static wellen.Wellen.NO_IN_OUTPOINT;
 
 /**
- * a track allows to compose complex DSP modules. it is a container that may be managed by a {@link DSPComposition}
- * object.
+ * a track allows to compose complex DSP modules. it is a container that may be managed by a {@link DSPComposition}.
  * <p>
  * a track must implement the method <pre><code>void&nbsp;output(Signal)</code></pre> which supplies an audio signal and
  * may implement the method <pre><code>void&nbsp;beat(int)</code></pre> which can be used to receive beat events.
@@ -32,15 +31,19 @@ public abstract class DSPTrack implements DSPNodeOutputSignal {
     public float volume;
     public int in;
     public int out;
+    public final int ID;
+
+    private static int oTrackUID;
 
     public DSPTrack() {
-        this(1.0f);
+        this(1.0f, NO_IN_OUTPOINT, NO_IN_OUTPOINT);
     }
 
-    public DSPTrack(float pVolume) {
+    public DSPTrack(float pVolume, int pIn, int pOut) {
         volume = pVolume;
-        in = NO_IN_OUTPOINT;
-        out = NO_IN_OUTPOINT;
+        in = pIn;
+        out = pOut;
+        ID = oTrackUID++;
     }
 
     public void set_in_outpoint(int pIn, int pOut) {
@@ -49,5 +52,9 @@ public abstract class DSPTrack implements DSPNodeOutputSignal {
     }
 
     public void beat(int pBeat) {
+    }
+
+    public int get_relative_position(int pAbsolutPosition) {
+        return pAbsolutPosition - in;
     }
 }

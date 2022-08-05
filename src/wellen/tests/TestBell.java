@@ -6,6 +6,7 @@ import wellen.Beat;
 import wellen.InstrumentInternal;
 import wellen.Note;
 import wellen.Scale;
+import wellen.Signal;
 import wellen.Tone;
 import wellen.Wavetable;
 import wellen.Wellen;
@@ -110,7 +111,7 @@ public class TestBell extends PApplet {
             /* never stop oscillators as they are stopped by their ADSR */
         }
 
-        public float output() {
+        public Signal output_signal() {
             float mSample = 0.0f;
             for (int i = 0; i < mVCOs.length; i++) {
                 mVCOs[i].set_frequency(get_frequency() * mOscillatorDetune[i]);
@@ -119,7 +120,7 @@ public class TestBell extends PApplet {
             }
             mSample /= mVCOs.length;
             mSample *= mAmplify;
-            return mSample;
+            return new Signal(mSample, mSample);
         }
 
         public void set_detune(float pDetune) {

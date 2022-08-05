@@ -47,7 +47,7 @@ public class TechniqueBasics04Composition extends PApplet {
 
     public void audioblock(float[] pOutputSignalLeft, float[] pOutputSignalRight) {
         for (int i = 0; i < pOutputSignalLeft.length; i++) {
-            Signal s = mComposition.output();
+            Signal s = mComposition.output_signal();
             pOutputSignalLeft[i] = s.left() * mMasterVolume;
             pOutputSignalRight[i] = s.right() * mMasterVolume;
         }
@@ -67,9 +67,9 @@ public class TechniqueBasics04Composition extends PApplet {
             set_in_outpoint(0, 63);
         }
 
-        public void output(Signal pSignal) {
+        public Signal output_signal() {
             mOSC.set_frequency(mLFO.output());
-            pSignal.signal(mOSC.output());
+            return Signal.create(mOSC.output());
         }
     }
 
@@ -82,8 +82,8 @@ public class TechniqueBasics04Composition extends PApplet {
             mOSC.set_amplitude(0.0f);
         }
 
-        public void output(Signal pSignal) {
-            pSignal.signal(mOSC.output());
+        public Signal output_signal() {
+            return Signal.create(mOSC.output());
         }
 
         public void beat(int pBeat) {

@@ -78,7 +78,7 @@ void set_spread(float pSpread) {
         mSpread = pSpread;
     }
     
-void output(Signal pSignal) {
+Signal output_signal() {
         /* this custom instrument ignores LFOs and LPF */
         mVCO.set_frequency(get_frequency() * (1.0f - mDetune));
         mVCO.set_amplitude(get_amplitude());
@@ -90,9 +90,11 @@ void output(Signal pSignal) {
         final float mSignalB = mVCOSecond.output();
         final float mMix = mSpread * 0.5f + 0.5f;
         final float mInvMix = 1.0f - mMix;
-        pSignal.signal[0] = (mSignalA * mMix + mSignalB * mInvMix);
-        pSignal.signal[1] = (mSignalA * mInvMix + mSignalB * mMix);
-        pSignal.signal[0] *= mADSRAmp;
-        pSignal.signal[1] *= mADSRAmp;
+        final Signal pSignal = new Signal();
+        pSignal.left(mSignalA * mMix + mSignalB * mInvMix);
+        pSignal.right(mSignalA * mInvMix + mSignalB * mMix);
+        pSignal.left_mult(mADSRAmp);
+        pSignal.right_mult(mADSRAmp);
+        return pSignal;
     }
 }

@@ -22,7 +22,7 @@ package wellen;
 /**
  * applies reverb to a signal. {@link wellen.Reverb} uses an implementation of freeverb.
  */
-public class Reverb implements DSPNodeProcess, EffectStereo {
+public class Reverb implements DSPNodeProcessSignal, DSPNodeProcess, EffectStereo {
 
     /* a `FreeVerb` implementation taken from https://github.com/kmatheussen/soundengine */
 
@@ -323,6 +323,15 @@ public class Reverb implements DSPNodeProcess, EffectStereo {
         float[] mBuffer = {pSignal};
         process(mBuffer, mBuffer, mBuffer, mBuffer);
         return mBuffer[0];
+    }
+
+    public Signal process_signal(Signal pSignal) {
+        float[] mBufferLeft = {pSignal.left()};
+        float[] mBufferRight = {pSignal.right()};
+        process(mBufferLeft, mBufferRight, mBufferLeft, mBufferRight);
+        pSignal.left(mBufferLeft[0]);
+        pSignal.right(mBufferRight[0]);
+        return new Signal(pSignal);
     }
 
     /*

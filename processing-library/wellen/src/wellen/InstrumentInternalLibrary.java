@@ -103,7 +103,7 @@ public class InstrumentInternalLibrary {
         }
 
         @Override
-        public void output(Signal pSignal) {
+        public Signal output_signal() {
             float mSample = 0.0f;
             for (int i = 0; i < mVCOs.length; i++) {
                 mVCOs[i].set_frequency(get_frequency() * mOscillatorDetune[i]);
@@ -112,7 +112,7 @@ public class InstrumentInternalLibrary {
             }
             mSample /= mVCOs.length;
             mSample *= mAmplify;
-            pSignal.signal[0] = mSample;
+            return Signal.create(mSample);
         }
 
         public void set_detune(float pDetune) {
@@ -159,7 +159,7 @@ public class InstrumentInternalLibrary {
         }
 
         @Override
-        public void output(Signal pSignal) {
+        public Signal output_signal() {
             mVCO.set_frequency(get_frequency());
             mVCO.set_amplitude(get_amplitude() * 0.2f);
             mLowerVCO.set_frequency(get_frequency() * 0.5f);
@@ -171,7 +171,8 @@ public class InstrumentInternalLibrary {
             float mSample = mVCO.output();
             mSample += mLowerVCO.output();
             mSample += mVeryLowVCO.output();
-            pSignal.signal[0] = mADSRAmp * mSample;
+
+            return Signal.create(mADSRAmp * mSample);
         }
     }
 
@@ -186,8 +187,8 @@ public class InstrumentInternalLibrary {
         }
 
         @Override
-        public void output(Signal pSignal) {
-            pSignal.signal[0] = Wellen.random(-get_amplitude(), get_amplitude()) * mADSR.output();
+        public Signal output_signal() {
+            return Signal.create(Wellen.random(-get_amplitude(), get_amplitude()) * mADSR.output());
         }
     }
 
@@ -218,14 +219,14 @@ public class InstrumentInternalLibrary {
         }
 
         @Override
-        public void output(Signal pSignal) {
+        public Signal output_signal() {
             final float mFrequencyOffset = mFrequencyEnvelope.output() * mFrequencyRange;
             mVCO.set_frequency(get_frequency() + mFrequencyOffset);
             mVCO.set_amplitude(get_amplitude());
 
             float mSample = mVCO.output();
             final float mADSRAmp = mADSR.output();
-            pSignal.signal[0] = mSample * mADSRAmp;
+            return Signal.create(mSample * mADSRAmp);
         }
 
         public void note_off() {
@@ -252,8 +253,8 @@ public class InstrumentInternalLibrary {
         }
 
         @Override
-        public void output(Signal pSignal) {
-            pSignal.signal[0] = mSampler.output() * get_amplitude();
+        public Signal output_signal() {
+            return Signal.create(mSampler.output() * get_amplitude());
         }
 
 

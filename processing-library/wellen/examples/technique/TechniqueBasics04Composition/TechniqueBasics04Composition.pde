@@ -36,7 +36,7 @@ void beat(int pBeat) {
 
 void audioblock(float[] pOutputSignalLeft, float[] pOutputSignalRight) {
     for (int i = 0; i < pOutputSignalLeft.length; i++) {
-        Signal s = mComposition.output();
+        Signal s = mComposition.output_signal();
         pOutputSignalLeft[i] = s.left() * mMasterVolume;
         pOutputSignalRight[i] = s.right() * mMasterVolume;
     }
@@ -56,9 +56,9 @@ Track_0() {
         set_in_outpoint(0, 63);
     }
     
-void output(Signal pSignal) {
+Signal output_signal() {
         mOSC.set_frequency(mLFO.output());
-        pSignal.signal(mOSC.output());
+        return Signal.create(mOSC.output());
     }
 }
 
@@ -73,8 +73,8 @@ Track_1() {
         mOSC.set_amplitude(0.0f);
     }
     
-void output(Signal pSignal) {
-        pSignal.signal(mOSC.output());
+Signal output_signal() {
+        return Signal.create(mOSC.output());
     }
     
 void beat(int pBeat) {

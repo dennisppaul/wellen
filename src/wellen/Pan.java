@@ -29,7 +29,7 @@ import static wellen.Wellen.SIGNAL_RIGHT;
 /**
  * position a mono signal somewhere in a stereo space.
  */
-public class Pan {
+public class Pan implements DSPNodeProcessSignal {
 
     private int mPanType;
     private float mPanning;
@@ -50,7 +50,7 @@ public class Pan {
      * @param pPanning the value ranges from -1.0 to 1.0 where -1.0 is left and 1.0 is right channel.
      */
     public void set_panning(float pPanning) {
-        mPanning = pPanning > 1.0f ? 1.0f : pPanning < -1.0f ? -1.0f : pPanning;
+        mPanning = (pPanning > 1.0f) ? 1.0f : ((pPanning < -1.0f) ? -1.0f : pPanning);
         mPanningNormalized = (mPanning + 1.0f) * 0.5f;
     }
 
@@ -71,5 +71,10 @@ public class Pan {
                 break;
         }
         return mSignal;
+    }
+
+    @Override
+    public Signal process_signal(Signal pSignal) {
+        return process(pSignal.left());
     }
 }
