@@ -11,7 +11,7 @@ public abstract class Oscillator implements DSPNodeOutput {
     public abstract float get_frequency();
 
     /**
-     * set speed of oscillator in seconds
+     * set speed of oscillator in seconds per phase
      *
      * @param pFrequency
      */

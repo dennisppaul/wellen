@@ -212,9 +212,12 @@ public class Wellen {
         g.line(0, pHeight * 0.5f, pWidth, pHeight * 0.5f);
         if (pBuffer != null) {
             for (int i = 0; i < pBuffer.length - pStride; i += pStride) {
-                g.line(PApplet.map(i, 0, pBuffer.length, 0, pWidth), PApplet.map(pBuffer[i], -1.0f, 1.0f, 0, pHeight),
-                       PApplet.map(i + pStride, 0, pBuffer.length, 0, pWidth),
-                       PApplet.map(pBuffer[i + pStride], -1.0f, 1.0f, 0, pHeight));
+                if (!Float.isNaN(pBuffer[i]) && !Float.isNaN(pBuffer[i + pStride])) {
+                    g.line(PApplet.map(i, 0, pBuffer.length, 0, pWidth),
+                           PApplet.map(pBuffer[i], -1.0f, 1.0f, 0, pHeight),
+                           PApplet.map(i + pStride, 0, pBuffer.length, 0, pWidth),
+                           PApplet.map(pBuffer[i + pStride], -1.0f, 1.0f, 0, pHeight));
+                }
             }
         }
     }
