@@ -48,11 +48,11 @@ public abstract class Tone {
         if (pName.equalsIgnoreCase(Wellen.TONE_ENGINE_INTERNAL)) {
             /* specify output channels */
             // ToneEngineInternal(int pSamplingRate, int pAudioblockSize, int pOutputDeviceID, int pOutputChannels)
-            mInstance = new ToneEngineInternal(Wellen.DEFAULT_SAMPLING_RATE,
-                                               Wellen.DEFAULT_AUDIOBLOCK_SIZE,
-                                               Wellen.DEFAULT_AUDIO_DEVICE,
-                                               pParameter,
-                                               Wellen.DEFAULT_NUMBER_OF_INSTRUMENTS);
+            mInstance = new ToneEngineDSP(Wellen.DEFAULT_SAMPLING_RATE,
+                                          Wellen.DEFAULT_AUDIOBLOCK_SIZE,
+                                          Wellen.DEFAULT_AUDIO_DEVICE,
+                                          pParameter,
+                                          Wellen.DEFAULT_NUMBER_OF_INSTRUMENTS);
         } else if (pName.equalsIgnoreCase(Wellen.TONE_ENGINE_MIDI)) {
             /* specify output device ID */
             mInstance = new ToneEngineMIDI(pParameter);
@@ -69,11 +69,11 @@ public abstract class Tone {
         if (pName.equalsIgnoreCase(Wellen.TONE_ENGINE_INTERNAL)) {
             /* specify output device + output channels */
             // ToneEngineInternal(int pSamplingRate, int pAudioblockSize, int pOutputDeviceID, int pOutputChannels)
-            mInstance = new ToneEngineInternal(Wellen.DEFAULT_SAMPLING_RATE,
-                                               Wellen.DEFAULT_AUDIOBLOCK_SIZE,
-                                               pParameterA,
-                                               pParameterB,
-                                               Wellen.DEFAULT_NUMBER_OF_INSTRUMENTS);
+            mInstance = new ToneEngineDSP(Wellen.DEFAULT_SAMPLING_RATE,
+                                          Wellen.DEFAULT_AUDIOBLOCK_SIZE,
+                                          pParameterA,
+                                          pParameterB,
+                                          Wellen.DEFAULT_NUMBER_OF_INSTRUMENTS);
         } else {
             mInstance = ToneEngine.create(pName);
         }
@@ -87,11 +87,11 @@ public abstract class Tone {
         if (pName.equalsIgnoreCase(Wellen.TONE_ENGINE_INTERNAL)) {
             /* specify sampling rate + output device + output channels */
             // ToneEngineInternal(int pSamplingRate, int pAudioblockSize, int pOutputDeviceID, int pOutputChannels)
-            mInstance = new ToneEngineInternal(pParameterA,
-                                               Wellen.DEFAULT_AUDIOBLOCK_SIZE,
-                                               pParameterB,
-                                               pParameterC,
-                                               Wellen.DEFAULT_NUMBER_OF_INSTRUMENTS);
+            mInstance = new ToneEngineDSP(pParameterA,
+                                          Wellen.DEFAULT_AUDIOBLOCK_SIZE,
+                                          pParameterB,
+                                          pParameterC,
+                                          Wellen.DEFAULT_NUMBER_OF_INSTRUMENTS);
         } else {
             mInstance = ToneEngine.create(pName);
         }
@@ -104,25 +104,25 @@ public abstract class Tone {
         mInstance = null;
     }
 
-    public static ToneEngineInternal start(int pConfiguration) {
+    public static ToneEngineDSP start(int pConfiguration) {
         if (mInstance != null) {
             printAlreadyStartedWarning();
-            if (mInstance instanceof ToneEngineInternal) {
-                return (ToneEngineInternal) mInstance;
+            if (mInstance instanceof ToneEngineDSP) {
+                return (ToneEngineDSP) mInstance;
             }
         }
         if (pConfiguration == Wellen.TONE_ENGINE_INTERNAL_WITH_NO_OUTPUT) {
-            ToneEngineInternal mInstance = new ToneEngineInternal(Wellen.DEFAULT_SAMPLING_RATE,
-                                                                  Wellen.DEFAULT_AUDIOBLOCK_SIZE,
-                                                                  Wellen.DEFAULT_AUDIO_DEVICE,
-                                                                  Wellen.NO_CHANNELS,
-                                                                  Wellen.DEFAULT_NUMBER_OF_INSTRUMENTS);
+            ToneEngineDSP mInstance = new ToneEngineDSP(Wellen.DEFAULT_SAMPLING_RATE,
+                                                        Wellen.DEFAULT_AUDIOBLOCK_SIZE,
+                                                        Wellen.DEFAULT_AUDIO_DEVICE,
+                                                        Wellen.NO_CHANNELS,
+                                                        Wellen.DEFAULT_NUMBER_OF_INSTRUMENTS);
             Tone.mInstance = mInstance;
             return mInstance;
         } else {
             System.err.println(
             "+++ WARNING @" + Tone.class.getSimpleName() + ".start" + " / unknown configuration, " + "using default");
-            return new ToneEngineInternal();
+            return new ToneEngineDSP();
         }
     }
 
@@ -216,9 +216,9 @@ public abstract class Tone {
         return mInstance;
     }
 
-    public static ToneEngineInternal get_internal_engine() {
-        if (instance() instanceof ToneEngineInternal) {
-            return (ToneEngineInternal) instance();
+    public static ToneEngineDSP get_DSP_engine() {
+        if (instance() instanceof ToneEngineDSP) {
+            return (ToneEngineDSP) instance();
         } else {
             return null;
         }

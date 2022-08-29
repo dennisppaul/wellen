@@ -14,7 +14,7 @@ final float mDecay = 0.9f;
 
 final float mMix = 0.7f;
 
-ToneEngineInternal mToneEngine;
+ToneEngineDSP mToneEngine;
 
 int mDelayID = 0;
 

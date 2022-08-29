@@ -216,7 +216,7 @@ public abstract class Tone {
         return mInstance;
     }
 
-    public static ToneEngineDSP get_internal_engine() {
+    public static ToneEngineDSP get_DSP_engine() {
         if (instance() instanceof ToneEngineDSP) {
             return (ToneEngineDSP) instance();
         } else {

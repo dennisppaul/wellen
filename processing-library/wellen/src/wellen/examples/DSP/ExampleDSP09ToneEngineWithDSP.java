@@ -3,10 +3,10 @@ package wellen.examples.DSP;
 import processing.core.PApplet;
 import wellen.DSP;
 import wellen.Tone;
-import wellen.ToneEngineInternal;
+import wellen.ToneEngineDSP;
 import wellen.Wellen;
 
-public class ExampleDSP09ToneEngineInternalWithDSP extends PApplet {
+public class ExampleDSP09ToneEngineWithDSP extends PApplet {
 
     /*
      * this example demonstrate how to reroute the output of the internal tone engine to `DSP` to e.g apply an effect.
@@ -18,7 +18,7 @@ public class ExampleDSP09ToneEngineInternalWithDSP extends PApplet {
     private final int mDelayOffset = 512;
     private final float mDecay = 0.9f;
     private final float mMix = 0.7f;
-    private ToneEngineInternal mToneEngine;
+    private ToneEngineDSP mToneEngine;
     private int mDelayID = 0;
 
     public void settings() {
@@ -63,6 +63,6 @@ public class ExampleDSP09ToneEngineInternalWithDSP extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main(ExampleDSP09ToneEngineInternalWithDSP.class.getName());
+        PApplet.main(ExampleDSP09ToneEngineWithDSP.class.getName());
     }
 }

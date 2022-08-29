@@ -115,7 +115,9 @@ public class Wellen {
     public static final int SIGNAL_RIGHT = 1;
     public static final int NO_INPOINT = 0;
     public static final int NO_OUTPOINT = -1;
-    public static final int NO_LOOP = 0;
+    public static final int NO_POSITION = -1;
+    public static final int NO_LOOP_COUNT = -1;
+    public static final int NO_LOOP = -2;
     public static final int LOOP_INFINITE = Integer.MAX_VALUE;
     public static final int SIGNAL_PROCESSING_IGNORE_IN_OUTPOINTS = -3;
 

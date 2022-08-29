@@ -18,7 +18,7 @@ public class ExampleInstruments11MasterVolume extends PApplet {
     }
 
     public void setup() {
-        ToneEngineDSP mToneEngine = Tone.get_internal_engine();
+        ToneEngineDSP mToneEngine = Tone.get_DSP_engine();
         mToneEngine.add_effect(mMasterVolume);
 
         mMasterVolume.set_gain(1.5f);

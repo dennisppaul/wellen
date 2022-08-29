@@ -19,8 +19,11 @@
 
 package wellen;
 
+import static processing.core.PApplet.min;
 import static wellen.Wellen.SIGNAL_LEFT;
+import static wellen.Wellen.SIGNAL_MONO;
 import static wellen.Wellen.SIGNAL_RIGHT;
+import static wellen.Wellen.SIGNAL_STEREO;
 
 public class Signal {
 
@@ -31,11 +34,20 @@ public class Signal {
     }
 
     public static Signal create(float pSignal) {
+        return new Signal(pSignal);
+    }
+
+    public static Signal create_stereo(float pSignal) {
         return new Signal(pSignal, pSignal);
     }
 
     public Signal(int pChannels) {
         signal = new float[pChannels];
+    }
+
+    public Signal(float pLeft) {
+        this(1);
+        left(pLeft);
     }
 
     public Signal(float pLeft, float pRight) {
@@ -75,10 +87,32 @@ public class Signal {
         }
     }
 
+    public void set(Signal pSignal) {
+        int mNumCopyChannels = min(pSignal.num_channels(), num_channels());
+        //noinspection ManualArrayCopy
+        for (int i = 0; i < mNumCopyChannels; i++) {
+            signal[i] = pSignal.signal[i];
+        }
+    }
+
+    public boolean is_mono() {
+        return signal.length == SIGNAL_MONO;
+    }
+
+    public boolean is_stereo() {
+        return signal.length == SIGNAL_STEREO;
+    }
+
     public int num_channels() {
         return signal.length;
     }
 
+    public float mono() {
+        if (signal.length < 1) {
+            return 0;
+        }
+        return signal[SIGNAL_LEFT];
+    }
 
     public float left() {
         if (signal.length < 1) {
@@ -106,6 +140,13 @@ public class Signal {
             return;
         }
         signal[SIGNAL_RIGHT] = pSignal;
+    }
+
+    public Signal mult(float pSignal) {
+        for (int i = 0; i < signal.length; i++) {
+            signal[i] *= pSignal;
+        }
+        return this;
     }
 
     public void left_mult(float pSignal) {

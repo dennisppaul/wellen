@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -178,21 +178,28 @@ implements <a href="DSPNodeProcessSignal.html" title="interface in wellen">DSPNo
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="Signal.html" title="class in wellen">Signal</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#process(float)">process</a></span>&#8203;(float&nbsp;pSignal)</code></th>
+<td class="colFirst"><code>float</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#get_panning()">get_panning</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code><a href="Signal.html" title="class in wellen">Signal</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#process_signal(wellen.Signal)">process_signal</a></span>&#8203;(<a href="Signal.html" title="class in wellen">Signal</a>&nbsp;pSignal)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#process(float)">process</a></span>&#8203;(float&nbsp;pSignal)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
+<td class="colFirst"><code><a href="Signal.html" title="class in wellen">Signal</a></code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#process_signal(wellen.Signal)">process_signal</a></span>&#8203;(<a href="Signal.html" title="class in wellen">Signal</a>&nbsp;pSignal)</code></th>
+<td class="colLast">
+<div class="block">map audio signal into stereo space.</div>
+</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set_pan_type(int)">set_pan_type</a></span>&#8203;(int&nbsp;pPanType)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set_panning(float)">set_panning</a></span>&#8203;(float&nbsp;pPanning)</code></th>
 <td class="colLast">
@@ -251,6 +258,15 @@ implements <a href="DSPNodeProcessSignal.html" title="interface in wellen">DSPNo
 <pre class="methodSignature">public&nbsp;void&nbsp;set_pan_type&#8203;(int&nbsp;pPanType)</pre>
 </li>
 </ul>
+<a id="get_panning()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>get_panning</h4>
+<pre class="methodSignature">public&nbsp;float&nbsp;get_panning()</pre>
+</li>
+</ul>
 <a id="set_panning(float)">
 <!--   -->
 </a>
@@ -281,9 +297,14 @@ implements <a href="DSPNodeProcessSignal.html" title="interface in wellen">DSPNo
 <li class="blockList">
 <h4>process_signal</h4>
 <pre class="methodSignature">public&nbsp;<a href="Signal.html" title="class in wellen">Signal</a>&nbsp;process_signal&#8203;(<a href="Signal.html" title="class in wellen">Signal</a>&nbsp;pSignal)</pre>
+<div class="block">map audio signal into stereo space. mono signals are positioned in stereo space. stereo signals are biased
+ according to the current panning value. signals with more than 2 channels are <em>clipped</em> to 2 channels.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="DSPNodeProcessSignal.html#process_signal(wellen.Signal)">process_signal</a></code>&nbsp;in interface&nbsp;<code><a href="DSPNodeProcessSignal.html" title="interface in wellen">DSPNodeProcessSignal</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>pSignal</code> - </dd>
+<dt><span class="returnLabel">Returns:</span></dt>
 </dl>
 </li>
 </ul>

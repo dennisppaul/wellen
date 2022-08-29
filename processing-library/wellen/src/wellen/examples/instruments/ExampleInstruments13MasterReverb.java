@@ -2,7 +2,7 @@ package wellen.examples.instruments;
 
 import processing.core.PApplet;
 import wellen.Tone;
-import wellen.ToneEngineInternal;
+import wellen.ToneEngineDSP;
 
 public class ExampleInstruments13MasterReverb extends PApplet {
 
@@ -17,7 +17,7 @@ public class ExampleInstruments13MasterReverb extends PApplet {
     }
 
     public void setup() {
-        ToneEngineInternal mToneEngine = Tone.get_internal_engine();
+        ToneEngineDSP mToneEngine = Tone.get_DSP_engine();
         mToneEngine.enable_reverb(true);
         mToneEngine.get_reverb().set_roomsize(0.9f);
     }

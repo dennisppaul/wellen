@@ -3,11 +3,11 @@ package wellen.tests;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import wellen.Tone;
-import wellen.ToneEngineInternal;
+import wellen.ToneEngineDSP;
 
 public class TestToneEngineInteralWithDSPPostProcess extends PApplet {
 
-    private ToneEngineInternal mToneEngine;
+    private ToneEngineDSP mToneEngine;
     private MMasterEffect mPostProcessing;
 
     public void settings() {
@@ -15,7 +15,7 @@ public class TestToneEngineInteralWithDSPPostProcess extends PApplet {
     }
 
     public void setup() {
-        mToneEngine = new ToneEngineInternal();
+        mToneEngine = new ToneEngineDSP();
         Tone.set_engine(mToneEngine);
         mPostProcessing = new MMasterEffect();
         mToneEngine.register_audioblock_callback(mPostProcessing);
@@ -53,7 +53,7 @@ public class TestToneEngineInteralWithDSPPostProcess extends PApplet {
         }
     }
 
-    private static class MMasterEffect implements ToneEngineInternal.AudioOutputCallback {
+    private static class MMasterEffect implements ToneEngineDSP.AudioOutputCallback {
 
         float[] mDelayBuffer = new float[4096];
         int mDelayID = 0;

@@ -1,5 +1,7 @@
 package wellen;
 
+import static wellen.Wellen.clamp;
+
 public class VowelFormantFilter implements DSPNodeProcess {
 
     /*
@@ -16,7 +18,7 @@ public class VowelFormantFilter implements DSPNodeProcess {
     public static final int VOWEL_U = 4;
 
     public VowelFormantFilter() {
-        mVowel = VOWEL_A;
+        set_vowel(VOWEL_A);
     }
 
     //---------------------------------------------------------------------------------
@@ -48,22 +50,22 @@ public class VowelFormantFilter implements DSPNodeProcess {
     }
     };
 
-    private int mVowel;
+    private static final double[] mCoeff = new double[coeff[0].length];
 
     //---------------------------------------------------------------------------------
 
     public float process(float pSignal) {
-        double mSignal = (coeff[mVowel][0] * pSignal +
-                          coeff[mVowel][1] * memory[0] +
-                          coeff[mVowel][2] * memory[1] +
-                          coeff[mVowel][3] * memory[2] +
-                          coeff[mVowel][4] * memory[3] +
-                          coeff[mVowel][5] * memory[4] +
-                          coeff[mVowel][6] * memory[5] +
-                          coeff[mVowel][7] * memory[6] +
-                          coeff[mVowel][8] * memory[7] +
-                          coeff[mVowel][9] * memory[8] +
-                          coeff[mVowel][10] * memory[9]);
+        double mSignal = (mCoeff[0] * pSignal +
+                          mCoeff[1] * memory[0] +
+                          mCoeff[2] * memory[1] +
+                          mCoeff[3] * memory[2] +
+                          mCoeff[4] * memory[3] +
+                          mCoeff[5] * memory[4] +
+                          mCoeff[6] * memory[5] +
+                          mCoeff[7] * memory[6] +
+                          mCoeff[8] * memory[7] +
+                          mCoeff[9] * memory[8] +
+                          mCoeff[10] * memory[9]);
 
         memory[9] = memory[8];
         memory[8] = memory[7];
@@ -78,11 +80,15 @@ public class VowelFormantFilter implements DSPNodeProcess {
         return (float) mSignal;
     }
 
-    public void set_vowel(int pVowel) {
-        mVowel = pVowel;
+    public void lerp_vowel(int pVowelA, int pVowelB, float pLerp) {
+        final float b = clamp(pLerp, 0.0f, 1.0f);
+        final float a = 1.0f - b;
+        for (int i = 0; i < mCoeff.length; i++) {
+            mCoeff[i] = coeff[pVowelA][i] * a + coeff[pVowelB][i] * b;
+        }
     }
 
-    public int get_vowel() {
-        return mVowel;
+    public void set_vowel(int pVowel) {
+        System.arraycopy(coeff[pVowel], 0, mCoeff, 0, mCoeff.length);
     }
 }

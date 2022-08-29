@@ -30,7 +30,7 @@ void mouseReleased() {
     Tone.instrument(INSTRUMENT_DETUNE_STEREO).note_off();
 }
 
-static class CustomInstrumentDetunedOscillatorsStereo extends InstrumentInternal {
+static class CustomInstrumentDetunedOscillatorsStereo extends InstrumentDSP {
     /**
      * detunes the oscillators in percentage of the main frequency. one oscillator is detuned below the main
      * frequency and the other above.

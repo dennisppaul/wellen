@@ -11,7 +11,7 @@ void settings() {
 }
 
 void setup() {
-    ToneEngineInternal mToneEngine = Tone.get_internal_engine();
+    ToneEngineDSP mToneEngine = Tone.get_DSP_engine();
     mToneEngine.enable_reverb(true);
     mToneEngine.get_reverb().set_roomsize(0.9f);
 }

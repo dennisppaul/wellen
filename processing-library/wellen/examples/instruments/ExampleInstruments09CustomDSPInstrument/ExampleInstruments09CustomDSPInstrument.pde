@@ -63,7 +63,7 @@ void setup() {
     Tone.replace_instrument(new CustomInstrumentMultipleOscillators(INSTRUMENT_FAT_LEAD));
     Tone.replace_instrument(new CustomInstrumentDetunedOscillatorsStereo(INSTRUMENT_DETUNED));
     /* instrument from the collection `InstrumentInternalLibrary` */
-    Tone.replace_instrument(new InstrumentInternalLibrary.BELL(INSTRUMENT_BELL));
+    Tone.replace_instrument(new InstrumentDSPLibrary.BELL(INSTRUMENT_BELL));
 }
 
 void draw() {
@@ -120,7 +120,7 @@ void keyReleased() {
  * custom DSP instrument that implements a snare drum by playing a pre-recorded sample.
  */
 
-static class CustomInstrumentSampler extends InstrumentInternal {
+static class CustomInstrumentSampler extends InstrumentDSP {
     
 final float mGain;
     
@@ -183,7 +183,7 @@ void note_on(int pNote, int pVelocity) {
  * custom DSP instrument that combines 3 oscillators to create a more complex sound.
  */
 
-static class CustomInstrumentMultipleOscillators extends InstrumentInternal {
+static class CustomInstrumentMultipleOscillators extends InstrumentDSP {
     
 final Wavetable mLowerVCO;
     
@@ -222,7 +222,7 @@ Signal output_signal() {
  * VCO to create a pitch slide when a note is triggered.
  */
 
-static class CustomInstrumentKickDrum extends InstrumentInternal {
+static class CustomInstrumentKickDrum extends InstrumentDSP {
     
 final float mDecaySpeed = 0.25f;
     
@@ -273,7 +273,7 @@ void note_on(int pNote, int pVelocity) {
  * shapes it with the built-in ADSR.
  */
 
-static class CustomInstrumentNoise extends InstrumentInternal {
+static class CustomInstrumentNoise extends InstrumentDSP {
     
 CustomInstrumentNoise(int pID) {
         super(pID);
@@ -291,7 +291,7 @@ Signal output_signal() {
  * custom instrument that produces a stereo signal from 2 slightly detunes oscillators.
  */
 
-static class CustomInstrumentDetunedOscillatorsStereo extends InstrumentInternal {
+static class CustomInstrumentDetunedOscillatorsStereo extends InstrumentDSP {
     /**
      * detunes the oscillators in percentage of the main frequency. one oscillator is detuned below the main
      * frequency and the other above.

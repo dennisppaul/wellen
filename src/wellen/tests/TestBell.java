@@ -26,8 +26,8 @@ public class TestBell extends PApplet {
             Tone.replace_instrument(mInstrumentBells[i]);
         }
         Beat.start(this, 240);
-        Tone.get_internal_engine().enable_reverb(true);
-        Tone.get_internal_engine().get_reverb().set_roomsize(0.9f);
+        Tone.get_DSP_engine().enable_reverb(true);
+        Tone.get_DSP_engine().get_reverb().set_roomsize(0.9f);
     }
 
     public void draw() {

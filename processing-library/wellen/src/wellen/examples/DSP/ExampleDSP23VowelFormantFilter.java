@@ -40,6 +40,19 @@ public class ExampleDSP23VowelFormantFilter extends PApplet {
         DSP.draw_buffer(g, width, height);
     }
 
+    public void mousePressed() {
+        mADSR.start();
+    }
+
+    public void mouseReleased() {
+        mADSR.stop();
+    }
+
+    public void mouseDragged() {
+        mFormantFilter.lerp_vowel(VowelFormantFilter.VOWEL_I, VowelFormantFilter.VOWEL_O, map(mouseY, 0, height, 0, 1));
+        mouseMoved();
+    }
+
     public void mouseMoved() {
         mOsc.set_frequency(map(mouseX, 0, width, 1, 110));
     }

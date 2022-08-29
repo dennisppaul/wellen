@@ -4,7 +4,7 @@ import processing.core.PApplet;
 import wellen.DSP;
 import wellen.Distortion;
 import wellen.Tone;
-import wellen.ToneEngineInternal;
+import wellen.ToneEngineDSP;
 import wellen.Wellen;
 
 public class ExampleDSP16Distortion extends PApplet {
@@ -18,7 +18,7 @@ public class ExampleDSP16Distortion extends PApplet {
      * achieve distortion by artificially reducing the bit range.
      */
 
-    private ToneEngineInternal mToneEngine;
+    private ToneEngineDSP mToneEngine;
     private Distortion mDistortion;
 
     public void settings() {

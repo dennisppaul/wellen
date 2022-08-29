@@ -32,6 +32,19 @@ void draw() {
     DSP.draw_buffer(g, width, height);
 }
 
+void mousePressed() {
+    mADSR.start();
+}
+
+void mouseReleased() {
+    mADSR.stop();
+}
+
+void mouseDragged() {
+    mFormantFilter.lerp_vowel(VowelFormantFilter.VOWEL_I, VowelFormantFilter.VOWEL_O, map(mouseY, 0, height, 0, 1));
+    mouseMoved();
+}
+
 void mouseMoved() {
     mOsc.set_frequency(map(mouseX, 0, width, 1, 110));
 }

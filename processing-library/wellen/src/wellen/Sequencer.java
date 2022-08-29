@@ -33,6 +33,7 @@ public class Sequencer<T> {
     private int mStep;
 
     public Sequencer(int pSteps) {
+        Float f;
         mSequence = (T[]) new Object[pSteps];
         reset();
     }
@@ -48,9 +49,9 @@ public class Sequencer<T> {
     }
 
     public T step() {
-        final T mValue = mSequence[mStep];
         mStep++;
         mStep %= mSequence.length;
+        final T mValue = mSequence[mStep];
         return mValue;
     }
 
@@ -77,7 +78,11 @@ public class Sequencer<T> {
     }
 
     public void reset() {
-        mStep = 0;
+        mStep = -1;
+    }
+
+    public void set_step(int pStep) {
+        mStep = pStep;
     }
 
     public int get_step() {

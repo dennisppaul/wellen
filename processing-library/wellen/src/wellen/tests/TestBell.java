@@ -3,7 +3,7 @@ package wellen.tests;
 import processing.core.PApplet;
 import wellen.ADSR;
 import wellen.Beat;
-import wellen.InstrumentInternal;
+import wellen.InstrumentDSP;
 import wellen.Note;
 import wellen.Scale;
 import wellen.Signal;
@@ -26,8 +26,8 @@ public class TestBell extends PApplet {
             Tone.replace_instrument(mInstrumentBells[i]);
         }
         Beat.start(this, 240);
-        Tone.get_internal_engine().enable_reverb(true);
-        Tone.get_internal_engine().get_reverb().set_roomsize(0.9f);
+        Tone.get_DSP_engine().enable_reverb(true);
+        Tone.get_DSP_engine().get_reverb().set_roomsize(0.9f);
     }
 
     public void draw() {
@@ -44,7 +44,7 @@ public class TestBell extends PApplet {
         Tone.note_on(mNote, mOffset == 0 ? 80 : 60);
     }
 
-    private static class InstrumentBell extends InstrumentInternal {
+    private static class InstrumentBell extends InstrumentDSP {
 
         private static final int NUM_OSC = 7;
         private final Wavetable[] mVCOs;

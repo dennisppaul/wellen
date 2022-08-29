@@ -9,7 +9,7 @@ void settings() {
 }
 
 void setup() {
-    ToneEngineInternal mToneEngine = Tone.get_internal_engine();
+    ToneEngineDSP mToneEngine = Tone.get_DSP_engine();
     RREchotron mEchotron = new RREchotron();
     mEchotron.setpreset(RREchotron.PRESET_SUMMER);
     mToneEngine.add_effect(mEchotron);
@@ -29,8 +29,8 @@ void draw() {
     fill(0);
     ellipse(width * 0.5f, height * 0.5f, Tone.is_playing() ? 100 : 5, Tone.is_playing() ? 100 : 5);
     Wellen.draw_buffer(getGraphics(), width, height,
-                       Tone.get_internal_engine().get_buffer_left(),
-                       Tone.get_internal_engine().get_buffer_left());
+                       Tone.get_DSP_engine().get_buffer_left(),
+                       Tone.get_DSP_engine().get_buffer_left());
 }
 
 void mousePressed() {

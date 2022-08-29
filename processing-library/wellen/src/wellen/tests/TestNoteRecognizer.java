@@ -3,7 +3,7 @@ package wellen.tests;
 import processing.core.PApplet;
 import wellen.DSP;
 import wellen.Tone;
-import wellen.ToneEngineInternal;
+import wellen.ToneEngineDSP;
 import wellen.Wellen;
 import wellen.extra.rakarrack.RRRecognizer;
 
@@ -12,7 +12,7 @@ import static wellen.extra.rakarrack.RRUtilities.memcpy;
 public class TestNoteRecognizer extends PApplet {
 
     private RRRecognizer mRecognize;
-    private ToneEngineInternal mToneEngine;
+    private ToneEngineDSP mToneEngine;
 
     public void settings() {
         size(640, 480);

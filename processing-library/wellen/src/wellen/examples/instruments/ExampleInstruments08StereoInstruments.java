@@ -1,7 +1,7 @@
 package wellen.examples.instruments;
 
 import processing.core.PApplet;
-import wellen.InstrumentInternal;
+import wellen.InstrumentDSP;
 import wellen.Signal;
 import wellen.Tone;
 import wellen.Wavetable;
@@ -38,7 +38,7 @@ public class ExampleInstruments08StereoInstruments extends PApplet {
         Tone.instrument(INSTRUMENT_DETUNE_STEREO).note_off();
     }
 
-    private static class CustomInstrumentDetunedOscillatorsStereo extends InstrumentInternal {
+    private static class CustomInstrumentDetunedOscillatorsStereo extends InstrumentDSP {
 
         /**
          * detunes the oscillators in percentage of the main frequency. one oscillator is detuned below the main

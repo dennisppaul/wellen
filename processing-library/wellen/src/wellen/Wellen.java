@@ -47,6 +47,7 @@ public class Wellen {
 
     public static final int DEFAULT_AUDIOBLOCK_SIZE = 1024;
     public static final int DEFAULT_AUDIO_DEVICE = -1;
+    public static final int NO_AUDIO_DEVICE = -2;
     public static final int DEFAULT_NUMBER_OF_INSTRUMENTS = 16;
     public static final int DEFAULT_SAMPLING_RATE = 48000;
     public static final int DEFAULT_WAVETABLE_SIZE = 512;
@@ -108,11 +109,16 @@ public class Wellen {
     public static final int PAN_LINEAR = 0;
     public static final int PAN_SQUARE_LAW = 1;
     public static final int PAN_SINE_LAW = 2;
-    public static final int SIGNAL_MONO = 0;
+    public static final int SIGNAL_MONO = 1;
+    public static final int SIGNAL_STEREO = 2;
     public static final int SIGNAL_LEFT = 0;
     public static final int SIGNAL_RIGHT = 1;
-    public static final int NO_INPOINT = -1;
-    public static final int NO_OUTPOINT = -2;
+    public static final int NO_INPOINT = 0;
+    public static final int NO_OUTPOINT = -1;
+    public static final int NO_POSITION = -1;
+    public static final int NO_LOOP_COUNT = -1;
+    public static final int NO_LOOP = -2;
+    public static final int LOOP_INFINITE = Integer.MAX_VALUE;
     public static final int SIGNAL_PROCESSING_IGNORE_IN_OUTPOINTS = -3;
 
     public static final float TWO_PI = PApplet.TWO_PI;
@@ -220,6 +226,14 @@ public class Wellen {
                 }
             }
         }
+    }
+
+    public static void draw_tone_stereo(PGraphics g, float pWidth, float pHeight) {
+        draw_buffer(g, pWidth, pHeight, Tone.get_buffer_left(), Tone.get_buffer_right());
+    }
+
+    public static void draw_tone(PGraphics g, float pWidth, float pHeight) {
+        draw_buffer(g, pWidth, pHeight, Tone.get_buffer());
     }
 
     public static void draw_buffer(PGraphics g, float pWidth, float pHeight, float[] pBuffer) {
