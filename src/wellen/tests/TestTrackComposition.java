@@ -3,22 +3,24 @@ package wellen.tests;
 import processing.core.PApplet;
 import wellen.Beat;
 import wellen.DSP;
-import wellen.DSPComposition;
+import wellen.DSPModule;
 import wellen.DSPTrack;
 import wellen.Signal;
 
+import static wellen.Wellen.LOOP_INFINITE;
+
 public class TestTrackComposition extends PApplet {
 
-    private final DSPComposition mComposition = new DSPComposition();
+    private final DSPTrack mComposition = new DSPTrack();
 
     public void settings() {
         size(640, 480);
     }
 
     public void setup() {
-        mComposition.tracks().add(new Track_0());
-        mComposition.tracks().add(new Track_1());
-        mComposition.tracks().add(new Track_2());
+        mComposition.modules().add(new Module_0());
+        mComposition.modules().add(new Module_1());
+        mComposition.modules().add(new Module_2());
         Beat.start(this, 60);
         DSP.start(this, 2);
     }
@@ -29,7 +31,7 @@ public class TestTrackComposition extends PApplet {
     }
 
     public void mouseMoved() {
-        mComposition.track(0).volume = map(mouseY, 0, height, 0, 0.5f);
+        mComposition.module(0).set_volume(map(mouseY, 0, height, 0, 0.5f));
     }
 
     public void beat(int pBeat) {
@@ -45,8 +47,8 @@ public class TestTrackComposition extends PApplet {
         }
     }
 
-    private static class Track_0 extends DSPTrack {
-        public Track_0() {
+    private static class Module_0 extends DSPModule {
+        public Module_0() {
             set_in_outpoint(1, 7);
         }
 
@@ -59,10 +61,10 @@ public class TestTrackComposition extends PApplet {
         }
     }
 
-    private static class Track_1 extends DSPTrack {
-        public Track_1() {
+    private static class Module_1 extends DSPModule {
+        public Module_1() {
             set_in_outpoint(2, 4);
-            loop = true;
+            set_loop(LOOP_INFINITE);
         }
 
         public Signal output_signal() {
@@ -74,8 +76,8 @@ public class TestTrackComposition extends PApplet {
         }
     }
 
-    private static class Track_2 extends DSPTrack {
-        public Track_2() {
+    private static class Module_2 extends DSPModule {
+        public Module_2() {
             set_outpoint(6);
         }
 
