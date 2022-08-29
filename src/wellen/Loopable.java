@@ -25,8 +25,8 @@ import static wellen.Wellen.NO_OUTPOINT;
 
 public interface Loopable {
     int get_loop();
-    int get_inpoint();
-    int get_outpoint();
+    int get_in_point();
+    int get_out_point();
 
     static int get_relative_position(Loopable p, int pAbsolutPosition) {
         return Loopable.getRelativePositionOrLoopCount(p, pAbsolutPosition, true);
@@ -37,12 +37,12 @@ public interface Loopable {
     }
 
     private static int getRelativePositionOrLoopCount(Loopable p, int pAbsolutPosition, boolean pGetRelativePosition) {
-        if (p.get_loop() == NO_LOOP || p.get_outpoint() == NO_OUTPOINT) {
-            return pGetRelativePosition ? (pAbsolutPosition - p.get_inpoint()) : NO_LOOP_COUNT;
+        if (p.get_loop() == NO_LOOP || p.get_out_point() == NO_OUTPOINT) {
+            return pGetRelativePosition ? (pAbsolutPosition - p.get_in_point()) : NO_LOOP_COUNT;
         } else {
             //noinspection ManualMinMaxCalculation
-            int mSanitizedInPoint = (p.get_inpoint() < 0 ? 0 : p.get_inpoint());
-            int mTrackDuration = 1 + p.get_outpoint() - mSanitizedInPoint;
+            int mSanitizedInPoint = (p.get_in_point() < 0 ? 0 : p.get_in_point());
+            int mTrackDuration = 1 + p.get_out_point() - mSanitizedInPoint;
             if (mTrackDuration > 0) {
                 int mRelativePosition = (pAbsolutPosition - mSanitizedInPoint);
                 if (pGetRelativePosition) {

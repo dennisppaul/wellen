@@ -82,20 +82,20 @@ public abstract class DSPModule implements DSPNodeOutputSignal, Loopable {
     }
 
     @Override
-    public int get_inpoint() {
+    public int get_in_point() {
         return fInPoint;
     }
 
-    public void set_outpoint(int pOut) {
+    public void set_out_point(int pOut) {
         fOutPoint = pOut;
     }
 
     @Override
-    public int get_outpoint() {
+    public int get_out_point() {
         return fOutPoint;
     }
 
-    public void set_in_outpoint(int pIn, int pOut) {
+    public void set_in_out_point(int pIn, int pOut) {
         fInPoint = pIn;
         fOutPoint = pOut;
     }
@@ -199,7 +199,7 @@ public abstract class DSPModule implements DSPNodeOutputSignal, Loopable {
         println("BEAT\tRELATIV\tLOOP");
 
         println("---");
-        d.set_in_outpoint(2, 5);
+        d.set_in_out_point(2, 5);
         d.fLoop = LOOP_INFINITE;
         for (int i = 0; i < 16; i++) {
             t.beat(i);
@@ -207,14 +207,14 @@ public abstract class DSPModule implements DSPNodeOutputSignal, Loopable {
 
         println("---");
         d.set_inpoint(2);
-        d.set_outpoint(5);
+        d.set_out_point(5);
         d.fLoop = NO_LOOP;
         for (int i = 0; i < 16; i++) {
             t.beat(i);
         }
 
         println("---");
-        d.set_in_outpoint(11, NO_OUTPOINT);
+        d.set_in_out_point(11, NO_OUTPOINT);
         d.fLoop = NO_LOOP;
         for (int i = 0; i < 16; i++) {
             t.beat(i);

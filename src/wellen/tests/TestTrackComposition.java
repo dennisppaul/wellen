@@ -49,7 +49,7 @@ public class TestTrackComposition extends PApplet {
 
     private static class Module_0 extends DSPModule {
         public Module_0() {
-            set_in_outpoint(1, 7);
+            set_in_out_point(1, 7);
         }
 
         public Signal output_signal() {
@@ -63,7 +63,7 @@ public class TestTrackComposition extends PApplet {
 
     private static class Module_1 extends DSPModule {
         public Module_1() {
-            set_in_outpoint(2, 4);
+            set_in_out_point(2, 4);
             set_loop(LOOP_INFINITE);
         }
 
@@ -78,7 +78,7 @@ public class TestTrackComposition extends PApplet {
 
     private static class Module_2 extends DSPModule {
         public Module_2() {
-            set_outpoint(6);
+            set_out_point(6);
         }
 
         public Signal output_signal() {
