@@ -1,36 +1,39 @@
-package wellen.examples.DSP;
+package wellen.tests;
 
 import processing.core.PApplet;
 import wellen.ADSR;
 import wellen.DSP;
 import wellen.Oscillator;
 import wellen.OscillatorFunction;
-import wellen.VowelFormantFilter;
 import wellen.Wellen;
+import wellen.extra.daisysp.Svf;
 
-public class ExampleDSP23VowelFormantFilter extends PApplet {
+public class TestVowelizer extends PApplet {
 
-    /*
-     * this example demonstrates how to use the vowel format filter. it shapes a spectral rich signal ( e.g square or
-     * sawtooth or even white noise ) into a sound that resembles a vowel formed by a human vocal cords.
-     *
-     * keys `1 – 3` select signal shapes, keys `a, e, i, o, u` select vowels, mouse changes the frequency of the
-     * oscillator.
-     */
-
-    private final VowelFormantFilter mFormantFilter = new VowelFormantFilter();
     private final Oscillator mOsc = new OscillatorFunction();
     private final ADSR mADSR = new ADSR();
     private boolean mIsKeyPressed = false;
+
+    private Svf filt1 = new Svf();
+    private Svf filt2 = new Svf();
+    float formant1, formant2;
 
     public void settings() {
         size(640, 480);
     }
 
     public void setup() {
-        mOsc.set_frequency(55);
+        mOsc.set_frequency(140);
         mOsc.set_amplitude(0.33f);
-        mOsc.set_waveform(Wellen.WAVESHAPE_SQUARE);
+        mOsc.set_waveform(Wellen.WAVESHAPE_SAWTOOTH);
+
+        filt1.Init(Wellen.DEFAULT_SAMPLING_RATE);
+        filt1.SetRes(0.85f);
+        filt1.SetDrive(0.8f);
+
+        filt2.Init(Wellen.DEFAULT_SAMPLING_RATE);
+        filt2.SetRes(0.85f);
+        filt2.SetDrive(0.8f);
 
         DSP.start(this);
     }
@@ -38,19 +41,6 @@ public class ExampleDSP23VowelFormantFilter extends PApplet {
     public void draw() {
         background(255);
         DSP.draw_buffer(g, width, height);
-    }
-
-    public void mousePressed() {
-        mADSR.start();
-    }
-
-    public void mouseReleased() {
-        mADSR.stop();
-    }
-
-    public void mouseDragged() {
-        mFormantFilter.lerp_vowel(VowelFormantFilter.VOWEL_I, VowelFormantFilter.VOWEL_O, map(mouseY, 0, height, 0, 1));
-        mouseMoved();
     }
 
     public void mouseMoved() {
@@ -63,19 +53,24 @@ public class ExampleDSP23VowelFormantFilter extends PApplet {
 
             switch (key) {
                 case 'a':
-                    mFormantFilter.set_vowel(VowelFormantFilter.VOWEL_A);
+                    formant1 = 200;
+                    formant2 = 500;
                     break;
                 case 'e':
-                    mFormantFilter.set_vowel(VowelFormantFilter.VOWEL_E);
+                    formant1 = 300;
+                    formant2 = 1000;
                     break;
                 case 'i':
-                    mFormantFilter.set_vowel(VowelFormantFilter.VOWEL_I);
+                    formant1 = 400;
+                    formant2 = 1500;
                     break;
                 case 'o':
-                    mFormantFilter.set_vowel(VowelFormantFilter.VOWEL_O);
+                    formant1 = 450;
+                    formant2 = 2000;
                     break;
                 case 'u':
-                    mFormantFilter.set_vowel(VowelFormantFilter.VOWEL_U);
+                    formant1 = 500;
+                    formant2 = 2500;
                     break;
                 case '1':
                     mOsc.set_waveform(Wellen.WAVESHAPE_SQUARE);
@@ -87,7 +82,8 @@ public class ExampleDSP23VowelFormantFilter extends PApplet {
                     mOsc.set_waveform(Wellen.WAVESHAPE_NOISE);
                     break;
             }
-
+            filt1.SetFreq(formant1);
+            filt2.SetFreq(formant2);
             mADSR.start();
         }
     }
@@ -102,13 +98,20 @@ public class ExampleDSP23VowelFormantFilter extends PApplet {
     public void audioblock(float[] pOutputSignal) {
         for (int i = 0; i < pOutputSignal.length; i++) {
             pOutputSignal[i] = mOsc.output();
-            pOutputSignal[i] = mFormantFilter.process(pOutputSignal[i]);
+
+            filt1.Process(pOutputSignal[i]);
+            filt2.Process(pOutputSignal[i]);
+
+            float band1 = filt1.Band();
+            float band2 = filt2.Band();
+
+            pOutputSignal[i] = (band1 + band2);
             pOutputSignal[i] *= 0.5f;
             pOutputSignal[i] *= mADSR.output();
         }
     }
 
     public static void main(String[] args) {
-        PApplet.main(ExampleDSP23VowelFormantFilter.class.getName());
+        PApplet.main(TestVowelizer.class.getName());
     }
 }
