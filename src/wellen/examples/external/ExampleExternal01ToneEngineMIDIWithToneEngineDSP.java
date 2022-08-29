@@ -1,17 +1,17 @@
 package wellen.examples.external;
 
 import processing.core.PApplet;
-import wellen.ToneEngineInternal;
+import wellen.ToneEngineDSP;
 import wellen.ToneEngineMIDI;
 import wellen.Wellen;
 
-public class ExampleExternal01MIDIToneEngineWithInternalToneEngine extends PApplet {
+public class ExampleExternal01ToneEngineMIDIWithToneEngineDSP extends PApplet {
 
     /*
      * this example demonstrates how to use multiple tone engines ( i.e midi + internal ) at the same time.
      */
 
-    private ToneEngineInternal mToneEngineInternal;
+    private ToneEngineDSP mToneEngineDSP;
     private ToneEngineMIDI mToneEngineMIDI;
 
     public void settings() {
@@ -21,7 +21,7 @@ public class ExampleExternal01MIDIToneEngineWithInternalToneEngine extends PAppl
     public void setup() {
         Wellen.dumpMidiOutputDevices();
         /* when working with multiple engines the use of `Tone.start(...)` is discouraged. */
-        mToneEngineInternal = new ToneEngineInternal();
+        mToneEngineDSP = new ToneEngineDSP();
         mToneEngineMIDI = new ToneEngineMIDI("Bus 1");
     }
 
@@ -30,8 +30,8 @@ public class ExampleExternal01MIDIToneEngineWithInternalToneEngine extends PAppl
         fill(0);
         ellipse(width * 0.33f,
                 height * 0.5f,
-                mToneEngineInternal.is_playing() ? 100 : 5,
-                mToneEngineInternal.is_playing() ? 100 : 5);
+                mToneEngineDSP.is_playing() ? 100 : 5,
+                mToneEngineDSP.is_playing() ? 100 : 5);
         ellipse(width * 0.66f,
                 height * 0.5f,
                 mToneEngineMIDI.is_playing() ? 100 : 5,
@@ -42,16 +42,16 @@ public class ExampleExternal01MIDIToneEngineWithInternalToneEngine extends PAppl
 
     public void mousePressed() {
         mNote = 45 + (int) random(0, 12);
-        mToneEngineInternal.note_on(mNote, 100);
+        mToneEngineDSP.note_on(mNote, 100);
         mToneEngineMIDI.note_on(mNote, 100);
     }
 
     public void mouseReleased() {
-        mToneEngineInternal.note_off();
+        mToneEngineDSP.note_off();
         mToneEngineMIDI.note_off(mNote);
     }
 
     public static void main(String[] args) {
-        PApplet.main(ExampleExternal01MIDIToneEngineWithInternalToneEngine.class.getName());
+        PApplet.main(ExampleExternal01ToneEngineMIDIWithToneEngineDSP.class.getName());
     }
 }

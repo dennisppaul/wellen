@@ -5,12 +5,12 @@ import wellen.DSP;
 import wellen.Pan;
 import wellen.Signal;
 import wellen.Tone;
-import wellen.ToneEngineInternal;
+import wellen.ToneEngineDSP;
 import wellen.Wellen;
 
 public class TestPanning extends PApplet {
 
-    private ToneEngineInternal mToneEngine;
+    private ToneEngineDSP mToneEngine;
     private final Pan mPan = new Pan();
 
     public void settings() {

@@ -22,12 +22,13 @@ package wellen;
 import java.util.ArrayList;
 
 import static processing.core.PApplet.constrain;
+import static wellen.Wellen.NO_AUDIO_DEVICE;
 import static wellen.Wellen.clamp;
 
 /**
  * implementation of {@link wellen.ToneEngine} using internal DSP audio processing.
  */
-public class ToneEngineInternal extends ToneEngine implements AudioBufferRenderer, DSPNodeOutput {
+public class ToneEngineDSP extends ToneEngine implements AudioBufferRenderer, DSPNodeOutput, DSPNodeOutputSignal {
 
     public static boolean VERBOSE = true;
     public boolean USE_AMP_FRACTION = false;
@@ -39,19 +40,22 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
     private int mCurrentInstrumentID;
     private final ArrayList<EffectStereo> mEffects;
     private final Gain mGain;
-    private final ArrayList<InstrumentInternal> mInstruments;
+    private final ArrayList<InstrumentDSP> mInstruments;
     private final int mNumberOfInstruments;
     private final Pan mPan;
     private final Reverb mReverb;
     private boolean mReverbEnabled;
 
-    public ToneEngineInternal(int pSamplingRate, int pAudioblockSize, int pOutputDeviceID, int pOutputChannels,
-                              int pNumberOfInstruments) {
+    public ToneEngineDSP(int pSamplingRate,
+                         int pAudioblockSize,
+                         int pOutputDeviceID,
+                         int pOutputChannels,
+                         int pNumberOfInstruments) {
         mInstruments = new ArrayList<>();
         mEffects = new ArrayList<>();
         mNumberOfInstruments = pNumberOfInstruments;
         for (int i = 0; i < mNumberOfInstruments; i++) {
-            final InstrumentInternal mInstrument = new InstrumentInternal(i, pSamplingRate);
+            final InstrumentDSP mInstrument = new InstrumentDSP(i, pSamplingRate);
             mInstruments.add(mInstrument);
         }
 
@@ -61,18 +65,36 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
         mPan = new Pan();
         mPan.set_pan_type(Wellen.PAN_SINE_LAW);
 
-        if (pOutputChannels > 0) {
-            mAudioPlayer = new AudioBufferManager(this, pSamplingRate, pAudioblockSize, pOutputDeviceID,
-                                                  pOutputChannels, 0, 0);
+        if (pOutputDeviceID != NO_AUDIO_DEVICE && pOutputChannels > 0) {
+            mAudioPlayer = new AudioBufferManager(this,
+                                                  pSamplingRate,
+                                                  pAudioblockSize,
+                                                  pOutputDeviceID,
+                                                  pOutputChannels,
+                                                  0,
+                                                  0);
         } else {
             mAudioPlayer = null;
         }
     }
 
-    public ToneEngineInternal() {
-        this(Wellen.DEFAULT_SAMPLING_RATE, Wellen.DEFAULT_AUDIOBLOCK_SIZE, Wellen.DEFAULT_AUDIO_DEVICE, 2, 16);
+    public ToneEngineDSP() {
+        this(Wellen.DEFAULT_SAMPLING_RATE,
+             Wellen.DEFAULT_AUDIOBLOCK_SIZE,
+             Wellen.DEFAULT_AUDIO_DEVICE,
+             2,
+             16);
     }
 
+    public static ToneEngineDSP create_without_audio_output(int pNumberOfInstruments) {
+        return new ToneEngineDSP(Wellen.DEFAULT_SAMPLING_RATE,
+                                 Wellen.DEFAULT_AUDIOBLOCK_SIZE,
+                                 Wellen.NO_AUDIO_DEVICE,
+                                 2,
+                                 pNumberOfInstruments);
+    }
+
+    @Override
     public void stop() {
         super.stop();
         if (mAudioPlayer != null) {
@@ -148,18 +170,20 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
 
     @Override
     public void replace_instrument(Instrument pInstrument) {
-        if (pInstrument instanceof InstrumentInternal) {
-            mInstruments.set(pInstrument.ID(), (InstrumentInternal) pInstrument);
+        if (pInstrument instanceof InstrumentDSP) {
+            mInstruments.set(pInstrument.ID(), (InstrumentDSP) pInstrument);
         } else {
             System.err.println(
             "+++ WARNING @" + getClass().getSimpleName() + ".replace_instrument(Instrument) / " + "instrument must " + "be" + " of type `InstrumentInternal`");
         }
     }
 
+    @Override
     public float[] get_buffer_left() {
         return mCurrentBufferLeft;
     }
 
+    @Override
     public float[] get_buffer_right() {
         return mCurrentBufferRight;
     }
@@ -180,6 +204,7 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
         }
     }
 
+    @Override
     public float output() {
         float mSignal = getNextInstrumentSampleMono();
 
@@ -199,25 +224,12 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
         return mSignal;
     }
 
-    public void audioblock(float[] pSignal) {
-        for (int i = 0; i < pSignal.length; i++) {
-            pSignal[i] = getNextInstrumentSampleMono();
-        }
-
-        if (mReverbEnabled) {
-            mReverb.process(pSignal, pSignal, pSignal, pSignal);
-        }
-
-        mGain.out(pSignal, null);
-
-        mCurrentBufferLeft = pSignal;
-    }
-
+    @Override
     public Signal output_signal() {
         Signal mSignalSum = getNextInstrumentSampleStereo();
 
         float[] pSignalLeft = new float[]{mSignalSum.left()};
-        float[] pSignalRight = new float[]{mSignalSum.left()};
+        float[] pSignalRight = new float[]{mSignalSum.right()};
         for (EffectStereo mEffect : mEffects) {
             mEffect.out(pSignalLeft, pSignalRight);
         }
@@ -245,6 +257,20 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
         return mSignalSum;
     }
 
+    public void audioblock(float[] pSignal) {
+        for (int i = 0; i < pSignal.length; i++) {
+            pSignal[i] = getNextInstrumentSampleMono();
+        }
+
+        if (mReverbEnabled) {
+            mReverb.process(pSignal, pSignal, pSignal, pSignal);
+        }
+
+        mGain.out(pSignal, null);
+
+        mCurrentBufferLeft = pSignal;
+    }
+
     public void audioblock(float[] pSignalLeft, float[] pSignalRight) {
         for (int i = 0; i < pSignalLeft.length; i++) {
             Signal mSignalSum = getNextInstrumentSampleStereo();
@@ -267,7 +293,7 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
 
     private float getNextInstrumentSampleMono() {
         float mSignal = 0;
-        for (InstrumentInternal mInstrument : mInstruments) {
+        for (InstrumentDSP mInstrument : mInstruments) {
             final Signal mSignals = mInstrument.output_signal();
             /* if instrument has multiple channels accumulate them into one */
             for (int j = 0; j < mSignals.signal.length; j++) {
@@ -280,7 +306,7 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
 
     private Signal getNextInstrumentSampleStereo() {
         final Signal mSignalSum = new Signal();
-        for (InstrumentInternal mInstrument : mInstruments) {
+        for (InstrumentDSP mInstrument : mInstruments) {
             Signal mSignal = mInstrument.output_signal();
             if (mInstrument.get_channels() == 1) {
                 /* convert mono instrument to stereo (default) */
@@ -328,10 +354,10 @@ public class ToneEngineInternal extends ToneEngine implements AudioBufferRendere
         return Math.max(mCurrentInstrumentID, 0) % mInstruments.size();
     }
 
-    public static ToneEngineInternal no_output() {
-        return new ToneEngineInternal(Wellen.DEFAULT_SAMPLING_RATE, Wellen.DEFAULT_AUDIOBLOCK_SIZE,
-                                      Wellen.DEFAULT_AUDIO_DEVICE, Wellen.NO_CHANNELS,
-                                      Wellen.DEFAULT_NUMBER_OF_INSTRUMENTS);
+    public static ToneEngineDSP no_output() {
+        return new ToneEngineDSP(Wellen.DEFAULT_SAMPLING_RATE, Wellen.DEFAULT_AUDIOBLOCK_SIZE,
+                                 Wellen.DEFAULT_AUDIO_DEVICE, Wellen.NO_CHANNELS,
+                                 Wellen.DEFAULT_NUMBER_OF_INSTRUMENTS);
     }
 
     public interface AudioOutputCallback {

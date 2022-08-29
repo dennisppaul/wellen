@@ -44,13 +44,13 @@ public abstract class ToneEngine {
     }
 
     public static ToneEngine create() {
-        return new ToneEngineInternal();
+        return new ToneEngineDSP();
     }
 
     public static ToneEngine create(String... pName) {
         if (pName.length > 0) {
             if (pName[0].equalsIgnoreCase(Wellen.TONE_ENGINE_INTERNAL)) {
-                return new ToneEngineInternal();
+                return new ToneEngineDSP();
             } else if (pName[0].equalsIgnoreCase(Wellen.TONE_ENGINE_MIDI) && pName.length == 2) {
                 return new ToneEngineMIDI(pName[1]);
             } else if (pName[0].equalsIgnoreCase(Wellen.TONE_ENGINE_OSC) && pName.length >= 2) {

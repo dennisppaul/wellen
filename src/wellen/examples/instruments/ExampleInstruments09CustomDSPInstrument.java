@@ -59,7 +59,7 @@ public class ExampleInstruments09CustomDSPInstrument extends PApplet {
         Tone.replace_instrument(new CustomInstrumentMultipleOscillators(INSTRUMENT_FAT_LEAD));
         Tone.replace_instrument(new CustomInstrumentDetunedOscillatorsStereo(INSTRUMENT_DETUNED));
         /* instrument from the collection `InstrumentInternalLibrary` */
-        Tone.replace_instrument(new InstrumentInternalLibrary.BELL(INSTRUMENT_BELL));
+        Tone.replace_instrument(new InstrumentDSPLibrary.BELL(INSTRUMENT_BELL));
     }
 
     public void draw() {
@@ -116,7 +116,7 @@ public class ExampleInstruments09CustomDSPInstrument extends PApplet {
     /**
      * custom DSP instrument that implements a snare drum by playing a pre-recorded sample.
      */
-    private static class CustomInstrumentSampler extends InstrumentInternal {
+    private static class CustomInstrumentSampler extends InstrumentDSP {
 
         private final float mGain;
         private final Reverb mReverb;
@@ -180,7 +180,7 @@ public class ExampleInstruments09CustomDSPInstrument extends PApplet {
     /**
      * custom DSP instrument that combines 3 oscillators to create a more complex sound.
      */
-    private static class CustomInstrumentMultipleOscillators extends InstrumentInternal {
+    private static class CustomInstrumentMultipleOscillators extends InstrumentDSP {
 
         private final Wavetable mLowerVCO;
         private final Wavetable mVeryLowVCO;
@@ -221,7 +221,7 @@ public class ExampleInstruments09CustomDSPInstrument extends PApplet {
      * custom DSP instrument that implements a kick drum. it uses a second ADSR envelope to control the frequency of the
      * VCO to create a pitch slide when a note is triggered.
      */
-    private static class CustomInstrumentKickDrum extends InstrumentInternal {
+    private static class CustomInstrumentKickDrum extends InstrumentDSP {
 
         private final float mDecaySpeed = 0.25f;
         private final ADSR mFrequencyEnvelope;
@@ -276,7 +276,7 @@ public class ExampleInstruments09CustomDSPInstrument extends PApplet {
      * custom DSP instrument that implements a hi-hat. it uses the `random(float, float)` method to create noise and
      * shapes it with the built-in ADSR.
      */
-    private static class CustomInstrumentNoise extends InstrumentInternal {
+    private static class CustomInstrumentNoise extends InstrumentDSP {
 
         public CustomInstrumentNoise(int pID) {
             super(pID);
@@ -294,7 +294,7 @@ public class ExampleInstruments09CustomDSPInstrument extends PApplet {
     /**
      * custom instrument that produces a stereo signal from 2 slightly detunes oscillators.
      */
-    private static class CustomInstrumentDetunedOscillatorsStereo extends InstrumentInternal {
+    private static class CustomInstrumentDetunedOscillatorsStereo extends InstrumentDSP {
 
         /**
          * detunes the oscillators in percentage of the main frequency. one oscillator is detuned below the main

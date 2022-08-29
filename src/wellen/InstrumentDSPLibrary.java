@@ -24,18 +24,18 @@ import processing.core.PApplet;
 /**
  * a collection of DSP instruments.
  * <p>
- * these instruments can be used to replace the default instrument ( i.e {@link wellen.InstrumentInternal} ) e.g by
- * using the method <code>Tone.replace_instrument(InstrumentInternal)</code>.
+ * these instruments can be used to replace the default instrument ( i.e {@link InstrumentDSP} ) e.g by
+ * using the method <code>Tone.replace_instrument(InstrumentDSP)</code>.
  * <p>
- * all instruments are extended from {@link wellen.InstrumentInternal}, however some the original functionality is
+ * all instruments are extended from {@link InstrumentDSP}, however some the original functionality is
  * extended, changed or even removed.
  * <p>
  * note that these instruments only work with the internal tone engine. however, due to the modular nature of the
  * library these instruments can also be integrated into {@link wellen.DSP} applications.
  */
-public class InstrumentInternalLibrary {
+public class InstrumentDSPLibrary {
 
-    public static class BELL extends InstrumentInternal {
+    public static class BELL extends InstrumentDSP {
 
         private static final int NUM_OSC = 7;
         private final ADSR[] mADSRs;
@@ -141,7 +141,7 @@ public class InstrumentInternalLibrary {
         }
     }
 
-    public static class FAT_LEAD extends InstrumentInternal {
+    public static class FAT_LEAD extends InstrumentDSP {
 
         private final Wavetable mLowerVCO;
         private final Wavetable mVeryLowVCO;
@@ -176,7 +176,7 @@ public class InstrumentInternalLibrary {
         }
     }
 
-    public static class HI_HAT extends InstrumentInternal {
+    public static class HI_HAT extends InstrumentDSP {
 
         public HI_HAT(int pID) {
             super(pID);
@@ -192,7 +192,7 @@ public class InstrumentInternalLibrary {
         }
     }
 
-    public static class KICK_DRUM extends InstrumentInternal {
+    public static class KICK_DRUM extends InstrumentDSP {
 
         private final float mDecaySpeed = 0.25f;
         private final ADSR mFrequencyEnvelope;
@@ -240,7 +240,7 @@ public class InstrumentInternalLibrary {
         }
     }
 
-    public static class SAMPLER extends InstrumentInternal {
+    public static class SAMPLER extends InstrumentDSP {
 
         private final Sampler mSampler;
 

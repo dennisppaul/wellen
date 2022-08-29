@@ -2,7 +2,7 @@ package wellen.examples.technique;
 
 import processing.core.PApplet;
 import wellen.Beat;
-import wellen.InstrumentInternal;
+import wellen.InstrumentDSP;
 import wellen.Note;
 import wellen.Scale;
 import wellen.Tone;
@@ -31,7 +31,7 @@ public class TechniqueAlgorithmicComposition04FunctionSineWaves extends PApplet 
         Tone.instrument(INSTRUMENT_FLUTE).set_oscillator_type(Wellen.WAVESHAPE_SAWTOOTH);
 
         //@TODO("this might be broken!")
-        Tone.replace_instrument(InstrumentInternal.class, INSTRUMENT_NOISE);
+        Tone.replace_instrument(InstrumentDSP.class, INSTRUMENT_NOISE);
         Tone.instrument(INSTRUMENT_NOISE).set_oscillator_type(Wellen.WAVESHAPE_NOISE);
         Tone.instrument(INSTRUMENT_NOISE).note_on(1, 127);
         Tone.instrument(INSTRUMENT_NOISE).set_sustain(1.0f);

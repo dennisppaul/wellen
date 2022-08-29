@@ -4,7 +4,7 @@ import processing.core.PApplet;
 import wellen.Gain;
 import wellen.Reverb;
 import wellen.Tone;
-import wellen.ToneEngineInternal;
+import wellen.ToneEngineDSP;
 import wellen.Wellen;
 import wellen.extra.rakarrack.RREchotron;
 import wellen.extra.rakarrack.RRStompBox;
@@ -20,7 +20,7 @@ public class ExampleInstruments12MasterEffects extends PApplet {
     }
 
     public void setup() {
-        ToneEngineInternal mToneEngine = Tone.get_internal_engine();
+        ToneEngineDSP mToneEngine = Tone.get_internal_engine();
 
         RREchotron mEchotron = new RREchotron();
         mEchotron.setpreset(RREchotron.PRESET_SUMMER);

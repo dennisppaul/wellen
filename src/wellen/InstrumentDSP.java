@@ -22,7 +22,7 @@ package wellen;
 /**
  * implementation of {@link wellen.Instrument} for the internal tone engine.
  */
-public class InstrumentInternal extends Instrument implements DSPNodeOutputSignal {
+public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
 
     public static final float DEFAULT_FREQUENCY = 220.0f;
     public static final int DEFAULT_WAVETABLE_SIZE = 512;
@@ -38,7 +38,7 @@ public class InstrumentInternal extends Instrument implements DSPNodeOutputSigna
     private int mOscType;
     private final int mSamplingRate;
 
-    public InstrumentInternal(int pID, int pSamplingRate, int pWavetableSize) {
+    public InstrumentDSP(int pID, int pSamplingRate, int pWavetableSize) {
         super(pID);
         mNumChannels = 1;
         mSamplingRate = pSamplingRate;
@@ -76,11 +76,11 @@ public class InstrumentInternal extends Instrument implements DSPNodeOutputSigna
         enable_LPF(false);
     }
 
-    public InstrumentInternal(int pID, int pSamplingRate) {
+    public InstrumentDSP(int pID, int pSamplingRate) {
         this(pID, pSamplingRate, DEFAULT_WAVETABLE_SIZE);
     }
 
-    public InstrumentInternal(int pID) {
+    public InstrumentDSP(int pID) {
         this(pID, Wellen.DEFAULT_SAMPLING_RATE, DEFAULT_WAVETABLE_SIZE);
     }
 
