@@ -57,7 +57,7 @@ public class TechniqueBasics04TracksAndModules extends PApplet {
         }
 
         public void beat(int pBeat) {
-            if (pBeat % PPQN == 0) {
+            if (pBeat % (PPQN / 4) == 0) {
                 int mBeat = pBeat / PPQN;
                 if ((get_loop_count(mBeat) % 8) < 4) {
                     mToneEngine.instrument(0);
@@ -115,12 +115,11 @@ public class TechniqueBasics04TracksAndModules extends PApplet {
 
             Loop mLoop = new Loop();
             mLoop.set_length(PPQN * 4);
-            mLoop.set_tick(pBeat);
-            if (mLoop.event(0)) {
+            if (mLoop.event(pBeat, 0)) {
                 mFormantFilter.set_vowel(VowelFormantFilter.VOWEL_O);
-            } else if (mLoop.event(PPQN * 2)) {
+            } else if (mLoop.event(pBeat, PPQN * 2)) {
                 mFormantFilter.set_vowel(VowelFormantFilter.VOWEL_A);
-            } else if (mLoop.event(PPQN * 3)) {
+            } else if (mLoop.event(pBeat, PPQN * 3)) {
                 mFormantFilter.set_vowel(VowelFormantFilter.VOWEL_U);
             }
         }

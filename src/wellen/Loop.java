@@ -19,90 +19,112 @@
 
 package wellen;
 
+import static wellen.Wellen.NO_LOOP_COUNT;
+
 public class Loop {
 
-    private int fLength = 0;
-    private int fTick = 0;
+    protected int fInterval = 0;
+    protected int fOffset = 0;
 
     public int get_length() {
-        return fLength;
+        return fInterval;
     }
 
-    public void set_length(int pLength) {
-        fLength = pLength;
+    public void set_length(int pInterval) {
+        fInterval = pInterval;
     }
 
-    public int get_tick() {
-        return fTick;
+    public int get_offset() {
+        return -fOffset;
     }
 
-    public void set_tick(int pTick) {
-        fTick = pTick;
+    public void set_offset(int pOffset) {
+        fOffset = -pOffset;
     }
 
-    public static boolean event(int pCounter, int pLoopEvent, int pLoopInterval) {
+    public static boolean event(int pTick, int pLoopEvent, int pLoopInterval) {
         if (pLoopInterval == 0) {
             return false;
         }
-        return (pCounter % pLoopInterval) == pLoopEvent;
+        return (pTick % pLoopInterval) == pLoopEvent;
     }
 
-    public boolean event(int pCounter, int pLoopEvent) {
-        fTick = pCounter;
-        if (fLength == 0) {
+    public boolean event(int pTick, int pLoopEvent) {
+        if (fInterval == 0) {
             return false;
         }
-        return (fTick % fLength) == pLoopEvent;
+        return (getTickWithOffset(pTick) % fInterval) == pLoopEvent;
     }
 
-    public boolean event(int pLoopEvent) {
-        if (fLength == 0) {
-            return false;
-        }
-        return (fTick % fLength) == pLoopEvent;
-    }
-
-    public static boolean before(int pCounter, int pThreshold, int pLoopInterval) {
+    public static boolean before(int pTick, int pThreshold, int pLoopInterval) {
         if (pLoopInterval == 0) {
             return false;
         }
-        return (pCounter % pLoopInterval) < pThreshold;
+        return (pTick % pLoopInterval) < pThreshold;
     }
 
-    public boolean before(int pCounter, int pThreshold) {
-        fTick = pCounter;
-        if (fLength == 0) {
+    public boolean before(int pTick, int pThreshold) {
+        if (fInterval == 0) {
             return false;
         }
-        return (fTick % fLength) < pThreshold;
+        return (getTickWithOffset(pTick) % fInterval) < pThreshold;
     }
 
-    public boolean before(int pThreshold) {
-        if (fLength == 0) {
-            return false;
-        }
-        return (fTick % fLength) < pThreshold;
-    }
 
-    public static boolean after(int pCounter, int pThreshold, int pLoopInterval) {
+    public static boolean after(int pTick, int pThreshold, int pLoopInterval) {
         if (pLoopInterval == 0) {
             return false;
         }
-        return (pCounter % pLoopInterval) > pThreshold;
+        return (pTick % pLoopInterval) > pThreshold;
     }
 
-    public boolean after(int pCounter, int pThreshold) {
-        fTick = pCounter;
-        if (fLength == 0) {
+    public boolean after(int pTick, int pThreshold) {
+        if (fInterval == 0) {
             return false;
         }
-        return (fTick % fLength) > pThreshold;
+        return (getTickWithOffset(pTick) % fInterval) > pThreshold;
     }
 
-    public boolean after(int pThreshold) {
-        if (fLength == 0) {
-            return false;
+    private int getTickWithOffset(int pTick) {
+        return pTick + fOffset;
+    }
+
+    public int get_loop_count(int pAbsolutPosition) {
+        if (fInterval > 0) {
+            if (pAbsolutPosition + fOffset >= 0) {
+                return (pAbsolutPosition + fOffset) / fInterval;
+            } else {
+                return NO_LOOP_COUNT;
+            }
+        } else {
+            return NO_LOOP_COUNT;
         }
-        return (fTick % fLength) > pThreshold;
+    }
+
+    public static void main(String[] args) {
+        Loop l = new Loop();
+
+        System.out.println("CNT\tREL\tEVT\tLOP");
+
+        System.out.println("---");
+        l.set_length(3);
+        for (int i = 0; i < 10; i++) {
+            System.out.print(i + "\t");
+            System.out.print("\t");
+            System.out.print((l.event(i, 0) ? "+" : "-") + "\t");
+            System.out.print(l.get_loop_count(i) + "\t");
+            System.out.println();
+        }
+
+        System.out.println("---");
+        l.set_length(5);
+        l.set_offset(2);
+        for (int i = 0; i < 10; i++) {
+            System.out.print(i + "\t");
+            System.out.print("\t");
+            System.out.print((l.event(i, 0) ? "+" : "-") + "\t");
+            System.out.print(l.get_loop_count(i) + "\t");
+            System.out.println();
+        }
     }
 }

@@ -30,7 +30,7 @@ import static wellen.Wellen.NO_OUTPOINT;
  * a module must implement the method <pre><code>void&nbsp;output(Signal)</code></pre> which supplies an audio signal
  * and may implement the method <pre><code>void&nbsp;beat(int)</code></pre> which can be used to receive beat events.
  */
-public abstract class DSPModule implements DSPNodeOutputSignal {
+public abstract class DSPModule implements DSPNodeOutputSignal, Loopable {
     public final int ID;
 
     private float fVolume;
@@ -81,6 +81,7 @@ public abstract class DSPModule implements DSPNodeOutputSignal {
         fInPoint = pIn;
     }
 
+    @Override
     public int get_inpoint() {
         return fInPoint;
     }
@@ -89,6 +90,7 @@ public abstract class DSPModule implements DSPNodeOutputSignal {
         fOutPoint = pOut;
     }
 
+    @Override
     public int get_outpoint() {
         return fOutPoint;
     }
@@ -102,46 +104,32 @@ public abstract class DSPModule implements DSPNodeOutputSignal {
         return fOutPoint - fInPoint + 1;
     }
 
-    public void set_length(int pInterval) {
-        fOutPoint = fInPoint + pInterval - 1;
+    /**
+     * set length of a module loop. setting the length affects outpoint. e.g given an inpoint of 3, setting the length
+     * to 2 will set output to 4. note that outpoint is inclusive i.e a pattern from in- to outpoint of 3, 4, 5, … is
+     * generated.
+     *
+     * @param pLength set length of loop
+     */
+    public void set_length(int pLength) {
+        fOutPoint = fInPoint + pLength - 1;
     }
 
     public void set_loop(int pLoop) {
         fLoop = pLoop;
     }
 
+    @Override
     public int get_loop() {
         return fLoop;
     }
 
-    private int getRelativePositionOrLoopCount(int pAbsolutPosition, boolean pGetRelativePosition) {
-        if (fLoop == NO_LOOP || fOutPoint == NO_OUTPOINT) {
-            return pGetRelativePosition ? pAbsolutPosition - fInPoint : 0;
-        } else {
-            //noinspection ManualMinMaxCalculation
-            int mSanitizedInPoint = (fInPoint < 0 ? 0 : fInPoint);
-            int mTrackDuration = 1 + fOutPoint - mSanitizedInPoint;
-            if (mTrackDuration > 0) {
-                int mRelativePosition = (pAbsolutPosition - mSanitizedInPoint);
-                if (pGetRelativePosition) {
-                    mRelativePosition %= mTrackDuration;
-                    return mRelativePosition;
-                } else {
-                    //noinspection UnnecessaryLocalVariable
-                    final int mLoopCount = mRelativePosition / mTrackDuration;
-                    return mLoopCount;
-                }
-            }
-        }
-        return pGetRelativePosition ? pAbsolutPosition : 0;
-    }
-
     public int get_relative_position(int pAbsolutPosition) {
-        return getRelativePositionOrLoopCount(pAbsolutPosition, true);
+        return Loopable.get_relative_position(this, pAbsolutPosition);
     }
 
     public int get_loop_count(int pAbsolutPosition) {
-        return getRelativePositionOrLoopCount(pAbsolutPosition, false);
+        return Loopable.get_loop_count(this, pAbsolutPosition);
     }
 
     /* ---------------------------------- TEST ---------------------------------- */
@@ -240,7 +228,6 @@ public abstract class DSPModule implements DSPNodeOutputSignal {
             t.beat(i);
         }
 
-        System.out.println("---");
         System.out.println("TEST SUCCESS: " + TEST_RESULT.equals(TEST_RESULT_IDEAL));
     }
 }
