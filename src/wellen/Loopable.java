@@ -48,6 +48,9 @@ public interface Loopable {
                 if (pGetRelativePosition) {
                     if (mRelativePosition >= 0) {
                         mRelativePosition %= mTrackDuration;
+                        // @TODO not sure if it is a good idea to also wrap negative position values
+                        // } else {
+                        //     mRelativePosition = -mTrackDuration - ((mRelativePosition + 1) % mTrackDuration) + 1;
                     }
                     return mRelativePosition;
                 } else {
