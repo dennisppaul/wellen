@@ -33,7 +33,7 @@ public class LowPassFilter implements DSPNodeProcess {
      */
 
     private final float mSamplingRate;
-    private final float mIstor;
+//    private final float mIstor;
     private final float[] mDelay = new float[6];
     private final float[] mTanhstg = new float[3];
     private float mResonance;
@@ -49,7 +49,7 @@ public class LowPassFilter implements DSPNodeProcess {
 
     public LowPassFilter(int pSamplingRate) {
         mSamplingRate = pSamplingRate;
-        mIstor = 0.0f;
+//        mIstor = 0.0f;
         mResonance = 0.4f;
         mCutoffFrequency = 1000.0f;
 
@@ -64,19 +64,15 @@ public class LowPassFilter implements DSPNodeProcess {
 
     @Override
     public float process(float pSignal) {
-        float freq = mCutoffFrequency;
-        float res = mResonance;
-        float res4;
-        float[] stg = new float[4];
-        float acr, tune;
-        float THERMAL = 0.000025f;
-
-        if (res < 0) {
-            res = 0;
-        }
+        final float freq = mCutoffFrequency;
+        final float res = Math.max(mResonance, 0.0f);
+        final float res4;
+        final float[] stg = new float[4];
+        final float acr, tune;
+        final float THERMAL = 0.000025f;
 
         if (mOldFreq != freq || mOldRes != res) {
-            float f, fc, fc2, fc3, fcr;
+            final float f, fc, fc2, fc3, fcr;
             mOldFreq = freq;
             fc = (freq / mSamplingRate);
             f = 0.5f * fc;
