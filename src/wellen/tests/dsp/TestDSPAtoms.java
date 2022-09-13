@@ -23,6 +23,8 @@ public class TestDSPAtoms extends PApplet {
         osc1.wavetable_data = Atoms.saw_table(10, osc1.wavetable_length);
         osc2.frequency = osc1.frequency * 0.995f;
         osc2.interpolation = Atoms.Oscillator.INTERPOLATE_CUBIC;
+        System.out.println(osc1.wavetable_data.length);
+        System.out.println(osc2.wavetable_data.length);
         flanger1.fdb = 0.9f;
         flanger1.vdtime = 0.1f;
         DSP.start(this, 2);

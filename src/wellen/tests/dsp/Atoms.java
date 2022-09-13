@@ -544,7 +544,8 @@ public abstract class Atoms {
             // linear interpolation
             frac = pos - (int) pos;
             a = table[(int) pos];
-            b = table[(int) pos + 1];
+            final int pos1 = (int) pos + 1;
+            b = table[pos1 >= table.length ? pos1 - table.length : pos1];
             output[i] = amp * (a + frac * (b - a));
             index[0] += incr;
             while (index[0] >= length) {
@@ -577,9 +578,11 @@ public abstract class Atoms {
             // cubic interpolation
             frac = pos - (int) pos;
             a = (int) pos > 0 ? table[(int) pos - 1] : table[length - 1];
-            b = table[(int) pos];
-            c = table[(int) pos + 1];
-            d = table[(int) pos + 2];
+            b = table[((int) pos) % table.length];
+            final int pos1 = (int) pos + 1;
+            c = table[pos1 >= table.length ? pos1 - table.length : pos1];
+            final int pos2 = (int) pos + 2;
+            d = table[pos2 >= table.length ? pos2 - table.length : pos2];
             tmp = d + 3.f * b;
             fracsq = frac * frac;
             fracb = frac * fracsq;
@@ -645,12 +648,11 @@ public abstract class Atoms {
 
     public static float[] fourier_table(int harms, float[] amps, int length, float phase) {
         float a;
-        float[] table = new float[length + 2];
+        float[] table = new float[length];
         double w;
         phase *= (float) PI * 2;
-        // memset(table,0,(length+2)*sizeof(float));
         for (int i = 0; i < harms; i++) {
-            for (int n = 0; n < length + 2; n++) {
+            for (int n = 0; n < length; n++) {
                 a = (amps != null) ? amps[i] : 1.f;
                 w = (i + 1) * (n * 2 * PI / length);
                 table[n] += (float) (a * cos(w + phase));

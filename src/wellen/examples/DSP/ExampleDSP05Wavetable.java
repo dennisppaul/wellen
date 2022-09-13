@@ -54,6 +54,15 @@ public class ExampleDSP05Wavetable extends PApplet {
                 Wavetable.square(mWavetable.get_wavetable());
                 break;
             case '5':
+                Wavetable.triangle(mWavetable.get_wavetable(), 4);
+                break;
+            case '6':
+                Wavetable.sawtooth(mWavetable.get_wavetable(), 8);
+                break;
+            case '7':
+                Wavetable.square(mWavetable.get_wavetable(), 16);
+                break;
+            case '8':
                 randomize(mWavetable.get_wavetable());
                 break;
         }

@@ -21,6 +21,10 @@ package wellen;
 
 import processing.core.PApplet;
 
+import java.util.Arrays;
+
+import static java.lang.Math.PI;
+
 /**
  * plays back a chunk of samples ( i.e arbitrary, single-cycle waveform like sine, triangle, saw or square waves ) at
  * different frequencies and amplitudes.
@@ -94,6 +98,71 @@ public class Wavetable extends Oscillator {
                 noise(pWavetable);
                 break;
         }
+    }
+
+    public static void fill(float[] pWavetable, int pHarmonics, int pWavetableType) {
+        switch (pWavetableType) {
+            case Wellen.WAVESHAPE_TRIANGLE:
+                triangle(pWavetable, pHarmonics);
+            case Wellen.WAVESHAPE_SAWTOOTH:
+                sawtooth(pWavetable, pHarmonics);
+            case Wellen.WAVESHAPE_SQUARE:
+        }
+    }
+
+    private static void normalise_table(float[] table) {
+        int n;
+        float max = 0.f;
+        for (n = 0; n < table.length; n++) {
+            max = Math.max(table[n], max);
+        }
+        if (max > 0) {
+            for (n = 0; n < table.length; n++) {
+                table[n] /= max;
+            }
+        }
+    }
+
+    private static float[] fourier_table(float[] table, int harms, float[] amps, float phase) {
+        float a;
+        double w;
+        phase *= (float) PI * 2;
+        for (int i = 0; i < harms; i++) {
+            for (int n = 0; n < table.length; n++) {
+                a = (amps != null) ? amps[i] : 1.f;
+                w = (i + 1) * (n * 2 * PI / table.length);
+                table[n] += (float) (a * Math.cos(w + phase));
+            }
+        }
+        normalise_table(table);
+        return table;
+    }
+
+    public static float[] sawtooth(float[] pWavetable, int pHarmonics) {
+        Arrays.fill(pWavetable, 0.0f);
+        float[] amps = new float[pHarmonics];
+        for (int i = 0; i < pHarmonics; i++) {
+            amps[i] = 1.f / (i + 1);
+        }
+        return fourier_table(pWavetable, pHarmonics, amps, -0.25f);
+    }
+
+    public static float[] square(float[] pWavetable, int pHarmonics) {
+        Arrays.fill(pWavetable, 0.0f);
+        float[] amps = new float[pHarmonics];
+        for (int i = 0; i < pHarmonics; i += 2) {
+            amps[i] = 1.f / (i + 1);
+        }
+        return fourier_table(pWavetable, pHarmonics, amps, -0.25f);
+    }
+
+    public static float[] triangle(float[] pWavetable, int pHarmonics) {
+        Arrays.fill(pWavetable, 0.0f);
+        float[] amps = new float[pHarmonics];
+        for (int i = 0; i < pHarmonics; i += 2) {
+            amps[i] = 1.f / ((i + 1) * (i + 1));
+        }
+        return fourier_table(pWavetable, pHarmonics, amps, 0);
     }
 
     public static void sine(float[] pWavetable) {
