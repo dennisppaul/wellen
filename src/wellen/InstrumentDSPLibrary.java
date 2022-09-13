@@ -57,7 +57,7 @@ public class InstrumentDSPLibrary {
             mOscillatorAmplitudes = new float[NUM_OSC];
             for (int i = 0; i < NUM_OSC; i++) {
                 mVCOs[i] = new Wavetable();
-                mVCOs[i].interpolate_samples(true);
+                mVCOs[i].set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
                 Wavetable.fill(mVCOs[i].get_wavetable(), Wellen.WAVESHAPE_SINE);
                 mADSRs[i] = new ADSR();
             }
@@ -150,9 +150,9 @@ public class InstrumentDSPLibrary {
             super(pID);
 
             mLowerVCO = new Wavetable(DEFAULT_WAVETABLE_SIZE);
-            mLowerVCO.interpolate_samples(true);
+            mLowerVCO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
             mVeryLowVCO = new Wavetable(DEFAULT_WAVETABLE_SIZE);
-            mVeryLowVCO.interpolate_samples(true);
+            mVeryLowVCO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
             Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVESHAPE_TRIANGLE);
             Wavetable.fill(mLowerVCO.get_wavetable(), Wellen.WAVESHAPE_SINE);
             Wavetable.fill(mVeryLowVCO.get_wavetable(), Wellen.WAVESHAPE_SQUARE);

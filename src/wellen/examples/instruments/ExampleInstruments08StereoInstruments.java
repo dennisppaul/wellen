@@ -66,7 +66,7 @@ public class ExampleInstruments08StereoInstruments extends PApplet {
             Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVESHAPE_SINE);
 
             mVCOSecond = new Wavetable(DEFAULT_WAVETABLE_SIZE);
-            mVCOSecond.interpolate_samples(true);
+            mVCOSecond.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
             Wavetable.fill(mVCOSecond.get_wavetable(), Wellen.WAVESHAPE_SINE);
         }
 

@@ -74,6 +74,9 @@ public class Wellen {
     public static final String TONE_ENGINE_MIDI = "midi";
     public static final String TONE_ENGINE_OSC = "osc";
     public static final int TONE_ENGINE_INTERNAL_WITH_NO_OUTPUT = -2;
+    public static final int WAVESHAPE_INTERPOLATE_NONE = 0;
+    public static final int WAVESHAPE_INTERPOLATE_LINEAR = 1;
+    public static final int WAVESHAPE_INTERPOLATE_CUBIC = 2;
     public static final int WAVESHAPE_SINE = 0;
     public static final int WAVESHAPE_TRIANGLE = 1;
     public static final int WAVESHAPE_SAWTOOTH = 2;
@@ -469,41 +472,40 @@ public class Wellen {
             return pMin;
         } else {
             final float mDiff = pMax - pMin;
-            final float mValue = (float) Math.random() * mDiff + pMin;
-            return mValue;
+            return (float) Math.random() * mDiff + pMin;
         }
     }
 
-    public static float millis_to_samples(float pMillis, float pSamplingRate) {
-        return pMillis / 1000.0f * pSamplingRate;
+    public static int millis_to_samples(float pMillis, float pSamplingRate) {
+        return (int) (pMillis / 1000.0f * pSamplingRate);
     }
 
-    public static float seconds_to_samples(float pSeconds, float pSamplingRate) {
-        return pSeconds * pSamplingRate;
+    public static int seconds_to_samples(float pSeconds, float pSamplingRate) {
+        return (int) (pSeconds * pSamplingRate);
     }
 
-    public static float samples_to_millis(float pSamples, float pSamplingRate) {
+    public static float samples_to_millis(int pSamples, float pSamplingRate) {
         return pSamples * 1000.0f / pSamplingRate;
     }
 
-    public static float samples_to_seconds(float pSamples, float pSamplingRate) {
+    public static float samples_to_seconds(int pSamples, float pSamplingRate) {
         return pSamples / pSamplingRate;
     }
 
-    public static float millis_to_samples(float pMillis) {
-        return pMillis / 1000.0f * (float) DEFAULT_SAMPLING_RATE;
+    public static int millis_to_samples(float pMillis) {
+        return (int) (pMillis / 1000.0f * (float) DEFAULT_SAMPLING_RATE);
     }
 
-    public static float seconds_to_samples(float pSeconds) {
-        return pSeconds * (float) DEFAULT_SAMPLING_RATE;
+    public static int seconds_to_samples(float pSeconds) {
+        return (int) (pSeconds * (float) DEFAULT_SAMPLING_RATE);
     }
 
-    public static float samples_to_millis(float pSamples) {
-        return pSamples * 1000.0f / (float) DEFAULT_SAMPLING_RATE;
+    public static float samples_to_millis(int pSamples) {
+        return (float) pSamples * 1000.0f / (float) DEFAULT_SAMPLING_RATE;
     }
 
-    public static float samples_to_seconds(float pSamples) {
-        return pSamples / (float) DEFAULT_SAMPLING_RATE;
+    public static float samples_to_seconds(int pSamples) {
+        return (float) pSamples / (float) DEFAULT_SAMPLING_RATE;
     }
 
     public static String now() {

@@ -20,12 +20,12 @@ public class TestSynthFMTerrain extends PApplet {
 
     public void setup() {
         Wavetable mCarrier = new Wavetable(2048);
-        mCarrier.interpolate_samples(true);
+        mCarrier.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
         Wavetable.fill(mCarrier.get_wavetable(), Wellen.OSC_SINE);
         mCarrier.set_frequency(2.0f * mVisuallyStableFrequency);
 
         Wavetable mModulator = new Wavetable(2048);
-        mModulator.interpolate_samples(true);
+        mModulator.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
         Wavetable.fill(mModulator.get_wavetable(), Wellen.OSC_SINE);
         mModulator.set_frequency(2.0f * mVisuallyStableFrequency);
 

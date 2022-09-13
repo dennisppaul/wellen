@@ -50,7 +50,7 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
         enable_ADSR(true);
 
         mVCO = new Wavetable(pWavetableSize, pSamplingRate);
-        mVCO.interpolate_samples(true);
+        mVCO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
         set_oscillator_type(Wellen.WAVESHAPE_SINE);
         set_amplitude(0.0f);
         set_frequency(DEFAULT_FREQUENCY);
@@ -58,7 +58,7 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
         /* setup LFO for frequency */
         mFrequencyLFO = new Wavetable(pWavetableSize, pSamplingRate);
         Wavetable.sine(mFrequencyLFO.get_wavetable());
-        mFrequencyLFO.interpolate_samples(true);
+        mFrequencyLFO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
         mFrequencyLFO.set_frequency(0);
         mFrequencyLFO.set_amplitude(0);
         enable_frequency_LFO(false);
@@ -66,7 +66,7 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
         /* setup LFO for amplitude */
         mAmplitudeLFO = new Wavetable(pWavetableSize, pSamplingRate);
         Wavetable.sine(mAmplitudeLFO.get_wavetable());
-        mAmplitudeLFO.interpolate_samples(true);
+        mAmplitudeLFO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
         mAmplitudeLFO.set_frequency(0);
         mAmplitudeLFO.set_amplitude(0);
         enable_amplitude_LFO(false);
