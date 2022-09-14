@@ -1,5 +1,29 @@
 # wellen / release notes
 
+## v0.9 (20220914)
+
+- added example with SAM singing
+- SAM can now speak phonemes
+- SAM can now parse text strings to phonemes
+- added SAM native lib for *Linux Ubuntu x86_64*
+- added constants for (most) MIDI notes
+- added option to start MIDI in/out from ID
+- added option to start DSP from name
+- added instructions on how to `Setup Internal MIDI Communication` to README
+- added option to reset `BeatMIDI` beat counter at MIDI stop event
+- added *MIDI clock generator* command line tool
+- added option to define loop in- + output-points in Sampler ( see `ExampleDSP21SamplerWithLoopPoints` )
+- added method `Wellen.find_zero_crossings()` to make sample data
+- added `SamplerListener` so that applications can receive events when `Sampler` finished playing a sample
+- added `FilterBiquad` class to DSP section
+- added [DaisySP](https://github.com/electro-smith/DaisySP) library to DSP section
+- added `DSPTrack` and `DSPModule` which allow to compose complex DSP-based and beat-based structures
+- added `VowelFormatFilter` to emulate vowels formed by human vocal cords
+- renamed `ToneEngineInternal` + `InstrumentInternal` to `ToneEngineDSP` + `InstrumentDSP`
+- added `Pattern` + `Loop` two classes which allow to create tick/beat based composition structures
+- added wavetable generators for `TRIANGLE`, `SAWTOOTH`, and `SQUARE` with harmonics
+- added alternative `set_frequency()` + `set_amplitude()` to `Wavetable` that interpolates to a value rather then setting it directly ( e.g prevents audible *edges* in signal )
+
 ## v0.8 (20220427)
 
 - added `HarmonicTable`
