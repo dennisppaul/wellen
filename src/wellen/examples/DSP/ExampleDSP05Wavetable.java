@@ -15,9 +15,13 @@ public class ExampleDSP05Wavetable extends PApplet {
      * this example also demonstrates the effect of different interpolation methods for sample data. use keys
      * `+` and `-` to change the table size of a wave shape. use keys `q`, `w` and `e` to select an interpolation
      * method. note that the effect of interpolation can be quite significant at small table sizes.
+     *
+     * and lastly this example also demonstrates how to modify amplitude and frequency of an oscillator with
+     * interpolation. use `SPACE` to toggle interpolation. see explantion inline.
      */
     private int mWavetableSize = 6;
     private Wavetable mWavetable;
+    private boolean mInterpolateAmplitudeAndFrequency = false;
 
     public void settings() {
         size(640, 480);
@@ -39,12 +43,20 @@ public class ExampleDSP05Wavetable extends PApplet {
     }
 
     public void mouseMoved() {
-        /* these versions of `set_frequency` + `set_amplitude` take a second paramter which defines the duration in samples
-         * from current to new value. on the one hands this prevents unwanted artifacts ( e.g crackling noise when changing
-         * amplitude quickly ) and on the other hand can be used to create glissando or portamento effects.
-         */
-        mWavetable.set_frequency(map(mouseX, 0, width, 55, 220), Wellen.seconds_to_samples(0.5f));
-        mWavetable.set_amplitude(map(mouseY, 0, height, 0.0f, 0.9f), Wellen.millis_to_samples(10));
+        final float mNewFrequency = map(mouseX, 0, width, 55, 880);
+        final float mNewAmplitude = map(mouseY, 0, height, 0.0f, 0.9f);
+        if (mInterpolateAmplitudeAndFrequency) {
+            /* these versions of `set_frequency` + `set_amplitude` take a second paramter which define the duration in
+             * samples from current to new value. on the one hands this prevents unwanted artifacts ( e.g crackling
+             * noise when changing amplitude quickly especially on smoother wave shape like sine waves ) and on the
+             * other hand can be used to create glissando or portamento effects.
+             */
+            mWavetable.set_frequency(mNewFrequency, Wellen.seconds_to_samples(0.5f));
+            mWavetable.set_amplitude(mNewAmplitude, Wellen.millis_to_samples(10));
+        } else {
+            mWavetable.set_frequency(mNewFrequency);
+            mWavetable.set_amplitude(mNewAmplitude);
+        }
     }
 
     public void keyPressed() {
@@ -92,6 +104,9 @@ public class ExampleDSP05Wavetable extends PApplet {
                 break;
             case 'e':
                 mWavetable.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_CUBIC);
+                break;
+            case ' ':
+                mInterpolateAmplitudeAndFrequency = !mInterpolateAmplitudeAndFrequency;
                 break;
         }
     }

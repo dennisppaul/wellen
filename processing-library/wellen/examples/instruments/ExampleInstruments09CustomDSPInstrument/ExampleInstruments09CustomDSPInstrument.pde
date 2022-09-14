@@ -192,9 +192,9 @@ final Wavetable mVeryLowVCO;
 CustomInstrumentMultipleOscillators(int pID) {
         super(pID);
         mLowerVCO = new Wavetable(DEFAULT_WAVETABLE_SIZE);
-        mLowerVCO.interpolate_samples(true);
+        mLowerVCO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
         mVeryLowVCO = new Wavetable(DEFAULT_WAVETABLE_SIZE);
-        mVeryLowVCO.interpolate_samples(true);
+        mVeryLowVCO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
         Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVESHAPE_TRIANGLE);
         Wavetable.fill(mLowerVCO.get_wavetable(), Wellen.WAVESHAPE_SINE);
         Wavetable.fill(mVeryLowVCO.get_wavetable(), Wellen.WAVESHAPE_SQUARE);
@@ -319,7 +319,7 @@ CustomInstrumentDetunedOscillatorsStereo(int pID) {
         set_spread(0.5f);
         Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVESHAPE_TRIANGLE);
         mVCOSecond = new Wavetable(DEFAULT_WAVETABLE_SIZE);
-        mVCOSecond.interpolate_samples(true);
+        mVCOSecond.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
         Wavetable.fill(mVCOSecond.get_wavetable(), Wellen.WAVESHAPE_TRIANGLE);
     }
     

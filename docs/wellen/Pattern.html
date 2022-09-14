@@ -26,7 +26,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":10,"i14":10,"i15":10,"i16":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":10,"i12":10,"i13":10,"i14":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -50,7 +50,6 @@ loadScripts(document, 'script');</script>
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="../index-all.html">Index</a></li>
@@ -183,99 +182,93 @@ implements <a href="Loopable.html" title="interface in wellen">Loopable</a></pre
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#after(int,int)">after</a></span>&#8203;(int&nbsp;pTick,
-     int&nbsp;pThreshold)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#event(int,int)">event</a></span>&#8203;(int&nbsp;pTick,
+     int&nbsp;pLocalPosition)</code></th>
+<td class="colLast">
+<div class="block">querry whether an event occured.</div>
+</td>
 </tr>
 <tr id="i1" class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#before(int,int)">before</a></span>&#8203;(int&nbsp;pTick,
-      int&nbsp;pThreshold)</code></th>
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#get_in_point()">get_in_point</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#event(int,int)">event</a></span>&#8203;(int&nbsp;pTick,
-     int&nbsp;pLoopEvent)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i3" class="rowColor">
-<td class="colFirst"><code>int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#get_inpoint()">get_inpoint</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i4" class="altColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#get_loop()">get_loop</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#get_loop_count(int)">get_loop_count</a></span>&#8203;(int&nbsp;pAbsolutPosition)</code></th>
 <td class="colLast">
 <div class="block">returns the current loop where 0 is the first loop.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#get_outpoint()">get_outpoint</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#get_out_point()">get_out_point</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#get_relative_position(int)">get_relative_position</a></span>&#8203;(int&nbsp;pAbsolutPosition)</code></th>
 <td class="colLast">
-<div class="block">returns the relative postion in repsect to in- and outpoint</div>
+<div class="block">returns the relative postion in repsect to in- and out point</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#main(java.lang.String%5B%5D)">main</a></span>&#8203;(java.lang.String[]&nbsp;args)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#print(java.lang.String)">print</a></span>&#8203;(java.lang.String&nbsp;s)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i10" class="altColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#println()">println</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#println(java.lang.String)">println</a></span>&#8203;(java.lang.String&nbsp;s)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i12" class="altColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>static void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#run_test()">run_test</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i13" class="rowColor">
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set_inpoint(int)">set_inpoint</a></span>&#8203;(int&nbsp;pIn)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set_in_point(int)">set_in_point</a></span>&#8203;(int&nbsp;pInPoint)</code></th>
 <td class="colLast">
-<div class="block">set inpoint for pattern.</div>
+<div class="block">set in point for pattern.</div>
 </td>
 </tr>
-<tr id="i14" class="altColor">
+<tr id="i12" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set_length(int)">set_length</a></span>&#8203;(int&nbsp;pInterval)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set_length(int)">set_length</a></span>&#8203;(int&nbsp;pLength)</code></th>
 <td class="colLast">
 <div class="block">length defines the number of steps before tick is wrapped.</div>
 </td>
 </tr>
-<tr id="i15" class="rowColor">
+<tr id="i13" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set_loop(int)">set_loop</a></span>&#8203;(int&nbsp;pLoop)</code></th>
-<td class="colLast">&nbsp;</td>
+<td class="colLast">
+<div class="block">set the number of loops.</div>
+</td>
 </tr>
-<tr id="i16" class="altColor">
+<tr id="i14" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set_outpoint(int)">set_outpoint</a></span>&#8203;(int&nbsp;pOut)</code></th>
-<td class="colLast">&nbsp;</td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#set_out_point(int)">set_out_point</a></span>&#8203;(int&nbsp;pOutPoint)</code></th>
+<td class="colLast">
+<div class="block">set out point for pattern.</div>
+</td>
 </tr>
 </table>
 <ul class="blockList">
@@ -283,7 +276,7 @@ implements <a href="Loopable.html" title="interface in wellen">Loopable</a></pre
 <!--   -->
 </a>
 <h3>Methods inherited from class&nbsp;wellen.<a href="Loop.html" title="class in wellen">Loop</a></h3>
-<code><a href="Loop.html#after(int,int,int)">after</a>, <a href="Loop.html#before(int,int,int)">before</a>, <a href="Loop.html#event(int,int,int)">event</a>, <a href="Loop.html#get_length()">get_length</a>, <a href="Loop.html#get_offset()">get_offset</a>, <a href="Loop.html#set_offset(int)">set_offset</a></code></li>
+<code><a href="Loop.html#after(int,int)">after</a>, <a href="Loop.html#after(int,int,int)">after</a>, <a href="Loop.html#before(int,int)">before</a>, <a href="Loop.html#before(int,int,int)">before</a>, <a href="Loop.html#event(int,int,int)">event</a>, <a href="Loop.html#get_length()">get_length</a>, <a href="Loop.html#get_offset()">get_offset</a>, <a href="Loop.html#set_offset(int)">set_offset</a></code></li>
 </ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
@@ -333,18 +326,18 @@ implements <a href="Loopable.html" title="interface in wellen">Loopable</a></pre
 <ul class="blockList">
 <li class="blockList">
 <h4>set_length</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;set_length&#8203;(int&nbsp;pInterval)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;set_length&#8203;(int&nbsp;pLength)</pre>
 <div class="block">length defines the number of steps before tick is wrapped.
  <p>
  e.g an interval of 3 would generate a pattern of 0, 1, 2, 0, 1, 2, 0, 1, …
  <p>
- setting interval length affects the outpoint. e.g an interval of 3 and an inpoint of N would yield an outpoint of
- N + ( 3 - 1 ) and would generate a pattern of 0, 1, 2, 0, 1, 2, 0, 1, …</div>
+ setting interval length affects the out point. e.g an interval of 3 and an in point of N would yield an out point
+ of N + ( 3 - 1 ) and would generate a pattern of 0, 1, 2, 0, 1, 2, 0, 1, …</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="Loop.html#set_length(int)">set_length</a></code>&nbsp;in class&nbsp;<code><a href="Loop.html" title="class in wellen">Loop</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>pInterval</code> - number of steps before the tick is wrapped</dd>
+<dd><code>pLength</code> - number of steps before the tick is wrapped</dd>
 </dl>
 </li>
 </ul>
@@ -355,6 +348,14 @@ implements <a href="Loopable.html" title="interface in wellen">Loopable</a></pre
 <li class="blockList">
 <h4>set_loop</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;set_loop&#8203;(int&nbsp;pLoop)</pre>
+<div class="block">set the number of loops. while the length of a single cycle is set by <pre><code>set_length(int)</code></pre>,
+ the number of cycles or repetitions is defined by <pre><code>set_loop(int)</code></pre>. if number of loops is
+ set to <pre><code>Wellen.LOOP_INFINITE</code></pre> the loop is repearted infinitely. if set to
+ <pre><code>Wellen.NO_LOOP</code></pre> only one cycle is processed.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>pLoop</code> - number of loops</dd>
+</dl>
 </li>
 </ul>
 <a id="get_loop()">
@@ -370,53 +371,58 @@ implements <a href="Loopable.html" title="interface in wellen">Loopable</a></pre
 </dl>
 </li>
 </ul>
-<a id="set_inpoint(int)">
+<a id="set_in_point(int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>set_inpoint</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;set_inpoint&#8203;(int&nbsp;pIn)</pre>
-<div class="block">set inpoint for pattern. if outpoint is equal or smaller than inpoint length is set to 1 and output set to
- inpoint.</div>
+<h4>set_in_point</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;set_in_point&#8203;(int&nbsp;pInPoint)</pre>
+<div class="block">set in point for pattern. if out point is equal or smaller than in point length is set to 1 and out point
+ accordingly.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>pIn</code> - set inpoint for pattern</dd>
+<dd><code>pInPoint</code> - set in point for pattern</dd>
 </dl>
 </li>
 </ul>
-<a id="get_inpoint()">
+<a id="get_in_point()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>get_inpoint</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;get_inpoint()</pre>
+<h4>get_in_point</h4>
+<pre class="methodSignature">public&nbsp;int&nbsp;get_in_point()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="Loopable.html#get_inpoint()">get_inpoint</a></code>&nbsp;in interface&nbsp;<code><a href="Loopable.html" title="interface in wellen">Loopable</a></code></dd>
+<dd><code><a href="Loopable.html#get_in_point()">get_in_point</a></code>&nbsp;in interface&nbsp;<code><a href="Loopable.html" title="interface in wellen">Loopable</a></code></dd>
 </dl>
 </li>
 </ul>
-<a id="set_outpoint(int)">
+<a id="set_out_point(int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>set_outpoint</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;set_outpoint&#8203;(int&nbsp;pOut)</pre>
+<h4>set_out_point</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;set_out_point&#8203;(int&nbsp;pOutPoint)</pre>
+<div class="block">set out point for pattern. this method also affects the length of the pattern.</div>
+<dl>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>pOutPoint</code> - out point for pattern</dd>
+</dl>
 </li>
 </ul>
-<a id="get_outpoint()">
+<a id="get_out_point()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>get_outpoint</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;get_outpoint()</pre>
+<h4>get_out_point</h4>
+<pre class="methodSignature">public&nbsp;int&nbsp;get_out_point()</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code><a href="Loopable.html#get_outpoint()">get_outpoint</a></code>&nbsp;in interface&nbsp;<code><a href="Loopable.html" title="interface in wellen">Loopable</a></code></dd>
+<dd><code><a href="Loopable.html#get_out_point()">get_out_point</a></code>&nbsp;in interface&nbsp;<code><a href="Loopable.html" title="interface in wellen">Loopable</a></code></dd>
 </dl>
 </li>
 </ul>
@@ -427,38 +433,41 @@ implements <a href="Loopable.html" title="interface in wellen">Loopable</a></pre
 <li class="blockList">
 <h4>event</h4>
 <pre class="methodSignature">public&nbsp;boolean&nbsp;event&#8203;(int&nbsp;pTick,
-                     int&nbsp;pLoopEvent)</pre>
+                     int&nbsp;pLocalPosition)</pre>
+<div class="block">querry whether an event occured. the first value is the absolute tick ( or beat ) to evalute, the second value
+ specifies the position in to query. e.g if the pattern is of length 3 ( <pre><code>P(3)</code></pre>, has an
+ in&nbsp;point of 0 and loops infinitely, it will generate the following values:
+
+ <pre><code>
+     TICK   : 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
+     P(3)   : 0  1  2  0  1  2  0  1  2  0  1  2  0  1  2  0  1
+ </code></pre>
+ <p>
+ if event is now for example tested againt 0 <pre><code>E(0)</code></pre> it will either return true
+ <pre><code>+</code></pre> or false <pre><code>-</code></pre>:
+
+ <pre><code>
+     TICK   : 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
+     P(3)   : 0  1  2  0  1  2  0  1  2  0  1  2  0  1  2  0  1
+     E(0)   : +  -  -  +  -  -  +  -  -  +  -  -  +  -  -  +  -
+ </code></pre>
+ <p>
+ e.g an increasing value will produce an event every 3 ticks:
+ <pre><code>
+     Pattern p = new Pattern();
+     p.set_length(3);
+     if (p.event(mTick, 0)) {
+         println("event");
+     }
+ </code></pre></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
 <dd><code><a href="Loop.html#event(int,int)">event</a></code>&nbsp;in class&nbsp;<code><a href="Loop.html" title="class in wellen">Loop</a></code></dd>
-</dl>
-</li>
-</ul>
-<a id="before(int,int)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>before</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;before&#8203;(int&nbsp;pTick,
-                      int&nbsp;pThreshold)</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="Loop.html#before(int,int)">before</a></code>&nbsp;in class&nbsp;<code><a href="Loop.html" title="class in wellen">Loop</a></code></dd>
-</dl>
-</li>
-</ul>
-<a id="after(int,int)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>after</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;after&#8203;(int&nbsp;pTick,
-                     int&nbsp;pThreshold)</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code><a href="Loop.html#after(int,int)">after</a></code>&nbsp;in class&nbsp;<code><a href="Loop.html" title="class in wellen">Loop</a></code></dd>
+<dt><span class="paramLabel">Parameters:</span></dt>
+<dd><code>pTick</code> - absolute tick ( or beat ) to evaluate</dd>
+<dd><code>pLocalPosition</code> - local position to to test tick against</dd>
+<dt><span class="returnLabel">Returns:</span></dt>
+<dd>true if an event occurs</dd>
 </dl>
 </li>
 </ul>
@@ -469,7 +478,7 @@ implements <a href="Loopable.html" title="interface in wellen">Loopable</a></pre
 <li class="blockList">
 <h4>get_relative_position</h4>
 <pre class="methodSignature">public&nbsp;int&nbsp;get_relative_position&#8203;(int&nbsp;pAbsolutPosition)</pre>
-<div class="block">returns the relative postion in repsect to in- and outpoint</div>
+<div class="block">returns the relative postion in repsect to in- and out point</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>pAbsolutPosition</code> - current absolut position ( i.e tick )</dd>
@@ -489,9 +498,9 @@ implements <a href="Loopable.html" title="interface in wellen">Loopable</a></pre
  <pre><code>Wellen.NO_LOOP_COUNT</code></pre> if one of the following criteria is met:
 
  <ul>
-     <li>no outpoint is specified ( i.e <pre><code>set_outpoint(NO_OUTPOINT)</code></pre> )</li>
+     <li>no out point is specified ( i.e <pre><code>set_out_point(NO_OUTPOINT)</code></pre> )</li>
      <li>loop is set to <pre><code>set_loop(NO_LOOP)</code></pre></li>
-     <li>a number of loops is specified but the position is before the inpoint</li>
+     <li>a number of loops is specified but the position is before the in point</li>
  </ul></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
@@ -568,7 +577,6 @@ implements <a href="Loopable.html" title="interface in wellen">Loopable</a></pre
 <!--   -->
 </a>
 <ul class="navList" title="Navigation">
-<li><a href="../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
 <li class="navBarCell1Rev">Class</li>
 <li><a href="../index-all.html">Index</a></li>

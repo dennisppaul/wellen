@@ -99,8 +99,8 @@ public class Pan implements DSPNodeProcessSignal {
      * map audio signal into stereo space. mono signals are positioned in stereo space. stereo signals are biased
      * according to the current panning value. signals with more than 2 channels are <em>clipped</em> to 2 channels.
      *
-     * @param pSignal
-     * @return
+     * @param pSignal incoming signal with 1 or more channels
+     * @return processed signal
      */
     @Override
     public Signal process_signal(Signal pSignal) {

@@ -52,10 +52,10 @@ public class FMSynthesis implements DSPNodeOutput {
 
     public FMSynthesis() {
         this(new Wavetable(), new Wavetable());
-        mCarrier.interpolate_samples(true);
+        mCarrier.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
         Wavetable.fill(mCarrier.get_wavetable(), Wellen.OSC_SINE);
 
-        mModulator.interpolate_samples(true);
+        mModulator.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
         Wavetable.fill(mModulator.get_wavetable(), Wellen.OSC_SINE);
     }
 

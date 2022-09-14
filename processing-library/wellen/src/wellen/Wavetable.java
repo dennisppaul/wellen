@@ -21,6 +21,10 @@ package wellen;
 
 import processing.core.PApplet;
 
+import java.util.Arrays;
+
+import static java.lang.Math.PI;
+
 /**
  * plays back a chunk of samples ( i.e arbitrary, single-cycle waveform like sine, triangle, saw or square waves ) at
  * different frequencies and amplitudes.
@@ -32,21 +36,22 @@ public class Wavetable extends Oscillator {
     private float mOffset;
     private final int mSamplingRate;
     private final float[] mWavetable;
-    private int mPhaseOffset;
+    private float mPhaseOffset;
     private float mFrequency;
     private float mStepSize;
-    private float mDesiredStepSize;
-    private float mArrayPtr;
     private float mAmplitude;
-    private float mCurrentAmplitude;
-    private boolean mInterpolateSamples;
-    private float mInterpolateFrequencyChangeFactor;
-    /* @TODO(consider replacing this with a linear ramp mechanism at some point) */
-    private float mInterpolateAmplitudeChangeFactor;
-    private float mInterpolateFrequencyDelta;
+    private int mInterpolationType;
+    private float mArrayPtr;
     private boolean mEnableJitter;
     private float mJitterRange;
     private float mSignal;
+
+    private float mDesiredAmplitude;
+    private float mDesiredAmplitudeFraction;
+    private int mDesiredAmplitudeSteps;
+    private float mDesiredFrequency;
+    private float mDesiredFrequencyFraction;
+    private int mDesiredFrequencySteps;
 
     public Wavetable() {
         this(Wellen.DEFAULT_WAVETABLE_SIZE, Wellen.DEFAULT_SAMPLING_RATE);
@@ -60,13 +65,14 @@ public class Wavetable extends Oscillator {
         mWavetable = new float[pWavetableSize];
         mSamplingRate = pSamplingRate;
         mArrayPtr = 0;
-        mInterpolateSamples = false;
-        mInterpolateFrequencyChangeFactor = 0.0f;
-        mInterpolateAmplitudeChangeFactor = 0.0f;
         mJitterRange = 0.0f;
         mEnableJitter = false;
         mAmplitude = DEFAULT_AMPLITUDE;
-        mPhaseOffset = 0;
+        mPhaseOffset = 0.0f;
+        mInterpolationType = Wellen.WAVESHAPE_INTERPOLATE_NONE;
+        mDesiredAmplitude = 0.0f;
+        mDesiredAmplitudeFraction = 0.0f;
+        mDesiredAmplitudeSteps = 0;
         set_frequency(DEFAULT_FREQUENCY);
     }
 
@@ -96,6 +102,71 @@ public class Wavetable extends Oscillator {
         }
     }
 
+    public static void fill(float[] pWavetable, int pHarmonics, int pWavetableType) {
+        switch (pWavetableType) {
+            case Wellen.WAVESHAPE_TRIANGLE:
+                triangle(pWavetable, pHarmonics);
+            case Wellen.WAVESHAPE_SAWTOOTH:
+                sawtooth(pWavetable, pHarmonics);
+            case Wellen.WAVESHAPE_SQUARE:
+        }
+    }
+
+    private static void normalise_table(float[] table) {
+        int n;
+        float max = 0.f;
+        for (n = 0; n < table.length; n++) {
+            max = Math.max(table[n], max);
+        }
+        if (max > 0) {
+            for (n = 0; n < table.length; n++) {
+                table[n] /= max;
+            }
+        }
+    }
+
+    private static float[] fourier_table(float[] table, int harms, float[] amps, float phase) {
+        float a;
+        double w;
+        phase *= (float) PI * 2;
+        for (int i = 0; i < harms; i++) {
+            for (int n = 0; n < table.length; n++) {
+                a = (amps != null) ? amps[i] : 1.f;
+                w = (i + 1) * (n * 2 * PI / table.length);
+                table[n] += (float) (a * Math.cos(w + phase));
+            }
+        }
+        normalise_table(table);
+        return table;
+    }
+
+    public static float[] sawtooth(float[] pWavetable, int pHarmonics) {
+        Arrays.fill(pWavetable, 0.0f);
+        float[] amps = new float[pHarmonics];
+        for (int i = 0; i < pHarmonics; i++) {
+            amps[i] = 1.f / (i + 1);
+        }
+        return fourier_table(pWavetable, pHarmonics, amps, -0.25f);
+    }
+
+    public static float[] square(float[] pWavetable, int pHarmonics) {
+        Arrays.fill(pWavetable, 0.0f);
+        float[] amps = new float[pHarmonics];
+        for (int i = 0; i < pHarmonics; i += 2) {
+            amps[i] = 1.f / (i + 1);
+        }
+        return fourier_table(pWavetable, pHarmonics, amps, -0.25f);
+    }
+
+    public static float[] triangle(float[] pWavetable, int pHarmonics) {
+        Arrays.fill(pWavetable, 0.0f);
+        float[] amps = new float[pHarmonics];
+        for (int i = 0; i < pHarmonics; i += 2) {
+            amps[i] = 1.f / ((i + 1) * (i + 1));
+        }
+        return fourier_table(pWavetable, pHarmonics, amps, 0);
+    }
+
     public static void sine(float[] pWavetable) {
         for (int i = 0; i < pWavetable.length; i++) {
             pWavetable[i] = PApplet.sin(2.0f * PApplet.PI * ((float) i / (float) (pWavetable.length)));
@@ -113,6 +184,7 @@ public class Wavetable extends Oscillator {
         final float qf = pWavetable.length * 0.25f;
         for (int i = 0; i < q; i++) {
             pWavetable[i] = i / qf;
+            //noinspection PointlessArithmeticExpression
             pWavetable[i + (q * 1)] = (qf - i) / qf;
             pWavetable[i + (q * 2)] = -i / qf;
             pWavetable[i + (q * 3)] = -(qf - i) / qf;
@@ -141,13 +213,26 @@ public class Wavetable extends Oscillator {
     public void set_frequency(float pFrequency) {
         if (mFrequency != PApplet.abs(pFrequency)) {
             mFrequency = PApplet.abs(pFrequency);
-            if (mInterpolateFrequencyChangeFactor > 0.0f) {
-                mDesiredStepSize = computeStepSize();
-                mInterpolateFrequencyDelta = mDesiredStepSize - mStepSize;
-                mInterpolateFrequencyDelta *= mInterpolateFrequencyChangeFactor;
-            } else {
-                mStepSize = computeStepSize();
-            }
+            mStepSize = computeStepSize();
+        }
+    }
+
+    /**
+     * alternative version of `set_frequency` which takes a second paramter that specifies the duration in samples from
+     * current to new value. this can prevent unwanted artifacts ( e.g when quickly changing values ). it can also be
+     * used to create glissando or portamento effects.
+     *
+     * @param pFrequency                      destination frequency
+     * @param pInterpolationDurationInSamples duration of interpolation in samples
+     */
+    public void set_frequency(float pFrequency, int pInterpolationDurationInSamples) {
+        if (pInterpolationDurationInSamples > 0) {
+            mDesiredFrequency = pFrequency;
+            mDesiredFrequencySteps = pInterpolationDurationInSamples;
+            final float mFrequencyDelta = mDesiredFrequency - mFrequency;
+            mDesiredFrequencyFraction = mFrequencyDelta / pInterpolationDurationInSamples;
+        } else {
+            set_frequency(pFrequency);
         }
     }
 
@@ -161,18 +246,6 @@ public class Wavetable extends Oscillator {
         return mOffset;
     }
 
-    public void interpolate_samples(boolean pInterpolateSamples) {
-        mInterpolateSamples = pInterpolateSamples;
-    }
-
-    public void interpolate_frequency_change(float pInterpolateFrequencyChangeFactor) {
-        mInterpolateFrequencyChangeFactor = pInterpolateFrequencyChangeFactor;
-    }
-
-    public void interpolate_amplitude_change(float pInterpolateAmplitudeChangeFactor) {
-        mInterpolateAmplitudeChangeFactor = pInterpolateAmplitudeChangeFactor;
-    }
-
     @Override
     public float get_amplitude() {
         return mAmplitude;
@@ -181,6 +254,27 @@ public class Wavetable extends Oscillator {
     @Override
     public void set_amplitude(float pAmplitude) {
         mAmplitude = pAmplitude;
+        mDesiredAmplitudeSteps = 0;
+    }
+
+    /**
+     * alternative version of `set_amplitude` which takes a second paramter that specifies the duration in samples from
+     * current to new value. this can prevents unwanted artifacts ( e.g crackling noise when changing amplitude quickly
+     * especially on smoother wave shape like sine waves ). it can also be used to create glissando or portamento
+     * effects.
+     *
+     * @param pAmplitude                      destination amplitude
+     * @param pInterpolationDurationInSamples duration of interpolation in samples
+     */
+    public void set_amplitude(float pAmplitude, int pInterpolationDurationInSamples) {
+        if (pInterpolationDurationInSamples > 0) {
+            mDesiredAmplitude = pAmplitude;
+            mDesiredAmplitudeSteps = pInterpolationDurationInSamples;
+            final float mAmplitudeDelta = mDesiredAmplitude - mAmplitude;
+            mDesiredAmplitudeFraction = mAmplitudeDelta / pInterpolationDurationInSamples;
+        } else {
+            set_amplitude(pAmplitude);
+        }
     }
 
     public float[] get_wavetable() {
@@ -191,12 +285,12 @@ public class Wavetable extends Oscillator {
         mEnableJitter = pEnableJitter;
     }
 
-    public int get_phase_offset() {
+    public float get_phase_offset() {
         return mPhaseOffset;
     }
 
-    public void set_phase_offset(int pPhaseOffset) {
-        mPhaseOffset = pPhaseOffset;
+    public void set_phase_offset(float pPhaseOffset) {
+        mPhaseOffset = pPhaseOffset < 0 ? 1 + pPhaseOffset : pPhaseOffset;
     }
 
     public float get_jitter_range() {
@@ -205,44 +299,6 @@ public class Wavetable extends Oscillator {
 
     public void set_jitter_range(float pJitterRange) {
         mJitterRange = pJitterRange;
-    }
-
-    @Override
-    public float output() {
-        if (mInterpolateFrequencyChangeFactor > 0.0f) {
-            if (mStepSize != mDesiredStepSize) {
-                mStepSize += mInterpolateFrequencyDelta;
-                final float mDelta = mDesiredStepSize - mStepSize;
-                if (Math.abs(mDelta) < 0.1f) {
-                    mStepSize = mDesiredStepSize;
-                }
-            }
-        }
-        mArrayPtr += mStepSize * (mEnableJitter ? (Wellen.random(-mJitterRange, mJitterRange) + 1.0f) : 1.0f);
-        final int i = (int) mArrayPtr;
-        final float mFrac = mArrayPtr - i; /* store fractional part */
-        int j = i % mWavetable.length; /* wrap pointer to array size */
-        mArrayPtr = j + mFrac;
-        j = (j + mPhaseOffset) % mWavetable.length; /* apply phase offset */
-
-        final float mTmpAmplitude;
-        if (mInterpolateAmplitudeChangeFactor > 0.0f) {
-            mCurrentAmplitude += (mAmplitude - mCurrentAmplitude) * mInterpolateAmplitudeChangeFactor;
-            mTmpAmplitude = mCurrentAmplitude;
-        } else {
-            mTmpAmplitude = mAmplitude;
-        }
-
-        if (mInterpolateSamples) {
-            final float mNextSample = mWavetable[(j + 1) % mWavetable.length];
-            final float mSample = mWavetable[j];
-            final float mInterpolatedSample = mSample * (1.0f - mFrac) + mNextSample * mFrac;
-            mSignal = mInterpolatedSample * mTmpAmplitude;
-        } else {
-            mSignal = mWavetable[j] * mTmpAmplitude;
-        }
-        mSignal += mOffset;
-        return mSignal;
     }
 
     public void reset() {
@@ -254,7 +310,100 @@ public class Wavetable extends Oscillator {
         return mSignal;
     }
 
+    public void set_interpolation(int pInterpolationType) {
+        mInterpolationType = pInterpolationType;
+    }
+
+    @Override
+    public float output() {
+        if (mDesiredAmplitudeSteps > 0) {
+            mDesiredAmplitudeSteps--;
+            if (mDesiredAmplitudeSteps == 0) {
+                mAmplitude = mDesiredAmplitude;
+            } else {
+                mAmplitude += mDesiredAmplitudeFraction;
+            }
+        }
+
+        if (mDesiredFrequencySteps > 0) {
+            mDesiredFrequencySteps--;
+            if (mDesiredFrequencySteps == 0) {
+                set_frequency(mDesiredFrequency);
+            } else {
+                set_frequency(mFrequency + mDesiredFrequencyFraction);
+            }
+        }
+
+        switch (mInterpolationType) {
+            default:
+                mSignal = next_sample();
+                break;
+            case Wellen.WAVESHAPE_INTERPOLATE_LINEAR:
+                mSignal = next_sample_interpolate_linear();
+                break;
+            case Wellen.WAVESHAPE_INTERPOLATE_CUBIC:
+                mSignal = next_sample_interpolate_cubic();
+                break;
+        }
+
+        mSignal *= mAmplitude;
+        mSignal += mOffset;
+        return mSignal;
+    }
+
+    private void advance_array_ptr() {
+        mArrayPtr += mStepSize * (mEnableJitter ? (Wellen.random(-mJitterRange,
+                                                                 mJitterRange) + 1.0f) : 1.0f);
+        while (mArrayPtr >= mWavetable.length) {
+            mArrayPtr -= mWavetable.length;
+        }
+        while (mArrayPtr < 0) {
+            mArrayPtr += mWavetable.length;
+        }
+    }
+
+    private float next_sample() {
+        final float mOutput = mWavetable[(int) (mArrayPtr)];
+        advance_array_ptr();
+        return mOutput;
+    }
+
+    private float next_sample_interpolate_linear() {
+        final int mOffset = (int) (mPhaseOffset * mWavetable.length) % mWavetable.length;
+        final float mArrayPtrOffset = mArrayPtr + mOffset;
+        /* linear interpolation */
+        final float mFrac = mArrayPtrOffset - (int) mArrayPtrOffset;
+        final float a = mWavetable[(int) mArrayPtrOffset];
+        final int p1 = (int) mArrayPtrOffset + 1;
+        final float b = mWavetable[p1 >= mWavetable.length ? p1 - mWavetable.length : p1];
+        final float mOutput = a + mFrac * (b - a);
+        advance_array_ptr();
+        return mOutput;
+    }
+
+    private float next_sample_interpolate_cubic() {
+        final int mOffset = (int) (mPhaseOffset * mWavetable.length) % mWavetable.length;
+        final float mArrayPtrOffset = mArrayPtr + mOffset;
+        /* cubic interpolation */
+        final float frac = mArrayPtrOffset - (int) mArrayPtrOffset;
+        final float a = (int) mArrayPtrOffset > 0 ? mWavetable[(int) mArrayPtrOffset - 1] :
+                        mWavetable[mWavetable.length - 1];
+        final float b = mWavetable[((int) mArrayPtrOffset) % mWavetable.length];
+        final int p1 = (int) mArrayPtrOffset + 1;
+        final float c = mWavetable[p1 >= mWavetable.length ? p1 - mWavetable.length : p1];
+        final int p2 = (int) mArrayPtrOffset + 2;
+        final float d = mWavetable[p2 >= mWavetable.length ? p2 - mWavetable.length : p2];
+        final float tmp = d + 3.0f * b;
+        final float fracsq = frac * frac;
+        final float fracb = frac * fracsq;
+        final float mOutput =
+        (fracb * (-a - 3.f * c + tmp) / 6.f + fracsq * ((a + c) / 2.f - b) + frac * (c + (-2.f * a - tmp) / 6.f) + b);
+        advance_array_ptr();
+        return mOutput;
+    }
+
     private float computeStepSize() {
         return mFrequency * ((float) mWavetable.length / (float) mSamplingRate);
     }
+
 }

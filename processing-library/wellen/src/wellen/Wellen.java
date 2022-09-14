@@ -22,23 +22,12 @@ package wellen;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Line;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.Mixer;
-import javax.sound.sampled.SourceDataLine;
-import javax.sound.sampled.TargetDataLine;
+import javax.sound.sampled.*;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
 
-import static processing.core.PApplet.day;
-import static processing.core.PApplet.hour;
-import static processing.core.PApplet.minute;
-import static processing.core.PApplet.month;
-import static processing.core.PApplet.nf;
-import static processing.core.PApplet.second;
-import static processing.core.PApplet.year;
+import static processing.core.PApplet.*;
 
 /**
  * contains constants and utility methods for the wellen library.
@@ -85,6 +74,9 @@ public class Wellen {
     public static final String TONE_ENGINE_MIDI = "midi";
     public static final String TONE_ENGINE_OSC = "osc";
     public static final int TONE_ENGINE_INTERNAL_WITH_NO_OUTPUT = -2;
+    public static final int WAVESHAPE_INTERPOLATE_NONE = 0;
+    public static final int WAVESHAPE_INTERPOLATE_LINEAR = 1;
+    public static final int WAVESHAPE_INTERPOLATE_CUBIC = 2;
     public static final int WAVESHAPE_SINE = 0;
     public static final int WAVESHAPE_TRIANGLE = 1;
     public static final int WAVESHAPE_SAWTOOTH = 2;
@@ -136,7 +128,10 @@ public class Wellen {
         return bytes_to_floatIEEE(b, true);
     }
 
-    public static float bytes_to_floatIEEE(byte[] pBytes, int pStart, int pEnd, boolean pLittleEndian) {
+    public static float bytes_to_floatIEEE(byte[] pBytes,
+                                           int pStart,
+                                           int pEnd,
+                                           boolean pLittleEndian) {
         final byte[] mBytes = Arrays.copyOfRange(pBytes, pStart, pEnd);
         return bytes_to_floatIEEE(mBytes, pLittleEndian);
     }
@@ -147,9 +142,7 @@ public class Wellen {
                 pSignal[i] = bytes_to_floatIEEE(pBytes, i * 4, (i + 1) * 4, pLittleEndian);
             }
         } else {
-            System.err.println(
-            "+++ WARNING @ " + Wellen.class.getSimpleName() + " / array sizes do not match. make " + "sure byte " +
-            "array" + " is exactly 4 times the size of float array");
+            System.err.println("+++ WARNING @ " + Wellen.class.getSimpleName() + " / array sizes do not match. make " + "sure byte " + "array" + " is exactly 4 times the size of float array");
         }
     }
 
@@ -214,7 +207,11 @@ public class Wellen {
         return value;
     }
 
-    public static void draw_buffer(PGraphics g, float pWidth, float pHeight, float[] pBuffer, int pStride) {
+    public static void draw_buffer(PGraphics g,
+                                   float pWidth,
+                                   float pHeight,
+                                   float[] pBuffer,
+                                   int pStride) {
         g.line(0, pHeight * 0.5f, pWidth, pHeight * 0.5f);
         if (pBuffer != null) {
             for (int i = 0; i < pBuffer.length - pStride; i += pStride) {
@@ -240,7 +237,10 @@ public class Wellen {
         draw_buffer(g, pWidth, pHeight, pBuffer, 1);
     }
 
-    public static void draw_buffer(PGraphics g, float pWidth, float pHeight, float[] pBufferLeft,
+    public static void draw_buffer(PGraphics g,
+                                   float pWidth,
+                                   float pHeight,
+                                   float[] pBufferLeft,
                                    float[] pBufferRight) {
         g.pushMatrix();
         draw_buffer(g, pWidth, pHeight * 0.5f, pBufferLeft);
@@ -296,10 +296,7 @@ public class Wellen {
                 final String mID = i + getSpacesFrom(i, 3) + ":";
                 final String mName = AudioSystem.getMixerInfo()[i].getName();
                 if (pPrintDevices) {
-                    System.out.println("+ " + mID +
-                                       " ( IN:" + mInputChannels +
-                                       " / OUT:" + mOutputChannels +
-                                       " ) : \"" + mName + "\"");
+                    System.out.println("+ " + mID + " ( IN:" + mInputChannels + " / OUT:" + mOutputChannels + " ) : \"" + mName + "\"");
                 }
                 if (pDeviceName != null && pDeviceName.equalsIgnoreCase(mName)) {
                     mSelectedID = i;
@@ -350,27 +347,44 @@ public class Wellen {
         return mOutputNames;
     }
 
-    public static void exportWAV(PApplet p, String pFilepath, float[][] pBuffer, int pBitsPerSignal, int pSignalRate,
+    public static void exportWAV(PApplet p,
+                                 String pFilepath,
+                                 float[][] pBuffer,
+                                 int pBitsPerSignal,
+                                 int pSignalRate,
                                  int pCompressionType) {
         if (pCompressionType == WAV_FORMAT_IEEE_FLOAT_32BIT && pBitsPerSignal != 32) {
-            System.err.println(
-            "+++ WARNING @" + Wellen.class.getSimpleName() + ".exportWAV / if WAV format is *IEEE " + "float* 32 " +
-            "bits" + " per sample are required.");
+            System.err.println("+++ WARNING @" + Wellen.class.getSimpleName() + ".exportWAV / if WAV format is *IEEE " + "float* 32 " + "bits" + " per sample are required.");
             pBitsPerSignal = 32;
         }
-        final byte[] mWAVBytes = WAVConverter.convert_samples_to_bytes(pBuffer, pBuffer.length, pBitsPerSignal,
-                                                                       pSignalRate, pCompressionType);
+        final byte[] mWAVBytes = WAVConverter.convert_samples_to_bytes(pBuffer,
+                                                                       pBuffer.length,
+                                                                       pBitsPerSignal,
+                                                                       pSignalRate,
+                                                                       pCompressionType);
         p.saveBytes(pFilepath, mWAVBytes);
     }
 
-    public static void exportWAV(PApplet p, String pFilepath, float[][] pBuffer, int pBitsPerSignal, int pSignalRate) {
-        final byte[] mWAVBytes = WAVConverter.convert_samples_to_bytes(pBuffer, pBuffer.length, pBitsPerSignal,
+    public static void exportWAV(PApplet p,
+                                 String pFilepath,
+                                 float[][] pBuffer,
+                                 int pBitsPerSignal,
+                                 int pSignalRate) {
+        final byte[] mWAVBytes = WAVConverter.convert_samples_to_bytes(pBuffer,
+                                                                       pBuffer.length,
+                                                                       pBitsPerSignal,
                                                                        pSignalRate);
         p.saveBytes(pFilepath, mWAVBytes);
     }
 
-    public static void exportWAV(PApplet p, String pFilepath, float[] pBuffer, int pBitsPerSignal, int pSignalRate) {
-        final byte[] mWAVBytes = WAVConverter.convert_samples_to_bytes(new float[][]{pBuffer}, 1, pBitsPerSignal,
+    public static void exportWAV(PApplet p,
+                                 String pFilepath,
+                                 float[] pBuffer,
+                                 int pBitsPerSignal,
+                                 int pSignalRate) {
+        final byte[] mWAVBytes = WAVConverter.convert_samples_to_bytes(new float[][]{pBuffer},
+                                                                       1,
+                                                                       pBitsPerSignal,
                                                                        pSignalRate);
         p.saveBytes(pFilepath, mWAVBytes);
     }
@@ -401,8 +415,7 @@ public class Wellen {
     }
 
     public static byte[] floatIEEEs_to_bytes(float[] pFloats, boolean pLittleEndian) {
-        ByteBuffer buffer = ByteBuffer.allocate(4 * pFloats.length).order(
-        pLittleEndian ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN);
+        ByteBuffer buffer = ByteBuffer.allocate(4 * pFloats.length).order(pLittleEndian ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN);
 
         for (float value : pFloats) {
             buffer.putFloat(value);
@@ -459,24 +472,52 @@ public class Wellen {
             return pMin;
         } else {
             final float mDiff = pMax - pMin;
-            final float mValue = (float) Math.random() * mDiff + pMin;
-            return mValue;
+            return (float) Math.random() * mDiff + pMin;
         }
     }
 
-    public static String now() {
-        return
-        nf(year(), 4) +
-        nf(month(), 2) +
-        nf(day(), 2) +
-        "_" +
-        nf(hour(), 2) +
-        nf(minute(), 2) +
-        nf(second(), 2)
-        ;
+    public static int millis_to_samples(float pMillis, float pSamplingRate) {
+        return (int) (pMillis / 1000.0f * pSamplingRate);
     }
 
-    public static int[] find_zero_crossings(float[] pSampleData, int pInPoint, int pOutPoint) {
+    public static int seconds_to_samples(float pSeconds, float pSamplingRate) {
+        return (int) (pSeconds * pSamplingRate);
+    }
+
+    public static float samples_to_millis(int pSamples, float pSamplingRate) {
+        return pSamples * 1000.0f / pSamplingRate;
+    }
+
+    public static float samples_to_seconds(int pSamples, float pSamplingRate) {
+        return pSamples / pSamplingRate;
+    }
+
+    public static int millis_to_samples(float pMillis) {
+        return (int) (pMillis / 1000.0f * (float) DEFAULT_SAMPLING_RATE);
+    }
+
+    public static int seconds_to_samples(float pSeconds) {
+        return (int) (pSeconds * (float) DEFAULT_SAMPLING_RATE);
+    }
+
+    public static float samples_to_millis(int pSamples) {
+        return (float) pSamples * 1000.0f / (float) DEFAULT_SAMPLING_RATE;
+    }
+
+    public static float samples_to_seconds(int pSamples) {
+        return (float) pSamples / (float) DEFAULT_SAMPLING_RATE;
+    }
+
+    public static String now() {
+        return nf(year(), 4) + nf(month(), 2) + nf(day(), 2) + "_" + nf(hour(), 2) + nf(minute(),
+                                                                                        2) + nf(
+                second(),
+                2);
+    }
+
+    public static int[] find_zero_crossings(float[] pSampleData,
+                                            final int pInPoint,
+                                            final int pOutPoint) {
         final int ZERO_CROSSING_EDGE_NONE = 0;
         final int ZERO_CROSSING_EDGE_RISING = 1;
         final int ZERO_CROSSING_EDGE_FALLING = -1;
@@ -521,7 +562,8 @@ public class Wellen {
     }
 
     public static void run_sketch_with_resources(Class<? extends PApplet> pSketch) {
-        PApplet.runSketch(new String[]{"--sketch-path=" + Wellen.get_resource_path(), pSketch.getName()}, null);
+        PApplet.runSketch(new String[]{"--sketch-path=" + Wellen.get_resource_path(), pSketch.getName()},
+                          null);
     }
 
     public static int to_millis(float pSeconds) {

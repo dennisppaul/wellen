@@ -217,6 +217,14 @@ public class Wavetable extends Oscillator {
         }
     }
 
+    /**
+     * alternative version of `set_frequency` which takes a second paramter that specifies the duration in samples from
+     * current to new value. this can prevent unwanted artifacts ( e.g when quickly changing values ). it can also be
+     * used to create glissando or portamento effects.
+     *
+     * @param pFrequency                      destination frequency
+     * @param pInterpolationDurationInSamples duration of interpolation in samples
+     */
     public void set_frequency(float pFrequency, int pInterpolationDurationInSamples) {
         if (pInterpolationDurationInSamples > 0) {
             mDesiredFrequency = pFrequency;
@@ -249,6 +257,15 @@ public class Wavetable extends Oscillator {
         mDesiredAmplitudeSteps = 0;
     }
 
+    /**
+     * alternative version of `set_amplitude` which takes a second paramter that specifies the duration in samples from
+     * current to new value. this can prevents unwanted artifacts ( e.g crackling noise when changing amplitude quickly
+     * especially on smoother wave shape like sine waves ). it can also be used to create glissando or portamento
+     * effects.
+     *
+     * @param pAmplitude                      destination amplitude
+     * @param pInterpolationDurationInSamples duration of interpolation in samples
+     */
     public void set_amplitude(float pAmplitude, int pInterpolationDurationInSamples) {
         if (pInterpolationDurationInSamples > 0) {
             mDesiredAmplitude = pAmplitude;
@@ -369,7 +386,8 @@ public class Wavetable extends Oscillator {
         final float mArrayPtrOffset = mArrayPtr + mOffset;
         /* cubic interpolation */
         final float frac = mArrayPtrOffset - (int) mArrayPtrOffset;
-        final float a = (int) mArrayPtrOffset > 0 ? mWavetable[(int) mArrayPtrOffset - 1] : mWavetable[mWavetable.length - 1];
+        final float a = (int) mArrayPtrOffset > 0 ? mWavetable[(int) mArrayPtrOffset - 1] :
+                        mWavetable[mWavetable.length - 1];
         final float b = mWavetable[((int) mArrayPtrOffset) % mWavetable.length];
         final int p1 = (int) mArrayPtrOffset + 1;
         final float c = mWavetable[p1 >= mWavetable.length ? p1 - mWavetable.length : p1];
@@ -378,7 +396,8 @@ public class Wavetable extends Oscillator {
         final float tmp = d + 3.0f * b;
         final float fracsq = frac * frac;
         final float fracb = frac * fracsq;
-        final float mOutput = (fracb * (-a - 3.f * c + tmp) / 6.f + fracsq * ((a + c) / 2.f - b) + frac * (c + (-2.f * a - tmp) / 6.f) + b);
+        final float mOutput =
+        (fracb * (-a - 3.f * c + tmp) / 6.f + fracsq * ((a + c) / 2.f - b) + frac * (c + (-2.f * a - tmp) / 6.f) + b);
         advance_array_ptr();
         return mOutput;
     }

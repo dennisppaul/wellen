@@ -47,7 +47,7 @@ public class TechniqueBasics04TracksAndModules extends PApplet {
         public ModuleToneEngine() {
             mToneEngine = ToneEngineDSP.create_without_audio_output(4);
             mToneEngine.enable_reverb(true);
-            set_in_outpoint(0, 3);
+            set_in_out_point(0, 3);
             set_loop(Wellen.LOOP_INFINITE);
         }
 

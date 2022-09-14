@@ -23,15 +23,15 @@ import static wellen.Wellen.NO_LOOP_COUNT;
 
 public class Loop {
 
-    protected int fInterval = 0;
+    protected int fLength = 0;
     protected int fOffset = 0;
 
     public int get_length() {
-        return fInterval;
+        return fLength;
     }
 
-    public void set_length(int pInterval) {
-        fInterval = pInterval;
+    public void set_length(int pLength) {
+        fLength = pLength;
     }
 
     public int get_offset() {
@@ -50,10 +50,10 @@ public class Loop {
     }
 
     public boolean event(int pTick, int pLoopEvent) {
-        if (fInterval == 0) {
+        if (fLength == 0) {
             return false;
         }
-        return (getTickWithOffset(pTick) % fInterval) == pLoopEvent;
+        return (getTickWithOffset(pTick) % fLength) == pLoopEvent;
     }
 
     public static boolean before(int pTick, int pThreshold, int pLoopInterval) {
@@ -64,10 +64,10 @@ public class Loop {
     }
 
     public boolean before(int pTick, int pThreshold) {
-        if (fInterval == 0) {
+        if (fLength == 0) {
             return false;
         }
-        return (getTickWithOffset(pTick) % fInterval) < pThreshold;
+        return (getTickWithOffset(pTick) % fLength) < pThreshold;
     }
 
 
@@ -79,10 +79,10 @@ public class Loop {
     }
 
     public boolean after(int pTick, int pThreshold) {
-        if (fInterval == 0) {
+        if (fLength == 0) {
             return false;
         }
-        return (getTickWithOffset(pTick) % fInterval) > pThreshold;
+        return (getTickWithOffset(pTick) % fLength) > pThreshold;
     }
 
     private int getTickWithOffset(int pTick) {
@@ -90,9 +90,9 @@ public class Loop {
     }
 
     public int get_loop_count(int pAbsolutPosition) {
-        if (fInterval > 0) {
+        if (fLength > 0) {
             if (pAbsolutPosition + fOffset >= 0) {
-                return (pAbsolutPosition + fOffset) / fInterval;
+                return (pAbsolutPosition + fOffset) / fLength;
             } else {
                 return NO_LOOP_COUNT;
             }

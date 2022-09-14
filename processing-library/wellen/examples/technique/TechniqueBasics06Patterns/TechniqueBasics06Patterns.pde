@@ -28,13 +28,13 @@ void setup() {
     ToneEngineDSP mToneEngine = Tone.get_DSP_engine();
     Reverb mReverb = new Reverb();
     mToneEngine.add_effect(mReverb);
-    mPatternA.set_inpoint(0);
+    mPatternA.set_in_point(0);
     mPatternA.set_length(8);
     mPatternA.set_loop(LOOP_INFINITE);
-    mPatternB.set_inpoint(2);
+    mPatternB.set_in_point(2);
     mPatternB.set_length(4);
     mPatternB.set_loop(LOOP_INFINITE);
-    mPatternC.set_inpoint(0);
+    mPatternC.set_in_point(0);
     mPatternC.set_length(1);
     mPatternC.set_loop(16);
     mEventPositionPatternC = 0;
@@ -58,7 +58,7 @@ void draw() {
 
 void keyPressed() {
     int mQuantizedInpoint = (mBeat / 8) * 8 + 8;
-    mPatternC.set_inpoint(mQuantizedInpoint);
+    mPatternC.set_in_point(mQuantizedInpoint);
     switch (key) {
         case '1':
             mPatternC.set_length(1);

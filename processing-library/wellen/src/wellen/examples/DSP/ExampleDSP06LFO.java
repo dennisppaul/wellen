@@ -33,12 +33,12 @@ public class ExampleDSP06LFO extends PApplet {
 
         /* setup LFO for frequency */
         Wavetable.sine(mFrequencyLFO.get_wavetable());
-        mFrequencyLFO.interpolate_samples(true);
+        mFrequencyLFO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_CUBIC);
         mFrequencyLFO.set_frequency(0);
 
         /* setup LFO for amplitude */
         Wavetable.sine(mAmplitudeLFO.get_wavetable());
-        mAmplitudeLFO.interpolate_samples(true);
+        mAmplitudeLFO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_CUBIC);
         mAmplitudeLFO.set_frequency(0);
 
         DSP.start(this);

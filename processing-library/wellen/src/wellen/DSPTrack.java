@@ -138,14 +138,14 @@ public class DSPTrack extends DSPModule {
     }
 
     private static boolean evaluate_in_outpoints(DSPModule pTrack, int pBeat) {
-        final boolean mNoInOutPoint = (pTrack.get_inpoint() == NO_INPOINT && pTrack.get_outpoint() == NO_OUTPOINT);
+        final boolean mNoInOutPoint = (pTrack.get_in_point() == NO_INPOINT && pTrack.get_out_point() == NO_OUTPOINT);
         if (mNoInOutPoint) {
             return true;
         }
-        final boolean mIsBeyondInPoint = (pBeat >= pTrack.get_inpoint());
+        final boolean mIsBeyondInPoint = (pBeat >= pTrack.get_in_point());
         final int mLoopCount = pTrack.get_loop_count(pBeat);
         final boolean mIsBeforeOutPoint =
-        (pBeat <= pTrack.get_outpoint()) || (pTrack.get_outpoint() == NO_OUTPOINT) || (mLoopCount < pTrack.get_loop() || pTrack.get_loop() == LOOP_INFINITE);
+        (pBeat <= pTrack.get_out_point()) || (pTrack.get_out_point() == NO_OUTPOINT) || (mLoopCount < pTrack.get_loop() || pTrack.get_loop() == LOOP_INFINITE);
         //noinspection UnnecessaryLocalVariable
         final boolean mWithinInOutPoint = mIsBeyondInPoint && mIsBeforeOutPoint;
         return mWithinInOutPoint;

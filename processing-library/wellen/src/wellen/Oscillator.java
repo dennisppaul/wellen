@@ -13,7 +13,7 @@ public abstract class Oscillator implements DSPNodeOutput {
     /**
      * set speed of oscillator in seconds per phase
      *
-     * @param pFrequency
+     * @param pFrequency oscillation speed on seconds per phase ( or Hz )
      */
     public void set_oscillation_speed(float pFrequency) {
         set_frequency(1.0f / pFrequency);
@@ -21,10 +21,11 @@ public abstract class Oscillator implements DSPNodeOutput {
 
     /**
      * set output value range of oscillator in minimum and maximum. this method affects the oscillator’s amplitude and
-     * offset.
+     * offset. this methods can be particularily helpful when using an oscillator for non-audio applications ( e.g as an
+     * LFO that controlls the frequency ).
      *
-     * @param pMin
-     * @param pMax
+     * @param pMin minimum value of oscillator
+     * @param pMax maximum value of oscillator
      */
     public void set_oscillation_range(float pMin, float pMax) {
         final float mDelta = pMax - pMin;

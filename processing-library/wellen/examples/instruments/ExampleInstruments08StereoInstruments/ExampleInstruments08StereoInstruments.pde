@@ -58,7 +58,7 @@ CustomInstrumentDetunedOscillatorsStereo(int pID) {
         set_spread(0.5f);
         Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVESHAPE_SINE);
         mVCOSecond = new Wavetable(DEFAULT_WAVETABLE_SIZE);
-        mVCOSecond.interpolate_samples(true);
+        mVCOSecond.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
         Wavetable.fill(mVCOSecond.get_wavetable(), Wellen.WAVESHAPE_SINE);
     }
     

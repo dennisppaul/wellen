@@ -66,7 +66,7 @@ public class TestBell extends PApplet {
             mOscillatorAmplitudes = new float[NUM_OSC];
             for (int i = 0; i < NUM_OSC; i++) {
                 mVCOs[i] = new Wavetable();
-                mVCOs[i].interpolate_samples(true);
+                mVCOs[i].set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
                 Wavetable.fill(mVCOs[i].get_wavetable(), Wellen.WAVESHAPE_SINE);
                 mADSRs[i] = new ADSR();
             }

@@ -19,13 +19,13 @@ public class TestWavetableInterpolation extends PApplet {
         Wavetable.sine(mWavetable.get_wavetable());
         mWavetable.set_frequency(172.265625f);
         mWavetable.set_amplitude(0.25f);
-        mWavetable.interpolate_samples(true);
+        mWavetable.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
     }
 
     public void draw() {
         background(255);
         DSP.draw_buffer(g, width, height);
-        mWavetable.interpolate_samples(!mousePressed);
+        mWavetable.set_interpolation(mousePressed ? Wellen.WAVESHAPE_INTERPOLATE_LINEAR : Wellen.WAVESHAPE_INTERPOLATE_NONE);
     }
 
     public void keyPressed() {
