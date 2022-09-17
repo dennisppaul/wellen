@@ -35,7 +35,7 @@ public class ExampleRRAnalogFilter extends PApplet {
 
     public void draw() {
         background(255);
-        DSP.draw_buffer(g, width, height);
+        DSP.draw_buffers(g, width, height);
     }
 
     public void mouseMoved() {
@@ -46,28 +46,28 @@ public class ExampleRRAnalogFilter extends PApplet {
     public void keyPressed() {
         switch (key) {
             case 'q':
-                Wavetable.fill(mVCO2.get_wavetable(), Wellen.WAVESHAPE_SINE);
+                Wavetable.fill(mVCO2.get_wavetable(), Wellen.WAVEFORM_SINE);
                 break;
             case 'w':
-                Wavetable.fill(mVCO2.get_wavetable(), Wellen.WAVESHAPE_TRIANGLE);
+                Wavetable.fill(mVCO2.get_wavetable(), Wellen.WAVEFORM_TRIANGLE);
                 break;
             case 'e':
-                Wavetable.fill(mVCO2.get_wavetable(), Wellen.WAVESHAPE_SAWTOOTH);
+                Wavetable.fill(mVCO2.get_wavetable(), Wellen.WAVEFORM_SAWTOOTH);
                 break;
             case 'r':
-                Wavetable.fill(mVCO2.get_wavetable(), Wellen.WAVESHAPE_SQUARE);
+                Wavetable.fill(mVCO2.get_wavetable(), Wellen.WAVEFORM_SQUARE);
                 break;
             case 'a':
-                Wavetable.fill(mVCO1.get_wavetable(), Wellen.WAVESHAPE_SINE);
+                Wavetable.fill(mVCO1.get_wavetable(), Wellen.WAVEFORM_SINE);
                 break;
             case 's':
-                Wavetable.fill(mVCO1.get_wavetable(), Wellen.WAVESHAPE_TRIANGLE);
+                Wavetable.fill(mVCO1.get_wavetable(), Wellen.WAVEFORM_TRIANGLE);
                 break;
             case 'd':
-                Wavetable.fill(mVCO1.get_wavetable(), Wellen.WAVESHAPE_SAWTOOTH);
+                Wavetable.fill(mVCO1.get_wavetable(), Wellen.WAVEFORM_SAWTOOTH);
                 break;
             case 'f':
-                Wavetable.fill(mVCO1.get_wavetable(), Wellen.WAVESHAPE_SQUARE);
+                Wavetable.fill(mVCO1.get_wavetable(), Wellen.WAVEFORM_SQUARE);
                 break;
             case '1':
                 mAnalogFilter.settype(RRAnalogFilter.TYPE_LPF_1_POLE);

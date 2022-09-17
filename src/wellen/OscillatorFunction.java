@@ -22,11 +22,11 @@ package wellen;
 import static wellen.Wellen.SIGNAL_MAX;
 import static wellen.Wellen.SIGNAL_MIN;
 import static wellen.Wellen.TWO_PI;
-import static wellen.Wellen.WAVESHAPE_NOISE;
-import static wellen.Wellen.WAVESHAPE_SAWTOOTH;
-import static wellen.Wellen.WAVESHAPE_SINE;
-import static wellen.Wellen.WAVESHAPE_SQUARE;
-import static wellen.Wellen.WAVESHAPE_TRIANGLE;
+import static wellen.Wellen.WAVEFORM_NOISE;
+import static wellen.Wellen.WAVEFORM_SAWTOOTH;
+import static wellen.Wellen.WAVEFORM_SINE;
+import static wellen.Wellen.WAVEFORM_SQUARE;
+import static wellen.Wellen.WAVEFORM_TRIANGLE;
 import static wellen.Wellen.random;
 
 /**
@@ -48,7 +48,7 @@ public class OscillatorFunction extends Oscillator {
 
     public OscillatorFunction(int pSamplingRate) {
         mSamplingRate = pSamplingRate;
-        mWaveform = WAVESHAPE_SINE;
+        mWaveform = WAVEFORM_SINE;
         set_frequency(DEFAULT_FREQUENCY);
         set_amplitude(DEFAULT_AMPLITUDE);
     }
@@ -103,19 +103,19 @@ public class OscillatorFunction extends Oscillator {
     public float output() {
         double s;
         switch (mWaveform) {
-            case WAVESHAPE_SINE:
+            case WAVEFORM_SINE:
                 s = process_sine();
                 break;
-            case WAVESHAPE_TRIANGLE:
+            case WAVEFORM_TRIANGLE:
                 s = process_triangle();
                 break;
-            case WAVESHAPE_SAWTOOTH:
+            case WAVEFORM_SAWTOOTH:
                 s = process_sawtooth();
                 break;
-            case WAVESHAPE_SQUARE:
+            case WAVEFORM_SQUARE:
                 s = process_square();
                 break;
-            case WAVESHAPE_NOISE:
+            case WAVEFORM_NOISE:
                 s = random(-1, 1);
                 break;
             default:

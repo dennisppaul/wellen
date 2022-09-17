@@ -33,7 +33,7 @@ public class TestExportSAM extends PApplet {
     public void draw() {
         background(mIsRecording ? 0 : 255);
         stroke(mIsRecording ? 255 : 0);
-        DSP.draw_buffer(g, width, height);
+        DSP.draw_buffers(g, width, height);
     }
 
     public void audioblock(float[] pOutputSignal) {

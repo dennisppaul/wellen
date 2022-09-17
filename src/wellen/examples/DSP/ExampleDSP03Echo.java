@@ -28,7 +28,7 @@ public class ExampleDSP03Echo extends PApplet {
     public void draw() {
         background(255);
         stroke(0);
-        DSP.draw_buffer(g, width, height);
+        DSP.draw_buffers(g, width, height);
     }
 
     public void mouseMoved() {

@@ -81,34 +81,39 @@ public class Wavetable extends Oscillator {
         fill(mWavetable, pWaveform);
     }
 
-    public static void fill(float[] pWavetable, int pWavetableType) {
+    public void set_waveform(int pHarmonics, int pWaveform) {
+        fill(mWavetable, pHarmonics, pWaveform);
+    }
+
+    public static void fill(float[] pWavetable, int pWaveform) {
         // @TODO(add some more interesting waveforms like pulse )
-        switch (pWavetableType) {
-            case Wellen.WAVESHAPE_SINE:
+        switch (pWaveform) {
+            case Wellen.WAVEFORM_SINE:
                 sine(pWavetable);
                 break;
-            case Wellen.WAVESHAPE_TRIANGLE:
+            case Wellen.WAVEFORM_TRIANGLE:
                 triangle(pWavetable);
                 break;
-            case Wellen.WAVESHAPE_SAWTOOTH:
+            case Wellen.WAVEFORM_SAWTOOTH:
                 sawtooth(pWavetable);
                 break;
-            case Wellen.WAVESHAPE_SQUARE:
+            case Wellen.WAVEFORM_SQUARE:
                 square(pWavetable);
                 break;
-            case Wellen.WAVESHAPE_NOISE:
+            case Wellen.WAVEFORM_NOISE:
                 noise(pWavetable);
                 break;
         }
     }
 
-    public static void fill(float[] pWavetable, int pHarmonics, int pWavetableType) {
-        switch (pWavetableType) {
-            case Wellen.WAVESHAPE_TRIANGLE:
+    public static void fill(float[] pWavetable, int pHarmonics, int pWaveform) {
+        switch (pWaveform) {
+            case Wellen.WAVEFORM_TRIANGLE:
                 triangle(pWavetable, pHarmonics);
-            case Wellen.WAVESHAPE_SAWTOOTH:
+            case Wellen.WAVEFORM_SAWTOOTH:
                 sawtooth(pWavetable, pHarmonics);
-            case Wellen.WAVESHAPE_SQUARE:
+            case Wellen.WAVEFORM_SQUARE:
+                square(pWavetable, pHarmonics);
         }
     }
 
@@ -352,8 +357,7 @@ public class Wavetable extends Oscillator {
     }
 
     private void advance_array_ptr() {
-        mArrayPtr += mStepSize * (mEnableJitter ? (Wellen.random(-mJitterRange,
-                                                                 mJitterRange) + 1.0f) : 1.0f);
+        mArrayPtr += mStepSize * (mEnableJitter ? (Wellen.random(-mJitterRange, mJitterRange) + 1.0f) : 1.0f);
         while (mArrayPtr >= mWavetable.length) {
             mArrayPtr -= mWavetable.length;
         }
@@ -387,7 +391,7 @@ public class Wavetable extends Oscillator {
         /* cubic interpolation */
         final float frac = mArrayPtrOffset - (int) mArrayPtrOffset;
         final float a = (int) mArrayPtrOffset > 0 ? mWavetable[(int) mArrayPtrOffset - 1] :
-                        mWavetable[mWavetable.length - 1];
+                mWavetable[mWavetable.length - 1];
         final float b = mWavetable[((int) mArrayPtrOffset) % mWavetable.length];
         final int p1 = (int) mArrayPtrOffset + 1;
         final float c = mWavetable[p1 >= mWavetable.length ? p1 - mWavetable.length : p1];
@@ -397,7 +401,7 @@ public class Wavetable extends Oscillator {
         final float fracsq = frac * frac;
         final float fracb = frac * fracsq;
         final float mOutput =
-        (fracb * (-a - 3.f * c + tmp) / 6.f + fracsq * ((a + c) / 2.f - b) + frac * (c + (-2.f * a - tmp) / 6.f) + b);
+                (fracb * (-a - 3.f * c + tmp) / 6.f + fracsq * ((a + c) / 2.f - b) + frac * (c + (-2.f * a - tmp) / 6.f) + b);
         advance_array_ptr();
         return mOutput;
     }

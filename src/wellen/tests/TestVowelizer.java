@@ -26,7 +26,7 @@ public class TestVowelizer extends PApplet {
     public void setup() {
         mOsc.set_frequency(140);
         mOsc.set_amplitude(0.33f);
-        mOsc.set_waveform(Wellen.WAVESHAPE_SAWTOOTH);
+        mOsc.set_waveform(Wellen.WAVEFORM_SAWTOOTH);
 
         final float mResonance = 0.6f;
         filt1.Init(Wellen.DEFAULT_SAMPLING_RATE);
@@ -46,7 +46,7 @@ public class TestVowelizer extends PApplet {
 
     public void draw() {
         background(255);
-        DSP.draw_buffer(g, width, height);
+        DSP.draw_buffers(g, width, height);
     }
 
     public void mouseMoved() {
@@ -90,13 +90,13 @@ public class TestVowelizer extends PApplet {
                     formant3 = 2400;
                     break;
                 case '1':
-                    mOsc.set_waveform(Wellen.WAVESHAPE_SQUARE);
+                    mOsc.set_waveform(Wellen.WAVEFORM_SQUARE);
                     break;
                 case '2':
-                    mOsc.set_waveform(Wellen.WAVESHAPE_SAWTOOTH);
+                    mOsc.set_waveform(Wellen.WAVEFORM_SAWTOOTH);
                     break;
                 case '3':
-                    mOsc.set_waveform(Wellen.WAVESHAPE_NOISE);
+                    mOsc.set_waveform(Wellen.WAVEFORM_NOISE);
                     break;
             }
             filt1.SetFreq(formant1);

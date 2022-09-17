@@ -23,6 +23,7 @@ import processing.core.PGraphics;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 /**
  * handles audio signal processing. after <code>start(...)</code> is called the processing continously calls
@@ -37,8 +38,12 @@ public class DSP implements AudioBufferRenderer {
     private final int mNumberOutputChannels;
     private final int mNumberInputChannels;
     private Method mMethod = null;
-    private float[] mCurrentBufferLeft;
-    private float[] mCurrentBufferRight;
+    private static final int OUTPUT_LEFT = 0;
+    private static final int OUTPUT_RIGHT = 1;
+    private static final int INPUT_LEFT = 2;
+    private static final int INPUT_RIGHT = 3;
+    private static final int NUM_CACHED_BUFFERS = 4;
+    private final float[][] fCachedBuffers = new float[NUM_CACHED_BUFFERS][];
 
     public DSP(Object pListener, int pNumberOutputChannels, int pNumberInputChannels) {
         mListener = pListener;
@@ -63,39 +68,45 @@ public class DSP implements AudioBufferRenderer {
             } else if (mNumberOutputChannels == 1 && mNumberInputChannels == 0) {
                 mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME, float[].class);
             } else {
-                mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME, float[][].class);
+                mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME, float[][].class, float[][].class);
             }
         } catch (NoSuchMethodException | SecurityException ex) {
             System.err.println("+++ @" + DSP.class.getSimpleName() + " / could not find callback `" + METHOD_NAME +
-                               "()`.");
-            System.err.println(
-            "    hint: check the callback method parameters, they must match the number of input" + " and output " +
-            "channels. default is `" + METHOD_NAME + "(float[])` ( = MONO OUTPUT ).");
+                                       "()`.");
+            System.err.println("    hint: check the callback method parameters, they must match the number of input" + " and output " + "channels. default is `" + METHOD_NAME + "(float[])` ( = MONO OUTPUT ).");
         }
     }
 
     public void audioblock(float[][] pOutputSignal, float[][] pInputSignal) {
         try {
+            Arrays.fill(fCachedBuffers, null);
             if (mNumberOutputChannels == 1 && mNumberInputChannels == 0) {
                 mMethod.invoke(mListener, pOutputSignal[0]);
-                mCurrentBufferLeft = pOutputSignal[0];
+                fCachedBuffers[OUTPUT_LEFT] = pOutputSignal[0];
             } else if (mNumberOutputChannels == 1 && mNumberInputChannels == 1) {
                 mMethod.invoke(mListener, pOutputSignal[0], pInputSignal[0]);
-                mCurrentBufferLeft = pOutputSignal[0];
+                fCachedBuffers[OUTPUT_LEFT] = pOutputSignal[0];
+                fCachedBuffers[INPUT_LEFT] = pInputSignal[0];
             } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 0) {
                 mMethod.invoke(mListener, pOutputSignal[0], pOutputSignal[1]);
-                mCurrentBufferLeft = pOutputSignal[0];
-                mCurrentBufferRight = pOutputSignal[1];
+                fCachedBuffers[OUTPUT_LEFT] = pOutputSignal[0];
+                fCachedBuffers[OUTPUT_RIGHT] = pOutputSignal[1];
             } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 1) {
                 mMethod.invoke(mListener, pOutputSignal[0], pOutputSignal[1], pInputSignal[0]);
-                mCurrentBufferLeft = pOutputSignal[0];
-                mCurrentBufferRight = pOutputSignal[1];
+                fCachedBuffers[OUTPUT_LEFT] = pOutputSignal[0];
+                fCachedBuffers[OUTPUT_RIGHT] = pOutputSignal[1];
+                fCachedBuffers[INPUT_LEFT] = pInputSignal[0];
             } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 2) {
                 mMethod.invoke(mListener, pOutputSignal[0], pOutputSignal[1], pInputSignal[0], pInputSignal[1]);
-                mCurrentBufferLeft = pOutputSignal[0];
-                mCurrentBufferRight = pOutputSignal[1];
+                fCachedBuffers[OUTPUT_LEFT] = pOutputSignal[0];
+                fCachedBuffers[OUTPUT_RIGHT] = pOutputSignal[1];
+                fCachedBuffers[INPUT_LEFT] = pInputSignal[0];
+                fCachedBuffers[INPUT_RIGHT] = pInputSignal[1];
+            } else {
+                mMethod.invoke(mListener, pOutputSignal, pInputSignal);
             }
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NullPointerException ex) {
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException |
+                 NullPointerException ex) {
             System.err.println("+++ @" + DSP.class.getSimpleName() + " / error in audioblock: " + ex.getCause());
             ex.printStackTrace();
         }
@@ -194,24 +205,33 @@ public class DSP implements AudioBufferRenderer {
         return mAudioPlayer == null ? 0 : mAudioPlayer.buffer_size();
     }
 
-    public static float[] get_buffer() {
-        return get_buffer_left();
+    public static float[] get_output_buffer() {
+        return get_output_buffer_left();
     }
 
-    public static float[] get_buffer_left() {
-        return mInstance == null ? null : mInstance.mCurrentBufferLeft;
+    public static float[] get_output_buffer_left() {
+        return mInstance == null ? null : mInstance.fCachedBuffers[OUTPUT_LEFT];
     }
 
-    public static float[] get_buffer_right() {
-        return mInstance == null ? null : mInstance.mCurrentBufferRight;
+    public static float[] get_output_buffer_right() {
+        return mInstance == null ? null : mInstance.fCachedBuffers[OUTPUT_RIGHT];
     }
 
-    public static void draw_buffer_stereo(PGraphics g, float pWidth, float pHeight) {
-        Wellen.draw_buffer(g, pWidth, pHeight, DSP.get_buffer_left(), DSP.get_buffer_right());
+    public static float[] get_input_buffer_left() {
+        return mInstance == null ? null : mInstance.fCachedBuffers[INPUT_LEFT];
     }
 
-    public static void draw_buffer(PGraphics g, float pWidth, float pHeight) {
-        Wellen.draw_buffer(g, pWidth, pHeight, DSP.get_buffer());
+    public static float[] get_input_buffer_right() {
+        return mInstance == null ? null : mInstance.fCachedBuffers[INPUT_RIGHT];
+    }
+
+    public static void draw_buffers(PGraphics g, float pWidth, float pHeight) {
+        Wellen.draw_buffers(g,
+                            pWidth,
+                            pHeight,
+                            DSP.get_output_buffer_left(),
+                            DSP.get_output_buffer_right(),
+                            DSP.get_input_buffer_left(),
+                            DSP.get_input_buffer_right());
     }
 }
-

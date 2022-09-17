@@ -26,7 +26,7 @@ public class ExampleDSP02PassThrough extends PApplet {
         background(255);
         stroke(0);
         final int mBufferSize = DSP.get_buffer_size();
-        DSP.draw_buffer(g, width, height);
+        DSP.draw_buffers(g, width, height);
     }
 
     public void audioblock(float[] pOutputSignal, float[] pInputSignal) {

@@ -67,7 +67,7 @@ public class TestBell extends PApplet {
             for (int i = 0; i < NUM_OSC; i++) {
                 mVCOs[i] = new Wavetable();
                 mVCOs[i].set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
-                Wavetable.fill(mVCOs[i].get_wavetable(), Wellen.WAVESHAPE_SINE);
+                Wavetable.fill(mVCOs[i].get_wavetable(), Wellen.WAVEFORM_SINE);
                 mADSRs[i] = new ADSR();
             }
             set_detune(0.23f);

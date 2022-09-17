@@ -113,7 +113,7 @@ public class TestSAMTuningPhonemeLoops extends PApplet {
 
         /* draw audio buffer */
         stroke(0, 63);
-        DSP.draw_buffer(g, width, height);
+        DSP.draw_buffers(g, width, height);
     }
 
     public void keyPressed() {

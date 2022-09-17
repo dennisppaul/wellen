@@ -63,11 +63,11 @@ public class ExampleInstruments08StereoInstruments extends PApplet {
             set_detune(0.01f);
             set_spread(0.5f);
 
-            Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVESHAPE_SINE);
+            Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVEFORM_SINE);
 
             mVCOSecond = new Wavetable(DEFAULT_WAVETABLE_SIZE);
             mVCOSecond.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
-            Wavetable.fill(mVCOSecond.get_wavetable(), Wellen.WAVESHAPE_SINE);
+            Wavetable.fill(mVCOSecond.get_wavetable(), Wellen.WAVEFORM_SINE);
         }
 
         public float get_detune() {

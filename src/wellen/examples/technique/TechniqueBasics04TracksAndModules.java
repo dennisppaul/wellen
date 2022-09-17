@@ -26,7 +26,7 @@ public class TechniqueBasics04TracksAndModules extends PApplet {
 
     public void draw() {
         background(255);
-        DSP.draw_buffer_stereo(g, width, height);
+        DSP.draw_buffers(g, width, height);
     }
 
     public void beat(int pBeat) {
@@ -89,7 +89,7 @@ public class TechniqueBasics04TracksAndModules extends PApplet {
 
         public ModuleOhhhhUhh() {
             mOSC.set_frequency(mBaseFreq);
-            mOSC.set_waveform(Wellen.WAVESHAPE_SQUARE);
+            mOSC.set_waveform(Wellen.WAVEFORM_SQUARE);
             mOSC.set_amplitude(0.0f);
             mFormantFilter.set_vowel(VowelFormantFilter.VOWEL_O);
         }

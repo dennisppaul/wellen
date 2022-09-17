@@ -36,7 +36,7 @@ public class ExampleRREcho extends PApplet {
 
     public void draw() {
         background(255);
-        DSP.draw_buffer_stereo(g, width, height);
+        DSP.draw_buffers(g, width, height);
     }
 
     public void mouseMoved() {
@@ -58,16 +58,16 @@ public class ExampleRREcho extends PApplet {
     public void keyPressed() {
         switch (key) {
             case 'q':
-                Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVESHAPE_SINE);
+                Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVEFORM_SINE);
                 break;
             case 'w':
-                Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVESHAPE_TRIANGLE);
+                Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVEFORM_TRIANGLE);
                 break;
             case 'e':
-                Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVESHAPE_SAWTOOTH);
+                Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVEFORM_SAWTOOTH);
                 break;
             case 'r':
-                Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVESHAPE_SQUARE);
+                Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVEFORM_SQUARE);
                 break;
             case '1':
                 mEcho.setpreset(RREcho.PRESET_ECHO_1);

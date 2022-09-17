@@ -58,7 +58,7 @@ public class InstrumentDSPLibrary {
             for (int i = 0; i < NUM_OSC; i++) {
                 mVCOs[i] = new Wavetable();
                 mVCOs[i].set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
-                Wavetable.fill(mVCOs[i].get_wavetable(), Wellen.WAVESHAPE_SINE);
+                Wavetable.fill(mVCOs[i].get_wavetable(), Wellen.WAVEFORM_SINE);
                 mADSRs[i] = new ADSR();
             }
             set_detune(0.23f);
@@ -153,9 +153,9 @@ public class InstrumentDSPLibrary {
             mLowerVCO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
             mVeryLowVCO = new Wavetable(DEFAULT_WAVETABLE_SIZE);
             mVeryLowVCO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
-            Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVESHAPE_TRIANGLE);
-            Wavetable.fill(mLowerVCO.get_wavetable(), Wellen.WAVESHAPE_SINE);
-            Wavetable.fill(mVeryLowVCO.get_wavetable(), Wellen.WAVESHAPE_SQUARE);
+            Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVEFORM_TRIANGLE);
+            Wavetable.fill(mLowerVCO.get_wavetable(), Wellen.WAVEFORM_SINE);
+            Wavetable.fill(mVeryLowVCO.get_wavetable(), Wellen.WAVEFORM_SQUARE);
         }
 
         @Override
@@ -201,7 +201,7 @@ public class InstrumentDSPLibrary {
         public KICK_DRUM(int pID) {
             super(pID);
 
-            set_oscillator_type(Wellen.WAVESHAPE_SINE);
+            set_oscillator_type(Wellen.WAVEFORM_SINE);
             set_amplitude(0.5f);
             set_frequency(90);
 

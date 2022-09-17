@@ -59,7 +59,7 @@ public class TestImportExportWAV extends PApplet {
             line(p0.x, p0.y, p1.x, p1.y);
         }
 
-        DSP.draw_buffer(g, width, height);
+        DSP.draw_buffers(g, width, height);
     }
 
     public void audioblock(float[] pOutputSignal) {

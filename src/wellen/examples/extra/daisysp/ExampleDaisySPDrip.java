@@ -30,7 +30,7 @@ public class ExampleDaisySPDrip extends PApplet {
         float mScale = 0.98f * height;
         circle(width * 0.5f, height * 0.5f, mScale);
         stroke(255);
-        DSP.draw_buffer(g, width, height);
+        DSP.draw_buffers(g, width, height);
     }
 
     public void beat(int pBeatCount) {

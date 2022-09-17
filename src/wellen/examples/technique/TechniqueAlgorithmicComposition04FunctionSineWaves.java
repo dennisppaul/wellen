@@ -27,12 +27,12 @@ public class TechniqueAlgorithmicComposition04FunctionSineWaves extends PApplet 
 
     public void setup() {
         Beat.start(this, 240);
-        Tone.instrument(INSTRUMENT_BASE).set_oscillator_type(Wellen.WAVESHAPE_TRIANGLE);
-        Tone.instrument(INSTRUMENT_FLUTE).set_oscillator_type(Wellen.WAVESHAPE_SAWTOOTH);
+        Tone.instrument(INSTRUMENT_BASE).set_oscillator_type(Wellen.WAVEFORM_TRIANGLE);
+        Tone.instrument(INSTRUMENT_FLUTE).set_oscillator_type(Wellen.WAVEFORM_SAWTOOTH);
 
         //@TODO("this might be broken!")
         Tone.replace_instrument(InstrumentDSP.class, INSTRUMENT_NOISE);
-        Tone.instrument(INSTRUMENT_NOISE).set_oscillator_type(Wellen.WAVESHAPE_NOISE);
+        Tone.instrument(INSTRUMENT_NOISE).set_oscillator_type(Wellen.WAVEFORM_NOISE);
         Tone.instrument(INSTRUMENT_NOISE).note_on(1, 127);
         Tone.instrument(INSTRUMENT_NOISE).set_sustain(1.0f);
         Tone.instrument(INSTRUMENT_NOISE).set_amplitude(0.0f);

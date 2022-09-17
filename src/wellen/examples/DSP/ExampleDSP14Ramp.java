@@ -46,7 +46,7 @@ public class ExampleDSP14Ramp extends PApplet {
         mEnvelopeAmplitude.add_stage(0.0f);
 
         mWavetable = new Wavetable();
-        Wavetable.fill(mWavetable.get_wavetable(), Wellen.WAVESHAPE_SAWTOOTH);
+        Wavetable.fill(mWavetable.get_wavetable(), Wellen.WAVEFORM_SAWTOOTH);
 
         DSP.start(this);
         Beat.start(this, 120);

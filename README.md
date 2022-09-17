@@ -84,6 +84,13 @@ macOS provides a mechanism to send *virtual* MIDI messages internally. the techn
 
 now the configured ports are avialable as virtual MIDI ports in macOS.
 
+*Wellen* can list available MIDI ports with `Wellen.dumpMidiInputDevices()` + `Wellen.dumpMidiOutputDevices()`. the following examples demonstrate how to connect to MIDI devices, send and receive MIDI messages:
+
+- `ExampleBasics06MIDI`
+- `ExampleExternal01MIDIToneEngineWithInternalToneEngine`
+- `ExampleExternal02MIDIClock`
+- `ExampleExternal03MIDIExternalKeyboard`
+
 ### linux
 
 @todo
@@ -91,14 +98,3 @@ now the configured ports are avialable as virtual MIDI ports in macOS.
 ### windows
 
 @todo
-
-### Using IAC in *wellen* 
-
-in a *wellen* application the available MIDI ports can be listed with `Wellen.dumpMidiInputDevices()` + `Wellen.dumpMidiOutputDevices()`.
-
-the following examples demonstrate how to send and receive MIDI messages:
-
-- `ExampleBasics06MIDI`
-- `ExampleExternal01MIDIToneEngineWithInternalToneEngine`
-- `ExampleExternal02MIDIClock`
-- `ExampleExternal03MIDIExternalKeyboard`

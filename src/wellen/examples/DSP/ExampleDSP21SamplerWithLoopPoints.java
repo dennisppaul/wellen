@@ -77,7 +77,7 @@ public class ExampleDSP21SamplerWithLoopPoints extends PApplet {
         /* draw audio buffer */
         stroke(0, 63);
         noFill();
-        DSP.draw_buffer(g, width, height);
+        DSP.draw_buffers(g, width, height);
     }
 
     public void mousePressed() {

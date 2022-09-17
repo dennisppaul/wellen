@@ -58,7 +58,7 @@ public class TestSAMTuningMIDINotes extends PApplet {
 
         stroke(0);
         noFill();
-        DSP.draw_buffer(g, width, height);
+        DSP.draw_buffers(g, width, height);
     }
 
     public void beat(int pBeatCount) {

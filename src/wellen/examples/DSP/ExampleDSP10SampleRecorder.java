@@ -33,7 +33,7 @@ public class ExampleDSP10SampleRecorder extends PApplet {
 
     public void draw() {
         background(255);
-        DSP.draw_buffer(g, width, height);
+        DSP.draw_buffers(g, width, height);
         fill(0);
         float mSize = mRecording != null ? mRecording.length : mSampler.data().length;
         mSize /= Wellen.DEFAULT_SAMPLING_RATE;
