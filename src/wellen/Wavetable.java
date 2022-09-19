@@ -103,6 +103,9 @@ public class Wavetable extends Oscillator {
             case Wellen.WAVEFORM_NOISE:
                 noise(pWavetable);
                 break;
+            default:
+                sine(pWavetable);
+                System.out.println("+++ " + Wavetable.class.getSimpleName() + ".fill / could not find wave form: " + pWaveform + " ( using SINE )");
         }
     }
 
@@ -110,10 +113,16 @@ public class Wavetable extends Oscillator {
         switch (pWaveform) {
             case Wellen.WAVEFORM_TRIANGLE:
                 triangle(pWavetable, pHarmonics);
+                break;
             case Wellen.WAVEFORM_SAWTOOTH:
                 sawtooth(pWavetable, pHarmonics);
+                break;
             case Wellen.WAVEFORM_SQUARE:
                 square(pWavetable, pHarmonics);
+                break;
+            default:
+                sine(pWavetable);
+                System.out.println("+++ " + Wavetable.class.getSimpleName() + ".fill / could not find wave form: " + pWaveform + " ( using SINE )");
         }
     }
 

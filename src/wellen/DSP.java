@@ -81,6 +81,7 @@ public class DSP implements AudioBufferRenderer {
         try {
             Arrays.fill(fCachedBuffers, null);
             if (mNumberOutputChannels == 1 && mNumberInputChannels == 0) {
+                //noinspection PrimitiveArrayArgumentToVarargsMethod
                 mMethod.invoke(mListener, pOutputSignal[0]);
                 fCachedBuffers[OUTPUT_LEFT] = pOutputSignal[0];
             } else if (mNumberOutputChannels == 1 && mNumberInputChannels == 1) {
@@ -233,5 +234,46 @@ public class DSP implements AudioBufferRenderer {
                             DSP.get_output_buffer_right(),
                             DSP.get_input_buffer_left(),
                             DSP.get_input_buffer_right());
+    }
+
+    /* --- UTILITIES --- */
+
+    /**
+     * Calculates and returns the root mean square of the signal. Please cache the result since it is calculated every
+     * time.
+     *
+     * @param pBuffer The audio buffer to calculate the RMS for.
+     * @return The <a href="http://en.wikipedia.org/wiki/Root_mean_square">RMS</a> of the signal present in the current
+     *         buffer.
+     */
+    public static float calculate_RMS(final float[] pBuffer) {
+        float mRMS = 0.0f;
+        for (float v : pBuffer) {
+            mRMS += v * v;
+        }
+        mRMS = mRMS / (float) pBuffer.length;
+        mRMS = (float) Math.sqrt(mRMS);
+        return mRMS;
+    }
+
+    /**
+     * returns sound pressure level in decibel for given buffer
+     *
+     * @param pBuffer buffer with signal
+     * @return level for buffer in decibel
+     */
+    public static float sound_pressure_level(final float[] pBuffer) {
+        float rms = calculate_RMS(pBuffer);
+        return linear_to_decibel(rms);
+    }
+
+    /**
+     * Converts a linear to a dB value.
+     *
+     * @param pLinearValue linear value to convert
+     * @return converted value in decibel
+     */
+    public static float linear_to_decibel(final float pLinearValue) {
+        return 20.0f * (float) Math.log10(pLinearValue);
     }
 }

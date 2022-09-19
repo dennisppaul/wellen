@@ -13,7 +13,7 @@ public class ExampleDSPAnalysis00PitchDetection extends PApplet {
      * an oscillator.
      */
 
-    private final PitchDetection fPitchProcessor = new PitchDetection();
+    private final PitchDetection fPitchDetection = new PitchDetection();
     private final Wavetable fWavetable = new Wavetable();
     private float fInputAmplification = 1.0f;
 
@@ -35,8 +35,8 @@ public class ExampleDSPAnalysis00PitchDetection extends PApplet {
         fill(0);
         ellipse(width * 0.5f,
                 height * 0.5f,
-                fPitchProcessor.is_pitched() ? 100 : 5,
-                fPitchProcessor.is_pitched() ? 100 : 5);
+                fPitchDetection.is_pitched() ? 100 : 5,
+                fPitchDetection.is_pitched() ? 100 : 5);
         DSP.draw_buffers(g, width, height);
     }
 
@@ -47,9 +47,9 @@ public class ExampleDSPAnalysis00PitchDetection extends PApplet {
         }
 
         /* detect pitch and set oscillator */
-        fPitchProcessor.process(pInputSignal);
-        if (fPitchProcessor.is_pitched()) {
-            fWavetable.set_frequency(fPitchProcessor.get_pitch());
+        fPitchDetection.process(pInputSignal);
+        if (fPitchDetection.is_pitched()) {
+            fWavetable.set_frequency(fPitchDetection.get_pitch());
             fWavetable.set_amplitude(0.25f, 32);
         } else {
             fWavetable.set_amplitude(0.0f, 32);

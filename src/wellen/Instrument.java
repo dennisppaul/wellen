@@ -89,6 +89,13 @@ public abstract class Instrument {
         mRelease = pRelease;
     }
 
+    public void set_adsr(float pAttack, float pDecay, float pSustain, float pRelease) {
+        set_attack(pAttack);
+        set_decay(pDecay);
+        set_sustain(pSustain);
+        set_release(pRelease);
+    }
+
     public abstract int get_oscillator_type();
 
     public abstract void set_oscillator_type(int pOscillator);

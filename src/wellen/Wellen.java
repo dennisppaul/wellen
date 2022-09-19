@@ -53,8 +53,8 @@ public class Wellen {
     public static final int DEFAULT_WAVETABLE_SIZE = 512;
     public static final float DEFAULT_ATTACK = 0.005f;
     public static final float DEFAULT_DECAY = 0.01f;
-    public static final float DEFAULT_RELEASE = 0.075f;
     public static final float DEFAULT_SUSTAIN = 0.5f;
+    public static final float DEFAULT_RELEASE = 0.075f;
     public static final int VERSION_MINOR = 8;
     public static final int VERSION_MAJOR = 0;
     public static final int DISTORTION_HARD_CLIPPING = 0;
@@ -224,6 +224,18 @@ public class Wellen {
             value = min;
         }
         return value;
+    }
+
+    /**
+     * copy the content of one array to another array of the same length
+     *
+     * @param source      source array
+     * @param destination destination array with same length as source array
+     */
+    public static void copy(float[] source, float[] destination) {
+        if (source.length == destination.length) {
+            System.arraycopy(source, 0, destination, 0, destination.length);
+        }
     }
 
     public static void draw_buffer(PGraphics g, float pWidth, float pHeight, float[] pBuffer, int pStride) {
