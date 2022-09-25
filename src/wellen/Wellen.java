@@ -256,6 +256,18 @@ public class Wellen {
         }
     }
 
+    /**
+     * copy the content of one array to a new array
+     *
+     * @param source source array
+     * @return the new array containing a copy of source array
+     */
+    public static float[] copy(float[] source) {
+        float[] destination = new float[source.length];
+        System.arraycopy(source, 0, destination, 0, destination.length);
+        return destination;
+    }
+
     public static void draw_buffer(PGraphics g, float pWidth, float pHeight, float[] pBuffer, int pStride) {
         g.line(0, pHeight * 0.5f, pWidth, pHeight * 0.5f);
         if (pBuffer != null) {

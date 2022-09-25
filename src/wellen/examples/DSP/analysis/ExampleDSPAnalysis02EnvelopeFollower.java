@@ -9,7 +9,8 @@ import wellen.analysis.EnvelopeFollower;
 public class ExampleDSPAnalysis02EnvelopeFollower extends PApplet {
 
     /*
-     * this example demonstrates how to detect an envelope from an input signal.
+     * this example demonstrates how to detect an envelope from an input signal. it uses that information to set the
+     * amplitude of an oscillator.
      */
 
     private final EnvelopeFollower fEnvelopeFollower = new EnvelopeFollower();

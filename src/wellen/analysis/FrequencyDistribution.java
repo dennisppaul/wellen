@@ -69,7 +69,6 @@ public class FrequencyDistribution {
         float[] mSignalCopy = new float[pSignal.length];
         System.arraycopy(pSignal, 0, mSignalCopy, 0, Array.getLength(pSignal));
         fFFT.forward(mSignalCopy);
-        draw();
         return pSignal;
     }
 }

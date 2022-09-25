@@ -31,6 +31,8 @@ import java.util.Arrays;
  */
 public class DSP implements AudioBufferRenderer {
 
+    public boolean COPY_CACHED_BUFFER = false;
+
     private static final String METHOD_NAME = "audioblock";
     private static AudioBufferManager mAudioPlayer;
     private static DSP mInstance = null;
@@ -83,26 +85,26 @@ public class DSP implements AudioBufferRenderer {
             if (mNumberOutputChannels == 1 && mNumberInputChannels == 0) {
                 //noinspection PrimitiveArrayArgumentToVarargsMethod
                 mMethod.invoke(mListener, pOutputSignal[0]);
-                fCachedBuffers[OUTPUT_LEFT] = pOutputSignal[0];
+                fCachedBuffers[OUTPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(pOutputSignal[0]) : pOutputSignal[0];
             } else if (mNumberOutputChannels == 1 && mNumberInputChannels == 1) {
                 mMethod.invoke(mListener, pOutputSignal[0], pInputSignal[0]);
-                fCachedBuffers[OUTPUT_LEFT] = pOutputSignal[0];
-                fCachedBuffers[INPUT_LEFT] = pInputSignal[0];
+                fCachedBuffers[OUTPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(pOutputSignal[0]) : pOutputSignal[0];
+                fCachedBuffers[INPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(pInputSignal[0]) : pInputSignal[0];
             } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 0) {
                 mMethod.invoke(mListener, pOutputSignal[0], pOutputSignal[1]);
-                fCachedBuffers[OUTPUT_LEFT] = pOutputSignal[0];
-                fCachedBuffers[OUTPUT_RIGHT] = pOutputSignal[1];
+                fCachedBuffers[OUTPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(pOutputSignal[0]) : pOutputSignal[0];
+                fCachedBuffers[OUTPUT_RIGHT] = COPY_CACHED_BUFFER ? Wellen.copy(pOutputSignal[1]) : pOutputSignal[1];
             } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 1) {
                 mMethod.invoke(mListener, pOutputSignal[0], pOutputSignal[1], pInputSignal[0]);
-                fCachedBuffers[OUTPUT_LEFT] = pOutputSignal[0];
-                fCachedBuffers[OUTPUT_RIGHT] = pOutputSignal[1];
-                fCachedBuffers[INPUT_LEFT] = pInputSignal[0];
+                fCachedBuffers[OUTPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(pOutputSignal[0]) : pOutputSignal[0];
+                fCachedBuffers[OUTPUT_RIGHT] = COPY_CACHED_BUFFER ? Wellen.copy(pOutputSignal[1]) : pOutputSignal[1];
+                fCachedBuffers[INPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(pInputSignal[0]) : pInputSignal[0];
             } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 2) {
                 mMethod.invoke(mListener, pOutputSignal[0], pOutputSignal[1], pInputSignal[0], pInputSignal[1]);
-                fCachedBuffers[OUTPUT_LEFT] = pOutputSignal[0];
-                fCachedBuffers[OUTPUT_RIGHT] = pOutputSignal[1];
-                fCachedBuffers[INPUT_LEFT] = pInputSignal[0];
-                fCachedBuffers[INPUT_RIGHT] = pInputSignal[1];
+                fCachedBuffers[OUTPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(pOutputSignal[0]) : pOutputSignal[0];
+                fCachedBuffers[OUTPUT_RIGHT] = COPY_CACHED_BUFFER ? Wellen.copy(pOutputSignal[1]) : pOutputSignal[1];
+                fCachedBuffers[INPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(pInputSignal[0]) : pInputSignal[0];
+                fCachedBuffers[INPUT_RIGHT] = COPY_CACHED_BUFFER ? Wellen.copy(pInputSignal[1]) : pInputSignal[1];
             } else {
                 mMethod.invoke(mListener, pOutputSignal, pInputSignal);
             }

@@ -36,7 +36,9 @@ public class ExampleDSPAnalysis03SonogramFrequencyDistribution extends PApplet {
 
     public void draw() {
         background(0);
+        fSonogram.draw();
         image(fSonogram.get_graphics(), 0, height * 0.25f, width * 0.5f, height * 0.5f);
+        fFrequencyDistribution.draw();
         image(fFrequencyDistribution.get_graphics(), width * 0.5f + 1, height * 0.25f, width * 0.5f, height * 0.5f);
     }
 
