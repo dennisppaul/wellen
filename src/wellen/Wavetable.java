@@ -187,10 +187,15 @@ public class Wavetable extends Oscillator {
         }
     }
 
-    public static void sawtooth(float[] pWavetable) {
-        for (int i = 0; i < pWavetable.length; i++) {
-            pWavetable[i] = 2.0f * ((float) i / (float) (pWavetable.length - 1)) - 1.0f;
+    public static void sawtooth(float[] wavetable, boolean is_ramp_up) {
+        final float mSign = is_ramp_up ? -1.0f : 1.0f;
+        for (int i = 0; i < wavetable.length; i++) {
+            wavetable[i] = mSign * (2.0f * ((float) i / (float) (wavetable.length - 1)) - 1.0f);
         }
+    }
+
+    public static void sawtooth(float[] pWavetable) {
+        sawtooth(pWavetable, true);
     }
 
     public static void triangle(float[] pWavetable) {

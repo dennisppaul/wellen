@@ -1,4 +1,4 @@
-# wellen / release notes
+# Wellen / Release Notes
 
 ## v0.9 (20220914)
 

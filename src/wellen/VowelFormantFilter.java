@@ -16,6 +16,7 @@ public class VowelFormantFilter implements DSPNodeProcess {
     public static final int VOWEL_I = 2;
     public static final int VOWEL_O = 3;
     public static final int VOWEL_U = 4;
+    public static final int NUM_OF_VOWELS = 5;
 
     public VowelFormantFilter() {
         set_vowel(VOWEL_A);

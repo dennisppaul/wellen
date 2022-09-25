@@ -93,16 +93,34 @@ public class Wellen {
     public static final int WAVEFORM_SAWTOOTH = 2;
     public static final int WAVEFORM_SQUARE = 3;
     public static final int WAVEFORM_NOISE = 4;
-    @Deprecated
+    /**
+     * @deprecated use WAVEFORM_ instead
+     */
+    @Deprecated()
     public static final int WAVESHAPE_SINE = 0;
+    /**
+     * @deprecated use WAVEFORM_ instead
+     */
     @Deprecated
     public static final int WAVESHAPE_TRIANGLE = 1;
+    /**
+     * @deprecated use WAVEFORM_ instead
+     */
     @Deprecated
     public static final int WAVESHAPE_SAWTOOTH = 2;
+    /**
+     * @deprecated use WAVEFORM_ instead
+     */
     @Deprecated
     public static final int WAVESHAPE_SQUARE = 3;
+    /**
+     * @deprecated use WAVEFORM_ instead
+     */
     @Deprecated
     public static final int WAVESHAPE_NOISE = 4;
+    /**
+     * @deprecated use WAVEFORM_ instead
+     */
     @Deprecated
     public static final int OSC_NOISE = WAVEFORM_NOISE;
     public static final int OSC_SAWTOOTH = WAVEFORM_SAWTOOTH;

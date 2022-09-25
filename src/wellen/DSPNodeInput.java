@@ -23,5 +23,5 @@ package wellen;
  * interface implemented by classes that accept mono input signals.
  */
 public interface DSPNodeInput {
-    void input(float pSignal);
+    void input(float signal);
 }

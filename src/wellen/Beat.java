@@ -21,6 +21,7 @@ package wellen;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -31,11 +32,12 @@ public class Beat {
 
     private static final String METHOD_NAME = "beat";
     private static Beat mInstance = null;
-    private int mBeat;
+    private int fBeat;
     private final Object mListener;
-    private Method mMethod = null;
+    private final Method fMethod;
     private TimerTask mTask;
     private final Timer mTimer;
+    private final ArrayList<Listener> fListeners;
 
     public Beat(Object pListener, int pBPM) {
         this(pListener);
@@ -44,13 +46,31 @@ public class Beat {
 
     public Beat(Object pListener) {
         mListener = pListener;
-        mBeat = -1;
-        try {
-            mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME, Integer.TYPE);
-        } catch (NoSuchMethodException | SecurityException ex) {
-            System.err.println("+++ @" + getClass().getSimpleName() + " / could not find `" + METHOD_NAME + "(int)`");
+        Method mMethod = null;
+        if (mListener != null) {
+            try {
+                mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME, Integer.TYPE);
+            } catch (NoSuchMethodException | SecurityException ex) {
+                System.err.println("+++ @" + getClass().getSimpleName() + " / could not find `" + METHOD_NAME +
+                                           "(int)`");
+            }
         }
+        fMethod = mMethod;
+        fBeat = -1;
+        fListeners = new ArrayList<>();
         mTimer = new Timer();
+    }
+
+    public ArrayList<Listener> listeners() {
+        return fListeners;
+    }
+
+    public void add(Listener pTriggerListener) {
+        listeners().add(pTriggerListener);
+    }
+
+    public boolean remove(Listener pTriggerListener) {
+        return listeners().remove(pTriggerListener);
     }
 
     public void set_bpm(float pBPM) {
@@ -63,7 +83,7 @@ public class Beat {
     }
 
     public int get_beat_count() {
-        return mBeat;
+        return fBeat;
     }
 
     public void clean_up() {
@@ -99,12 +119,21 @@ public class Beat {
 
         @Override
         public void run() {
-            try {
-                mBeat++;
-                mMethod.invoke(mListener, mBeat);
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                ex.printStackTrace();
+            fBeat++;
+            if (fMethod != null) {
+                try {
+                    fMethod.invoke(mListener, fBeat);
+                } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            for (Listener l : fListeners) {
+                l.trigger(fBeat);
             }
         }
+    }
+
+    public interface Listener {
+        void trigger(int beat_count);
     }
 }

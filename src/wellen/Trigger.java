@@ -79,14 +79,14 @@ public class Trigger implements DSPNodeInput {
         mEnableFallingEdge = pEnableFallingEdge;
     }
 
-    public void input(float pSignal) {
-        if (mEnableRisingEdge && (mPreviousSignal <= 0 && pSignal > 0)) {
+    public void input(float signal) {
+        if (mEnableRisingEdge && (mPreviousSignal <= 0 && signal > 0)) {
             fireEvent(EVENT_RISING_EDGE);
         }
-        if (mEnableFallingEdge && (mPreviousSignal >= 0 && pSignal < 0)) {
+        if (mEnableFallingEdge && (mPreviousSignal >= 0 && signal < 0)) {
             fireEvent(EVENT_FALLING_EDGE);
         }
-        mPreviousSignal = pSignal;
+        mPreviousSignal = signal;
     }
 
     private void fireEvent(int pEventType) {
@@ -102,7 +102,7 @@ public class Trigger implements DSPNodeInput {
         }
     }
 
-    public static abstract class Listener {
-        public abstract void trigger(int pEventType);
+    public interface Listener {
+        void trigger(int pEventType);
     }
 }

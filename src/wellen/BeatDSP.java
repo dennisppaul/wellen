@@ -21,6 +21,7 @@ package wellen;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 
 /**
  * similar to {@link wellen.Beat} with the exception that events are triggered from {@link wellen.DSP}.
@@ -28,27 +29,53 @@ import java.lang.reflect.Method;
 public class BeatDSP implements DSPNodeInput {
 
     private static final String METHOD_NAME = "beat";
-    private final Object mListener;
-    private final int mSamplingRate;
-    private Method mMethod = null;
-    private int mBeat;
-    private int mCounter;
-    private float mInterval;
+    private final Object fListener;
+    private final int fSamplingRate;
+    private final Method fMethod;
+    private int fBeat;
+    private int fTickCounter;
+    private float fTickInterval;
+    private final ArrayList<Trigger.Listener> fListeners;
+
+    public BeatDSP(Object pListener, int pSamplingRate) {
+        Method mMethod;
+        if (pListener != null) {
+            try {
+                mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME, Integer.TYPE);
+            } catch (NoSuchMethodException | SecurityException ex) {
+                mMethod = null;
+                System.err.println("+++ @" + getClass().getSimpleName() + " / could not find `" + METHOD_NAME +
+                                           "(int)`");
+            }
+        } else {
+            mMethod = null;
+        }
+        fMethod = mMethod;
+        fListener = pListener;
+        fSamplingRate = pSamplingRate;
+        fBeat = -1;
+        fListeners = new ArrayList<>();
+        set_bpm(120);
+    }
 
     public BeatDSP(Object pListener) {
         this(pListener, Wellen.DEFAULT_SAMPLING_RATE);
     }
 
-    public BeatDSP(Object pListener, int pSamplingRate) {
-        mListener = pListener;
-        mSamplingRate = pSamplingRate;
-        mBeat = -1;
-        set_bpm(120);
-        try {
-            mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME, Integer.TYPE);
-        } catch (NoSuchMethodException | SecurityException ex) {
-            System.err.println("+++ @" + getClass().getSimpleName() + " / could not find `" + METHOD_NAME + "(int)`");
-        }
+    public BeatDSP() {
+        this(null, Wellen.DEFAULT_SAMPLING_RATE);
+    }
+
+    public ArrayList<Trigger.Listener> listeners() {
+        return fListeners;
+    }
+
+    public void add(Trigger.Listener pTriggerListener) {
+        listeners().add(pTriggerListener);
+    }
+
+    public boolean remove(Trigger.Listener pTriggerListener) {
+        return listeners().remove(pTriggerListener);
     }
 
     public static BeatDSP start(Object pListener, int pSamplingRate) {
@@ -61,27 +88,58 @@ public class BeatDSP implements DSPNodeInput {
 
     public void set_bpm(float pBPM) {
         final float mPeriod = 60.0f / pBPM;
-        mInterval = mSamplingRate * mPeriod;
+        fTickInterval = fSamplingRate * mPeriod;
+    }
+
+    /**
+     * sets the interval between beat events in samples
+     *
+     * @param interval in samples
+     */
+    public void set_interval(float interval) {
+        fTickInterval = interval;
+    }
+
+    /**
+     * sets the interval between beat events in seconds
+     *
+     * @param interval in seconds
+     */
+    public void set_interval_sec(float interval) {
+        fTickInterval = fSamplingRate * interval;
+    }
+
+    public int get_beat_count() {
+        return fBeat;
     }
 
     public void tick() {
         input(0.0f);
     }
 
-    public void input(float pSignal) {
-        mCounter++;
-        if (mCounter >= mInterval) {
+    public void input(float signal) {
+        fTickCounter++;
+        if (fTickCounter >= fTickInterval) {
             fireEvent();
-            mCounter -= mInterval;
+            fTickCounter -= fTickInterval;
         }
     }
 
     private void fireEvent() {
-        try {
-            mBeat++;
-            mMethod.invoke(mListener, mBeat);
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-            ex.printStackTrace();
+        fBeat++;
+        if (fMethod != null) {
+            try {
+                fMethod.invoke(fListener, fBeat);
+            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+                ex.printStackTrace();
+            }
         }
+        for (Trigger.Listener l : fListeners) {
+            l.trigger(fBeat);
+        }
+    }
+
+    public interface Listener {
+        public abstract void trigger(int beat_count);
     }
 }

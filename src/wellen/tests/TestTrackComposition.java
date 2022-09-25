@@ -3,15 +3,15 @@ package wellen.tests;
 import processing.core.PApplet;
 import wellen.Beat;
 import wellen.DSP;
-import wellen.DSPModule;
-import wellen.DSPTrack;
+import wellen.Module;
 import wellen.Signal;
+import wellen.Track;
 
 import static wellen.Wellen.LOOP_INFINITE;
 
 public class TestTrackComposition extends PApplet {
 
-    private final DSPTrack mComposition = new DSPTrack();
+    private final Track mComposition = new Track();
 
     public void settings() {
         size(640, 480);
@@ -47,7 +47,7 @@ public class TestTrackComposition extends PApplet {
         }
     }
 
-    private static class Module_0 extends DSPModule {
+    private static class Module_0 extends Module {
         public Module_0() {
             set_in_out_point(1, 7);
         }
@@ -56,12 +56,12 @@ public class TestTrackComposition extends PApplet {
             return Signal.create(-0.1f);
         }
 
-        public void beat(int pBeat) {
-            System.out.println("000: " + nf(get_relative_position(pBeat), 2));
+        public void beat(int beat) {
+            System.out.println("000: " + nf(get_relative_position(beat), 2));
         }
     }
 
-    private static class Module_1 extends DSPModule {
+    private static class Module_1 extends Module {
         public Module_1() {
             set_in_out_point(2, 4);
             set_loop(LOOP_INFINITE);
@@ -71,12 +71,12 @@ public class TestTrackComposition extends PApplet {
             return Signal.create(0.1f);
         }
 
-        public void beat(int pBeat) {
-            System.out.println("001: " + nf(get_relative_position(pBeat), 2));
+        public void beat(int beat) {
+            System.out.println("001: " + nf(get_relative_position(beat), 2));
         }
     }
 
-    private static class Module_2 extends DSPModule {
+    private static class Module_2 extends Module {
         public Module_2() {
             set_out_point(6);
         }
@@ -85,8 +85,8 @@ public class TestTrackComposition extends PApplet {
             return Signal.create(0.1f);
         }
 
-        public void beat(int pBeat) {
-            System.out.println("002: " + nf(get_relative_position(pBeat), 2));
+        public void beat(int beat) {
+            System.out.println("002: " + nf(get_relative_position(beat), 2));
         }
     }
 
