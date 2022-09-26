@@ -2,10 +2,10 @@ package wellen.examples.technique;
 
 import processing.core.PApplet;
 import processing.core.PVector;
-import wellen.DSP;
 import wellen.SampleDataSNARE;
-import wellen.Sampler;
 import wellen.Wellen;
+import wellen.dsp.DSP;
+import wellen.dsp.Sampler;
 
 import java.util.ArrayList;
 

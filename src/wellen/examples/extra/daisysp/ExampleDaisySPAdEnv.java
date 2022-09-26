@@ -1,8 +1,8 @@
 package wellen.examples.extra.daisysp;
 
 import processing.core.PApplet;
-import wellen.DSP;
 import wellen.Wellen;
+import wellen.dsp.DSP;
 import wellen.extra.daisysp.AdEnv;
 import wellen.extra.daisysp.Adsr;
 import wellen.extra.daisysp.Oscillator;
@@ -21,8 +21,8 @@ public class ExampleDaisySPAdEnv extends PApplet {
     public void setup() {
         mAdEnv = new AdEnv();
         mAdEnv.Init(Wellen.DEFAULT_SAMPLING_RATE);
-        mAdEnv.SetTime(AdEnv.ADENV_SEG_ATTACK,0.5f);
-        mAdEnv.SetTime(AdEnv.ADENV_SEG_DECAY,0.5f);
+        mAdEnv.SetTime(AdEnv.ADENV_SEG_ATTACK, 0.5f);
+        mAdEnv.SetTime(AdEnv.ADENV_SEG_DECAY, 0.5f);
         mAdEnv.SetMin(110);
         mAdEnv.SetMax(880);
 

@@ -1,10 +1,10 @@
 package wellen.examples.DSP;
 
 import processing.core.PApplet;
-import wellen.DSP;
-import wellen.Envelope;
-import wellen.Noise;
 import wellen.Wellen;
+import wellen.dsp.DSP;
+import wellen.dsp.Envelope;
+import wellen.dsp.Noise;
 
 public class ExampleDSP13Envelope extends PApplet {
 

@@ -1,11 +1,11 @@
 package wellen.tests;
 
 import processing.core.PApplet;
-import wellen.DSP;
-import wellen.Distortion;
-import wellen.Sampler;
 import wellen.Tone;
 import wellen.Wellen;
+import wellen.dsp.DSP;
+import wellen.dsp.Distortion;
+import wellen.dsp.Sampler;
 
 public class TestDistortionWithSample extends PApplet {
 

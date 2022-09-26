@@ -1,12 +1,12 @@
 package wellen.tests;
 
 import processing.core.PApplet;
-import wellen.DSP;
 import wellen.Pan;
-import wellen.Signal;
 import wellen.Tone;
 import wellen.ToneEngineDSP;
 import wellen.Wellen;
+import wellen.dsp.DSP;
+import wellen.dsp.Signal;
 
 public class TestPanning extends PApplet {
 

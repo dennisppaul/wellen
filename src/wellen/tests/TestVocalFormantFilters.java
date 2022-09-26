@@ -1,14 +1,14 @@
 package wellen.tests;
 
 import processing.core.PApplet;
-import wellen.ADSR;
-import wellen.DSP;
-import wellen.DSPNodeProcess;
-import wellen.FilterBiquad;
-import wellen.Oscillator;
-import wellen.OscillatorFunction;
-import wellen.VowelFormantFilter;
 import wellen.Wellen;
+import wellen.dsp.ADSR;
+import wellen.dsp.DSP;
+import wellen.dsp.DSPNodeProcess;
+import wellen.dsp.FilterBiquad;
+import wellen.dsp.Oscillator;
+import wellen.dsp.OscillatorFunction;
+import wellen.dsp.VowelFormantFilter;
 
 import java.util.ArrayList;
 
@@ -103,6 +103,7 @@ public class TestVocalFormantFilters extends PApplet {
             mADSR.stop();
         }
     }
+
     private static final boolean USE_FIXED_FILTER = true;
 
     public void audioblock(float[] pOutputSignal) {

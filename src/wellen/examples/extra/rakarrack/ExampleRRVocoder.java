@@ -1,9 +1,9 @@
 package wellen.examples.extra.rakarrack;
 
 import processing.core.PApplet;
-import wellen.DSP;
-import wellen.Wavetable;
 import wellen.Wellen;
+import wellen.dsp.DSP;
+import wellen.dsp.Wavetable;
 import wellen.extra.rakarrack.RRUtilities;
 import wellen.extra.rakarrack.RRVocoder;
 

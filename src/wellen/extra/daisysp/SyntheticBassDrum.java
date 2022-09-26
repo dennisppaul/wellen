@@ -6,10 +6,10 @@ import static wellen.extra.daisysp.DaisySP.*;
  * @author Ben Sergentanis
  * @brief Naive bass drum model (modulated oscillator with FM + envelope).
  * @date Jan 2021 Inadvertently 909-ish.
- * <p>
- * Ported from pichenettes/eurorack/plaits/dsp/drums/synthetic_bass_drum.h to an independent module.
- * <p>
- * Original code written by Emilie Gillet in 2016.
+ *         <p>
+ *         Ported from pichenettes/eurorack/plaits/dsp/drums/synthetic_bass_drum.h to an independent module.
+ *         <p>
+ *         Original code written by Emilie Gillet in 2016.
  */
 public class SyntheticBassDrum {
 

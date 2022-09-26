@@ -16,9 +16,9 @@ import static wellen.extra.daisysp.StringOsc.StringNonLinearity.STRING_NON_LINEA
  * @author Ben Sergentanis
  * @brief Comb filter / KS string.
  * @date Jan 2021 "Lite" version of the implementation used in Rings
- * <p>
- * Ported from pichenettes/eurorack/plaits/dsp/oscillator/formant_oscillator.h to an independent module. Original code
- * written by Emilie Gillet in 2016.
+ *         <p>
+ *         Ported from pichenettes/eurorack/plaits/dsp/oscillator/formant_oscillator.h to an independent module.
+ *         Original code written by Emilie Gillet in 2016.
  */
 public class StringOsc {
 

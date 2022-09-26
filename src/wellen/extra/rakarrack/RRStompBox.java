@@ -40,7 +40,7 @@ package wellen.extra.rakarrack;
 
 */
 
-import wellen.EffectStereo;
+import wellen.dsp.EffectStereo;
 
 public class RRStompBox implements EffectStereo {
 
@@ -292,22 +292,22 @@ public class RRStompBox implements EffectStereo {
     public void setpreset(int npreset) {
         final int PRESET_SIZE = 6;
         int[][] presets = {
-        //Odie
-        {80, 32, 0, 32, 10, TYPE_ODIE},
-        //Grunger
-        {48, 10, -6, 55, 85, TYPE_GRUNGE},
-        //Hard Dist.
-        {48, -22, -6, 38, 12, TYPE_GRUNGE},
-        //Ratty
-        {48, -20, 0, 0, 70, TYPE_PRO_CO_RAT},
-        //Classic Dist
-        {50, 64, 0, 0, 110, TYPE_MXR_DIST_PLUS},
-        //Morbid Impalement
-        {38, 6, 6, 6, 105, TYPE_DEATH_METAL},
-        //Mid Elve
-        {48, 0, -12, 0, 127, TYPE_METAL_ZONE},
-        //Fuzz
-        {48, 0, 0, 0, 127, TYPE_CLASSIC_FUZZ}};
+                //Odie
+                {80, 32, 0, 32, 10, TYPE_ODIE},
+                //Grunger
+                {48, 10, -6, 55, 85, TYPE_GRUNGE},
+                //Hard Dist.
+                {48, -22, -6, 38, 12, TYPE_GRUNGE},
+                //Ratty
+                {48, -20, 0, 0, 70, TYPE_PRO_CO_RAT},
+                //Classic Dist
+                {50, 64, 0, 0, 110, TYPE_MXR_DIST_PLUS},
+                //Morbid Impalement
+                {38, 6, 6, 6, 105, TYPE_DEATH_METAL},
+                //Mid Elve
+                {48, 0, -12, 0, 127, TYPE_METAL_ZONE},
+                //Fuzz
+                {48, 0, 0, 0, 127, TYPE_CLASSIC_FUZZ}};
 
         for (int n = 0; n < PRESET_SIZE; n++) {
             changepar(n, presets[npreset][n]);

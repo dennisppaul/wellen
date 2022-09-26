@@ -13,18 +13,18 @@ import static wellen.extra.daisysp.DaisySP.sqrtf;
  * @author Ben Sergentanis
  * @brief Naive snare drum model (two modulated oscillators + filtered noise).
  * @date Jan 2021
- * <p>
- * Uses a few magic numbers taken from the 909 schematics: \n
- * <p>
- * - Ratio between the two modes of the drum set to 1.47. \n
- * <p>
- * - Funky coupling between the two modes. \n
- * <p>
- * - Noise coloration filters and envelope shapes for the snare. \n \n
- * <p>
- * Ported from pichenettes/eurorack/plaits/dsp/drums/synthetic_snare_drum.h \n to an independent module. \n
- * <p>
- * Original code written by Emilie Gillet in 2016. \n
+ *         <p>
+ *         Uses a few magic numbers taken from the 909 schematics: \n
+ *         <p>
+ *         - Ratio between the two modes of the drum set to 1.47. \n
+ *         <p>
+ *         - Funky coupling between the two modes. \n
+ *         <p>
+ *         - Noise coloration filters and envelope shapes for the snare. \n \n
+ *         <p>
+ *         Ported from pichenettes/eurorack/plaits/dsp/drums/synthetic_snare_drum.h \n to an independent module. \n
+ *         <p>
+ *         Original code written by Emilie Gillet in 2016. \n
  */
 public class SyntheticSnareDrum {
 

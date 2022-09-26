@@ -1,7 +1,16 @@
 package wellen.examples.instruments;
 
 import processing.core.PApplet;
-import wellen.*;
+import wellen.InstrumentDSP;
+import wellen.InstrumentDSPLibrary;
+import wellen.SampleDataSNARE;
+import wellen.Tone;
+import wellen.Wellen;
+import wellen.dsp.ADSR;
+import wellen.dsp.Reverb;
+import wellen.dsp.Sampler;
+import wellen.dsp.Signal;
+import wellen.dsp.Wavetable;
 
 public class ExampleInstruments09CustomDSPInstrument extends PApplet {
 

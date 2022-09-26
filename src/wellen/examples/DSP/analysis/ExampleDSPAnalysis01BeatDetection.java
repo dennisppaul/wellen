@@ -2,11 +2,11 @@ package wellen.examples.DSP.analysis;
 
 import processing.core.PApplet;
 import wellen.Beat;
-import wellen.DSP;
 import wellen.Tone;
 import wellen.ToneEngineDSP;
 import wellen.Wellen;
 import wellen.analysis.BeatDetection;
+import wellen.dsp.DSP;
 
 public class ExampleDSPAnalysis01BeatDetection extends PApplet {
 

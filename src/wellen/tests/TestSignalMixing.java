@@ -1,9 +1,9 @@
 package wellen.tests;
 
 import processing.core.PApplet;
-import wellen.DSP;
-import wellen.Wavetable;
 import wellen.Wellen;
+import wellen.dsp.DSP;
+import wellen.dsp.Wavetable;
 
 import static wellen.Wellen.DEFAULT_AUDIOBLOCK_SIZE;
 import static wellen.Wellen.clamp;

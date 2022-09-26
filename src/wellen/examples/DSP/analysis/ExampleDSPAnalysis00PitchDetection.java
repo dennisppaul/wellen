@@ -1,10 +1,10 @@
 package wellen.examples.DSP.analysis;
 
 import processing.core.PApplet;
-import wellen.DSP;
-import wellen.Wavetable;
 import wellen.Wellen;
 import wellen.analysis.PitchDetection;
+import wellen.dsp.DSP;
+import wellen.dsp.Wavetable;
 
 public class ExampleDSPAnalysis00PitchDetection extends PApplet {
 

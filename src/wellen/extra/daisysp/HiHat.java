@@ -11,13 +11,13 @@ import static wellen.extra.daisysp.DaisySP.rand_kRandFrac;
  * @author Ben Sergentanis
  * @brief 808 HH, with a few extra parameters to push things to the CY territory...
  * @date Jan 2021
- * <p>
- * The template parameter MetallicNoiseSource allows another kind of "metallic noise" to be used, for results which are
- * more similar to KR-55 or FM hi-hats.
- * <p>
- * Ported from pichenettes/eurorack/plaits/dsp/drums/hihat.h to an independent module.
- * <p>
- * Original code written by Emilie Gillet in 2016.
+ *         <p>
+ *         The template parameter MetallicNoiseSource allows another kind of "metallic noise" to be used, for results
+ *         which are more similar to KR-55 or FM hi-hats.
+ *         <p>
+ *         Ported from pichenettes/eurorack/plaits/dsp/drums/hihat.h to an independent module.
+ *         <p>
+ *         Original code written by Emilie Gillet in 2016.
  */
 public class HiHat {
 
@@ -64,16 +64,13 @@ public class HiHat {
      * @param trigger Hit the hihat with true. Defaults to false.
      */
     public float Process(boolean trigger) {
-        final float envelope_decay
-        = 1.0f - 0.003f * SemitonesToRatio(-decay_ * 84.0f);
-        final float cut_decay
-        = 1.0f - 0.0025f * SemitonesToRatio(-decay_ * 36.0f);
+        final float envelope_decay = 1.0f - 0.003f * SemitonesToRatio(-decay_ * 84.0f);
+        final float cut_decay = 1.0f - 0.0025f * SemitonesToRatio(-decay_ * 36.0f);
 
         if (trigger || trig_) {
             trig_ = false;
 
-            envelope_
-            = (1.5f + 0.5f * (1.0f - decay_)) * (0.3f + 0.7f * accent_);
+            envelope_ = (1.5f + 0.5f * (1.0f - decay_)) * (0.3f + 0.7f * accent_);
         }
 
         // Process the metallic noise.
@@ -250,9 +247,9 @@ public class HiHat {
      * @author Ben Sergentanis
      * @brief Swing type VCA
      * @date Jan 2021
-     * <p>
-     * Ported from pichenettes/eurorack/plaits/dsp/drums/hihat.h  to an independent module.  Original code written by
-     * Emilie Gillet in 2016.
+     *         <p>
+     *         Ported from pichenettes/eurorack/plaits/dsp/drums/hihat.h  to an independent module.  Original code
+     *         written by Emilie Gillet in 2016.
      */
     public static class SwingVCA implements VCA {
         public float operator(float s, float gain) {
@@ -266,9 +263,9 @@ public class HiHat {
      * @author Ben Sergentanis
      * @brief Linear type VCA
      * @date Jan 2021
-     * <p>
-     * Ported from pichenettes/eurorack/plaits/dsp/drums/hihat.h  to an independent module.  Original code written by
-     * Emilie Gillet in 2016.
+     *         <p>
+     *         Ported from pichenettes/eurorack/plaits/dsp/drums/hihat.h  to an independent module.  Original code
+     *         written by Emilie Gillet in 2016.
      */
     public static class LinearVCA implements VCA {
         public float operator(float s, float gain) {
@@ -285,9 +282,9 @@ public class HiHat {
      * @author Ben Sergentanis
      * @brief 808 style "metallic noise" with 6 square oscillators.
      * @date Jan 2021
-     * <p>
-     * Ported from pichenettes/eurorack/plaits/dsp/drums/hihat.h  to an independent module.  Original code written by
-     * Emilie Gillet in 2016.
+     *         <p>
+     *         Ported from pichenettes/eurorack/plaits/dsp/drums/hihat.h  to an independent module.  Original code
+     *         written by Emilie Gillet in 2016.
      */
     public static class SquareNoise implements MetallicNoiseSource {
         public void Init(float sample_rate) {
@@ -298,13 +295,7 @@ public class HiHat {
 
         public float Process(float f0) {
             final float[] ratios = {// Nominal f0: 414 Hz
-                                    1.0f,
-                                    1.304f,
-                                    1.466f,
-                                    1.787f,
-                                    1.932f,
-                                    2.536f
-            };
+                                    1.0f, 1.304f, 1.466f, 1.787f, 1.932f, 2.536f};
 
             int[] increment = new int[6];
             int[] phase = new int[6];
@@ -345,9 +336,9 @@ public class HiHat {
      * @author Ben Sergentanis
      * @brief Ring mod style metallic noise generator.
      * @date Jan 2021
-     * <p>
-     * Ported from pichenettes/eurorack/plaits/dsp/drums/hihat.h  to an independent module.  Original code written by
-     * Emilie Gillet in 2016.
+     *         <p>
+     *         Ported from pichenettes/eurorack/plaits/dsp/drums/hihat.h  to an independent module.  Original code
+     *         written by Emilie Gillet in 2016.
      */
     public static class RingModNoise implements MetallicNoiseSource {
         public void Init(float sample_rate) {

@@ -19,7 +19,7 @@
 
 package wellen.analysis;
 
-import wellen.DSP;
+import wellen.dsp.DSP;
 
 public class RootMeanSquare {
 

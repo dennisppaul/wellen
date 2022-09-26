@@ -10,10 +10,22 @@ public class AppSequenceRecorder extends PApplet {
 
     private static final int OFF = -1;
     private static final int NO_INPUT = -2;
-    private final Sequencer<Integer> mSequence = new Sequencer<Integer>(OFF, OFF, OFF, OFF,
-                                                                        OFF, OFF, OFF, OFF,
-                                                                        OFF, OFF, OFF, OFF,
-                                                                        OFF, OFF, OFF, OFF);
+    private final Sequencer<Integer> mSequence = new Sequencer<Integer>(OFF,
+                                                                        OFF,
+                                                                        OFF,
+                                                                        OFF,
+                                                                        OFF,
+                                                                        OFF,
+                                                                        OFF,
+                                                                        OFF,
+                                                                        OFF,
+                                                                        OFF,
+                                                                        OFF,
+                                                                        OFF,
+                                                                        OFF,
+                                                                        OFF,
+                                                                        OFF,
+                                                                        OFF);
     private int mLastInput = NO_INPUT;
 
     public void settings() {

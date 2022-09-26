@@ -2,8 +2,8 @@ package wellen.examples.external;
 
 import processing.core.PApplet;
 import wellen.Beat;
-import wellen.DSP;
-import wellen.SAM;
+import wellen.dsp.DSP;
+import wellen.dsp.SAM;
 
 public class ExampleExternal07SAM extends PApplet {
 

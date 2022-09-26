@@ -4,10 +4,10 @@ package wellen.extra.daisysp;
  * @author Ben Sergentanis
  * @brief 808 snare drum model, revisited.
  * @date Jan 2021
- * <p>
- * Ported from pichenettes/eurorack/plaits/dsp/drums/analog_snare_drum.h to an independent module.
- * <p>
- * Original code written by Emilie Gillet in 2016.
+ *         <p>
+ *         Ported from pichenettes/eurorack/plaits/dsp/drums/analog_snare_drum.h to an independent module.
+ *         <p>
+ *         Original code written by Emilie Gillet in 2016.
  */
 public class AnalogSnareDrum {
 
@@ -196,8 +196,8 @@ public class AnalogSnareDrum {
 
             resonator_[i].Process(excitation);
 
-            shell += gain[i] * (sustain_ ? DaisySP.sin(
-            phase_[i] * DaisySP.TWOPI_F) * sustain_gain_value * 0.25f : resonator_[i].Band() + excitation * exciter_leak);
+            shell += gain[i] * (sustain_ ? DaisySP.sin(phase_[i] * DaisySP.TWOPI_F) * sustain_gain_value * 0.25f :
+                    resonator_[i].Band() + excitation * exciter_leak);
         }
         shell = SoftClip(shell);
 

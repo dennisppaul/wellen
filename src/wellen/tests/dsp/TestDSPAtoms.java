@@ -1,7 +1,7 @@
 package wellen.tests.dsp;
 
 import processing.core.PApplet;
-import wellen.DSP;
+import wellen.dsp.DSP;
 
 public class TestDSPAtoms extends PApplet {
 

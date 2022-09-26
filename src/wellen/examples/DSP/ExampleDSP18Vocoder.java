@@ -1,10 +1,10 @@
 package wellen.examples.DSP;
 
 import processing.core.PApplet;
-import wellen.DSP;
-import wellen.Vocoder;
-import wellen.Wavetable;
 import wellen.Wellen;
+import wellen.dsp.DSP;
+import wellen.dsp.Vocoder;
+import wellen.dsp.Wavetable;
 
 public class ExampleDSP18Vocoder extends PApplet {
 

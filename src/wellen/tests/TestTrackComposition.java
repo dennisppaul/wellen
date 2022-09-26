@@ -2,10 +2,10 @@ package wellen.tests;
 
 import processing.core.PApplet;
 import wellen.Beat;
-import wellen.DSP;
 import wellen.Module;
-import wellen.Signal;
 import wellen.Track;
+import wellen.dsp.DSP;
+import wellen.dsp.Signal;
 
 import static wellen.Wellen.LOOP_INFINITE;
 

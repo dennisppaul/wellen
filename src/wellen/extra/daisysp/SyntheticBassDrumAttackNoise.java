@@ -7,10 +7,10 @@ import static wellen.extra.daisysp.DaisySP.rand_kRandFrac;
  * @author Ben Sergentanis
  * @brief Attack Noise generator for SyntheticBassDrum.
  * @date Jan 2021
- * <p>
- * Ported from pichenettes/eurorack/plaits/dsp/drums/synthetic_bass_drum.h \n to an independent module. \n
- * <p>
- * Original code written by Emilie Gillet in 2016. \n
+ *         <p>
+ *         Ported from pichenettes/eurorack/plaits/dsp/drums/synthetic_bass_drum.h \n to an independent module. \n
+ *         <p>
+ *         Original code written by Emilie Gillet in 2016. \n
  */
 public class SyntheticBassDrumAttackNoise {
     /**

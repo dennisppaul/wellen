@@ -1,8 +1,18 @@
 package wellen.examples.technique;
 
 import processing.core.PApplet;
+import wellen.Beat;
+import wellen.Loop;
 import wellen.Module;
-import wellen.*;
+import wellen.Note;
+import wellen.ToneEngineDSP;
+import wellen.Track;
+import wellen.Wellen;
+import wellen.dsp.DSP;
+import wellen.dsp.Oscillator;
+import wellen.dsp.OscillatorFunction;
+import wellen.dsp.Signal;
+import wellen.dsp.VowelFormantFilter;
 
 public class TechniqueBasics04TracksAndModules extends PApplet {
 

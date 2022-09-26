@@ -2,8 +2,8 @@ package wellen.tests;
 
 import processing.core.PApplet;
 import wellen.Beat;
-import wellen.DSP;
-import wellen.SAM;
+import wellen.dsp.DSP;
+import wellen.dsp.SAM;
 
 public class TestSAMTuningMIDINotes extends PApplet {
 
@@ -21,12 +21,9 @@ public class TestSAMTuningMIDINotes extends PApplet {
         mSAM.set_sing_mode(true);
 
         /* from https://github.com/s-macke/SAM/wiki/Phonetic-Alphabet */
-        mWords = new String[]{
-        "AOAOAOAOAOAO",
+        mWords = new String[]{"AOAOAOAOAOAO",
 //        "AOAO4AO-4",
-        "IYIYIYIY",
-        "UXUX",
-        };
+                              "IYIYIYIY", "UXUX",};
         mPitch = 57;
 
         DSP.start(this);

@@ -1,10 +1,10 @@
 package wellen.tests;
 
 import processing.core.PApplet;
-import wellen.DSP;
-import wellen.LowPassFilter;
-import wellen.Wavetable;
 import wellen.Wellen;
+import wellen.dsp.DSP;
+import wellen.dsp.LowPassFilter;
+import wellen.dsp.Wavetable;
 
 public class TestDSPNodeProcessFilter extends PApplet {
 

@@ -264,7 +264,7 @@ public class OptimizedGranulator {
         float ym1, y0, y1, y2;
 
         int realCurrentSample = (int) Math.floor(frame);
-        float fractionOffset = (frame - (float)realCurrentSample);
+        float fractionOffset = (frame - (float) realCurrentSample);
 
         if (realCurrentSample >= 0 && realCurrentSample < (audioBufferWatermark - 1)) {
             realCurrentSample--;

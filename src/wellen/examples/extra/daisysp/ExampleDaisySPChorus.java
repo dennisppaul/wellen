@@ -2,8 +2,8 @@ package wellen.examples.extra.daisysp;
 
 import processing.core.PApplet;
 import wellen.Beat;
-import wellen.DSP;
 import wellen.Wellen;
+import wellen.dsp.DSP;
 import wellen.extra.daisysp.Chorus;
 import wellen.extra.daisysp.DaisySP;
 import wellen.extra.daisysp.Pluck;
@@ -48,20 +48,16 @@ public class ExampleDaisySPChorus extends PApplet {
     public void mouseMoved() {
         switch (keyCode) {
             case SHIFT:
-                mChorus.SetFeedback(map(mouseX, 0, width, 0, 1),
-                                    map(mouseY, 0, height, 0, 1));
+                mChorus.SetFeedback(map(mouseX, 0, width, 0, 1), map(mouseY, 0, height, 0, 1));
                 break;
             case ALT:
-                mChorus.SetLfoDepth(map(mouseX, 0, width, 0, 1),
-                                    map(mouseY, 0, height, 0, 1));
+                mChorus.SetLfoDepth(map(mouseX, 0, width, 0, 1), map(mouseY, 0, height, 0, 1));
                 break;
             case CONTROL:
-                mChorus.SetLfoFreq(map(mouseX, 0, width, 0, 10),
-                                   map(mouseY, 0, height, 0, 10));
+                mChorus.SetLfoFreq(map(mouseX, 0, width, 0, 10), map(mouseY, 0, height, 0, 10));
                 break;
             default:
-                mChorus.SetDelay(map(mouseX, 0, width, 0, 1),
-                                 map(mouseY, 0, height, 0, 1));
+                mChorus.SetDelay(map(mouseX, 0, width, 0, 1), map(mouseY, 0, height, 0, 1));
         }
     }
 

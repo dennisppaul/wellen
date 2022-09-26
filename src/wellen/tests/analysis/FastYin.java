@@ -37,13 +37,11 @@
 package wellen.tests.analysis;
 
 /**
- * An implementation of the YIN pitch tracking algorithm which uses an FFT to
- * calculate the difference function. This makes calculating the difference
- * function more performant. See <a href=
- * "http://recherche.ircam.fr/equipes/pcm/cheveign/ps/2002_JASA_YIN_proof.pdf"
- * >the YIN paper.</a> This implementation is done by <a href="mailto:matthias.mauch@elec.qmul.ac.uk">Matthias Mauch</a> and is
- * based on Yin which is based on the implementation found in <a
- * href="http://aubio.org">aubio</a> by Paul Brossier.
+ * An implementation of the YIN pitch tracking algorithm which uses an FFT to calculate the difference function. This
+ * makes calculating the difference function more performant. See <a href=
+ * "http://recherche.ircam.fr/equipes/pcm/cheveign/ps/2002_JASA_YIN_proof.pdf" >the YIN paper.</a> This implementation
+ * is done by <a href="mailto:matthias.mauch@elec.qmul.ac.uk">Matthias Mauch</a> and is based on Yin which is based on
+ * the implementation found in <a href="http://aubio.org">aubio</a> by Paul Brossier.
  *
  * @author Matthias Mauch
  * @author Joren Six
@@ -51,8 +49,7 @@ package wellen.tests.analysis;
  */
 public final class FastYin implements PitchDetector {
     /**
-     * The default YIN threshold value. Should be around 0.10~0.15. See YIN
-     * paper for more information.
+     * The default YIN threshold value. Should be around 0.10~0.15. See YIN paper for more information.
      */
     private static final double DEFAULT_THRESHOLD = 0.20;
 
@@ -77,8 +74,7 @@ public final class FastYin implements PitchDetector {
     private final float sampleRate;
 
     /**
-     * The buffer that stores the calculated values. It is exactly half the size
-     * of the input buffer.
+     * The buffer that stores the calculated values. It is exactly half the size of the input buffer.
      */
     private final float[] yinBuffer;
 
@@ -97,7 +93,7 @@ public final class FastYin implements PitchDetector {
     /**
      * Half of the data, disguised as a convolution kernel.
      */
-    private final  float[] kernel;
+    private final float[] kernel;
 
     /**
      * Buffer to allow convolution via complex multiplication. It calculates the auto correlation function (ACF).
@@ -110,45 +106,39 @@ public final class FastYin implements PitchDetector {
     private final FloatFFT fft;
 
     /**
-     * Create a new pitch detector for a stream with the defined sample rate.
-     * Processes the audio in blocks of the defined size.
+     * Create a new pitch detector for a stream with the defined sample rate. Processes the audio in blocks of the
+     * defined size.
      *
-     * @param audioSampleRate
-     *            The sample rate of the audio stream. E.g. 44.1 kHz.
-     * @param bufferSize
-     *            The size of a buffer. E.g. 1024.
+     * @param audioSampleRate The sample rate of the audio stream. E.g. 44.1 kHz.
+     * @param bufferSize      The size of a buffer. E.g. 1024.
      */
     public FastYin(final float audioSampleRate, final int bufferSize) {
         this(audioSampleRate, bufferSize, DEFAULT_THRESHOLD);
     }
 
     /**
-     * Create a new pitch detector for a stream with the defined sample rate.
-     * Processes the audio in blocks of the defined size.
+     * Create a new pitch detector for a stream with the defined sample rate. Processes the audio in blocks of the
+     * defined size.
      *
-     * @param audioSampleRate
-     *            The sample rate of the audio stream. E.g. 44.1 kHz.
-     * @param bufferSize
-     *            The size of a buffer. E.g. 1024.
-     * @param yinThreshold
-     *            The parameter that defines which peaks are kept as possible
-     *            pitch candidates. See the YIN paper for more details.
+     * @param audioSampleRate The sample rate of the audio stream. E.g. 44.1 kHz.
+     * @param bufferSize      The size of a buffer. E.g. 1024.
+     * @param yinThreshold    The parameter that defines which peaks are kept as possible pitch candidates. See the YIN
+     *                        paper for more details.
      */
     public FastYin(final float audioSampleRate, final int bufferSize, final double yinThreshold) {
         this.sampleRate = audioSampleRate;
         this.threshold = yinThreshold;
         yinBuffer = new float[bufferSize / 2];
         //Initializations for FFT difference step
-        audioBufferFFT = new float[2*bufferSize];
-        kernel = new float[2*bufferSize];
-        yinStyleACF = new float[2*bufferSize];
+        audioBufferFFT = new float[2 * bufferSize];
+        kernel = new float[2 * bufferSize];
+        yinStyleACF = new float[2 * bufferSize];
         fft = new FloatFFT(bufferSize);
         result = new PitchDetectionResult();
     }
 
     /**
-     * The main flow of the YIN algorithm. Returns a pitch value in Hz or -1 if
-     * no pitch is detected.
+     * The main flow of the YIN algorithm. Returns a pitch value in Hz or -1 if no pitch is detected.
      *
      * @return a pitch value in Hz or -1 if no pitch is detected.
      */
@@ -178,7 +168,7 @@ public final class FastYin implements PitchDetector {
 
             // conversion to Hz
             pitchInHertz = sampleRate / betterTau;
-        } else{
+        } else {
             // no pitch found
             pitchInHertz = -1;
         }
@@ -189,8 +179,8 @@ public final class FastYin implements PitchDetector {
     }
 
     /**
-     * Implements the difference function as described in step 2 of the YIN
-     * paper with an FFT to reduce the number of operations.
+     * Implements the difference function as described in step 2 of the YIN paper with an FFT to reduce the number of
+     * operations.
      */
     private void difference(final float[] audioBuffer) {
         // POWER TERM CALCULATION
@@ -201,30 +191,33 @@ public final class FastYin implements PitchDetector {
         }
         // now iteratively calculate all others (saves a few multiplications)
         for (int tau = 1; tau < yinBuffer.length; ++tau) {
-            powerTerms[tau] = powerTerms[tau-1] - audioBuffer[tau-1] * audioBuffer[tau-1] + audioBuffer[tau+yinBuffer.length] * audioBuffer[tau+yinBuffer.length];
+            powerTerms[tau] =
+                    powerTerms[tau - 1] - audioBuffer[tau - 1] * audioBuffer[tau - 1] + audioBuffer[tau + yinBuffer.length] * audioBuffer[tau + yinBuffer.length];
         }
 
         // YIN-STYLE AUTOCORRELATION via FFT
         // 1. data
         for (int j = 0; j < audioBuffer.length; ++j) {
-            audioBufferFFT[2*j] = audioBuffer[j];
-            audioBufferFFT[2*j+1] = 0;
+            audioBufferFFT[2 * j] = audioBuffer[j];
+            audioBufferFFT[2 * j + 1] = 0;
         }
         fft.complexForward(audioBufferFFT);
 
         // 2. half of the data, disguised as a convolution kernel
         for (int j = 0; j < yinBuffer.length; ++j) {
-            kernel[2*j] = audioBuffer[(yinBuffer.length-1)-j];
-            kernel[2*j+1] = 0;
-            kernel[2*j+audioBuffer.length] = 0;
-            kernel[2*j+audioBuffer.length+1] = 0;
+            kernel[2 * j] = audioBuffer[(yinBuffer.length - 1) - j];
+            kernel[2 * j + 1] = 0;
+            kernel[2 * j + audioBuffer.length] = 0;
+            kernel[2 * j + audioBuffer.length + 1] = 0;
         }
         fft.complexForward(kernel);
 
         // 3. convolution via complex multiplication
         for (int j = 0; j < audioBuffer.length; ++j) {
-            yinStyleACF[2*j]   = audioBufferFFT[2*j]*kernel[2*j] - audioBufferFFT[2*j+1]*kernel[2*j+1]; // real
-            yinStyleACF[2*j+1] = audioBufferFFT[2*j+1]*kernel[2*j] + audioBufferFFT[2*j]*kernel[2*j+1]; // imaginary
+            yinStyleACF[2 * j] =
+                    audioBufferFFT[2 * j] * kernel[2 * j] - audioBufferFFT[2 * j + 1] * kernel[2 * j + 1]; // real
+            yinStyleACF[2 * j + 1] =
+                    audioBufferFFT[2 * j + 1] * kernel[2 * j] + audioBufferFFT[2 * j] * kernel[2 * j + 1]; // imaginary
         }
         fft.complexInverse(yinStyleACF, true);
 
@@ -237,8 +230,7 @@ public final class FastYin implements PitchDetector {
     }
 
     /**
-     * The cumulative mean normalized difference function as described in step 3
-     * of the YIN paper. <br>
+     * The cumulative mean normalized difference function as described in step 3 of the YIN paper. <br>
      * <code>
      * yinBuffer[0] == yinBuffer[1] = 1
      * </code>
@@ -295,14 +287,11 @@ public final class FastYin implements PitchDetector {
     }
 
     /**
-     * Implements step 5 of the AUBIO_YIN paper. It refines the estimated tau
-     * value using parabolic interpolation. This is needed to detect higher
-     * frequencies more precisely. See http://fizyka.umk.pl/nrbook/c10-2.pdf and
-     * for more background
-     * http://fedc.wiwi.hu-berlin.de/xplore/tutorials/xegbohtmlnode62.html
+     * Implements step 5 of the AUBIO_YIN paper. It refines the estimated tau value using parabolic interpolation. This
+     * is needed to detect higher frequencies more precisely. See http://fizyka.umk.pl/nrbook/c10-2.pdf and for more
+     * background http://fedc.wiwi.hu-berlin.de/xplore/tutorials/xegbohtmlnode62.html
      *
-     * @param tauEstimate
-     *            The estimated tau value.
+     * @param tauEstimate The estimated tau value.
      * @return A better, more precise tau value.
      */
     private float parabolicInterpolation(final int tauEstimate) {

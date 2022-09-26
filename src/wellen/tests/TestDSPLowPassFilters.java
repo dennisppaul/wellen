@@ -1,9 +1,9 @@
 package wellen.tests;
 
 import processing.core.PApplet;
-import wellen.DSP;
-import wellen.DSPNodeProcess;
 import wellen.Wellen;
+import wellen.dsp.DSP;
+import wellen.dsp.DSPNodeProcess;
 
 public class TestDSPLowPassFilters extends PApplet {
 
@@ -123,7 +123,7 @@ public class TestDSPLowPassFilters extends PApplet {
         public float process(float pSample) {
             float xn = pSample;
             float yn =
-            m_coeffs.a0 * xn + m_coeffs.a1 * m_xnz1 + m_coeffs.a2 * m_xnz2 - m_coeffs.b1 * m_ynz1 - m_coeffs.b2 * m_xnz2;
+                    m_coeffs.a0 * xn + m_coeffs.a1 * m_xnz1 + m_coeffs.a2 * m_xnz2 - m_coeffs.b1 * m_ynz1 - m_coeffs.b2 * m_xnz2;
 
             m_xnz2 = m_xnz1;
             m_xnz1 = xn;
@@ -163,8 +163,8 @@ public class TestDSPLowPassFilters extends PApplet {
 
         public float process(float pSignal) {
             float xn = pSignal;
-            float yn = m_coeffs.a0 * xn + m_coeffs.a1 * m_xnz1 + m_coeffs.a2 * m_xnz2
-                       - m_coeffs.b1 * m_ynz1 - m_coeffs.b2 * m_xnz2;
+            float yn =
+                    m_coeffs.a0 * xn + m_coeffs.a1 * m_xnz1 + m_coeffs.a2 * m_xnz2 - m_coeffs.b1 * m_ynz1 - m_coeffs.b2 * m_xnz2;
 
             m_xnz2 = m_xnz1;
             m_xnz1 = xn;

@@ -19,6 +19,12 @@
 
 package wellen;
 
+import wellen.dsp.ADSR;
+import wellen.dsp.DSPNodeOutputSignal;
+import wellen.dsp.LowPassFilter;
+import wellen.dsp.Signal;
+import wellen.dsp.Wavetable;
+
 /**
  * implementation of {@link wellen.Instrument} for the internal tone engine.
  */

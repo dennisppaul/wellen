@@ -2,8 +2,8 @@ package wellen.examples.extra.daisysp;
 
 import processing.core.PApplet;
 import wellen.Beat;
-import wellen.DSP;
 import wellen.Wellen;
+import wellen.dsp.DSP;
 import wellen.extra.daisysp.DaisySP;
 import wellen.extra.daisysp.Pluck;
 import wellen.extra.daisysp.ReverbSc;

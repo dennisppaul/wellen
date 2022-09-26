@@ -1,10 +1,10 @@
 package wellen.examples.DSP;
 
 import processing.core.PApplet;
-import wellen.DSP;
 import wellen.Tone;
 import wellen.ToneEngineDSP;
 import wellen.Wellen;
+import wellen.dsp.DSP;
 
 public class ExampleDSP09ToneEngineWithDSP extends PApplet {
 

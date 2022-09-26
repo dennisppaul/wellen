@@ -19,6 +19,13 @@
 
 package wellen;
 
+import wellen.dsp.DSPNodeOutput;
+import wellen.dsp.DSPNodeOutputSignal;
+import wellen.dsp.EffectStereo;
+import wellen.dsp.Gain;
+import wellen.dsp.Reverb;
+import wellen.dsp.Signal;
+
 import java.util.ArrayList;
 
 import static processing.core.PApplet.constrain;
@@ -79,11 +86,7 @@ public class ToneEngineDSP extends ToneEngine implements AudioBufferRenderer, DS
     }
 
     public ToneEngineDSP() {
-        this(Wellen.DEFAULT_SAMPLING_RATE,
-             Wellen.DEFAULT_AUDIOBLOCK_SIZE,
-             Wellen.DEFAULT_AUDIO_DEVICE,
-             2,
-             16);
+        this(Wellen.DEFAULT_SAMPLING_RATE, Wellen.DEFAULT_AUDIOBLOCK_SIZE, Wellen.DEFAULT_AUDIO_DEVICE, 2, 16);
     }
 
     public static ToneEngineDSP create_without_audio_output(int pNumberOfInstruments) {
@@ -173,8 +176,8 @@ public class ToneEngineDSP extends ToneEngine implements AudioBufferRenderer, DS
         if (pInstrument instanceof InstrumentDSP) {
             mInstruments.set(pInstrument.ID(), (InstrumentDSP) pInstrument);
         } else {
-            System.err.println(
-            "+++ WARNING @" + getClass().getSimpleName() + ".replace_instrument(Instrument) / " + "instrument must " + "be" + " of type `InstrumentInternal`");
+            System.err.println("+++ WARNING @" + getClass().getSimpleName() + ".replace_instrument(Instrument) / " +
+                                       "instrument must " + "be" + " of type `InstrumentInternal`");
         }
     }
 
@@ -195,9 +198,8 @@ public class ToneEngineDSP extends ToneEngine implements AudioBufferRenderer, DS
         } else if (pOutputSignal.length == 2) {
             audioblock(pOutputSignal[0], pOutputSignal[1]);
         } else {
-            System.err.println(
-            "+++ WARNING @" + getClass().getSimpleName() + ".audioblock / multiple output " + "channels are not " +
-            "supported.");
+            System.err.println("+++ WARNING @" + getClass().getSimpleName() + ".audioblock / multiple output " +
+                                       "channels are not " + "supported.");
         }
         if (mAudioblockCallback != null) {
             mAudioblockCallback.audioblock(pOutputSignal);
@@ -317,10 +319,9 @@ public class ToneEngineDSP extends ToneEngine implements AudioBufferRenderer, DS
                 mSignal = new Signal();
             } else if (mInstrument.get_channels() > 2) {
                 if (VERBOSE) {
-                    System.err.println(
-                    "+++ @WARNING " + getClass().getSimpleName() + ".audioblock(stereo) /" + " instruments with " +
-                    "more than 2 channels are " + "not supported in this tone engine. all extra channels are " +
-                    "ignored.");
+                    System.err.println("+++ @WARNING " + getClass().getSimpleName() + ".audioblock(stereo) /" + " " +
+                                               "instruments with " + "more than 2 channels are " + "not supported in " +
+                                               "this tone engine. all extra channels are " + "ignored.");
                 }
             }
             /* stereo -- more than 2 channels are ignored */
@@ -355,8 +356,10 @@ public class ToneEngineDSP extends ToneEngine implements AudioBufferRenderer, DS
     }
 
     public static ToneEngineDSP no_output() {
-        return new ToneEngineDSP(Wellen.DEFAULT_SAMPLING_RATE, Wellen.DEFAULT_AUDIOBLOCK_SIZE,
-                                 Wellen.DEFAULT_AUDIO_DEVICE, Wellen.NO_CHANNELS,
+        return new ToneEngineDSP(Wellen.DEFAULT_SAMPLING_RATE,
+                                 Wellen.DEFAULT_AUDIOBLOCK_SIZE,
+                                 Wellen.DEFAULT_AUDIO_DEVICE,
+                                 Wellen.NO_CHANNELS,
                                  Wellen.DEFAULT_NUMBER_OF_INSTRUMENTS);
     }
 

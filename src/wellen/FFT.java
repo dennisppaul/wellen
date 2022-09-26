@@ -87,7 +87,7 @@ public class FFT extends FourierTransform {
     public void forward(float[] buffReal, float[] buffImag) {
         if (buffReal.length != timeSize || buffImag.length != timeSize) {
             throw new IllegalArgumentException(
-            "FFT.forward: The length of the passed buffers must be equal to timeSize().");
+                    "FFT.forward: The length of the passed buffers must be equal to timeSize().");
         }
         setComplex(buffReal, buffImag);
         bitReverseComplex();
@@ -135,7 +135,7 @@ public class FFT extends FourierTransform {
     public void forward(float[] buffer) {
         if (buffer.length != timeSize) {
             throw new IllegalArgumentException(
-            "FFT.forward: The length of the passed sample buffer must be equal to timeSize().");
+                    "FFT.forward: The length of the passed sample buffer must be equal to timeSize().");
         }
         doWindow(buffer);
         // copy samples to real/imag in bit-reversed order
@@ -424,8 +424,7 @@ abstract class FourierTransform {
      */
     public void linAverages(int numAvg) {
         if (numAvg > spectrum.length / 2) {
-            throw new IllegalArgumentException(
-            "The number of averages for this transform can be at most " + spectrum.length / 2 + ".");
+            throw new IllegalArgumentException("The number of averages for this transform can be at most " + spectrum.length / 2 + ".");
         } else {
             averages = new float[numAvg];
         }
@@ -712,8 +711,7 @@ abstract class FourierTransform {
      */
     public void forward(float[] buffer, int startAt) {
         if (buffer.length - startAt < timeSize) {
-            throw new IllegalArgumentException(
-            "FourierTransform.forward: not enough samples in the buffer between " + startAt + " and " + buffer.length + " to perform a transform.");
+            throw new IllegalArgumentException("FourierTransform.forward: not enough samples in the buffer between " + startAt + " and " + buffer.length + " to perform a transform.");
         }
 
         // copy the section of samples we want to analyze

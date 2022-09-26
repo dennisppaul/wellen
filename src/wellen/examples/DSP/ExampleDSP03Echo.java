@@ -1,7 +1,7 @@
 package wellen.examples.DSP;
 
 import processing.core.PApplet;
-import wellen.DSP;
+import wellen.dsp.DSP;
 
 public class ExampleDSP03Echo extends PApplet {
 

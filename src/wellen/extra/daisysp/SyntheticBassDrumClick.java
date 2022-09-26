@@ -6,10 +6,10 @@ import static wellen.extra.daisysp.DaisySP.fonepole_return;
  * @author Ben Sergentanis
  * @brief Click noise for SyntheticBassDrum
  * @date Jan 2021
- * <p>
- * Ported from pichenettes/eurorack/plaits/dsp/drums/synthetic_bass_drum.h to an independent module.
- * <p>
- * Original code written by Emilie Gillet in 2016.
+ *         <p>
+ *         Ported from pichenettes/eurorack/plaits/dsp/drums/synthetic_bass_drum.h to an independent module.
+ *         <p>
+ *         Original code written by Emilie Gillet in 2016.
  */
 public class SyntheticBassDrumClick {
 

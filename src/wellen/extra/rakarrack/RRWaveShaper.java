@@ -311,7 +311,9 @@ public class RRWaveShaper {
             if (temps[i] < factor) {
                 temps[i] = temps[i];
             } else if (temps[i] > factor) {
-                temps[i] = factor + (temps[i] - factor) / RRUtilities.powf(1.0f + ((temps[i] - factor) / (1.0f - temps[i])), 2.0f);
+                temps[i] =
+                        factor + (temps[i] - factor) / RRUtilities.powf(1.0f + ((temps[i] - factor) / (1.0f - temps[i])),
+                                                                           2.0f);
             } else if (temps[i] > 1.0f) {
                 temps[i] = (factor + 1.0f) * .5f;
             }

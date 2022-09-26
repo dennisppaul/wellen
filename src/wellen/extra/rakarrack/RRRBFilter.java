@@ -96,7 +96,8 @@ public class RRRBFilter extends RRFilterI {
         cleanup();
         setfreq_and_q(Ffreq, Fq);
         iper = 1.0f / RRUtilities.fPERIOD;
-        a_smooth_tc = RRUtilities.cSAMPLE_RATE / (RRUtilities.cSAMPLE_RATE + 0.01f);  //10ms time finalant for averaging coefficients
+        a_smooth_tc = RRUtilities.cSAMPLE_RATE / (RRUtilities.cSAMPLE_RATE + 0.01f);  //10ms time finalant for
+        // averaging coefficients
         b_smooth_tc = 1.0f - a_smooth_tc;
     }
 

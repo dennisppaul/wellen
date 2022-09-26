@@ -1,9 +1,9 @@
 package wellen.examples.DSP;
 
 import processing.core.PApplet;
-import wellen.DSP;
-import wellen.Noise;
 import wellen.Wellen;
+import wellen.dsp.DSP;
+import wellen.dsp.Noise;
 
 public class ExampleDSP12Noise extends PApplet {
 

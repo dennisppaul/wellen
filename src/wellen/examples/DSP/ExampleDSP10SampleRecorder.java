@@ -1,10 +1,10 @@
 package wellen.examples.DSP;
 
 import processing.core.PApplet;
-import wellen.DSP;
 import wellen.SampleDataSNARE;
-import wellen.Sampler;
 import wellen.Wellen;
+import wellen.dsp.DSP;
+import wellen.dsp.Sampler;
 
 public class ExampleDSP10SampleRecorder extends PApplet {
 

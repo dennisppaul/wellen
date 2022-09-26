@@ -20,18 +20,22 @@
 package wellen;
 
 import processing.core.PApplet;
+import wellen.dsp.ADSR;
+import wellen.dsp.Sampler;
+import wellen.dsp.Signal;
+import wellen.dsp.Wavetable;
 
 /**
  * a collection of DSP instruments.
  * <p>
- * these instruments can be used to replace the default instrument ( i.e {@link InstrumentDSP} ) e.g by
- * using the method <code>Tone.replace_instrument(InstrumentDSP)</code>.
+ * these instruments can be used to replace the default instrument ( i.e {@link InstrumentDSP} ) e.g by using the method
+ * <code>Tone.replace_instrument(InstrumentDSP)</code>.
  * <p>
- * all instruments are extended from {@link InstrumentDSP}, however some the original functionality is
- * extended, changed or even removed.
+ * all instruments are extended from {@link InstrumentDSP}, however some the original functionality is extended, changed
+ * or even removed.
  * <p>
  * note that these instruments only work with the internal tone engine. however, due to the modular nature of the
- * library these instruments can also be integrated into {@link wellen.DSP} applications.
+ * library these instruments can also be integrated into {@link wellen.dsp.DSP} applications.
  */
 public class InstrumentDSPLibrary {
 

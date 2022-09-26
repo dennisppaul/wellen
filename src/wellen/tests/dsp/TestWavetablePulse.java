@@ -1,11 +1,11 @@
 package wellen.tests.dsp;
 
 import processing.core.PApplet;
-import wellen.DSP;
-import wellen.Wavetable;
 import wellen.Wellen;
 import wellen.analysis.FrequencyDistribution;
 import wellen.analysis.Sonogram;
+import wellen.dsp.DSP;
+import wellen.dsp.Wavetable;
 
 public class TestWavetablePulse extends PApplet {
 

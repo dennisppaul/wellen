@@ -1,9 +1,9 @@
 package wellen.tests;
 
 import processing.core.PApplet;
-import wellen.DSP;
-import wellen.Wavetable;
 import wellen.Wellen;
+import wellen.dsp.DSP;
+import wellen.dsp.Wavetable;
 
 public class TestWavetableInterpolation extends PApplet {
 
@@ -25,7 +25,8 @@ public class TestWavetableInterpolation extends PApplet {
     public void draw() {
         background(255);
         DSP.draw_buffers(g, width, height);
-        mWavetable.set_interpolation(mousePressed ? Wellen.WAVESHAPE_INTERPOLATE_LINEAR : Wellen.WAVESHAPE_INTERPOLATE_NONE);
+        mWavetable.set_interpolation(mousePressed ? Wellen.WAVESHAPE_INTERPOLATE_LINEAR :
+                                             Wellen.WAVESHAPE_INTERPOLATE_NONE);
     }
 
     public void keyPressed() {

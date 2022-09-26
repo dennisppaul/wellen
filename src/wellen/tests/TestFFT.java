@@ -1,11 +1,11 @@
 package wellen.tests;
 
 import processing.core.PApplet;
-import wellen.DSP;
 import wellen.FFT;
 import wellen.Tone;
 import wellen.ToneEngineDSP;
 import wellen.Wellen;
+import wellen.dsp.DSP;
 
 public class TestFFT extends PApplet {
 

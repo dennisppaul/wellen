@@ -1,11 +1,11 @@
 package wellen.examples.extra.rakarrack;
 
 import processing.core.PApplet;
-import wellen.ADSR;
 import wellen.Beat;
-import wellen.DSP;
-import wellen.Wavetable;
 import wellen.Wellen;
+import wellen.dsp.ADSR;
+import wellen.dsp.DSP;
+import wellen.dsp.Wavetable;
 import wellen.extra.rakarrack.RREcho;
 
 public class ExampleRREcho extends PApplet {

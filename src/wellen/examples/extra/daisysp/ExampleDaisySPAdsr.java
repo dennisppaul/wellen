@@ -1,8 +1,8 @@
 package wellen.examples.extra.daisysp;
 
 import processing.core.PApplet;
-import wellen.DSP;
 import wellen.Wellen;
+import wellen.dsp.DSP;
 import wellen.extra.daisysp.Adsr;
 import wellen.extra.daisysp.Oscillator;
 

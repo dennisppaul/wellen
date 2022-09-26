@@ -15,10 +15,7 @@ public class TechniqueAlgorithmicComposition04FunctionSineWaves extends PApplet 
     private static final int INSTRUMENT_BASE = 0;
     private static final int INSTRUMENT_FLUTE = 1;
     private static final int INSTRUMENT_NOISE = 2;
-    private final int[] mBaseSequence = {0, O, X, 0,
-                                         X, X, 0, X,
-                                         X, 0, X, X,
-                                         7, O, X, 12};
+    private final int[] mBaseSequence = {0, O, X, 0, X, X, 0, X, X, 0, X, X, 7, O, X, 12};
     private float mTime;
 
     public void settings() {

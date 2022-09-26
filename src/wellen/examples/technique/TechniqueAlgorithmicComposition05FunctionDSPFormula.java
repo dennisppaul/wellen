@@ -1,8 +1,8 @@
 package wellen.examples.technique;
 
 import processing.core.PApplet;
-import wellen.DSP;
 import wellen.Wellen;
+import wellen.dsp.DSP;
 
 public class TechniqueAlgorithmicComposition05FunctionDSPFormula extends PApplet {
 

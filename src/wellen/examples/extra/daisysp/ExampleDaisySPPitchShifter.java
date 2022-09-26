@@ -1,10 +1,10 @@
 package wellen.examples.extra.daisysp;
 
 import processing.core.PApplet;
-import wellen.DSP;
 import wellen.SampleDataSNARE;
-import wellen.Sampler;
 import wellen.Wellen;
+import wellen.dsp.DSP;
+import wellen.dsp.Sampler;
 import wellen.extra.daisysp.PitchShifter;
 
 public class ExampleDaisySPPitchShifter extends PApplet {
@@ -41,7 +41,7 @@ public class ExampleDaisySPPitchShifter extends PApplet {
     }
 
     public void mouseMoved() {
-        mPitchShifter.SetDelSize((int)map(mouseX, 0, width, 1, 16384));
+        mPitchShifter.SetDelSize((int) map(mouseX, 0, width, 1, 16384));
         mPitchShifter.SetTransposition(map(mouseY, 0, height, 1.0f, 24.0f));
     }
 

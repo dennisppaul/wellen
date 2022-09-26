@@ -1,9 +1,9 @@
 package wellen.tests;
 
 import processing.core.PApplet;
-import wellen.DSP;
-import wellen.Sampler;
 import wellen.Wellen;
+import wellen.dsp.DSP;
+import wellen.dsp.Sampler;
 
 public class TestSampleEdgeFading extends PApplet {
 

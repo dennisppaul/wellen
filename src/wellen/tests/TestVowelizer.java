@@ -1,11 +1,11 @@
 package wellen.tests;
 
 import processing.core.PApplet;
-import wellen.ADSR;
-import wellen.DSP;
-import wellen.Oscillator;
-import wellen.OscillatorFunction;
 import wellen.Wellen;
+import wellen.dsp.ADSR;
+import wellen.dsp.DSP;
+import wellen.dsp.Oscillator;
+import wellen.dsp.OscillatorFunction;
 import wellen.extra.daisysp.Svf;
 
 public class TestVowelizer extends PApplet {

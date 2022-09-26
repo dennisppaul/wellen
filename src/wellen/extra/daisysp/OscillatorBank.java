@@ -4,12 +4,12 @@ package wellen.extra.daisysp;
  * @author Ben Sergentanis
  * @brief Oscillator Bank module.
  * @date Dec 2020
- * <p>
- * A mixture of 7 sawtooth and square waveforms in the style of divide-down organs
- * <p>
- * Ported from pichenettes/eurorack/plaits/dsp/oscillator/string_synth_oscillator.h to an independent module.
- * <p>
- * Original code written by Emilie Gillet in 2016.
+ *         <p>
+ *         A mixture of 7 sawtooth and square waveforms in the style of divide-down organs
+ *         <p>
+ *         Ported from pichenettes/eurorack/plaits/dsp/oscillator/string_synth_oscillator.h to an independent module.
+ *         <p>
+ *         Original code written by Emilie Gillet in 2016.
  */
 public class OscillatorBank {
 

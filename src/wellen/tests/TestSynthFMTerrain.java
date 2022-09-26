@@ -1,16 +1,16 @@
 package wellen.tests;
 
 import processing.core.PApplet;
-import wellen.FMSynthesis;
-import wellen.Wavetable;
 import wellen.Wellen;
+import wellen.dsp.FMSynthesis;
+import wellen.dsp.Wavetable;
 
 public class TestSynthFMTerrain extends PApplet {
 
     public static final int NUM_OF_INTERPOLATIONS = 32;
     private FMSynthesis mFMSynthesis;
     private final float mVisuallyStableFrequency =
-    (float) Wellen.DEFAULT_SAMPLING_RATE / Wellen.DEFAULT_AUDIOBLOCK_SIZE;
+            (float) Wellen.DEFAULT_SAMPLING_RATE / Wellen.DEFAULT_AUDIOBLOCK_SIZE;
     private final float[][] mWaveSynthFMTerrain = new float[NUM_OF_INTERPOLATIONS][Wellen.DEFAULT_AUDIOBLOCK_SIZE];
 
     public void settings() {

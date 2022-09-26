@@ -4,10 +4,10 @@ package wellen.extra.daisysp;
  * @author Ported by Ben Sergentanis
  * @brief Random impulse train processed by a resonant filter.
  * @date Jan 2021 Noise processed by a sample and hold running at a target frequency.
- * <p>
- * Ported from pichenettes/eurorack/plaits/dsp/noise/particle.h to an independent module.
- * <p>
- * Original code written by Emilie Gillet in 2016.
+ *         <p>
+ *         Ported from pichenettes/eurorack/plaits/dsp/noise/particle.h to an independent module.
+ *         <p>
+ *         Original code written by Emilie Gillet in 2016.
  */
 public class Particle {
     private static final float kRatioFrac = 1.f / 12.f;

@@ -1,8 +1,8 @@
 package wellen.tests;
 
 import processing.core.PApplet;
-import wellen.Envelope;
 import wellen.Wellen;
+import wellen.dsp.Envelope;
 
 public class TestRamp extends PApplet {
 

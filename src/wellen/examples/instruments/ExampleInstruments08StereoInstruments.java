@@ -2,10 +2,10 @@ package wellen.examples.instruments;
 
 import processing.core.PApplet;
 import wellen.InstrumentDSP;
-import wellen.Signal;
 import wellen.Tone;
-import wellen.Wavetable;
 import wellen.Wellen;
+import wellen.dsp.Signal;
+import wellen.dsp.Wavetable;
 
 public class ExampleInstruments08StereoInstruments extends PApplet {
 

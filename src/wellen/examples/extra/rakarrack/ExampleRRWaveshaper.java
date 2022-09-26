@@ -1,9 +1,9 @@
 package wellen.examples.extra.rakarrack;
 
 import processing.core.PApplet;
-import wellen.DSP;
-import wellen.Wavetable;
 import wellen.Wellen;
+import wellen.dsp.DSP;
+import wellen.dsp.Wavetable;
 import wellen.extra.rakarrack.RRWaveShaper;
 
 public class ExampleRRWaveshaper extends PApplet {
@@ -93,11 +93,7 @@ public class ExampleRRWaveshaper extends PApplet {
             pOutputSignal[i] = a + b;
             pOutputSignal[i] *= 0.5f;
         }
-        mWaveshaper.waveshapesmps(pOutputSignal.length,
-                                  pOutputSignal,
-                                  mWaveshapeType,
-                                  mWaveshapeDrive,
-                                  true);
+        mWaveshaper.waveshapesmps(pOutputSignal.length, pOutputSignal, mWaveshapeType, mWaveshapeDrive, true);
         for (int i = 0; i < pOutputSignal.length; i++) {
             pOutputSignal[i] *= mMasterVolume;
         }

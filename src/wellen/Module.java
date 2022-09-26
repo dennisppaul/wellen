@@ -19,6 +19,9 @@
 
 package wellen;
 
+import wellen.dsp.DSPNodeOutputSignal;
+import wellen.dsp.Signal;
+
 import static wellen.Wellen.LOOP_INFINITE;
 import static wellen.Wellen.NO_INPOINT;
 import static wellen.Wellen.NO_LOOP;

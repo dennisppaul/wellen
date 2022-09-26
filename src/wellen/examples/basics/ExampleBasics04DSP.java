@@ -1,7 +1,7 @@
 package wellen.examples.basics;
 
 import processing.core.PApplet;
-import wellen.DSP;
+import wellen.dsp.DSP;
 
 public class ExampleBasics04DSP extends PApplet {
 

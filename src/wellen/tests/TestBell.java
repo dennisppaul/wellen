@@ -1,15 +1,15 @@
 package wellen.tests;
 
 import processing.core.PApplet;
-import wellen.ADSR;
 import wellen.Beat;
 import wellen.InstrumentDSP;
 import wellen.Note;
 import wellen.Scale;
-import wellen.Signal;
 import wellen.Tone;
-import wellen.Wavetable;
 import wellen.Wellen;
+import wellen.dsp.ADSR;
+import wellen.dsp.Signal;
+import wellen.dsp.Wavetable;
 
 public class TestBell extends PApplet {
 

@@ -20,10 +20,8 @@ public class ExampleExternal06SpeechSynthesis extends PApplet {
 
     public void setup() {
         String mText = "I know not by what power I am made bold, Nor how it may concern my modesty, In such a " +
-                       "presence here to plead" +
-                       " my thoughts; But I beseech your grace that I may know The worst that may " + "befall me in " +
-                       "this case, If I refuse to " +
-                       "wed Demetrius.";
+                "presence here to plead" + " my thoughts; But I beseech your grace that I may know The worst that " +
+                "may" + " " + "befall me in " + "this case, If I refuse to " + "wed Demetrius.";
         mWords = split(mText, ' ');
         printArray(SpeechSynthesis.list());
         mSpeech = new SpeechSynthesis();

@@ -4,6 +4,7 @@ public class InstrumentMIDI extends Instrument {
     public InstrumentMIDI(int pID) {
         super(pID);
     }
+
     @Override
     public int get_oscillator_type() {
         return 0;

@@ -19,6 +19,8 @@
 
 package wellen;
 
+import wellen.dsp.Signal;
+
 import java.util.ArrayList;
 
 import static wellen.Wellen.LOOP_INFINITE;

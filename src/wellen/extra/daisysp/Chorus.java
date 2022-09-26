@@ -8,8 +8,8 @@ import static wellen.extra.daisysp.DaisySP.fmin;
  * @author Ben Sergentanis
  * @brief Chorus Effect.
  * @date Jan 2021 Based on
- * https://www.izotope.com/en/learn/understanding-chorus-flangers-and-phasers-in-audio-production.html \n and
- * https://www.researchgate.net/publication/236629475_Implementing_Professional_Audio_Effects_with_DSPs \n
+ *         https://www.izotope.com/en/learn/understanding-chorus-flangers-and-phasers-in-audio-production.html \n and
+ *         https://www.researchgate.net/publication/236629475_Implementing_Professional_Audio_Effects_with_DSPs \n
  */
 public class Chorus {
 

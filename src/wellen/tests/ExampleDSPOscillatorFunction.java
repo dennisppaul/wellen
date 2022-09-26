@@ -1,9 +1,9 @@
 package wellen.tests;
 
 import processing.core.PApplet;
-import wellen.DSP;
-import wellen.OscillatorFunction;
 import wellen.Wellen;
+import wellen.dsp.DSP;
+import wellen.dsp.OscillatorFunction;
 
 public class ExampleDSPOscillatorFunction extends PApplet {
 

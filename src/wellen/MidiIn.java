@@ -107,8 +107,8 @@ public class MidiIn implements Receiver {
                 default:
                     if (VERBOSE) {
                         // int POLY_PRESSURE = 0xA0; // Polyphonic Key Pressure (Aftertouch)
-                        System.err.println("+++ MidiIn / could not parse command: " + mShortMessage.getCommand() + " " +
-                                           ": " + mShortMessage);
+                        System.err.println("+++ MidiIn / could not parse command: " + mShortMessage.getCommand() + " "
+                                                   + ": " + mShortMessage);
                     }
             }
         } else {
@@ -150,8 +150,7 @@ public class MidiIn implements Receiver {
             }
         } else {
             if (VERBOSE) {
-                System.err.println(
-                "+++ MidiIn / unrecognized system message: " + mShortMessage + " (" + mShortMessage.getLength() + ")");
+                System.err.println("+++ MidiIn / unrecognized system message: " + mShortMessage + " (" + mShortMessage.getLength() + ")");
             }
         }
     }

@@ -214,7 +214,7 @@ public final class FFT {
                     bk1 = new float[2 * nBluestein];
                     bk2 = new float[2 * nBluestein];
                     this.ip =
-                                                new int[2 + (int) Math.ceil(2 + (1 << (int) (Math.log(nBluestein + 0.5) / Math.log(2)) / 2))];
+                            new int[2 + (int) Math.ceil(2 + (1 << (int) (Math.log(nBluestein + 0.5) / Math.log(2)) / 2))];
                     this.w = new float[nBluestein];
                     int twon = 2 * nBluestein;
                     nw = ip[0];
@@ -5114,7 +5114,7 @@ tr2, tr3, tr4, tr5, w1r, w1i, w2r, w2i, w3r, w3i, w4r, w4i;
 
         private void bitrv216(float[] a, int offa) {
             float x1r, x1i, x2r, x2i, x3r, x3i, x4r, x4i, x5r, x5i, x7r, x7i, x8r, x8i, x10r, x10i, x11r, x11i, x12r,
-x12i, x13r, x13i, x14r, x14i;
+ x12i, x13r, x13i, x14r, x14i;
 
             x1r = a[offa + 2];
             x1i = a[offa + 3];
@@ -5168,7 +5168,7 @@ x12i, x13r, x13i, x14r, x14i;
 
         private void bitrv216neg(float[] a, int offa) {
             float x1r, x1i, x2r, x2i, x3r, x3i, x4r, x4i, x5r, x5i, x6r, x6i, x7r, x7i, x8r, x8i, x9r, x9i, x10r,
-            x10i, x11r, x11i, x12r, x12i, x13r, x13i, x14r, x14i, x15r, x15i;
+ x10i, x11r, x11i, x12r, x12i, x13r, x13i, x14r, x14i, x15r, x15i;
 
             x1r = a[offa + 2];
             x1i = a[offa + 3];
@@ -6184,8 +6184,8 @@ x12i, x13r, x13i, x14r, x14i;
 
         private void cftf161(float[] a, int offa, float[] w, int startw) {
             float wn4r, wk1r, wk1i, x0r, x0i, x1r, x1i, x2r, x2i, x3r, x3i, y0r, y0i, y1r, y1i, y2r, y2i, y3r, y3i,
-                                y4r, y4i, y5r, y5i, y6r, y6i, y7r, y7i, y8r, y8i, y9r, y9i, y10r, y10i, y11r, y11i, y12r, y12i, y13r,
-                                 y13i, y14r, y14i, y15r, y15i;
+             y4r, y4i, y5r, y5i, y6r, y6i, y7r, y7i, y8r, y8i, y9r, y9i, y10r, y10i, y11r, y11i, y12r, y12i, y13r,
+y13i, y14r, y14i, y15r, y15i;
 
             wn4r = w[startw + 1];
             wk1r = w[startw + 2];
@@ -6340,7 +6340,7 @@ x12i, x13r, x13i, x14r, x14i;
         private void cftf162(float[] a, int offa, float[] w, int startw) {
             float wn4r, wk1r, wk1i, wk2r, wk2i, wk3r, wk3i, x0r, x0i, x1r, x1i, x2r, x2i, y0r, y0i, y1r, y1i, y2r,
              y2i, y3r, y3i, y4r, y4i, y5r, y5i, y6r, y6i, y7r, y7i, y8r, y8i, y9r, y9i, y10r, y10i, y11r, y11i, y12r,
-              y12i, y13r, y13i, y14r, y14i, y15r, y15i;
+ y12i, y13r, y13i, y14r, y14i, y15r, y15i;
 
             wn4r = w[startw + 1];
             wk1r = w[startw + 4];
@@ -6517,7 +6517,7 @@ x12i, x13r, x13i, x14r, x14i;
 
         private void cftf081(float[] a, int offa, float[] w, int startw) {
             float wn4r, x0r, x0i, x1r, x1i, x2r, x2i, x3r, x3i, y0r, y0i, y1r, y1i, y2r, y2i, y3r, y3i, y4r, y4i, y5r
-            , y5i, y6r, y6i, y7r, y7i;
+ , y5i, y6r, y6i, y7r, y7i;
             wn4r = w[startw + 1];
             x0r = a[offa] + a[offa + 8];
             x0i = a[offa + 1] + a[offa + 9];
@@ -6812,7 +6812,7 @@ y6r, y6i, y7r, y7i;
          * Thread pool.
          */
         private static final ExecutorService THREAD_POOL =
-                        Executors.newCachedThreadPool(new CustomThreadFactory(new CustomExceptionHandler()));
+                Executors.newCachedThreadPool(new CustomThreadFactory(new CustomExceptionHandler()));
 
         private static int THREADS_BEGIN_N_1D_FFT_2THREADS = 8192;
 

@@ -7,10 +7,10 @@ package wellen.extra.daisysp;
  * @author Ported by Ben Sergentanis
  * @brief SVF for use in the Resonator Class
  * @date Jan 2021
- * <p>
- * Ported from pichenettes/eurorack/plaits/dsp/physical_modelling/resonator.h to an independent module.
- * <p>
- * Original code written by Emilie Gillet in 2016.
+ *         <p>
+ *         Ported from pichenettes/eurorack/plaits/dsp/physical_modelling/resonator.h to an independent module.
+ *         <p>
+ *         Original code written by Emilie Gillet in 2016.
  */
 public class ResonatorSvf {
 
@@ -39,7 +39,8 @@ public class ResonatorSvf {
         }
     }
 
-    public float Process(FilterMode mode, boolean add,
+    public float Process(FilterMode mode,
+                         boolean add,
                          final float[] f,
                          final float[] q,
                          final float[] gain,
@@ -65,8 +66,7 @@ public class ResonatorSvf {
         float s_in = in;
         float s_out = 0.0f;
         for (int i = 0; i < batch_size; ++i) {
-            final float hp
-            = (s_in - r_plus_g[i] * state_1[i] - state_2[i]) * h[i];
+            final float hp = (s_in - r_plus_g[i] * state_1[i] - state_2[i]) * h[i];
             final float bp = g[i] * hp + state_1[i];
             state_1[i] = g[i] * hp + bp;
             final float lp = g[i] * bp + state_2[i];

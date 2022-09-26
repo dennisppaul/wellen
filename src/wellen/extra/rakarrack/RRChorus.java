@@ -43,7 +43,7 @@ package wellen.extra.rakarrack;
 
 */
 
-import wellen.EffectStereo;
+import wellen.dsp.EffectStereo;
 
 import static wellen.extra.rakarrack.RRUtilities.F2I;
 import static wellen.extra.rakarrack.RRUtilities.MAX_CHORUS_DELAY;
@@ -228,26 +228,26 @@ public class RRChorus implements EffectStereo {
 
     public void setpreset(int npreset) {
         final int[][] presets = {
-        //Chorus1
-        {64, 64, 33, 0, RREffectLFO.TYPE_SINE, 90, 40, 85, 64, 119, 0, 0},
-        //Chorus2
-        {64, 64, 19, 0, RREffectLFO.TYPE_SINE, 98, 56, 90, 64, 19, 0, 0},
-        //Chorus3
-        {64, 64, 7, 0, RREffectLFO.TYPE_TRIANGLE, 42, 97, 95, 90, 127, 0, 0},
-        //Celeste1
-        {64, 64, 1, 0, RREffectLFO.TYPE_SINE, 42, 115, 18, 90, 127, 0, 0},
-        //Celeste2
-        {64, 64, 7, 117, RREffectLFO.TYPE_SINE, 50, 115, 9, 31, 127, 0, 1},
-        //Flange1
-        {64, 64, 39, 0, RREffectLFO.TYPE_SINE, 60, 23, 3, 62, 0, 0, 0},
-        //Flange2
-        {64, 64, 9, 34, RREffectLFO.TYPE_TRIANGLE, 40, 35, 3, 109, 0, 0, 0},
-        //Flange3
-        {64, 64, 31, 34, RREffectLFO.TYPE_TRIANGLE, 94, 35, 3, 54, 0, 0, 1},
-        //Flange4
-        {64, 64, 14, 0, RREffectLFO.TYPE_TRIANGLE, 62, 12, 19, 97, 0, 0, 0},
-        //Flange5
-        {64, 64, 34, 105, RREffectLFO.TYPE_SINE, 24, 39, 19, 17, 0, 0, 1}};
+                //Chorus1
+                {64, 64, 33, 0, RREffectLFO.TYPE_SINE, 90, 40, 85, 64, 119, 0, 0},
+                //Chorus2
+                {64, 64, 19, 0, RREffectLFO.TYPE_SINE, 98, 56, 90, 64, 19, 0, 0},
+                //Chorus3
+                {64, 64, 7, 0, RREffectLFO.TYPE_TRIANGLE, 42, 97, 95, 90, 127, 0, 0},
+                //Celeste1
+                {64, 64, 1, 0, RREffectLFO.TYPE_SINE, 42, 115, 18, 90, 127, 0, 0},
+                //Celeste2
+                {64, 64, 7, 117, RREffectLFO.TYPE_SINE, 50, 115, 9, 31, 127, 0, 1},
+                //Flange1
+                {64, 64, 39, 0, RREffectLFO.TYPE_SINE, 60, 23, 3, 62, 0, 0, 0},
+                //Flange2
+                {64, 64, 9, 34, RREffectLFO.TYPE_TRIANGLE, 40, 35, 3, 109, 0, 0, 0},
+                //Flange3
+                {64, 64, 31, 34, RREffectLFO.TYPE_TRIANGLE, 94, 35, 3, 54, 0, 0, 1},
+                //Flange4
+                {64, 64, 14, 0, RREffectLFO.TYPE_TRIANGLE, 62, 12, 19, 97, 0, 0, 0},
+                //Flange5
+                {64, 64, 34, 105, RREffectLFO.TYPE_SINE, 24, 39, 19, 17, 0, 0, 1}};
 
         npreset %= presets.length;
         for (int n = 0; n < presets[npreset].length; n++) {

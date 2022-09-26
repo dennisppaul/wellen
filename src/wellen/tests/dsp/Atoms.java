@@ -7,14 +7,8 @@ import static java.lang.Math.PI;
 public abstract class Atoms {
 
     /**
-     * sr :: sampling rate
-     * cr :: control rate
-     * at :: attack time
-     * dt :: decay time
-     * rt :: release time
-     * bw :: bandwidth
-     * BR :: band reject
-     * BP :: band pass
+     * sr :: sampling rate cr :: control rate at :: attack time dt :: decay time rt :: release time bw :: bandwidth BR
+     * :: band reject BP :: band pass
      */
 
     public static final int LP = 0;
@@ -156,12 +150,7 @@ public abstract class Atoms {
         return sig;
     }
 
-    public static float[] resonator(float[] sig,
-                                    float freq,
-                                    float bw,
-                                    float[] del,
-                                    int vecsize,
-                                    float sr) {
+    public static float[] resonator(float[] sig, float freq, float bw, float[] del, int vecsize, float sr) {
         double r, rsq, rr, costh, a;
         rr = 2 * (r = 1. - PI * (bw / sr));
         rsq = r * r;
@@ -175,12 +164,7 @@ public abstract class Atoms {
         return sig;
     }
 
-    public static float[] bandpass(float[] sig,
-                                   float freq,
-                                   float bw,
-                                   float[] del,
-                                   int vecsize,
-                                   float sr) {
+    public static float[] bandpass(float[] sig, float freq, float bw, float[] del, int vecsize, float sr) {
         double r, rsq, rr, costh, a, w;
         rr = 2 * (r = 1. - PI * (bw / sr));
         rsq = r * r;
@@ -195,12 +179,7 @@ public abstract class Atoms {
         return sig;
     }
 
-    public static float[] balance(float[] sig,
-                                  float[] cmp,
-                                  float[] del,
-                                  float freq,
-                                  int vecsize,
-                                  float sr) {
+    public static float[] balance(float[] sig, float[] cmp, float[] del, float freq, int vecsize, float sr) {
         double costh, coef;
         costh = 2. - cos(2 * PI * freq / sr);
         coef = sqrt(costh * costh - 1.) - costh;
@@ -218,13 +197,7 @@ public abstract class Atoms {
     //
     // (c) V Lazzarini, 2005
     //////////////////////////////////////////////////////
-    public static float[] butterworth(float[] sig,
-                                      float freq,
-                                      float bw,
-                                      float[] del,
-                                      int mode,
-                                      int vecsize,
-                                      float sr) {
+    public static float[] butterworth(float[] sig, float freq, float bw, float[] del, int mode, int vecsize, float sr) {
         double a, a1, a2, b1, b2, tanthe, costhe, sqrtan, tansq, w;
         switch (mode) {
             case LP:
@@ -280,12 +253,7 @@ public abstract class Atoms {
     // (c) V Lazzarini, 2005
     //////////////////////////////////////////////////////
 
-    public static float[] delay(float[] sig,
-                                float dtime,
-                                float[] del,
-                                int[] p,
-                                int vecsize,
-                                float sr) {
+    public static float[] delay(float[] sig, float dtime, float[] del, int[] p, int vecsize, float sr) {
         int dt;
         float out;
         dt = (int) (dtime * sr);
@@ -298,13 +266,7 @@ public abstract class Atoms {
         return sig;
     }
 
-    public static float[] comb(float[] sig,
-                               float dtime,
-                               float gain,
-                               float[] delay,
-                               int[] p,
-                               int vecsize,
-                               float sr) {
+    public static float[] comb(float[] sig, float dtime, float gain, float[] delay, int[] p, int vecsize, float sr) {
         int dt;
         float out;
         dt = (int) (dtime * sr);
@@ -317,13 +279,7 @@ public abstract class Atoms {
         return sig;
     }
 
-    public static float[] allpass(float[] sig,
-                                  float dtime,
-                                  float gain,
-                                  float[] delay,
-                                  int[] p,
-                                  int vecsize,
-                                  float sr) {
+    public static float[] allpass(float[] sig, float dtime, float gain, float[] delay, int[] p, int vecsize, float sr) {
         int dt;
         float out;
         dt = (int) (dtime * sr);
@@ -393,13 +349,7 @@ public abstract class Atoms {
         return sig;
     }
 
-    public static float[] fir(float[] sig,
-                              float[] imp,
-                              float[] del,
-                              int length,
-                              int[] p,
-                              int vecsize,
-                              float sr) {
+    public static float[] fir(float[] sig, float[] imp, float[] del, int length, int[] p, int vecsize, float sr) {
         float out = 0.f;
         int rp;
         for (int i = 0; i < vecsize; i++) {
@@ -440,12 +390,7 @@ public abstract class Atoms {
         }
     }
 
-    public static float interp(float pos1,
-                               float dur,
-                               float pos2,
-                               double alpha,
-                               int[] cnt,
-                               float cr) {
+    public static float interp(float pos1, float dur, float pos2, double alpha, int[] cnt, float cr) {
         int durs = (int) (dur * cr);
         if ((cnt[0])++ < durs) {
             return (float) (pos1 + (pos2 - pos1) * pow((double) cnt[0] / durs, alpha));
@@ -454,14 +399,7 @@ public abstract class Atoms {
         }
     }
 
-    public static float adsr(float maxamp,
-                             float dur,
-                             float at,
-                             float dt,
-                             float sus,
-                             float rt,
-                             int[] cnt,
-                             float cr) {
+    public static float adsr(float maxamp, float dur, float at, float dt, float sus, float rt, int[] cnt, float cr) {
         float a = 0.0f;
         // convert to time in samples
         at = at * cr;
@@ -586,7 +524,8 @@ public abstract class Atoms {
             tmp = d + 3.f * b;
             fracsq = frac * frac;
             fracb = frac * fracsq;
-            output[i] = amp * (fracb * (-a - 3.f * c + tmp) / 6.f + fracsq * ((a + c) / 2.f - b) + frac * (c + (-2.f * a - tmp) / 6.f) + b);
+            output[i] =
+                    amp * (fracb * (-a - 3.f * c + tmp) / 6.f + fracsq * ((a + c) / 2.f - b) + frac * (c + (-2.f * a - tmp) / 6.f) + b);
             index[0] += incr;
             while (index[0] >= length) {
                 index[0] -= (length);

@@ -1,8 +1,8 @@
 package wellen.tests.dsp.tarsos;
 
 import processing.core.PApplet;
-import wellen.DSP;
 import wellen.Wellen;
+import wellen.dsp.DSP;
 
 public class ExampleDSPAnalysisXXPitchShifter extends PApplet {
 

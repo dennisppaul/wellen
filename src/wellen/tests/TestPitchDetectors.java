@@ -1,11 +1,11 @@
 package wellen.tests;
 
 import processing.core.PApplet;
-import wellen.DSP;
 import wellen.Note;
 import wellen.Tone;
 import wellen.ToneEngineDSP;
 import wellen.Wellen;
+import wellen.dsp.DSP;
 import wellen.tests.analysis.PitchProcessor;
 
 public class TestPitchDetectors extends PApplet {
