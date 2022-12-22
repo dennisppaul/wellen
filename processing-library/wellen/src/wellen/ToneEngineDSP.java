@@ -19,6 +19,7 @@
 
 package wellen;
 
+import processing.core.PApplet;
 import wellen.dsp.DSPNodeOutput;
 import wellen.dsp.DSPNodeOutputSignal;
 import wellen.dsp.EffectStereo;
@@ -28,7 +29,6 @@ import wellen.dsp.Signal;
 
 import java.util.ArrayList;
 
-import static processing.core.PApplet.constrain;
 import static wellen.Wellen.NO_AUDIO_DEVICE;
 import static wellen.Wellen.clamp;
 
@@ -147,7 +147,7 @@ public class ToneEngineDSP extends ToneEngine implements AudioBufferRenderer, DS
     @Override
     public void pitch_bend(int pValue) {
         final float mRange = 110;
-        final float mValue = mRange * ((float) (constrain(pValue, 0, 16383) - 8192) / 8192.0f);
+        final float mValue = mRange * ((float) (PApplet.constrain(pValue, 0, 16383) - 8192) / 8192.0f);
         mInstruments.get(getInstrumentID()).pitch_bend(mValue);
     }
 

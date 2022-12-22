@@ -19,6 +19,8 @@
 
 package wellen;
 
+import wellen.AudioDeviceImplAndroid;
+
 /**
  * communicates with the underlying audio systems.
  */
