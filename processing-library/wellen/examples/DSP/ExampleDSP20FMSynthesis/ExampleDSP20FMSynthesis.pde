@@ -8,7 +8,7 @@ import wellen.*;
 FMSynthesis mFMSynthesis;
 
 final float mVisuallyStableFrequency =
-(float) Wellen.DEFAULT_SAMPLING_RATE / Wellen.DEFAULT_AUDIOBLOCK_SIZE;
+        (float) Wellen.DEFAULT_SAMPLING_RATE / Wellen.DEFAULT_AUDIOBLOCK_SIZE;
 
 void settings() {
     size(640, 480);
@@ -30,7 +30,7 @@ void setup() {
 
 void draw() {
     background(255);
-    DSP.draw_buffer(g, width, height);
+    DSP.draw_buffers(g, width, height);
 }
 
 void mouseDragged() {

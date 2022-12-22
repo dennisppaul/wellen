@@ -1,10 +1,10 @@
 package wellen.examples.DSP;
 
 import processing.core.PApplet;
-import wellen.DSP;
-import wellen.Vocoder;
-import wellen.Wavetable;
 import wellen.Wellen;
+import wellen.dsp.DSP;
+import wellen.dsp.Vocoder;
+import wellen.dsp.Wavetable;
 
 public class ExampleDSP18Vocoder extends PApplet {
 
@@ -28,7 +28,7 @@ public class ExampleDSP18Vocoder extends PApplet {
         Wellen.dumpAudioInputAndOutputDevices();
 
         mVocoderCarrierOsc = new Wavetable();
-        Wavetable.fill(mVocoderCarrierOsc.get_wavetable(), Wellen.WAVESHAPE_SAWTOOTH);
+        Wavetable.fill(mVocoderCarrierOsc.get_wavetable(), Wellen.WAVEFORM_SAWTOOTH);
         mVocoderCarrierOsc.set_frequency(55);
         mVocoderCarrierOsc.set_amplitude(1.0f);
 
@@ -41,7 +41,7 @@ public class ExampleDSP18Vocoder extends PApplet {
         background(255);
         stroke(0);
         final int mBufferSize = DSP.get_buffer_size();
-        DSP.draw_buffer(g, width, height);
+        DSP.draw_buffers(g, width, height);
     }
 
     public void mouseMoved() {

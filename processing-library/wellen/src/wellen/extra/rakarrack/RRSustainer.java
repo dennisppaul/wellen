@@ -41,7 +41,7 @@ package wellen.extra.rakarrack;
 
 */
 
-import wellen.EffectStereo;
+import wellen.dsp.EffectStereo;
 
 public class RRSustainer implements EffectStereo {
 
@@ -141,13 +141,12 @@ public class RRSustainer implements EffectStereo {
         final int PRESET_SIZE = 2;
         final int NUM_PRESETS = 3;
         int[][] presets = {
-        //Moderate
-        {79, 54},
-        //Extreme
-        {16, 127},
-        //Mild
-        {120, 15}
-        };
+                //Moderate
+                {79, 54},
+                //Extreme
+                {16, 127},
+                //Mild
+                {120, 15}};
 
         for (int n = 0; n < PRESET_SIZE; n++) {
             changepar(n, presets[npreset][n]);

@@ -43,7 +43,7 @@ void draw() {
     background(255);
     stroke(0);
     Wellen.draw_buffer(g, width, height, mSampler.data());
-    DSP.draw_buffer(g, width, height);
+    DSP.draw_buffers(g, width, height);
 }
 
 void audioblock(float[] pOutputSignal) {

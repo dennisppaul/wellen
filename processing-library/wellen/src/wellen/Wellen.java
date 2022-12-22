@@ -22,12 +22,23 @@ package wellen;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 
-import javax.sound.sampled.*;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Line;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.Mixer;
+import javax.sound.sampled.SourceDataLine;
+import javax.sound.sampled.TargetDataLine;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
 
-import static processing.core.PApplet.*;
+import static processing.core.PApplet.day;
+import static processing.core.PApplet.hour;
+import static processing.core.PApplet.minute;
+import static processing.core.PApplet.month;
+import static processing.core.PApplet.nf;
+import static processing.core.PApplet.second;
+import static processing.core.PApplet.year;
 
 /**
  * contains constants and utility methods for the wellen library.
@@ -42,8 +53,8 @@ public class Wellen {
     public static final int DEFAULT_WAVETABLE_SIZE = 512;
     public static final float DEFAULT_ATTACK = 0.005f;
     public static final float DEFAULT_DECAY = 0.01f;
-    public static final float DEFAULT_RELEASE = 0.075f;
     public static final float DEFAULT_SUSTAIN = 0.5f;
+    public static final float DEFAULT_RELEASE = 0.075f;
     public static final int VERSION_MINOR = 8;
     public static final int VERSION_MAJOR = 0;
     public static final int DISTORTION_HARD_CLIPPING = 0;
@@ -77,16 +88,45 @@ public class Wellen {
     public static final int WAVESHAPE_INTERPOLATE_NONE = 0;
     public static final int WAVESHAPE_INTERPOLATE_LINEAR = 1;
     public static final int WAVESHAPE_INTERPOLATE_CUBIC = 2;
+    public static final int WAVEFORM_SINE = 0;
+    public static final int WAVEFORM_TRIANGLE = 1;
+    public static final int WAVEFORM_SAWTOOTH = 2;
+    public static final int WAVEFORM_SQUARE = 3;
+    public static final int WAVEFORM_NOISE = 4;
+    /**
+     * @deprecated use WAVEFORM_ instead
+     */
+    @Deprecated()
     public static final int WAVESHAPE_SINE = 0;
+    /**
+     * @deprecated use WAVEFORM_ instead
+     */
+    @Deprecated
     public static final int WAVESHAPE_TRIANGLE = 1;
+    /**
+     * @deprecated use WAVEFORM_ instead
+     */
+    @Deprecated
     public static final int WAVESHAPE_SAWTOOTH = 2;
+    /**
+     * @deprecated use WAVEFORM_ instead
+     */
+    @Deprecated
     public static final int WAVESHAPE_SQUARE = 3;
+    /**
+     * @deprecated use WAVEFORM_ instead
+     */
+    @Deprecated
     public static final int WAVESHAPE_NOISE = 4;
-    public static final int OSC_NOISE = WAVESHAPE_NOISE;
-    public static final int OSC_SAWTOOTH = WAVESHAPE_SAWTOOTH;
-    public static final int OSC_SINE = WAVESHAPE_SINE;
-    public static final int OSC_SQUARE = WAVESHAPE_SQUARE;
-    public static final int OSC_TRIANGLE = WAVESHAPE_TRIANGLE;
+    /**
+     * @deprecated use WAVEFORM_ instead
+     */
+    @Deprecated
+    public static final int OSC_NOISE = WAVEFORM_NOISE;
+    public static final int OSC_SAWTOOTH = WAVEFORM_SAWTOOTH;
+    public static final int OSC_SINE = WAVEFORM_SINE;
+    public static final int OSC_SQUARE = WAVEFORM_SQUARE;
+    public static final int OSC_TRIANGLE = WAVEFORM_TRIANGLE;
     public static final int WAV_FORMAT_IEEE_FLOAT_32BIT = 3;
     public static final int WAV_FORMAT_PCM = 1;
     public static final int EVENT_UNDEFINED = -1;
@@ -113,6 +153,9 @@ public class Wellen {
     public static final int LOOP_INFINITE = Integer.MAX_VALUE;
     public static final int SIGNAL_PROCESSING_IGNORE_IN_OUTPOINTS = -3;
 
+    public static final int MONO = 1;
+    public static final int STEREO = 2;
+
     public static final float TWO_PI = PApplet.TWO_PI;
     public static final float SIGNAL_MIN = -1.0f;
     public static final float SIGNAL_MAX = 1.0f;
@@ -128,10 +171,7 @@ public class Wellen {
         return bytes_to_floatIEEE(b, true);
     }
 
-    public static float bytes_to_floatIEEE(byte[] pBytes,
-                                           int pStart,
-                                           int pEnd,
-                                           boolean pLittleEndian) {
+    public static float bytes_to_floatIEEE(byte[] pBytes, int pStart, int pEnd, boolean pLittleEndian) {
         final byte[] mBytes = Arrays.copyOfRange(pBytes, pStart, pEnd);
         return bytes_to_floatIEEE(mBytes, pLittleEndian);
     }
@@ -158,6 +198,65 @@ public class Wellen {
             }
             pFloats[i] = (float) (f * mScale);
         }
+    }
+
+    public static final int SIG_INT8 = 0;
+    public static final int SIG_UINT8 = 1;
+    public static final int SIG_INT16_BIG_ENDIAN = 2;
+    public static final int SIG_INT16_LITTLE_ENDIAN = 3;
+    public static final int SIG_INT24_3_BIG_ENDIAN = 4;
+    public static final int SIG_INT24_3_LITTLE_ENDIAN = 5;
+    public static final int SIG_INT24_4_BIG_ENDIAN = 6;
+    public static final int SIG_INT24_4_LITTLE_ENDIAN = 7;
+    public static final int SIG_INT32_BIG_ENDIAN = 8;
+    public static final int SIG_INT32_LITTLE_ENDIAN = 9;
+
+    private static final float SIG_8BIT_MAX = 128.0f;
+    private static final float SIG_16BIT_MAX = 32768.0f;
+    private static final float SIG_24BIT_MAX = 8388608.0f;
+    private static final float SIG_32BIT_MAX = 2147483648.0f;
+    private static final float SIG_8BIT_MAX_INVERSE = 1.0f / SIG_8BIT_MAX;
+    private static final float SIG_16BIT_MAX_INVERSE = 1.0f / SIG_16BIT_MAX;
+    private static final float SIG_24BIT_MAX_INVERSE = 1.0f / SIG_24BIT_MAX;
+    private static final float SIG_32BIT_MAX_INVERSE = 1.0f / SIG_32BIT_MAX;
+
+    public static float bytes_to_floats(int pFormat, byte[] pInput, int pIndex) {
+        final float f;
+        switch (pFormat) {
+            case SIG_INT8:
+                f = pInput[pIndex] * SIG_8BIT_MAX_INVERSE;
+                break;
+            case SIG_UINT8:
+                f = ((pInput[pIndex] & 0xFF) - 128) * SIG_8BIT_MAX_INVERSE;
+                break;
+            case SIG_INT16_BIG_ENDIAN:
+                f = ((pInput[pIndex] << 8) | (pInput[pIndex + 1] & 0xFF)) * SIG_16BIT_MAX_INVERSE;
+                break;
+            case SIG_INT16_LITTLE_ENDIAN:
+                f = ((pInput[pIndex + 1] << 8) | (pInput[pIndex] & 0xFF)) * SIG_16BIT_MAX_INVERSE;
+                break;
+            case SIG_INT24_3_BIG_ENDIAN:
+                f = ((pInput[pIndex] << 16) | ((pInput[pIndex + 1] & 0xFF) << 8) | (pInput[pIndex + 2] & 0xFF)) * SIG_24BIT_MAX_INVERSE;
+                break;
+            case SIG_INT24_3_LITTLE_ENDIAN:
+                f = ((pInput[pIndex + 2] << 16) | ((pInput[pIndex + 1] & 0xFF) << 8) | (pInput[pIndex] & 0xFF)) * SIG_24BIT_MAX_INVERSE;
+                break;
+            case SIG_INT24_4_BIG_ENDIAN:
+                f = ((pInput[pIndex + 1] << 16) | ((pInput[pIndex + 2] & 0xFF) << 8) | (pInput[pIndex + 3] & 0xFF)) * SIG_24BIT_MAX_INVERSE;
+                break;
+            case SIG_INT24_4_LITTLE_ENDIAN:
+                f = ((pInput[pIndex + 3] << 16) | ((pInput[pIndex + 2] & 0xFF) << 8) | (pInput[pIndex + 1] & 0xFF)) * SIG_24BIT_MAX_INVERSE;
+                break;
+            case SIG_INT32_BIG_ENDIAN:
+                f = ((pInput[pIndex] << 24) | ((pInput[pIndex + 1] & 0xFF) << 16) | ((pInput[pIndex + 2] & 0xFF) << 8) | (pInput[pIndex + 3] & 0xFF)) * SIG_32BIT_MAX_INVERSE;
+                break;
+            case SIG_INT32_LITTLE_ENDIAN:
+                f = ((pInput[pIndex + 3] << 24) | ((pInput[pIndex + 2] & 0xFF) << 16) | ((pInput[pIndex + 1] & 0xFF) << 8) | (pInput[pIndex] & 0xFF)) * SIG_32BIT_MAX_INVERSE;
+                break;
+            default:
+                f = 0.0f;
+        }
+        return f;
     }
 
     public static float clamp(float pValue) {
@@ -207,11 +306,31 @@ public class Wellen {
         return value;
     }
 
-    public static void draw_buffer(PGraphics g,
-                                   float pWidth,
-                                   float pHeight,
-                                   float[] pBuffer,
-                                   int pStride) {
+    /**
+     * copy the content of one array to another array of the same length
+     *
+     * @param source      source array
+     * @param destination destination array with same length as source array
+     */
+    public static void copy(float[] source, float[] destination) {
+        if (source.length == destination.length) {
+            System.arraycopy(source, 0, destination, 0, destination.length);
+        }
+    }
+
+    /**
+     * copy the content of one array to a new array
+     *
+     * @param source source array
+     * @return the new array containing a copy of source array
+     */
+    public static float[] copy(float[] source) {
+        float[] destination = new float[source.length];
+        System.arraycopy(source, 0, destination, 0, destination.length);
+        return destination;
+    }
+
+    public static void draw_buffer(PGraphics g, float pWidth, float pHeight, float[] pBuffer, int pStride) {
         g.line(0, pHeight * 0.5f, pWidth, pHeight * 0.5f);
         if (pBuffer != null) {
             for (int i = 0; i < pBuffer.length - pStride; i += pStride) {
@@ -226,7 +345,7 @@ public class Wellen {
     }
 
     public static void draw_tone_stereo(PGraphics g, float pWidth, float pHeight) {
-        draw_buffer(g, pWidth, pHeight, Tone.get_buffer_left(), Tone.get_buffer_right());
+        draw_buffers(g, pWidth, pHeight, Tone.get_buffer_left(), Tone.get_buffer_right());
     }
 
     public static void draw_tone(PGraphics g, float pWidth, float pHeight) {
@@ -237,15 +356,24 @@ public class Wellen {
         draw_buffer(g, pWidth, pHeight, pBuffer, 1);
     }
 
-    public static void draw_buffer(PGraphics g,
-                                   float pWidth,
-                                   float pHeight,
-                                   float[] pBufferLeft,
-                                   float[] pBufferRight) {
+    public static void draw_buffers(PGraphics g, float pWidth, float pHeight, float[]... pBuffers) {
+        int mCountValidBuffers = 0;
+        for (float[] pBuffer : pBuffers) {
+            if (pBuffer != null) {
+                mCountValidBuffers++;
+            }
+        }
+        if (mCountValidBuffers == 0) {
+            return;
+        }
+        final float mFraction = 1.0f / mCountValidBuffers;
         g.pushMatrix();
-        draw_buffer(g, pWidth, pHeight * 0.5f, pBufferLeft);
-        g.translate(0, pHeight * 0.5f);
-        draw_buffer(g, pWidth, pHeight * 0.5f, pBufferRight);
+        for (float[] mBuffer : pBuffers) {
+            if (mBuffer != null) {
+                draw_buffer(g, pWidth, pHeight * mFraction, mBuffer);
+                g.translate(0, pHeight * mFraction);
+            }
+        }
         g.popMatrix();
     }
 
@@ -296,7 +424,7 @@ public class Wellen {
                 final String mID = i + getSpacesFrom(i, 3) + ":";
                 final String mName = AudioSystem.getMixerInfo()[i].getName();
                 if (pPrintDevices) {
-                    System.out.println("+ " + mID + " ( IN:" + mInputChannels + " / OUT:" + mOutputChannels + " ) : \"" + mName + "\"");
+                    System.out.println("+ " + mID + " ( IN:" + mInputChannels + " / OUT:" + mOutputChannels + " ) : " + "\"" + mName + "\"");
                 }
                 if (pDeviceName != null && pDeviceName.equalsIgnoreCase(mName)) {
                     mSelectedID = i;
@@ -354,7 +482,8 @@ public class Wellen {
                                  int pSignalRate,
                                  int pCompressionType) {
         if (pCompressionType == WAV_FORMAT_IEEE_FLOAT_32BIT && pBitsPerSignal != 32) {
-            System.err.println("+++ WARNING @" + Wellen.class.getSimpleName() + ".exportWAV / if WAV format is *IEEE " + "float* 32 " + "bits" + " per sample are required.");
+            System.err.println("+++ WARNING @" + Wellen.class.getSimpleName() + ".exportWAV / if WAV format is *IEEE "
+                                       + "float* 32 " + "bits" + " per sample are required.");
             pBitsPerSignal = 32;
         }
         final byte[] mWAVBytes = WAVConverter.convert_samples_to_bytes(pBuffer,
@@ -365,11 +494,7 @@ public class Wellen {
         p.saveBytes(pFilepath, mWAVBytes);
     }
 
-    public static void exportWAV(PApplet p,
-                                 String pFilepath,
-                                 float[][] pBuffer,
-                                 int pBitsPerSignal,
-                                 int pSignalRate) {
+    public static void exportWAV(PApplet p, String pFilepath, float[][] pBuffer, int pBitsPerSignal, int pSignalRate) {
         final byte[] mWAVBytes = WAVConverter.convert_samples_to_bytes(pBuffer,
                                                                        pBuffer.length,
                                                                        pBitsPerSignal,
@@ -377,11 +502,7 @@ public class Wellen {
         p.saveBytes(pFilepath, mWAVBytes);
     }
 
-    public static void exportWAV(PApplet p,
-                                 String pFilepath,
-                                 float[] pBuffer,
-                                 int pBitsPerSignal,
-                                 int pSignalRate) {
+    public static void exportWAV(PApplet p, String pFilepath, float[] pBuffer, int pBitsPerSignal, int pSignalRate) {
         final byte[] mWAVBytes = WAVConverter.convert_samples_to_bytes(new float[][]{pBuffer},
                                                                        1,
                                                                        pBitsPerSignal,
@@ -415,7 +536,8 @@ public class Wellen {
     }
 
     public static byte[] floatIEEEs_to_bytes(float[] pFloats, boolean pLittleEndian) {
-        ByteBuffer buffer = ByteBuffer.allocate(4 * pFloats.length).order(pLittleEndian ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN);
+        ByteBuffer buffer = ByteBuffer.allocate(4 * pFloats.length).order(pLittleEndian ? ByteOrder.LITTLE_ENDIAN :
+                                                                                  ByteOrder.BIG_ENDIAN);
 
         for (float value : pFloats) {
             buffer.putFloat(value);
@@ -509,15 +631,10 @@ public class Wellen {
     }
 
     public static String now() {
-        return nf(year(), 4) + nf(month(), 2) + nf(day(), 2) + "_" + nf(hour(), 2) + nf(minute(),
-                                                                                        2) + nf(
-                second(),
-                2);
+        return nf(year(), 4) + nf(month(), 2) + nf(day(), 2) + "_" + nf(hour(), 2) + nf(minute(), 2) + nf(second(), 2);
     }
 
-    public static int[] find_zero_crossings(float[] pSampleData,
-                                            final int pInPoint,
-                                            final int pOutPoint) {
+    public static int[] find_zero_crossings(float[] pSampleData, final int pInPoint, final int pOutPoint) {
         final int ZERO_CROSSING_EDGE_NONE = 0;
         final int ZERO_CROSSING_EDGE_RISING = 1;
         final int ZERO_CROSSING_EDGE_FALLING = -1;
@@ -562,8 +679,7 @@ public class Wellen {
     }
 
     public static void run_sketch_with_resources(Class<? extends PApplet> pSketch) {
-        PApplet.runSketch(new String[]{"--sketch-path=" + Wellen.get_resource_path(), pSketch.getName()},
-                          null);
+        PApplet.runSketch(new String[]{"--sketch-path=" + Wellen.get_resource_path(), pSketch.getName()}, null);
     }
 
     public static int to_millis(float pSeconds) {

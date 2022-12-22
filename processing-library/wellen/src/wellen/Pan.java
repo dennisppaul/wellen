@@ -19,6 +19,9 @@
 
 package wellen;
 
+import wellen.dsp.DSPNodeProcessSignal;
+import wellen.dsp.Signal;
+
 import static processing.core.PConstants.HALF_PI;
 import static wellen.Wellen.PAN_LINEAR;
 import static wellen.Wellen.PAN_SINE_LAW;

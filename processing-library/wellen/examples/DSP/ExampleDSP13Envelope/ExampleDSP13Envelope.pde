@@ -33,7 +33,7 @@ void setup() {
 
 void draw() {
     background(255);
-    DSP.draw_buffer(g, width, height);
+    DSP.draw_buffers(g, width, height);
     fill(0);
     ellipse(width * 0.33f,
             map(mEnvelopeAmplitude.get_current_value(), 0.0f, 1.0f, height * 0.1f, height * 0.9f),

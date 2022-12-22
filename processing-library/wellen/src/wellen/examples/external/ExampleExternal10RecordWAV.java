@@ -1,8 +1,8 @@
 package wellen.examples.external;
 
 import processing.core.PApplet;
-import wellen.DSP;
 import wellen.Wellen;
+import wellen.dsp.DSP;
 
 import java.util.ArrayList;
 
@@ -13,7 +13,7 @@ public class ExampleExternal10RecordWAV extends PApplet {
      * `s` starts the recording and `e` ends it.
      */
 
-    private boolean mIsRecording = false;
+    private boolean mIsRecording = true;
     private final ArrayList<Float> mRecordedSamples = new ArrayList<>();
 
     public void settings() {
@@ -27,7 +27,7 @@ public class ExampleExternal10RecordWAV extends PApplet {
     public void draw() {
         background(mIsRecording ? 0 : 255);
         stroke(mIsRecording ? 255 : 0);
-        DSP.draw_buffer(g, width, height);
+        DSP.draw_buffers(g, width, height);
     }
 
     public void audioblock(float[] pOutputSignal, float[] pInputSignal) {
@@ -41,28 +41,36 @@ public class ExampleExternal10RecordWAV extends PApplet {
 
     public void keyPressed() {
         if (key == 's') {
-            mRecordedSamples.clear();
-            mIsRecording = true;
+            start_recording();
         }
         if (key == 'e') {
-            mIsRecording = false;
-            /* export samples to WAV file */
-            final String WAV_FILE_NAME = "recording-" + Wellen.now() + ".wav";
-            final int WAV_FILE_LENGTH = mRecordedSamples.size();
-            final int NUM_OF_CHANNELS = 1;
-            final float[][] mExportSamples = new float[NUM_OF_CHANNELS][WAV_FILE_LENGTH];
-            for (int i = 0; i < WAV_FILE_LENGTH; i++) {
-                mExportSamples[0][i] = mRecordedSamples.get(i);
-            }
-            Wellen.exportWAV(this,
-                             WAV_FILE_NAME,
-                             mExportSamples,
-                             32,
-                             Wellen.DEFAULT_SAMPLING_RATE,
-                             Wellen.WAV_FORMAT_IEEE_FLOAT_32BIT);
-            println("+++ recorded file ...... : " + WAV_FILE_NAME);
-            println("+++ recorded samples ... : " + WAV_FILE_LENGTH);
+            stop_recording();
         }
+    }
+
+    private void stop_recording() {
+        mIsRecording = false;
+        /* export samples to WAV file */
+        final String WAV_FILE_NAME = "recording-" + Wellen.now() + ".wav";
+        final int WAV_FILE_LENGTH = mRecordedSamples.size();
+        final int NUM_OF_CHANNELS = 1;
+        final float[][] mExportSamples = new float[NUM_OF_CHANNELS][WAV_FILE_LENGTH];
+        for (int i = 0; i < WAV_FILE_LENGTH; i++) {
+            mExportSamples[0][i] = mRecordedSamples.get(i);
+        }
+        Wellen.exportWAV(this,
+                         WAV_FILE_NAME,
+                         mExportSamples,
+                         32,
+                         Wellen.DEFAULT_SAMPLING_RATE,
+                         Wellen.WAV_FORMAT_IEEE_FLOAT_32BIT);
+        println("+++ recorded file ...... : " + WAV_FILE_NAME);
+        println("+++ recorded samples ... : " + WAV_FILE_LENGTH);
+    }
+
+    private void start_recording() {
+        mRecordedSamples.clear();
+        mIsRecording = true;
     }
 
     public static void main(String[] args) {

@@ -195,9 +195,9 @@ CustomInstrumentMultipleOscillators(int pID) {
         mLowerVCO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
         mVeryLowVCO = new Wavetable(DEFAULT_WAVETABLE_SIZE);
         mVeryLowVCO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
-        Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVESHAPE_TRIANGLE);
-        Wavetable.fill(mLowerVCO.get_wavetable(), Wellen.WAVESHAPE_SINE);
-        Wavetable.fill(mVeryLowVCO.get_wavetable(), Wellen.WAVESHAPE_SQUARE);
+        Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVEFORM_TRIANGLE);
+        Wavetable.fill(mLowerVCO.get_wavetable(), Wellen.WAVEFORM_SINE);
+        Wavetable.fill(mVeryLowVCO.get_wavetable(), Wellen.WAVEFORM_SQUARE);
     }
     
 Signal output_signal() {
@@ -232,7 +232,7 @@ final float mFrequencyRange = 80;
     
 CustomInstrumentKickDrum(int pID) {
         super(pID);
-        set_oscillator_type(Wellen.WAVESHAPE_SINE);
+        set_oscillator_type(Wellen.WAVEFORM_SINE);
         set_amplitude(0.5f);
         set_frequency(90);
         /* this ADSR envelope is used to control the frequency instead of amplitude */
@@ -317,10 +317,10 @@ CustomInstrumentDetunedOscillatorsStereo(int pID) {
         set_channels(2);
         set_detune(0.01f);
         set_spread(0.5f);
-        Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVESHAPE_TRIANGLE);
+        Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVEFORM_TRIANGLE);
         mVCOSecond = new Wavetable(DEFAULT_WAVETABLE_SIZE);
         mVCOSecond.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
-        Wavetable.fill(mVCOSecond.get_wavetable(), Wellen.WAVESHAPE_TRIANGLE);
+        Wavetable.fill(mVCOSecond.get_wavetable(), Wellen.WAVEFORM_TRIANGLE);
     }
     
 float get_detune() {

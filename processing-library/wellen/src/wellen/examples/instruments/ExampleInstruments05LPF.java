@@ -18,7 +18,7 @@ public class ExampleInstruments05LPF extends PApplet {
 
     public void setup() {
         Tone.instrument().enable_LPF(true);
-        Tone.instrument().set_oscillator_type(Wellen.WAVESHAPE_SAWTOOTH);
+        Tone.instrument().set_oscillator_type(Wellen.WAVEFORM_SAWTOOTH);
     }
 
     public void draw() {

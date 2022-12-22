@@ -23,13 +23,13 @@ void settings() {
 void setup() {
     mOsc.set_frequency(55);
     mOsc.set_amplitude(0.33f);
-    mOsc.set_waveform(Wellen.WAVESHAPE_SQUARE);
+    mOsc.set_waveform(Wellen.WAVEFORM_SQUARE);
     DSP.start(this);
 }
 
 void draw() {
     background(255);
-    DSP.draw_buffer(g, width, height);
+    DSP.draw_buffers(g, width, height);
 }
 
 void mousePressed() {
@@ -69,13 +69,13 @@ void keyPressed() {
                 mFormantFilter.set_vowel(VowelFormantFilter.VOWEL_U);
                 break;
             case '1':
-                mOsc.set_waveform(Wellen.WAVESHAPE_SQUARE);
+                mOsc.set_waveform(Wellen.WAVEFORM_SQUARE);
                 break;
             case '2':
-                mOsc.set_waveform(Wellen.WAVESHAPE_SAWTOOTH);
+                mOsc.set_waveform(Wellen.WAVEFORM_SAWTOOTH);
                 break;
             case '3':
-                mOsc.set_waveform(Wellen.WAVESHAPE_NOISE);
+                mOsc.set_waveform(Wellen.WAVEFORM_NOISE);
                 break;
         }
         mADSR.start();

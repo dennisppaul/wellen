@@ -1,10 +1,10 @@
 package wellen.examples.DSP;
 
 import processing.core.PApplet;
-import wellen.DSP;
 import wellen.FFT;
-import wellen.Sampler;
 import wellen.Wellen;
+import wellen.dsp.DSP;
+import wellen.dsp.Sampler;
 
 public class ExampleDSP19FFT extends PApplet {
 
@@ -31,7 +31,7 @@ public class ExampleDSP19FFT extends PApplet {
 
     public void draw() {
         for (int i = 0; i < FFT.get_spectrum().length; i++) {
-            float y = map(i, 0, FFT.get_spectrum().length, height, 0);
+            float y = pow(map(i, 0, FFT.get_spectrum().length, 1, 0), 4) * height;
             float b = map(FFT.get_spectrum()[i], 0.0f, 10.0f, 255, 0);
             stroke(b);
             line(x, 0, x, y);

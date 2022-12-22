@@ -120,8 +120,7 @@ public abstract class Tone {
             Tone.mInstance = mInstance;
             return mInstance;
         } else {
-            System.err.println(
-            "+++ WARNING @" + Tone.class.getSimpleName() + ".start" + " / unknown configuration, " + "using default");
+            System.err.println("+++ WARNING @" + Tone.class.getSimpleName() + ".start" + " / unknown configuration, " + "using default");
             return new ToneEngineDSP();
         }
     }
@@ -238,7 +237,7 @@ public abstract class Tone {
 
     private static void printAlreadyStartedWarning() {
         System.err.println("+++ WARNING @" + Tone.class.getSimpleName() + ".start" + " / tone engine already " +
-                           "initialized. make sure that `start` is the first call to `Ton`. " + "use " +
-                           "`set_engine(ToneEngine)` to switch tone engines.");
+                                   "initialized. make sure that `start` is the first call to `Ton`. " + "use " +
+                                   "`set_engine(ToneEngine)` to switch tone engines.");
     }
 }

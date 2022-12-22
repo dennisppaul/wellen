@@ -112,9 +112,9 @@ public class ModalVoice {
 
         final float range = sustain_ ? 36.0f : 60.0f;
         final float f = sustain_ ? 4.0f * f0_ : 2.0f * f0_;
-        final float cutoff = DaisySP.fmin(
-        f * DaisySP.powf(2.f, DaisySP.kOneTwelfth * ((brightness * (2.0f - brightness) - 0.5f) * range)),
-        0.499f);
+        final float cutoff = DaisySP.fmin(f * DaisySP.powf(2.f,
+                                                           DaisySP.kOneTwelfth * ((brightness * (2.0f - brightness) - 0.5f) * range)),
+                                          0.499f);
         final float q = sustain_ ? 0.7f : 1.5f;
 
         float temp = 0.f;
@@ -131,8 +131,12 @@ public class ModalVoice {
         }
 
         final float one = 1.0f;
-        temp = excitation_filter_.Process(ResonatorSvf.FilterMode.LOW_PASS, false, new float[]{cutoff}, new float[]{q},
-                                          new float[]{one}, temp);
+        temp = excitation_filter_.Process(ResonatorSvf.FilterMode.LOW_PASS,
+                                          false,
+                                          new float[]{cutoff},
+                                          new float[]{q},
+                                          new float[]{one},
+                                          temp);
 
         aux_ = temp;
 

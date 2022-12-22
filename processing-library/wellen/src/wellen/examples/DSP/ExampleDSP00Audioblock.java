@@ -1,8 +1,8 @@
 package wellen.examples.DSP;
 
 import processing.core.PApplet;
-import wellen.DSP;
 import wellen.Wellen;
+import wellen.dsp.DSP;
 
 public class ExampleDSP00Audioblock extends PApplet {
 
@@ -26,7 +26,7 @@ public class ExampleDSP00Audioblock extends PApplet {
 
     public void draw() {
         background(255);
-        DSP.draw_buffer(g, width, height);
+        DSP.draw_buffers(g, width, height);
     }
 
     public void audioblock(float[] pOutputSignal) {

@@ -2,10 +2,10 @@ package wellen.tests;
 
 import processing.core.PApplet;
 import processing.core.PVector;
-import wellen.DSP;
-import wellen.Sampler;
 import wellen.WAVConverter;
 import wellen.Wellen;
+import wellen.dsp.DSP;
+import wellen.dsp.Sampler;
 
 import static wellen.Wellen.WAV_FORMAT_IEEE_FLOAT_32BIT;
 
@@ -33,7 +33,8 @@ public class TestImportExportWAV extends PApplet {
         byte[] mWAVMono = WAVConverter.convert_samples_to_bytes(new float[][]{mSampleBuffer[0]},
                                                                 1,
                                                                 32,
-                                                                44100, WAV_FORMAT_IEEE_FLOAT_32BIT);
+                                                                44100,
+                                                                WAV_FORMAT_IEEE_FLOAT_32BIT);
         saveBytes(mPath + "test-mono_32bit_float.wav", mWAVMono);
 
         System.out.println("+++ loading WAV from disk");
@@ -59,7 +60,7 @@ public class TestImportExportWAV extends PApplet {
             line(p0.x, p0.y, p1.x, p1.y);
         }
 
-        DSP.draw_buffer(g, width, height);
+        DSP.draw_buffers(g, width, height);
     }
 
     public void audioblock(float[] pOutputSignal) {

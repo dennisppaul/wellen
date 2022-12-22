@@ -1,11 +1,11 @@
 package wellen.examples.DSP;
 
 import processing.core.PApplet;
-import wellen.DSP;
-import wellen.Distortion;
 import wellen.Tone;
 import wellen.ToneEngineDSP;
 import wellen.Wellen;
+import wellen.dsp.DSP;
+import wellen.dsp.Distortion;
 
 public class ExampleDSP16Distortion extends PApplet {
 
@@ -38,7 +38,7 @@ public class ExampleDSP16Distortion extends PApplet {
         stroke(0);
         ellipse(width * 0.5f, height * 0.5f, Tone.is_playing() ? 100 : 5, Tone.is_playing() ? 100 : 5);
         line(50, height * 0.1f, width - 50, height * 0.1f);
-        DSP.draw_buffer(g, width, height);
+        DSP.draw_buffers(g, width, height);
     }
 
     public void keyPressed() {

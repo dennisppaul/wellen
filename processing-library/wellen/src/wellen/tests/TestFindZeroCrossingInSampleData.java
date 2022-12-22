@@ -1,9 +1,9 @@
 package wellen.tests;
 
 import processing.core.PApplet;
-import wellen.DSP;
-import wellen.Sampler;
 import wellen.Wellen;
+import wellen.dsp.DSP;
+import wellen.dsp.Sampler;
 
 public class TestFindZeroCrossingInSampleData extends PApplet {
 
@@ -21,15 +21,10 @@ public class TestFindZeroCrossingInSampleData extends PApplet {
             final float mFrequency = 110.0f;
             final float mAmplitude = 0.33f;
             float r = PApplet.TWO_PI * (float) i / (float) Wellen.DEFAULT_SAMPLING_RATE;
-            float s = sin(r * mFrequency) * mAmplitude * 0.2f +
-                      sin(r * 0.55f * mFrequency) * mAmplitude * 0.2f +
-                      sin(r * 0.44f * mFrequency) * mAmplitude * 0.2f +
-                      sin(r * 0.33f * mFrequency) * mAmplitude * 0.2f +
-                      sin(r * 0.22f * mFrequency) * mAmplitude * 0.2f +
-                      sin(r * 0.11f * mFrequency) * mAmplitude * 0.2f +
-                      sin(r * 10.0f) * mAmplitude * 0.2f +
-                      sin(r * 43.0f) * mAmplitude * 0.4f
-            ;
+            float s =
+                    sin(r * mFrequency) * mAmplitude * 0.2f + sin(r * 0.55f * mFrequency) * mAmplitude * 0.2f + sin(r * 0.44f * mFrequency) * mAmplitude * 0.2f + sin(
+                    r * 0.33f * mFrequency) * mAmplitude * 0.2f + sin(r * 0.22f * mFrequency) * mAmplitude * 0.2f + sin(
+                    r * 0.11f * mFrequency) * mAmplitude * 0.2f + sin(r * 10.0f) * mAmplitude * 0.2f + sin(r * 43.0f) * mAmplitude * 0.4f;
             mSampler.data()[i] = s;
         }
 

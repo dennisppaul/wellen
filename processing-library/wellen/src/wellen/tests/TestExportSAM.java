@@ -1,9 +1,9 @@
 package wellen.tests;
 
 import processing.core.PApplet;
-import wellen.DSP;
-import wellen.SAM;
 import wellen.Wellen;
+import wellen.dsp.DSP;
+import wellen.dsp.SAM;
 
 import java.util.ArrayList;
 
@@ -33,7 +33,7 @@ public class TestExportSAM extends PApplet {
     public void draw() {
         background(mIsRecording ? 0 : 255);
         stroke(mIsRecording ? 255 : 0);
-        DSP.draw_buffer(g, width, height);
+        DSP.draw_buffers(g, width, height);
     }
 
     public void audioblock(float[] pOutputSignal) {

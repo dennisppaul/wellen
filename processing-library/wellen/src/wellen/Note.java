@@ -47,12 +47,20 @@ public abstract class Note implements MIDI {
         return PApplet.trim(note) + octave;
     }
 
-    public static int frequency_to_note(int pFreq) {
+    public static int frequency_to_note(float pFreq) {
         return frequency_to_note(pFreq, 440, NOTE_OFFSET);
     }
 
-    public static int frequency_to_note(int pFreq, float pBaseFreq, int pOffset) {
-        return (int) (Math.round(12 * log2(pFreq / pBaseFreq)) + pOffset);
+    public static int frequency_to_note(float pFreq, float pBaseFreq, int pOffset) {
+        return (int) Math.round(12 * log2(pFreq / pBaseFreq)) + pOffset;
+    }
+
+    public static float frequency_to_note_f(float pFreq) {
+        return frequency_to_note_f(pFreq, 440.0f, NOTE_OFFSET);
+    }
+
+    public static float frequency_to_note_f(float pFreq, float pBaseFreq, float pOffset) {
+        return (float) (12f * log2(pFreq / pBaseFreq)) + pOffset;
     }
 
     private static double log2(double num) {

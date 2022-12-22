@@ -1,9 +1,9 @@
 package wellen.examples.extra.rakarrack;
 
 import processing.core.PApplet;
-import wellen.DSP;
-import wellen.Wavetable;
 import wellen.Wellen;
+import wellen.dsp.DSP;
+import wellen.dsp.Wavetable;
 import wellen.extra.rakarrack.RRUtilities;
 import wellen.extra.rakarrack.RRVocoder;
 
@@ -32,7 +32,7 @@ public class ExampleRRVocoder extends PApplet {
 
     public void draw() {
         background(255);
-        DSP.draw_buffer(g, width, height);
+        DSP.draw_buffers(g, width, height);
     }
 
     public void mouseMoved() {

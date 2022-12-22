@@ -26,7 +26,7 @@ public class TestFrequencyPerceivedVolumeMap extends PApplet {
         float[] mOffset = mOffsetSINE_AND_TRIANGLE;
         mSlider = new Slider[Wellen.DEFAULT_NUMBER_OF_INSTRUMENTS];
         for (int i = 0; i < mSlider.length; i++) {
-            Tone.instrument(i).set_oscillator_type(Wellen.WAVESHAPE_SAWTOOTH);
+            Tone.instrument(i).set_oscillator_type(Wellen.WAVEFORM_SAWTOOTH);
             mSlider[i] = new Slider(height * 0.5f);
             mSlider[i].x = map(i, 0, mSlider.length - 1, width * 0.25f, width * 0.75f);
             mSlider[i].y = height * 0.25f;

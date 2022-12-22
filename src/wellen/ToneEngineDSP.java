@@ -54,7 +54,7 @@ public class ToneEngineDSP extends ToneEngine implements AudioBufferRenderer, DS
     private boolean mReverbEnabled;
 
     public ToneEngineDSP(int pSamplingRate,
-                         int pAudioblockSize,
+                         int pAudioBlockSize,
                          int pOutputDeviceID,
                          int pOutputChannels,
                          int pNumberOfInstruments) {
@@ -73,13 +73,14 @@ public class ToneEngineDSP extends ToneEngine implements AudioBufferRenderer, DS
         mPan.set_pan_type(Wellen.PAN_SINE_LAW);
 
         if (pOutputDeviceID != NO_AUDIO_DEVICE && pOutputChannels > 0) {
-            mAudioPlayer = new AudioBufferManager(this,
-                                                  pSamplingRate,
-                                                  pAudioblockSize,
-                                                  pOutputDeviceID,
-                                                  pOutputChannels,
-                                                  0,
-                                                  0);
+            AudioDeviceConfiguration mConfig = new AudioDeviceConfiguration();
+            mConfig.sample_rate = pSamplingRate;
+            mConfig.sample_buffer_size = pAudioBlockSize;
+            mConfig.output_device = pOutputDeviceID;
+            mConfig.number_of_output_channels = pOutputChannels;
+            mConfig.input_device = 0;
+            mConfig.number_of_input_channels = 0;
+            mAudioPlayer = new AudioBufferManager(this, mConfig);
         } else {
             mAudioPlayer = null;
         }
@@ -319,9 +320,7 @@ public class ToneEngineDSP extends ToneEngine implements AudioBufferRenderer, DS
                 mSignal = new Signal();
             } else if (mInstrument.get_channels() > 2) {
                 if (VERBOSE) {
-                    System.err.println("+++ @WARNING " + getClass().getSimpleName() + ".audioblock(stereo) /" + " " +
-                                               "instruments with " + "more than 2 channels are " + "not supported in " +
-                                               "this tone engine. all extra channels are " + "ignored.");
+                    System.err.println("+++ @WARNING " + getClass().getSimpleName() + ".audioblock(stereo) /" + " " + "instruments with " + "more than 2 channels are " + "not supported in " + "this tone engine. all extra channels are " + "ignored.");
                 }
             }
             /* stereo -- more than 2 channels are ignored */

@@ -30,7 +30,7 @@ void draw() {
     stroke(0);
     ellipse(width * 0.5f, height * 0.5f, Tone.is_playing() ? 100 : 5, Tone.is_playing() ? 100 : 5);
     line(50, height * 0.1f, width - 50, height * 0.1f);
-    DSP.draw_buffer(g, width, height);
+    DSP.draw_buffers(g, width, height);
 }
 
 void keyPressed() {

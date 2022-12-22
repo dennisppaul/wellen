@@ -208,7 +208,8 @@ public class RRRecognizer {
         }
         lfreq = RRUtilities.logf(freq);
         while (lfreq < RRUtilities.lfreqs[0] - RRUtilities.LOG_D_NOTE * .5f) lfreq += RRUtilities.LOG_2;
-        while (lfreq >= RRUtilities.lfreqs[0] + RRUtilities.LOG_2 - RRUtilities.LOG_D_NOTE * .5f) lfreq -= RRUtilities.LOG_2;
+        while (lfreq >= RRUtilities.lfreqs[0] + RRUtilities.LOG_2 - RRUtilities.LOG_D_NOTE * .5f)
+            lfreq -= RRUtilities.LOG_2;
         mldf = RRUtilities.LOG_D_NOTE;
         for (i = 0; i < 12; i++) {
             ldf = RRUtilities.fabsf(lfreq - RRUtilities.lfreqs[i]);

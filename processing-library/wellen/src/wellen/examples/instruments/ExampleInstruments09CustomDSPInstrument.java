@@ -1,7 +1,16 @@
 package wellen.examples.instruments;
 
 import processing.core.PApplet;
-import wellen.*;
+import wellen.InstrumentDSP;
+import wellen.InstrumentDSPLibrary;
+import wellen.SampleDataSNARE;
+import wellen.Tone;
+import wellen.Wellen;
+import wellen.dsp.ADSR;
+import wellen.dsp.Reverb;
+import wellen.dsp.Sampler;
+import wellen.dsp.Signal;
+import wellen.dsp.Wavetable;
 
 public class ExampleInstruments09CustomDSPInstrument extends PApplet {
 
@@ -192,9 +201,9 @@ public class ExampleInstruments09CustomDSPInstrument extends PApplet {
             mLowerVCO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
             mVeryLowVCO = new Wavetable(DEFAULT_WAVETABLE_SIZE);
             mVeryLowVCO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
-            Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVESHAPE_TRIANGLE);
-            Wavetable.fill(mLowerVCO.get_wavetable(), Wellen.WAVESHAPE_SINE);
-            Wavetable.fill(mVeryLowVCO.get_wavetable(), Wellen.WAVESHAPE_SQUARE);
+            Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVEFORM_TRIANGLE);
+            Wavetable.fill(mLowerVCO.get_wavetable(), Wellen.WAVEFORM_SINE);
+            Wavetable.fill(mVeryLowVCO.get_wavetable(), Wellen.WAVEFORM_SQUARE);
         }
 
         public Signal output_signal() {
@@ -230,7 +239,7 @@ public class ExampleInstruments09CustomDSPInstrument extends PApplet {
         public CustomInstrumentKickDrum(int pID) {
             super(pID);
 
-            set_oscillator_type(Wellen.WAVESHAPE_SINE);
+            set_oscillator_type(Wellen.WAVEFORM_SINE);
             set_amplitude(0.5f);
             set_frequency(90);
 
@@ -319,11 +328,11 @@ public class ExampleInstruments09CustomDSPInstrument extends PApplet {
             set_detune(0.01f);
             set_spread(0.5f);
 
-            Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVESHAPE_TRIANGLE);
+            Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVEFORM_TRIANGLE);
 
             mVCOSecond = new Wavetable(DEFAULT_WAVETABLE_SIZE);
             mVCOSecond.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
-            Wavetable.fill(mVCOSecond.get_wavetable(), Wellen.WAVESHAPE_TRIANGLE);
+            Wavetable.fill(mVCOSecond.get_wavetable(), Wellen.WAVEFORM_TRIANGLE);
         }
 
         public float get_detune() {

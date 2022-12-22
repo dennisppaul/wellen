@@ -26,7 +26,7 @@ void draw() {
     final float mDelta = 1.0f / frameRate;
     noFill();
     stroke(0);
-    DSP.draw_buffer(g, width, height);
+    DSP.draw_buffers(g, width, height);
     for (CircleController c : mControllers) {
         c.draw();
         c.update(mDelta);

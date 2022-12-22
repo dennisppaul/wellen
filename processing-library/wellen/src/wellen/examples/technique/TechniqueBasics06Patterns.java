@@ -4,12 +4,12 @@ import processing.core.PApplet;
 import wellen.Beat;
 import wellen.Note;
 import wellen.Pattern;
-import wellen.Reverb;
 import wellen.Scale;
 import wellen.Sequencer;
 import wellen.Tone;
 import wellen.ToneEngineDSP;
 import wellen.Wellen;
+import wellen.dsp.Reverb;
 
 import static wellen.Wellen.LOOP_INFINITE;
 

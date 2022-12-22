@@ -27,7 +27,7 @@ void setup() {
     mRampFrequency.start();
     mWavetable = new Wavetable();
     mWavetable.set_amplitude(0.25f);
-    Wavetable.fill(mWavetable.get_wavetable(), Wellen.WAVESHAPE_SAWTOOTH);
+    Wavetable.fill(mWavetable.get_wavetable(), Wellen.WAVEFORM_SAWTOOTH);
     DSP.start(this);
 }
 

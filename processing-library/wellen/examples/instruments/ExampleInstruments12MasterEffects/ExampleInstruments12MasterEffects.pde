@@ -21,16 +21,18 @@ void setup() {
     Gain mGain = new Gain();
     mGain.set_gain(1.5f);
     mToneEngine.add_effect(mGain);
-    Tone.instrument().set_oscillator_type(Wellen.WAVESHAPE_SAWTOOTH);
+    Tone.instrument().set_oscillator_type(Wellen.WAVEFORM_SAWTOOTH);
 }
 
 void draw() {
     background(255);
     fill(0);
     ellipse(width * 0.5f, height * 0.5f, Tone.is_playing() ? 100 : 5, Tone.is_playing() ? 100 : 5);
-    Wellen.draw_buffer(getGraphics(), width, height,
-                       Tone.get_DSP_engine().get_buffer_left(),
-                       Tone.get_DSP_engine().get_buffer_left());
+    Wellen.draw_buffers(getGraphics(),
+                        width,
+                        height,
+                        Tone.get_DSP_engine().get_buffer_left(),
+                        Tone.get_DSP_engine().get_buffer_right());
 }
 
 void mousePressed() {

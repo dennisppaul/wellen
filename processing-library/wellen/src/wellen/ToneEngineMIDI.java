@@ -20,7 +20,6 @@
 package wellen;
 
 import java.util.ArrayList;
-import java.util.Timer;
 
 import static processing.core.PApplet.constrain;
 
@@ -118,10 +117,9 @@ public class ToneEngineMIDI extends ToneEngine {
         if (pInstrument instanceof InstrumentMIDI) {
             mInstruments.set(pInstrument.ID(), (InstrumentMIDI) pInstrument);
         } else {
-            System.err.println(
-            "+++ WARNING @" + getClass().getSimpleName() + ".replace_instrument(Instrument) / instrument must be" +
-            " of type `" + InstrumentMIDI.class.getSimpleName() +
-            "`");
+            System.err.println("+++ WARNING @" + getClass().getSimpleName() + ".replace_instrument(Instrument) / " +
+                                       "instrument must be" + " of type `" + InstrumentMIDI.class.getSimpleName() +
+                                       "`");
         }
     }
 
@@ -147,8 +145,7 @@ public class ToneEngineMIDI extends ToneEngine {
                 return mDevice;
             }
         }
-        System.err.println(
-        "+++ @" + ToneEngineMIDI.class.getSimpleName() + " / couldn't find MIDI device: " + pMidiOutputDeviceName);
+        System.err.println("+++ @" + ToneEngineMIDI.class.getSimpleName() + " / couldn't find MIDI device: " + pMidiOutputDeviceName);
         return "";
     }
 }

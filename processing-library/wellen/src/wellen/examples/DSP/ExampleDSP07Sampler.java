@@ -1,9 +1,9 @@
 package wellen.examples.DSP;
 
 import processing.core.PApplet;
-import wellen.DSP;
 import wellen.SampleDataSNARE;
-import wellen.Sampler;
+import wellen.dsp.DSP;
+import wellen.dsp.Sampler;
 
 public class ExampleDSP07Sampler extends PApplet {
 
@@ -38,7 +38,7 @@ public class ExampleDSP07Sampler extends PApplet {
 
     public void draw() {
         background(255);
-        DSP.draw_buffer(g, width, height);
+        DSP.draw_buffers(g, width, height);
         line(width * 0.5f, height * 0.5f + 5, width * 0.5f, height * 0.5f - 5);
     }
 

@@ -43,8 +43,8 @@ package wellen.extra.rakarrack;
 
 */
 
-import wellen.EffectMono;
-import wellen.EffectStereo;
+import wellen.dsp.EffectMono;
+import wellen.dsp.EffectStereo;
 
 import static wellen.extra.rakarrack.RRAnalogFilter.TYPE_HPF_2_POLE;
 import static wellen.extra.rakarrack.RRAnalogFilter.TYPE_LPF_2_POLE;
@@ -141,19 +141,18 @@ public class RRDistortion implements EffectMono, EffectStereo {
 
     public void setpreset(int npreset) {
         int[][] presets = {
-        //Overdrive 1
-        {84, 64, 35, 56, 40, TYPE_ARCTANGENT, 0, 6703, 21, 0, 0},
-        //Overdrive 2
-        {85, 64, 35, 29, 45, TYPE_ASYMETRIC, 0, 25040, 21, 0, 0},
-        //Distorsion 1
-        {0, 64, 0, 87, 14, 6, TYPE_ARCTANGENT, 3134, 157, 0, 1},
-        //Distorsion 2
-        {0, 64, 127, 87, 14, TYPE_ARCTANGENT, 1, 3134, 102, 0, 0},
-        //Distorsion 3
-        {0, 64, 127, 127, 12, TYPE_SIGMOID, 0, 5078, 56, 0, 1},
-        //Guitar Amp
-        {84, 64, 35, 63, 50, TYPE_POW, 0, 824, 21, 0, 0}
-        };
+                //Overdrive 1
+                {84, 64, 35, 56, 40, TYPE_ARCTANGENT, 0, 6703, 21, 0, 0},
+                //Overdrive 2
+                {85, 64, 35, 29, 45, TYPE_ASYMETRIC, 0, 25040, 21, 0, 0},
+                //Distorsion 1
+                {0, 64, 0, 87, 14, 6, TYPE_ARCTANGENT, 3134, 157, 0, 1},
+                //Distorsion 2
+                {0, 64, 127, 87, 14, TYPE_ARCTANGENT, 1, 3134, 102, 0, 0},
+                //Distorsion 3
+                {0, 64, 127, 127, 12, TYPE_SIGMOID, 0, 5078, 56, 0, 1},
+                //Guitar Amp
+                {84, 64, 35, 63, 50, TYPE_POW, 0, 824, 21, 0, 0}};
         for (int n = 0; n < presets[npreset].length; n++) {
             changepar(n, presets[npreset][n]);
         }

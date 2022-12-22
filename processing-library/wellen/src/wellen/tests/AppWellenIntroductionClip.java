@@ -91,7 +91,7 @@ public class AppWellenIntroductionClip extends PApplet {
             note = pNote;
             instrument = pInstrument;
             playing = false;
-            Tone.instrument(instrument).set_oscillator_type(Wellen.WAVESHAPE_TRIANGLE);
+            Tone.instrument(instrument).set_oscillator_type(Wellen.WAVEFORM_TRIANGLE);
         }
 
         public void beat(int pBeatCount) {

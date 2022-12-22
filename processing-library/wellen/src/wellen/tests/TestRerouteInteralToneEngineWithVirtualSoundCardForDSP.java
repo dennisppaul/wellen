@@ -1,14 +1,14 @@
 package wellen.tests;
 
 import processing.core.PApplet;
-import wellen.DSP;
 import wellen.Tone;
 import wellen.Wellen;
+import wellen.dsp.DSP;
 
 /**
  * @deprecated do not use this method. it is just a proof of concept. depending on system configurations the output can
- * distorted. in order to post-process interal sounds from `ToneEngineInternal` see example
- * `ExampleDSP09ToneEngineInteralWithDSP` instead.
+ *         distorted. in order to post-process interal sounds from `ToneEngineInternal` see example
+ *         `ExampleDSP09ToneEngineInteralWithDSP` instead.
  */
 public class TestRerouteInteralToneEngineWithVirtualSoundCardForDSP extends PApplet {
 
@@ -38,10 +38,10 @@ public class TestRerouteInteralToneEngineWithVirtualSoundCardForDSP extends PApp
         background(255);
         stroke(0);
         final int mBufferSize = DSP.get_buffer_size();
-        if (DSP.get_buffer() != null) {
+        if (DSP.get_output_buffer() != null) {
             for (int i = 0; i < mBufferSize; i++) {
                 final float x = map(i, 0, mBufferSize, 0, width);
-                point(x, map(DSP.get_buffer()[i], -1, 1, 0, height));
+                point(x, map(DSP.get_output_buffer()[i], -1, 1, 0, height));
             }
         }
     }

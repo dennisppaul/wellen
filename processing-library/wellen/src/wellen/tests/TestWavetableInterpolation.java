@@ -1,9 +1,9 @@
 package wellen.tests;
 
 import processing.core.PApplet;
-import wellen.DSP;
-import wellen.Wavetable;
 import wellen.Wellen;
+import wellen.dsp.DSP;
+import wellen.dsp.Wavetable;
 
 public class TestWavetableInterpolation extends PApplet {
 
@@ -24,8 +24,9 @@ public class TestWavetableInterpolation extends PApplet {
 
     public void draw() {
         background(255);
-        DSP.draw_buffer(g, width, height);
-        mWavetable.set_interpolation(mousePressed ? Wellen.WAVESHAPE_INTERPOLATE_LINEAR : Wellen.WAVESHAPE_INTERPOLATE_NONE);
+        DSP.draw_buffers(g, width, height);
+        mWavetable.set_interpolation(mousePressed ? Wellen.WAVESHAPE_INTERPOLATE_LINEAR :
+                                             Wellen.WAVESHAPE_INTERPOLATE_NONE);
     }
 
     public void keyPressed() {
@@ -41,7 +42,7 @@ public class TestWavetableInterpolation extends PApplet {
                 break;
             case '4':
                 Wavetable.fill(mWavetable.get_wavetable(),
-                               Wellen.WAVESHAPE_SQUARE); /* alternative way to fill wavetable */
+                               Wellen.WAVEFORM_SQUARE); /* alternative way to fill wavetable */
                 break;
             case '5':
                 randomize(mWavetable.get_wavetable());

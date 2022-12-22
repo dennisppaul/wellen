@@ -142,7 +142,8 @@ public class EventReceiverMIDI implements MidiInListener {
         }
         try {
             mMethodClockSongPositionPointer = pPApplet.getClass().getDeclaredMethod(
-            METHOD_NAME_CLOCK_SONG_POSITION_POINTER, int.class);
+                    METHOD_NAME_CLOCK_SONG_POSITION_POINTER,
+                    int.class);
         } catch (NoSuchMethodException | SecurityException ex) {
             if (VERBOSE) {
                 ex.printStackTrace();

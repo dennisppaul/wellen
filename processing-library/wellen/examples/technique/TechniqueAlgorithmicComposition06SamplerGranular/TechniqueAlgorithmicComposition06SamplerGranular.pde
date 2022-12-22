@@ -21,7 +21,7 @@ void draw() {
     background(255);
     noFill();
     stroke(0);
-    DSP.draw_buffer(g, width, height);
+    DSP.draw_buffers(g, width, height);
     stroke(0, 31);
     Wellen.draw_buffer(g, width, height, mSampler.data());
     stroke(0);

@@ -67,7 +67,7 @@ void draw() {
     /* draw audio buffer */
     stroke(0, 63);
     noFill();
-    DSP.draw_buffer(g, width, height);
+    DSP.draw_buffers(g, width, height);
 }
 
 void mousePressed() {
@@ -88,7 +88,8 @@ void keyPressed() {
             mSampler.set_loop_out_normalized(map(mouseX, BORDER, width - BORDER, 0, 1));
             break;
         case 'z':
-            int[] mLoopPoints = Wellen.find_zero_crossings(mSampler.data(), mSampler.get_loop_in(),
+            int[] mLoopPoints = Wellen.find_zero_crossings(mSampler.data(),
+                                                           mSampler.get_loop_in(),
                                                            mSampler.get_loop_out());
             if (mLoopPoints[0] > 0 && mLoopPoints[1] > 0) {
                 mSampler.set_loop_in(mLoopPoints[0]);

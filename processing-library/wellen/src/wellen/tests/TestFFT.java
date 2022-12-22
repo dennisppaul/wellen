@@ -1,11 +1,11 @@
 package wellen.tests;
 
 import processing.core.PApplet;
-import wellen.DSP;
 import wellen.FFT;
 import wellen.Tone;
 import wellen.ToneEngineDSP;
 import wellen.Wellen;
+import wellen.dsp.DSP;
 
 public class TestFFT extends PApplet {
 
@@ -33,9 +33,9 @@ public class TestFFT extends PApplet {
         fill(0);
         stroke(0);
         ellipse(width * 0.5f, height * 0.5f, Tone.is_playing() ? 50 : 5, Tone.is_playing() ? 50 : 5);
-        DSP.draw_buffer(g, width, height);
+        DSP.draw_buffers(g, width, height);
 
-        float[] mExtremum = Wellen.get_extremum(DSP.get_buffer());
+        float[] mExtremum = Wellen.get_extremum(DSP.get_output_buffer());
         ellipse(width * 0.5f, map(mExtremum[0], -1.0f, 1.0f, 0, height), 10, 10);
         ellipse(width * 0.5f, map(mExtremum[1], -1.0f, 1.0f, 0, height), 20, 20);
 

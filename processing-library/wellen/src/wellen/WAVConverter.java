@@ -37,7 +37,9 @@ public class WAVConverter {
         mHeader = new ArrayList<>();
     }
 
-    public static byte[] convert_samples_to_bytes(float[][] pBuffer, int pChannels, int pBitsPerSample,
+    public static byte[] convert_samples_to_bytes(float[][] pBuffer,
+                                                  int pChannels,
+                                                  int pBitsPerSample,
                                                   int pSampleRate) {
         return convert_samples_to_bytes(pBuffer, pChannels, pBitsPerSample, pSampleRate, Wellen.WAV_FORMAT_PCM);
     }
@@ -49,7 +51,10 @@ public class WAVConverter {
         return mWAVConverter.getByteData();
     }
 
-    public static byte[] convert_samples_to_bytes(float[][] pBuffer, int pChannels, int pBitsPerSample, int pSampleRate,
+    public static byte[] convert_samples_to_bytes(float[][] pBuffer,
+                                                  int pChannels,
+                                                  int pBitsPerSample,
+                                                  int pSampleRate,
                                                   int pCompressionCode) {
         Info mInfo = new Info();
         mInfo.samples = pBuffer;
@@ -104,8 +109,8 @@ public class WAVConverter {
         }
         if (mWAVStruct.format != Wellen.WAV_FORMAT_PCM && mWAVStruct.format != Wellen.WAV_FORMAT_IEEE_FLOAT_32BIT) {
             System.err.println("+++ WARNING @" + WAVConverter.class.getSimpleName() + " / format not " + "supported. "
-                                       + "currently only `WAV_FORMAT_PCM` + `WAV_FORMAT_IEEE_FLOAT_32BIT` " + "works." +
-                                       " " + "(" + mWAVStruct.format + ")");
+                                       + "currently only `WAV_FORMAT_PCM` + `WAV_FORMAT_IEEE_FLOAT_32BIT` " + "works" +
+                                       "." + " " + "(" + mWAVStruct.format + ")");
         }
 
         /* data chunk */

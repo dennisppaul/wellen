@@ -1,10 +1,10 @@
 package wellen.examples.DSP;
 
 import processing.core.PApplet;
-import wellen.BeatDSP;
-import wellen.DSP;
 import wellen.Note;
 import wellen.Tone;
+import wellen.dsp.BeatDSP;
+import wellen.dsp.DSP;
 
 public class ExampleDSP11BeatDSP extends PApplet {
 
@@ -17,10 +17,8 @@ public class ExampleDSP11BeatDSP extends PApplet {
      * size is introduced ( e.g ( AUDIOBLOCK_SIZE=512 / SAMPLING_RATE=44100Hz ) = 0.01161SEC maximum timing error ).
      */
 
-    private final int[] mNotes = {Note.NOTE_C3, Note.NOTE_C4,
-                                  Note.NOTE_F3 - 1, Note.NOTE_F4 - 1,
-                                  Note.NOTE_A2, Note.NOTE_A3,
-                                  Note.NOTE_F4 - 1, Note.NOTE_F3 - 1};
+    private final int[] mNotes = {Note.NOTE_C3, Note.NOTE_C4, Note.NOTE_F3 - 1, Note.NOTE_F4 - 1, Note.NOTE_A2,
+                                  Note.NOTE_A3, Note.NOTE_F4 - 1, Note.NOTE_F3 - 1};
     private BeatDSP mBeat;
     private float mSignal;
 

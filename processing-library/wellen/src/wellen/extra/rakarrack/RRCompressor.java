@@ -53,7 +53,7 @@ package wellen.extra.rakarrack;
 
 */
 
-import wellen.EffectStereo;
+import wellen.dsp.EffectStereo;
 
 public class RRCompressor implements EffectStereo {
 
@@ -260,20 +260,20 @@ public class RRCompressor implements EffectStereo {
     public void setpreset(int npreset) {
         final int NUM_PRESETS = 7;
         int[][] presets = {
-        //2:1
-        {-30, 2, -6, 20, 120, 1, 0, 0, 0},
-        //4:1
-        {-26, 4, -8, 20, 120, 1, 10, 0, 0},
-        //8:1
-        {-24, 8, -12, 20, 35, 1, 30, 0, 0},
-        //Final Limiter
-        {-1, 15, 0, 5, 250, 0, 0, 1, 1},
-        //HarmonicEnhancer
-        {-20, 15, -3, 5, 50, 0, 0, 1, 1},
-        //Band CompBand
-        {-3, 2, 0, 5, 50, 1, 0, 1, 0},
-        //End CompBand
-        {-60, 2, 0, 10, 500, 1, 0, 1, 1},};
+                //2:1
+                {-30, 2, -6, 20, 120, 1, 0, 0, 0},
+                //4:1
+                {-26, 4, -8, 20, 120, 1, 10, 0, 0},
+                //8:1
+                {-24, 8, -12, 20, 35, 1, 30, 0, 0},
+                //Final Limiter
+                {-1, 15, 0, 5, 250, 0, 0, 1, 1},
+                //HarmonicEnhancer
+                {-20, 15, -3, 5, 50, 0, 0, 1, 1},
+                //Band CompBand
+                {-3, 2, 0, 5, 50, 1, 0, 1, 0},
+                //End CompBand
+                {-60, 2, 0, 10, 500, 1, 0, 1, 1},};
 
         for (int n = 0; n < presets[npreset].length; n++) {
             changepar(n, presets[npreset][n]);

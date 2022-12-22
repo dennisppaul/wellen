@@ -2,11 +2,11 @@ package wellen.examples.DSP;
 
 import processing.core.PApplet;
 import wellen.Beat;
-import wellen.DSP;
-import wellen.Envelope;
 import wellen.Note;
-import wellen.Wavetable;
 import wellen.Wellen;
+import wellen.dsp.DSP;
+import wellen.dsp.Envelope;
+import wellen.dsp.Wavetable;
 
 public class ExampleDSP14Ramp extends PApplet {
 
@@ -46,7 +46,7 @@ public class ExampleDSP14Ramp extends PApplet {
         mEnvelopeAmplitude.add_stage(0.0f);
 
         mWavetable = new Wavetable();
-        Wavetable.fill(mWavetable.get_wavetable(), Wellen.WAVESHAPE_SAWTOOTH);
+        Wavetable.fill(mWavetable.get_wavetable(), Wellen.WAVEFORM_SAWTOOTH);
 
         DSP.start(this);
         Beat.start(this, 120);

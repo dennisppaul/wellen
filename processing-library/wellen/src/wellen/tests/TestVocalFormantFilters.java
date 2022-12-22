@@ -1,14 +1,14 @@
 package wellen.tests;
 
 import processing.core.PApplet;
-import wellen.ADSR;
-import wellen.DSP;
-import wellen.DSPNodeProcess;
-import wellen.FilterBiquad;
-import wellen.Oscillator;
-import wellen.OscillatorFunction;
-import wellen.VowelFormantFilter;
 import wellen.Wellen;
+import wellen.dsp.ADSR;
+import wellen.dsp.DSP;
+import wellen.dsp.DSPNodeProcess;
+import wellen.dsp.FilterBiquad;
+import wellen.dsp.Oscillator;
+import wellen.dsp.OscillatorFunction;
+import wellen.dsp.VowelFormantFilter;
 
 import java.util.ArrayList;
 
@@ -28,14 +28,14 @@ public class TestVocalFormantFilters extends PApplet {
     public void setup() {
         mOsc.set_frequency(55);
         mOsc.set_amplitude(0.33f);
-        mOsc.set_waveform(Wellen.WAVESHAPE_SQUARE);
+        mOsc.set_waveform(Wellen.WAVEFORM_SQUARE);
 
         DSP.start(this);
     }
 
     public void draw() {
         background(255);
-        DSP.draw_buffer(g, width, height);
+        DSP.draw_buffers(g, width, height);
     }
 
     private static final int mFirstNum = '1';
@@ -83,13 +83,13 @@ public class TestVocalFormantFilters extends PApplet {
                     mFormantFilterDIY.set_vowel(VowelFilterBank.VOWEL_U);
                     break;
                 case '1':
-                    mOsc.set_waveform(Wellen.WAVESHAPE_SQUARE);
+                    mOsc.set_waveform(Wellen.WAVEFORM_SQUARE);
                     break;
                 case '2':
-                    mOsc.set_waveform(Wellen.WAVESHAPE_SAWTOOTH);
+                    mOsc.set_waveform(Wellen.WAVEFORM_SAWTOOTH);
                     break;
                 case '3':
-                    mOsc.set_waveform(Wellen.WAVESHAPE_NOISE);
+                    mOsc.set_waveform(Wellen.WAVEFORM_NOISE);
                     break;
             }
 
@@ -103,6 +103,7 @@ public class TestVocalFormantFilters extends PApplet {
             mADSR.stop();
         }
     }
+
     private static final boolean USE_FIXED_FILTER = true;
 
     public void audioblock(float[] pOutputSignal) {

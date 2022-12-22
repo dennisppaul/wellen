@@ -1,9 +1,9 @@
 package wellen.examples.technique;
 
 import processing.core.PApplet;
-import wellen.DSP;
-import wellen.Sampler;
 import wellen.Wellen;
+import wellen.dsp.DSP;
+import wellen.dsp.Sampler;
 
 import java.util.ArrayList;
 
@@ -29,7 +29,7 @@ public class TechniqueAlgorithmicComposition06SamplerGranular extends PApplet {
         background(255);
         noFill();
         stroke(0);
-        DSP.draw_buffer(g, width, height);
+        DSP.draw_buffers(g, width, height);
         stroke(0, 31);
         Wellen.draw_buffer(g, width, height, mSampler.data());
 

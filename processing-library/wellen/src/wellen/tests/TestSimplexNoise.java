@@ -1,8 +1,8 @@
 package wellen.tests;
 
 import processing.core.PApplet;
-import wellen.Noise;
 import wellen.Wellen;
+import wellen.dsp.Noise;
 
 public class TestSimplexNoise extends PApplet {
     private Noise mNoise;

@@ -131,10 +131,8 @@ public class ToneEngineOSC extends ToneEngine {
         if (pInstrument instanceof InstrumentOSC) {
             mInstruments.set(pInstrument.ID(), (InstrumentOSC) pInstrument);
         } else {
-            System.err.println(
-            "+++ WARNING @" + getClass().getSimpleName() + ".replace_instrument(Instrument) / instrument must be" +
-            " of type `" + InstrumentOSC.class.getSimpleName() +
-            "`");
+            System.err.println("+++ WARNING @" + getClass().getSimpleName() + ".replace_instrument(Instrument) / " +
+                                       "instrument must be" + " of type `" + InstrumentOSC.class.getSimpleName() + "`");
         }
     }
 }

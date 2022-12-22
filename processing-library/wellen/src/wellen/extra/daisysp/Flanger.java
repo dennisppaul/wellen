@@ -6,9 +6,9 @@ import static wellen.extra.daisysp.DaisySP.fmin;
 
 /**
  * @brief Flanging Audio Effect
- * <p>
- * Generates a modulating phase shifted copy of a signal, and recombines with the original to create a 'flanging' sound
- * effect.
+ *         <p>
+ *         Generates a modulating phase shifted copy of a signal, and recombines with the original to create a
+ *         'flanging' sound effect.
  */
 public class Flanger {
     /**

@@ -1,10 +1,10 @@
 package wellen.tests;
 
 import processing.core.PApplet;
-import wellen.DSP;
 import wellen.Tone;
 import wellen.ToneEngineDSP;
 import wellen.Wellen;
+import wellen.dsp.DSP;
 import wellen.extra.rakarrack.RRRecognizer;
 
 import static wellen.extra.rakarrack.RRUtilities.memcpy;
@@ -22,7 +22,7 @@ public class TestNoteRecognizer extends PApplet {
         mRecognize = new RRRecognizer(0.6f);
         mToneEngine = Tone.start(Wellen.TONE_ENGINE_INTERNAL_WITH_NO_OUTPUT);
         mToneEngine.instrument().enable_ADSR(false);
-        mToneEngine.instrument().set_oscillator_type(Wellen.WAVESHAPE_SINE);
+        mToneEngine.instrument().set_oscillator_type(Wellen.WAVEFORM_SINE);
 
         DSP.start(this, 2, 1);
         textFont(createFont("Courier", 10));

@@ -4,7 +4,7 @@ import wellen.*;
  * this example demonstrates how to build a composition with tracks and modules.
  */
 
-final DSPTrack mMaster = new DSPTrack();
+final Track mMaster = new Track();
 
 final ModuleToneEngine mModuleBleepBleep = new ModuleToneEngine();
 
@@ -23,7 +23,7 @@ void setup() {
 
 void draw() {
     background(255);
-    DSP.draw_buffer_stereo(g, width, height);
+    DSP.draw_buffers(g, width, height);
 }
 
 void beat(int pBeat) {
@@ -38,7 +38,7 @@ void audioblock(float[] pOutputSignalLeft, float[] pOutputSignalRight) {
     }
 }
 
-static class ModuleToneEngine extends DSPModule {
+static class ModuleToneEngine extends Module {
     
 final ToneEngineDSP mToneEngine;
     
@@ -54,9 +54,9 @@ Signal output_signal() {
         return mToneEngine.output_signal();
     }
     
-void beat(int pBeat) {
-        if (pBeat % (PPQN / 4) == 0) {
-            int mBeat = pBeat / PPQN;
+void beat(int beat) {
+        if (beat % (PPQN / 4) == 0) {
+            int mBeat = beat / PPQN;
             if ((get_loop_count(mBeat) % 8) < 4) {
                 mToneEngine.instrument(0);
                 mToneEngine.note_on(48 + (mBeat % 4) * 12, 70, 0.1f);
@@ -77,7 +77,7 @@ void beat(int pBeat) {
     }
 }
 
-class ModuleOhhhhUhh extends DSPModule {
+class ModuleOhhhhUhh extends Module {
     
 final Oscillator mOSC = new OscillatorFunction();
     
@@ -91,7 +91,7 @@ final float mBaseFreq = Note.note_to_frequency(12);
     
 ModuleOhhhhUhh() {
         mOSC.set_frequency(mBaseFreq);
-        mOSC.set_waveform(Wellen.WAVESHAPE_SQUARE);
+        mOSC.set_waveform(Wellen.WAVEFORM_SQUARE);
         mOSC.set_amplitude(0.0f);
         mFormantFilter.set_vowel(VowelFormantFilter.VOWEL_O);
     }
@@ -100,11 +100,11 @@ Signal output_signal() {
         return Signal.create(mFormantFilter.process(mOSC.output()));
     }
     
-void beat(int pBeat) {
-        mOSC.set_frequency(mBaseFreq + noise(pBeat * mNoiseScale) * 6 - 3);
+void beat(int beat) {
+        mOSC.set_frequency(mBaseFreq + noise(beat * mNoiseScale) * 6 - 3);
         final int mPhase = PPQN * 16;
-        if (Loop.before(pBeat / mPhase, 3, 4)) {
-            float mAmp = (pBeat % mPhase) / (mPhase * 0.5f);
+        if (Loop.before(beat / mPhase, 3, 4)) {
+            float mAmp = (beat % mPhase) / (mPhase * 0.5f);
             mAmp -= 1.0f;
             mAmp = abs(mAmp);
             mAmp = 1.0f - mAmp;
@@ -115,11 +115,11 @@ void beat(int pBeat) {
         }
         Loop mLoop = new Loop();
         mLoop.set_length(PPQN * 4);
-        if (mLoop.event(pBeat, 0)) {
+        if (mLoop.event(beat, 0)) {
             mFormantFilter.set_vowel(VowelFormantFilter.VOWEL_O);
-        } else if (mLoop.event(pBeat, PPQN * 2)) {
+        } else if (mLoop.event(beat, PPQN * 2)) {
             mFormantFilter.set_vowel(VowelFormantFilter.VOWEL_A);
-        } else if (mLoop.event(pBeat, PPQN * 3)) {
+        } else if (mLoop.event(beat, PPQN * 3)) {
             mFormantFilter.set_vowel(VowelFormantFilter.VOWEL_U);
         }
     }

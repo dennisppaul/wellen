@@ -1,9 +1,9 @@
 package wellen.examples.DSP;
 
 import processing.core.PApplet;
-import wellen.DSP;
-import wellen.Wavetable;
 import wellen.Wellen;
+import wellen.dsp.DSP;
+import wellen.dsp.Wavetable;
 
 public class ExampleDSP05Wavetable extends PApplet {
 
@@ -34,7 +34,7 @@ public class ExampleDSP05Wavetable extends PApplet {
 
     public void draw() {
         background(255);
-        DSP.draw_buffer(g, width, height);
+        DSP.draw_buffers(g, width, height);
     }
 
     public void mouseDragged() {

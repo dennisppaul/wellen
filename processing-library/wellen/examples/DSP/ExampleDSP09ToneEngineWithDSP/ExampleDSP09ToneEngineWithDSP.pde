@@ -31,7 +31,7 @@ void draw() {
     background(255);
     fill(0);
     ellipse(width * 0.5f, height * 0.5f, Tone.is_playing() ? 100 : 5, Tone.is_playing() ? 100 : 5);
-    DSP.draw_buffer(g, width, height);
+    DSP.draw_buffers(g, width, height);
 }
 
 void mousePressed() {

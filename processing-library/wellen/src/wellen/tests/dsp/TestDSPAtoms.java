@@ -1,7 +1,7 @@
 package wellen.tests.dsp;
 
 import processing.core.PApplet;
-import wellen.DSP;
+import wellen.dsp.DSP;
 
 public class TestDSPAtoms extends PApplet {
 
@@ -33,7 +33,7 @@ public class TestDSPAtoms extends PApplet {
     public void draw() {
         background(255);
         stroke(0);
-        DSP.draw_buffer_stereo(g, width, height);
+        DSP.draw_buffers(g, width, height);
     }
 
     public void mouseMoved() {

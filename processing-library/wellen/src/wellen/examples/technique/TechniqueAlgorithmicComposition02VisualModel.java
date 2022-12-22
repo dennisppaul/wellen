@@ -2,10 +2,10 @@ package wellen.examples.technique;
 
 import processing.core.PApplet;
 import processing.core.PVector;
-import wellen.DSP;
 import wellen.SampleDataSNARE;
-import wellen.Sampler;
 import wellen.Wellen;
+import wellen.dsp.DSP;
+import wellen.dsp.Sampler;
 
 import java.util.ArrayList;
 
@@ -37,7 +37,7 @@ public class TechniqueAlgorithmicComposition02VisualModel extends PApplet {
 
         noFill();
         stroke(0);
-        DSP.draw_buffer(g, width, height);
+        DSP.draw_buffers(g, width, height);
 
         for (CircleController c : mControllers) {
             c.draw();

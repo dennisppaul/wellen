@@ -1,10 +1,10 @@
 package wellen.examples.DSP;
 
 import processing.core.PApplet;
-import wellen.DSP;
-import wellen.Envelope;
-import wellen.Noise;
 import wellen.Wellen;
+import wellen.dsp.DSP;
+import wellen.dsp.Envelope;
+import wellen.dsp.Noise;
 
 public class ExampleDSP13Envelope extends PApplet {
 
@@ -42,7 +42,7 @@ public class ExampleDSP13Envelope extends PApplet {
 
     public void draw() {
         background(255);
-        DSP.draw_buffer(g, width, height);
+        DSP.draw_buffers(g, width, height);
         fill(0);
         ellipse(width * 0.33f,
                 map(mEnvelopeAmplitude.get_current_value(), 0.0f, 1.0f, height * 0.1f, height * 0.9f),

@@ -7,10 +7,10 @@ import static wellen.extra.daisysp.Pluck.PLUCK_MODE_RECURSIVE;
  * @author shensley
  * @brief Simplified Pseudo-Polyphonic Pluck Voice
  * @date Added**: March 2020
- * <p>
- * Template Based Pluck Voice, with configurable number of voices and simple pseudo-polyphony.
- * <p>
- * DC Blocking included to prevent biases from causing unwanted saturation distortion.
+ *         <p>
+ *         Template Based Pluck Voice, with configurable number of voices and simple pseudo-polyphony.
+ *         <p>
+ *         DC Blocking included to prevent biases from causing unwanted saturation distortion.
  */
 
 public class PolyPluck {

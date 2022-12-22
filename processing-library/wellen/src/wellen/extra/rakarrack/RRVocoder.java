@@ -42,7 +42,7 @@ package wellen.extra.rakarrack;
 
 */
 
-import wellen.EffectStereo;
+import wellen.dsp.EffectStereo;
 
 import static wellen.Wellen.clamp;
 
@@ -280,14 +280,14 @@ public class RRVocoder implements EffectStereo {
     public void setpreset(int npreset) {
         final int NUM_PRESETS = 4;
         final int[][] presets = {
-        //Vocoder 1
-        {0, 64, 10, 70, 70, 40, 0},
-        //Vocoder 2
-        {0, 64, 14, 80, 70, 40, 32},
-        //Vocoder 3
-        {0, 64, 20, 90, 70, 40, 64},
-        //Vocoder 4
-        {0, 64, 30, 100, 70, 40, 127}};
+                //Vocoder 1
+                {0, 64, 10, 70, 70, 40, 0},
+                //Vocoder 2
+                {0, 64, 14, 80, 70, 40, 32},
+                //Vocoder 3
+                {0, 64, 20, 90, 70, 40, 64},
+                //Vocoder 4
+                {0, 64, 30, 100, 70, 40, 127}};
 
         for (int n = 0; n < presets[npreset].length; n++) {
             changepar(n, presets[npreset][n]);

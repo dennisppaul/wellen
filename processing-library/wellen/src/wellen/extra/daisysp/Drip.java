@@ -5,10 +5,10 @@ package wellen.extra.daisysp;
  * @author Perry Cook
  * @brief Imitates the sound of dripping water via Physical Modeling Synthesis.
  * @date 2000
- * <p>
- * Ported from soundpipe by Ben Sergentanis, May 2020
- * <p>
- * TODO(does not sound good … might be something fishy with the random functions)
+ *         <p>
+ *         Ported from soundpipe by Ben Sergentanis, May 2020
+ *         <p>
+ *         TODO(does not sound good … might be something fishy with the random functions)
  */
 public class Drip {
 
@@ -24,10 +24,11 @@ public class Drip {
     private static final float MAX_SHAKE = 2000.0f;
 
     private float gains0_, gains1_, gains2_, kloop_, dettack_, num_tubes_, damp_, shake_max_, freq_, freq1_, freq2_,
-    amp_, snd_level_, outputs00_, outputs01_, outputs10_, outputs11_, outputs20_, outputs21_, total_energy_,
-    center_freqs0_, center_freqs1_, center_freqs2_, num_objects_save_, sound_decay_, system_decay_, finalZ0_,
-    finalZ1_, finalZ2_, coeffs01_, coeffs00_, coeffs11_, coeffs10_, coeffs21_, coeffs20_, shake_energy_, shake_damp_,
-    shake_max_save_, num_objects_, sample_rate_, res_freq0_, res_freq1_, res_freq2_, inputs1_, inputs2_;
+            amp_, snd_level_, outputs00_, outputs01_, outputs10_, outputs11_, outputs20_, outputs21_, total_energy_,
+            center_freqs0_, center_freqs1_, center_freqs2_, num_objects_save_, sound_decay_, system_decay_, finalZ0_,
+            finalZ1_, finalZ2_, coeffs01_, coeffs00_, coeffs11_, coeffs10_, coeffs21_, coeffs20_, shake_energy_,
+            shake_damp_, shake_max_save_, num_objects_, sample_rate_, res_freq0_, res_freq1_, res_freq2_, inputs1_,
+            inputs2_;
 
     private boolean mTrigger = false;
 

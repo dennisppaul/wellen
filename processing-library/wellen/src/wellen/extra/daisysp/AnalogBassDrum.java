@@ -4,9 +4,9 @@ package wellen.extra.daisysp;
  * @author Ben Sergentanis
  * @date Jan 2021
  * @brief 808 bass drum model, revisited.
- * <p>
- * Ported from pichenettes/eurorack/plaits/dsp/drums/analog_bass_drum.h to an independent module. Original code written
- * by Emilie Gillet in 2016.
+ *         <p>
+ *         Ported from pichenettes/eurorack/plaits/dsp/drums/analog_bass_drum.h to an independent module. Original code
+ *         written by Emilie Gillet in 2016.
  */
 public class AnalogBassDrum {
 

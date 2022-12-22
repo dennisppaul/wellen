@@ -1,9 +1,9 @@
 package wellen.examples.instruments;
 
 import processing.core.PApplet;
-import wellen.Gain;
 import wellen.Tone;
 import wellen.ToneEngineDSP;
+import wellen.dsp.Gain;
 
 public class ExampleInstruments11MasterVolume extends PApplet {
 

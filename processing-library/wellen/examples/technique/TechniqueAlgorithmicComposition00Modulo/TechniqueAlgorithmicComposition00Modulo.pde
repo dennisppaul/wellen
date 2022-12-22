@@ -8,7 +8,7 @@ void settings() {
 }
 
 void setup() {
-    Tone.instrument().set_oscillator_type(Wellen.WAVESHAPE_TRIANGLE);
+    Tone.instrument().set_oscillator_type(Wellen.WAVEFORM_TRIANGLE);
     Beat.start(this, 120 * 4);
 }
 

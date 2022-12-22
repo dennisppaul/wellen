@@ -1,9 +1,9 @@
 package wellen.examples.external;
 
 import processing.core.PApplet;
-import wellen.DSP;
-import wellen.Sampler;
 import wellen.Wellen;
+import wellen.dsp.DSP;
+import wellen.dsp.Sampler;
 
 public class ExampleExternal09ImportExportWAV extends PApplet {
 
@@ -54,7 +54,7 @@ public class ExampleExternal09ImportExportWAV extends PApplet {
         background(255);
         stroke(0);
         Wellen.draw_buffer(g, width, height, mSampler.data());
-        DSP.draw_buffer(g, width, height);
+        DSP.draw_buffers(g, width, height);
     }
 
     public void audioblock(float[] pOutputSignal) {

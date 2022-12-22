@@ -1,13 +1,9 @@
 import wellen.*; 
 
 
-final String mInput = "RADIO, LIVE TRANSMISSION.\n" +
-                              "RADIO, LIVE TRANSMISSION.\n" +
-                              "LISTEN TO THE SILENCE, LET IT RING ON.\n" +
-                              "EYES, DARK GREY LENSES FRIGHTENED OF THE SUN.\n" +
-                              "WE WOULD HAVE A FINE TIME LIVING IN THE NIGHT,\n" +
-                              "LEFT TO BLIND DESTRUCTION,\n" +
-                              "WAITING FOR OUR SIGHT.";
+final String mInput = "RADIO, LIVE TRANSMISSION.\n" + "RADIO, LIVE TRANSMISSION.\n" + "LISTEN TO THE " +
+        "SILENCE, LET IT RING ON.\n" + "EYES, DARK GREY LENSES FRIGHTENED OF THE SUN.\n" + "WE WOULD HAVE A FINE "
+        + "TIME LIVING IN THE NIGHT,\n" + "LEFT TO BLIND DESTRUCTION,\n" + "WAITING FOR OUR SIGHT.";
 
 final int mBaseNote = Note.NOTE_C3;
 
@@ -32,8 +28,8 @@ void settings() {
 
 void setup() {
     textFont(createFont("Helvetica-Bold", 10));
-    Tone.instrument(1).set_oscillator_type(Wellen.WAVESHAPE_SAWTOOTH);
-    Tone.instrument(2).set_oscillator_type(Wellen.WAVESHAPE_SINE);
+    Tone.instrument(1).set_oscillator_type(Wellen.WAVEFORM_SAWTOOTH);
+    Tone.instrument(2).set_oscillator_type(Wellen.WAVEFORM_SINE);
     Beat.start(this, 240);
 }
 

@@ -18,40 +18,25 @@ void settings() {
 void setup() {
     mSAM = new SAM();
     mSAM.set_sing_mode(true);
-    mWords = new TextFragment[]{
-    new TextFragment("EHEHEHEH", Note.NOTE_C3),
-    new TextFragment("    ", Note.NOTE_C3),
-    new TextFragment("VERIY", Note.NOTE_D3),
-    new TextFragment("     ", Note.NOTE_D3),
-    new TextFragment("TAYM", Note.NOTE_D3 + 1),
-    new TextFragment("AY", Note.NOTE_F3),
-    new TextFragment("  ", Note.NOTE_F3),
-    new TextFragment("SIYIY", Note.NOTE_G3),
-    new TextFragment("     ", Note.NOTE_G3),
-    new TextFragment("YUW", Note.NOTE_F3),
-    new TextFragment("   ", Note.NOTE_F3),
-    new TextFragment("FAOAOAOAO", Note.NOTE_D3 + 1),
-    new TextFragment("   ", Note.NOTE_D3 + 1),
-    new TextFragment("LIHNX", Note.NOTE_F3),
-    new TextFragment("     ", Note.NOTE_F3),
-    new TextFragment("AY", Note.NOTE_C3),
-    new TextFragment("GEHT", Note.NOTE_A3 + 1),
-    new TextFragment("    ", Note.NOTE_A3 + 1),
-    new TextFragment("DAWN", Note.NOTE_G3 + 1),
-    new TextFragment("    ", Note.NOTE_G3 + 1),
-    new TextFragment("AAN", Note.NOTE_G3),
-    new TextFragment("MAY", Note.NOTE_F3),
-    new TextFragment("   ", Note.NOTE_F3),
-    new TextFragment("NIYZ", Note.NOTE_D3 + 1),
-    new TextFragment("    ", Note.NOTE_D3 + 1),
-    new TextFragment("AEND", Note.NOTE_F3),
-    new TextFragment("    ", Note.NOTE_F3),
-    new TextFragment("PREY", Note.NOTE_C3),
-    new TextFragment("    ", Note.NOTE_C3),
-    new TextFragment("", Note.NOTE_C3),
-    new TextFragment("", Note.NOTE_C3),
-    new TextFragment("", Note.NOTE_C3),
-    };
+    mWords = new TextFragment[]{new TextFragment("EHEHEHEH", Note.NOTE_C3), new TextFragment("    ", Note.NOTE_C3),
+                                new TextFragment("VERIY", Note.NOTE_D3), new TextFragment("     ", Note.NOTE_D3),
+                                new TextFragment("TAYM", Note.NOTE_D3 + 1), new TextFragment("AY", Note.NOTE_F3),
+                                new TextFragment("  ", Note.NOTE_F3), new TextFragment("SIYIY", Note.NOTE_G3),
+                                new TextFragment("     ", Note.NOTE_G3), new TextFragment("YUW", Note.NOTE_F3),
+                                new TextFragment("   ", Note.NOTE_F3), new TextFragment("FAOAOAOAO",
+                                                                                        Note.NOTE_D3 + 1),
+                                new TextFragment("   ", Note.NOTE_D3 + 1), new TextFragment("LIHNX", Note.NOTE_F3),
+                                new TextFragment("     ", Note.NOTE_F3), new TextFragment("AY", Note.NOTE_C3),
+                                new TextFragment("GEHT", Note.NOTE_A3 + 1), new TextFragment("    ",
+                                                                                             Note.NOTE_A3 + 1),
+                                new TextFragment("DAWN", Note.NOTE_G3 + 1), new TextFragment("    ",
+                                                                                             Note.NOTE_G3 + 1),
+                                new TextFragment("AAN", Note.NOTE_G3), new TextFragment("MAY", Note.NOTE_F3),
+                                new TextFragment("   ", Note.NOTE_F3), new TextFragment("NIYZ", Note.NOTE_D3 + 1),
+                                new TextFragment("    ", Note.NOTE_D3 + 1), new TextFragment("AEND", Note.NOTE_F3),
+                                new TextFragment("    ", Note.NOTE_F3), new TextFragment("PREY", Note.NOTE_C3),
+                                new TextFragment("    ", Note.NOTE_C3), new TextFragment("", Note.NOTE_C3),
+                                new TextFragment("", Note.NOTE_C3), new TextFragment("", Note.NOTE_C3),};
     // | 1     |       | 2     |       | 3     |       | 4     |       |
     // | EH----------- | VERIY-------- | TAYM- | AY ---------- | SIY----
     // | 5     |       | 6     |       | 7     |       | 8     |       |
@@ -75,7 +60,7 @@ static class TextFragment {
 void draw() {
     background(255);
     stroke(0);
-    DSP.draw_buffer(g, width, height);
+    DSP.draw_buffers(g, width, height);
 }
 
 void beat(int pBeatCount) {

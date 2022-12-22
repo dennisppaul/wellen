@@ -42,8 +42,8 @@ package wellen.extra.rakarrack;
 
 */
 
-import wellen.EffectMono;
-import wellen.EffectStereo;
+import wellen.dsp.EffectMono;
+import wellen.dsp.EffectStereo;
 
 public class RREchotron implements EffectMono, EffectStereo {
     public static final int PARAM_VOLUME = 0;
@@ -72,43 +72,39 @@ public class RREchotron implements EffectMono, EffectStereo {
     public static final int NUM_PRESETS = 5;
     private static final int ECHOTRON_F_SIZE = 32;      //Allow up to 150 points in the file
     private static final int ECHOTRON_MAXFILTERS = 32;  //filters available
-    private static final float[][][] FILE_PRESETS = {
-    {
-    //    #Filter Delay   #LFO Tempo rate adjustment #Filter resonance mode
-    {0.5f, 1.0f, 1},
-    //    #Pan    Time    Level   LP      BP      HP      Freq    Q       Stages
-    {-1.0f, 0.5f, 1.0f, 0.5f, -0.25f, 0.125f, 550f, 4.0f, 1},
-    {1.0f, 0.75f, 1.0f, 0.0f, -0.25f, 0.75f, 950f, 4.0f, 1},
-    {-0.85f, 1.0f, .707f, 0.5f, -0.25f, 0.125f, 750f, 4.0f, 1},
-    {0.85f, 1.25f, .707f, 0.0f, -0.25f, 0.5f, 750f, 4.0f, 1},
-    }, // (1)
+    private static final float[][][] FILE_PRESETS = {{
+                                                             //    #Filter Delay   #LFO Tempo rate adjustment #Filter
+                                                             //    resonance mode
+                                                             {0.5f, 1.0f, 1},
+                                                             //    #Pan    Time    Level   LP      BP      HP
+                                                             //    Freq    Q       Stages
+                                                             {-1.0f, 0.5f, 1.0f, 0.5f, -0.25f, 0.125f, 550f, 4.0f, 1},
+                                                             {1.0f, 0.75f, 1.0f, 0.0f, -0.25f, 0.75f, 950f, 4.0f, 1},
+                                                             {-0.85f, 1.0f, .707f, 0.5f, -0.25f, 0.125f, 750f, 4.0f, 1},
+                                                             {0.85f, 1.25f, .707f, 0.0f, -0.25f, 0.5f, 750f, 4.0f, 1},},
+                                                     // (1)
 
-    {
-    {0.5f, 0.5f, 0},
-    {-1.0f, 0.10f, 1.0f, 0.5f, -0.25f, 0.125f, 550f, 4.6f, 1},
-    {1.0f, 0.20f, 1.0f, 0.0f, -0.25f, 0.75f, 950f, 4.6f, 1},
-    {-0.5f, 0.30f, 1.0f, 0.5f, -0.25f, 0.125f, 750f, 4.6f, 1},
-    }, // (2)
+                                                     {{0.5f, 0.5f, 0},
+                                                      {-1.0f, 0.10f, 1.0f, 0.5f, -0.25f, 0.125f, 550f, 4.6f, 1},
+                                                      {1.0f, 0.20f, 1.0f, 0.0f, -0.25f, 0.75f, 950f, 4.6f, 1},
+                                                      {-0.5f, 0.30f, 1.0f, 0.5f, -0.25f, 0.125f, 750f, 4.6f, 1},},
+                                                     // (2)
 
-    {
-    {0.5f, 0.5f, 0},
-    {0.0f, 0.00006f, -1.75f, 0.5f, 0.0f, 0.0f, 10000f, 0.5f, 1},
-    {0.0f, 0.00012f, 2.0f, 0.0f, 0.0f, 0.5f, 5000f, 0.5f, 1},
-    {0.5f, 0.0001f, 0.5f, 0.0f, -0.25f, 0.5f, 2500f, 1.0f, 1},
-    {-0.5f, 0.00011f, 0.5f, 0.5f, -0.25f, 0.0f, 2000f, 1.0f, 1},
-    {0.0f, 0.375f, 1.0f, 0.0f, -0.25f, 0.5f, 450f, 4.6f, 1},
-    }, // (3)
+                                                     {{0.5f, 0.5f, 0},
+                                                      {0.0f, 0.00006f, -1.75f, 0.5f, 0.0f, 0.0f, 10000f, 0.5f, 1},
+                                                      {0.0f, 0.00012f, 2.0f, 0.0f, 0.0f, 0.5f, 5000f, 0.5f, 1},
+                                                      {0.5f, 0.0001f, 0.5f, 0.0f, -0.25f, 0.5f, 2500f, 1.0f, 1},
+                                                      {-0.5f, 0.00011f, 0.5f, 0.5f, -0.25f, 0.0f, 2000f, 1.0f, 1},
+                                                      {0.0f, 0.375f, 1.0f, 0.0f, -0.25f, 0.5f, 450f, 4.6f, 1},}, // (3)
 
-    {
-    {0.5f, 0.5f, 0},
-    {0.0f, 0.00025f, 0.95f, 0.0f, 1.0f, 0.0f, 1000f, 30f, 1},
-    {0.0f, 0.000125f, -0.95f, 0.0f, 1.0f, 0.0f, 1000f, 30f, 1},
-    {0.0f, 0.0000625f, 0.95f, 0.0f, 1.0f, 0.0f, 2000f, 30f, 1},
-    {0.0f, 0.000015f, 0.95f, 0.0f, 1.0f, 0.0f, 6000f, 30f, 1},
-    {0.0f, 0.0000075f, -0.95f, 0.0f, 1.0f, 0.0f, 8000f, 30f, 1},
-    {0.0f, 0.0000032f, 0.95f, 0.0f, 1.0f, 0.0f, 16000f, 30f, 1},
-    {0.0f, 0.0005f, -0.95f, 0.0f, 1.0f, 0.0f, 500f, 30f, 1},
-    }, // (4)
+                                                     {{0.5f, 0.5f, 0},
+                                                      {0.0f, 0.00025f, 0.95f, 0.0f, 1.0f, 0.0f, 1000f, 30f, 1},
+                                                      {0.0f, 0.000125f, -0.95f, 0.0f, 1.0f, 0.0f, 1000f, 30f, 1},
+                                                      {0.0f, 0.0000625f, 0.95f, 0.0f, 1.0f, 0.0f, 2000f, 30f, 1},
+                                                      {0.0f, 0.000015f, 0.95f, 0.0f, 1.0f, 0.0f, 6000f, 30f, 1},
+                                                      {0.0f, 0.0000075f, -0.95f, 0.0f, 1.0f, 0.0f, 8000f, 30f, 1},
+                                                      {0.0f, 0.0000032f, 0.95f, 0.0f, 1.0f, 0.0f, 16000f, 30f, 1},
+                                                      {0.0f, 0.0005f, -0.95f, 0.0f, 1.0f, 0.0f, 500f, 30f, 1},}, // (4)
     };
     private int Filenum;
     private int Pdepth;
@@ -387,17 +383,16 @@ public class RREchotron implements EffectMono, EffectStereo {
     public void setpreset(int npreset) {
         // load presets: 1,2+4 ( aka 0,1+3 )
         int[][] presets = {
-        //Summer
-        {64, 45, 34, 4, 0, 76, 3, 41, 0, 96, -13, 64, 1, 1, 1, 1},
-        //Ambience
-        {96, 64, 16, 4, 0, 180, 50, 64, 1, 96, -4, 64, 1, 0, 0, 0},
-        //Arranjer
-        {64, 64, 10, 4, 0, 400, 32, 64, 1, 96, -8, 64, 1, 0, 0, 0},
-        //Suction
-        {0, 47, 28, 8, 0, 92, 0, 64, 3, 32, 0, 64, 1, 1, 1, 1},
-        //SucFlange
-        {64, 36, 93, 8, 0, 81, 0, 64, 3, 32, 0, 64, 1, 0, 1, 1}
-        };
+                //Summer
+                {64, 45, 34, 4, 0, 76, 3, 41, 0, 96, -13, 64, 1, 1, 1, 1},
+                //Ambience
+                {96, 64, 16, 4, 0, 180, 50, 64, 1, 96, -4, 64, 1, 0, 0, 0},
+                //Arranjer
+                {64, 64, 10, 4, 0, 400, 32, 64, 1, 96, -8, 64, 1, 0, 0, 0},
+                //Suction
+                {0, 47, 28, 8, 0, 92, 0, 64, 3, 32, 0, 64, 1, 1, 1, 1},
+                //SucFlange
+                {64, 36, 93, 8, 0, 81, 0, 64, 3, 32, 0, 64, 1, 0, 1, 1}};
 
         for (int n = 0; n < presets[npreset].length; n++) {
             changepar(n, presets[npreset][n]);

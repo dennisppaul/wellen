@@ -132,7 +132,7 @@ public class Pattern extends Loop implements Loopable {
         final int mRelativePosition = get_relative_position(pTick);
         final int mLoopCount = get_loop_count(pTick);
         final boolean mIsLoopOK =
-        mLoopCount < get_loop() && mLoopCount >= 0 || ((get_loop() == NO_LOOP || get_out_point() == NO_OUTPOINT) && mRelativePosition == pLocalPosition);
+                mLoopCount < get_loop() && mLoopCount >= 0 || ((get_loop() == NO_LOOP || get_out_point() == NO_OUTPOINT) && mRelativePosition == pLocalPosition);
         final boolean mIsInpointOK = mRelativePosition >= 0;
         if (mIsLoopOK && mIsInpointOK) {
             return super.event(mRelativePosition, pLocalPosition);
@@ -172,32 +172,20 @@ public class Pattern extends Loop implements Loopable {
     /* ---------------------------------- TEST ---------------------------------- */
 
     @SuppressWarnings("SpellCheckingInspection")
-    private static final String TEST_RESULT_IDEAL = "CNT\tREL\tEVT\tLOP\n" + "---\n" + "0\t0\t+\t0\t\n" + "1\t1\t-\t0" +
-                                                    "\t\n" + "2\t2\t-\t0\t\n" + "3\t0\t+\t1\t\n" + "4\t1\t-\t1\t" +
-                                                    "\n" + "5\t2\t-\t1\t\n" + "6\t0\t-\t-1\t\n" + "7\t1\t-\t-1\t" +
-                                                    "\n" + "8\t2\t-\t-1\t\n" + "9\t0\t-\t-1\t\n" + "10\t1\t-\t-1" +
-                                                    "\t\n" + "11\t2\t-\t-1\t\n" + "---\n" + "0\t-5\t-\t-1\t\n" +
-                                                    "1\t-4\t-\t-1\t\n" + "2\t-3\t-\t-1\t\n" + "3\t-2\t-\t-1\t\n" + "4" +
-                                                    "\t-1\t-\t-1\t\n" + "5\t0\t-\t0\t\n" + "6\t1\t-\t0\t\n" + "7" +
-                                                    "\t2\t+\t0\t\n" + "8\t0\t-\t1\t\n" + "9\t1\t-\t1\t\n" + "10" +
-                                                    "\t2\t+\t1\t\n" + "11\t0\t-\t2\t\n" + "12\t1\t-\t2\t\n" + "13" +
-                                                    "\t2\t+\t2\t\n" + "14\t0\t-\t3\t\n" + "15\t1\t-\t3\t\n" + "16" +
-                                                    "\t2\t+\t3\t\n" + "17\t0\t-\t4\t\n" + "18\t1\t-\t4\t\n" + "19" +
-                                                    "\t2\t+\t4\t\n" + "---\n" + "0\t-7\t-\t-1\t\n" + "1\t-6\t-\t" +
-                                                    "-1\t\n" + "2\t-5\t-\t-1\t\n" + "3\t-4\t-\t-1\t\n" + "4\t-3\t" +
-                                                    "-\t-1\t\n" + "5\t-2\t-\t-1\t\n" + "6\t-1\t-\t-1\t\n" + "7\t0" +
-                                                    "\t+\t-1\t\n" + "8\t1\t-\t-1\t\n" + "9\t2\t-\t-1\t\n" + "10" +
-                                                    "\t3\t-\t-1\t\n" + "11\t4\t-\t-1\t\n" + "12\t5\t-\t-1\t\n" +
-                                                    "13\t6\t-\t-1\t\n" + "14\t7\t-\t-1\t\n" + "15\t8\t-\t-1\t\n" +
-                                                    "16\t9\t-\t-1\t\n" + "17\t10\t-\t-1\t\n" + "18\t11\t-\t-1\t\n"
-                                                    + "19\t12\t-\t-1\t\n" + "---\n" + "0\t-2\t-\t-1\t\n" + "1\t-1" +
-                                                    "\t-\t-1\t\n" + "2\t0\t+\t0\t\n" + "3\t1\t-\t0\t\n" + "4\t2\t" +
-                                                    "-\t0\t\n" + "5\t0\t-\t-1\t\n" + "6\t1\t-\t-1\t\n" + "7\t2\t" +
-                                                    "-\t-1\t\n" + "8\t0\t-\t-1\t\n" + "9\t1\t-\t-1\t\n" + "10\t2" +
-                                                    "\t-\t-1\t\n" + "11\t0\t-\t-1\t\n" + "---\n" + "0\t-2\t-\t-1" +
-                                                    "\t\n" + "1\t-1\t-\t-1\t\n" + "2\t0\t+\t-1\t\n" + "3\t1\t-\t" +
-                                                    "-1\t\n" + "4\t2\t-\t-1\t\n" + "5\t3\t-\t-1\t\n" + "6\t4\t-\t" +
-                                                    "-1\t\n" + "7\t5\t-\t-1\t\n";
+    private static final String TEST_RESULT_IDEAL = "CNT\tREL\tEVT\tLOP\n" + "---\n" + "0\t0\t+\t0\t\n" + "1\t1\t-\t0"
+            + "\t\n" + "2\t2\t-\t0\t\n" + "3\t0\t+\t1\t\n" + "4\t1\t-\t1\t" + "\n" + "5\t2\t-\t1\t\n" + "6\t0\t-\t-1" +
+            "\t\n" + "7\t1\t-\t-1\t" + "\n" + "8\t2\t-\t-1\t\n" + "9\t0\t-\t-1\t\n" + "10\t1\t-\t-1" + "\t\n" + "11" +
+            "\t2\t-\t-1\t\n" + "---\n" + "0\t-5\t-\t-1\t\n" + "1\t-4\t-\t-1\t\n" + "2\t-3\t-\t-1\t\n" + "3\t-2\t-\t-1" +
+            "\t\n" + "4" + "\t-1\t-\t-1\t\n" + "5\t0\t-\t0\t\n" + "6\t1\t-\t0\t\n" + "7" + "\t2\t+\t0\t\n" + "8\t0\t" +
+            "-\t1\t\n" + "9\t1\t-\t1\t\n" + "10" + "\t2\t+\t1\t\n" + "11\t0\t-\t2\t\n" + "12\t1\t-\t2\t\n" + "13" +
+            "\t2\t+\t2\t\n" + "14\t0\t-\t3\t\n" + "15\t1\t-\t3\t\n" + "16" + "\t2\t+\t3\t\n" + "17\t0\t-\t4\t\n" +
+            "18\t1\t-\t4\t\n" + "19" + "\t2\t+\t4\t\n" + "---\n" + "0\t-7\t-\t-1\t\n" + "1\t-6\t-\t" + "-1\t\n" + "2" +
+            "\t-5\t-\t-1\t\n" + "3\t-4\t-\t-1\t\n" + "4\t-3\t" + "-\t-1\t\n" + "5\t-2\t-\t-1\t\n" + "6\t-1\t-\t-1\t\n"
+            + "7\t0" + "\t+\t-1\t\n" + "8\t1\t-\t-1\t\n" + "9\t2\t-\t-1\t\n" + "10" + "\t3\t-\t-1\t\n" + "11\t4\t-\t" +
+            "-1\t\n" + "12\t5\t-\t-1\t\n" + "13\t6\t-\t-1\t\n" + "14\t7\t-\t-1\t\n" + "15\t8\t-\t-1\t\n" + "16\t9\t" +
+            "-\t-1\t\n" + "17\t10\t-\t-1\t\n" + "18\t11\t-\t-1\t\n" + "19\t12\t-\t-1\t\n" + "---\n" + "0\t-2\t-\t-1\t" +
+            "\n" + "1\t-1" + "\t-\t-1\t\n" + "2\t0\t+\t0\t\n" + "3\t1\t-\t0\t\n" + "4\t2\t" + "-\t0\t\n" + "5\t0\t-\t" +
+            "-1\t\n" + "6\t1\t-\t-1\t\n" + "7\t2\t" + "-\t-1\t\n" + "8\t0\t-\t-1\t\n" + "9\t1\t-\t-1\t\n" + "10\t2" + "\t-\t-1\t\n" + "11\t0\t-\t-1\t\n" + "---\n" + "0\t-2\t-\t-1" + "\t\n" + "1\t-1\t-\t-1\t\n" + "2\t0\t+\t-1\t\n" + "3\t1\t-\t" + "-1\t\n" + "4\t2\t-\t-1\t\n" + "5\t3\t-\t-1\t\n" + "6\t4\t-\t" + "-1\t\n" + "7\t5\t-\t-1\t\n";
 
     private static String TEST_RESULT = "";
 

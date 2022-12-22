@@ -3,10 +3,10 @@ package wellen.examples.instruments;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import processing.core.PVector;
-import wellen.ADSR;
 import wellen.Note;
 import wellen.Scale;
 import wellen.Tone;
+import wellen.dsp.ADSR;
 
 public class ExampleInstruments10ADSRwithGUI extends PApplet {
 

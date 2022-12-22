@@ -1,7 +1,12 @@
 package wellen.examples.DSP;
 
 import processing.core.PApplet;
-import wellen.*;
+import wellen.Note;
+import wellen.Tone;
+import wellen.Wellen;
+import wellen.dsp.DSP;
+import wellen.dsp.Trigger;
+import wellen.dsp.Wavetable;
 
 public class ExampleDSP08Trigger extends PApplet {
 
@@ -14,10 +19,8 @@ public class ExampleDSP08Trigger extends PApplet {
      * it is common to use a low-frequency oscillator (LFO) to generate the signal for the trigger.
      */
 
-    private final int[] mNotes = {Note.NOTE_C3, Note.NOTE_C4,
-                                  Note.NOTE_F3 - 1, Note.NOTE_F4 - 1,
-                                  Note.NOTE_A2, Note.NOTE_A3,
-                                  Note.NOTE_F4 - 1, Note.NOTE_F3 - 1};
+    private final int[] mNotes = {Note.NOTE_C3, Note.NOTE_C4, Note.NOTE_F3 - 1, Note.NOTE_F4 - 1, Note.NOTE_A2,
+                                  Note.NOTE_A3, Note.NOTE_F4 - 1, Note.NOTE_F3 - 1};
     private int mBeatCount;
 
     private Trigger mTrigger;
@@ -35,7 +38,8 @@ public class ExampleDSP08Trigger extends PApplet {
 
         mWavetable = new Wavetable(64); /* use wavetable as LFO */
         Wavetable.sine(mWavetable.get_wavetable());
-        mWavetable.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR); /* interpolate between samples to remove *steps* from the signal */
+        mWavetable.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR); /* interpolate between samples to remove
+         *steps* from the signal */
         mWavetable.set_frequency(1.0f / 3.0f); /* set phase duration to 3SEC */
 
         Tone.start();

@@ -1,8 +1,8 @@
 package wellen.examples.extra.daisysp;
 
 import processing.core.PApplet;
-import wellen.DSP;
 import wellen.Wellen;
+import wellen.dsp.DSP;
 import wellen.extra.daisysp.Oscillator;
 
 public class ExampleDaisySPOscillator extends PApplet {
@@ -22,7 +22,7 @@ public class ExampleDaisySPOscillator extends PApplet {
 
     public void draw() {
         background(255);
-        DSP.draw_buffer(g, width, height);
+        DSP.draw_buffers(g, width, height);
     }
 
     public void mouseDragged() {

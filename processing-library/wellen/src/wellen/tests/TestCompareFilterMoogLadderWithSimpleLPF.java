@@ -2,11 +2,11 @@ package wellen.tests;
 
 import processing.core.PApplet;
 import wellen.Beat;
-import wellen.DSP;
-import wellen.Filter;
-import wellen.LowPassFilter;
-import wellen.Wavetable;
 import wellen.Wellen;
+import wellen.dsp.DSP;
+import wellen.dsp.Filter;
+import wellen.dsp.LowPassFilter;
+import wellen.dsp.Wavetable;
 
 public class TestCompareFilterMoogLadderWithSimpleLPF extends PApplet {
     private final Wavetable mWavetable = new Wavetable();
@@ -28,7 +28,7 @@ public class TestCompareFilterMoogLadderWithSimpleLPF extends PApplet {
 
     public void draw() {
         background(255);
-        DSP.draw_buffer(g, width, height);
+        DSP.draw_buffers(g, width, height);
     }
 
     public void beat(int pBeatCounter) {
@@ -48,8 +48,7 @@ public class TestCompareFilterMoogLadderWithSimpleLPF extends PApplet {
             mFreqOffset = 10 - 12;
         }
         float mFreqMult = (pBeatCounter % 4) + 1;
-        mWavetable.set_frequency(
-        mFreqMult * Wellen.DEFAULT_SAMPLING_RATE * ((12.0f + mFreqOffset) / 12.0f) / Wellen.DEFAULT_AUDIOBLOCK_SIZE);
+        mWavetable.set_frequency(mFreqMult * Wellen.DEFAULT_SAMPLING_RATE * ((12.0f + mFreqOffset) / 12.0f) / Wellen.DEFAULT_AUDIOBLOCK_SIZE);
     }
 
     public void keyPressed() {

@@ -2,8 +2,8 @@ package wellen.examples.external;
 
 import processing.core.PApplet;
 import wellen.Beat;
-import wellen.DSP;
-import wellen.SAM;
+import wellen.dsp.DSP;
+import wellen.dsp.SAM;
 
 public class ExampleExternal07SAM extends PApplet {
 
@@ -46,7 +46,7 @@ public class ExampleExternal07SAM extends PApplet {
     public void draw() {
         background(255);
         stroke(0);
-        DSP.draw_buffer(g, width, height);
+        DSP.draw_buffers(g, width, height);
     }
 
     public void beat(int pBeatCount) {

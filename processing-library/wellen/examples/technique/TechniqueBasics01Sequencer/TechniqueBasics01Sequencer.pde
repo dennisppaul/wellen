@@ -6,16 +6,38 @@ import wellen.*;
 
 static final int OFF = -1;
 
-final Sequencer<Integer> mSequence = new Sequencer<Integer>(
-        0, OFF, 12, OFF,
-        0, OFF, 12, OFF,
-        0, OFF, 12, OFF,
-        0, OFF, 12, OFF,
-        3, 3, 15, 15,
-        3, 3, 15, 15,
-        5, 5, 17, 17,
-        5, 5, 17, 17
-);
+final Sequencer<Integer> mSequence = new Sequencer<Integer>(0,
+                                                                    OFF,
+                                                                    12,
+                                                                    OFF,
+                                                                    0,
+                                                                    OFF,
+                                                                    12,
+                                                                    OFF,
+                                                                    0,
+                                                                    OFF,
+                                                                    12,
+                                                                    OFF,
+                                                                    0,
+                                                                    OFF,
+                                                                    12,
+                                                                    OFF,
+                                                                    3,
+                                                                    3,
+                                                                    15,
+                                                                    15,
+                                                                    3,
+                                                                    3,
+                                                                    15,
+                                                                    15,
+                                                                    5,
+                                                                    5,
+                                                                    17,
+                                                                    17,
+                                                                    5,
+                                                                    5,
+                                                                    17,
+                                                                    17);
 
 void settings() {
     size(640, 480);

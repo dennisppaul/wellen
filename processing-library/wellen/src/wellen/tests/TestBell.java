@@ -1,15 +1,15 @@
 package wellen.tests;
 
 import processing.core.PApplet;
-import wellen.ADSR;
 import wellen.Beat;
 import wellen.InstrumentDSP;
 import wellen.Note;
 import wellen.Scale;
-import wellen.Signal;
 import wellen.Tone;
-import wellen.Wavetable;
 import wellen.Wellen;
+import wellen.dsp.ADSR;
+import wellen.dsp.Signal;
+import wellen.dsp.Wavetable;
 
 public class TestBell extends PApplet {
 
@@ -67,7 +67,7 @@ public class TestBell extends PApplet {
             for (int i = 0; i < NUM_OSC; i++) {
                 mVCOs[i] = new Wavetable();
                 mVCOs[i].set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
-                Wavetable.fill(mVCOs[i].get_wavetable(), Wellen.WAVESHAPE_SINE);
+                Wavetable.fill(mVCOs[i].get_wavetable(), Wellen.WAVEFORM_SINE);
                 mADSRs[i] = new ADSR();
             }
             set_detune(0.23f);

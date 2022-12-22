@@ -11,11 +11,11 @@ import static wellen.extra.daisysp.DaisySP.rand_kRandFrac;
  * @author Ben Sergentanis
  * @brief Extended Karplus-Strong, with all the niceties from Rings
  * @date Jan 2021
- * <p>
- * Ported from pichenettes/eurorack/plaits/dsp/physical_modelling/string_voice.h and
- * pichenettes/eurorack/plaits/dsp/physical_modelling/string_voice.cc to an independent module.
- * <p>
- * Original code written by Emilie Gillet in 2016.
+ *         <p>
+ *         Ported from pichenettes/eurorack/plaits/dsp/physical_modelling/string_voice.h and
+ *         pichenettes/eurorack/plaits/dsp/physical_modelling/string_voice.cc to an independent module.
+ *         <p>
+ *         Original code written by Emilie Gillet in 2016.
  */
 public class StringVoice {
 
@@ -143,7 +143,7 @@ public class StringVoice {
     public void SetStructure(float structure) {
         structure = fclamp(structure, 0.f, 1.f);
         final float non_linearity = structure < 0.24f ? (structure - 0.24f) * 4.166f : (structure > 0.26f ?
-                                                                                        (structure - 0.26f) * 1.35135f : 0.0f);
+                (structure - 0.26f) * 1.35135f : 0.0f);
         string_.SetNonLinearity(non_linearity);
     }
 

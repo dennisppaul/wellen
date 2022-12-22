@@ -1,9 +1,9 @@
 package wellen.tests;
 
 import processing.core.PApplet;
-import wellen.DSP;
-import wellen.OscillatorFunction;
 import wellen.Wellen;
+import wellen.dsp.DSP;
+import wellen.dsp.OscillatorFunction;
 
 public class ExampleDSPOscillatorFunction extends PApplet {
 
@@ -14,13 +14,13 @@ public class ExampleDSPOscillatorFunction extends PApplet {
     }
 
     public void setup() {
-        mOscillator.set_waveform(Wellen.WAVESHAPE_SINE);
+        mOscillator.set_waveform(Wellen.WAVEFORM_SINE);
         DSP.start(this);
     }
 
     public void draw() {
         background(255);
-        DSP.draw_buffer(g, width, height);
+        DSP.draw_buffers(g, width, height);
     }
 
     public void mouseDragged() {
@@ -36,19 +36,19 @@ public class ExampleDSPOscillatorFunction extends PApplet {
     public void keyPressed() {
         switch (key) {
             case '1':
-                mOscillator.set_waveform(Wellen.WAVESHAPE_SINE);
+                mOscillator.set_waveform(Wellen.WAVEFORM_SINE);
                 break;
             case '2':
-                mOscillator.set_waveform(Wellen.WAVESHAPE_TRIANGLE);
+                mOscillator.set_waveform(Wellen.WAVEFORM_TRIANGLE);
                 break;
             case '3':
-                mOscillator.set_waveform(Wellen.WAVESHAPE_SAWTOOTH);
+                mOscillator.set_waveform(Wellen.WAVEFORM_SAWTOOTH);
                 break;
             case '4':
-                mOscillator.set_waveform(Wellen.WAVESHAPE_SQUARE);
+                mOscillator.set_waveform(Wellen.WAVEFORM_SQUARE);
                 break;
             case '5':
-                mOscillator.set_waveform(Wellen.WAVESHAPE_NOISE);
+                mOscillator.set_waveform(Wellen.WAVEFORM_NOISE);
                 break;
         }
     }

@@ -43,8 +43,8 @@ package wellen.extra.rakarrack;
 
 */
 
-import wellen.EffectMono;
-import wellen.EffectStereo;
+import wellen.dsp.EffectMono;
+import wellen.dsp.EffectStereo;
 
 public class RRNewDist implements EffectMono, EffectStereo {
 
@@ -307,12 +307,12 @@ public class RRNewDist implements EffectMono, EffectStereo {
         final int PRESET_SIZE = 11;
         final int NUM_PRESETS = 3;
         int[][] presets = {
-        //NewDist 1
-        {0, 64, 64, 83, 85, RRWaveShaper.TYPE_ASYMMETRIC_SQRT_DISTORTION2, 0, 2437, 169, 68, 0},
-        //NewDist 2
-        {0, 64, 64, 95, 75, RRWaveShaper.TYPE_LIMITER, 0, 3459, 209, 60, 1},
-        //NewDist 3
-        {0, 64, 64, 43, 97, RRWaveShaper.TYPE_OCTAVE_UP, 0, 2983, 118, 83, 0}};
+                //NewDist 1
+                {0, 64, 64, 83, 85, RRWaveShaper.TYPE_ASYMMETRIC_SQRT_DISTORTION2, 0, 2437, 169, 68, 0},
+                //NewDist 2
+                {0, 64, 64, 95, 75, RRWaveShaper.TYPE_LIMITER, 0, 3459, 209, 60, 1},
+                //NewDist 3
+                {0, 64, 64, 43, 97, RRWaveShaper.TYPE_OCTAVE_UP, 0, 2983, 118, 83, 0}};
 
         for (int n = 0; n < PRESET_SIZE; n++) {
             changepar(n, presets[npreset][n]);
@@ -356,7 +356,8 @@ public class RRNewDist implements EffectMono, EffectStereo {
                 break;
             case 9:
                 Prfreq = value;
-                rfreq = RRUtilities.expf(RRUtilities.powf((float) value / 127.0f, 0.5f) * RRUtilities.logf(25000.0f)) + 40.0f;
+                rfreq = RRUtilities.expf(RRUtilities.powf((float) value / 127.0f,
+                                                          0.5f) * RRUtilities.logf(25000.0f)) + 40.0f;
                 filterl.setfreq(rfreq);
                 filterr.setfreq(rfreq);
 

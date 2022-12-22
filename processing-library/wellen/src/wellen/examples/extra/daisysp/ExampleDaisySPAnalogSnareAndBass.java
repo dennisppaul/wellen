@@ -2,8 +2,8 @@ package wellen.examples.extra.daisysp;
 
 import processing.core.PApplet;
 import wellen.Beat;
-import wellen.DSP;
 import wellen.Wellen;
+import wellen.dsp.DSP;
 import wellen.extra.daisysp.AnalogBassDrum;
 import wellen.extra.daisysp.AnalogSnareDrum;
 
@@ -35,7 +35,7 @@ public class ExampleDaisySPAnalogSnareAndBass extends PApplet {
         float mScale = 0.98f * height - (mBeatCount % 2) * 50;
         circle(width * 0.5f, height * 0.5f, mScale);
         stroke(255);
-        DSP.draw_buffer(g, width, height);
+        DSP.draw_buffers(g, width, height);
     }
 
     public void mouseMoved() {

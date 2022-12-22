@@ -153,6 +153,9 @@ public class Wellen {
     public static final int LOOP_INFINITE = Integer.MAX_VALUE;
     public static final int SIGNAL_PROCESSING_IGNORE_IN_OUTPOINTS = -3;
 
+    public static final int MONO = 1;
+    public static final int STEREO = 2;
+
     public static final float TWO_PI = PApplet.TWO_PI;
     public static final float SIGNAL_MIN = -1.0f;
     public static final float SIGNAL_MAX = 1.0f;
@@ -195,6 +198,65 @@ public class Wellen {
             }
             pFloats[i] = (float) (f * mScale);
         }
+    }
+
+    public static final int SIG_INT8 = 0;
+    public static final int SIG_UINT8 = 1;
+    public static final int SIG_INT16_BIG_ENDIAN = 2;
+    public static final int SIG_INT16_LITTLE_ENDIAN = 3;
+    public static final int SIG_INT24_3_BIG_ENDIAN = 4;
+    public static final int SIG_INT24_3_LITTLE_ENDIAN = 5;
+    public static final int SIG_INT24_4_BIG_ENDIAN = 6;
+    public static final int SIG_INT24_4_LITTLE_ENDIAN = 7;
+    public static final int SIG_INT32_BIG_ENDIAN = 8;
+    public static final int SIG_INT32_LITTLE_ENDIAN = 9;
+
+    private static final float SIG_8BIT_MAX = 128.0f;
+    private static final float SIG_16BIT_MAX = 32768.0f;
+    private static final float SIG_24BIT_MAX = 8388608.0f;
+    private static final float SIG_32BIT_MAX = 2147483648.0f;
+    private static final float SIG_8BIT_MAX_INVERSE = 1.0f / SIG_8BIT_MAX;
+    private static final float SIG_16BIT_MAX_INVERSE = 1.0f / SIG_16BIT_MAX;
+    private static final float SIG_24BIT_MAX_INVERSE = 1.0f / SIG_24BIT_MAX;
+    private static final float SIG_32BIT_MAX_INVERSE = 1.0f / SIG_32BIT_MAX;
+
+    public static float bytes_to_floats(int pFormat, byte[] pInput, int pIndex) {
+        final float f;
+        switch (pFormat) {
+            case SIG_INT8:
+                f = pInput[pIndex] * SIG_8BIT_MAX_INVERSE;
+                break;
+            case SIG_UINT8:
+                f = ((pInput[pIndex] & 0xFF) - 128) * SIG_8BIT_MAX_INVERSE;
+                break;
+            case SIG_INT16_BIG_ENDIAN:
+                f = ((pInput[pIndex] << 8) | (pInput[pIndex + 1] & 0xFF)) * SIG_16BIT_MAX_INVERSE;
+                break;
+            case SIG_INT16_LITTLE_ENDIAN:
+                f = ((pInput[pIndex + 1] << 8) | (pInput[pIndex] & 0xFF)) * SIG_16BIT_MAX_INVERSE;
+                break;
+            case SIG_INT24_3_BIG_ENDIAN:
+                f = ((pInput[pIndex] << 16) | ((pInput[pIndex + 1] & 0xFF) << 8) | (pInput[pIndex + 2] & 0xFF)) * SIG_24BIT_MAX_INVERSE;
+                break;
+            case SIG_INT24_3_LITTLE_ENDIAN:
+                f = ((pInput[pIndex + 2] << 16) | ((pInput[pIndex + 1] & 0xFF) << 8) | (pInput[pIndex] & 0xFF)) * SIG_24BIT_MAX_INVERSE;
+                break;
+            case SIG_INT24_4_BIG_ENDIAN:
+                f = ((pInput[pIndex + 1] << 16) | ((pInput[pIndex + 2] & 0xFF) << 8) | (pInput[pIndex + 3] & 0xFF)) * SIG_24BIT_MAX_INVERSE;
+                break;
+            case SIG_INT24_4_LITTLE_ENDIAN:
+                f = ((pInput[pIndex + 3] << 16) | ((pInput[pIndex + 2] & 0xFF) << 8) | (pInput[pIndex + 1] & 0xFF)) * SIG_24BIT_MAX_INVERSE;
+                break;
+            case SIG_INT32_BIG_ENDIAN:
+                f = ((pInput[pIndex] << 24) | ((pInput[pIndex + 1] & 0xFF) << 16) | ((pInput[pIndex + 2] & 0xFF) << 8) | (pInput[pIndex + 3] & 0xFF)) * SIG_32BIT_MAX_INVERSE;
+                break;
+            case SIG_INT32_LITTLE_ENDIAN:
+                f = ((pInput[pIndex + 3] << 24) | ((pInput[pIndex + 2] & 0xFF) << 16) | ((pInput[pIndex + 1] & 0xFF) << 8) | (pInput[pIndex] & 0xFF)) * SIG_32BIT_MAX_INVERSE;
+                break;
+            default:
+                f = 0.0f;
+        }
+        return f;
     }
 
     public static float clamp(float pValue) {

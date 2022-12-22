@@ -1,9 +1,9 @@
 package wellen.tests.dsp;
 
 import processing.core.PApplet;
-import wellen.DSP;
-import wellen.OscillatorFunction;
 import wellen.Wellen;
+import wellen.dsp.DSP;
+import wellen.dsp.OscillatorFunction;
 
 public class TestButterworthFilter extends PApplet {
 
@@ -24,12 +24,12 @@ public class TestButterworthFilter extends PApplet {
         mOSCLeft = new OscillatorFunction();
         mOSCLeft.set_frequency(2f * 48000f / 1024f);
         mOSCLeft.set_amplitude(0.5f);
-        mOSCLeft.set_waveform(Wellen.WAVESHAPE_SQUARE);
+        mOSCLeft.set_waveform(Wellen.WAVEFORM_SQUARE);
 
         mOSCRight = new OscillatorFunction();
         mOSCRight.set_frequency(2f * 48000f / 1024f);
         mOSCRight.set_amplitude(0.5f);
-        mOSCRight.set_waveform(Wellen.WAVESHAPE_SQUARE);
+        mOSCRight.set_waveform(Wellen.WAVEFORM_SQUARE);
 
         mButterworthFilters = new ButterworthFilters(Wellen.DEFAULT_SAMPLING_RATE);
         mFilters = new Filters(Wellen.DEFAULT_SAMPLING_RATE);
@@ -41,7 +41,7 @@ public class TestButterworthFilter extends PApplet {
     public void draw() {
         background(255);
         stroke(0);
-        DSP.draw_buffer_stereo(g, width, height);
+        DSP.draw_buffers(g, width, height);
     }
 
     public void mouseMoved() {
@@ -66,7 +66,7 @@ public class TestButterworthFilter extends PApplet {
                 break;
             case '2':
                 mButterworthType = ButterworthFilters.HIGH_PASS;
-                mFilterType =  Filters.HIGH_PASS;
+                mFilterType = Filters.HIGH_PASS;
                 break;
             case '3':
                 mButterworthType = ButterworthFilters.BAND_PASS;
@@ -74,7 +74,7 @@ public class TestButterworthFilter extends PApplet {
                 break;
             case '4':
                 mButterworthType = ButterworthFilters.BAND_REJECT;
-                mFilterType =  Filters.RESONATOR;
+                mFilterType = Filters.RESONATOR;
                 break;
         }
     }
@@ -84,14 +84,8 @@ public class TestButterworthFilter extends PApplet {
             pOutputSignalLeft[i] = mOSCLeft.output();
             pOutputSignalRight[i] = mOSCRight.output();
         }
-        mButterworthFilters.process(pOutputSignalLeft,
-                mFilterFrequency,
-                mFilterBandwidth,
-                mButterworthType);
-        mFilters.process(pOutputSignalRight,
-                mFilterFrequency,
-                mFilterBandwidth,
-                mFilterType);
+        mButterworthFilters.process(pOutputSignalLeft, mFilterFrequency, mFilterBandwidth, mButterworthType);
+        mFilters.process(pOutputSignalRight, mFilterFrequency, mFilterBandwidth, mFilterType);
     }
 
     public static void main(String[] args) {

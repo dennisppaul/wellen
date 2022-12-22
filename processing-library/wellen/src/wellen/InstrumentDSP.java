@@ -19,6 +19,12 @@
 
 package wellen;
 
+import wellen.dsp.ADSR;
+import wellen.dsp.DSPNodeOutputSignal;
+import wellen.dsp.LowPassFilter;
+import wellen.dsp.Signal;
+import wellen.dsp.Wavetable;
+
 /**
  * implementation of {@link wellen.Instrument} for the internal tone engine.
  */
@@ -51,7 +57,7 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
 
         mVCO = new Wavetable(pWavetableSize, pSamplingRate);
         mVCO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
-        set_oscillator_type(Wellen.WAVESHAPE_SINE);
+        set_oscillator_type(Wellen.WAVEFORM_SINE);
         set_amplitude(0.0f);
         set_frequency(DEFAULT_FREQUENCY);
 

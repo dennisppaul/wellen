@@ -33,26 +33,22 @@ void draw() {
     float mScale = 0.98f * height;
     circle(width * 0.5f, height * 0.5f, mScale);
     stroke(255);
-    DSP.draw_buffer(g, width, height);
+    DSP.draw_buffers(g, width, height);
 }
 
 void mouseMoved() {
     switch (keyCode) {
         case SHIFT:
-            mChorus.SetFeedback(map(mouseX, 0, width, 0, 1),
-                                map(mouseY, 0, height, 0, 1));
+            mChorus.SetFeedback(map(mouseX, 0, width, 0, 1), map(mouseY, 0, height, 0, 1));
             break;
         case ALT:
-            mChorus.SetLfoDepth(map(mouseX, 0, width, 0, 1),
-                                map(mouseY, 0, height, 0, 1));
+            mChorus.SetLfoDepth(map(mouseX, 0, width, 0, 1), map(mouseY, 0, height, 0, 1));
             break;
         case CONTROL:
-            mChorus.SetLfoFreq(map(mouseX, 0, width, 0, 10),
-                               map(mouseY, 0, height, 0, 10));
+            mChorus.SetLfoFreq(map(mouseX, 0, width, 0, 10), map(mouseY, 0, height, 0, 10));
             break;
         default:
-            mChorus.SetDelay(map(mouseX, 0, width, 0, 1),
-                             map(mouseY, 0, height, 0, 1));
+            mChorus.SetDelay(map(mouseX, 0, width, 0, 1), map(mouseY, 0, height, 0, 1));
     }
 }
 
