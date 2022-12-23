@@ -153,6 +153,7 @@ public class Wellen {
     public static final int LOOP_INFINITE = Integer.MAX_VALUE;
     public static final int SIGNAL_PROCESSING_IGNORE_IN_OUTPOINTS = -3;
 
+    public static final int NO_VALUE = -1;
     public static final int MONO = 1;
     public static final int STEREO = 2;
 
@@ -382,9 +383,18 @@ public class Wellen {
     }
 
     public static int queryAudioInputAndOutputDevices(String pDeviceName, boolean pPrintDevices) {
+        if (AndroidProbe.isAndroid()) {
+            System.out.println("+-------------------------------------------------------+");
+            System.out.println("+ AUDIO DEVICES ( Audio System )                         ");
+            System.out.println("+ querrying audio input and output devices on android is ");
+            System.out.println("+ currently not supported.                               ");
+            System.out.println("+-------------------------------------------------------+");
+            return Wellen.DEFAULT_AUDIO_DEVICE;
+        }
+
         if (pPrintDevices) {
             System.out.println("+-------------------------------------------------------+");
-            System.out.println("+ AUDIO DEVICES ( Audio System )");
+            System.out.println("+ AUDIO DEVICES ( Audio System )                         ");
             System.out.println("+-------------------------------------------------------+");
         }
 
@@ -536,8 +546,8 @@ public class Wellen {
     }
 
     public static byte[] floatIEEEs_to_bytes(float[] pFloats, boolean pLittleEndian) {
-        ByteBuffer buffer = ByteBuffer.allocate(4 * pFloats.length).order(pLittleEndian ? ByteOrder.LITTLE_ENDIAN :
-                                                                                  ByteOrder.BIG_ENDIAN);
+        ByteBuffer buffer = ByteBuffer.allocate(4 * pFloats.length)
+                                      .order(pLittleEndian ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN);
 
         for (float value : pFloats) {
             buffer.putFloat(value);

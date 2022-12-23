@@ -195,11 +195,11 @@ public class DSP implements AudioBufferRenderer {
     }
 
     public static int get_sample_rate() {
-        return mAudioPlayer == null ? 0 : mAudioPlayer.sample_rate();
+        return mAudioPlayer == null ? Wellen.NO_VALUE : mAudioPlayer.sample_rate();
     }
 
     public static int get_buffer_size() {
-        return mAudioPlayer == null ? 0 : mAudioPlayer.buffer_size();
+        return mAudioPlayer == null ? Wellen.NO_VALUE : mAudioPlayer.buffer_size();
     }
 
     public static float[] get_output_buffer() {

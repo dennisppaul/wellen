@@ -19,12 +19,13 @@
 
 package wellen;
 
+import android.media.AudioAttributes;
 import android.media.AudioFormat;
-import android.media.AudioManager;
 import android.media.AudioTrack;
-import android.os.Process;
 
 public class AudioDeviceImplAndroid extends Thread implements AudioDevice {
+    private static final boolean VERBOSE = true;
+
     private boolean mRunBuffer = true;
     private int mFrameCounter = 0;
     private final AndroidAudioOutputStream fOutput;
@@ -42,7 +43,7 @@ public class AudioDeviceImplAndroid extends Thread implements AudioDevice {
         mNumOutputChannels = pConfiguration.number_of_output_channels;
         mNumInputChannels = pConfiguration.number_of_input_channels;
 
-        fOutput = createOutputStream(pConfiguration.output_device, mSampleRate);
+        fOutput = createOutputStream(pConfiguration.output_device, mSampleRate, mNumOutputChannels);
         fOutput.start();
         // TODO ignore input channels for now
         start();
@@ -55,18 +56,17 @@ public class AudioDeviceImplAndroid extends Thread implements AudioDevice {
 
     @Override
     public int sample_rate() {
-        return 0;
+        return mSampleRate;
     }
 
     @Override
     public int buffer_size() {
-        return 0;
+        return mSampleBufferSize;
     }
 
     @Override
     public void run() {
         while (mRunBuffer) {
-
             boolean mLockAudioBlock;
 
             /* output */
@@ -75,55 +75,82 @@ public class AudioDeviceImplAndroid extends Thread implements AudioDevice {
                 mOutputBuffers[j] = new float[mSampleBufferSize];
             }
 
+            // TODO ignore input channels for now
             mSampleRenderer.audioblock(mOutputBuffers, null);
 
-			if (mNumOutputChannels == 1) {
-            	fOutput.write(mOutputBuffers[0]);
-            } else if (mNumOutputChannels > 1) {
+            if (mNumOutputChannels == Wellen.MONO) {
+                fOutput.write(mOutputBuffers[0]);
+            } else if (mNumOutputChannels > Wellen.MONO) {
                 float[] mOutBufferInterleaved = new float[mSampleBufferSize * mNumOutputChannels];
-            	for (int i=0; i < mSampleBufferSize; i++) {
-            		for (int j=0; j < mNumOutputChannels; j++) {
-	            	    mOutBufferInterleaved[i * mNumOutputChannels + j] = mOutputBuffers[j][i];
-					}            		
-            	}
-            	fOutput.write(mOutBufferInterleaved);
-			}
+                for (int i = 0; i < mSampleBufferSize; i++) {
+                    for (int j = 0; j < mNumOutputChannels; j++) {
+                        mOutBufferInterleaved[i * mNumOutputChannels + j] = mOutputBuffers[j][i];
+                    }
+                }
+                fOutput.write(mOutBufferInterleaved);
+            }
 
             mFrameCounter++;
         }
     }
 
     private static class AndroidAudioStream {
-        float[] floatBuffer;
-        int frameRate;
-        int deviceID;
-        AudioTrack audioTrack;
-        int minBufferSize;
-        int bufferSize;
+        protected AudioTrack audioTrack;
+        protected float[] floatBuffer;
+        protected int minBufferSize;
 
-        public AndroidAudioStream(int deviceID, int frameRate) {
-            this.deviceID = deviceID;
-            this.frameRate = frameRate;
+        protected final int fDeviceID;
+        protected final int fSampleRate;
+        protected final int fNumOutChannels;
+
+        public AndroidAudioStream(int pDeviceID, int pSampleRate, int pNumChannels) {
+            fDeviceID = pDeviceID;
+            fSampleRate = pSampleRate;
+            fNumOutChannels = pNumChannels;
         }
     }
 
     private static class AndroidAudioOutputStream extends AndroidAudioStream {
-        public AndroidAudioOutputStream(int deviceID, int frameRate) {
-            super(deviceID, frameRate);
+        public AndroidAudioOutputStream(int pDeviceID, int pSampleRate, int pNumChannels) {
+            super(pDeviceID, pSampleRate, pNumChannels);
         }
 
         public void start() {
-            Process.setThreadPriority(-5);
-            minBufferSize = AudioTrack.getMinBufferSize(frameRate,
-                                                        AudioFormat.CHANNEL_OUT_STEREO,
-                                                        AudioFormat.ENCODING_PCM_FLOAT);
-            bufferSize = (3 * (minBufferSize / 2)) & ~3;
-            audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC,
-                                        frameRate,
-                                        AudioFormat.CHANNEL_OUT_STEREO,
-                                        AudioFormat.ENCODING_PCM_FLOAT,
-                                        bufferSize,
-                                        AudioTrack.MODE_STREAM);
+//            Process.setThreadPriority(-5);
+            // TODO only evaluate MONO and STEREO for now
+            final int ANDROID_ENUM_NUM_CHANNELS = fNumOutChannels == Wellen.MONO ? AudioFormat.CHANNEL_OUT_MONO :
+                    AudioFormat.CHANNEL_OUT_STEREO;
+            final int ANDROID_ENUM_ENCODING = AudioFormat.ENCODING_PCM_FLOAT;
+            minBufferSize = AudioTrack.getMinBufferSize(fSampleRate, ANDROID_ENUM_NUM_CHANNELS, ANDROID_ENUM_ENCODING);
+            // TODO replace with `AudioAttributes` constructor e.g
+            // see https://developer.android.com/reference/android/media/AudioAttributes.Builder
+            AudioAttributes mAttributes = new AudioAttributes.Builder().setUsage(AudioAttributes.USAGE_MEDIA)
+                                                                       .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                                                                       // or `AudioAttributes.CONTENT_TYPE_SONIFICATION`
+                                                                       .build();
+            // see https://developer.android.com/reference/android/media/AudioFormat.Builder
+            AudioFormat mFormat = new AudioFormat.Builder().setEncoding(ANDROID_ENUM_ENCODING)
+                                                           .setSampleRate(fSampleRate)
+                                                           .setChannelMask(ANDROID_ENUM_NUM_CHANNELS).build();
+            audioTrack = new AudioTrack.Builder().setAudioAttributes(mAttributes).setAudioFormat(mFormat)
+                                                 .setBufferSizeInBytes(minBufferSize).build();
+
+//            audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC,
+//                                        fSampleRate,
+//                                        AudioFormat.CHANNEL_OUT_STEREO,
+//                                        AudioFormat.ENCODING_PCM_FLOAT,
+//                                        bufferSize,
+//                                        AudioTrack.MODE_STREAM);
+
+            if (VERBOSE) {
+                System.out.println("+++ Android Output Stream Information");
+                System.out.println("+++ ");
+                System.out.println("+++ num channels ........................... : " + fNumOutChannels);
+                System.out.println("+++ min buffer size ........................ : " + minBufferSize);
+                System.out.println("+++ calc'd buffer size ( not used ) ........ : " + ((3 * (minBufferSize / 2)) & ~3));
+                System.out.println("+++ actual buffer size ( in frames ) ....... : " + audioTrack.getBufferSizeInFrames());
+                System.out.println("+++ latency ................................ : " + (minBufferSize / fNumOutChannels));
+            }
             audioTrack.play();
         }
 
@@ -135,24 +162,29 @@ public class AudioDeviceImplAndroid extends Thread implements AudioDevice {
             if ((floatBuffer == null) || (floatBuffer.length < count)) {
                 floatBuffer = new float[count];
             }
-            for (int i = 0; i < count; i++) {
-                floatBuffer[i] = buffer[i + start];
+            if (count >= 0) {
+                System.arraycopy(buffer, start, floatBuffer, 0, count);
             }
-            audioTrack.write(floatBuffer, 0, count, AudioTrack.WRITE_BLOCKING);
+            int mResult = audioTrack.write(floatBuffer, 0, count, AudioTrack.WRITE_BLOCKING);
+            if (VERBOSE) {
+                if (mResult < 0) {
+                    System.err.println("### ERROR: AudioTrack.write() returned " + mResult);
+                } else if (mResult != count) {
+                    System.err.println("### ERROR: AudioTrack.write() returned " + mResult + " instead of " + count);
+                }
+            }
         }
 
         public void stop() {
             audioTrack.stop();
             audioTrack.release();
-        }
-
-        public void close() {
+            audioTrack = null;
         }
     }
 
     private static class AndroidAudioInputStream extends AndroidAudioStream {
-        public AndroidAudioInputStream(int deviceID, int frameRate) {
-            super(deviceID, frameRate);
+        public AndroidAudioInputStream(int deviceID, int frameRate, int pNumChannels) {
+            super(deviceID, frameRate, pNumChannels);
         }
 
         public void start() {
@@ -178,19 +210,16 @@ public class AudioDeviceImplAndroid extends Thread implements AudioDevice {
         public int available() {
             return 0;
         }
-
-        public void close() {
-        }
     }
 
-    public AndroidAudioOutputStream createOutputStream(int deviceID, int frameRate) {
-        return new AndroidAudioOutputStream(deviceID, frameRate);
+    private AndroidAudioOutputStream createOutputStream(int pDeviceID, int pSampleRate, int pNumOutChannels) {
+        return new AndroidAudioOutputStream(pDeviceID, pSampleRate, pNumOutChannels);
     }
 
-    public AndroidAudioInputStream createInputStream(int deviceID, int frameRate) {
-        if (frameRate > 0) {
+    private AndroidAudioInputStream createInputStream(int pDeviceID, int pSampleRate, int pNumInChannels) {
+        if (pSampleRate > 0) {
             throw new RuntimeException("audio input not implemented");
         }
-        return new AndroidAudioInputStream(deviceID, frameRate);
+        return new AndroidAudioInputStream(pDeviceID, pSampleRate, pNumInChannels);
     }
 }
