@@ -89,7 +89,6 @@ public class AudioDeviceImplAndroid extends Thread implements AudioDevice {
                 }
                 fOutput.write(mOutBufferInterleaved);
             }
-
             mFrameCounter++;
         }
     }
@@ -118,9 +117,14 @@ public class AudioDeviceImplAndroid extends Thread implements AudioDevice {
         public void start() {
 //            Process.setThreadPriority(-5);
             // TODO only evaluate MONO and STEREO for now
+            final int ANDROID_ENUM_ENCODING = AudioFormat.ENCODING_PCM_FLOAT;
             final int ANDROID_ENUM_NUM_CHANNELS = fNumOutChannels == Wellen.MONO ? AudioFormat.CHANNEL_OUT_MONO :
                     AudioFormat.CHANNEL_OUT_STEREO;
-            final int ANDROID_ENUM_ENCODING = AudioFormat.ENCODING_PCM_FLOAT;
+            if (fNumOutChannels > Wellen.STEREO) {
+                System.out.println("+++ @" + AudioDeviceImplAndroid.class.getSimpleName() + " / only MONO and STEREO "
+                                           + "output is supported for now.");
+            }
+
             minBufferSize = AudioTrack.getMinBufferSize(fSampleRate, ANDROID_ENUM_NUM_CHANNELS, ANDROID_ENUM_ENCODING);
             // TODO replace with `AudioAttributes` constructor e.g
             // see https://developer.android.com/reference/android/media/AudioAttributes.Builder
@@ -154,11 +158,11 @@ public class AudioDeviceImplAndroid extends Thread implements AudioDevice {
             audioTrack.play();
         }
 
-        public void write(float[] buffer) {
-            write(buffer, 0, buffer.length);
+        public int write(float[] buffer) {
+            return write(buffer, 0, buffer.length);
         }
 
-        public void write(float[] buffer, int start, int count) {
+        public int write(float[] buffer, int start, int count) {
             if ((floatBuffer == null) || (floatBuffer.length < count)) {
                 floatBuffer = new float[count];
             }
@@ -173,6 +177,7 @@ public class AudioDeviceImplAndroid extends Thread implements AudioDevice {
                     System.err.println("### ERROR: AudioTrack.write() returned " + mResult + " instead of " + count);
                 }
             }
+            return mResult;
         }
 
         public void stop() {

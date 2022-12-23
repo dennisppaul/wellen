@@ -91,14 +91,17 @@ public class AudioDeviceImplDesktop extends Thread implements AudioDevice {
                 if (pConfiguration.input_device == Wellen.DEFAULT_AUDIO_DEVICE) {
                     mInputLine = AudioSystem.getTargetDataLine(mInputFormat);
                     if (mNumInputChannels != mInputLine.getFormat().getChannels()) {
-                        System.err.println("+++ @" + getClass().getSimpleName() + " / input line channel numbers do " + "not match: " + "REQUESTED: " + mNumInputChannels + " RECEIVED: " + mInputLine.getFormat().getChannels());
+                        System.err.println("+++ @" + getClass().getSimpleName() + " / input line channel numbers do " + "not match: " + "REQUESTED: " + mNumInputChannels + " RECEIVED: " + mInputLine.getFormat()
+                                                                                                                                                                                                      .getChannels());
                     }
                     if (BITS_PER_SAMPLE != mInputLine.getFormat().getSampleSizeInBits()) {
-                        System.err.println("+++ @" + getClass().getSimpleName() + " / input line BITS_PER_SAMPLE do " + "not match: " + "REQUESTED: " + BITS_PER_SAMPLE + " RECEIVED: " + mInputLine.getFormat().getSampleSizeInBits());
+                        System.err.println("+++ @" + getClass().getSimpleName() + " / input line BITS_PER_SAMPLE do " + "not match: " + "REQUESTED: " + BITS_PER_SAMPLE + " RECEIVED: " + mInputLine.getFormat()
+                                                                                                                                                                                                    .getSampleSizeInBits());
                     }
                     if (mSampleRate != mInputLine.getFormat().getSampleRate()) {
                         System.err.println("+++ @" + getClass().getSimpleName() + " / sample rates do not match: " +
-                                                   "REQUESTED: " + mSampleRate + " RECEIVED: " + mInputLine.getFormat().getSampleRate());
+                                                   "REQUESTED: " + mSampleRate + " RECEIVED: " + mInputLine.getFormat()
+                                                                                                                                                                             .getSampleRate());
                     }
                 } else {
                     mInputLine = AudioSystem.getTargetDataLine(mInputFormat,

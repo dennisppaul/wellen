@@ -6,6 +6,7 @@ ANDROID_JAR=$HOME/Documents/Processing/android/sdk/platforms/android-30/android.
 PROBE_CLASSNAME=wellen/
 LIBRARY_JAR=wellen-android.jar
 WELLEN_LIB_FOLDER=../../lib
+WELLEN_P5_LIB_FOLDER=../../processing-library/wellen/library
 WELLEN_JAR=../$WELLEN_LIB_FOLDER/wellen.jar
 
 if [ -e $ANDROID_JAR ]
@@ -28,4 +29,5 @@ rm wellen/*.class
 mv $LIBRARY_JAR ..
 cd ..
 cp $LIBRARY_JAR $WELLEN_LIB_FOLDER
+cp $LIBRARY_JAR $WELLEN_P5_LIB_FOLDER
 echo "+++ DONE"
