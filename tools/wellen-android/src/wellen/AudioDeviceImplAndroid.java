@@ -77,12 +77,17 @@ public class AudioDeviceImplAndroid extends Thread implements AudioDevice {
 
             mSampleRenderer.audioblock(mOutputBuffers, null);
 
-//            for (int i = 0; i < mSampleBufferSize; i++) {
-//                for (int j = 0; j < mNumOutputChannels; j++) {
-//                    writeSample16(mOutputBuffers[j][i], i * mNumOutputChannels + j);
-//                }
-//            }
-            fOutput.write(mOutputBuffers[0]); // TODO mono for now
+			if (mNumOutputChannels == 1) {
+            	fOutput.write(mOutputBuffers[0]);
+            } else if (mNumOutputChannels > 1) {
+                float[] mOutBufferInterleaved = new float[mSampleBufferSize * mNumOutputChannels];
+            	for (int i=0; i < mSampleBufferSize; i++) {
+            		for (int j=0; j < mNumOutputChannels; j++) {
+	            	    mOutBufferInterleaved[i * mNumOutputChannels + j] = mOutputBuffers[j][i];
+					}            		
+            	}
+            	fOutput.write(mOutBufferInterleaved);
+			}
 
             mFrameCounter++;
         }
