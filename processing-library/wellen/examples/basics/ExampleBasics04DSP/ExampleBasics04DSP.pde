@@ -1,4 +1,5 @@
 import wellen.*; 
+import wellen.dsp.*; 
 
 /*
  * this example demonstrates how to perform digital signal processing (DSP) by continuously writing to an audio

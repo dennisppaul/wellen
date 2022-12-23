@@ -1,4 +1,5 @@
 import wellen.*; 
+import wellen.dsp.*; 
 
 /*
  * this example demonstrates how to receive audio data from the input device and pass it through to the output

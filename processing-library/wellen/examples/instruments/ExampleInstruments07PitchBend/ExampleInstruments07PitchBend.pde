@@ -1,4 +1,5 @@
 import wellen.*; 
+import wellen.dsp.*; 
 
 /*
  * this example shows how use pitch bending i.e offsetting the note’s frequency by a fraction of its frequency.

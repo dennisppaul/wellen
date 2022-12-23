@@ -1,4 +1,5 @@
 import wellen.*; 
+import wellen.dsp.*; 
 
 /*
  * this example demonstrates how to use the built-in speech synthesis engine ( macOS only ).

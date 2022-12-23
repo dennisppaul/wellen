@@ -1,4 +1,5 @@
 import wellen.*; 
+import wellen.dsp.*; 
 
 /*
  * this example demonstrate how to reroute the output of the internal tone engine to `DSP` to e.g apply an effect.

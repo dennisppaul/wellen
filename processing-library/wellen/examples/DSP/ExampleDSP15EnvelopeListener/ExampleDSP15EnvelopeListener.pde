@@ -1,4 +1,5 @@
 import wellen.*; 
+import wellen.dsp.*; 
 
 /*
  * this example demonstrates how to use envelope listeners with envelopes. envelope listeners are informed by the

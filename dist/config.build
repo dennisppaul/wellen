@@ -1,7 +1,7 @@
 LIB_NAME=wellen
 IO_EXAMPLE_PATHS=( examples/basics examples/DSP examples/external examples/instruments examples/technique examples/extra/daisysp examples/extra/rakarrack )
 PROJECT_PACKAGE=wellen
-SKETCH_IMPORTS=( )
+SKETCH_IMPORTS=( wellen.dsp.* )
 BASE_COLOR=59
 ADDITIONAL_LIBS=( libjni_wellen_sam.dylib libjni_wellen_sam.so wellen-android.jar )
 RESOURCES=( teilchen.raw a_portrait_in_reverse.raw hello.raw )

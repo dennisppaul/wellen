@@ -1,4 +1,5 @@
 import wellen.*; 
+import wellen.dsp.*; 
 
 /*
  * this example demonstrates how to control the tone engine’s frequency and amplitude directly ( instead of setting

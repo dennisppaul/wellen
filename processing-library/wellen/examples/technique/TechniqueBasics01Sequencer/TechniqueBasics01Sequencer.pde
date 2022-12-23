@@ -1,4 +1,5 @@
 import wellen.*; 
+import wellen.dsp.*; 
 
 /*
  * this example demonstrates how to use `Sequencer` to repeatedly play a predefined pattern of notes.

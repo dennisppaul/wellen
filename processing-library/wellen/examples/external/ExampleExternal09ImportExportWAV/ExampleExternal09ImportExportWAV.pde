@@ -1,4 +1,5 @@
 import wellen.*; 
+import wellen.dsp.*; 
 
 /**
  * this example demonstrates how to export sample data to a WAV file and then import the WAV file to play it back

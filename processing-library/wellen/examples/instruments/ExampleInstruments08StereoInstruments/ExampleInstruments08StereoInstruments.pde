@@ -1,4 +1,5 @@
 import wellen.*; 
+import wellen.dsp.*; 
 
 
 static final int INSTRUMENT_DETUNE_STEREO = 0;

@@ -1,4 +1,5 @@
 import wellen.*; 
+import wellen.dsp.*; 
 
 /*
  * this example demonstrates how to use the SAM ( Software Automatic Mouth ) a speech software first published in

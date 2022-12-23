@@ -1,4 +1,5 @@
 import wellen.*; 
+import wellen.dsp.*; 
 
 /*
  * this example demonstrates how to receive MIDI events sent from an external MIDI device ( i.e a MIDI keyboard )

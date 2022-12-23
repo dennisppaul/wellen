@@ -1,4 +1,5 @@
 import wellen.*; 
+import wellen.dsp.*; 
 
 /*
  * this example demonstrates how to use *musical scales*. a selection of predefined scales is available in `Scale`,

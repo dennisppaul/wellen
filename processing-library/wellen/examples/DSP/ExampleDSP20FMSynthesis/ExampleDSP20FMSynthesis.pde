@@ -1,4 +1,5 @@
 import wellen.*; 
+import wellen.dsp.*; 
 
 /*
  * this example demonstrate how to use simple FM Synthesis with two oscillators. the carrier oscillator usually

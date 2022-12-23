@@ -1,4 +1,5 @@
 import wellen.*; 
+import wellen.dsp.*; 
 
 /*
  * this examples demonstrates how to play all 16 instruments at the same time.

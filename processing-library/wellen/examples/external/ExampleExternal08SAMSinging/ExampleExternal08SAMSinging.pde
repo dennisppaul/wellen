@@ -1,4 +1,5 @@
 import wellen.*; 
+import wellen.dsp.*; 
 
 /*
  * this example demonstrates how to make SAM sing. it also demonstrates how to use phonemes instead of text. for

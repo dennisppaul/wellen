@@ -1,4 +1,5 @@
 import wellen.*; 
+import wellen.dsp.*; 
 
 /*
  * this example demonstrates how to use the vowel format filter. it shapes a spectral rich signal ( e.g square or

@@ -1,4 +1,5 @@
 import wellen.*; 
+import wellen.dsp.*; 
 
 import wellen.extra.daisysp.*;
 // TODO(does not sound good … might be something fishy with the random functions)

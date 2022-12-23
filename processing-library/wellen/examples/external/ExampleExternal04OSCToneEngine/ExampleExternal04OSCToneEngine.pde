@@ -1,4 +1,5 @@
 import wellen.*; 
+import wellen.dsp.*; 
 
 /*
  * this example demonstrates how to use the OSC tone engine to send OSC commands. the defined OSC address patterns

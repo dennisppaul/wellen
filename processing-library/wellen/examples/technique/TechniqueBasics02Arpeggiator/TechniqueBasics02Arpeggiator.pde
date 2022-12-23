@@ -1,4 +1,5 @@
 import wellen.*; 
+import wellen.dsp.*; 
 
 /*
  * this example demonstrates how to use `Arpeggiator` to play a predefined *pattern* of notes. `play(int, int)`

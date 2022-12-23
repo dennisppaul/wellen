@@ -1,4 +1,5 @@
 import wellen.*; 
+import wellen.dsp.*; 
 
 /*
  * this example demonstrates how to implement a low-frequency oscillator (LFO) by using wavetables to emulate

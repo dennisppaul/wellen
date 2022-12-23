@@ -1,4 +1,5 @@
 import wellen.*; 
+import wellen.dsp.*; 
 
 /*
  * this example shows how to use an instrument with an amplitude envelope ( ADSR ). the envelope controls the

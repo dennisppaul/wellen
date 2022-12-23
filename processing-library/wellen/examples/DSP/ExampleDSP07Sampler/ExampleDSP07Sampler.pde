@@ -1,4 +1,5 @@
 import wellen.*; 
+import wellen.dsp.*; 
 
 /*
  * this example demonstrates how to use a sampler ( a pre-recorded chunk of memory ) and play it at different speeds
