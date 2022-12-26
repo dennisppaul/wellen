@@ -20,6 +20,7 @@
 package wellen;
 
 import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioFormat.Encoding;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
@@ -35,8 +36,94 @@ public class AudioDeviceImplDesktop extends Thread implements AudioDevice {
      */
 
     //@TODO(make BITS_PER_SAMPLE more flexible)
+//    public void playAudio(float[][] samples) {
+//        try {
+//            // Set up audio format
+//            AudioFormat audioFormat = new AudioFormat(44100, 32, 2, true, false);
+//
+//            // Open audio output
+//            SourceDataLine line = AudioSystem.getSourceDataLine(audioFormat);
+//            line.open(audioFormat, 44100 * 8);
+//            line.start();
+//
+//            // Write samples to audio output
+//            for (float[] sample : samples) {
+//                // Convert float samples to 32-bit PCM
+//                int pcmLeft = Float.floatToIntBits(sample[0]);
+//                int pcmRight = Float.floatToIntBits(sample[1]);
+//
+//                // Write PCM samples to audio output
+//                line.write(new byte[]{(byte) (pcmLeft & 0xff), (byte) ((pcmLeft >> 8) & 0xff),
+//                                      (byte) ((pcmLeft >> 16) & 0xff), (byte) ((pcmLeft >> 24) & 0xff)}, 0, 4);
+//                line.write(new byte[]{(byte) (pcmRight & 0xff), (byte) ((pcmRight >> 8) & 0xff),
+//                                      (byte) ((pcmRight >> 16) & 0xff), (byte) ((pcmRight >> 24) & 0xff)}, 0, 4);
+//            }
+//
+//            // Close audio output
+//            line.drain();
+//            line.close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
-    public static final int BITS_PER_SAMPLE = 16;
+//    public float[][] readAudio() {
+//        float[][] samples = null;
+//
+//        try {
+//            // Set up audio format
+//            AudioFormat audioFormat = new AudioFormat(44100, 32, 2, true, false);
+//
+//            // Open audio input
+//            DataLine.Info info = new DataLine.Info(TargetDataLine.class, audioFormat);
+//            TargetDataLine line = (TargetDataLine) AudioSystem.getLine(info);
+//            line.open(audioFormat);
+//            line.start();
+//
+//            // Read samples from audio input
+//            int numSamples = (int) (line.getMicrosecondPosition() / 1000000.0 * audioFormat.getSampleRate()) *
+//            audioFormat.getChannels();
+//            samples = new float[numSamples][2];
+//            for (int i = 0; i < numSamples; i++) {
+//                // Read PCM samples from audio input
+//                byte[] pcm = new byte[8];
+//                line.read(pcm, 0, 8);
+//
+//                // Convert PCM samples to float
+//                int pcmLeft = ((pcm[3] & 0xff) << 24) | ((pcm[2] & 0xff) << 16) | ((pcm[1] & 0xff) << 8) | (pcm[0]
+//                & 0xff);
+//                int pcmRight = ((pcm[7] & 0xff) << 24) | ((pcm[6] & 0xff) << 16) | ((pcm[5] & 0xff) << 8) | (pcm[4]
+//                & 0xff);
+//                samples[i][0] = Float.intBitsToFloat(pcmLeft);
+//                samples[i][1] = Float.intBitsToFloat(pcmRight);
+//            }
+//
+//            // Close audio input
+//            line.stop();
+//            line.close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        return samples;
+//    }
+
+//    // Convert 32-bit PCM samples to float
+//    int pcmLeft = ((pcm[3] & 0xff) << 24) | ((pcm[2] & 0xff) << 16) | ((pcm[1] & 0xff) << 8) | (pcm[0] & 0xff);
+//    int pcmRight = ((pcm[7] & 0xff) << 24) | ((pcm[6] & 0xff) << 16) | ((pcm[5] & 0xff) << 8) | (pcm[4] & 0xff);
+//    samples[i][0] = Float.intBitsToFloat(pcmLeft);
+//    samples[i][1] = Float.intBitsToFloat(pcmRight);
+//
+//    // Convert float samples to 32-bit PCM
+//    int pcmLeft = Float.floatToIntBits(sample[0]);
+//    int pcmRight = Float.floatToIntBits(sample[1]);
+//
+//    // Write PCM samples to audio output
+//    line.write(new byte[]{(byte) (pcmLeft & 0xff), (byte) ((pcmLeft >> 8) & 0xff), (byte) ((pcmLeft >> 16) & 0xff),
+//    (byte) ((pcmLeft >> 24) & 0xff)}, 0, 4);
+//    line.write(new byte[]{(byte) (pcmRight & 0xff), (byte) ((pcmRight >> 8) & 0xff), (byte) ((pcmRight >> 16) &
+//    0xff), (byte) ((pcmRight >> 24) & 0xff)}, 0, 4);
+
     public static final boolean LITTLE_ENDIAN = false;
     public static final boolean BIG_ENDIAN = true;
     public static final boolean SIGNED = true;
@@ -54,6 +141,8 @@ public class AudioDeviceImplDesktop extends Thread implements AudioDevice {
     private final int mSampleBufferSize;
     private final int mNumOutputChannels;
     private final int mNumInputChannels;
+    private final int fBitsPerSample;
+    private final int fBytesPerSample;
 
     public AudioDeviceImplDesktop(AudioBufferRenderer pSampleRenderer, AudioDeviceConfiguration pConfiguration) {
         mSampleRenderer = pSampleRenderer;
@@ -61,54 +150,82 @@ public class AudioDeviceImplDesktop extends Thread implements AudioDevice {
         mSampleBufferSize = pConfiguration.sample_buffer_size;
         mNumOutputChannels = pConfiguration.number_of_output_channels;
         mNumInputChannels = pConfiguration.number_of_input_channels;
+        fBitsPerSample = pConfiguration.bits_per_sample;
+        fBytesPerSample = fBitsPerSample / 8;
 
         try {
             /* output */
-            final AudioFormat mOutputFormat = new AudioFormat(mSampleRate,
-                                                              BITS_PER_SAMPLE,
-                                                              mNumOutputChannels,
-                                                              SIGNED,
-                                                              LITTLE_ENDIAN);
+            final AudioFormat mOutputFormat;
+            // TODO check if there is any java implementation that allows PCM_FLOAT
+//            mOutputFormat = new AudioFormat(Encoding.PCM_FLOAT,
+//                                            mSampleRate,
+//                                            fBitsPerSample,
+//                                            mNumOutputChannels,
+//                                            ((fBitsPerSample + 7) / 8) * mNumOutputChannels,
+//                                            mSampleRate,
+//                                            LITTLE_ENDIAN);
+            mOutputFormat = new AudioFormat((SIGNED ? Encoding.PCM_SIGNED : Encoding.PCM_UNSIGNED),
+                                            mSampleRate,
+                                            fBitsPerSample,
+                                            mNumOutputChannels,
+                                            ((fBitsPerSample + 7) / 8) * mNumOutputChannels,
+                                            mSampleRate,
+                                            LITTLE_ENDIAN);
+//            final AudioFormat mOutputFormat = new AudioFormat(mSampleRate,
+//                                                              fBitsPerSample,
+//                                                              mNumOutputChannels,
+//                                                              SIGNED,
+//                                                              LITTLE_ENDIAN);
             if (pConfiguration.output_device == Wellen.DEFAULT_AUDIO_DEVICE) {
                 mOutputLine = AudioSystem.getSourceDataLine(mOutputFormat);
             } else {
                 System.out.println("+ OUTPUT DEVICE: " + AudioSystem.getMixerInfo()[pConfiguration.output_device]);
                 mOutputLine = AudioSystem.getSourceDataLine(mOutputFormat,
                                                             AudioSystem.getMixerInfo()[pConfiguration.output_device]);
+                if (mNumOutputChannels != mOutputLine.getFormat().getChannels()) {
+                    System.err.println("+++ @" + getClass().getSimpleName() + " / output line 'channel numbers' do " + "not match: REQUESTED: " + mNumOutputChannels + " RECEIVED: " + mOutputLine.getFormat()
+                                                                                                                                                                                                  .getChannels());
+                }
+                if (fBitsPerSample != mOutputLine.getFormat().getSampleSizeInBits()) {
+                    System.err.println("+++ @" + getClass().getSimpleName() + " / output line 'bits per sample' do " + "not match: REQUESTED: " + fBitsPerSample + " RECEIVED: " + mOutputLine.getFormat()
+                                                                                                                                                                                              .getSampleSizeInBits());
+                }
+                if (mSampleRate != mOutputLine.getFormat().getSampleRate()) {
+                    System.err.println("+++ @" + getClass().getSimpleName() + " / output line 'sample rates' do not " + "match: REQUESTED: " + mSampleRate + " RECEIVED: " + mOutputLine.getFormat()
+                                                                                                                                                                                        .getSampleRate());
+                }
             }
-            final int BYTES_PER_SAMPLE = BITS_PER_SAMPLE / 8;
             mOutputByteBuffer =
-                    new byte[mSampleBufferSize * BYTES_PER_SAMPLE * pConfiguration.number_of_output_channels];
+                    new byte[mSampleBufferSize * fBytesPerSample * pConfiguration.number_of_output_channels];
             mOutputLine.open(mOutputFormat, mOutputByteBuffer.length);
 
             /* input */
             if (mNumInputChannels > 0) {
                 final AudioFormat mInputFormat = new AudioFormat(mSampleRate,
-                                                                 BITS_PER_SAMPLE,
+                                                                 fBitsPerSample,
                                                                  mNumInputChannels,
                                                                  SIGNED,
                                                                  LITTLE_ENDIAN);
                 if (pConfiguration.input_device == Wellen.DEFAULT_AUDIO_DEVICE) {
                     mInputLine = AudioSystem.getTargetDataLine(mInputFormat);
                     if (mNumInputChannels != mInputLine.getFormat().getChannels()) {
-                        System.err.println("+++ @" + getClass().getSimpleName() + " / input line channel numbers do " + "not match: " + "REQUESTED: " + mNumInputChannels + " RECEIVED: " + mInputLine.getFormat()
-                                                                                                                                                                                                      .getChannels());
+                        System.err.println("+++ @" + getClass().getSimpleName() + " / input line 'channel numbers' " + "do" + " not match: REQUESTED: " + mNumInputChannels + " RECEIVED:" + " " + mInputLine.getFormat()
+                                                                                                                                                                                                             .getChannels());
                     }
-                    if (BITS_PER_SAMPLE != mInputLine.getFormat().getSampleSizeInBits()) {
-                        System.err.println("+++ @" + getClass().getSimpleName() + " / input line BITS_PER_SAMPLE do " + "not match: " + "REQUESTED: " + BITS_PER_SAMPLE + " RECEIVED: " + mInputLine.getFormat()
-                                                                                                                                                                                                    .getSampleSizeInBits());
+                    if (fBitsPerSample != mInputLine.getFormat().getSampleSizeInBits()) {
+                        System.err.println("+++ @" + getClass().getSimpleName() + " / input line 'bits per sample' " + "do" + " not match: REQUESTED: " + fBitsPerSample + " RECEIVED: " + mInputLine.getFormat()
+                                                                                                                                                                                                     .getSampleSizeInBits());
                     }
                     if (mSampleRate != mInputLine.getFormat().getSampleRate()) {
-                        System.err.println("+++ @" + getClass().getSimpleName() + " / sample rates do not match: " +
-                                                   "REQUESTED: " + mSampleRate + " RECEIVED: " + mInputLine.getFormat()
-                                                                                                                                                                             .getSampleRate());
+                        System.err.println("+++ @" + getClass().getSimpleName() + " / input line 'sample rates' do " + "not match: REQUESTED: " + mSampleRate + " RECEIVED: " + mInputLine.getFormat()
+                                                                                                                                                                                          .getSampleRate());
                     }
                 } else {
                     mInputLine = AudioSystem.getTargetDataLine(mInputFormat,
                                                                AudioSystem.getMixerInfo()[pConfiguration.input_device]);
                     System.out.println("+ INPUT DEVICE: " + AudioSystem.getMixerInfo()[pConfiguration.input_device]);
                 }
-                mInputByteBuffer = new byte[mSampleBufferSize * BYTES_PER_SAMPLE * mNumInputChannels];
+                mInputByteBuffer = new byte[mSampleBufferSize * fBytesPerSample * mNumInputChannels];
                 mInputLine.open(mInputFormat, mInputByteBuffer.length);
             }
         } catch (LineUnavailableException e) {
@@ -162,12 +279,22 @@ public class AudioDeviceImplDesktop extends Thread implements AudioDevice {
                         System.err.println("+++ @" + getClass().getSimpleName() + " / input buffer underrun.");
                     }
                 }
-                final int BYTES_PER_SAMPLE = BITS_PER_SAMPLE / 8;
                 for (int i = 0; i < mSampleBufferSize; i++) {
-                    final int k = i * mNumInputChannels * BYTES_PER_SAMPLE;
+                    final int k = i * mNumInputChannels * fBytesPerSample;
                     for (int j = 0; j < mNumInputChannels; j++) {
-                        final int l = k + BYTES_PER_SAMPLE * j;
-                        float mSample = readSample16(mInputByteBuffer[l + 0], mInputByteBuffer[l + 1]);
+                        final int l = k + fBytesPerSample * j;
+                        final float mSample;
+                        if (fBitsPerSample == Wellen.BITS_PER_SAMPLE_16) {
+                            mSample = readSample16(mInputByteBuffer, l);
+                        } else if (fBitsPerSample == Wellen.BITS_PER_SAMPLE_24) {
+                            mSample = readSample24(mInputByteBuffer, l);
+                        } else if (fBitsPerSample == Wellen.BITS_PER_SAMPLE_32) {
+                            mSample = readSample32(mInputByteBuffer, l);
+                        } else if (fBitsPerSample == Wellen.BITS_PER_SAMPLE_8) {
+                            mSample = readSample8(mInputByteBuffer, l);
+                        } else {
+                            mSample = 0;
+                        }
                         mInputBuffers[j][i] = mSample;
                     }
                 }
@@ -194,7 +321,16 @@ public class AudioDeviceImplDesktop extends Thread implements AudioDevice {
 
             for (int i = 0; i < mSampleBufferSize; i++) {
                 for (int j = 0; j < mNumOutputChannels; j++) {
-                    writeSample16(mOutputBuffers[j][i], i * mNumOutputChannels + j);
+                    final float mSample = Wellen.clamp(mOutputBuffers[j][i]);
+                    if (fBitsPerSample == Wellen.BITS_PER_SAMPLE_16) {
+                        writeSample16(mSample, i * mNumOutputChannels + j);
+                    } else if (fBitsPerSample == Wellen.BITS_PER_SAMPLE_24) {
+                        writeSample24(mSample, i * mNumOutputChannels + j);
+                    } else if (fBitsPerSample == Wellen.BITS_PER_SAMPLE_32) {
+                        writeSample32(mSample, i * mNumOutputChannels + j);
+                    } else if (fBitsPerSample == Wellen.BITS_PER_SAMPLE_8) {
+                        writeSample8(mSample, i * mNumOutputChannels + j);
+                    }
                 }
             }
 
@@ -223,20 +359,89 @@ public class AudioDeviceImplDesktop extends Thread implements AudioDevice {
         }
     }
 
+    private static final float SIG_8BIT_MAX = 128.0f;
     private static final float SIG_16BIT_MAX = 32768.0f;
+    private static final float SIG_24BIT_MAX = 8388608.0f;
+    private static final float SIG_32BIT_MAX = 2147483648.0f;
+    private static final float SIG_8BIT_MAX_INVERSE = 1.0f / SIG_8BIT_MAX;
     private static final float SIG_16BIT_MAX_INVERSE = 1.0f / SIG_16BIT_MAX;
+    private static final float SIG_24BIT_MAX_INVERSE = 1.0f / SIG_24BIT_MAX;
+    private static final float SIG_32BIT_MAX_INVERSE = 1.0f / SIG_32BIT_MAX;
 
-    private float readSample16(byte l, byte h) {
-        final float v = ((h << 8) | (l & 0xFF));
+    private float readSample8(byte[] b, int offset) {
+        final float v = b[offset];
+        return v * SIG_8BIT_MAX_INVERSE;
+    }
+
+    private float readSample16(byte[] b, int offset) { // low+high
+        final float v = ((b[offset + 1] << 8) | (b[offset + 0] & 0xFF));
         return v * SIG_16BIT_MAX_INVERSE;
     }
 
-    private void writeSample16(final float sample, final int i) {
-        short s = (short) (SIG_16BIT_MAX * sample);
-        if (sample == 1.0) {
-            s = Short.MAX_VALUE; // special case since 32768 not a short
+    private float readSample24(byte[] b, int offset) {
+        final float v = ((b[offset + 2] << 16) | ((b[offset + 1] & 0xFF) << 8) | (b[offset + 0] & 0xFF));
+        return v * SIG_24BIT_MAX_INVERSE;
+    }
+
+    private float readSample32(byte[] b, int offset) {
+        final float v =
+                ((b[offset + 3] << 24) | ((b[offset + 2] & 0xFF) << 16) | ((b[offset + 1] & 0xFF) << 8) | (b[offset + 0] & 0xFF));
+        return v * SIG_32BIT_MAX_INVERSE;
+    }
+
+    private void writeSample8(final float sample, final int i) {
+        final byte v;
+        if (sample == 1.0f) {
+            v = Byte.MAX_VALUE;
+        } else {
+            v = (byte) (SIG_8BIT_MAX * sample);
         }
-        mOutputByteBuffer[i * 2 + 0] = (byte) s;
-        mOutputByteBuffer[i * 2 + 1] = (byte) (s >> 8); // little endian
+        mOutputByteBuffer[i * fBytesPerSample + 0] = (byte) (v & 0xff);
+    }
+
+    private void writeSample16(final float sample, final int i) {
+        final short v;
+        if (sample == 1.0f) {
+            v = Short.MAX_VALUE; // special case since 32768 not a short
+        } else {
+            v = (short) (SIG_16BIT_MAX * sample);
+        }
+        mOutputByteBuffer[i * fBytesPerSample + 0] = (byte) (v & 0xff);
+        mOutputByteBuffer[i * fBytesPerSample + 1] = (byte) (v >> 8 & 0xff); // little endian
+    }
+
+    private void writeSample24(final float sample, final int i) {
+        final int v;
+        if (sample == 1.0f) {
+            v = Integer.MAX_VALUE;
+        } else {
+            v = (int) (SIG_24BIT_MAX * sample);
+        }
+        mOutputByteBuffer[i * fBytesPerSample + 0] = (byte) (v & 0xff);
+        mOutputByteBuffer[i * fBytesPerSample + 1] = (byte) (v >> 8 & 0xff); // little endian
+        mOutputByteBuffer[i * fBytesPerSample + 2] = (byte) (v >> 16 & 0xff);
+    }
+
+    private void writeSample32(final float sample, final int i) {
+        final long v;
+        if (sample == 1.0f) {
+            v = Long.MAX_VALUE; // special case
+        } else {
+            v = (long) (SIG_32BIT_MAX * sample);
+        }
+        mOutputByteBuffer[i * fBytesPerSample + 0] = (byte) (v & 0xff);
+        mOutputByteBuffer[i * fBytesPerSample + 1] = (byte) (v >> 8 & 0xff); // little endian
+        mOutputByteBuffer[i * fBytesPerSample + 2] = (byte) (v >> 16 & 0xff);
+        mOutputByteBuffer[i * fBytesPerSample + 3] = (byte) (v >> 24 & 0xff);
+    }
+
+    /* --- */
+
+    private void writeSamplePCM_FLOAT32(final float sample, final int i) {
+        int mPCM = Float.floatToIntBits(sample);
+        mOutputByteBuffer[i * fBytesPerSample + 0] = (byte) (mPCM & 0xff);
+        mOutputByteBuffer[i * fBytesPerSample + 1] = (byte) ((mPCM >> 8) & 0xff);
+        mOutputByteBuffer[i * fBytesPerSample + 2] = (byte) ((mPCM >> 16) & 0xff);
+        mOutputByteBuffer[i * fBytesPerSample + 3] = (byte) ((mPCM >> 24) & 0xff);
     }
 }

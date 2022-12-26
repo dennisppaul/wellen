@@ -22,7 +22,9 @@ package wellen;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 
+import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.DataLine;
 import javax.sound.sampled.Line;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.Mixer;
@@ -160,6 +162,12 @@ public class Wellen {
     public static final float TWO_PI = PApplet.TWO_PI;
     public static final float SIGNAL_MIN = -1.0f;
     public static final float SIGNAL_MAX = 1.0f;
+
+    public static final int BITS_PER_SAMPLE_8 = 8;
+    public static final int BITS_PER_SAMPLE_16 = 16;
+    public static final int BITS_PER_SAMPLE_24 = 24;
+    public static final int BITS_PER_SAMPLE_32 = 32;
+    public static final int DEFAULT_BITS_PER_SAMPLE = BITS_PER_SAMPLE_24;
 
     public static float bytes_to_floatIEEE(byte[] b, boolean pLittleEndian) {
         if (b.length != 4) {
@@ -378,11 +386,17 @@ public class Wellen {
         g.popMatrix();
     }
 
-    public static void dumpAudioInputAndOutputDevices() {
-        queryAudioInputAndOutputDevices(null, true);
+    public static void dumpAudioInputAndOutputDevices(boolean pPrintFormats) {
+        queryAudioInputAndOutputDevices(null, true, pPrintFormats);
     }
 
-    public static int queryAudioInputAndOutputDevices(String pDeviceName, boolean pPrintDevices) {
+    public static void dumpAudioInputAndOutputDevices() {
+        queryAudioInputAndOutputDevices(null, true, false);
+    }
+
+    public static int queryAudioInputAndOutputDevices(String pDeviceName,
+                                                      boolean pPrintDevices,
+                                                      boolean pPrintFormats) {
         if (AndroidProbe.isAndroid()) {
             System.out.println("+-------------------------------------------------------+");
             System.out.println("+ AUDIO DEVICES ( Audio System )                         ");
@@ -434,7 +448,16 @@ public class Wellen {
                 final String mID = i + getSpacesFrom(i, 3) + ":";
                 final String mName = AudioSystem.getMixerInfo()[i].getName();
                 if (pPrintDevices) {
-                    System.out.println("+ " + mID + " ( IN:" + mInputChannels + " / OUT:" + mOutputChannels + " ) : " + "\"" + mName + "\"");
+                    System.out.println("+ ID #" + mID + " ( INPUT:" + mInputChannels + " / OUTPUT:" + mOutputChannels + " )" + " : " + "\"" + mName + "\"");
+                    if (pPrintFormats) {
+                        // @NOTE(only print signed, little endian formats)
+                        if (mInputChannels > 0) {
+                            printFormats("INPUT", TargetDataLine.class, mMixer.getTargetLineInfo());
+                        }
+                        if (mOutputChannels > 0) {
+                            printFormats("OUTPUT", SourceDataLine.class, mMixer.getSourceLineInfo());
+                        }
+                    }
                 }
                 if (pDeviceName != null && pDeviceName.equalsIgnoreCase(mName)) {
                     mSelectedID = i;
@@ -446,6 +469,34 @@ public class Wellen {
             System.out.println();
         }
         return mSelectedID;
+    }
+
+    private static void printFormats(String mFormatString, Class mDataLineInfoClass, Line.Info[] mLineInfos) {
+        final String mIndentionString = "+     ";
+        System.out.print(mIndentionString);
+        System.out.print(mFormatString);
+        System.out.print(" FORMATS:");
+        System.out.println();
+        for (Line.Info mLineInfo : mLineInfos) {
+            if (mLineInfo instanceof DataLine.Info) {
+                DataLine.Info mDataLineInfo = (DataLine.Info) mLineInfo;
+                AudioFormat[] mFormats = mDataLineInfo.getFormats();
+                if (mDataLineInfo.getLineClass() == mDataLineInfoClass) {
+                    for (AudioFormat mFormat : mFormats) {
+                        if (!mFormat.isBigEndian() && mFormat.getEncoding() == AudioFormat.Encoding.PCM_SIGNED) {
+                            System.out.print(mIndentionString + "- ");
+                            System.out.print(mFormat.getSampleSizeInBits() + "-bits, ");
+                            System.out.print(mFormat.getChannels() + " channel" + (mFormat.getChannels() == 1 ? "" :
+                                    "s") + (mFormat.getSampleRate() > 0 ? ", " : ""));
+                            if (mFormat.getSampleRate() > 0) {
+                                System.out.print((int) mFormat.getSampleRate() + "Hz");
+                            }
+                            System.out.println();
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private static String getSpacesFrom(int pNumbers, int pTotalNumberOfCharacters) {

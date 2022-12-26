@@ -65,10 +65,8 @@ public class DSP implements AudioBufferRenderer {
             } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 0) {
                 mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME, float[].class, float[].class);
             } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 1) {
-                mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME,
-                                                                 float[].class,
-                                                                 float[].class,
-                                                                 float[].class);
+                mMethod = pListener.getClass()
+                                   .getDeclaredMethod(METHOD_NAME, float[].class, float[].class, float[].class);
             } else if (mNumberOutputChannels == 1 && mNumberInputChannels == 1) {
                 mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME, float[].class, float[].class);
             } else if (mNumberOutputChannels == 1 && mNumberInputChannels == 0) {
@@ -151,9 +149,9 @@ public class DSP implements AudioBufferRenderer {
                             int pSamplingRate,
                             int pAudioBlockSize) {
         return start(pObject,
-                     Wellen.queryAudioInputAndOutputDevices(pOutputDeviceName, false),
+                     Wellen.queryAudioInputAndOutputDevices(pOutputDeviceName, false, false),
                      pNumberOutputChannels,
-                     Wellen.queryAudioInputAndOutputDevices(pInputDeviceName, false),
+                     Wellen.queryAudioInputAndOutputDevices(pInputDeviceName, false, false),
                      pNumberInputChannels,
                      pSamplingRate,
                      pAudioBlockSize);
@@ -190,6 +188,14 @@ public class DSP implements AudioBufferRenderer {
             mConfig.input_device = pInputDevice;
             mConfig.number_of_input_channels = pNumberInputChannels;
             mAudioPlayer = new AudioBufferManager(mInstance, mConfig);
+        }
+        return mInstance;
+    }
+
+    public static DSP start(Object pObject, AudioDeviceConfiguration pConfig) {
+        if (mInstance == null) {
+            mInstance = new DSP(pObject, pConfig.number_of_output_channels, pConfig.number_of_input_channels);
+            mAudioPlayer = new AudioBufferManager(mInstance, pConfig);
         }
         return mInstance;
     }

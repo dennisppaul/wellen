@@ -19,7 +19,7 @@ public class ExampleDSP00Audioblock extends PApplet {
     }
 
     public void setup() {
-        Wellen.dumpAudioInputAndOutputDevices();
+        Wellen.dumpAudioInputAndOutputDevices(true);
         DSP.start(this);
         frameRate(120);
     }
