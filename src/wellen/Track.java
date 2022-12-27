@@ -32,18 +32,18 @@ import static wellen.Wellen.SIGNAL_STEREO;
 
 /**
  * manages a collection of {@link Module}s. each child module processes audio signals which are accumulated by the
- * track. furthermore, {@link Track} calls its child modules <pre><code>void&nbsp;beat(int)</code></pre> method.
+ * track. furthermore, {@link Track} calls its child modules <code>void&nbsp;beat(int)</code> method.
  * <p>
  * note, that since {@link Track} implements {@link Module} it can also be added as a module to another track. if a
- * class is derived from {@link Track} and <pre><code>beat(int)</code></pre> is overridden make sure to call
- * <pre><code>beat_update(int)</code></pre> to preserve internal functionality and update for child {@link Module}s.
- * similarly, make sure to call <pre><code>Signal&nbsp;output_signal_update()</code></pre> if
- * <pre><code>Signal&nbsp;output_signal()</code></pre> is overridden.
+ * class is derived from {@link Track} and <code>beat(int)</code> is overridden make sure to call
+ * <code>beat_update(int)</code> to preserve internal functionality and update for child {@link Module}s.
+ * similarly, make sure to call <code>Signal&nbsp;output_signal_update()</code> if
+ * <code>Signal&nbsp;output_signal()</code> is overridden.
  * <p>
  * {@link Track} handles mono or stereo {@link Module}s. if a {@link Module} outputs a mono signal the output is
- * positioned via panning ( see {@link Module} <pre><code>pan()</code></pre> ). if a {@link Module} outputs a stereo
- * signal the output ignores panning and just uses the signal unchanged. if a {@link Module} outputs more than channels
- * than a stereo signal all additional channels are ignored.
+ * positioned via panning ( see {@link Module} <code>pan()</code> ). if a {@link Module} outputs a stereo signal the
+ * output ignores panning and just uses the signal unchanged. if a {@link Module} outputs more than channels than a
+ * stereo signal all additional channels are ignored.
  *
  * @see Module
  */

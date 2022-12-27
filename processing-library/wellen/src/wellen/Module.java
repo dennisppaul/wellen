@@ -30,8 +30,8 @@ import static wellen.Wellen.NO_OUTPOINT;
 /**
  * a module allows to compose complex DSP configurations. it is a container that may be managed by a {@link Track}.
  * <p>
- * a module must implement the method <pre><code>void&nbsp;output(Signal)</code></pre> which supplies an audio signal
- * and may implement the method <pre><code>void&nbsp;beat(int)</code></pre> which can be used to receive beat events.
+ * a module must implement the method <code>void&nbsp;output(Signal)</code> which supplies an audio signal and may
+ * implement the method <code>void&nbsp;beat(int)</code> which can be used to receive beat events.
  */
 public abstract class Module implements DSPNodeOutputSignal, Loopable {
     public final int ID;

@@ -46,18 +46,18 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">Track</span>
 <span class="extends-implements">extends <a href="Module.html" title="class in wellen">Module</a></span></div>
 <div class="block">manages a collection of <a href="Module.html" title="class in wellen"><code>Module</code></a>s. each child module processes audio signals which are accumulated by the
- track. furthermore, <a href="Track.html" title="class in wellen"><code>Track</code></a> calls its child modules <pre><code>void&nbsp;beat(int)</code></pre> method.
+ track. furthermore, <a href="Track.html" title="class in wellen"><code>Track</code></a> calls its child modules <code>void&nbsp;beat(int)</code> method.
  <p>
  note, that since <a href="Track.html" title="class in wellen"><code>Track</code></a> implements <a href="Module.html" title="class in wellen"><code>Module</code></a> it can also be added as a module to another track. if a
- class is derived from <a href="Track.html" title="class in wellen"><code>Track</code></a> and <pre><code>beat(int)</code></pre> is overridden make sure to call
- <pre><code>beat_update(int)</code></pre> to preserve internal functionality and update for child <a href="Module.html" title="class in wellen"><code>Module</code></a>s.
- similarly, make sure to call <pre><code>Signal&nbsp;output_signal_update()</code></pre> if
- <pre><code>Signal&nbsp;output_signal()</code></pre> is overridden.
+ class is derived from <a href="Track.html" title="class in wellen"><code>Track</code></a> and <code>beat(int)</code> is overridden make sure to call
+ <code>beat_update(int)</code> to preserve internal functionality and update for child <a href="Module.html" title="class in wellen"><code>Module</code></a>s.
+ similarly, make sure to call <code>Signal&nbsp;output_signal_update()</code> if
+ <code>Signal&nbsp;output_signal()</code> is overridden.
  <p>
  <a href="Track.html" title="class in wellen"><code>Track</code></a> handles mono or stereo <a href="Module.html" title="class in wellen"><code>Module</code></a>s. if a <a href="Module.html" title="class in wellen"><code>Module</code></a> outputs a mono signal the output is
- positioned via panning ( see <a href="Module.html" title="class in wellen"><code>Module</code></a> <pre><code>pan()</code></pre> ). if a <a href="Module.html" title="class in wellen"><code>Module</code></a> outputs a stereo
- signal the output ignores panning and just uses the signal unchanged. if a <a href="Module.html" title="class in wellen"><code>Module</code></a> outputs more than channels
- than a stereo signal all additional channels are ignored.</div>
+ positioned via panning ( see <a href="Module.html" title="class in wellen"><code>Module</code></a> <code>pan()</code> ). if a <a href="Module.html" title="class in wellen"><code>Module</code></a> outputs a stereo signal the
+ output ignores panning and just uses the signal unchanged. if a <a href="Module.html" title="class in wellen"><code>Module</code></a> outputs more than channels than a
+ stereo signal all additional channels are ignored.</div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
