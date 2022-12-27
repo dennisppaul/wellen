@@ -37,6 +37,10 @@ public class EventReceiverOSC {
     private final OscP5 mOscP5;
     private Method mMethod = null;
 
+    /**
+     * @param pListener    object which will receive OSC messages
+     * @param pPortReceive port to listen on for incoming OSC messages
+     */
     public EventReceiverOSC(Object pListener, int pPortReceive) {
         mParent = pListener;
         mOscP5 = new OscP5(this, pPortReceive);
@@ -47,6 +51,11 @@ public class EventReceiverOSC {
         }
     }
 
+    /**
+     * callback method for incoming OSC messages
+     *
+     * @param pOSCMessage OSC message
+     */
     public void oscEvent(OscMessage pOSCMessage) {
         try {
             int mEvent = Wellen.EVENT_UNDEFINED;
@@ -74,6 +83,11 @@ public class EventReceiverOSC {
         }
     }
 
+    /**
+     * @param pListener    object which will receive OSC messages
+     * @param pPortReceive port to listen on for incoming OSC messages
+     * @return instance of {@code EventReceiverOSC}
+     */
     public static EventReceiverOSC start(Object pListener, int pPortReceive) {
         if (mInstance == null) {
             mInstance = new EventReceiverOSC(pListener, pPortReceive);
@@ -81,6 +95,10 @@ public class EventReceiverOSC {
         return mInstance;
     }
 
+    /**
+     * @param pListener object which will receive OSC messages
+     * @return instance of {@code EventReceiverOSC}
+     */
     public static EventReceiverOSC start(Object pListener) {
         return start(pListener, DEFAULT_RECEIVE_PORT);
     }

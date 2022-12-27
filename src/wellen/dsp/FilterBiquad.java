@@ -29,11 +29,7 @@ import static wellen.Wellen.FILTER_MODE_LOWSHELF;
 import static wellen.Wellen.FILTER_MODE_NOTCH;
 import static wellen.Wellen.FILTER_MODE_PEAK;
 
-/**
- * biquad filter inspired by <a
- * href="https://www.musicdsp.org/en/latest/_downloads/3e1dc886e7849251d6747b194d482272/Audio-EQ-Cookbook
- * .txt">Audio-EQ-Cookbook.txt</a>
- */
+/** biquad filter inspired by <a href="https://www.musicdsp.org/en/latest/_downloads/3e1dc886e7849251d6747b194d482272/Audio-EQ-Cookbook.txt">Audio-EQ-Cookbook.txt</a> */
 public class FilterBiquad implements DSPNodeProcess {
     private static final int BQN = 3;
     private final float mSamplingRate;

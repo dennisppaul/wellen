@@ -90,12 +90,18 @@ public class Envelope implements DSPNodeOutput {
     private final ArrayList<EnvelopeListener> mEnvelopeListeners;
     private final float mSamplingRate;
 
+    /**
+     * @param pSamplingRate sampling rate
+     */
     public Envelope(int pSamplingRate) {
         mSamplingRate = pSamplingRate;
         mEnvelopeStages = new ArrayList<>();
         mEnvelopeListeners = new ArrayList<>();
     }
 
+    /**
+     *
+     */
     public Envelope() {
         this(Wellen.DEFAULT_SAMPLING_RATE);
     }
@@ -163,22 +169,38 @@ public class Envelope implements DSPNodeOutput {
         add_stage(pValue);
     }
 
+    /**
+     * @return list of all stages
+     */
     public ArrayList<Stage> stages() {
         return mEnvelopeStages;
     }
 
+    /**
+     * @param pValue    value of stage
+     * @param pDuration duration of stage
+     */
     public void add_stage(float pValue, float pDuration) {
         mEnvelopeStages.add(new Stage(pValue, pDuration));
     }
 
+    /**
+     * @param pValue value of stage
+     */
     public void add_stage(float pValue) {
         mEnvelopeStages.add(new Stage(pValue, 0.0f));
     }
 
+    /**
+     *
+     */
     public void clear_stages() {
         mEnvelopeStages.clear();
     }
 
+    /**
+     *
+     */
     public void start() {
         mEnvelopeDone = false;
         if (!mEnvelopeStages.isEmpty()) {
@@ -187,38 +209,66 @@ public class Envelope implements DSPNodeOutput {
         mStageDuration = 0.0f;
     }
 
+    /**
+     *
+     */
     public void stop() {
         mEnvelopeDone = true;
     }
 
+    /**
+     * @return time scale in seconds
+     */
     public float get_time_scale() {
         return mTimeScale;
     }
 
+    /**
+     * @param pTimeScale time scale in seconds
+     */
     public void set_time_scale(float pTimeScale) {
         mTimeScale = pTimeScale;
     }
 
+    /**
+     * @return current value
+     */
     public float get_current_value() {
         return mValue;
     }
 
+    /**
+     * @param pValue set current value
+     */
     public void set_current_value(float pValue) {
         mValue = pValue;
     }
 
+    /**
+     * @param pEnvelopeListener envelope listener
+     */
     public void add_listener(EnvelopeListener pEnvelopeListener) {
         mEnvelopeListeners.add(pEnvelopeListener);
     }
 
+    /**
+     * @param pEnvelopeListener envelope listener
+     * @return true if envelope listener was removed
+     */
     public boolean remove_listener(EnvelopeListener pEnvelopeListener) {
         return mEnvelopeListeners.remove(pEnvelopeListener);
     }
 
+    /**
+     *
+     */
     public void clear_listeners() {
         mEnvelopeListeners.clear();
     }
 
+    /**
+     * @return list of all envelope listeners
+     */
     public ArrayList<EnvelopeListener> get_listeners() {
         return mEnvelopeListeners;
     }
@@ -258,6 +308,9 @@ public class Envelope implements DSPNodeOutput {
         mDelta = compute_delta_fraction(mDeltaTMP, mEnvelopeStages.get(mEnvStage).duration);
     }
 
+    /**
+     * envelope stage
+     */
     public static class Stage {
 
         /**

@@ -19,8 +19,6 @@
 
 package wellen;
 
-import wellen.AudioDeviceImplAndroid;
-
 /**
  * communicates with the underlying audio systems.
  */
@@ -28,6 +26,10 @@ public class AudioBufferManager {
 
     private final AudioDevice fImplementation;
 
+    /**
+     * @param pSampleRenderer renderer to be used
+     * @param pConfiguration  configuration to be used
+     */
     public AudioBufferManager(AudioBufferRenderer pSampleRenderer, AudioDeviceConfiguration pConfiguration) {
         if (AndroidProbe.isAndroid()) {
             fImplementation = new AudioDeviceImplAndroid(pSampleRenderer, pConfiguration);
@@ -36,15 +38,24 @@ public class AudioBufferManager {
         }
     }
 
+    /**
+     *
+     */
     public void exit() {
         fImplementation.exit();
     }
 
-    public int sample_rate() {
+    /**
+     * @return sample rate
+     */
+    public int get_sample_rate() {
         return fImplementation.sample_rate();
     }
 
-    public int buffer_size() {
+    /**
+     * @return audio block or buffer size
+     */
+    public int get_buffer_size() {
         return fImplementation.buffer_size();
     }
 }

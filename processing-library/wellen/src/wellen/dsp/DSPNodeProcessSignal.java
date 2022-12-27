@@ -26,6 +26,11 @@ package wellen.dsp;
  */
 public interface DSPNodeProcessSignal {
 
+    /**
+     *
+     * @param pSignal input signal
+     * @return processed signal
+     */
     Signal process_signal(Signal pSignal);
 }
 

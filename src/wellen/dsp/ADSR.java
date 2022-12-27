@@ -69,6 +69,9 @@ public class ADSR implements DSPNodeOutput {
      *
      */
 
+    /**
+     * ASCII diagram of an ADSR envelope.
+     */
     public static final String ADSR_DIAGRAM = "    ^    /\\\n" + "    |   /  \\\n" + "    |  /    \\______\n" + "    "
             + "| /            \\\n" + "    |/              \\\n" + "    +---------------------->\n" + "    [A   " +
             "][D][S " + "  ][R]\n";
@@ -93,38 +96,65 @@ public class ADSR implements DSPNodeOutput {
         PRE_ATTACK_FADE_TO_ZERO
     }
 
+    /**
+     * @param pSamplingRate sampling rate in Hz.
+     */
     public ADSR(int pSamplingRate) {
         mSamplingRate = pSamplingRate;
         FADE_TO_ZERO_RATE_SEC = 0.01f;
         setState(ENVELOPE_STATE.IDLE);
     }
 
+    /**
+     *
+     */
     public ADSR() {
         this(Wellen.DEFAULT_SAMPLING_RATE);
     }
 
+    /**
+     * @return current envelope value
+     */
     @Override
     public float output() {
         step();
         return mAmp;
     }
 
+    /**
+     *
+     */
     public void start() {
         check_scheduled_attack_state();
     }
 
+    /**
+     *
+     */
     public void stop() {
         check_scheduled_release_state();
     }
 
+    /**
+     * @return attack value in seconds
+     */
     public float get_attack() {
         return mAttack;
     }
 
+    /**
+     * @param pAttack attack value in seconds
+     */
     public void set_attack(float pAttack) {
         mAttack = pAttack;
     }
 
+    /**
+     * @param pAttack  attack value in seconds
+     * @param pDecay   decay value in seconds
+     * @param pSustain sustain value in seconds
+     * @param pRelease release value in seconds
+     */
     public void set_adsr(float pAttack, float pDecay, float pSustain, float pRelease) {
         set_attack(pAttack);
         set_decay(pDecay);
@@ -132,26 +162,44 @@ public class ADSR implements DSPNodeOutput {
         set_release(pRelease);
     }
 
+    /**
+     * @return decay value in seconds
+     */
     public float get_decay() {
         return mDecay;
     }
 
+    /**
+     * @param pDecay decay value in seconds
+     */
     public void set_decay(float pDecay) {
         mDecay = pDecay;
     }
 
+    /**
+     * @return sustain value in seconds
+     */
     public float get_sustain() {
         return mSustain;
     }
 
+    /**
+     * @param pSustain sustain value in seconds
+     */
     public void set_sustain(float pSustain) {
         mSustain = pSustain;
     }
 
+    /**
+     * @return release value in seconds
+     */
     public float get_release() {
         return mRelease;
     }
 
+    /**
+     * @param pRelease release value in seconds
+     */
     public void set_release(float pRelease) {
         mRelease = pRelease;
     }

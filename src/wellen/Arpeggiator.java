@@ -36,12 +36,18 @@ public class Arpeggiator {
     private int mBaseNote;
     private float mBaseVelocity;
 
+    /**
+     * @param pLengthInQuarterNotes length of the pattern in quarter notes
+     */
     public Arpeggiator(int pLengthInQuarterNotes) {
         mPattern = new NoteStruct[pLengthInQuarterNotes];
         Arrays.fill(mPattern, new NoteStruct());
         reset();
     }
 
+    /**
+     * @return the current note
+     */
     public boolean step() {
         if (mStep < mPattern.length) {
             mCurrentNote = mPattern[mStep];
@@ -52,68 +58,146 @@ public class Arpeggiator {
         }
     }
 
+    /**
+     * @param pPattern pattern to replace current pattern
+     */
     public void replace_pattern(NoteStruct[] pPattern) {
         mPattern = pPattern;
         reset();
     }
 
+    /**
+     * clear current pattern
+     */
     public void clear_pattern() {
         for (int i = 0; i < mPattern.length; i++) {
             Arrays.fill(mPattern, new NoteStruct());
         }
     }
 
+    /**
+     * @return true if a note is currently playing and if is active
+     */
     public boolean trigger() {
         return mCurrentNote != null && mCurrentNote.active;
     }
 
+    /**
+     * @return current note
+     */
     public int note() {
         return mCurrentNote != null ? mCurrentNote.note + mBaseNote : 0;
     }
 
+    /**
+     * @return current velocity
+     */
     public int velocity() {
         return mCurrentNote != null ? (int) (mCurrentNote.velocity * mBaseVelocity) : 0;
     }
 
+    /**
+     * reset to beginning of pattern
+     */
     public void reset() {
         mStep = 0;
         mCurrentNote = null;
     }
 
+    /**
+     * @param pNote     set base note
+     * @param pVelocity set base velocity
+     */
     public void play(int pNote, int pVelocity) {
         mBaseNote = pNote;
         mBaseVelocity = pVelocity;
         reset();
     }
 
+    /**
+     * set note in pattern
+     *
+     * @param pPosition position in pattern
+     * @param pNote     note in pattern
+     * @param pVelocity velocity in pattern
+     * @return true if note was set
+     */
     public boolean pattern(int pPosition, int pNote, float pVelocity) {
         return set(mPattern, pPosition, pNote, pVelocity);
     }
 
+    /**
+     * set note in pattern
+     *
+     * @param pPosition position in pattern
+     * @param pScaler   scaler in pattern
+     * @param pNote     note in pattern
+     * @param pVelocity velocity in pattern
+     * @return true if note was set
+     */
     public boolean pattern(int pPosition, int pScaler, int pNote, float pVelocity) {
         return set(mPattern, pPosition, pScaler, pNote, pVelocity);
     }
 
+    /**
+     * @param pPosition position in pattern
+     * @param pNote     note in pattern
+     * @param pVelocity velocity in pattern
+     * @return true if note was set
+     */
     public boolean pattern_4(int pPosition, int pNote, float pVelocity) {
         return set(mPattern, pPosition, PPQN, pNote, pVelocity);
     }
 
+    /**
+     * @param pPosition position in pattern
+     * @param pNote     note in pattern
+     * @param pVelocity velocity in pattern
+     * @return true if note was set
+     */
     public boolean pattern_8(int pPosition, int pNote, float pVelocity) {
         return set(mPattern, pPosition, PPQN / 2, pNote, pVelocity);
     }
 
+    /**
+     * @param pPosition position in pattern
+     * @param pNote     note in pattern
+     * @param pVelocity velocity in pattern
+     * @return true if note was set
+     */
     public boolean pattern_16(int pPosition, int pNote, float pVelocity) {
         return set(mPattern, pPosition, PPQN / 4, pNote, pVelocity);
     }
 
+    /**
+     * @param pPosition position in pattern
+     * @param pNote     note in pattern
+     * @param pVelocity velocity in pattern
+     * @return true if note was set
+     */
     public boolean pattern_32(int pPosition, int pNote, float pVelocity) {
         return set(mPattern, pPosition, PPQN / 8, pNote, pVelocity);
     }
 
+    /**
+     * @param pPattern  pattern to set
+     * @param pPosition position in pattern
+     * @param pScaler   position scaler in pattern
+     * @param pNote     note in pattern
+     * @param pVelocity velocity in pattern
+     * @return true if note was set
+     */
     public static boolean set(NoteStruct[] pPattern, int pPosition, int pScaler, int pNote, float pVelocity) {
         return set(pPattern, pPosition * pScaler, pNote, pVelocity);
     }
 
+    /**
+     * @param pPattern  pattern to set
+     * @param pPosition position in pattern
+     * @param pNote     note in pattern
+     * @param pVelocity velocity in pattern
+     * @return true if note was set
+     */
     public static boolean set(NoteStruct[] pPattern, int pPosition, int pNote, float pVelocity) {
         NoteStruct ns = new NoteStruct();
         ns.active = true;
@@ -127,21 +211,35 @@ public class Arpeggiator {
         }
     }
 
+    /**
+     * data structure for storing note information.
+     */
     public static class NoteStruct {
         boolean active;
         int note;
         float velocity;
 
+        /**
+         *
+         */
         public NoteStruct() {
             this(false, 0, 0.0f);
         }
 
+        /**
+         * @param pActive   set actice state
+         * @param pNote     set note
+         * @param pVelocity set velocity
+         */
         public NoteStruct(boolean pActive, int pNote, float pVelocity) {
             active = pActive;
             note = pNote;
             velocity = pVelocity;
         }
 
+        /**
+         * @return return copy of note structure
+         */
         public NoteStruct copy() {
             return new NoteStruct(active, note, velocity);
         }

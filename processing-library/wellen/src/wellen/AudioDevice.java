@@ -19,11 +19,22 @@
 
 package wellen;
 
+/**
+ *
+ */
 public interface AudioDevice {
-
+    /**
+     *
+     */
     void exit();
 
+    /**
+     * @return sample rate
+     */
     int sample_rate();
 
+    /**
+     * @return buffer size
+     */
     int buffer_size();
 }

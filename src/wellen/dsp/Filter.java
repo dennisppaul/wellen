@@ -43,10 +43,16 @@ public class Filter implements DSPNodeProcess {
     private float mBuffer3;
     private final float mSamplingRate;
 
+    /**
+     *
+     */
     public Filter() {
         this(Wellen.DEFAULT_SAMPLING_RATE);
     }
 
+    /**
+     * @param pSamplingRate sampling rate in Hz
+     */
     public Filter(int pSamplingRate) {
         mSamplingRate = pSamplingRate;
         mCutoffFrequency = 0.99f;
@@ -59,6 +65,9 @@ public class Filter implements DSPNodeProcess {
         calculateFeedbackAmount();
     }
 
+    /**
+     * @return cutoff frequency in Hz
+     */
     public float get_frequency() {
         return mCutoffFrequency * mSamplingRate;
     }
@@ -71,19 +80,32 @@ public class Filter implements DSPNodeProcess {
         calculateFeedbackAmount();
     }
 
+    /**
+     * @return resonance
+     */
     public float get_resonance() {
         return mResonance;
     }
 
+    /**
+     * @param pResonance resonance
+     */
     public void set_resonance(float pResonance) {
         mResonance = pResonance;
         calculateFeedbackAmount();
     }
 
+    /**
+     * @param pFilterMode filter mode
+     */
     public void set_mode(int pFilterMode) {
         mFilterMode = pFilterMode;
     }
 
+    /**
+     * @param inputValue input signal
+     * @return filtered signal
+     */
     @Override
     public float process(float inputValue) {
         if (inputValue == 0.0f) {
@@ -106,6 +128,9 @@ public class Filter implements DSPNodeProcess {
         }
     }
 
+    /**
+     *
+     */
     public void reset() {
         mBuffer0 = mBuffer1 = mBuffer2 = mBuffer3 = 0.0f;
     }

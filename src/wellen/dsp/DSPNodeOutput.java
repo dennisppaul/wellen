@@ -23,5 +23,10 @@ package wellen.dsp;
  * interface implemented by classes that produce mono output signals.
  */
 public interface DSPNodeOutput {
+    /**
+     * returns the output signal.
+     *
+     * @return output signal
+     */
     float output();
 }

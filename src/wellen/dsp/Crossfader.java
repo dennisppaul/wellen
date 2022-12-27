@@ -19,11 +19,29 @@
 
 package wellen.dsp;
 
+/**
+ *
+ */
 public class Crossfader implements DSPNodeOutput {
+    /**
+     * the crossfade value where a value of 0 means Input A at 100% and Input B at 0%, a value of 0.5 means Input A at
+     * 50% and Input B at 50%, and a value of 1 means Input A at 0% and Input B at 100%.
+     */
     public float ratio = 0.5f;
+
+    /**
+     *
+     */
     public DSPNodeOutput signal_a;
+
+    /**
+     *
+     */
     public DSPNodeOutput signal_b;
 
+    /**
+     * @return processed signal
+     */
     public float output() {
         if (signal_a != null && signal_b != null) {
             final float mSignalA = signal_a.output();

@@ -26,10 +26,12 @@ import java.lang.reflect.Method;
  * similar to {@link wellen.Beat} except that beat events are triggered by an external MIDI CLOCK signal.
  */
 public class BeatMIDI implements MidiInListener {
-
+    /**
+     *
+     */
+    public static boolean VERBOSE = false;
     private static final int BPM_SAMPLER_SIZE = 12;
     private static final String METHOD_NAME = "beat";
-    public static boolean VERBOSE = false;
     private final Object mListener;
     private final float[] mBPMSampler = new float[BPM_SAMPLER_SIZE];
     private Method mMethod = null;
@@ -56,6 +58,11 @@ public class BeatMIDI implements MidiInListener {
         start();
     }
 
+    /**
+     * @param pListener  object which implements the method `beat(int pBeatCounter)`
+     * @param pMidiInput MIDI input device to listen to
+     * @return {@link BeatMIDI}
+     */
     public static BeatMIDI start(Object pListener, String pMidiInput) {
         final BeatMIDI mBeatMIDI = new BeatMIDI(pListener);
         MidiIn mMidiIn = new MidiIn(pMidiInput);
@@ -63,6 +70,9 @@ public class BeatMIDI implements MidiInListener {
         return mBeatMIDI;
     }
 
+    /**
+     * @param pResetBeatCounterAtStop if `true` the beat counter is reset to `0` when the MIDI clock signal stops.
+     */
     public void reset_beat_counter_at_stop(boolean pResetBeatCounterAtStop) {
         mResetBeatCounterAtStop = pResetBeatCounterAtStop;
     }
@@ -75,10 +85,16 @@ public class BeatMIDI implements MidiInListener {
         return 1000000000;
     }
 
+    /**
+     * @return true if beat is running
+     */
     public boolean running() {
         return mIsRunning;
     }
 
+    /**
+     * @return current beat count in pulses per quarter notes (PPQN)
+     */
     public int beat_count() {
         return mTickPPQNCounter;
     }
@@ -92,6 +108,9 @@ public class BeatMIDI implements MidiInListener {
         return mBPMEstimate;
     }
 
+    /**
+     * @hidden internal use only
+     */
     public void invoke() {
         if (mIsRunning) {
             try {

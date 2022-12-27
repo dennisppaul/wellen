@@ -21,6 +21,9 @@ package wellen.dsp;
 
 import wellen.Wellen;
 
+/**
+ * a delay line.
+ */
 public class Delay implements DSPNodeProcess, DSPNodeProcessSignal {
 
     private final float fSampleRate;
@@ -41,6 +44,9 @@ public class Delay implements DSPNodeProcess, DSPNodeProcessSignal {
         adaptyEchoLength();
     }
 
+    /**
+     *
+     */
     public Delay() {
         this(1.0f, 0.75f, Wellen.DEFAULT_SAMPLING_RATE);
     }

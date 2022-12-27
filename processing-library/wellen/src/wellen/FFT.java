@@ -95,6 +95,11 @@ public class FFT extends FourierTransform {
         fillSpectrum();
     }
 
+    /**
+     *
+     * @param i the frequency band to modify
+     * @param a the new amplitude
+     */
     public void setBand(int i, float a) {
         if (a < 0) {
             throw new IllegalArgumentException("Can't set a frequency band to a negative value.");
@@ -115,6 +120,11 @@ public class FFT extends FourierTransform {
         }
     }
 
+    /**
+     *
+     * @param i the frequency band to modify
+     * @param s the scaling factor
+     */
     public void scaleBand(int i, float s) {
         if (s < 0) {
             throw new IllegalArgumentException("Can't scale a frequency band by a negative value.");
@@ -132,6 +142,10 @@ public class FFT extends FourierTransform {
         }
     }
 
+    /**
+     *
+     * @param buffer the buffer to analyze
+     */
     public void forward(float[] buffer) {
         if (buffer.length != timeSize) {
             throw new IllegalArgumentException(
@@ -146,6 +160,10 @@ public class FFT extends FourierTransform {
         fillSpectrum();
     }
 
+    /**
+     *
+     * @param buffer the buffer to place the result of the inverse transform in
+     */
     public void inverse(float[] buffer) {
         if (buffer.length > real.length) {
             throw new IllegalArgumentException("FFT.inverse: the passed array's length must equal FFT.timeSize().");
@@ -253,6 +271,9 @@ public class FFT extends FourierTransform {
         return sinlookup[i];
     }
 
+    /**
+     * @return instance
+     */
     public static FFT instance() {
         if (instance == null) {
             instance = new FFT(Wellen.DEFAULT_AUDIOBLOCK_SIZE, Wellen.DEFAULT_SAMPLING_RATE);
@@ -261,14 +282,24 @@ public class FFT extends FourierTransform {
         return instance;
     }
 
+    /**
+     * @return spectrum
+     */
     public static float[] get_spectrum() {
         return instance().getSpectrum();
     }
 
+    /**
+     * @param pFrequency frequency
+     * @return frequency
+     */
     public static float get_frequency(float pFrequency) {
         return instance().getFreq(pFrequency);
     }
 
+    /**
+     * @param pSignal signal
+     */
     public static void perform_forward_transform(float[] pSignal) {
         float[] mSignalCopy = new float[pSignal.length];
         System.arraycopy(pSignal, 0, mSignalCopy, 0, Array.getLength(pSignal));

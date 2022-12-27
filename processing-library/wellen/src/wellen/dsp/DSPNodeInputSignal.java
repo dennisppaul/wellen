@@ -25,5 +25,8 @@ package wellen.dsp;
  * note that the input signal is not guaranteed to be left unchanged.
  */
 public interface DSPNodeInputSignal {
+    /**
+     * @param pSignal input signal
+     */
     void input_signal(Signal pSignal);
 }

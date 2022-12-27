@@ -35,6 +35,10 @@ import java.util.Arrays;
  */
 public class DSP implements AudioBufferRenderer {
 
+    /**
+     * enable to create a copy of a cached buffer for each call to <code>audioblock(...)</code>. this is useful if the
+     * processing of the audio signal is not thread-safe.
+     */
     public boolean COPY_CACHED_BUFFER = false;
 
     private static final String METHOD_NAME = "audioblock";
@@ -51,17 +55,23 @@ public class DSP implements AudioBufferRenderer {
     private static final int NUM_CACHED_BUFFERS = 4;
     private final float[][] fCachedBuffers = new float[NUM_CACHED_BUFFERS][];
 
+    /**
+     * @param pListener             object which implements the <code>audioblock(...)</code> method
+     * @param pNumberOutputChannels number of output channels
+     * @param pNumberInputChannels  number of input channels
+     */
     public DSP(Object pListener, int pNumberOutputChannels, int pNumberInputChannels) {
         mListener = pListener;
         mNumberOutputChannels = pNumberOutputChannels;
         mNumberInputChannels = pNumberInputChannels;
         try {
             if (mNumberOutputChannels == 2 && mNumberInputChannels == 2) {
-                mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME,
-                                                                 float[].class,
-                                                                 float[].class,
-                                                                 float[].class,
-                                                                 float[].class);
+                mMethod = pListener.getClass()
+                                   .getDeclaredMethod(METHOD_NAME,
+                                                      float[].class,
+                                                      float[].class,
+                                                      float[].class,
+                                                      float[].class);
             } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 0) {
                 mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME, float[].class, float[].class);
             } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 1) {
@@ -117,6 +127,9 @@ public class DSP implements AudioBufferRenderer {
         }
     }
 
+    /**
+     *
+     */
     public static void stop() {
         if (mAudioPlayer != null) {
             mAudioPlayer.exit();
@@ -125,14 +138,29 @@ public class DSP implements AudioBufferRenderer {
         mAudioPlayer = null;
     }
 
+    /**
+     * @param pObject object which implements the <code>audioblock(...)</code> method
+     * @return reference to DSP instance
+     */
     public static DSP start(Object pObject) {
         return start(pObject, 1, 0);
     }
 
+    /**
+     * @param pObject               object which implements the <code>audioblock(...)</code> method
+     * @param pNumberOutputChannels number of output channels
+     * @return reference to DSP instance
+     */
     public static DSP start(Object pObject, int pNumberOutputChannels) {
         return start(pObject, pNumberOutputChannels, 0);
     }
 
+    /**
+     * @param pObject               object which implements the <code>audioblock(...)</code> method
+     * @param pNumberOutputChannels number of output channels
+     * @param pNumberInputChannels  number of input channels
+     * @return reference to DSP instance
+     */
     public static DSP start(Object pObject, int pNumberOutputChannels, int pNumberInputChannels) {
         return start(pObject,
                      Wellen.DEFAULT_AUDIO_DEVICE,
@@ -140,6 +168,17 @@ public class DSP implements AudioBufferRenderer {
                      Wellen.DEFAULT_AUDIO_DEVICE,
                      pNumberInputChannels);
     }
+
+    /**
+     * @param pObject               object which implements the <code>audioblock(...)</code> method
+     * @param pOutputDeviceName     name of output device
+     * @param pNumberOutputChannels number of output channels
+     * @param pInputDeviceName      name of input device
+     * @param pNumberInputChannels  number of input channels
+     * @param pSamplingRate         sampling rate
+     * @param pAudioBlockSize       audio block size
+     * @return reference to DSP instance
+     */
 
     public static DSP start(Object pObject,
                             String pOutputDeviceName,
@@ -157,6 +196,16 @@ public class DSP implements AudioBufferRenderer {
                      pAudioBlockSize);
     }
 
+    /**
+     * @param pObject               object which implements the <code>audioblock(...)</code> method
+     * @param pOutputDevice         output device ID as returned by
+     *                              {@link Wellen#queryAudioInputAndOutputDevices(String, boolean, boolean)}
+     * @param pNumberOutputChannels number of output channels
+     * @param pInputDevice          input device ID as returned by
+     *                              {@link Wellen#queryAudioInputAndOutputDevices(String, boolean, boolean)}
+     * @param pNumberInputChannels  number of input channels
+     * @return reference to DSP instance
+     */
     public static DSP start(Object pObject,
                             int pOutputDevice,
                             int pNumberOutputChannels,
@@ -171,6 +220,18 @@ public class DSP implements AudioBufferRenderer {
                      Wellen.DEFAULT_AUDIOBLOCK_SIZE);
     }
 
+    /**
+     * @param pObject               object which implements the <code>audioblock(...)</code> method
+     * @param pOutputDevice         output device ID as returned by
+     *                              {@link Wellen#queryAudioInputAndOutputDevices(String, boolean, boolean)}
+     * @param pNumberOutputChannels number of output channels
+     * @param pInputDevice          input device ID as returned by
+     *                              {@link Wellen#queryAudioInputAndOutputDevices(String, boolean, boolean)}
+     * @param pNumberInputChannels  number of input channels
+     * @param pSamplingRate         sampling rate
+     * @param pAudioBlockSize       audio block size
+     * @return reference to DSP instance
+     */
     public static DSP start(Object pObject,
                             int pOutputDevice,
                             int pNumberOutputChannels,
@@ -192,6 +253,11 @@ public class DSP implements AudioBufferRenderer {
         return mInstance;
     }
 
+    /**
+     * @param pObject object which implements the <code>audioblock(...)</code> method
+     * @param pConfig audio device configuration
+     * @return reference to DSP instance
+     */
     public static DSP start(Object pObject, AudioDeviceConfiguration pConfig) {
         if (mInstance == null) {
             mInstance = new DSP(pObject, pConfig.number_of_output_channels, pConfig.number_of_input_channels);
@@ -200,34 +266,60 @@ public class DSP implements AudioBufferRenderer {
         return mInstance;
     }
 
+    /**
+     * @return sample rate
+     */
     public static int get_sample_rate() {
-        return mAudioPlayer == null ? Wellen.NO_VALUE : mAudioPlayer.sample_rate();
+        return mAudioPlayer == null ? Wellen.NO_VALUE : mAudioPlayer.get_sample_rate();
     }
 
+    /**
+     * @return audio block or buffer size
+     */
     public static int get_buffer_size() {
-        return mAudioPlayer == null ? Wellen.NO_VALUE : mAudioPlayer.buffer_size();
+        return mAudioPlayer == null ? Wellen.NO_VALUE : mAudioPlayer.get_buffer_size();
     }
 
+    /**
+     * @return reference to output buffer
+     */
     public static float[] get_output_buffer() {
         return get_output_buffer_left();
     }
 
+    /**
+     * @return reference to left output buffer
+     */
     public static float[] get_output_buffer_left() {
         return mInstance == null ? null : mInstance.fCachedBuffers[OUTPUT_LEFT];
     }
 
+    /**
+     * @return reference to right output buffer
+     */
     public static float[] get_output_buffer_right() {
         return mInstance == null ? null : mInstance.fCachedBuffers[OUTPUT_RIGHT];
     }
 
+    /**
+     * @return reference to left input buffer
+     */
     public static float[] get_input_buffer_left() {
         return mInstance == null ? null : mInstance.fCachedBuffers[INPUT_LEFT];
     }
 
+    /**
+     * @return reference to right input buffer
+     */
     public static float[] get_input_buffer_right() {
         return mInstance == null ? null : mInstance.fCachedBuffers[INPUT_RIGHT];
     }
 
+    /**
+     * @param g       graphics context to draw into
+     * @param pWidth  visual width of the drawn buffer
+     * @param pHeight visual height of the drawn buffer
+     */
     public static void draw_buffers(PGraphics g, float pWidth, float pHeight) {
         Wellen.draw_buffers(g,
                             pWidth,

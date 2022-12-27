@@ -42,6 +42,9 @@ public class Distortion implements DSPNodeProcess {
     private int mBits;
     private int mSteps;
 
+    /**
+     *
+     */
     public Distortion() {
         set_clip(1.0f);
         set_amplification(1.0f);
@@ -49,6 +52,9 @@ public class Distortion implements DSPNodeProcess {
         set_bits(8);
     }
 
+    /**
+     * @return amplification value
+     */
     public float get_amplification() {
         return mAmplification;
     }
@@ -63,22 +69,37 @@ public class Distortion implements DSPNodeProcess {
         mAmplification = pAmplification;
     }
 
+    /**
+     * @return clipping value
+     */
     public float get_clip() {
         return mClip;
     }
 
+    /**
+     * @param pClip clipping value
+     */
     public void set_clip(float pClip) {
         mClip = pClip;
     }
 
+    /**
+     * @return distortion type
+     */
     public int get_type() {
         return mDistortionType;
     }
 
+    /**
+     * @param pDistortionType distortion type
+     */
     public void set_type(int pDistortionType) {
         mDistortionType = pDistortionType;
     }
 
+    /**
+     * @return number of bits for `DISTORTION_BIT_CRUSHING`
+     */
     public int get_bits() {
         return mBits;
     }
@@ -93,6 +114,10 @@ public class Distortion implements DSPNodeProcess {
         mSteps = (int) (Math.pow(2, mBits - 1));
     }
 
+    /**
+     * @param pSignal input signal
+     * @return distorted signal
+     */
     public float process(float pSignal) {
         // @TODO(check if it makes sense to always hard clip all distortion types to [-1.0, 1.0])
         final float mAmplifiedSignal = pSignal * mAmplification;

@@ -68,44 +68,50 @@ public class EventReceiverMIDI implements MidiInListener {
     private Method mMethodClockSongPositionPointer = null;
     private final boolean VERBOSE = false;
 
-    public EventReceiverMIDI(Object pPApplet) {
-        mParent = pPApplet;
+    /**
+     * @param pReceiver object which will receive MIDI messages
+     */
+    public EventReceiverMIDI(Object pReceiver) {
+        mParent = pReceiver;
         try {
-            mMethod = pPApplet.getClass().getDeclaredMethod(METHOD_NAME, int.class, float[].class);
+            mMethod = pReceiver.getClass().getDeclaredMethod(METHOD_NAME, int.class, float[].class);
         } catch (NoSuchMethodException | SecurityException ex) {
             if (VERBOSE) {
                 ex.printStackTrace();
             }
         }
         try {
-            mMethodNoteOn = pPApplet.getClass().getDeclaredMethod(METHOD_NAME_NOTE_ON, int.class, int.class, int.class);
+            mMethodNoteOn = pReceiver.getClass()
+                                     .getDeclaredMethod(METHOD_NAME_NOTE_ON, int.class, int.class, int.class);
         } catch (NoSuchMethodException | SecurityException ex) {
             if (VERBOSE) {
                 ex.printStackTrace();
             }
         }
         try {
-            mMethodNoteOff = pPApplet.getClass().getDeclaredMethod(METHOD_NAME_NOTE_OFF, int.class, int.class);
+            mMethodNoteOff = pReceiver.getClass().getDeclaredMethod(METHOD_NAME_NOTE_OFF, int.class, int.class);
         } catch (NoSuchMethodException | SecurityException ex) {
             if (VERBOSE) {
                 ex.printStackTrace();
             }
         }
         try {
-            mMethodControlChange = pPApplet.getClass().getDeclaredMethod(METHOD_NAME_CONTROL_CHANGE,
-                                                                         int.class,
-                                                                         int.class,
-                                                                         int.class);
+            mMethodControlChange = pReceiver.getClass()
+                                            .getDeclaredMethod(METHOD_NAME_CONTROL_CHANGE,
+                                                               int.class,
+                                                               int.class,
+                                                               int.class);
         } catch (NoSuchMethodException | SecurityException ex) {
             if (VERBOSE) {
                 ex.printStackTrace();
             }
         }
         try {
-            mMethodProgramChange = pPApplet.getClass().getDeclaredMethod(METHOD_NAME_PROGRAM_CHANGE,
-                                                                         int.class,
-                                                                         int.class,
-                                                                         int.class);
+            mMethodProgramChange = pReceiver.getClass()
+                                            .getDeclaredMethod(METHOD_NAME_PROGRAM_CHANGE,
+                                                               int.class,
+                                                               int.class,
+                                                               int.class);
         } catch (NoSuchMethodException | SecurityException ex) {
             if (VERBOSE) {
                 ex.printStackTrace();
@@ -113,37 +119,37 @@ public class EventReceiverMIDI implements MidiInListener {
         }
 
         try {
-            mMethodClockTick = pPApplet.getClass().getDeclaredMethod(METHOD_NAME_CLOCK_TICK);
+            mMethodClockTick = pReceiver.getClass().getDeclaredMethod(METHOD_NAME_CLOCK_TICK);
         } catch (NoSuchMethodException | SecurityException ex) {
             if (VERBOSE) {
                 ex.printStackTrace();
             }
         }
         try {
-            mMethodClockStart = pPApplet.getClass().getDeclaredMethod(METHOD_NAME_CLOCK_START);
+            mMethodClockStart = pReceiver.getClass().getDeclaredMethod(METHOD_NAME_CLOCK_START);
         } catch (NoSuchMethodException | SecurityException ex) {
             if (VERBOSE) {
                 ex.printStackTrace();
             }
         }
         try {
-            mMethodClockContinue = pPApplet.getClass().getDeclaredMethod(METHOD_NAME_CLOCK_CONTINUE);
+            mMethodClockContinue = pReceiver.getClass().getDeclaredMethod(METHOD_NAME_CLOCK_CONTINUE);
         } catch (NoSuchMethodException | SecurityException ex) {
             if (VERBOSE) {
                 ex.printStackTrace();
             }
         }
         try {
-            mMethodClockStop = pPApplet.getClass().getDeclaredMethod(METHOD_NAME_CLOCK_STOP);
+            mMethodClockStop = pReceiver.getClass().getDeclaredMethod(METHOD_NAME_CLOCK_STOP);
         } catch (NoSuchMethodException | SecurityException ex) {
             if (VERBOSE) {
                 ex.printStackTrace();
             }
         }
         try {
-            mMethodClockSongPositionPointer = pPApplet.getClass().getDeclaredMethod(
-                    METHOD_NAME_CLOCK_SONG_POSITION_POINTER,
-                    int.class);
+            mMethodClockSongPositionPointer = pReceiver.getClass()
+                                                       .getDeclaredMethod(METHOD_NAME_CLOCK_SONG_POSITION_POINTER,
+                                                                          int.class);
         } catch (NoSuchMethodException | SecurityException ex) {
             if (VERBOSE) {
                 ex.printStackTrace();
@@ -151,54 +157,88 @@ public class EventReceiverMIDI implements MidiInListener {
         }
     }
 
+    /**
+     * @param channel channel
+     * @param number  number
+     * @param value   value
+     */
     @Override
     public void receiveProgramChange(int channel, int number, int value) {
         sendEvent(Wellen.EVENT_PROGRAMCHANGE, new float[]{channel, number, value});
         sendEventProgramChange(channel, number, value);
     }
 
+    /**
+     * @param channel channel
+     * @param number  number
+     * @param value   value
+     */
     @Override
     public void receiveControlChange(int channel, int number, int value) {
         sendEvent(Wellen.EVENT_CONTROLCHANGE, new float[]{channel, number, value});
         sendEventControlChange(channel, number, value);
     }
 
+    /**
+     * @param channel channel
+     * @param pitch   pitch
+     */
     @Override
     public void receiveNoteOff(int channel, int pitch) {
         sendEvent(Wellen.EVENT_NOTE_OFF, new float[]{channel, pitch});
         sendEventNoteOff(channel, pitch);
     }
 
+    /**
+     * @param channel  channel
+     * @param pitch    pitch
+     * @param velocity velocity
+     */
     @Override
     public void receiveNoteOn(int channel, int pitch, int velocity) {
         sendEvent(Wellen.EVENT_NOTE_ON, new float[]{channel, pitch, velocity});
         sendEventNoteOn(channel, pitch, velocity);
     }
 
+    /**
+     *
+     */
     @Override
     public void clock_tick() {
         sendEvent(MIDI.MIDI_CLOCK_TICK, new float[]{});
         sendEventClockTick();
     }
 
+    /**
+     *
+     */
     @Override
     public void clock_start() {
         sendEvent(MIDI.MIDI_CLOCK_START, new float[]{});
         sendEventClockStart();
     }
 
+    /**
+     *
+     */
     @Override
     public void clock_continue() {
         sendEvent(MIDI.MIDI_CLOCK_CONTINUE, new float[]{});
         sendEventClockContinue();
     }
 
+    /**
+     *
+     */
     @Override
     public void clock_stop() {
         sendEvent(MIDI.MIDI_CLOCK_STOP, new float[]{});
         sendEventClockStop();
     }
 
+    /**
+     * @param pOffset16th offset of the song position in 16th notes
+     */
     @Override
     public void clock_song_position_pointer(int pOffset16th) {
         sendEvent(MIDI.MIDI_SONG_POSITION_POINTER, new float[]{pOffset16th});
@@ -305,6 +345,11 @@ public class EventReceiverMIDI implements MidiInListener {
         }
     }
 
+    /**
+     * @param pParent          object which will receive MIDI messages
+     * @param pMidiInputDevice MIDI input device to use (e.g. "IAC Driver Bus 1")
+     * @return instance of {@code MIDIInput} or {@code null} if the device is not available.
+     */
     public static EventReceiverMIDI start(Object pParent, String pMidiInputDevice) {
         if (mInstance == null) {
             mInstance = new EventReceiverMIDI(pParent);
@@ -314,6 +359,11 @@ public class EventReceiverMIDI implements MidiInListener {
         return mInstance;
     }
 
+    /**
+     * @param pParent            object which will receive MIDI messages
+     * @param pMidiInputDeviceID MIDI input device ID to use
+     * @return instance of {@code MIDIInput} or {@code null} if the device is not available.
+     */
     public static EventReceiverMIDI start(Object pParent, int pMidiInputDeviceID) {
         if (mInstance == null) {
             mInstance = new EventReceiverMIDI(pParent);

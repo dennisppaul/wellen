@@ -23,5 +23,8 @@ package wellen.dsp;
  * interface implemented by classes that create stereo ( or more multi-channel ) output signals.
  */
 public interface DSPNodeOutputSignal {
+    /**
+     * @return output signal
+     */
     Signal output_signal();
 }

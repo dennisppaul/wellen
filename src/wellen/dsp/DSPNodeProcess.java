@@ -23,6 +23,9 @@ package wellen.dsp;
  * interface implemented by classes that process mono signals.
  */
 public interface DSPNodeProcess {
-
+    /**
+     * @param pSignal input signal
+     * @return processed signal
+     */
     float process(float pSignal);
 }

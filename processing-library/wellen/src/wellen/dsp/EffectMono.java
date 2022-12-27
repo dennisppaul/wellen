@@ -19,6 +19,12 @@
 
 package wellen.dsp;
 
+/**
+ *
+ */
 public interface EffectMono {
+    /**
+     * @param pOutputSignal output signal
+     */
     void out(float[] pOutputSignal);
 }
