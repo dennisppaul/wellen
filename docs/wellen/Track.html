@@ -33,9 +33,7 @@ loadScripts(document, 'script');</script>
 <h1 title="Class Track" class="title">Class Track</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
-<div class="inheritance"><a href="Module.html" title="class in wellen">wellen.Module</a>
 <div class="inheritance">wellen.Track</div>
-</div>
 </div>
 <section class="class-description" id="class-description">
 <dl class="notes">
@@ -44,25 +42,26 @@ loadScripts(document, 'script');</script>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">Track</span>
-<span class="extends-implements">extends <a href="Module.html" title="class in wellen">Module</a></span></div>
-<div class="block">manages a collection of <a href="Module.html" title="class in wellen"><code>Module</code></a>s. each child module processes audio signals which are accumulated by the
- track. furthermore, <a href="Track.html" title="class in wellen"><code>Track</code></a> calls its child modules <code>void&nbsp;beat(int)</code> method.
+<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
+implements <a href="dsp/DSPNodeOutputSignal.html" title="interface in wellen.dsp">DSPNodeOutputSignal</a>, <a href="Loopable.html" title="interface in wellen">Loopable</a></span></div>
+<div class="block">manages a collection of <a href="Track.html" title="class in wellen"><code>Track</code></a>s. each child module processes audio signals which are accumulated by the track.
+ furthermore, <a href="Track.html" title="class in wellen"><code>Track</code></a> calls its child tracks <code>void&nbsp;beat(int)</code> method.
  <p>
- note, that since <a href="Track.html" title="class in wellen"><code>Track</code></a> implements <a href="Module.html" title="class in wellen"><code>Module</code></a> it can also be added as a module to another track. if a
+ note, that since <a href="Track.html" title="class in wellen"><code>Track</code></a> implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Module.html" title="class or interface in java.lang" class="external-link"><code>Module</code></a> it can also be added as a track to another track. if a
  class is derived from <a href="Track.html" title="class in wellen"><code>Track</code></a> and <code>beat(int)</code> is overridden make sure to call
- <code>beat_update(int)</code> to preserve internal functionality and update for child <a href="Module.html" title="class in wellen"><code>Module</code></a>s.
+ <code>beat_update(int)</code> to preserve internal functionality and update for child <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Module.html" title="class or interface in java.lang" class="external-link"><code>Module</code></a>s.
  similarly, make sure to call <code>Signal&nbsp;output_signal_update()</code> if
  <code>Signal&nbsp;output_signal()</code> is overridden.
  <p>
- <a href="Track.html" title="class in wellen"><code>Track</code></a> handles mono or stereo <a href="Module.html" title="class in wellen"><code>Module</code></a>s. if a <a href="Module.html" title="class in wellen"><code>Module</code></a> outputs a mono signal the output is
- positioned via panning ( see <a href="Module.html" title="class in wellen"><code>Module</code></a> <code>pan()</code> ). if a <a href="Module.html" title="class in wellen"><code>Module</code></a> outputs a stereo signal the
- output ignores panning and just uses the signal unchanged. if a <a href="Module.html" title="class in wellen"><code>Module</code></a> outputs more than channels than a
+ <a href="Track.html" title="class in wellen"><code>Track</code></a> handles mono or stereo <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Module.html" title="class or interface in java.lang" class="external-link"><code>Module</code></a>s. if a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Module.html" title="class or interface in java.lang" class="external-link"><code>Module</code></a> outputs a mono signal the output is
+ positioned via panning ( see <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Module.html" title="class or interface in java.lang" class="external-link"><code>Module</code></a> <code>pan()</code> ). if a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Module.html" title="class or interface in java.lang" class="external-link"><code>Module</code></a> outputs a stereo signal the
+ output ignores panning and just uses the signal unchanged. if a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Module.html" title="class or interface in java.lang" class="external-link"><code>Module</code></a> outputs more than channels than a
  stereo signal all additional channels are ignored.</div>
 <dl class="notes">
 <dt>See Also:</dt>
 <dd>
 <ul class="see-list">
-<li><a href="Module.html" title="class in wellen"><code>Module</code></a></li>
+<li><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Module.html" title="class or interface in java.lang" class="external-link"><code>Module</code></a></li>
 </ul>
 </dd>
 </dl>
@@ -78,13 +77,13 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static boolean</code></div>
-<div class="col-second even-row-color"><code><a href="#VERBOSE" class="member-name-link">VERBOSE</a></code></div>
+<div class="col-first even-row-color"><code>final int</code></div>
+<div class="col-second even-row-color"><code><a href="#ID" class="member-name-link">ID</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static boolean</code></div>
+<div class="col-second odd-row-color"><code><a href="#VERBOSE" class="member-name-link">VERBOSE</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
-<div class="inherited-list">
-<h3 id="fields-inherited-from-class-wellen.Module">Fields inherited from class&nbsp;wellen.<a href="Module.html" title="class in wellen">Module</a></h3>
-<code><a href="Module.html#ID">ID</a></code></div>
 </section>
 </li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
@@ -97,6 +96,10 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">Track</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(float,int,int)" class="member-name-link">Track</a><wbr>(float&nbsp;volume,
+ int&nbsp;in_point,
+ int&nbsp;out_point)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -105,7 +108,7 @@ loadScripts(document, 'script');</script>
 <section class="method-summary" id="method-summary">
 <h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel">
 <div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
 <div class="table-header col-first">Modifier and Type</div>
@@ -114,34 +117,87 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#beat(int)" class="member-name-link">beat</a><wbr>(int&nbsp;beat)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">triggered by beat mechanism.</div>
+<div class="block">triggered by update mechanism.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#beat_update(int)" class="member-name-link">beat_update</a><wbr>(int&nbsp;beat)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">updates everything related to beat functionality including internal mechanisms and child modules.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Module.html" title="class in wellen">Module</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#module(int)" class="member-name-link">module</a><wbr>(int&nbsp;index)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="Module.html" title="class in wellen">Module</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#modules()" class="member-name-link">modules</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_in_point()" class="member-name-link">get_in_point</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="dsp/Signal.html" title="class in wellen.dsp">Signal</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#output_signal()" class="member-name-link">output_signal</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">callback method that accumulates audio signals from child modules and if applicable maps mono signals into stereo
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_length()" class="member-name-link">get_length</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_loop()" class="member-name-link">get_loop</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_loop_count(int)" class="member-name-link">get_loop_count</a><wbr>(int&nbsp;absolut_position)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_out_point()" class="member-name-link">get_out_point</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_relative_position(int)" class="member-name-link">get_relative_position</a><wbr>(int&nbsp;absolut_position)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_volume()" class="member-name-link">get_volume</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#main(java.lang.String%5B%5D)" class="member-name-link">main</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]&nbsp;args)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="dsp/Signal.html" title="class in wellen.dsp">Signal</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#output_signal()" class="member-name-link">output_signal</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">callback method that accumulates audio signals from child tracks and if applicable maps mono signals into stereo
  space.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="dsp/Signal.html" title="class in wellen.dsp">Signal</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#output_signal_update()" class="member-name-link">output_signal_update</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="dsp/Signal.html" title="class in wellen.dsp">Signal</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#output_signal_update()" class="member-name-link">output_signal_update</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Pan.html" title="class in wellen">Pan</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pan()" class="member-name-link">pan</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#println(java.lang.String)" class="member-name-link">println</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;s)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#run_test()" class="member-name-link">run_test</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_in_out_point(int,int)" class="member-name-link">set_in_out_point</a><wbr>(int&nbsp;in_point,
+ int&nbsp;out_point)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_in_point(int)" class="member-name-link">set_in_point</a><wbr>(int&nbsp;in_point)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_length(int)" class="member-name-link">set_length</a><wbr>(int&nbsp;length)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">set length of a track loop.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_loop(int)" class="member-name-link">set_loop</a><wbr>(int&nbsp;loop)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_out_point(int)" class="member-name-link">set_out_point</a><wbr>(int&nbsp;out_point)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_volume(float)" class="member-name-link">set_volume</a><wbr>(float&nbsp;volume)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">volume of track with 0.0 being no output and 1.0 being 100% of the signal output.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Track.html" title="class in wellen">Track</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#track(int)" class="member-name-link">track</a><wbr>(int&nbsp;index)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="Track.html" title="class in wellen">Track</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#tracks()" class="member-name-link">tracks</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#update(int)" class="member-name-link">update</a><wbr>(int&nbsp;beat)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">updates everything related to beat functionality including internal mechanisms and child tracks.</div>
 </div>
 </div>
 </div>
-<div class="inherited-list">
-<h3 id="methods-inherited-from-class-wellen.Module">Methods inherited from class&nbsp;wellen.<a href="Module.html" title="class in wellen">Module</a></h3>
-<code><a href="Module.html#get_in_point()">get_in_point</a>, <a href="Module.html#get_length()">get_length</a>, <a href="Module.html#get_loop()">get_loop</a>, <a href="Module.html#get_loop_count(int)">get_loop_count</a>, <a href="Module.html#get_out_point()">get_out_point</a>, <a href="Module.html#get_relative_position(int)">get_relative_position</a>, <a href="Module.html#get_volume()">get_volume</a>, <a href="Module.html#pan()">pan</a>, <a href="Module.html#println(java.lang.String)">println</a>, <a href="Module.html#run_test()">run_test</a>, <a href="Module.html#set_in_out_point(int,int)">set_in_out_point</a>, <a href="Module.html#set_in_point(int)">set_in_point</a>, <a href="Module.html#set_length(int)">set_length</a>, <a href="Module.html#set_loop(int)">set_loop</a>, <a href="Module.html#set_out_point(int)">set_out_point</a>, <a href="Module.html#set_volume(float)">set_volume</a></code></div>
+</div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
@@ -162,6 +218,12 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">VERBOSE</span></div>
 </section>
 </li>
+<li>
+<section class="detail" id="ID">
+<h3>ID</h3>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">ID</span></div>
+</section>
+</li>
 </ul>
 </section>
 </li>
@@ -176,6 +238,14 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Track</span>()</div>
 </section>
 </li>
+<li>
+<section class="detail" id="&lt;init&gt;(float,int,int)">
+<h3>Track</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Track</span><wbr><span class="parameters">(float&nbsp;volume,
+ int&nbsp;in_point,
+ int&nbsp;out_point)</span></div>
+</section>
+</li>
 </ul>
 </section>
 </li>
@@ -185,22 +255,21 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="modules()">
-<h3>modules</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="Module.html" title="class in wellen">Module</a>&gt;</span>&nbsp;<span class="element-name">modules</span>()</div>
+<section class="detail" id="tracks()">
+<h3>tracks</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="Track.html" title="class in wellen">Track</a>&gt;</span>&nbsp;<span class="element-name">tracks</span>()</div>
 </section>
 </li>
 <li>
-<section class="detail" id="module(int)">
-<h3>module</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Module.html" title="class in wellen">Module</a></span>&nbsp;<span class="element-name">module</span><wbr><span class="parameters">(int&nbsp;index)</span></div>
+<section class="detail" id="track(int)">
+<h3>track</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Track.html" title="class in wellen">Track</a></span>&nbsp;<span class="element-name">track</span><wbr><span class="parameters">(int&nbsp;index)</span></div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>index</code> - index of track as stored in <pre><code>modules()</code></pre>. note that this not to be confused
-              with the final field <pre><code>.ID</code></pre> in <a href="Module.html" title="class in wellen"><code>Module</code></a> which refers to a unique ID for
-              each module ever created.</dd>
+<dd><code>index</code> - index of track as stored in <code>track()</code>. note that this not to be confused with the final
+              field <code>.ID</code> in <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Module.html" title="class or interface in java.lang" class="external-link"><code>Module</code></a> which refers to a unique ID for each track ever created.</dd>
 <dt>Returns:</dt>
-<dd>module stored at index</dd>
+<dd>track stored at index</dd>
 </dl>
 </section>
 </li>
@@ -208,21 +277,19 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="beat(int)">
 <h3>beat</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">beat</span><wbr><span class="parameters">(int&nbsp;beat)</span></div>
-<div class="block">triggered by beat mechanism. this method can be overridden to implement custom behavior, however, if doing so
- make sure to call <pre><code>void&nbsp;beat_update(int)</code></pre> to pass beat event onto child modules.</div>
+<div class="block">triggered by update mechanism. this method can be overridden to implement custom behavior.</div>
 <dl class="notes">
-<dt>Overrides:</dt>
-<dd><code><a href="Module.html#beat(int)">beat</a></code>&nbsp;in class&nbsp;<code><a href="Module.html" title="class in wellen">Module</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>beat</code> - current beat count</dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="beat_update(int)">
-<h3>beat_update</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">beat_update</span><wbr><span class="parameters">(int&nbsp;beat)</span></div>
-<div class="block">updates everything related to beat functionality including internal mechanisms and child modules.</div>
+<section class="detail" id="update(int)">
+<h3>update</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">update</span><wbr><span class="parameters">(int&nbsp;beat)</span></div>
+<div class="block">updates everything related to beat functionality including internal mechanisms and child tracks. this method
+ also calls this object's own <code>beat(int)</code> method.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>beat</code> - current beat count</dd>
@@ -233,10 +300,12 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="output_signal()">
 <h3>output_signal</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="dsp/Signal.html" title="class in wellen.dsp">Signal</a></span>&nbsp;<span class="element-name">output_signal</span>()</div>
-<div class="block">callback method that accumulates audio signals from child modules and if applicable maps mono signals into stereo
+<div class="block">callback method that accumulates audio signals from child tracks and if applicable maps mono signals into stereo
  space. this method can be overridden to implement custom behavior, however, if doing so make sure to call
- <pre><code>Signal&nbsp;output_signal_update()</code></pre> to collect signals from child modules.</div>
+ <code>Signal&nbsp;output_signal_update()</code> to collect signals from child tracks.</div>
 <dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="dsp/DSPNodeOutputSignal.html#output_signal()">output_signal</a></code>&nbsp;in interface&nbsp;<code><a href="dsp/DSPNodeOutputSignal.html" title="interface in wellen.dsp">DSPNodeOutputSignal</a></code></dd>
 <dt>Returns:</dt>
 <dd>Signal of this track</dd>
 </dl>
@@ -246,6 +315,138 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="output_signal_update()">
 <h3>output_signal_update</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="dsp/Signal.html" title="class in wellen.dsp">Signal</a></span>&nbsp;<span class="element-name">output_signal_update</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="pan()">
+<h3>pan</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Pan.html" title="class in wellen">Pan</a></span>&nbsp;<span class="element-name">pan</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="set_volume(float)">
+<h3>set_volume</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_volume</span><wbr><span class="parameters">(float&nbsp;volume)</span></div>
+<div class="block">volume of track with 0.0 being no output and 1.0 being 100% of the signal output. note, that this value is
+ interpreted by parent <a href="Track.html" title="class in wellen"><code>Track</code></a>s.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>volume</code> - track volume with 0.0 being no output and 1.0 being 100%</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="get_volume()">
+<h3>get_volume</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">get_volume</span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>track volume with 0.0 being no output and 1.0 being 100%</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="set_in_point(int)">
+<h3>set_in_point</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_in_point</span><wbr><span class="parameters">(int&nbsp;in_point)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="get_in_point()">
+<h3>get_in_point</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">get_in_point</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="Loopable.html#get_in_point()">get_in_point</a></code>&nbsp;in interface&nbsp;<code><a href="Loopable.html" title="interface in wellen">Loopable</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="set_out_point(int)">
+<h3>set_out_point</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_out_point</span><wbr><span class="parameters">(int&nbsp;out_point)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="get_out_point()">
+<h3>get_out_point</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">get_out_point</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="Loopable.html#get_out_point()">get_out_point</a></code>&nbsp;in interface&nbsp;<code><a href="Loopable.html" title="interface in wellen">Loopable</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="set_in_out_point(int,int)">
+<h3>set_in_out_point</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_in_out_point</span><wbr><span class="parameters">(int&nbsp;in_point,
+ int&nbsp;out_point)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="get_length()">
+<h3>get_length</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">get_length</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="set_length(int)">
+<h3>set_length</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_length</span><wbr><span class="parameters">(int&nbsp;length)</span></div>
+<div class="block">set length of a track loop. setting the length affects outpoint. e.g given an inpoint of 3, setting the length
+ to 2 will set output to 4. note that outpoint is inclusive i.e a pattern from in- to outpoint of 3, 4, 5, … is
+ generated.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>length</code> - set length of loop</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="set_loop(int)">
+<h3>set_loop</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_loop</span><wbr><span class="parameters">(int&nbsp;loop)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="get_loop()">
+<h3>get_loop</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">get_loop</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="Loopable.html#get_loop()">get_loop</a></code>&nbsp;in interface&nbsp;<code><a href="Loopable.html" title="interface in wellen">Loopable</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="get_relative_position(int)">
+<h3>get_relative_position</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">get_relative_position</span><wbr><span class="parameters">(int&nbsp;absolut_position)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="get_loop_count(int)">
+<h3>get_loop_count</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">get_loop_count</span><wbr><span class="parameters">(int&nbsp;absolut_position)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="println(java.lang.String)">
+<h3>println</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">println</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;s)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="main(java.lang.String[])">
+<h3>main</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">main</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]&nbsp;args)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="run_test()">
+<h3>run_test</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">run_test</span>()</div>
 </section>
 </li>
 </ul>

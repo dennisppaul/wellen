@@ -2,7 +2,7 @@ import wellen.*;
 import wellen.dsp.*; 
 
 /*
- * this example demonstrates how to build a composition with tracks and modules.
+ * this example demonstrates how to build a composition with tracks.
  */
 
 final Track mMaster = new Track();
@@ -16,8 +16,8 @@ void settings() {
 }
 
 void setup() {
-    mMaster.modules().add(mModuleBleepBleep);
-    mMaster.modules().add(new ModuleOhhhhUhh());
+    mMaster.tracks().add(mModuleBleepBleep);
+    mMaster.tracks().add(new ModuleOhhhhUhh());
     Beat.start(this, 120 * PPQN);
     DSP.start(this, 2);
 }
@@ -28,7 +28,7 @@ void draw() {
 }
 
 void beat(int pBeat) {
-    mMaster.beat(pBeat);
+    mMaster.update(pBeat);
 }
 
 void audioblock(float[] pOutputSignalLeft, float[] pOutputSignalRight) {
@@ -39,7 +39,7 @@ void audioblock(float[] pOutputSignalLeft, float[] pOutputSignalRight) {
     }
 }
 
-static class ModuleToneEngine extends Module {
+static class ModuleToneEngine extends Track {
     
 final ToneEngineDSP mToneEngine;
     
@@ -78,7 +78,7 @@ void beat(int beat) {
     }
 }
 
-class ModuleOhhhhUhh extends Module {
+class ModuleOhhhhUhh extends Track {
     
 final Oscillator mOSC = new OscillatorFunction();
     

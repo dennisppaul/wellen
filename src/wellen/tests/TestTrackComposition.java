@@ -2,7 +2,6 @@ package wellen.tests;
 
 import processing.core.PApplet;
 import wellen.Beat;
-import wellen.Module;
 import wellen.Track;
 import wellen.dsp.DSP;
 import wellen.dsp.Signal;
@@ -18,9 +17,9 @@ public class TestTrackComposition extends PApplet {
     }
 
     public void setup() {
-        mComposition.modules().add(new Module_0());
-        mComposition.modules().add(new Module_1());
-        mComposition.modules().add(new Module_2());
+        mComposition.tracks().add(new Module_0());
+        mComposition.tracks().add(new Module_1());
+        mComposition.tracks().add(new Module_2());
         Beat.start(this, 60);
         DSP.start(this, 2);
     }
@@ -31,7 +30,7 @@ public class TestTrackComposition extends PApplet {
     }
 
     public void mouseMoved() {
-        mComposition.module(0).set_volume(map(mouseY, 0, height, 0, 0.5f));
+        mComposition.track(0).set_volume(map(mouseY, 0, height, 0, 0.5f));
     }
 
     public void beat(int pBeat) {
@@ -47,7 +46,7 @@ public class TestTrackComposition extends PApplet {
         }
     }
 
-    private static class Module_0 extends Module {
+    private static class Module_0 extends Track {
         public Module_0() {
             set_in_out_point(1, 7);
         }
@@ -61,7 +60,7 @@ public class TestTrackComposition extends PApplet {
         }
     }
 
-    private static class Module_1 extends Module {
+    private static class Module_1 extends Track {
         public Module_1() {
             set_in_out_point(2, 4);
             set_loop(LOOP_INFINITE);
@@ -76,7 +75,7 @@ public class TestTrackComposition extends PApplet {
         }
     }
 
-    private static class Module_2 extends Module {
+    private static class Module_2 extends Track {
         public Module_2() {
             set_out_point(6);
         }

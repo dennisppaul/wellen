@@ -3,7 +3,6 @@ package wellen.examples.technique;
 import processing.core.PApplet;
 import wellen.Beat;
 import wellen.Loop;
-import wellen.Module;
 import wellen.Note;
 import wellen.ToneEngineDSP;
 import wellen.Track;
@@ -14,10 +13,10 @@ import wellen.dsp.OscillatorFunction;
 import wellen.dsp.Signal;
 import wellen.dsp.VowelFormantFilter;
 
-public class TechniqueBasics04TracksAndModules extends PApplet {
+public class TechniqueBasics04Tracks extends PApplet {
 
     /*
-     * this example demonstrates how to build a composition with tracks and modules.
+     * this example demonstrates how to build a composition with tracks.
      */
 
     private final Track mMaster = new Track();
@@ -29,8 +28,8 @@ public class TechniqueBasics04TracksAndModules extends PApplet {
     }
 
     public void setup() {
-        mMaster.modules().add(mModuleBleepBleep);
-        mMaster.modules().add(new ModuleOhhhhUhh());
+        mMaster.tracks().add(mModuleBleepBleep);
+        mMaster.tracks().add(new ModuleOhhhhUhh());
         Beat.start(this, 120 * PPQN);
         DSP.start(this, 2);
     }
@@ -41,7 +40,7 @@ public class TechniqueBasics04TracksAndModules extends PApplet {
     }
 
     public void beat(int pBeat) {
-        mMaster.beat(pBeat);
+        mMaster.update(pBeat);
     }
 
     public void audioblock(float[] pOutputSignalLeft, float[] pOutputSignalRight) {
@@ -52,7 +51,7 @@ public class TechniqueBasics04TracksAndModules extends PApplet {
         }
     }
 
-    private static class ModuleToneEngine extends Module {
+    private static class ModuleToneEngine extends Track {
         private final ToneEngineDSP mToneEngine;
 
         public ModuleToneEngine() {
@@ -90,7 +89,7 @@ public class TechniqueBasics04TracksAndModules extends PApplet {
         }
     }
 
-    private class ModuleOhhhhUhh extends Module {
+    private class ModuleOhhhhUhh extends Track {
 
         private final Oscillator mOSC = new OscillatorFunction();
         private final VowelFormantFilter mFormantFilter = new VowelFormantFilter();
@@ -137,6 +136,6 @@ public class TechniqueBasics04TracksAndModules extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main(TechniqueBasics04TracksAndModules.class.getName());
+        PApplet.main(TechniqueBasics04Tracks.class.getName());
     }
 }

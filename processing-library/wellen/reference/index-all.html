@@ -128,11 +128,9 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="wellen/BeatListener.html#beat(int)" class="member-name-link">beat(int)</a> - Method in interface wellen.<a href="wellen/BeatListener.html" title="interface in wellen">BeatListener</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="wellen/Module.html#beat(int)" class="member-name-link">beat(int)</a> - Method in class wellen.<a href="wellen/Module.html" title="class in wellen">Module</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="wellen/Track.html#beat(int)" class="member-name-link">beat(int)</a> - Method in class wellen.<a href="wellen/Track.html" title="class in wellen">Track</a></dt>
 <dd>
-<div class="block">triggered by beat mechanism.</div>
+<div class="block">triggered by update mechanism.</div>
 </dd>
 <dt><a href="wellen/Beat.html" class="type-name-link" title="class in wellen">Beat</a> - Class in <a href="wellen/package-summary.html">wellen</a></dt>
 <dd>
@@ -144,10 +142,6 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/BeatMIDI.html#beat_count()" class="member-name-link">beat_count()</a> - Method in class wellen.<a href="wellen/BeatMIDI.html" title="class in wellen">BeatMIDI</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="wellen/Track.html#beat_update(int)" class="member-name-link">beat_update(int)</a> - Method in class wellen.<a href="wellen/Track.html" title="class in wellen">Track</a></dt>
-<dd>
-<div class="block">updates everything related to beat functionality including internal mechanisms and child modules.</div>
-</dd>
 <dt><a href="wellen/Beat.Listener.html" class="type-name-link" title="interface in wellen">Beat.Listener</a> - Interface in <a href="wellen/package-summary.html">wellen</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/analysis/BeatDetection.html" class="type-name-link" title="class in wellen.analysis">BeatDetection</a> - Class in <a href="wellen/analysis/package-summary.html">wellen.analysis</a></dt>
@@ -929,9 +923,9 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/Loopable.html#get_in_point()" class="member-name-link">get_in_point()</a> - Method in interface wellen.<a href="wellen/Loopable.html" title="interface in wellen">Loopable</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="wellen/Module.html#get_in_point()" class="member-name-link">get_in_point()</a> - Method in class wellen.<a href="wellen/Module.html" title="class in wellen">Module</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="wellen/Pattern.html#get_in_point()" class="member-name-link">get_in_point()</a> - Method in class wellen.<a href="wellen/Pattern.html" title="class in wellen">Pattern</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/Track.html#get_in_point()" class="member-name-link">get_in_point()</a> - Method in class wellen.<a href="wellen/Track.html" title="class in wellen">Track</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/dsp/DSP.html#get_input_buffer_left()" class="member-name-link">get_input_buffer_left()</a> - Static method in class wellen.dsp.<a href="wellen/dsp/DSP.html" title="class in wellen.dsp">DSP</a></dt>
 <dd>&nbsp;</dd>
@@ -941,7 +935,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/Loop.html#get_length()" class="member-name-link">get_length()</a> - Method in class wellen.<a href="wellen/Loop.html" title="class in wellen">Loop</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="wellen/Module.html#get_length()" class="member-name-link">get_length()</a> - Method in class wellen.<a href="wellen/Module.html" title="class in wellen">Module</a></dt>
+<dt><a href="wellen/Track.html#get_length()" class="member-name-link">get_length()</a> - Method in class wellen.<a href="wellen/Track.html" title="class in wellen">Track</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/analysis/SoundLevelPressure.html#get_level()" class="member-name-link">get_level()</a> - Method in class wellen.analysis.<a href="wellen/analysis/SoundLevelPressure.html" title="class in wellen.analysis">SoundLevelPressure</a></dt>
 <dd>&nbsp;</dd>
@@ -949,18 +943,18 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/Loopable.html#get_loop()" class="member-name-link">get_loop()</a> - Method in interface wellen.<a href="wellen/Loopable.html" title="interface in wellen">Loopable</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="wellen/Module.html#get_loop()" class="member-name-link">get_loop()</a> - Method in class wellen.<a href="wellen/Module.html" title="class in wellen">Module</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="wellen/Pattern.html#get_loop()" class="member-name-link">get_loop()</a> - Method in class wellen.<a href="wellen/Pattern.html" title="class in wellen">Pattern</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="wellen/Loop.html#get_loop_count(int)" class="member-name-link">get_loop_count(int)</a> - Method in class wellen.<a href="wellen/Loop.html" title="class in wellen">Loop</a></dt>
+<dt><a href="wellen/Track.html#get_loop()" class="member-name-link">get_loop()</a> - Method in class wellen.<a href="wellen/Track.html" title="class in wellen">Track</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="wellen/Module.html#get_loop_count(int)" class="member-name-link">get_loop_count(int)</a> - Method in class wellen.<a href="wellen/Module.html" title="class in wellen">Module</a></dt>
+<dt><a href="wellen/Loop.html#get_loop_count(int)" class="member-name-link">get_loop_count(int)</a> - Method in class wellen.<a href="wellen/Loop.html" title="class in wellen">Loop</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/Pattern.html#get_loop_count(int)" class="member-name-link">get_loop_count(int)</a> - Method in class wellen.<a href="wellen/Pattern.html" title="class in wellen">Pattern</a></dt>
 <dd>
 <div class="block">returns the current loop where 0 is the first loop.</div>
 </dd>
+<dt><a href="wellen/Track.html#get_loop_count(int)" class="member-name-link">get_loop_count(int)</a> - Method in class wellen.<a href="wellen/Track.html" title="class in wellen">Track</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="wellen/Loopable.html#get_loop_count(wellen.Loopable,int)" class="member-name-link">get_loop_count(Loopable, int)</a> - Static method in interface wellen.<a href="wellen/Loopable.html" title="interface in wellen">Loopable</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/dsp/Sampler.html#get_loop_in()" class="member-name-link">get_loop_in()</a> - Method in class wellen.dsp.<a href="wellen/dsp/Sampler.html" title="class in wellen.dsp">Sampler</a></dt>
@@ -1001,9 +995,9 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/Loopable.html#get_out_point()" class="member-name-link">get_out_point()</a> - Method in interface wellen.<a href="wellen/Loopable.html" title="interface in wellen">Loopable</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="wellen/Module.html#get_out_point()" class="member-name-link">get_out_point()</a> - Method in class wellen.<a href="wellen/Module.html" title="class in wellen">Module</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="wellen/Pattern.html#get_out_point()" class="member-name-link">get_out_point()</a> - Method in class wellen.<a href="wellen/Pattern.html" title="class in wellen">Pattern</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/Track.html#get_out_point()" class="member-name-link">get_out_point()</a> - Method in class wellen.<a href="wellen/Track.html" title="class in wellen">Track</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/dsp/DSP.html#get_output_buffer()" class="member-name-link">get_output_buffer()</a> - Static method in class wellen.dsp.<a href="wellen/dsp/DSP.html" title="class in wellen.dsp">DSP</a></dt>
 <dd>&nbsp;</dd>
@@ -1029,12 +1023,12 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/ToneEngineMIDI.html#get_proper_device_name(java.lang.String)" class="member-name-link">get_proper_device_name(String)</a> - Static method in class wellen.<a href="wellen/ToneEngineMIDI.html" title="class in wellen">ToneEngineMIDI</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="wellen/Module.html#get_relative_position(int)" class="member-name-link">get_relative_position(int)</a> - Method in class wellen.<a href="wellen/Module.html" title="class in wellen">Module</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="wellen/Pattern.html#get_relative_position(int)" class="member-name-link">get_relative_position(int)</a> - Method in class wellen.<a href="wellen/Pattern.html" title="class in wellen">Pattern</a></dt>
 <dd>
 <div class="block">returns the relative postion in repsect to in- and out point</div>
 </dd>
+<dt><a href="wellen/Track.html#get_relative_position(int)" class="member-name-link">get_relative_position(int)</a> - Method in class wellen.<a href="wellen/Track.html" title="class in wellen">Track</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="wellen/Loopable.html#get_relative_position(wellen.Loopable,int)" class="member-name-link">get_relative_position(Loopable, int)</a> - Static method in interface wellen.<a href="wellen/Loopable.html" title="interface in wellen">Loopable</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/analysis/EnvelopeFollower.html#get_release()" class="member-name-link">get_release()</a> - Method in class wellen.analysis.<a href="wellen/analysis/EnvelopeFollower.html" title="class in wellen.analysis">EnvelopeFollower</a></dt>
@@ -1085,7 +1079,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/InstrumentDSP.html#get_VCO()" class="member-name-link">get_VCO()</a> - Method in class wellen.<a href="wellen/InstrumentDSP.html" title="class in wellen">InstrumentDSP</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="wellen/Module.html#get_volume()" class="member-name-link">get_volume()</a> - Method in class wellen.<a href="wellen/Module.html" title="class in wellen">Module</a></dt>
+<dt><a href="wellen/Track.html#get_volume()" class="member-name-link">get_volume()</a> - Method in class wellen.<a href="wellen/Track.html" title="class in wellen">Track</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/dsp/OscillatorFunction.html#get_waveform()" class="member-name-link">get_waveform()</a> - Method in class wellen.dsp.<a href="wellen/dsp/OscillatorFunction.html" title="class in wellen.dsp">OscillatorFunction</a></dt>
 <dd>&nbsp;</dd>
@@ -1144,7 +1138,7 @@ loadScripts(document, 'script');</script>
 <dl class="index">
 <dt><a href="wellen/Scale.html#id(int)" class="member-name-link">id(int)</a> - Static method in class wellen.<a href="wellen/Scale.html" title="class in wellen">Scale</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="wellen/Module.html#ID" class="member-name-link">ID</a> - Variable in class wellen.<a href="wellen/Module.html" title="class in wellen">Module</a></dt>
+<dt><a href="wellen/Track.html#ID" class="member-name-link">ID</a> - Variable in class wellen.<a href="wellen/Track.html" title="class in wellen">Track</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/Instrument.html#ID()" class="member-name-link">ID()</a> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
 <dd>&nbsp;</dd>
@@ -1397,6 +1391,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/Pattern.html#main(java.lang.String%5B%5D)" class="member-name-link">main(String[])</a> - Static method in class wellen.<a href="wellen/Pattern.html" title="class in wellen">Pattern</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="wellen/Track.html#main(java.lang.String%5B%5D)" class="member-name-link">main(String[])</a> - Static method in class wellen.<a href="wellen/Track.html" title="class in wellen">Track</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="wellen/Scale.html#MAJOR" class="member-name-link">MAJOR</a> - Static variable in class wellen.<a href="wellen/Scale.html" title="class in wellen">Scale</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/Scale.html#MAJOR_PENTATONIC" class="member-name-link">MAJOR_PENTATONIC</a> - Static variable in class wellen.<a href="wellen/Scale.html" title="class in wellen">Scale</a></dt>
@@ -1448,18 +1444,6 @@ loadScripts(document, 'script');</script>
 <dt><a href="wellen/Scale.html#MINOR_PENTATONIC" class="member-name-link">MINOR_PENTATONIC</a> - Static variable in class wellen.<a href="wellen/Scale.html" title="class in wellen">Scale</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/ToneEngineMIDI.html#mMidiOut" class="member-name-link">mMidiOut</a> - Variable in class wellen.<a href="wellen/ToneEngineMIDI.html" title="class in wellen">ToneEngineMIDI</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="wellen/Track.html#module(int)" class="member-name-link">module(int)</a> - Method in class wellen.<a href="wellen/Track.html" title="class in wellen">Track</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="wellen/Module.html" class="type-name-link" title="class in wellen">Module</a> - Class in <a href="wellen/package-summary.html">wellen</a></dt>
-<dd>
-<div class="block">a module allows to compose complex DSP configurations.</div>
-</dd>
-<dt><a href="wellen/Module.html#%3Cinit%3E()" class="member-name-link">Module()</a> - Constructor for class wellen.<a href="wellen/Module.html" title="class in wellen">Module</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="wellen/Module.html#%3Cinit%3E(float,int,int)" class="member-name-link">Module(float, int, int)</a> - Constructor for class wellen.<a href="wellen/Module.html" title="class in wellen">Module</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="wellen/Track.html#modules()" class="member-name-link">modules()</a> - Method in class wellen.<a href="wellen/Track.html" title="class in wellen">Track</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/analysis/FFT.html#modulus(float%5B%5D,float%5B%5D)" class="member-name-link">modulus(float[], float[])</a> - Method in class wellen.analysis.<a href="wellen/analysis/FFT.html" title="class in wellen.analysis">FFT</a></dt>
 <dd>
@@ -1854,7 +1838,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/Track.html#output_signal()" class="member-name-link">output_signal()</a> - Method in class wellen.<a href="wellen/Track.html" title="class in wellen">Track</a></dt>
 <dd>
-<div class="block">callback method that accumulates audio signals from child modules and if applicable maps mono signals into stereo
+<div class="block">callback method that accumulates audio signals from child tracks and if applicable maps mono signals into stereo
  space.</div>
 </dd>
 <dt><a href="wellen/Track.html#output_signal_update()" class="member-name-link">output_signal_update()</a> - Method in class wellen.<a href="wellen/Track.html" title="class in wellen">Track</a></dt>
@@ -1862,7 +1846,7 @@ loadScripts(document, 'script');</script>
 </dl>
 <h2 class="title" id="I:P">P</h2>
 <dl class="index">
-<dt><a href="wellen/Module.html#pan()" class="member-name-link">pan()</a> - Method in class wellen.<a href="wellen/Module.html" title="class in wellen">Module</a></dt>
+<dt><a href="wellen/Track.html#pan()" class="member-name-link">pan()</a> - Method in class wellen.<a href="wellen/Track.html" title="class in wellen">Track</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/Pan.html" class="type-name-link" title="class in wellen">Pan</a> - Class in <a href="wellen/package-summary.html">wellen</a></dt>
 <dd>
@@ -1944,9 +1928,9 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/Pattern.html#println()" class="member-name-link">println()</a> - Static method in class wellen.<a href="wellen/Pattern.html" title="class in wellen">Pattern</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="wellen/Module.html#println(java.lang.String)" class="member-name-link">println(String)</a> - Static method in class wellen.<a href="wellen/Module.html" title="class in wellen">Module</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="wellen/Pattern.html#println(java.lang.String)" class="member-name-link">println(String)</a> - Static method in class wellen.<a href="wellen/Pattern.html" title="class in wellen">Pattern</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/Track.html#println(java.lang.String)" class="member-name-link">println(String)</a> - Static method in class wellen.<a href="wellen/Track.html" title="class in wellen">Track</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/dsp/Delay.html#process(float)" class="member-name-link">process(float)</a> - Method in class wellen.dsp.<a href="wellen/dsp/Delay.html" title="class in wellen.dsp">Delay</a></dt>
 <dd>&nbsp;</dd>
@@ -2126,9 +2110,9 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/Wellen.html#run_sketch_with_resources(java.lang.Class)" class="member-name-link">run_sketch_with_resources(Class&lt;? extends PApplet&gt;)</a> - Static method in class wellen.<a href="wellen/Wellen.html" title="class in wellen">Wellen</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="wellen/Module.html#run_test()" class="member-name-link">run_test()</a> - Static method in class wellen.<a href="wellen/Module.html" title="class in wellen">Module</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="wellen/Pattern.html#run_test()" class="member-name-link">run_test()</a> - Static method in class wellen.<a href="wellen/Pattern.html" title="class in wellen">Pattern</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/Track.html#run_test()" class="member-name-link">run_test()</a> - Static method in class wellen.<a href="wellen/Track.html" title="class in wellen">Track</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/BeatMIDI.html#running()" class="member-name-link">running()</a> - Method in class wellen.<a href="wellen/BeatMIDI.html" title="class in wellen">BeatMIDI</a></dt>
 <dd>&nbsp;</dd>
@@ -2437,14 +2421,14 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/dsp/Sampler.html#set_in(int)" class="member-name-link">set_in(int)</a> - Method in class wellen.dsp.<a href="wellen/dsp/Sampler.html" title="class in wellen.dsp">Sampler</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="wellen/Module.html#set_in_out_point(int,int)" class="member-name-link">set_in_out_point(int, int)</a> - Method in class wellen.<a href="wellen/Module.html" title="class in wellen">Module</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="wellen/Module.html#set_in_point(int)" class="member-name-link">set_in_point(int)</a> - Method in class wellen.<a href="wellen/Module.html" title="class in wellen">Module</a></dt>
+<dt><a href="wellen/Track.html#set_in_out_point(int,int)" class="member-name-link">set_in_out_point(int, int)</a> - Method in class wellen.<a href="wellen/Track.html" title="class in wellen">Track</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/Pattern.html#set_in_point(int)" class="member-name-link">set_in_point(int)</a> - Method in class wellen.<a href="wellen/Pattern.html" title="class in wellen">Pattern</a></dt>
 <dd>
 <div class="block">set in point for pattern.</div>
 </dd>
+<dt><a href="wellen/Track.html#set_in_point(int)" class="member-name-link">set_in_point(int)</a> - Method in class wellen.<a href="wellen/Track.html" title="class in wellen">Track</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="wellen/AudioDeviceConfiguration.html#set_input_device(int)" class="member-name-link">set_input_device(int)</a> - Method in class wellen.<a href="wellen/AudioDeviceConfiguration.html" title="class in wellen">AudioDeviceConfiguration</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/dsp/Wavetable.html#set_interpolation(int)" class="member-name-link">set_interpolation(int)</a> - Method in class wellen.dsp.<a href="wellen/dsp/Wavetable.html" title="class in wellen.dsp">Wavetable</a></dt>
@@ -2461,20 +2445,20 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/Loop.html#set_length(int)" class="member-name-link">set_length(int)</a> - Method in class wellen.<a href="wellen/Loop.html" title="class in wellen">Loop</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="wellen/Module.html#set_length(int)" class="member-name-link">set_length(int)</a> - Method in class wellen.<a href="wellen/Module.html" title="class in wellen">Module</a></dt>
-<dd>
-<div class="block">set length of a module loop.</div>
-</dd>
 <dt><a href="wellen/Pattern.html#set_length(int)" class="member-name-link">set_length(int)</a> - Method in class wellen.<a href="wellen/Pattern.html" title="class in wellen">Pattern</a></dt>
 <dd>
 <div class="block">length defines the number of steps before tick is wrapped.</div>
 </dd>
-<dt><a href="wellen/Module.html#set_loop(int)" class="member-name-link">set_loop(int)</a> - Method in class wellen.<a href="wellen/Module.html" title="class in wellen">Module</a></dt>
-<dd>&nbsp;</dd>
+<dt><a href="wellen/Track.html#set_length(int)" class="member-name-link">set_length(int)</a> - Method in class wellen.<a href="wellen/Track.html" title="class in wellen">Track</a></dt>
+<dd>
+<div class="block">set length of a track loop.</div>
+</dd>
 <dt><a href="wellen/Pattern.html#set_loop(int)" class="member-name-link">set_loop(int)</a> - Method in class wellen.<a href="wellen/Pattern.html" title="class in wellen">Pattern</a></dt>
 <dd>
 <div class="block">set the number of loops.</div>
 </dd>
+<dt><a href="wellen/Track.html#set_loop(int)" class="member-name-link">set_loop(int)</a> - Method in class wellen.<a href="wellen/Track.html" title="class in wellen">Track</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="wellen/dsp/Sampler.html#set_loop_in(int)" class="member-name-link">set_loop_in(int)</a> - Method in class wellen.dsp.<a href="wellen/dsp/Sampler.html" title="class in wellen.dsp">Sampler</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/dsp/Sampler.html#set_loop_in_normalized(float)" class="member-name-link">set_loop_in_normalized(float)</a> - Method in class wellen.dsp.<a href="wellen/dsp/Sampler.html" title="class in wellen.dsp">Sampler</a></dt>
@@ -2529,12 +2513,12 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/dsp/Sampler.html#set_out(int)" class="member-name-link">set_out(int)</a> - Method in class wellen.dsp.<a href="wellen/dsp/Sampler.html" title="class in wellen.dsp">Sampler</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="wellen/Module.html#set_out_point(int)" class="member-name-link">set_out_point(int)</a> - Method in class wellen.<a href="wellen/Module.html" title="class in wellen">Module</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="wellen/Pattern.html#set_out_point(int)" class="member-name-link">set_out_point(int)</a> - Method in class wellen.<a href="wellen/Pattern.html" title="class in wellen">Pattern</a></dt>
 <dd>
 <div class="block">set out point for pattern.</div>
 </dd>
+<dt><a href="wellen/Track.html#set_out_point(int)" class="member-name-link">set_out_point(int)</a> - Method in class wellen.<a href="wellen/Track.html" title="class in wellen">Track</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="wellen/AudioDeviceConfiguration.html#set_output_device(int)" class="member-name-link">set_output_device(int)</a> - Method in class wellen.<a href="wellen/AudioDeviceConfiguration.html" title="class in wellen">AudioDeviceConfiguration</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/Instrument.html#set_pan(float)" class="member-name-link">set_pan(float)</a> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
@@ -2619,9 +2603,9 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/dsp/Vocoder.html#set_volume(float)" class="member-name-link">set_volume(float)</a> - Method in class wellen.dsp.<a href="wellen/dsp/Vocoder.html" title="class in wellen.dsp">Vocoder</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="wellen/Module.html#set_volume(float)" class="member-name-link">set_volume(float)</a> - Method in class wellen.<a href="wellen/Module.html" title="class in wellen">Module</a></dt>
+<dt><a href="wellen/Track.html#set_volume(float)" class="member-name-link">set_volume(float)</a> - Method in class wellen.<a href="wellen/Track.html" title="class in wellen">Track</a></dt>
 <dd>
-<div class="block">volume of module with 0.0 being no output and 1.0 being 100% of the signal output.</div>
+<div class="block">volume of track with 0.0 being no output and 1.0 being 100% of the signal output.</div>
 </dd>
 <dt><a href="wellen/dsp/VowelFormantFilter.html#set_vowel(int)" class="member-name-link">set_vowel(int)</a> - Method in class wellen.dsp.<a href="wellen/dsp/VowelFormantFilter.html" title="class in wellen.dsp">VowelFormantFilter</a></dt>
 <dd>&nbsp;</dd>
@@ -2875,11 +2859,17 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/ToneEngineOSC.html#%3Cinit%3E(java.lang.String,int)" class="member-name-link">ToneEngineOSC(String, int)</a> - Constructor for class wellen.<a href="wellen/ToneEngineOSC.html" title="class in wellen">ToneEngineOSC</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="wellen/Track.html#track(int)" class="member-name-link">track(int)</a> - Method in class wellen.<a href="wellen/Track.html" title="class in wellen">Track</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="wellen/Track.html" class="type-name-link" title="class in wellen">Track</a> - Class in <a href="wellen/package-summary.html">wellen</a></dt>
 <dd>
-<div class="block">manages a collection of <a href="wellen/Module.html" title="class in wellen"><code>Module</code></a>s.</div>
+<div class="block">manages a collection of <a href="wellen/Track.html" title="class in wellen"><code>Track</code></a>s.</div>
 </dd>
 <dt><a href="wellen/Track.html#%3Cinit%3E()" class="member-name-link">Track()</a> - Constructor for class wellen.<a href="wellen/Track.html" title="class in wellen">Track</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/Track.html#%3Cinit%3E(float,int,int)" class="member-name-link">Track(float, int, int)</a> - Constructor for class wellen.<a href="wellen/Track.html" title="class in wellen">Track</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/Track.html#tracks()" class="member-name-link">tracks()</a> - Method in class wellen.<a href="wellen/Track.html" title="class in wellen">Track</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/dsp/Wavetable.html#triangle(float%5B%5D)" class="member-name-link">triangle(float[])</a> - Static method in class wellen.dsp.<a href="wellen/dsp/Wavetable.html" title="class in wellen.dsp">Wavetable</a></dt>
 <dd>&nbsp;</dd>
@@ -2920,6 +2910,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/HarmonicTable.html#UP_RIGHT" class="member-name-link">UP_RIGHT</a> - Static variable in class wellen.<a href="wellen/HarmonicTable.html" title="class in wellen">HarmonicTable</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="wellen/Track.html#update(int)" class="member-name-link">update(int)</a> - Method in class wellen.<a href="wellen/Track.html" title="class in wellen">Track</a></dt>
+<dd>
+<div class="block">updates everything related to beat functionality including internal mechanisms and child tracks.</div>
+</dd>
 <dt><a href="wellen/ToneEngineDSP.html#USE_AMP_FRACTION" class="member-name-link">USE_AMP_FRACTION</a> - Variable in class wellen.<a href="wellen/ToneEngineDSP.html" title="class in wellen">ToneEngineDSP</a></dt>
 <dd>&nbsp;</dd>
 </dl>
