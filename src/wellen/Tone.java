@@ -32,68 +32,68 @@ public abstract class Tone {
     private Tone() {
     }
 
-    public static void start(String... pName) {
+    public static void start(String... tone_enginge_name) {
         if (mInstance != null) {
             printAlreadyStartedWarning();
             return;
         }
-        mInstance = ToneEngine.create(pName);
+        mInstance = ToneEngine.create(tone_enginge_name);
     }
 
-    public static void start(String pName, int pParameter) {
+    public static void start(String tone_enginge_name, int parameter) {
         if (mInstance != null) {
             printAlreadyStartedWarning();
             return;
         }
-        if (pName.equalsIgnoreCase(Wellen.TONE_ENGINE_INTERNAL)) {
+        if (tone_enginge_name.equalsIgnoreCase(Wellen.TONE_ENGINE_INTERNAL)) {
             /* specify output channels */
             // ToneEngineInternal(int pSamplingRate, int pAudioblockSize, int pOutputDeviceID, int pOutputChannels)
             mInstance = new ToneEngineDSP(Wellen.DEFAULT_SAMPLING_RATE,
                                           Wellen.DEFAULT_AUDIOBLOCK_SIZE,
                                           Wellen.DEFAULT_AUDIO_DEVICE,
-                                          pParameter,
+                                          parameter,
                                           Wellen.DEFAULT_NUMBER_OF_INSTRUMENTS);
-        } else if (pName.equalsIgnoreCase(Wellen.TONE_ENGINE_MIDI)) {
+        } else if (tone_enginge_name.equalsIgnoreCase(Wellen.TONE_ENGINE_MIDI)) {
             /* specify output device ID */
-            mInstance = new ToneEngineMIDI(pParameter);
+            mInstance = new ToneEngineMIDI(parameter);
         } else {
-            mInstance = ToneEngine.create(pName);
+            mInstance = ToneEngine.create(tone_enginge_name);
         }
     }
 
-    public static void start(String pName, int pParameterA, int pParameterB) {
+    public static void start(String tone_enginge_name, int parameterA, int parameterB) {
         if (mInstance != null) {
             printAlreadyStartedWarning();
             return;
         }
-        if (pName.equalsIgnoreCase(Wellen.TONE_ENGINE_INTERNAL)) {
+        if (tone_enginge_name.equalsIgnoreCase(Wellen.TONE_ENGINE_INTERNAL)) {
             /* specify output device + output channels */
             // ToneEngineInternal(int pSamplingRate, int pAudioblockSize, int pOutputDeviceID, int pOutputChannels)
             mInstance = new ToneEngineDSP(Wellen.DEFAULT_SAMPLING_RATE,
                                           Wellen.DEFAULT_AUDIOBLOCK_SIZE,
-                                          pParameterA,
-                                          pParameterB,
+                                          parameterA,
+                                          parameterB,
                                           Wellen.DEFAULT_NUMBER_OF_INSTRUMENTS);
         } else {
-            mInstance = ToneEngine.create(pName);
+            mInstance = ToneEngine.create(tone_enginge_name);
         }
     }
 
-    public static void start(String pName, int pParameterA, int pParameterB, int pParameterC) {
+    public static void start(String tone_enginge_name, int parameterA, int parameterB, int parameterC) {
         if (mInstance != null) {
             printAlreadyStartedWarning();
             return;
         }
-        if (pName.equalsIgnoreCase(Wellen.TONE_ENGINE_INTERNAL)) {
+        if (tone_enginge_name.equalsIgnoreCase(Wellen.TONE_ENGINE_INTERNAL)) {
             /* specify sampling rate + output device + output channels */
             // ToneEngineInternal(int pSamplingRate, int pAudioblockSize, int pOutputDeviceID, int pOutputChannels)
-            mInstance = new ToneEngineDSP(pParameterA,
+            mInstance = new ToneEngineDSP(parameterA,
                                           Wellen.DEFAULT_AUDIOBLOCK_SIZE,
-                                          pParameterB,
-                                          pParameterC,
+                                          parameterB,
+                                          parameterC,
                                           Wellen.DEFAULT_NUMBER_OF_INSTRUMENTS);
         } else {
-            mInstance = ToneEngine.create(pName);
+            mInstance = ToneEngine.create(tone_enginge_name);
         }
     }
 
@@ -104,14 +104,14 @@ public abstract class Tone {
         mInstance = null;
     }
 
-    public static ToneEngineDSP start(int pConfiguration) {
+    public static ToneEngineDSP start(int configuration) {
         if (mInstance != null) {
             printAlreadyStartedWarning();
             if (mInstance instanceof ToneEngineDSP) {
                 return (ToneEngineDSP) mInstance;
             }
         }
-        if (pConfiguration == Wellen.TONE_ENGINE_INTERNAL_WITH_NO_OUTPUT) {
+        if (configuration == Wellen.TONE_ENGINE_INTERNAL_WITH_NO_OUTPUT) {
             ToneEngineDSP mInstance = new ToneEngineDSP(Wellen.DEFAULT_SAMPLING_RATE,
                                                         Wellen.DEFAULT_AUDIOBLOCK_SIZE,
                                                         Wellen.DEFAULT_AUDIO_DEVICE,
@@ -125,36 +125,36 @@ public abstract class Tone {
         }
     }
 
-    public static void note_on(int pNote, int pVelocity, float pDuration) {
-        instance().note_on(pNote, pVelocity, pDuration);
+    public static void note_on(int note, int velocity, float duration) {
+        instance().note_on(note, velocity, duration);
     }
 
-    public static void note_on(int pNote, int pVelocity) {
-        instance().note_on(pNote, pVelocity);
+    public static void note_on(int note, int velocity) {
+        instance().note_on(note, velocity);
     }
 
-    public static void note_off(int pNote) {
-        instance().note_off(pNote);
+    public static void note_off(int note) {
+        instance().note_off(note);
     }
 
     public static void note_off() {
         instance().note_off();
     }
 
-    public static void control_change(int pCC, int pValue) {
-        instance().control_change(pCC, pValue);
+    public static void control_change(int CC, int value) {
+        instance().control_change(CC, value);
     }
 
-    public static void pitch_bend(int pValue) {
-        instance().pitch_bend(pValue);
+    public static void pitch_bend(int value) {
+        instance().pitch_bend(value);
     }
 
     public static boolean is_playing() {
         return instance().is_playing();
     }
 
-    public static Instrument instrument(int pInstrumentID) {
-        return instance().instrument(pInstrumentID);
+    public static Instrument instrument(int instrument_ID) {
+        return instance().instrument(instrument_ID);
     }
 
     public static Instrument instrument() {
@@ -173,33 +173,33 @@ public abstract class Tone {
         return instance().get_buffer_right();
     }
 
-    public static void replace_instrument(Class<? extends Instrument> pInstrumentClass, int pID) {
-        instance().replace_instrument(create_instrument(pInstrumentClass, pID));
+    public static void replace_instrument(Class<? extends Instrument> instrument_class, int ID) {
+        instance().replace_instrument(create_instrument(instrument_class, ID));
     }
 
-    public static void replace_instrument(Instrument pInstrument) {
-        instance().replace_instrument(pInstrument);
+    public static void replace_instrument(Instrument instrument) {
+        instance().replace_instrument(instrument);
     }
 
     public static ArrayList<? extends Instrument> instruments() {
         return instance().instruments();
     }
 
-    public static <T extends Instrument> T create_instrument(Class<T> pInstrumentClass, int pID) {
+    public static <T extends Instrument> T create_instrument(Class<T> instrument_class, int ID) {
         //@TODO(maybe move this to ToneEngine)
         T mInstrument;
         try {
             Constructor<T> c;
-            //@TODO(add constructor for `InstrumentInternal(int pID, int pSamplingRate, int pWavetableSize)`)
-//            if (InstrumentJSyn.class.isAssignableFrom(pInstrumentClass) && instance() instanceof ToneEngineJSyn) {
-//                c = pInstrumentClass.getDeclaredConstructor(ToneEngineJSyn.class, int.class);
-//                mInstrument = c.newInstance(instance(), pID);
-//            } else if (pInstrumentClass == InstrumentMinim.class && instance() instanceof ToneEngineMinim) {
-//                c = pInstrumentClass.getDeclaredConstructor(Minim.class, int.class);
-//                mInstrument = c.newInstance((Minim) ((ToneEngineMinim) instance()).minim(), pID);
+            //@TODO(add constructor for `InstrumentInternal(int ID, int pSamplingRate, int pWavetableSize)`)
+//            if (InstrumentJSyn.class.isAssignableFrom(instrument_class) && instance() instanceof ToneEngineJSyn) {
+//                c = instrument_class.getDeclaredConstructor(ToneEngineJSyn.class, int.class);
+//                mInstrument = c.newInstance(instance(), ID);
+//            } else if (instrument_class == InstrumentMinim.class && instance() instanceof ToneEngineMinim) {
+//                c = instrument_class.getDeclaredConstructor(Minim.class, int.class);
+//                mInstrument = c.newInstance((Minim) ((ToneEngineMinim) instance()).minim(), ID);
 //            } else {
-            c = pInstrumentClass.getDeclaredConstructor(int.class);
-            mInstrument = c.newInstance(pID);
+            c = instrument_class.getDeclaredConstructor(int.class);
+            mInstrument = c.newInstance(ID);
 //            }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -223,6 +223,15 @@ public abstract class Tone {
         }
     }
 
+    public static void enable_reverb(float damping, float roomsize, float wet) {
+        if (get_DSP_engine() != null) {
+            get_DSP_engine().enable_reverb(true);
+            get_DSP_engine().get_reverb().set_damp(damping);
+            get_DSP_engine().get_reverb().set_roomsize(roomsize);
+            get_DSP_engine().get_reverb().set_wet(wet);
+        }
+    }
+
     public static ToneEngineMIDI get_midi_engine() {
         if (instance() instanceof ToneEngineMIDI) {
             return (ToneEngineMIDI) instance();
@@ -231,8 +240,8 @@ public abstract class Tone {
         }
     }
 
-    public static void set_engine(ToneEngine pEngine) {
-        mInstance = pEngine;
+    public static void set_engine(ToneEngine tone_engine) {
+        mInstance = tone_engine;
     }
 
     private static void printAlreadyStartedWarning() {

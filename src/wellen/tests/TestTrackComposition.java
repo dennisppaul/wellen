@@ -35,7 +35,7 @@ public class TestTrackComposition extends PApplet {
 
     public void beat(int pBeat) {
         System.out.println("------- " + nf(pBeat, 2));
-        mComposition.beat(pBeat);
+        mComposition.update(pBeat);
     }
 
     public void audioblock(float[] pOutputSignalLeft, float[] pOutputSignalRight) {
@@ -55,8 +55,8 @@ public class TestTrackComposition extends PApplet {
             return Signal.create(-0.1f);
         }
 
-        public void beat(int beat) {
-            System.out.println("000: " + nf(get_relative_position(beat), 2));
+        public void beat(int beat_absolute, int beat_relative) {
+            System.out.println("000: " + nf(get_relative_position(beat_relative), 2));
         }
     }
 
@@ -70,8 +70,8 @@ public class TestTrackComposition extends PApplet {
             return Signal.create(0.1f);
         }
 
-        public void beat(int beat) {
-            System.out.println("001: " + nf(get_relative_position(beat), 2));
+        public void beat(int beat_absolute, int beat_relative) {
+            System.out.println("001: " + nf(get_relative_position(beat_relative), 2));
         }
     }
 
@@ -84,8 +84,8 @@ public class TestTrackComposition extends PApplet {
             return Signal.create(0.1f);
         }
 
-        public void beat(int beat) {
-            System.out.println("002: " + nf(get_relative_position(beat), 2));
+        public void beat(int beat_absolute, int beat_relative) {
+            System.out.println("002: " + nf(get_relative_position(beat_relative), 2));
         }
     }
 

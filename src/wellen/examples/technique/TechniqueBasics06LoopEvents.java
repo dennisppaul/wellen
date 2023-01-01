@@ -6,10 +6,10 @@ import wellen.Loop;
 import wellen.Tone;
 import wellen.Wellen;
 
-public class TechniqueBasics05LoopEvents extends PApplet {
+public class TechniqueBasics06LoopEvents extends PApplet {
 
     /*
-     * this example demonstrates how to loop events to create a composition.
+     * this example demonstrates how to use loop events to create a composition.
      */
 
     private final Loop mLoopA = new Loop();
@@ -65,6 +65,6 @@ public class TechniqueBasics05LoopEvents extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main(TechniqueBasics05LoopEvents.class.getName());
+        PApplet.main(TechniqueBasics06LoopEvents.class.getName());
     }
 }

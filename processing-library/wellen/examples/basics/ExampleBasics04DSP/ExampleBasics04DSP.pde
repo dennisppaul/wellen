@@ -23,7 +23,7 @@ void setup() {
 void draw() {
     background(255);
     stroke(0);
-    DSP.draw_buffers(g, width, height);
+    Wellen.draw_tone(g, width, height);
 }
 
 void mouseMoved() {

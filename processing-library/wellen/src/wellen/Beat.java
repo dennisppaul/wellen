@@ -31,25 +31,26 @@ import java.util.TimerTask;
 public class Beat {
 
     private static final String METHOD_NAME = "beat";
-    private static Beat mInstance = null;
+    private static Beat fInstance = null;
     private int fBeat;
-    private final Object mListener;
+    private float fBPM;
+    private final Object fListener;
     private final Method fMethod;
-    private TimerTask mTask;
-    private final Timer mTimer;
+    private TimerTask fTask;
+    private final Timer fTimer;
     private final ArrayList<Listener> fListeners;
 
-    public Beat(Object pListener, int pBPM) {
-        this(pListener);
-        set_bpm(pBPM);
+    public Beat(Object beat_listener, int BPM) {
+        this(beat_listener);
+        set_bpm(BPM);
     }
 
-    public Beat(Object pListener) {
-        mListener = pListener;
+    public Beat(Object beat_listener) {
+        fListener = beat_listener;
         Method mMethod = null;
-        if (mListener != null) {
+        if (fListener != null) {
             try {
-                mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME, Integer.TYPE);
+                mMethod = beat_listener.getClass().getDeclaredMethod(METHOD_NAME, Integer.TYPE);
             } catch (NoSuchMethodException | SecurityException ex) {
                 System.err.println("+++ @" + getClass().getSimpleName() + " / could not find `" + METHOD_NAME +
                                            "(int)`");
@@ -58,28 +59,34 @@ public class Beat {
         fMethod = mMethod;
         fBeat = -1;
         fListeners = new ArrayList<>();
-        mTimer = new Timer();
+        fTimer = new Timer();
+        fBPM = 0;
     }
 
     public ArrayList<Listener> listeners() {
         return fListeners;
     }
 
-    public void add(Listener pTriggerListener) {
-        listeners().add(pTriggerListener);
+    public void add(Listener beat_trigger_listener) {
+        listeners().add(beat_trigger_listener);
     }
 
-    public boolean remove(Listener pTriggerListener) {
-        return listeners().remove(pTriggerListener);
+    public boolean remove(Listener beat_trigger_listener) {
+        return listeners().remove(beat_trigger_listener);
     }
 
-    public void set_bpm(float pBPM) {
-        final int mPeriod = (int) (60.0f / pBPM * 1000.0f);
-        if (mTask != null) {
-            mTask.cancel();
+    public void set_bpm(float BPM) {
+        fBPM = BPM;
+        final int mPeriod = (int) (60.0f / BPM * 1000.0f);
+        if (fTask != null) {
+            fTask.cancel();
         }
-        mTask = new BeatTimerTaskP5();
-        mTimer.scheduleAtFixedRate(mTask, 1000, mPeriod);
+        fTask = new BeatTimerTaskP5();
+        fTimer.scheduleAtFixedRate(fTask, 1000, mPeriod);
+    }
+
+    public float get_bpm() {
+        return fBPM;
     }
 
     public int get_beat_count() {
@@ -87,31 +94,31 @@ public class Beat {
     }
 
     public void clean_up() {
-        mTimer.cancel();
-        mTimer.purge();
-        mTask.cancel();
+        fTimer.cancel();
+        fTimer.purge();
+        fTask.cancel();
     }
 
     public static Beat instance() {
-        if (mInstance == null) {
+        if (fInstance == null) {
             System.err.println("+++ no `Beat` instantiated or started.");
         }
-        return mInstance;
+        return fInstance;
     }
 
-    public static Beat start(Object pListener) {
-        mInstance = new Beat(pListener);
-        return mInstance;
+    public static Beat start(Object beat_listener) {
+        fInstance = new Beat(beat_listener);
+        return fInstance;
     }
 
-    public static Beat start(Object pListener, int pBPM) {
-        mInstance = new Beat(pListener, pBPM);
-        return mInstance;
+    public static Beat start(Object beat_listener, int BPM) {
+        fInstance = new Beat(beat_listener, BPM);
+        return fInstance;
     }
 
     public static void stop() {
-        if (mInstance != null) {
-            mInstance.clean_up();
+        if (fInstance != null) {
+            fInstance.clean_up();
         }
     }
 
@@ -122,7 +129,7 @@ public class Beat {
             fBeat++;
             if (fMethod != null) {
                 try {
-                    fMethod.invoke(mListener, fBeat);
+                    fMethod.invoke(fListener, fBeat);
                 } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
                     ex.printStackTrace();
                 }

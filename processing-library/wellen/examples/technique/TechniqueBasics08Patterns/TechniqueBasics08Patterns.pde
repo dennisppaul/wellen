@@ -2,6 +2,7 @@ import wellen.*;
 import wellen.dsp.*; 
 
 /*
+ * TODO(this has not been tested and may not be working properly)
  * this example demonstrates how to use patterns to create events.
  */
 

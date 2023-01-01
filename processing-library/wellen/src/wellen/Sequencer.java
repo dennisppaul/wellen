@@ -29,63 +29,67 @@ public class Sequencer<T> {
 
     // @TODO(should `T` be limited to `Number` e.g `T extends Number` )
 
-    private final T[] mSequence;
-    private int mStep;
+    private final T[] fSequence;
+    private int fStep;
 
-    public Sequencer(int pSteps) {
+    public Sequencer(int steps) {
         Float f;
-        mSequence = (T[]) new Object[pSteps];
+        fSequence = (T[]) new Object[steps];
         reset();
     }
 
     @SafeVarargs
     public Sequencer(T... pData) {
-        mSequence = pData;
+        fSequence = pData;
         reset();
     }
 
     public T[] data() {
-        return mSequence;
+        return fSequence;
     }
 
     public T step() {
-        mStep++;
-        mStep %= mSequence.length;
-        final T mValue = mSequence[mStep];
+        fStep++;
+        fStep %= fSequence.length;
+        final T mValue = fSequence[fStep];
         return mValue;
     }
 
     public T get_current() {
-        return mSequence[mStep];
-    }
-
-    public void set_current(T pValue) {
-        set(mStep, pValue);
-    }
-
-    public void set(int pStep, T pValue) {
-        if (pStep >= 0 && pStep < mSequence.length) {
-            mSequence[pStep] = pValue;
+        if (fStep >= 0 && fStep < fSequence.length) {
+            return fSequence[fStep];
+        } else {
+            return fSequence[0];
         }
     }
 
-    public T get(int pStep) {
-        if (pStep >= 0 && pStep < mSequence.length) {
-            return mSequence[pStep];
+    public void set_current(T value) {
+        set(fStep, value);
+    }
+
+    public void set(int step, T value) {
+        if (step >= 0 && step < fSequence.length) {
+            fSequence[step] = value;
+        }
+    }
+
+    public T get(int step) {
+        if (step >= 0 && step < fSequence.length) {
+            return fSequence[step];
         } else {
-            return mSequence[0];
+            return fSequence[0];
         }
     }
 
     public void reset() {
-        mStep = -1;
+        fStep = -1;
     }
 
-    public void set_step(int pStep) {
-        mStep = pStep;
+    public void set_step(int step) {
+        fStep = step;
     }
 
     public int get_step() {
-        return mStep;
+        return fStep;
     }
 }

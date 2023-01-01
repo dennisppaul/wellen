@@ -21,7 +21,6 @@ package wellen;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -31,26 +30,26 @@ import java.util.TimerTask;
  */
 public class BeatEvent {
 
-    private final Timer mTimer;
-    private final ArrayList<BeatListener> mListeners;
-    private BeatPool instance;
-    private int mBeat = -1;
-    private boolean mFlagged = false;
-    private TimerTask mTask;
+    private final Timer fTimer;
+    private final ArrayList<BeatListener> fListeners;
+    private BeatPool fInstance;
+    private int fBeat = -1;
+    private boolean fFlagged = false;
+    private TimerTask fTask;
 
-    private BeatEvent(int pBPM) {
+    private BeatEvent(int BPM) {
         this();
-        set_bpm(pBPM);
+        set_bpm(BPM);
     }
 
     private BeatEvent() {
-        mListeners = new ArrayList<>();
-        mTimer = new Timer();
+        fListeners = new ArrayList<>();
+        fTimer = new Timer();
     }
 
-    public static BeatEvent create(int pBPM) {
-        BeatEvent mBeatEvent = new BeatEvent(pBPM);
-        mBeatEvent.instance().pool.add(mBeatEvent);
+    public static BeatEvent create(int BPM) {
+        BeatEvent mBeatEvent = new BeatEvent(BPM);
+        mBeatEvent.instance().fPool.add(mBeatEvent);
         return mBeatEvent;
     }
 
@@ -61,74 +60,72 @@ public class BeatEvent {
     /**
      * add {@link wellen.BeatListener}
      *
-     * @param pListener listener
+     * @param listener object that listens to beat events
      */
-    public void add(BeatListener pListener) {
-        mListeners.add(pListener);
+    public void add(BeatListener listener) {
+        fListeners.add(listener);
     }
 
     /**
      * removes all {@link wellen.BeatListener}
      */
     public void clear() {
-        mListeners.clear();
+        fListeners.clear();
     }
 
     public int current_beat_count() {
-        return mBeat;
+        return fBeat;
     }
 
-    public void set_beat_count(int pBeatCounter) {
-        mBeat = pBeatCounter;
+    public void set_beat_count(int beat_counter) {
+        fBeat = beat_counter;
     }
 
     /**
      * reset beat counter
      */
     public void reset() {
-        mBeat = 0;
+        fBeat = 0;
     }
 
-    public void set_bpm(float pBPM) {
-        final int mPeriod = (int) (60.0f / pBPM * 1000.0f);
-        if (mTask != null) {
-            mTask.cancel();
+    public void set_bpm(float BPM) {
+        final int mPeriod = (int) (60.0f / BPM * 1000.0f);
+        if (fTask != null) {
+            fTask.cancel();
         }
-        mTask = new BeatTimerTask();
-        mTimer.scheduleAtFixedRate(mTask, 1000, mPeriod);
+        fTask = new BeatTimerTask();
+        fTimer.scheduleAtFixedRate(fTask, 1000, mPeriod);
     }
 
     private BeatPool instance() {
-        if (instance == null) {
-            instance = new BeatPool();
+        if (fInstance == null) {
+            fInstance = new BeatPool();
         }
-        return instance;
+        return fInstance;
     }
 
     private static class BeatPool extends Thread {
 
-        final List<BeatEvent> pool = Collections.synchronizedList(new ArrayList<BeatEvent>());
-        private boolean mActive = true;
+        final List<BeatEvent> fPool = Collections.synchronizedList(new ArrayList<>());
+        private boolean fActive = true;
 
         public BeatPool() {
             start();
         }
 
         public void end() {
-            mActive = false;
+            fActive = false;
         }
 
         public void run() {
-            while (mActive) {
+            while (fActive) {
                 try {
-                    synchronized (pool) {
-                        final Iterator<BeatEvent> i = pool.iterator();
-                        while (i.hasNext()) {
-                            final BeatEvent mBeatEvent = i.next();
-                            if (mBeatEvent.mFlagged) {
-                                mBeatEvent.mFlagged = false;
-                                for (BeatListener mListener : mBeatEvent.mListeners) {
-                                    mListener.beat(mBeatEvent.mBeat);
+                    synchronized (fPool) {
+                        for (BeatEvent mBeatEvent : fPool) {
+                            if (mBeatEvent.fFlagged) {
+                                mBeatEvent.fFlagged = false;
+                                for (BeatListener mListener : mBeatEvent.fListeners) {
+                                    mListener.beat(mBeatEvent.fBeat);
                                 }
                             }
                         }
@@ -145,8 +142,8 @@ public class BeatEvent {
 
         @Override
         public void run() {
-            mBeat++;
-            mFlagged = true;
+            fBeat++;
+            fFlagged = true;
         }
     }
 }

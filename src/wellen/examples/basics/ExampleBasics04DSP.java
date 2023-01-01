@@ -1,6 +1,7 @@
 package wellen.examples.basics;
 
 import processing.core.PApplet;
+import wellen.Wellen;
 import wellen.dsp.DSP;
 
 public class ExampleBasics04DSP extends PApplet {
@@ -25,7 +26,7 @@ public class ExampleBasics04DSP extends PApplet {
     public void draw() {
         background(255);
         stroke(0);
-        DSP.draw_buffers(g, width, height);
+        Wellen.draw_tone(g, width, height);
     }
 
     public void mouseMoved() {

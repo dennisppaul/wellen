@@ -2,7 +2,7 @@ import wellen.*;
 import wellen.dsp.*; 
 
 /*
- * this example demonstrates how to loop events to create a composition.
+ * this example demonstrates how to use loop events to create a composition.
  */
 
 final Loop mLoopA = new Loop();

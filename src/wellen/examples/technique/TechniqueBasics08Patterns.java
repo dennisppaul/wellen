@@ -13,9 +13,10 @@ import wellen.dsp.Reverb;
 
 import static wellen.Wellen.LOOP_INFINITE;
 
-public class TechniqueBasics06Patterns extends PApplet {
+public class TechniqueBasics08Patterns extends PApplet {
 
     /*
+     * TODO(this has not been tested and may not be working properly)
      * this example demonstrates how to use patterns to create events.
      */
 
@@ -115,6 +116,6 @@ public class TechniqueBasics06Patterns extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main(TechniqueBasics06Patterns.class.getName());
+        PApplet.main(TechniqueBasics08Patterns.class.getName());
     }
 }

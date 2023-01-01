@@ -33,30 +33,25 @@ import static wellen.Wellen.SIGNAL_PROCESSING_IGNORE_IN_OUTPOINTS;
 import static wellen.Wellen.SIGNAL_STEREO;
 
 /**
- * manages a collection of {@link Track}s. each child module processes audio signals which are accumulated by the track.
- * furthermore, {@link Track} calls its child tracks <code>void&nbsp;beat(int)</code> method.
+ * a {@link Track} allows to compose complex compositional and DSP configurations. a {@link Track} may be added to other
+ * {@link Track}s.
  * <p>
- * note, that since {@link Track} implements {@link Module} it can also be added as a track to another track. if a
- * class is derived from {@link Track} and <code>beat(int)</code> is overridden make sure to call
- * <code>beat_update(int)</code> to preserve internal functionality and update for child {@link Module}s.
+ * {@link Track} must implement the method <code>void&nbsp;output(Signal)</code> which delivers an audio signal and it
+ * may implement the method <code>void&nbsp;beat(int)</code> which can be used to receive beat events. a {@link Track}
+ * may manage a collection of child {@link Track}s. each child track processes audio signals which are accumulated by
+ * the track. furthermore, {@link Track} calls its child tracks <code>void&nbsp;beat(int)</code> method.
+ * <p>
+ * if a class is derived from {@link Track} and <code>update(int)</code> is overridden make sure to call
+ * <code>beat(int)</code> to preserve internal functionality and update for child {@link Track}s.
  * similarly, make sure to call <code>Signal&nbsp;output_signal_update()</code> if
  * <code>Signal&nbsp;output_signal()</code> is overridden.
  * <p>
- * {@link Track} handles mono or stereo {@link Module}s. if a {@link Module} outputs a mono signal the output is
- * positioned via panning ( see {@link Module} <code>pan()</code> ). if a {@link Module} outputs a stereo signal the
- * output ignores panning and just uses the signal unchanged. if a {@link Module} outputs more than channels than a
+ * {@link Track} may handle other mono or stereo {@link Track}s. if a {@link Track} outputs a mono signal the output is
+ * positioned via panning ( see {@link Track} <code>pan()</code> ). if a {@link Track} outputs a stereo signal the
+ * output ignores panning and just uses the signal unchanged. if a {@link Track} outputs more than channels than a
  * stereo signal all additional channels are ignored.
- *
- * @see Module
  */
 public class Track implements DSPNodeOutputSignal, Loopable {
-
-    /*
-     * a track allows to compose complex DSP configurations. it is a container that may be managed by a {@link Track}.
-     * <p>
-     * a track must implement the method <code>void&nbsp;output(Signal)</code> which supplies an audio signal and may
-     * implement the method <code>void&nbsp;beat(int)</code> which can be used to receive beat events.
-     */
 
     public static boolean VERBOSE = false;
     public final int ID;
@@ -67,7 +62,7 @@ public class Track implements DSPNodeOutputSignal, Loopable {
     private int fLoop;
     private final Pan fPan;
     private static int oTrackUID;
-    private final ArrayList<Track> mModules = new ArrayList<>();
+    private final ArrayList<Track> mTracks = new ArrayList<>();
     private int mBeat = SIGNAL_PROCESSING_IGNORE_IN_OUTPOINTS;
 
     public Track() {
@@ -84,41 +79,57 @@ public class Track implements DSPNodeOutputSignal, Loopable {
     }
 
     public ArrayList<Track> tracks() {
-        return mModules;
+        return mTracks;
+    }
+
+    public void add_track(Track track) {
+        mTracks.add(track);
     }
 
     /**
      * @param index index of track as stored in <code>track()</code>. note that this not to be confused with the final
-     *              field <code>.ID</code> in {@link Module} which refers to a unique ID for each track ever created.
+     *              field <code>.ID</code> in {@link Track} which refers to a unique ID for each track ever created.
      * @return track stored at index
      */
     public Track track(int index) {
-        return mModules.get(index);
+        return mTracks.get(index);
     }
 
     /**
      * triggered by update mechanism. this method can be overridden to implement custom behavior.
      *
-     * @param beat current beat count
+     * @param beat_absolute current absolute beat count
+     * @param beat_relative current relative beat count
      */
-    public void beat(int beat) {
+    public void beat(int beat_absolute, int beat_relative) {
     }
 
     /**
-     * updates everything related to beat functionality including internal mechanisms and child tracks. this method
-     * also calls this object's own <code>beat(int)</code> method.
+     * updates everything related to beat functionality including internal mechanisms and child tracks. this method also
+     * calls this object's own <code>beat(int)</code> method. the order in which methods are called is as follows:
+     * <p>
+     * <ul>
+     *     <li><code>beat(int)</code></li>
+     *     <li>child <code>beat(int)</code></li>
+     *     <li>child <code>update(int)</code></li>
+     * </ul>
      *
-     * @param beat current beat count
+     * @param beat_absolute current absolute beat count. by default this is the global beat count that is passed to the
+     *                      very first {@link Track} in the composition.
+     * @param beat_relative current relative beat count
      */
-    public void update(int beat) {
-        beat(beat);
-        mBeat = get_relative_position(beat);
-        for (Track c : mModules) {
+    public void update(int beat_absolute, int beat_relative) {
+        beat(beat_absolute, beat_relative);
+        mBeat = get_relative_position(beat_relative);
+        for (Track c : mTracks) {
             if (evaluate_in_outpoints(c, mBeat)) {
-                c.beat(mBeat);
-                c.update(mBeat);
+                c.update(beat_absolute, mBeat);
             }
         }
+    }
+
+    public void update(int beat) {
+        update(beat, beat);
     }
 
     /**
@@ -135,24 +146,26 @@ public class Track implements DSPNodeOutputSignal, Loopable {
 
     public Signal output_signal_update() {
         final Signal mSignalSum = new Signal();
-        for (Track mModule : mModules) {
-            if (mBeat == SIGNAL_PROCESSING_IGNORE_IN_OUTPOINTS || evaluate_in_outpoints(mModule, mBeat)) {
-                Signal mModuleOutputSignal = mModule.output_signal();
-                if (mModuleOutputSignal.num_channels() == SIGNAL_MONO) {
+        for (Track mTrack : mTracks) {
+            if (mBeat == SIGNAL_PROCESSING_IGNORE_IN_OUTPOINTS || evaluate_in_outpoints(mTrack, mBeat)) {
+                Signal mTrackOutputSignal = mTrack.output_signal();
+                if (mTrackOutputSignal.num_channels() == SIGNAL_MONO) {
                     /* position mono signal in stereo space */
-                    final float s = mModuleOutputSignal.mono();
-                    mModuleOutputSignal = mModule.pan().process(s);
-                    addSignalAndVolume(mSignalSum, mModule, mModuleOutputSignal);
-                } else if (mModuleOutputSignal.num_channels() >= SIGNAL_STEREO) {
+                    final float s = mTrackOutputSignal.mono();
+                    mTrackOutputSignal = mTrack.pan().process(s);
+                    addSignalAndVolume(mSignalSum, mTrack, mTrackOutputSignal);
+                } else if (mTrackOutputSignal.num_channels() >= SIGNAL_STEREO) {
                     /* apply signal with 2 or more channels. additional channels are omitted */
-                    addSignalAndVolume(mSignalSum, mModule, mModuleOutputSignal);
-                    if (VERBOSE && mModuleOutputSignal.num_channels() > SIGNAL_STEREO) {
-                        System.out.println("+++ track ID " + mModule.ID + " does not emit mono or stereo signal. " + "number of channels " + "is: " + mModuleOutputSignal.num_channels());
+                    addSignalAndVolume(mSignalSum, mTrack, mTrackOutputSignal);
+                    if (VERBOSE && mTrackOutputSignal.num_channels() > SIGNAL_STEREO) {
+                        System.out.println("+++ track ID " + mTrack.ID + " does not emit mono or stereo signal. " +
+                                                   "number of channels " + "is: " + mTrackOutputSignal.num_channels());
                     }
-                }
-
-                if (VERBOSE) {
-                    System.out.println("+++ track ID " + mModule.ID + " does not emit a signal. number of channels " + "is: 0");
+                } else {
+                    if (VERBOSE) {
+                        System.out.println("+++ track ID " + mTrack.ID + " does not emit a signal. number of " +
+                                                   "channels" + " " + "is: 0");
+                    }
                 }
             }
         }
@@ -183,6 +196,10 @@ public class Track implements DSPNodeOutputSignal, Loopable {
         return fVolume;
     }
 
+    /**
+     * @param in_point in point in beats. included in length count i.e an in point of 2 and an out point of 5 will *
+     *                 result in a duration of 4 beats ( 2, 3, 4, 5 ).
+     */
     public void set_in_point(int in_point) {
         fInPoint = in_point;
     }
@@ -192,6 +209,10 @@ public class Track implements DSPNodeOutputSignal, Loopable {
         return fInPoint;
     }
 
+    /**
+     * @param out_point out point in beats. included in length count i.e an in point of 2 and an out point of 5 will
+     *                  result in a duration of 4 beats ( 2, 3, 4, 5 ).
+     */
     public void set_out_point(int out_point) {
         fOutPoint = out_point;
     }
@@ -211,8 +232,8 @@ public class Track implements DSPNodeOutputSignal, Loopable {
     }
 
     /**
-     * set length of a track loop. setting the length affects outpoint. e.g given an inpoint of 3, setting the length
-     * to 2 will set output to 4. note that outpoint is inclusive i.e a pattern from in- to outpoint of 3, 4, 5, … is
+     * set length of a track loop. setting the length affects outpoint. e.g given an inpoint of 3, setting the length to
+     * 2 will set output to 4. note that outpoint is inclusive i.e a pattern from in- to outpoint of 3, 4, 5, … is
      * generated.
      *
      * @param length set length of loop
@@ -238,9 +259,9 @@ public class Track implements DSPNodeOutputSignal, Loopable {
         return Loopable.get_loop_count(this, absolut_position);
     }
 
-    private static void addSignalAndVolume(Signal pSignalSum, Track pModule, Signal pSignal) {
-        pSignalSum.left_add(pSignal.left() * pModule.get_volume());
-        pSignalSum.right_add(pSignal.right() * pModule.get_volume());
+    private static void addSignalAndVolume(Signal pSignalSum, Track pTrack, Signal pSignal) {
+        pSignalSum.left_add(pSignal.left() * pTrack.get_volume());
+        pSignalSum.right_add(pSignal.right() * pTrack.get_volume());
     }
 
     private static boolean evaluate_in_outpoints(Track pTrack, int pBeat) {
@@ -262,7 +283,11 @@ public class Track implements DSPNodeOutputSignal, Loopable {
 
     @SuppressWarnings("SpellCheckingInspection")
     private static final String TEST_RESULT_IDEAL =
-            "BEAT\tRELATIV\tLOOP\n" + "---\n" + "2\t\t0\t\t0\n" + "2\t\t0\t" + "\t0\n" + "3\t\t1\t\t0\n" + "3\t\t1\t" + "\t0\n" + "4\t\t2\t\t0\n" + "4\t\t2\t\t0\n" + "5\t\t3\t\t0\n" + "5\t" + "\t3\t\t0\n" + "6\t\t0\t" + "\t1\n" + "6\t\t0\t\t1\n" + "7\t\t1\t\t1\n" + "7\t\t1\t\t1\n" + "8\t\t2\t\t1\n" + "8\t\t2\t\t1\n" + "9\t\t3\t\t1\n" + "9\t\t3\t\t1\n" + "10\t\t0\t\t2\n" + "10\t\t0\t\t2\n" + "11\t\t1\t\t2" + "\n" + "11\t\t1\t\t2\n" + "12\t\t2\t\t2\n" + "12\t\t2\t\t2\n" + "13\t\t3\t\t2\n" + "13\t\t3\t\t2\n" + "14" + "\t\t0\t\t3\n" + "14\t\t0\t\t3\n" + "15\t\t1\t\t3\n" + "15\t\t1\t\t3\n" + "---\n" + "2\t\t0\t\t-1\n" + "2" + "\t\t0\t\t-1\n" + "3\t\t1\t\t-1\n" + "3\t\t1\t\t-1\n" + "4\t\t2\t\t-1\n" + "4\t\t2\t\t-1\n" + "5\t\t3\t\t" + "-1\n" + "5\t\t3\t\t-1\n" + "---\n" + "11\t\t0\t\t-1\n" + "11\t\t0\t\t-1\n" + "12\t\t1\t\t-1\n" + "12\t" + "\t1\t\t-1\n" + "13\t\t2\t\t-1\n" + "13\t\t2\t\t-1\n" + "14\t\t3\t\t-1\n" + "14\t\t3\t\t-1\n" + "15\t\t4" + "\t\t-1\n" + "15\t\t4\t\t-1\n" + "---\n" + "0\t\t0\t\t-1\n" + "0\t\t0\t\t-1\n" + "1\t\t1\t\t-1\n" + "1\t" + "\t1\t\t-1\n" + "2\t\t2\t\t-1\n" + "2\t\t2\t\t-1\n" + "3\t\t3\t\t-1\n" + "3\t\t3\t\t-1\n" + "4\t\t4\t\t-1" + "\n" + "4\t\t4\t\t-1\n";
+            "ROLE\tGLOBAL\tBEAT\tRELATIV\tLOOP\n" + "--- LOOP:INFINITE, IN: " + "2, OUT:5 ---\n" + "SERVER\t0\n" +
+                    "SERVER\t1\n" + "SERVER\t2\n" + "CHILD\t2\t\t2\t\t0\t\t0\n" + "SERVER" + "\t3\n" + "CHILD\t3\t\t3"
+                    + "\t\t1\t\t0\n" + "SERVER\t4\n" + "CHILD\t4\t\t4\t\t2\t\t0\n" + "SERVER\t5\n" + "CHILD\t5\t\t5\t"
+                    + "\t3\t\t0\n" + "SERVER\t6\n" + "CHILD\t6\t\t6\t\t0\t\t1\n" + "SERVER\t7\n" + "CHILD\t7\t" +
+                    "\t7" + "\t\t1\t\t1\n" + "SERVER\t8\n" + "CHILD\t8\t\t8\t\t2\t\t1\n" + "SERVER\t9\n" + "CHILD\t9" + "\t\t9\t" + "\t3\t" + "\t1\n" + "SERVER\t10\n" + "CHILD\t10\t\t10\t\t0\t\t2\n" + "SERVER\t11\n" + "CHILD\t11" + "\t\t11\t\t1\t\t2\n" + "SERVER\t12\n" + "CHILD\t12\t\t12\t\t2\t\t2\n" + "SERVER\t13\n" + "CHILD" + "\t13\t\t13\t\t3\t\t2\n" + "SERVER\t14\n" + "CHILD\t14\t\t14\t\t0\t\t3\n" + "SERVER\t15\n" + "CHILD\t15\t\t15\t\t1\t\t3\n" + "--- LOOP:NO, IN:2, OUT:5 ---\n" + "SERVER\t0\n" + "SERVER\t1\n" + "SERVER\t2\n" + "CHILD\t2\t\t2\t\t0\t\t-1\n" + "SERVER\t3\n" + "CHILD\t3\t\t3\t\t1\t\t-1\n" + "SERVER\t4\n" + "CHILD\t4\t\t4\t\t2\t\t-1\n" + "SERVER\t5\n" + "CHILD\t5\t\t5\t\t3\t\t-1\n" + "SERVER\t6\n" + "SERVER\t7\n" + "SERVER\t8\n" + "SERVER\t9\n" + "SERVER\t10\n" + "SERVER\t11\n" + "SERVER\t12\n" + "SERVER\t13\n" + "SERVER\t14\n" + "SERVER\t15\n" + "--- LOOP:NO, IN:11, OUT:NO ---\n" + "SERVER\t0\n" + "SERVER\t1\n" + "SERVER\t2\n" + "SERVER\t3\n" + "SERVER\t4\n" + "SERVER\t5\n" + "SERVER\t6\n" + "SERVER\t7\n" + "SERVER\t8\n" + "SERVER\t9\n" + "SERVER\t10\n" + "SERVER\t11\n" + "CHILD\t11\t\t11\t\t0\t\t-1\n" + "SERVER\t12\n" + "CHILD\t12\t\t12\t\t1\t\t-1\n" + "SERVER\t13\n" + "CHILD\t13\t\t13\t\t2\t\t-1\n" + "SERVER\t14\n" + "CHILD\t14\t\t14\t\t3\t\t-1\n" + "SERVER\t15\n" + "CHILD\t15\t\t15\t\t4\t\t-1\n" + "--- LOOP:NO, IN:0, OUT:4 ---\n" + "SERVER\t0\n" + "CHILD\t0\t\t0\t\t0\t\t-1\n" + "SERVER\t1\n" + "CHILD\t1\t\t1\t\t1\t\t-1\n" + "SERVER\t2\n" + "CHILD\t2\t\t2\t\t2\t\t-1\n" + "GRANDCH\t2\t\t2\t\t0\t\t-1\n" + "SERVER\t3\n" + "CHILD\t3\t\t3\t\t3\t\t-1\n" + "GRANDCH\t3\t\t3\t\t1\t\t-1\n" + "SERVER\t4\n" + "CHILD\t4\t\t4\t\t4\t\t-1\n" + "GRANDCH\t4\t\t4\t\t2\t\t-1\n" + "SERVER\t5\n" + "SERVER\t6\n" + "SERVER\t7\n" + "SERVER\t8\n" + "SERVER\t9\n" + "SERVER\t10\n" + "SERVER\t11\n" + "SERVER\t12\n" + "SERVER\t13\n" + "SERVER\t14\n" + "SERVER\t15\n";
 
     private static String TEST_RESULT = "";
 
@@ -271,58 +296,77 @@ public class Track implements DSPNodeOutputSignal, Loopable {
         System.out.println(s);
     }
 
-    public static void main(String[] args) {
-        Track.run_test();
-    }
-
     public static void run_test() {
-        Track t = new Track();
-        Track d = new Track() {
+        Track mServerTrack = new Track() {
+            public void beat(int beat_absolute, int beat_relative) {
+                println("SERVER\t" + beat_absolute);
+            }
+        };
+        Track mChildTrack = new Track() {
             @Override
             public Signal output_signal() {
                 return Signal.create(0);
             }
 
-            public void beat(int beat) {
-                println(beat + "\t\t" + get_relative_position(beat) + "\t\t" + get_loop_count(beat));
+            public void beat(int beat_absolute, int beat_relative) {
+                println("CHILD\t" + beat_absolute + "\t\t" + beat_relative + "\t\t" + get_relative_position(
+                        beat_relative) + "\t\t" + get_loop_count(beat_relative));
             }
         };
 
-        t.tracks().add(d);
+        Track mGrandChildTrack = new Track() {
+            @Override
+            public Signal output_signal() {
+                return Signal.create(0);
+            }
+
+            public void beat(int beat_absolute, int beat_relative) {
+                println("GRANDCH\t" + beat_absolute + "\t\t" + beat_relative + "\t\t" + get_relative_position(
+                        beat_relative) + "\t\t" + get_loop_count(beat_relative));
+            }
+        };
+
+        mServerTrack.tracks().add(mChildTrack);
 
         //noinspection SpellCheckingInspection
-        println("BEAT\tRELATIV\tLOOP");
+        println("ROLE\tGLOBAL\tBEAT\tRELATIV\tLOOP");
 
-        println("---");
-        d.set_in_out_point(2, 5);
-        d.fLoop = LOOP_INFINITE;
+        println("--- LOOP:INFINITE, IN: 2, OUT:5 ---");
+        mChildTrack.set_in_out_point(2, 5);
+        mChildTrack.fLoop = LOOP_INFINITE;
         for (int i = 0; i < 16; i++) {
-            t.update(i);
+            mServerTrack.update(i);
         }
 
-        println("---");
-        d.set_in_point(2);
-        d.set_out_point(5);
-        d.fLoop = NO_LOOP;
+        println("--- LOOP:NO, IN:2, OUT:5 ---");
+        mChildTrack.set_in_point(2);
+        mChildTrack.set_out_point(5);
+        mChildTrack.fLoop = NO_LOOP;
         for (int i = 0; i < 16; i++) {
-            t.update(i);
+            mServerTrack.update(i);
         }
 
-        println("---");
-        d.set_in_out_point(11, NO_OUTPOINT);
-        d.fLoop = NO_LOOP;
+        println("--- LOOP:NO, IN:11, OUT:NO ---");
+        mChildTrack.set_in_out_point(11, NO_OUTPOINT);
+        mChildTrack.fLoop = NO_LOOP;
         for (int i = 0; i < 16; i++) {
-            t.update(i);
+            mServerTrack.update(i);
         }
 
-        println("---");
-        d.set_in_point(NO_INPOINT);
-        d.set_length(5);
-        d.fLoop = NO_LOOP;
+        println("--- LOOP:NO, IN:0, OUT:4 ---");
+        mChildTrack.set_in_point(NO_INPOINT);
+        mChildTrack.set_length(5);
+        mChildTrack.fLoop = NO_LOOP;
+        mChildTrack.add_track(mGrandChildTrack);
+        mGrandChildTrack.set_in_out_point(2, 5);
         for (int i = 0; i < 16; i++) {
-            t.update(i);
+            mServerTrack.update(i);
         }
 
         System.out.println("TEST SUCCESS: " + TEST_RESULT.equals(TEST_RESULT_IDEAL));
     }
+
+//    public static void main(String[] args) {
+//        Track.run_test();
+//    }
 }
