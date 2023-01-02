@@ -3,9 +3,9 @@ package wellen.examples.external;
 import processing.core.PApplet;
 import wellen.Beat;
 import wellen.Note;
+import wellen.SAM;
 import wellen.Tone;
 import wellen.dsp.DSP;
-import wellen.dsp.SAM;
 
 public class ExampleExternal08SAMSinging extends PApplet {
 

@@ -19,7 +19,9 @@
 
 /* from [SAM Software Automatic Mouth](https://github.com/s-macke/SAM) */
 
-package wellen.dsp;
+package wellen;
+
+import wellen.dsp.DSPNodeOutput;
 
 import java.net.URL;
 import java.nio.file.FileSystems;

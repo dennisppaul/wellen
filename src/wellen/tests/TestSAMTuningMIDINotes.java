@@ -2,8 +2,8 @@ package wellen.tests;
 
 import processing.core.PApplet;
 import wellen.Beat;
+import wellen.SAM;
 import wellen.dsp.DSP;
-import wellen.dsp.SAM;
 
 public class TestSAMTuningMIDINotes extends PApplet {
 

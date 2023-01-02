@@ -223,6 +223,12 @@ public abstract class Tone {
         }
     }
 
+    /**
+     *
+     * @param damping default: 0.5
+     * @param roomsize default: 0.5
+     * @param wet default: 0.33
+     */
     public static void enable_reverb(float damping, float roomsize, float wet) {
         if (get_DSP_engine() != null) {
             get_DSP_engine().enable_reverb(true);

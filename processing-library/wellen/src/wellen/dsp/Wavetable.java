@@ -282,6 +282,10 @@ public class Wavetable extends Oscillator {
         return mAmplitude;
     }
 
+    /**
+     *
+     * @param amplitude amplitude
+     */
     @Override
     public void set_amplitude(float amplitude) {
         mAmplitude = amplitude;

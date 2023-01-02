@@ -3,9 +3,9 @@ package wellen.tests;
 import processing.core.PApplet;
 import wellen.Beat;
 import wellen.Note;
+import wellen.SAM;
 import wellen.Tone;
 import wellen.dsp.DSP;
-import wellen.dsp.SAM;
 import wellen.dsp.Sampler;
 
 public class TestSAMSingsLongerNotes extends PApplet {

@@ -44,7 +44,6 @@ public class TechniqueBasics06LoopEvents extends PApplet {
         circle(width * 0.5f - 100, height * 0.5f, Tone.instrument(0).is_playing() ? 100 : 10);
         circle(width * 0.5f, height * 0.5f, Tone.instrument(1).is_playing() ? 100 : 10);
         circle(width * 0.5f + 100, height * 0.5f, Tone.instrument(2).is_playing() ? 100 : 10);
-
     }
 
     public void beat(int beat) {

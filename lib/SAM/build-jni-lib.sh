@@ -3,10 +3,15 @@
 JAVA_SRC_PATH='../../src/'
 NATIVE_ACCESSER_PATH='wellen/SAM.java'
 NATIVE_ACCESSER_CLASS_NAME='wellen.SAM'
+HELPER_PATH='wellen/dsp/DSPNodeOutput.java'
 NATIVE_HEADER_PATH='../cpp/'
 PWD=`pwd`
 BUILD_PATH=build
 JAVA_BUILD_PATH=java
+
+ROOT=$(pwd)
+ROOT=$(dirname "$0")
+cd "$ROOT"
 
 echo
 echo '----- Wellen SAM JNI Builder -----'
@@ -42,7 +47,7 @@ exej () {
 
 mkdir -p $JAVA_BUILD_PATH/wellen
 cp $JAVA_SRC_PATH/$NATIVE_ACCESSER_PATH $JAVA_BUILD_PATH/$NATIVE_ACCESSER_PATH
-cp $JAVA_SRC_PATH/wellen/DSPNodeOutput.java $JAVA_BUILD_PATH/wellen/ # @TODO
+cp $JAVA_SRC_PATH/$HELPER_PATH $JAVA_BUILD_PATH/$HELPER_PATH # @TODO
 
 if [ "$1" != "" ]; then
     while [ "$1" != "" ]; do
@@ -73,5 +78,5 @@ if [ -f "$BUILD_PATH/$LINUX_DYLIB" ]; then
     mv $BUILD_PATH/$LINUX_DYLIB ../ 
 fi
 
-rm -rf $JAVA_BUILD_PATH
-rm -rf $BUILD_PATH
+# rm -rf $JAVA_BUILD_PATH
+# rm -rf $BUILD_PATH

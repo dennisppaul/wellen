@@ -2,9 +2,9 @@ package wellen.tests;
 
 import processing.core.PApplet;
 import wellen.Note;
+import wellen.SAM;
 import wellen.Wellen;
 import wellen.dsp.DSP;
-import wellen.dsp.SAM;
 import wellen.dsp.Sampler;
 
 public class TestSAMTuningPhonemeLoops extends PApplet {

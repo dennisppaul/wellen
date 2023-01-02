@@ -1,9 +1,9 @@
 package wellen.tests;
 
 import processing.core.PApplet;
+import wellen.SAM;
 import wellen.Wellen;
 import wellen.dsp.DSP;
-import wellen.dsp.SAM;
 
 import java.util.ArrayList;
 
