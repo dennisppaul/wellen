@@ -39,10 +39,6 @@ public abstract class ToneEngine {
         mTimer = new Timer();
     }
 
-    public void stop() {
-        mTimer.cancel();
-    }
-
     public static ToneEngine create() {
         return new ToneEngineDSP();
     }
@@ -71,6 +67,10 @@ public abstract class ToneEngine {
             System.err.println("+++ hint: check engine name and number of parameters");
         }
         return create();
+    }
+
+    public void stop() {
+        mTimer.cancel();
     }
 
     /**
@@ -134,8 +134,8 @@ public abstract class ToneEngine {
 
     private class NoteOffTask extends TimerTask {
 
-        final int note;
         final int instrument;
+        final int note;
 
         public NoteOffTask(int pNote, int pInstrument) {
             note = pNote;

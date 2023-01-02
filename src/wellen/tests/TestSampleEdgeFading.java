@@ -7,8 +7,8 @@ import wellen.dsp.Sampler;
 
 public class TestSampleEdgeFading extends PApplet {
 
-    private Sampler mSampler;
     private float[] mFadedData;
+    private Sampler mSampler;
 
     public void settings() {
         size(640, 480);

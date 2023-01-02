@@ -140,15 +140,15 @@ implements <a href="dsp/DSPNodeOutputSignal.html" title="interface in wellen.dsp
 <h2>Field Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="ID">
-<h3>ID</h3>
-<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">ID</span></div>
-</section>
-</li>
-<li>
 <section class="detail" id="VERBOSE">
 <h3>VERBOSE</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">VERBOSE</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="ID">
+<h3>ID</h3>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">ID</span></div>
 </section>
 </li>
 </ul>
@@ -231,6 +231,16 @@ implements <a href="dsp/DSPNodeOutputSignal.html" title="interface in wellen.dsp
 </section>
 </li>
 <li>
+<section class="detail" id="get_volume()">
+<h3>get_volume</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">get_volume</span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>patch volume with 0.0 being no output and 1.0 being 100%</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="set_volume(float)">
 <h3>set_volume</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_volume</span><wbr><span class="parameters">(float&nbsp;volume)</span></div>
@@ -239,16 +249,6 @@ implements <a href="dsp/DSPNodeOutputSignal.html" title="interface in wellen.dsp
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>volume</code> - patch volume with 0.0 being no output and 1.0 being 100%</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="get_volume()">
-<h3>get_volume</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">get_volume</span>()</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>patch volume with 0.0 being no output and 1.0 being 100%</dd>
 </dl>
 </section>
 </li>

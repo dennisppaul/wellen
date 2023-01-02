@@ -35,11 +35,11 @@ import static wellen.Wellen.DISTORTION_SOFT_CLIPPING_CUBIC;
 public class Distortion implements DSPNodeProcess {
 
     private static final int MAX_NUM_OF_ITERATIONS = 16;
-    private float mClip;
-    private float mAmplification;
-    private int mDistortionType;
     private final boolean LOCK_GUARD = true;
+    private float mAmplification;
     private int mBits;
+    private float mClip;
+    private int mDistortionType;
     private int mSteps;
 
     /**

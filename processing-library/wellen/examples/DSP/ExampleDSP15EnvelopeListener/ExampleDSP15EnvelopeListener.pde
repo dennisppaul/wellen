@@ -9,13 +9,13 @@ import wellen.dsp.*;
  * and frequency of the oscillator.
  */
 
-Envelope mRampFrequency;
-
-Wavetable mWavetable;
+final float MAX_FREQ = Note.note_to_frequency(48);
 
 final float MIN_FREQ = Note.note_to_frequency(24);
 
-final float MAX_FREQ = Note.note_to_frequency(48);
+Envelope mRampFrequency;
+
+Wavetable mWavetable;
 
 void settings() {
     size(640, 480);

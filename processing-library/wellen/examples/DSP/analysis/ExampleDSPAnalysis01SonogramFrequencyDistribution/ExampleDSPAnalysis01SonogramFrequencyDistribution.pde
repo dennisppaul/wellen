@@ -9,15 +9,15 @@ import wellen.analysis.*;
  * frequency and amplitude. use mouse+`SHIFT` to change filter cutoff frequency and resonance.
  */
 
+boolean fEnableFilter = false;
+
 final Filter fFilter = new Filter();
-
-final Wavetable fWavetable = new Wavetable();
-
-Sonogram fSonogram;
 
 FrequencyDistribution fFrequencyDistribution;
 
-boolean fEnableFilter = false;
+Sonogram fSonogram;
+
+final Wavetable fWavetable = new Wavetable();
 
 void settings() {
     size(640, 480);

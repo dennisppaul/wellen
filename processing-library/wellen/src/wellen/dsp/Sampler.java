@@ -33,24 +33,24 @@ import static wellen.Wellen.clamp;
 public class Sampler implements DSPNodeOutput {
 
     public static final int NO_LOOP_POINT = -1;
-    private boolean mIsPlaying;
-    private boolean mIsDone;
-    private final float mSamplingRate;
-    private float[] mData;
-    private float mFrequency;
-    private float mStepSize;
-    private float mDataIndex;
     private float mAmplitude;
-    private boolean mLoop;
+    private float[] mData;
+    private float mDataIndex;
     private boolean mDirectionForward;
-    private float mSpeed;
-    private boolean mInterpolateSamples;
+    private int mEdgeFadePadding;
+    private float mFrequency;
     private int mIn;
-    private int mOut;
+    private boolean mInterpolateSamples;
+    private boolean mIsDone;
+    private boolean mIsPlaying;
+    private boolean mLoop;
     private int mLoopIn;
     private int mLoopOut;
-    private int mEdgeFadePadding;
+    private int mOut;
     private ArrayList<SamplerListener> mSamplerListeners;
+    private final float mSamplingRate;
+    private float mSpeed;
+    private float mStepSize;
 
     public Sampler() {
         this(0);
@@ -245,7 +245,6 @@ public class Sampler implements DSPNodeOutput {
         mDataIndex = mDirectionForward ? mIn : mOut;
     }
 
-
     public void forward() {
         mDataIndex = mDirectionForward ? mOut : mIn;
     }
@@ -260,32 +259,6 @@ public class Sampler implements DSPNodeOutput {
 
     public void enable_loop(boolean pLoop) {
         mLoop = pLoop;
-    }
-
-
-    private int last_index() {
-        return mData.length - 1;
-    }
-
-    private int wrapIndex(int i) {
-        if (mIsPlaying && mLoopIn != NO_LOOP_POINT && mLoopOut != NO_LOOP_POINT) {
-            if (mDirectionForward) {
-                if (i > mLoopOut) {
-                    i = mLoopIn;
-                }
-            } else {
-                if (i < mLoopIn) {
-                    i = mLoopOut;
-                }
-            }
-        } else {
-            if (i > mOut) {
-                i = mIn;
-            } else if (i < mIn) {
-                i = mOut;
-            }
-        }
-        return i;
     }
 
     public void start() {
@@ -332,5 +305,30 @@ public class Sampler implements DSPNodeOutput {
 
     public void set_loop_out_normalized(float pLoopOut) {
         set_loop_out((int) (pLoopOut * mData.length - 1));
+    }
+
+    private int last_index() {
+        return mData.length - 1;
+    }
+
+    private int wrapIndex(int i) {
+        if (mIsPlaying && mLoopIn != NO_LOOP_POINT && mLoopOut != NO_LOOP_POINT) {
+            if (mDirectionForward) {
+                if (i > mLoopOut) {
+                    i = mLoopIn;
+                }
+            } else {
+                if (i < mLoopIn) {
+                    i = mLoopOut;
+                }
+            }
+        } else {
+            if (i > mOut) {
+                i = mIn;
+            } else if (i < mIn) {
+                i = mOut;
+            }
+        }
+        return i;
     }
 }

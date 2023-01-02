@@ -13,9 +13,9 @@ public class ExampleDSP01StereoOutput extends PApplet {
      * note that the distortion in the signal stems from changing the frequency too abruptly.
      */
 
-    private float mFreq = 344.53125f;
     private int mCounter = 0;
     private float mDetune = 1.1f;
+    private float mFreq = 344.53125f;
 
     public void settings() {
         size(640, 480);

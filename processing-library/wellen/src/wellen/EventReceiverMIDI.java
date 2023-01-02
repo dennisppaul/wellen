@@ -26,7 +26,6 @@ import java.lang.reflect.Method;
  * listens to incoming MIDI messages.
  * <p>
  * the following callback methods are available:
- *
  * <pre>
  * <code>
  * midi_note_on(int channel, int pitch, int velocity)
@@ -45,28 +44,28 @@ public class EventReceiverMIDI implements MidiInListener {
 
     private static final String METHOD_NAME = "event_receive";
     private static final String METHOD_NAME_CC = "midi_cc";
+    private static final String METHOD_NAME_CLOCK_CONTINUE = "midi_clock_continue";
+    private static final String METHOD_NAME_CLOCK_SONG_POSITION_POINTER = "midi_clock_song_position_pointer";
+    private static final String METHOD_NAME_CLOCK_START = "midi_clock_start";
+    private static final String METHOD_NAME_CLOCK_STOP = "midi_clock_stop";
+    private static final String METHOD_NAME_CLOCK_TICK = "midi_clock_tick";
     private static final String METHOD_NAME_CONTROL_CHANGE = "midi_control_change";
-    private static final String METHOD_NAME_PROGRAM_CHANGE = "midi_program_change";
     private static final String METHOD_NAME_NOTE_OFF = "midi_note_off";
     private static final String METHOD_NAME_NOTE_ON = "midi_note_on";
-    private static final String METHOD_NAME_CLOCK_TICK = "midi_clock_tick";
-    private static final String METHOD_NAME_CLOCK_START = "midi_clock_start";
-    private static final String METHOD_NAME_CLOCK_CONTINUE = "midi_clock_continue";
-    private static final String METHOD_NAME_CLOCK_STOP = "midi_clock_stop";
-    private static final String METHOD_NAME_CLOCK_SONG_POSITION_POINTER = "midi_clock_song_position_pointer";
+    private static final String METHOD_NAME_PROGRAM_CHANGE = "midi_program_change";
     private static EventReceiverMIDI mInstance = null;
-    private final Object mParent;
-    private Method mMethod = null;
-    private Method mMethodNoteOn = null;
-    private Method mMethodNoteOff = null;
-    private Method mMethodControlChange = null;
-    private Method mMethodProgramChange = null;
-    private Method mMethodClockTick = null;
-    private Method mMethodClockStart = null;
-    private Method mMethodClockContinue = null;
-    private Method mMethodClockStop = null;
-    private Method mMethodClockSongPositionPointer = null;
     private final boolean VERBOSE = false;
+    private Method mMethod = null;
+    private Method mMethodClockContinue = null;
+    private Method mMethodClockSongPositionPointer = null;
+    private Method mMethodClockStart = null;
+    private Method mMethodClockStop = null;
+    private Method mMethodClockTick = null;
+    private Method mMethodControlChange = null;
+    private Method mMethodNoteOff = null;
+    private Method mMethodNoteOn = null;
+    private Method mMethodProgramChange = null;
+    private final Object mParent;
 
     /**
      * @param pReceiver object which will receive MIDI messages
@@ -155,6 +154,34 @@ public class EventReceiverMIDI implements MidiInListener {
                 ex.printStackTrace();
             }
         }
+    }
+
+    /**
+     * @param pParent          object which will receive MIDI messages
+     * @param pMidiInputDevice MIDI input device to use (e.g. "IAC Driver Bus 1")
+     * @return instance of {@code MIDIInput} or {@code null} if the device is not available.
+     */
+    public static EventReceiverMIDI start(Object pParent, String pMidiInputDevice) {
+        if (mInstance == null) {
+            mInstance = new EventReceiverMIDI(pParent);
+            MidiIn mMidiIn = new MidiIn(pMidiInputDevice);
+            mMidiIn.addListener(mInstance);
+        }
+        return mInstance;
+    }
+
+    /**
+     * @param pParent            object which will receive MIDI messages
+     * @param pMidiInputDeviceID MIDI input device ID to use
+     * @return instance of {@code MIDIInput} or {@code null} if the device is not available.
+     */
+    public static EventReceiverMIDI start(Object pParent, int pMidiInputDeviceID) {
+        if (mInstance == null) {
+            mInstance = new EventReceiverMIDI(pParent);
+            MidiIn mMidiIn = new MidiIn(pMidiInputDeviceID);
+            mMidiIn.addListener(mInstance);
+        }
+        return mInstance;
     }
 
     /**
@@ -255,20 +282,60 @@ public class EventReceiverMIDI implements MidiInListener {
         }
     }
 
-    private void sendEventControlChange(int channel, int number, int value) {
-        if (mMethodControlChange != null) {
+    private void sendEventClockContinue() {
+        if (mMethodClockContinue != null) {
             try {
-                mMethodControlChange.invoke(mParent, channel, number, value);
+                mMethodClockContinue.invoke(mParent);
             } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
                 ex.printStackTrace();
             }
         }
     }
 
-    private void sendEventProgramChange(int channel, int number, int value) {
-        if (mMethodProgramChange != null) {
+    private void sendEventClockSongPositionPointer(int pOffset16th) {
+        if (mMethodClockSongPositionPointer != null) {
             try {
-                mMethodProgramChange.invoke(mParent, channel, number, value);
+                mMethodClockSongPositionPointer.invoke(mParent, pOffset16th);
+            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    private void sendEventClockStart() {
+        if (mMethodClockStart != null) {
+            try {
+                mMethodClockStart.invoke(mParent);
+            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    private void sendEventClockStop() {
+        if (mMethodClockStop != null) {
+            try {
+                mMethodClockStop.invoke(mParent);
+            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    private void sendEventClockTick() {
+        if (mMethodClockTick != null) {
+            try {
+                mMethodClockTick.invoke(mParent);
+            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    private void sendEventControlChange(int channel, int number, int value) {
+        if (mMethodControlChange != null) {
+            try {
+                mMethodControlChange.invoke(mParent, channel, number, value);
             } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
                 ex.printStackTrace();
             }
@@ -295,81 +362,13 @@ public class EventReceiverMIDI implements MidiInListener {
         }
     }
 
-    private void sendEventClockTick() {
-        if (mMethodClockTick != null) {
+    private void sendEventProgramChange(int channel, int number, int value) {
+        if (mMethodProgramChange != null) {
             try {
-                mMethodClockTick.invoke(mParent);
+                mMethodProgramChange.invoke(mParent, channel, number, value);
             } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
                 ex.printStackTrace();
             }
         }
-    }
-
-    private void sendEventClockStart() {
-        if (mMethodClockStart != null) {
-            try {
-                mMethodClockStart.invoke(mParent);
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
-
-    private void sendEventClockContinue() {
-        if (mMethodClockContinue != null) {
-            try {
-                mMethodClockContinue.invoke(mParent);
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
-
-    private void sendEventClockStop() {
-        if (mMethodClockStop != null) {
-            try {
-                mMethodClockStop.invoke(mParent);
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
-
-    private void sendEventClockSongPositionPointer(int pOffset16th) {
-        if (mMethodClockSongPositionPointer != null) {
-            try {
-                mMethodClockSongPositionPointer.invoke(mParent, pOffset16th);
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
-
-    /**
-     * @param pParent          object which will receive MIDI messages
-     * @param pMidiInputDevice MIDI input device to use (e.g. "IAC Driver Bus 1")
-     * @return instance of {@code MIDIInput} or {@code null} if the device is not available.
-     */
-    public static EventReceiverMIDI start(Object pParent, String pMidiInputDevice) {
-        if (mInstance == null) {
-            mInstance = new EventReceiverMIDI(pParent);
-            MidiIn mMidiIn = new MidiIn(pMidiInputDevice);
-            mMidiIn.addListener(mInstance);
-        }
-        return mInstance;
-    }
-
-    /**
-     * @param pParent            object which will receive MIDI messages
-     * @param pMidiInputDeviceID MIDI input device ID to use
-     * @return instance of {@code MIDIInput} or {@code null} if the device is not available.
-     */
-    public static EventReceiverMIDI start(Object pParent, int pMidiInputDeviceID) {
-        if (mInstance == null) {
-            mInstance = new EventReceiverMIDI(pParent);
-            MidiIn mMidiIn = new MidiIn(pMidiInputDeviceID);
-            mMidiIn.addListener(mInstance);
-        }
-        return mInstance;
     }
 }

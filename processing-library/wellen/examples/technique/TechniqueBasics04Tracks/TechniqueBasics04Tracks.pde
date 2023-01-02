@@ -5,11 +5,11 @@ import wellen.dsp.*;
  * this example demonstrates how to build a composition with tracks.
  */
 
-final Track fTrack = new Track();
+static final int PPQN = 24;
 
 final ModuleToneEngine fModuleBleepBleep = new ModuleToneEngine();
 
-static final int PPQN = 24;
+final Track fTrack = new Track();
 
 void settings() {
     size(640, 480);

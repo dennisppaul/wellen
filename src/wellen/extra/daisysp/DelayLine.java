@@ -13,11 +13,11 @@ package wellen.extra.daisysp;
  */
 public class DelayLine {
 
-    private final int max_size;
-    private float frac_;
-    private int write_ptr_;
     private int delay_;
+    private float frac_;
     private final float[] line_;
+    private final int max_size;
+    private int write_ptr_;
 
     public DelayLine(int pMaxSize) {
         max_size = pMaxSize;

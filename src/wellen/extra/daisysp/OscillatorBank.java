@@ -13,21 +13,19 @@ package wellen.extra.daisysp;
  */
 public class OscillatorBank {
 
-    private float phase_;
-    private float next_sample_;
-    private int segment_;
-    private float gain_;
-    private final float[] registration_ = new float[7];
-    private final float[] unshifted_registration_ = new float[7];
-
     private float frequency_;
-    private float saw_8_gain_;
-    private float saw_4_gain_;
-    private float saw_2_gain_;
-    private float saw_1_gain_;
-
-    private float sample_rate_;
+    private float gain_;
+    private float next_sample_;
+    private float phase_;
     private boolean recalc_, recalc_gain_;
+    private final float[] registration_ = new float[7];
+    private float sample_rate_;
+    private float saw_1_gain_;
+    private float saw_2_gain_;
+    private float saw_4_gain_;
+    private float saw_8_gain_;
+    private int segment_;
+    private final float[] unshifted_registration_ = new float[7];
 
     /**
      * Init string synth module \param sample_rate Audio engine sample rate
@@ -55,7 +53,6 @@ public class OscillatorBank {
         SetSingleAmp(1.f, 0);
         SetFreq(440.f);
     }
-
 
     /**
      * Get next floating point sample

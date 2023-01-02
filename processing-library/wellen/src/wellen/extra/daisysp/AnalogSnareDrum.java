@@ -11,23 +11,22 @@ package wellen.extra.daisysp;
  */
 public class AnalogSnareDrum {
 
-    private static final int kNumModes = 5;
     private static final float[] kModeFrequencies = {1.00f, 2.00f, 3.18f, 4.16f, 5.62f};
-    private float sample_rate_;
+    private static final int kNumModes = 5;
     private float f0_, tone_, accent_, snappy_, decay_;
-    private boolean sustain_;
-    private boolean trig_;
-    private int pulse_remaining_samples_;
+    private float noise_envelope_;
+    private final Svf noise_filter_ = new Svf();
+    // Replace the resonators in "free running" (sustain) mode.
+    private final float[] phase_ = new float[kNumModes];
     private float pulse_;
     private float pulse_height_;
     private float pulse_lp_;
-    private float noise_envelope_;
-    private float sustain_gain_;
+    private int pulse_remaining_samples_;
     private final Svf[] resonator_ = new Svf[kNumModes];
-    private final Svf noise_filter_ = new Svf();
-
-    // Replace the resonators in "free running" (sustain) mode.
-    private final float[] phase_ = new float[kNumModes];
+    private float sample_rate_;
+    private boolean sustain_;
+    private float sustain_gain_;
+    private boolean trig_;
 
     /**
      * Init the module \param sample_rate Audio engine sample rate
@@ -217,10 +216,6 @@ public class AnalogSnareDrum {
         return noise + shell * (1.0f - snappy);
     }
 
-    private float SoftLimit(float x) {
-        return x * (27.0f + x * x) / (27.0f + 9.0f * x * x);
-    }
-
     private float SoftClip(float x) {
         if (x < -3.0f) {
             return -1.0f;
@@ -229,5 +224,9 @@ public class AnalogSnareDrum {
         } else {
             return SoftLimit(x);
         }
+    }
+
+    private float SoftLimit(float x) {
+        return x * (27.0f + x * x) / (27.0f + 9.0f * x * x);
     }
 }

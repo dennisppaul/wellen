@@ -6,11 +6,11 @@ import wellen.dsp.*;
  * `Sampler`. this example also demonstrates how to play a sample backwards.
  */
 
-Sampler mSampler;
-
 boolean mIsRecording;
 
 float[] mRecording;
+
+Sampler mSampler;
 
 void settings() {
     size(640, 480);

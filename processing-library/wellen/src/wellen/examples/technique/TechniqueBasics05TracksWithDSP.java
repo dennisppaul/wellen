@@ -22,9 +22,9 @@ public class TechniqueBasics05TracksWithDSP extends PApplet {
      * tracks when <code>output_signal()</code> is called.
      */
 
+    private static final int PPQN = 24;
     private final Track fMaster = new Track();
     private final ModuleToneEngine fModuleBleepBleep = new ModuleToneEngine();
-    private static final int PPQN = 24;
 
     public void settings() {
         size(640, 480);
@@ -94,12 +94,11 @@ public class TechniqueBasics05TracksWithDSP extends PApplet {
 
     private class ModuleOhhhhUhh extends Track {
 
-        private final Oscillator mOSC = new OscillatorFunction();
+        private final float mBaseFreq = Note.note_to_frequency(12);
         private final VowelFormantFilter mFormantFilter = new VowelFormantFilter();
         private final float mMaxAmplitude = 0.2f;
         private final float mNoiseScale = 0.02f;
-        private final float mBaseFreq = Note.note_to_frequency(12);
-
+        private final Oscillator mOSC = new OscillatorFunction();
         public ModuleOhhhhUhh() {
             mOSC.set_frequency(mBaseFreq);
             mOSC.set_waveform(Wellen.WAVEFORM_SQUARE);

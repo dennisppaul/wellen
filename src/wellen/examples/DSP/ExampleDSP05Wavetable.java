@@ -7,6 +7,8 @@ import wellen.dsp.Wavetable;
 
 public class ExampleDSP05Wavetable extends PApplet {
 
+    private boolean mInterpolateAmplitudeAndFrequency = false;
+    private Wavetable mWavetable;
     /*
      * this example demonstrates how to use a *wavetable* ( a chunk of memory ) and play it back at different
      * frequencies and amplitudes. in this example a wavetable is used to emulate an oscillator (VCO) with different
@@ -20,8 +22,6 @@ public class ExampleDSP05Wavetable extends PApplet {
      * interpolation. use `SPACE` to toggle interpolation. see explantion inline.
      */
     private int mWavetableSize = 6;
-    private Wavetable mWavetable;
-    private boolean mInterpolateAmplitudeAndFrequency = false;
 
     public void settings() {
         size(640, 480);

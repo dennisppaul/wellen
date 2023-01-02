@@ -2,6 +2,13 @@ package wellen.tests.dsp.stk;
 
 public class StkFrames {
 
+    protected int bufferSize_;
+    protected float dataRate_;
+    protected float[] data_;
+    protected int nChannels_;
+    protected int nFrames_;
+    protected int size_;
+
     //! The default ructor initializes the frame data structure to size zero.
     public StkFrames(float value, int nFrames, int nChannels) {
         nFrames_ = nFrames;
@@ -18,7 +25,6 @@ public class StkFrames {
 
         dataRate_ = Stk.sampleRate();
     }
-
 
     //! Return an interpolated value at the fractional frame index and channel.
   /*!
@@ -158,11 +164,4 @@ public class StkFrames {
     public float get(int i) {
         return data_[i];
     }
-
-    protected float[] data_;
-    protected float dataRate_;
-    protected int nFrames_;
-    protected int nChannels_;
-    protected int size_;
-    protected int bufferSize_;
 }

@@ -13,6 +13,28 @@ import static wellen.extra.daisysp.DaisySP.*;
  */
 public class SyntheticBassDrum {
 
+    private float accent_, new_f0_, tone_, decay_;
+    private float body_env_;
+    private float body_env_lp_;
+    private int body_env_pulse_width_;
+    private final SyntheticBassDrumClick click_ = new SyntheticBassDrumClick();
+    private float dirtiness_, fm_envelope_amount_, fm_envelope_decay_;
+    private float f0_;
+    private float fm_;
+    private float fm_lp_;
+    private int fm_pulse_width_;
+    private boolean mTrigger = false;
+    private final SyntheticBassDrumAttackNoise noise_ = new SyntheticBassDrumAttackNoise();
+    private float phase_;
+    private float phase_noise_;
+    private float sample_rate_;
+    private boolean sustain_;
+    private float sustain_gain_;
+    private float tone_lp_;
+    private float transient_env_;
+    private float transient_env_lp_;
+    private boolean trig_;
+
     /**
      * Init the module \param sample_rate Audio engine sample rate.
      */
@@ -158,7 +180,6 @@ public class SyntheticBassDrum {
         trig_ = true;
     }
 
-
     /**
      * Allows the drum to play continuously
      *
@@ -231,34 +252,4 @@ public class SyntheticBassDrum {
         fm_envelope_decay = fclamp(fm_envelope_decay, 0.f, 1.f);
         fm_envelope_decay_ = fm_envelope_decay * fm_envelope_decay;
     }
-
-    private float sample_rate_;
-
-    private boolean trig_;
-    private boolean sustain_;
-    private float accent_, new_f0_, tone_, decay_;
-    private float dirtiness_, fm_envelope_amount_, fm_envelope_decay_;
-
-    private float f0_;
-    private float phase_;
-    private float phase_noise_;
-
-    private float fm_;
-    private float fm_lp_;
-    private float body_env_;
-    private float body_env_lp_;
-    private float transient_env_;
-    private float transient_env_lp_;
-
-    private float sustain_gain_;
-
-    private float tone_lp_;
-
-    private final SyntheticBassDrumClick click_ = new SyntheticBassDrumClick();
-    private final SyntheticBassDrumAttackNoise noise_ = new SyntheticBassDrumAttackNoise();
-
-    private int body_env_pulse_width_;
-    private int fm_pulse_width_;
-
-    private boolean mTrigger = false;
 }

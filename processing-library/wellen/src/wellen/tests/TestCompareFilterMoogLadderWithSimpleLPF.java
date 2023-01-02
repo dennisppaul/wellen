@@ -9,10 +9,10 @@ import wellen.dsp.LowPassFilter;
 import wellen.dsp.Wavetable;
 
 public class TestCompareFilterMoogLadderWithSimpleLPF extends PApplet {
-    private final Wavetable mWavetable = new Wavetable();
     private final Filter mFilter = new Filter();
-    private final LowPassFilter mMoggLadder = new LowPassFilter();
     private int mFreqOffset = 0;
+    private final LowPassFilter mMoggLadder = new LowPassFilter();
+    private final Wavetable mWavetable = new Wavetable();
 
     public void settings() {
         size(640, 480);

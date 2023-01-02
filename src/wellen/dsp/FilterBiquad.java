@@ -29,18 +29,21 @@ import static wellen.Wellen.FILTER_MODE_LOWSHELF;
 import static wellen.Wellen.FILTER_MODE_NOTCH;
 import static wellen.Wellen.FILTER_MODE_PEAK;
 
-/** biquad filter inspired by <a href="https://www.musicdsp.org/en/latest/_downloads/3e1dc886e7849251d6747b194d482272/Audio-EQ-Cookbook.txt">Audio-EQ-Cookbook.txt</a> */
+/**
+ * biquad filter inspired by <a href="https://www.musicdsp.org/en/latest/_downloads/3e1dc886e7849251d6747b194d482272/Audio-EQ-Cookbook.txt">Audio-EQ-Cookbook.txt</a>
+ */
 public class FilterBiquad implements DSPNodeProcess {
     private static final int BQN = 3;
-    private final float mSamplingRate;
+    private static final float M_PI = (float) Math.PI;
     private final float[] A = new float[BQN];
     private final float[] B = new float[BQN];
+    private float Q;
     private final float[] X = new float[BQN];
     private final float[] Y = new float[BQN];
-    private int index;
-    private int mode;
     private float fc;
-    private float Q;
+    private int index;
+    private final float mSamplingRate;
+    private int mode;
     private float peakGain;
 
     public FilterBiquad() {
@@ -195,7 +198,9 @@ public class FilterBiquad implements DSPNodeProcess {
         return (n + k + BQN) % BQN;
     }
 
-    private static final float M_PI = (float) Math.PI;
+    private float cos(float r) {
+        return (float) Math.cos(r);
+    }
 
     private float pow(float v, float w) {
         return (float) Math.pow(v, w);
@@ -203,10 +208,6 @@ public class FilterBiquad implements DSPNodeProcess {
 
     private float sin(float r) {
         return (float) Math.sin(r);
-    }
-
-    private float cos(float r) {
-        return (float) Math.cos(r);
     }
 
     private float sqrt(float v) {

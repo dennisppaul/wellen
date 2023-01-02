@@ -13,6 +13,9 @@ import static wellen.extra.daisysp.DaisySP.rand_kRandFrac;
  *         Original code written by Emilie Gillet in 2016. \n
  */
 public class SyntheticBassDrumAttackNoise {
+    private float hp_;
+    private float lp_;
+
     /**
      * Init the module
      */
@@ -20,7 +23,6 @@ public class SyntheticBassDrumAttackNoise {
         lp_ = 0.0f;
         hp_ = 0.0f;
     }
-
 
     /**
      * Get the next sample.
@@ -31,7 +33,4 @@ public class SyntheticBassDrumAttackNoise {
         hp_ = fonepole_return(hp_, lp_, 0.005f);
         return lp_ - hp_;
     }
-
-    private float lp_;
-    private float hp_;
 }

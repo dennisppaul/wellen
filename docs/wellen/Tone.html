@@ -168,6 +168,146 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="control_change(int,int)">
+<h3>control_change</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">control_change</span><wbr><span class="parameters">(int&nbsp;CC,
+ int&nbsp;value)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="create_instrument(java.lang.Class,int)">
+<h3>create_instrument</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;T extends <a href="Instrument.html" title="class in wellen">Instrument</a>&gt;</span>&nbsp;<span class="return-type">T</span>&nbsp;<span class="element-name">create_instrument</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;instrument_class,
+ int&nbsp;ID)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="enable_reverb(float,float,float)">
+<h3>enable_reverb</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">enable_reverb</span><wbr><span class="parameters">(float&nbsp;damping,
+ float&nbsp;roomsize,
+ float&nbsp;wet)</span></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>damping</code> - default: 0.5</dd>
+<dd><code>roomsize</code> - default: 0.5</dd>
+<dd><code>wet</code> - default: 0.33</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="get_DSP_engine()">
+<h3>get_DSP_engine</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ToneEngineDSP.html" title="class in wellen">ToneEngineDSP</a></span>&nbsp;<span class="element-name">get_DSP_engine</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="get_buffer()">
+<h3>get_buffer</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float[]</span>&nbsp;<span class="element-name">get_buffer</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="get_buffer_left()">
+<h3>get_buffer_left</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float[]</span>&nbsp;<span class="element-name">get_buffer_left</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="get_buffer_right()">
+<h3>get_buffer_right</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float[]</span>&nbsp;<span class="element-name">get_buffer_right</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="get_midi_engine()">
+<h3>get_midi_engine</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ToneEngineMIDI.html" title="class in wellen">ToneEngineMIDI</a></span>&nbsp;<span class="element-name">get_midi_engine</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="instance()">
+<h3>instance</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ToneEngine.html" title="class in wellen">ToneEngine</a></span>&nbsp;<span class="element-name">instance</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="instrument(int)">
+<h3>instrument</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="Instrument.html" title="class in wellen">Instrument</a></span>&nbsp;<span class="element-name">instrument</span><wbr><span class="parameters">(int&nbsp;ID)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="instrument()">
+<h3>instrument</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="Instrument.html" title="class in wellen">Instrument</a></span>&nbsp;<span class="element-name">instrument</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="instruments()">
+<h3>instruments</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;? extends <a href="Instrument.html" title="class in wellen">Instrument</a>&gt;</span>&nbsp;<span class="element-name">instruments</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="is_playing()">
+<h3>is_playing</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">is_playing</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="note_off(int)">
+<h3>note_off</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">note_off</span><wbr><span class="parameters">(int&nbsp;note)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="note_off()">
+<h3>note_off</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">note_off</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="note_on(int,int,float)">
+<h3>note_on</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">note_on</span><wbr><span class="parameters">(int&nbsp;note,
+ int&nbsp;velocity,
+ float&nbsp;duration)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="note_on(int,int)">
+<h3>note_on</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">note_on</span><wbr><span class="parameters">(int&nbsp;note,
+ int&nbsp;velocity)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="pitch_bend(int)">
+<h3>pitch_bend</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">pitch_bend</span><wbr><span class="parameters">(int&nbsp;value)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="replace_instrument(java.lang.Class,int)">
+<h3>replace_instrument</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">replace_instrument</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;? extends <a href="Instrument.html" title="class in wellen">Instrument</a>&gt;&nbsp;instrument_class,
+ int&nbsp;ID)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="replace_instrument(wellen.Instrument)">
+<h3>replace_instrument</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">replace_instrument</span><wbr><span class="parameters">(<a href="Instrument.html" title="class in wellen">Instrument</a>&nbsp;instrument)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="set_engine(wellen.ToneEngine)">
+<h3>set_engine</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_engine</span><wbr><span class="parameters">(<a href="ToneEngine.html" title="class in wellen">ToneEngine</a>&nbsp;tone_engine)</span></div>
+</section>
+</li>
+<li>
 <section class="detail" id="start(java.lang.String...)">
 <h3>start</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">start</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>...&nbsp;tone_enginge_name)</span></div>
@@ -198,149 +338,15 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="stop()">
-<h3>stop</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">stop</span>()</div>
-</section>
-</li>
-<li>
 <section class="detail" id="start(int)">
 <h3>start</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ToneEngineDSP.html" title="class in wellen">ToneEngineDSP</a></span>&nbsp;<span class="element-name">start</span><wbr><span class="parameters">(int&nbsp;configuration)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="note_on(int,int,float)">
-<h3>note_on</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">note_on</span><wbr><span class="parameters">(int&nbsp;note,
- int&nbsp;velocity,
- float&nbsp;duration)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="note_on(int,int)">
-<h3>note_on</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">note_on</span><wbr><span class="parameters">(int&nbsp;note,
- int&nbsp;velocity)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="note_off(int)">
-<h3>note_off</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">note_off</span><wbr><span class="parameters">(int&nbsp;note)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="note_off()">
-<h3>note_off</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">note_off</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="control_change(int,int)">
-<h3>control_change</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">control_change</span><wbr><span class="parameters">(int&nbsp;CC,
- int&nbsp;value)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="pitch_bend(int)">
-<h3>pitch_bend</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">pitch_bend</span><wbr><span class="parameters">(int&nbsp;value)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="is_playing()">
-<h3>is_playing</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">is_playing</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="instrument(int)">
-<h3>instrument</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="Instrument.html" title="class in wellen">Instrument</a></span>&nbsp;<span class="element-name">instrument</span><wbr><span class="parameters">(int&nbsp;ID)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="instrument()">
-<h3>instrument</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="Instrument.html" title="class in wellen">Instrument</a></span>&nbsp;<span class="element-name">instrument</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="get_buffer()">
-<h3>get_buffer</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float[]</span>&nbsp;<span class="element-name">get_buffer</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="get_buffer_left()">
-<h3>get_buffer_left</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float[]</span>&nbsp;<span class="element-name">get_buffer_left</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="get_buffer_right()">
-<h3>get_buffer_right</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float[]</span>&nbsp;<span class="element-name">get_buffer_right</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="replace_instrument(java.lang.Class,int)">
-<h3>replace_instrument</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">replace_instrument</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;? extends <a href="Instrument.html" title="class in wellen">Instrument</a>&gt;&nbsp;instrument_class,
- int&nbsp;ID)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="replace_instrument(wellen.Instrument)">
-<h3>replace_instrument</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">replace_instrument</span><wbr><span class="parameters">(<a href="Instrument.html" title="class in wellen">Instrument</a>&nbsp;instrument)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="instruments()">
-<h3>instruments</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;? extends <a href="Instrument.html" title="class in wellen">Instrument</a>&gt;</span>&nbsp;<span class="element-name">instruments</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="create_instrument(java.lang.Class,int)">
-<h3>create_instrument</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;T extends <a href="Instrument.html" title="class in wellen">Instrument</a>&gt;</span>&nbsp;<span class="return-type">T</span>&nbsp;<span class="element-name">create_instrument</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;instrument_class,
- int&nbsp;ID)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="instance()">
-<h3>instance</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ToneEngine.html" title="class in wellen">ToneEngine</a></span>&nbsp;<span class="element-name">instance</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="get_DSP_engine()">
-<h3>get_DSP_engine</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ToneEngineDSP.html" title="class in wellen">ToneEngineDSP</a></span>&nbsp;<span class="element-name">get_DSP_engine</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="enable_reverb(float,float,float)">
-<h3>enable_reverb</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">enable_reverb</span><wbr><span class="parameters">(float&nbsp;damping,
- float&nbsp;roomsize,
- float&nbsp;wet)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="get_midi_engine()">
-<h3>get_midi_engine</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ToneEngineMIDI.html" title="class in wellen">ToneEngineMIDI</a></span>&nbsp;<span class="element-name">get_midi_engine</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="set_engine(wellen.ToneEngine)">
-<h3>set_engine</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_engine</span><wbr><span class="parameters">(<a href="ToneEngine.html" title="class in wellen">ToneEngine</a>&nbsp;tone_engine)</span></div>
+<section class="detail" id="stop()">
+<h3>stop</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">stop</span>()</div>
 </section>
 </li>
 </ul>

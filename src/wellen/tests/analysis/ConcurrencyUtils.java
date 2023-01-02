@@ -74,45 +74,15 @@ public class ConcurrencyUtils {
      */
     private static final ExecutorService THREAD_POOL =
             Executors.newCachedThreadPool(new CustomThreadFactory(new CustomExceptionHandler()));
-
-    private static int THREADS_BEGIN_N_1D_FFT_2THREADS = 8192;
-
-    private static int THREADS_BEGIN_N_1D_FFT_4THREADS = 65536;
-
-    private static int THREADS_BEGIN_N_2D = 65536;
-
-    private static int THREADS_BEGIN_N_3D = 65536;
-
     private static int NTHREADS = prevPow2(getNumberOfProcessors());
+    private static int THREADS_BEGIN_N_1D_FFT_2THREADS = 8192;
+    private static int THREADS_BEGIN_N_1D_FFT_4THREADS = 65536;
+    private static int THREADS_BEGIN_N_2D = 65536;
+    private static int THREADS_BEGIN_N_3D = 65536;
 
     private ConcurrencyUtils() {
 
     }
-
-    private static class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
-        public void uncaughtException(Thread t, Throwable e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    private static class CustomThreadFactory implements ThreadFactory {
-        private static final ThreadFactory defaultFactory = Executors.defaultThreadFactory();
-
-        private final Thread.UncaughtExceptionHandler handler;
-
-        CustomThreadFactory(Thread.UncaughtExceptionHandler handler) {
-            this.handler = handler;
-        }
-
-        public Thread newThread(Runnable r) {
-            Thread t = defaultFactory.newThread(r);
-            t.setUncaughtExceptionHandler(handler);
-            return t;
-        }
-    }
-
-    ;
 
     /**
      * Returns the number of available processors.
@@ -131,6 +101,8 @@ public class ConcurrencyUtils {
     public static int getNumberOfThreads() {
         return NTHREADS;
     }
+
+    ;
 
     /**
      * Sets the number of threads. If n is not a power-of-two number, then the number of threads is set to the closest
@@ -152,33 +124,6 @@ public class ConcurrencyUtils {
     }
 
     /**
-     * Returns the minimal size of 1D data for which four threads are used.
-     *
-     * @return the minimal size of 1D data for which four threads are used
-     */
-    public static int getThreadsBeginN_1D_FFT_4Threads() {
-        return THREADS_BEGIN_N_1D_FFT_4THREADS;
-    }
-
-    /**
-     * Returns the minimal size of 2D data for which threads are used.
-     *
-     * @return the minimal size of 2D data for which threads are used
-     */
-    public static int getThreadsBeginN_2D() {
-        return THREADS_BEGIN_N_2D;
-    }
-
-    /**
-     * Returns the minimal size of 3D data for which threads are used.
-     *
-     * @return the minimal size of 3D data for which threads are used
-     */
-    public static int getThreadsBeginN_3D() {
-        return THREADS_BEGIN_N_3D;
-    }
-
-    /**
      * Sets the minimal size of 1D data for which two threads are used.
      *
      * @param n the minimal size of 1D data for which two threads are used
@@ -189,6 +134,15 @@ public class ConcurrencyUtils {
         } else {
             THREADS_BEGIN_N_1D_FFT_2THREADS = n;
         }
+    }
+
+    /**
+     * Returns the minimal size of 1D data for which four threads are used.
+     *
+     * @return the minimal size of 1D data for which four threads are used
+     */
+    public static int getThreadsBeginN_1D_FFT_4Threads() {
+        return THREADS_BEGIN_N_1D_FFT_4THREADS;
     }
 
     /**
@@ -205,12 +159,30 @@ public class ConcurrencyUtils {
     }
 
     /**
+     * Returns the minimal size of 2D data for which threads are used.
+     *
+     * @return the minimal size of 2D data for which threads are used
+     */
+    public static int getThreadsBeginN_2D() {
+        return THREADS_BEGIN_N_2D;
+    }
+
+    /**
      * Sets the minimal size of 2D data for which threads are used.
      *
      * @param n the minimal size of 2D data for which threads are used
      */
     public static void setThreadsBeginN_2D(int n) {
         THREADS_BEGIN_N_2D = n;
+    }
+
+    /**
+     * Returns the minimal size of 3D data for which threads are used.
+     *
+     * @return the minimal size of 3D data for which threads are used
+     */
+    public static int getThreadsBeginN_3D() {
+        return THREADS_BEGIN_N_3D;
     }
 
     /**
@@ -223,19 +195,17 @@ public class ConcurrencyUtils {
     }
 
     /**
-     * Resets the minimal size of 1D data for which two and four threads are used.
+     * Checks if x is a power-of-two number.
+     *
+     * @param x
+     * @return true if x is a power-of-two number
      */
-    public static void resetThreadsBeginN_FFT() {
-        THREADS_BEGIN_N_1D_FFT_2THREADS = 8192;
-        THREADS_BEGIN_N_1D_FFT_4THREADS = 65536;
-    }
-
-    /**
-     * Resets the minimal size of 2D and 3D data for which threads are used.
-     */
-    public static void resetThreadsBeginN() {
-        THREADS_BEGIN_N_2D = 65536;
-        THREADS_BEGIN_N_3D = 65536;
+    public static boolean isPowerOf2(int x) {
+        if (x <= 0) {
+            return false;
+        } else {
+            return (x & (x - 1)) == 0;
+        }
     }
 
     /**
@@ -249,7 +219,7 @@ public class ConcurrencyUtils {
             throw new IllegalArgumentException("x must be greater or equal 1");
         }
         if ((x & (x - 1)) == 0) {
-            return x; // x is already a power-of-two number 
+            return x; // x is already a power-of-two number
         }
         x |= (x >>> 1);
         x |= (x >>> 2);
@@ -274,17 +244,19 @@ public class ConcurrencyUtils {
     }
 
     /**
-     * Checks if x is a power-of-two number.
-     *
-     * @param x
-     * @return true if x is a power-of-two number
+     * Resets the minimal size of 2D and 3D data for which threads are used.
      */
-    public static boolean isPowerOf2(int x) {
-        if (x <= 0) {
-            return false;
-        } else {
-            return (x & (x - 1)) == 0;
-        }
+    public static void resetThreadsBeginN() {
+        THREADS_BEGIN_N_2D = 65536;
+        THREADS_BEGIN_N_3D = 65536;
+    }
+
+    /**
+     * Resets the minimal size of 1D data for which two and four threads are used.
+     */
+    public static void resetThreadsBeginN_FFT() {
+        THREADS_BEGIN_N_1D_FFT_2THREADS = 8192;
+        THREADS_BEGIN_N_1D_FFT_4THREADS = 65536;
     }
 
     /**
@@ -326,6 +298,28 @@ public class ConcurrencyUtils {
             ex.printStackTrace();
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+    }
+
+    private static class CustomExceptionHandler implements Thread.UncaughtExceptionHandler {
+        public void uncaughtException(Thread t, Throwable e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private static class CustomThreadFactory implements ThreadFactory {
+        private static final ThreadFactory defaultFactory = Executors.defaultThreadFactory();
+        private final Thread.UncaughtExceptionHandler handler;
+
+        CustomThreadFactory(Thread.UncaughtExceptionHandler handler) {
+            this.handler = handler;
+        }
+
+        public Thread newThread(Runnable r) {
+            Thread t = defaultFactory.newThread(r);
+            t.setUncaughtExceptionHandler(handler);
+            return t;
         }
     }
 }

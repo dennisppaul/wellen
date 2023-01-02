@@ -24,18 +24,12 @@ import static wellen.Wellen.NO_LOOP_COUNT;
 import static wellen.Wellen.NO_OUTPOINT;
 
 public interface Loopable {
-    int get_loop();
-    int get_in_point();
-    int get_out_point();
-
-    static int get_relative_position(Loopable p, int pAbsolutPosition) {
-        return Loopable.getRelativePositionOrLoopCount(p, pAbsolutPosition, true);
-    }
-
     static int get_loop_count(Loopable p, int pAbsolutPosition) {
         return Loopable.getRelativePositionOrLoopCount(p, pAbsolutPosition, false);
     }
-
+    static int get_relative_position(Loopable p, int pAbsolutPosition) {
+        return Loopable.getRelativePositionOrLoopCount(p, pAbsolutPosition, true);
+    }
     private static int getRelativePositionOrLoopCount(Loopable p, int pAbsolutPosition, boolean pGetRelativePosition) {
         if (p.get_loop() == NO_LOOP || p.get_out_point() == NO_OUTPOINT) {
             return pGetRelativePosition ? (pAbsolutPosition - p.get_in_point()) : NO_LOOP_COUNT;
@@ -70,4 +64,7 @@ public interface Loopable {
         }
         return pGetRelativePosition ? pAbsolutPosition : 0;
     }
+    int get_loop();
+    int get_in_point();
+    int get_out_point();
 }

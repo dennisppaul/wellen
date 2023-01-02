@@ -7,14 +7,6 @@ import static wellen.extra.daisysp.Oscillator.WAVE_FORM.WAVE_SIN;
  */
 public class Oscillator {
 
-    private static final float TWO_PI_RECIP = 1.0f / DaisySP.TWOPI_F;
-
-    private WAVE_FORM waveform_;
-    private float amp_, freq_;
-    private float sr_, sr_recip_, phase_, phase_inc_;
-    private float last_out_, last_freq_;
-    private boolean eor_, eoc_;
-
     /**
      * Choices for output waveforms, POLYBLEP are appropriately labeled. Others are naive forms.
      */
@@ -28,6 +20,26 @@ public class Oscillator {
         WAVE_POLYBLEP_SAW,
         WAVE_POLYBLEP_SQUARE,
         WAVE_LAST,
+    }
+
+    private static final float TWO_PI_RECIP = 1.0f / DaisySP.TWOPI_F;
+    private float amp_, freq_;
+    private boolean eor_, eoc_;
+    private float last_out_, last_freq_;
+    private float sr_, sr_recip_, phase_, phase_inc_;
+    private WAVE_FORM waveform_;
+
+    private static float Polyblep(float phase_inc, float t) {
+        float dt = phase_inc * TWO_PI_RECIP;
+        if (t < dt) {
+            t /= dt;
+            return t + t - t * t - 1.0f;
+        } else if (t > 1.0f - dt) {
+            t = (t - 1.0f) / dt;
+            return t * t + t + t + 1.0f;
+        } else {
+            return 0.0f;
+        }
     }
 
     /**
@@ -102,24 +114,6 @@ public class Oscillator {
     }
 
     /**
-     * Adds a value 0.0-1.0 (mapped to 0.0-TWO_PI) to the current phase. Useful for PM and "FM" synthesis.
-     */
-    void PhaseAdd(float _phase) {
-        phase_ += (_phase * DaisySP.TWOPI_F);
-    }
-
-    /**
-     * Resets the phase to the input argument. If no argumeNt is present, it will reset phase to 0.0;
-     */
-    void Reset(float _phase) {
-        phase_ = _phase;
-    }
-
-    void Reset() {
-        phase_ = 0.0f;
-    }
-
-    /**
      * Processes the waveform to be generated, returning one sample. This should be called once per sample period.
      */
     public float Process() {
@@ -184,20 +178,25 @@ public class Oscillator {
         return Process();
     }
 
-    private float CalcPhaseInc(float f) {
-        return (DaisySP.TWOPI_F * f) * sr_recip_;
+    /**
+     * Adds a value 0.0-1.0 (mapped to 0.0-TWO_PI) to the current phase. Useful for PM and "FM" synthesis.
+     */
+    void PhaseAdd(float _phase) {
+        phase_ += (_phase * DaisySP.TWOPI_F);
     }
 
-    private static float Polyblep(float phase_inc, float t) {
-        float dt = phase_inc * TWO_PI_RECIP;
-        if (t < dt) {
-            t /= dt;
-            return t + t - t * t - 1.0f;
-        } else if (t > 1.0f - dt) {
-            t = (t - 1.0f) / dt;
-            return t * t + t + t + 1.0f;
-        } else {
-            return 0.0f;
-        }
+    /**
+     * Resets the phase to the input argument. If no argumeNt is present, it will reset phase to 0.0;
+     */
+    void Reset(float _phase) {
+        phase_ = _phase;
+    }
+
+    void Reset() {
+        phase_ = 0.0f;
+    }
+
+    private float CalcPhaseInc(float f) {
+        return (DaisySP.TWOPI_F * f) * sr_recip_;
     }
 }

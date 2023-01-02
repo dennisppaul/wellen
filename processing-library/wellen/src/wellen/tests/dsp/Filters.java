@@ -2,19 +2,33 @@ package wellen.tests.dsp;
 
 public class Filters {
 
-    public static final int LOW_PASS = 0;
-    public static final int HIGH_PASS = 1;
-    public static final int RESONATOR = 2;
     public static final int BAND_PASS = 3;
-
-    private final float sr;
-    private final float[] del;
+    public static final int HIGH_PASS = 1;
+    public static final int LOW_PASS = 0;
+    public static final int RESONATOR = 2;
     private static final float pi = (float) Math.PI;
-
+    private final float[] del;
+    private final float sr;
 
     public Filters(float pSamplingFrequency) {
         del = new float[2];
         sr = pSamplingFrequency;
+    }
+
+    private static double acos(double r) {
+        return Math.acos(r);
+    }
+
+    private static double cos(double r) {
+        return Math.cos(r);
+    }
+
+    private static double sin(double r) {
+        return Math.sin(r);
+    }
+
+    private static double sqrt(double r) {
+        return Math.sqrt(r);
     }
 
     public float[] process(float[] pSignal, float freq, float bw, int mode) {
@@ -45,7 +59,6 @@ public class Filters {
 
         return sig;
     }
-
 
     public float[] highpass(float[] sig, float freq) {
 
@@ -109,22 +122,5 @@ public class Filters {
         }
 
         return sig;
-    }
-
-
-    private static double sin(double r) {
-        return Math.sin(r);
-    }
-
-    private static double cos(double r) {
-        return Math.cos(r);
-    }
-
-    private static double acos(double r) {
-        return Math.acos(r);
-    }
-
-    private static double sqrt(double r) {
-        return Math.sqrt(r);
     }
 }

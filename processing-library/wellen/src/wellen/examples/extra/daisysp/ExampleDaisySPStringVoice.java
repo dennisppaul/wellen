@@ -10,10 +10,9 @@ import wellen.extra.daisysp.StringVoice;
 public class ExampleDaisySPStringVoice extends PApplet {
     //@add import wellen.extra.daisysp.*;
 
-    private StringVoice mStringVoice;
-
     private int mMIDINoteCounter = 0;
     private final int[] mMIDINotes = {36, 48, 39, 51};
+    private StringVoice mStringVoice;
 
     public void settings() {
         size(640, 480);

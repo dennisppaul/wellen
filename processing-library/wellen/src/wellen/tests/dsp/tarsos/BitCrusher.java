@@ -31,13 +31,13 @@ public class BitCrusher {
         set_bit_depth(16);
     }
 
+    public int get_bit_depth() {
+        return fBitDepth;
+    }
+
     public void set_bit_depth(int pBitDepth) {
         fBitDepth = pBitDepth;
         fFactor = (float) Math.pow(2, fBitDepth) / 2.0f - 1;
-    }
-
-    public int get_bit_depth() {
-        return fBitDepth;
     }
 
     public boolean process(float[] pBuffer) {

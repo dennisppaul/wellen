@@ -7,12 +7,12 @@ import wellen.dsp.DSPNodeProcess;
 
 public class TestDSPLowPassFilters extends PApplet {
 
-    private final SecondOrderLowPassFilter mLPFilter = new SecondOrderLowPassFilter();
     private final ButterworthLowPassFilter mButterworthLowPassFilter = new ButterworthLowPassFilter();
-    private final NaiveLowPassFilter mNaiveLowPassFilter = new NaiveLowPassFilter();
-    private final float mFreq = 2.0f * Wellen.DEFAULT_SAMPLING_RATE / Wellen.DEFAULT_AUDIOBLOCK_SIZE;
     private float mCounter = 0;
     private int mFilterType;
+    private final float mFreq = 2.0f * Wellen.DEFAULT_SAMPLING_RATE / Wellen.DEFAULT_AUDIOBLOCK_SIZE;
+    private final SecondOrderLowPassFilter mLPFilter = new SecondOrderLowPassFilter();
+    private final NaiveLowPassFilter mNaiveLowPassFilter = new NaiveLowPassFilter();
 
     public void settings() {
         size(640, 480);
@@ -74,25 +74,8 @@ public class TestDSPLowPassFilters extends PApplet {
 
     private interface filter_constants {
 
-        float sqrt2 = (float) (2.0 * 3.1415926535897932384626433832795);
         float pi = (float) (2.0 * 0.707106781186547524401);
-    }
-
-    private static class NaiveLowPassFilter implements DSPNodeProcess {
-
-        float mBuffer;
-
-        float mRatio;
-
-        public float process(float pSample) {
-            float mSample = pSample * mRatio + mBuffer * (1.0f - mRatio);
-            mBuffer = mSample;
-            return mSample;
-        }
-
-        void ratio(float pRatio) {
-            mRatio = pRatio;
-        }
+        float sqrt2 = (float) (2.0 * 3.1415926535897932384626433832795);
     }
 
     /**
@@ -106,8 +89,8 @@ public class TestDSPLowPassFilters extends PApplet {
      */
     private static class ButterworthLowPassFilter implements DSPNodeProcess {
 
-        float m_xnz1, m_xnz2, m_ynz1, m_ynz2;
         tp_coeffs m_coeffs = new tp_coeffs();
+        float m_xnz1, m_xnz2, m_ynz1, m_ynz2;
 
         public tp_coeffs calculate_coeffs(int fc) {
             final int fs = Wellen.DEFAULT_SAMPLING_RATE;
@@ -135,6 +118,22 @@ public class TestDSPLowPassFilters extends PApplet {
 
     }
 
+    private static class NaiveLowPassFilter implements DSPNodeProcess {
+
+        float mBuffer;
+        float mRatio;
+
+        public float process(float pSample) {
+            float mSample = pSample * mRatio + mBuffer * (1.0f - mRatio);
+            mBuffer = mSample;
+            return mSample;
+        }
+
+        void ratio(float pRatio) {
+            mRatio = pRatio;
+        }
+    }
+
     /**
      * Second order Low-pass filter Dimitris Tassopoulos 2016
      * <p>
@@ -144,8 +143,8 @@ public class TestDSPLowPassFilters extends PApplet {
      */
     private static class SecondOrderLowPassFilter implements DSPNodeProcess {
 
-        float m_xnz1, m_xnz2, m_ynz1, m_ynz2;
         tp_coeffs m_coeffs = new tp_coeffs();
+        float m_xnz1, m_xnz2, m_ynz1, m_ynz2;
 
         public tp_coeffs calculate_coeffs(float Q, int fc) {
             final int fs = Wellen.DEFAULT_SAMPLING_RATE;

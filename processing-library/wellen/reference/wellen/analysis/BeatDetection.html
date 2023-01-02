@@ -48,11 +48,9 @@ loadScripts(document, 'script');</script>
  <p>
  Implementation based on a <a href="http://vamp-plugins.org/code-doc/PercussionOnsetDetector_8cpp-source.html">VAMP
  plugin example</a> by Chris Cannam at Queen Mary, London:
-
  <pre>
   Centre for Digital Music, Queen Mary, University of London.
   Copyright 2006 Chris Cannam.
-
   Permission is hereby granted, free of charge, to any person
   obtaining a copy of this software and associated documentation
   files (the "Software"), to deal in the Software without
@@ -60,10 +58,8 @@ loadScripts(document, 'script');</script>
   modify, merge, publish, distribute, sublicense, and/or sell copies
   of the Software, and to permit persons to whom the Software is
   furnished to do so, subject to the following conditions:
-
   The above copyright notice and this permission notice shall be
   included in all copies or substantial portions of the Software.
-
   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
   EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -71,7 +67,6 @@ loadScripts(document, 'script');</script>
   ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
   CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
   Except as contained in this notice, the names of the Centre for
   Digital Music; Queen Mary, University of London; and Chris Cannam
   shall not be used in advertising or otherwise to promote the sale,
@@ -175,20 +170,6 @@ loadScripts(document, 'script');</script>
 <h2>Field Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="DEFAULT_THRESHOLD">
-<h3>DEFAULT_THRESHOLD</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">DEFAULT_THRESHOLD</span></div>
-<dl class="notes">
-<dt>See Also:</dt>
-<dd>
-<ul class="see-list">
-<li><a href="../../constant-values.html#wellen.analysis.BeatDetection.DEFAULT_THRESHOLD">Constant Field Values</a></li>
-</ul>
-</dd>
-</dl>
-</section>
-</li>
-<li>
 <section class="detail" id="DEFAULT_SENSITIVITY">
 <h3>DEFAULT_SENSITIVITY</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">DEFAULT_SENSITIVITY</span></div>
@@ -197,6 +178,20 @@ loadScripts(document, 'script');</script>
 <dd>
 <ul class="see-list">
 <li><a href="../../constant-values.html#wellen.analysis.BeatDetection.DEFAULT_SENSITIVITY">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="DEFAULT_THRESHOLD">
+<h3>DEFAULT_THRESHOLD</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">DEFAULT_THRESHOLD</span></div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../constant-values.html#wellen.analysis.BeatDetection.DEFAULT_THRESHOLD">Constant Field Values</a></li>
 </ul>
 </dd>
 </dl>
@@ -255,28 +250,6 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="set_sensitivity(double)">
-<h3>set_sensitivity</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_sensitivity</span><wbr><span class="parameters">(double&nbsp;pfSensitivity)</span></div>
-<div class="block">sensitivity of peak detector applied to broadband detection function</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>pfSensitivity</code> - in percentage [0-100]</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="set_threshold(double)">
-<h3>set_threshold</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_threshold</span><wbr><span class="parameters">(double&nbsp;pfThreshold)</span></div>
-<div class="block">energy rise within a frequency bin necessary to count toward broadband total</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>pfThreshold</code> - in dB [0-20]</dd>
-</dl>
-</section>
-</li>
-<li>
 <section class="detail" id="get_time_stamp()">
 <h3>get_time_stamp</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">get_time_stamp</span>()</div>
@@ -289,9 +262,31 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="set_sensitivity(double)">
+<h3>set_sensitivity</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_sensitivity</span><wbr><span class="parameters">(double&nbsp;pfSensitivity)</span></div>
+<div class="block">sensitivity of peak detector applied to broadband detection function</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>pfSensitivity</code> - in percentage [0-100]</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="get_threshold()">
 <h3>get_threshold</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">double</span>&nbsp;<span class="element-name">get_threshold</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="set_threshold(double)">
+<h3>set_threshold</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_threshold</span><wbr><span class="parameters">(double&nbsp;pfThreshold)</span></div>
+<div class="block">energy rise within a frequency bin necessary to count toward broadband total</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>pfThreshold</code> - in dB [0-20]</dd>
+</dl>
 </section>
 </li>
 <li>

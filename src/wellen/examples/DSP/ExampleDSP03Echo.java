@@ -11,10 +11,10 @@ public class ExampleDSP03Echo extends PApplet {
      * note that a microphone or some other line in must be available to run this example.
      */
 
+    float mDecay = 0.9f;
     float[] mDelayBuffer = new float[4096];
     int mDelayID = 0;
     int mDelayOffset = 512;
-    float mDecay = 0.9f;
     float mMix = 0.25f;
 
     public void settings() {

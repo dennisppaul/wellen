@@ -2,25 +2,25 @@ import wellen.*;
 import wellen.dsp.*; 
 
 
+final int mBaseNote = Note.NOTE_C3;
+
+int mCharCounter = 0;
+
+char mCurrentChar = 0;
+
 final String mInput = "RADIO, LIVE TRANSMISSION.\n" + "RADIO, LIVE TRANSMISSION.\n" + "LISTEN TO THE " +
         "SILENCE, LET IT RING ON.\n" + "EYES, DARK GREY LENSES FRIGHTENED OF THE SUN.\n" + "WE WOULD HAVE A FINE "
         + "TIME LIVING IN THE NIGHT,\n" + "LEFT TO BLIND DESTRUCTION,\n" + "WAITING FOR OUR SIGHT.";
 
-final int mBaseNote = Note.NOTE_C3;
-
-final int[] mScale = Scale.MINOR_PENTATONIC;
-
 final int mMaxNoteCounter = 12;
-
-boolean mSkipNote;
 
 int mNoteCounter = 0;
 
 int mNoteStep = 0;
 
-int mCharCounter = 0;
+final int[] mScale = Scale.MINOR_PENTATONIC;
 
-char mCurrentChar = 0;
+boolean mSkipNote;
 
 void settings() {
     size(640, 480);

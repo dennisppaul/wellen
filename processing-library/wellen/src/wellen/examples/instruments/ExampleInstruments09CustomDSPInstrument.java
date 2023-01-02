@@ -48,13 +48,13 @@ public class ExampleInstruments09CustomDSPInstrument extends PApplet {
      * use keys `1` – `6` to play a custom instrument.
      */
 
-    private static final int INSTRUMENT_DEFAULT = 0;
-    private static final int INSTRUMENT_SNARE_DRUM = 1;
-    private static final int INSTRUMENT_KICK_DRUM = 2;
-    private static final int INSTRUMENT_HIHAT = 3;
-    private static final int INSTRUMENT_FAT_LEAD = 4;
-    private static final int INSTRUMENT_DETUNED = 5;
     private static final int INSTRUMENT_BELL = 6;
+    private static final int INSTRUMENT_DEFAULT = 0;
+    private static final int INSTRUMENT_DETUNED = 5;
+    private static final int INSTRUMENT_FAT_LEAD = 4;
+    private static final int INSTRUMENT_HIHAT = 3;
+    private static final int INSTRUMENT_KICK_DRUM = 2;
+    private static final int INSTRUMENT_SNARE_DRUM = 1;
     private static final int NUM_OF_INSTRUMENTS = 7;
 
     public void settings() {
@@ -119,184 +119,6 @@ public class ExampleInstruments09CustomDSPInstrument extends PApplet {
     public void keyReleased() {
         for (int i = 0; i < NUM_OF_INSTRUMENTS; i++) {
             Tone.instrument(i).note_off();
-        }
-    }
-
-    /**
-     * custom DSP instrument that implements a snare drum by playing a pre-recorded sample.
-     */
-    private static class CustomInstrumentSampler extends InstrumentDSP {
-
-        private final float mGain;
-        private final Reverb mReverb;
-        private final Sampler mSampler;
-
-        /**
-         * the constructor of the custom instrument must call the *super constructor* passing the instrument’s ID with
-         * `super(int)`.
-         *
-         * @param pID instrument ID
-         */
-        public CustomInstrumentSampler(int pID) {
-            super(pID); /* call super constructor with instrument ID */
-
-            mSampler = new Sampler();
-            mSampler.load(SampleDataSNARE.data);
-            mSampler.loop(false);
-
-            mReverb = new Reverb();
-
-            mGain = 2.0f;
-        }
-
-        /**
-         * called by tone engine to request the next audio sample of the instrument.
-         *
-         * @return
-         */
-        public Signal output_signal() {
-            /* `output(Signal)` is called to request a new sample: sampler returns a new sample which is then
-            multiplied by the amplitude. the result is processed by reverb and returned. the final sample is stored
-            in the supplied signal container. */
-            return Signal.create(mReverb.process(mSampler.output() * get_amplitude()) * mGain);
-        }
-
-        /**
-         * override this method to change the `note_off` behavior. in this case the interaction with the ADSR envelope
-         * is removed.
-         */
-        public void note_off() {
-            mIsPlaying = false;
-        }
-
-        /**
-         * override this method to change the `note_on` behavior. in this case the sampler is rewound, the ADSR is
-         * ignored, the velocity is interpreted, and the note value is ignored ( although it could be interpreted as
-         * sample playback speed ).
-         *
-         * @param pNote     ignored in this instrument
-         * @param pVelocity specifies the volume of the sampler with a value range [0, 127]
-         */
-        public void note_on(int pNote, int pVelocity) {
-            mIsPlaying = true;
-            /* use `velocity_to_amplitude(float)` to convert velocities with a value range [0, 127] to amplitude with
-             a value range [0.0, 0.1] */
-            set_amplitude(velocity_to_amplitude(pVelocity));
-            mSampler.rewind();
-        }
-    }
-
-    /**
-     * custom DSP instrument that combines 3 oscillators to create a more complex sound.
-     */
-    private static class CustomInstrumentMultipleOscillators extends InstrumentDSP {
-
-        private final Wavetable mLowerVCO;
-        private final Wavetable mVeryLowVCO;
-
-        public CustomInstrumentMultipleOscillators(int pID) {
-            super(pID);
-
-            mLowerVCO = new Wavetable(DEFAULT_WAVETABLE_SIZE);
-            mLowerVCO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
-            mVeryLowVCO = new Wavetable(DEFAULT_WAVETABLE_SIZE);
-            mVeryLowVCO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
-            Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVEFORM_TRIANGLE);
-            Wavetable.fill(mLowerVCO.get_wavetable(), Wellen.WAVEFORM_SINE);
-            Wavetable.fill(mVeryLowVCO.get_wavetable(), Wellen.WAVEFORM_SQUARE);
-        }
-
-        public Signal output_signal() {
-            /* this custom instrument ignores LFOs and LPF */
-            mVCO.set_frequency(get_frequency());
-            mVCO.set_amplitude(get_amplitude() * 0.2f);
-            mLowerVCO.set_frequency(get_frequency() * 0.5f);
-            mLowerVCO.set_amplitude(get_amplitude());
-            mVeryLowVCO.set_frequency(get_frequency() * 0.25f);
-            mVeryLowVCO.set_amplitude(get_amplitude() * 0.075f);
-
-            /* use inherited ADSR envelope to control the amplitude */
-            final float mADSRAmp = mADSR.output();
-            /* multiple samples are combined by a simple addition */
-            float mSample = mVCO.output();
-            mSample += mLowerVCO.output();
-            mSample += mVeryLowVCO.output();
-
-            return Signal.create(mADSRAmp * mSample);
-        }
-    }
-
-    /**
-     * custom DSP instrument that implements a kick drum. it uses a second ADSR envelope to control the frequency of the
-     * VCO to create a pitch slide when a note is triggered.
-     */
-    private static class CustomInstrumentKickDrum extends InstrumentDSP {
-
-        private final float mDecaySpeed = 0.25f;
-        private final ADSR mFrequencyEnvelope;
-        private final float mFrequencyRange = 80;
-
-        public CustomInstrumentKickDrum(int pID) {
-            super(pID);
-
-            set_oscillator_type(Wellen.WAVEFORM_SINE);
-            set_amplitude(0.5f);
-            set_frequency(90);
-
-            /* this ADSR envelope is used to control the frequency instead of amplitude */
-            mFrequencyEnvelope = new ADSR();
-
-            /* the *built-in* ADSR is still available and used to control the amplitude, as usual. */
-            mADSR.set_attack(0.001f);
-            mADSR.set_decay(mDecaySpeed);
-            mADSR.set_sustain(0.0f);
-            mADSR.set_release(0.0f);
-
-            mFrequencyEnvelope.set_attack(0.001f);
-            mFrequencyEnvelope.set_decay(mDecaySpeed);
-            mFrequencyEnvelope.set_sustain(0.0f);
-            mFrequencyEnvelope.set_release(0.0f);
-        }
-
-        public Signal output_signal() {
-            final float mFrequencyOffset = mFrequencyEnvelope.output() * mFrequencyRange;
-            mVCO.set_frequency(get_frequency() + mFrequencyOffset);
-            mVCO.set_amplitude(get_amplitude());
-
-            final float mSample = mVCO.output();
-            final float mADSRAmp = mADSR.output();
-
-            return Signal.create(mSample * mADSRAmp);
-        }
-
-        public void note_off() {
-            mIsPlaying = false;
-        }
-
-        public void note_on(int pNote, int pVelocity) {
-            mIsPlaying = true;
-            /* make sure to trigger both ADSRs when a note is played */
-            mADSR.start();
-            mFrequencyEnvelope.start();
-        }
-    }
-
-    /**
-     * custom DSP instrument that implements a hi-hat. it uses the `random(float, float)` method to create noise and
-     * shapes it with the built-in ADSR.
-     */
-    private static class CustomInstrumentNoise extends InstrumentDSP {
-
-        public CustomInstrumentNoise(int pID) {
-            super(pID);
-            mADSR.set_attack(0.005f);
-            mADSR.set_decay(0.05f);
-            mADSR.set_sustain(0.0f);
-            mADSR.set_release(0.0f);
-        }
-
-        public Signal output_signal() {
-            return Signal.create(Wellen.random(-get_amplitude(), get_amplitude()) * mADSR.output());
         }
     }
 
@@ -372,6 +194,184 @@ public class ExampleInstruments09CustomDSPInstrument extends PApplet {
             pSignal.left_mult(mADSRAmp);
             pSignal.right_mult(mADSRAmp);
             return pSignal;
+        }
+    }
+
+    /**
+     * custom DSP instrument that implements a kick drum. it uses a second ADSR envelope to control the frequency of the
+     * VCO to create a pitch slide when a note is triggered.
+     */
+    private static class CustomInstrumentKickDrum extends InstrumentDSP {
+
+        private final float mDecaySpeed = 0.25f;
+        private final ADSR mFrequencyEnvelope;
+        private final float mFrequencyRange = 80;
+
+        public CustomInstrumentKickDrum(int pID) {
+            super(pID);
+
+            set_oscillator_type(Wellen.WAVEFORM_SINE);
+            set_amplitude(0.5f);
+            set_frequency(90);
+
+            /* this ADSR envelope is used to control the frequency instead of amplitude */
+            mFrequencyEnvelope = new ADSR();
+
+            /* the *built-in* ADSR is still available and used to control the amplitude, as usual. */
+            mADSR.set_attack(0.001f);
+            mADSR.set_decay(mDecaySpeed);
+            mADSR.set_sustain(0.0f);
+            mADSR.set_release(0.0f);
+
+            mFrequencyEnvelope.set_attack(0.001f);
+            mFrequencyEnvelope.set_decay(mDecaySpeed);
+            mFrequencyEnvelope.set_sustain(0.0f);
+            mFrequencyEnvelope.set_release(0.0f);
+        }
+
+        public Signal output_signal() {
+            final float mFrequencyOffset = mFrequencyEnvelope.output() * mFrequencyRange;
+            mVCO.set_frequency(get_frequency() + mFrequencyOffset);
+            mVCO.set_amplitude(get_amplitude());
+
+            final float mSample = mVCO.output();
+            final float mADSRAmp = mADSR.output();
+
+            return Signal.create(mSample * mADSRAmp);
+        }
+
+        public void note_off() {
+            mIsPlaying = false;
+        }
+
+        public void note_on(int pNote, int pVelocity) {
+            mIsPlaying = true;
+            /* make sure to trigger both ADSRs when a note is played */
+            mADSR.start();
+            mFrequencyEnvelope.start();
+        }
+    }
+
+    /**
+     * custom DSP instrument that combines 3 oscillators to create a more complex sound.
+     */
+    private static class CustomInstrumentMultipleOscillators extends InstrumentDSP {
+
+        private final Wavetable mLowerVCO;
+        private final Wavetable mVeryLowVCO;
+
+        public CustomInstrumentMultipleOscillators(int pID) {
+            super(pID);
+
+            mLowerVCO = new Wavetable(DEFAULT_WAVETABLE_SIZE);
+            mLowerVCO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
+            mVeryLowVCO = new Wavetable(DEFAULT_WAVETABLE_SIZE);
+            mVeryLowVCO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
+            Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVEFORM_TRIANGLE);
+            Wavetable.fill(mLowerVCO.get_wavetable(), Wellen.WAVEFORM_SINE);
+            Wavetable.fill(mVeryLowVCO.get_wavetable(), Wellen.WAVEFORM_SQUARE);
+        }
+
+        public Signal output_signal() {
+            /* this custom instrument ignores LFOs and LPF */
+            mVCO.set_frequency(get_frequency());
+            mVCO.set_amplitude(get_amplitude() * 0.2f);
+            mLowerVCO.set_frequency(get_frequency() * 0.5f);
+            mLowerVCO.set_amplitude(get_amplitude());
+            mVeryLowVCO.set_frequency(get_frequency() * 0.25f);
+            mVeryLowVCO.set_amplitude(get_amplitude() * 0.075f);
+
+            /* use inherited ADSR envelope to control the amplitude */
+            final float mADSRAmp = mADSR.output();
+            /* multiple samples are combined by a simple addition */
+            float mSample = mVCO.output();
+            mSample += mLowerVCO.output();
+            mSample += mVeryLowVCO.output();
+
+            return Signal.create(mADSRAmp * mSample);
+        }
+    }
+
+    /**
+     * custom DSP instrument that implements a hi-hat. it uses the `random(float, float)` method to create noise and
+     * shapes it with the built-in ADSR.
+     */
+    private static class CustomInstrumentNoise extends InstrumentDSP {
+
+        public CustomInstrumentNoise(int pID) {
+            super(pID);
+            mADSR.set_attack(0.005f);
+            mADSR.set_decay(0.05f);
+            mADSR.set_sustain(0.0f);
+            mADSR.set_release(0.0f);
+        }
+
+        public Signal output_signal() {
+            return Signal.create(Wellen.random(-get_amplitude(), get_amplitude()) * mADSR.output());
+        }
+    }
+
+    /**
+     * custom DSP instrument that implements a snare drum by playing a pre-recorded sample.
+     */
+    private static class CustomInstrumentSampler extends InstrumentDSP {
+
+        private final float mGain;
+        private final Reverb mReverb;
+        private final Sampler mSampler;
+
+        /**
+         * the constructor of the custom instrument must call the *super constructor* passing the instrument’s ID with
+         * `super(int)`.
+         *
+         * @param pID instrument ID
+         */
+        public CustomInstrumentSampler(int pID) {
+            super(pID); /* call super constructor with instrument ID */
+
+            mSampler = new Sampler();
+            mSampler.load(SampleDataSNARE.data);
+            mSampler.loop(false);
+
+            mReverb = new Reverb();
+
+            mGain = 2.0f;
+        }
+
+        /**
+         * called by tone engine to request the next audio sample of the instrument.
+         *
+         * @return
+         */
+        public Signal output_signal() {
+            /* `output(Signal)` is called to request a new sample: sampler returns a new sample which is then
+            multiplied by the amplitude. the result is processed by reverb and returned. the final sample is stored
+            in the supplied signal container. */
+            return Signal.create(mReverb.process(mSampler.output() * get_amplitude()) * mGain);
+        }
+
+        /**
+         * override this method to change the `note_off` behavior. in this case the interaction with the ADSR envelope
+         * is removed.
+         */
+        public void note_off() {
+            mIsPlaying = false;
+        }
+
+        /**
+         * override this method to change the `note_on` behavior. in this case the sampler is rewound, the ADSR is
+         * ignored, the velocity is interpreted, and the note value is ignored ( although it could be interpreted as
+         * sample playback speed ).
+         *
+         * @param pNote     ignored in this instrument
+         * @param pVelocity specifies the volume of the sampler with a value range [0, 127]
+         */
+        public void note_on(int pNote, int pVelocity) {
+            mIsPlaying = true;
+            /* use `velocity_to_amplitude(float)` to convert velocities with a value range [0, 127] to amplitude with
+             a value range [0.0, 0.1] */
+            set_amplitude(velocity_to_amplitude(pVelocity));
+            mSampler.rewind();
         }
     }
 

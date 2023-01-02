@@ -124,25 +124,33 @@ public class AudioDeviceImplDesktop extends Thread implements AudioDevice {
 //    line.write(new byte[]{(byte) (pcmRight & 0xff), (byte) ((pcmRight >> 8) & 0xff), (byte) ((pcmRight >> 16) &
 //    0xff), (byte) ((pcmRight >> 24) & 0xff)}, 0, 4);
 
-    public static final boolean LITTLE_ENDIAN = false;
     public static final boolean BIG_ENDIAN = true;
+    public static final boolean LITTLE_ENDIAN = false;
     public static final boolean SIGNED = true;
     public static final boolean UNSIGNED = false;
     public static boolean VERBOSE = false;
+    private static final float SIG_16BIT_MAX = 32768.0f;
+    private static final float SIG_16BIT_MAX_INVERSE = 1.0f / SIG_16BIT_MAX;
+    private static final float SIG_24BIT_MAX = 8388608.0f;
+    private static final float SIG_24BIT_MAX_INVERSE = 1.0f / SIG_24BIT_MAX;
+    private static final float SIG_32BIT_MAX = 2147483648.0f;
+    private static final float SIG_32BIT_MAX_INVERSE = 1.0f / SIG_32BIT_MAX;
+    private static final float SIG_8BIT_MAX = 128.0f;
+    private static final float SIG_8BIT_MAX_INVERSE = 1.0f / SIG_8BIT_MAX;
+    private final int fBitsPerSample;
+    /* --- */
+    private final int fBytesPerSample;
     private int mFrameCounter = 0;
     private byte[] mInputByteBuffer;
     private TargetDataLine mInputLine;
+    private final int mNumInputChannels;
+    private final int mNumOutputChannels;
     private byte[] mOutputByteBuffer;
     private SourceDataLine mOutputLine;
     private boolean mRunBuffer = true;
-
-    private final AudioBufferRenderer mSampleRenderer;
-    private final int mSampleRate;
     private final int mSampleBufferSize;
-    private final int mNumOutputChannels;
-    private final int mNumInputChannels;
-    private final int fBitsPerSample;
-    private final int fBytesPerSample;
+    private final int mSampleRate;
+    private final AudioBufferRenderer mSampleRenderer;
 
     public AudioDeviceImplDesktop(AudioBufferRenderer pSampleRenderer, AudioDeviceConfiguration pConfiguration) {
         mSampleRenderer = pSampleRenderer;
@@ -359,20 +367,6 @@ public class AudioDeviceImplDesktop extends Thread implements AudioDevice {
         }
     }
 
-    private static final float SIG_8BIT_MAX = 128.0f;
-    private static final float SIG_16BIT_MAX = 32768.0f;
-    private static final float SIG_24BIT_MAX = 8388608.0f;
-    private static final float SIG_32BIT_MAX = 2147483648.0f;
-    private static final float SIG_8BIT_MAX_INVERSE = 1.0f / SIG_8BIT_MAX;
-    private static final float SIG_16BIT_MAX_INVERSE = 1.0f / SIG_16BIT_MAX;
-    private static final float SIG_24BIT_MAX_INVERSE = 1.0f / SIG_24BIT_MAX;
-    private static final float SIG_32BIT_MAX_INVERSE = 1.0f / SIG_32BIT_MAX;
-
-    private float readSample8(byte[] b, int offset) {
-        final float v = b[offset];
-        return v * SIG_8BIT_MAX_INVERSE;
-    }
-
     private float readSample16(byte[] b, int offset) { // low+high
         final float v = ((b[offset + 1] << 8) | (b[offset + 0] & 0xFF));
         return v * SIG_16BIT_MAX_INVERSE;
@@ -389,14 +383,9 @@ public class AudioDeviceImplDesktop extends Thread implements AudioDevice {
         return v * SIG_32BIT_MAX_INVERSE;
     }
 
-    private void writeSample8(final float sample, final int i) {
-        final byte v;
-        if (sample == 1.0f) {
-            v = Byte.MAX_VALUE;
-        } else {
-            v = (byte) (SIG_8BIT_MAX * sample);
-        }
-        mOutputByteBuffer[i * fBytesPerSample + 0] = (byte) (v & 0xff);
+    private float readSample8(byte[] b, int offset) {
+        final float v = b[offset];
+        return v * SIG_8BIT_MAX_INVERSE;
     }
 
     private void writeSample16(final float sample, final int i) {
@@ -435,7 +424,15 @@ public class AudioDeviceImplDesktop extends Thread implements AudioDevice {
         mOutputByteBuffer[i * fBytesPerSample + 3] = (byte) (v >> 24 & 0xff);
     }
 
-    /* --- */
+    private void writeSample8(final float sample, final int i) {
+        final byte v;
+        if (sample == 1.0f) {
+            v = Byte.MAX_VALUE;
+        } else {
+            v = (byte) (SIG_8BIT_MAX * sample);
+        }
+        mOutputByteBuffer[i * fBytesPerSample + 0] = (byte) (v & 0xff);
+    }
 
     private void writeSamplePCM_FLOAT32(final float sample, final int i) {
         int mPCM = Float.floatToIntBits(sample);

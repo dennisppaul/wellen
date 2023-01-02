@@ -10,9 +10,9 @@ import wellen.dsp.*;
  * achieve distortion by artificially reducing the bit range.
  */
 
-ToneEngineDSP mToneEngine;
-
 Distortion mDistortion;
+
+ToneEngineDSP mToneEngine;
 
 void settings() {
     size(640, 480);

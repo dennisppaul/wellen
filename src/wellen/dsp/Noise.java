@@ -36,13 +36,13 @@ public class Noise implements DSPNodeOutput {
      * pink noises sound so different ) better and maybe add some more noise types ( i.e brown, grey ))
      */
     private float mAmplitude;
+    private final double[] mPN_b = new double[7];
+    private final double[] mPN_state = new double[3];
+    private double mSimplexStep;
+    private double mSimplexStepSize;
     private int mType;
     private boolean mWN_pass = false;
     private double mWN_y2;
-    private final double[] mPN_state = new double[3];
-    private final double[] mPN_b = new double[7];
-    private double mSimplexStepSize;
-    private double mSimplexStep;
 
     public Noise() {
         mAmplitude = 1.0f;
@@ -258,15 +258,10 @@ public class Noise implements DSPNodeOutput {
          *
          */
         // from http://webstaff.itn.liu.se/~stegu/simplexnoise/SimplexNoise.java
-        private static final Grad[] grad3 = {new Grad(1, 1, 0), new Grad(-1, 1, 0), new Grad(1, -1, 0), new Grad(-1,
-                                                                                                                 -1,
-                                                                                                                 0),
-                                             new Grad(1, 0, 1), new Grad(-1, 0, 1), new Grad(1, 0, -1), new Grad(-1,
-                                                                                                                 0,
-                                                                                                                 -1),
-                                             new Grad(0, 1, 1), new Grad(0, -1, 1), new Grad(0, 1, -1), new Grad(0,
-                                                                                                                 -1,
-                                                                                                                 -1)};
+        private static final Grad[] grad3 = {new Grad(1, 1, 0), new Grad(-1, 1, 0), new Grad(1, -1, 0),
+                                             new Grad(-1, -1, 0), new Grad(1, 0, 1), new Grad(-1, 0, 1),
+                                             new Grad(1, 0, -1), new Grad(-1, 0, -1), new Grad(0, 1, 1),
+                                             new Grad(0, -1, 1), new Grad(0, 1, -1), new Grad(0, -1, -1)};
         private static final short[] p = {151, 160, 137, 91, 90, 15, 131, 13, 201, 95, 96, 53, 194, 233, 7, 225, 140,
                                           36, 103, 30, 69, 142, 8, 99, 37, 240, 21, 10, 23, 190, 6, 148, 247, 120, 234,
                                           75, 0, 26, 197, 62, 94, 252, 219, 203, 117, 35, 11, 32, 57, 177, 33, 88, 237,
@@ -360,21 +355,6 @@ public class Noise implements DSPNodeOutput {
             return 70.0 * (n0 + n1 + n2);
         }
 
-        private static double grad(int hash, double x) {
-            int h = hash & 15;
-            float grad = 1.0f + (h & 7);   // Gradient value 1.0, 2.0, ..., 8.0
-            if ((h & 8) != 0) {
-                grad = -grad; // Set a random sign for the gradient
-            }
-            return (grad * x);           // Multiply the gradient with the distance
-        }
-
-        // This method is a *lot* faster than using (int)Math.floor(x)
-        private static int fastfloor(double x) {
-            int xi = (int) x;
-            return x < xi ? xi - 1 : xi;
-        }
-
         private static double dot(Grad g, double x, double y) {
             return g.x * x + g.y * y;
         }
@@ -385,6 +365,21 @@ public class Noise implements DSPNodeOutput {
 
         private static double dot(Grad g, double x, double y, double z, double w) {
             return g.x * x + g.y * y + g.z * z + g.w * w;
+        }
+
+        // This method is a *lot* faster than using (int)Math.floor(x)
+        private static int fastfloor(double x) {
+            int xi = (int) x;
+            return x < xi ? xi - 1 : xi;
+        }
+
+        private static double grad(int hash, double x) {
+            int h = hash & 15;
+            float grad = 1.0f + (h & 7);   // Gradient value 1.0, 2.0, ..., 8.0
+            if ((h & 8) != 0) {
+                grad = -grad; // Set a random sign for the gradient
+            }
+            return (grad * x);           // Multiply the gradient with the distance
         }
 
         // Inner class to speed upp gradient computations

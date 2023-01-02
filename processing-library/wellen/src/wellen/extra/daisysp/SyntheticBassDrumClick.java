@@ -13,6 +13,10 @@ import static wellen.extra.daisysp.DaisySP.fonepole_return;
  */
 public class SyntheticBassDrumClick {
 
+    private final Svf filter_ = new Svf();
+    private float hp_;
+    private float lp_;
+
     /**
      * Init the module \param sample_rate Audio engine sample rate.
      */
@@ -37,8 +41,4 @@ public class SyntheticBassDrumClick {
         filter_.Process(lp_ - hp_);
         return filter_.Low();
     }
-
-    private float lp_;
-    private float hp_;
-    private final Svf filter_ = new Svf();
 }

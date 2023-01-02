@@ -6,9 +6,9 @@ import wellen.dsp.DSP;
 
 public class TechniqueAlgorithmicComposition05FunctionDSPFormula extends PApplet {
 
-    private final float fFreq = 220.0f;
-    private AudioFormula fFormula = new MAudioFormulaAwayAndAway();
     private int fCounter = 0;
+    private AudioFormula fFormula = new MAudioFormulaAwayAndAway();
+    private final float fFreq = 220.0f;
 
     public void settings() {
         size(640, 480);

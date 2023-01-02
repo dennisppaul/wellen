@@ -16,8 +16,8 @@ public class ExampleDSPAnalysis02EnvelopeFollower extends PApplet {
      */
 
     private final EnvelopeFollower fEnvelopeFollower = new EnvelopeFollower();
-    private final Wavetable fWavetable = new Wavetable();
     private float[] fEnvelopeFollowerBuffer;
+    private final Wavetable fWavetable = new Wavetable();
 
     public void settings() {
         size(640, 480);
@@ -54,6 +54,15 @@ public class ExampleDSPAnalysis02EnvelopeFollower extends PApplet {
         Wellen.draw_buffer(g, width, height, fEnvelopeFollowerBuffer);
     }
 
+    public void audioblock(float[] output_signal, float[] pInputSignal) {
+        fEnvelopeFollowerBuffer = fEnvelopeFollower.process(pInputSignal);
+
+        for (int i = 0; i < output_signal.length; i++) {
+            fWavetable.set_amplitude(fEnvelopeFollowerBuffer[i]);
+            output_signal[i] = fWavetable.output();
+        }
+    }
+
     private float getEnvelopeAverage() {
         float mEnvelopeAverage = 0;
         if (fEnvelopeFollowerBuffer != null) {
@@ -63,15 +72,6 @@ public class ExampleDSPAnalysis02EnvelopeFollower extends PApplet {
             mEnvelopeAverage /= fEnvelopeFollowerBuffer.length;
         }
         return mEnvelopeAverage;
-    }
-
-    public void audioblock(float[] output_signal, float[] pInputSignal) {
-        fEnvelopeFollowerBuffer = fEnvelopeFollower.process(pInputSignal);
-
-        for (int i = 0; i < output_signal.length; i++) {
-            fWavetable.set_amplitude(fEnvelopeFollowerBuffer[i]);
-            output_signal[i] = fWavetable.output();
-        }
     }
 
     public static void main(String[] args) {

@@ -8,9 +8,9 @@ import wellen.dsp.*;
 
 int mNote;
 
-int mStep;
-
 int[] mScale;
+
+int mStep;
 
 void settings() {
     size(640, 480);

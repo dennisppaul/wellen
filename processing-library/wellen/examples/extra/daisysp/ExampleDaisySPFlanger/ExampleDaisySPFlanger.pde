@@ -3,13 +3,13 @@ import wellen.dsp.*;
 
 import wellen.extra.daisysp.*;
 
-Pluck mPluck;
-
 Flanger mFlanger;
 
 int mMIDINoteCounter = 0;
 
 final int[] mMIDINotes = {36, 48, 39, 51};
+
+Pluck mPluck;
 
 void settings() {
     size(640, 480);

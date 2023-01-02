@@ -34,21 +34,19 @@ public class LowPassFilter implements DSPNodeProcess {
      * Original author(s) : Victor Lazzarini, John ffitch (fast tanh), Bob Moog
      */
 
-    private final float mSamplingRate;
+    private float mCutoffFrequency;
     //    private final float mIstor;
     private final float[] mDelay = new float[6];
-    private final float[] mTanhstg = new float[3];
-    private float mResonance;
-    private float mCutoffFrequency;
+    private float mOldAcr;
     private float mOldFreq;
     private float mOldRes;
-    private float mOldAcr;
     private float mOldTune;
-
+    private float mResonance;
+    private final float mSamplingRate;
+    private final float[] mTanhstg = new float[3];
     public LowPassFilter() {
         this(Wellen.DEFAULT_SAMPLING_RATE);
     }
-
     public LowPassFilter(int pSamplingRate) {
         mSamplingRate = pSamplingRate;
 //        mIstor = 0.0f;

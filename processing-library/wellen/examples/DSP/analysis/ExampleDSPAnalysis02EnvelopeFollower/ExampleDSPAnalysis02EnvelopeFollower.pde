@@ -9,9 +9,9 @@ import wellen.analysis.*;
 
 final EnvelopeFollower fEnvelopeFollower = new EnvelopeFollower();
 
-final Wavetable fWavetable = new Wavetable();
-
 float[] fEnvelopeFollowerBuffer;
+
+final Wavetable fWavetable = new Wavetable();
 
 void settings() {
     size(640, 480);
@@ -43,6 +43,14 @@ void draw() {
     Wellen.draw_buffer(g, width, height, fEnvelopeFollowerBuffer);
 }
 
+void audioblock(float[] output_signal, float[] pInputSignal) {
+    fEnvelopeFollowerBuffer = fEnvelopeFollower.process(pInputSignal);
+    for (int i = 0; i < output_signal.length; i++) {
+        fWavetable.set_amplitude(fEnvelopeFollowerBuffer[i]);
+        output_signal[i] = fWavetable.output();
+    }
+}
+
 float getEnvelopeAverage() {
     float mEnvelopeAverage = 0;
     if (fEnvelopeFollowerBuffer != null) {
@@ -52,12 +60,4 @@ float getEnvelopeAverage() {
         mEnvelopeAverage /= fEnvelopeFollowerBuffer.length;
     }
     return mEnvelopeAverage;
-}
-
-void audioblock(float[] output_signal, float[] pInputSignal) {
-    fEnvelopeFollowerBuffer = fEnvelopeFollower.process(pInputSignal);
-    for (int i = 0; i < output_signal.length; i++) {
-        fWavetable.set_amplitude(fEnvelopeFollowerBuffer[i]);
-        output_signal[i] = fWavetable.output();
-    }
 }

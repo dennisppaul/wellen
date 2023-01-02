@@ -12,39 +12,25 @@ import java.util.Arrays;
  */
 public class OptimizedGranulator {
 
-    public static final float ADAPTIVE_INTERP_LOW_THRESH = 0.5f;
     public static final float ADAPTIVE_INTERP_HIGH_THRESH = 2.5f;
-
+    public static final float ADAPTIVE_INTERP_LOW_THRESH = 0.5f;
     /**
      * The position in milliseconds.
      */
     protected double position;
-
+    private final float[] audioBuffer;
+    private int audioBufferWatermark;
     /**
      * The millisecond position increment per sample. Calculated from the ratio of the sample rate
      */
     private final double audioSampleLength;
-
+    /**
+     * Flag to indicate special case for the first grain.
+     */
+    private boolean firstGrain = true;
     private float grainInterval;
-    private float grainSize;
     private float grainRandomness;
-
-    /**
-     * The time in milliseconds since the last grain was activated.
-     */
-    private float timeSinceLastGrain;
-
-
-    /**
-     * The pitch, bound to the pitch envelope.
-     */
-    private float pitchFactor;
-
-    /**
-     * The pitch, bound to the pitch envelope.
-     */
-    private float timeStretchFactor;
-
+    private float grainSize;
     /**
      * The list of current grains.
      */
@@ -52,18 +38,23 @@ public class OptimizedGranulator {
 
     ///** The interpolation type. */
     //protected InterpolationType interpolationType;
-
+    private final float[] outputBuffer;
+    /**
+     * The pitch, bound to the pitch envelope.
+     */
+    private float pitchFactor;
+    /**
+     * The time in milliseconds since the last grain was activated.
+     */
+    private float timeSinceLastGrain;
+    /**
+     * The pitch, bound to the pitch envelope.
+     */
+    private float timeStretchFactor;
     /**
      * The window used by grains.
      */
     private final float[] window;
-
-
-    private final float[] audioBuffer;
-    private int audioBufferWatermark;
-
-    private final float[] outputBuffer;
-
 
     /**
      * Instantiates a new GranularSamplePlayer.
@@ -92,30 +83,8 @@ public class OptimizedGranulator {
         audioSampleLength = 1000.0f / sampleRate;
     }
 
-
     public void start() {
         timeSinceLastGrain = 0;
-    }
-
-
-    /**
-     * Flag to indicate special case for the first grain.
-     */
-    private boolean firstGrain = true;
-
-    /**
-     * Special case method for playing first grain.
-     */
-    private void firstGrain() {
-        if (firstGrain) {
-            Grain g = grains[0];
-            g.position = position;
-            g.age = grainSize / 4f;
-            g.grainSize = grainSize;
-
-            firstGrain = false;
-            timeSinceLastGrain = grainInterval / 2f;
-        }
     }
 
     public float[] process(float[] signal_buffer) {
@@ -208,7 +177,6 @@ public class OptimizedGranulator {
         return signal_buffer;
     }
 
-
     /**
      * Retrieves a frame of audio using linear interpolation. If the frame is not in the sample range then zeros are
      * returned.
@@ -295,18 +263,6 @@ public class OptimizedGranulator {
         return result;
     }
 
-
-    private double msToSamples(double posInMs) {
-        double positionInSamples = posInMs / audioSampleLength;
-        if (positionInSamples < 0) {
-            positionInSamples = 0;
-        } else {
-            int bufferNumber = (int) (positionInSamples / audioBuffer.length);
-            positionInSamples = positionInSamples - bufferNumber * audioBuffer.length;
-        }
-        return positionInSamples;
-    }
-
     /**
      * Returns the value of the buffer at the given fraction along its length (0 = start, 1 = end). Uses linear
      * interpolation.
@@ -325,6 +281,34 @@ public class OptimizedGranulator {
         return (1 - offset) * window[lowerIndex] + offset * window[upperIndex];
     }
 
+    public void setTimestretchFactor(float currentFactor) {
+        timeStretchFactor = currentFactor;
+    }
+
+    public void setPitchShiftFactor(float currentFactor) {
+        pitchFactor = currentFactor;
+    }
+
+    public void setGrainInterval(int grainInterval) {
+        this.grainInterval = grainInterval;
+    }
+
+    public void setGrainSize(int grainSize) {
+        this.grainSize = grainSize;
+
+    }
+
+    public void setGrainRandomness(float grainRandomness) {
+        this.grainRandomness = grainRandomness;
+    }
+
+    /**
+     * @param position in seconds
+     */
+    public void setPosition(float position) {
+        this.position = position * 1000;
+    }
+
     /**
      * Calculate next position for the given Grain.
      *
@@ -337,35 +321,30 @@ public class OptimizedGranulator {
         g.position += direction * audioSampleLength * pitchFactor;
     }
 
-    public void setTimestretchFactor(float currentFactor) {
-        timeStretchFactor = currentFactor;
-    }
-
-    public void setPitchShiftFactor(float currentFactor) {
-        pitchFactor = currentFactor;
-    }
-
-
-    public void setGrainInterval(int grainInterval) {
-        this.grainInterval = grainInterval;
-    }
-
-
-    public void setGrainSize(int grainSize) {
-        this.grainSize = grainSize;
-
-    }
-
-    public void setGrainRandomness(float grainRandomness) {
-        this.grainRandomness = grainRandomness;
-    }
-
-
     /**
-     * @param position in seconds
+     * Special case method for playing first grain.
      */
-    public void setPosition(float position) {
-        this.position = position * 1000;
+    private void firstGrain() {
+        if (firstGrain) {
+            Grain g = grains[0];
+            g.position = position;
+            g.age = grainSize / 4f;
+            g.grainSize = grainSize;
+
+            firstGrain = false;
+            timeSinceLastGrain = grainInterval / 2f;
+        }
+    }
+
+    private double msToSamples(double posInMs) {
+        double positionInSamples = posInMs / audioSampleLength;
+        if (positionInSamples < 0) {
+            positionInSamples = 0;
+        } else {
+            int bufferNumber = (int) (positionInSamples / audioBuffer.length);
+            positionInSamples = positionInSamples - bufferNumber * audioBuffer.length;
+        }
+        return positionInSamples;
     }
 }
 

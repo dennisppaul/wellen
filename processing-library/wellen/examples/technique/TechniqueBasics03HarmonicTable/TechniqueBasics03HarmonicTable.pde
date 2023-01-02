@@ -2,11 +2,11 @@ import wellen.*;
 import wellen.dsp.*; 
 
 
-int fStep;
+int fBaseNote;
 
 final HarmonicTable fHarmonicTable = new HarmonicTable();
 
-int fBaseNote;
+int fStep;
 
 void settings() {
     size(640, 480);

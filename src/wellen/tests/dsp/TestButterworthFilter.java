@@ -7,14 +7,14 @@ import wellen.dsp.OscillatorFunction;
 
 public class TestButterworthFilter extends PApplet {
 
+    private ButterworthFilters mButterworthFilters;
+    private int mButterworthType = ButterworthFilters.LOW_PASS;
+    private float mFilterBandwidth = 10.0f;
+    private float mFilterFrequency = 1000.0f;
+    private int mFilterType = Filters.LOW_PASS;
+    private Filters mFilters;
     private OscillatorFunction mOSCLeft;
     private OscillatorFunction mOSCRight;
-    private ButterworthFilters mButterworthFilters;
-    private Filters mFilters;
-    private int mButterworthType = ButterworthFilters.LOW_PASS;
-    private int mFilterType = Filters.LOW_PASS;
-    private float mFilterFrequency = 1000.0f;
-    private float mFilterBandwidth = 10.0f;
 
     public void settings() {
         size(1024, 768);

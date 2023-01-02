@@ -3,11 +3,11 @@ import wellen.dsp.*;
 
 import wellen.extra.daisysp.*;
 
-StringVoice mStringVoice;
-
 int mMIDINoteCounter = 0;
 
 final int[] mMIDINotes = {36, 48, 39, 51};
+
+StringVoice mStringVoice;
 
 void settings() {
     size(640, 480);

@@ -6,6 +6,9 @@ import static wellen.extra.daisysp.DaisySP.TWOPI_F;
  * Creates a clock signal at a specific frequency.
  */
 public class Metro {
+    private float freq_;
+    private float phs_, sample_rate_, phs_inc_;
+
     /**
      * Initializes Metro module.
      *
@@ -46,15 +49,11 @@ public class Metro {
         phs_inc_ = (TWOPI_F * freq_) / sample_rate_;
     }
 
-
     /**
      * Returns current value for frequency.
      */
     public float GetFreq() {
         return freq_;
     }
-
-    private float freq_;
-    private float phs_, sample_rate_, phs_inc_;
 
 }

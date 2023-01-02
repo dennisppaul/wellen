@@ -3,12 +3,18 @@ package wellen.dsp;
 public abstract class Oscillator implements DSPNodeOutput {
 
     public abstract void set_waveform(int pWaveform);
-    public abstract void set_amplitude(float pAmplitude);
+
     public abstract float get_amplitude();
-    public abstract void set_offset(float pOffset);
+
+    public abstract void set_amplitude(float pAmplitude);
+
     public abstract float get_offset();
-    public abstract void set_frequency(float pFrequency);
+
+    public abstract void set_offset(float pOffset);
+
     public abstract float get_frequency();
+
+    public abstract void set_frequency(float pFrequency);
 
     /**
      * set speed of oscillator in seconds per phase

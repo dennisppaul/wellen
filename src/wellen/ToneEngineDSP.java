@@ -41,8 +41,8 @@ public class ToneEngineDSP extends ToneEngine implements AudioBufferRenderer, DS
     public boolean USE_AMP_FRACTION = false;
     private final AudioBufferManager fAudioPlayer;
     private AudioOutputCallback fAudioblockCallback = null;
-    private float[] fCurrentBufferLeft;
     private int fCurrentBufferCounter;
+    private float[] fCurrentBufferLeft;
     private float[] fCurrentBufferRight;
     private int fCurrentInstrumentID;
     private final ArrayList<EffectStereo> fEffects;
@@ -96,6 +96,14 @@ public class ToneEngineDSP extends ToneEngine implements AudioBufferRenderer, DS
                                  Wellen.NO_AUDIO_DEVICE,
                                  2,
                                  number_of_instruments);
+    }
+
+    public static ToneEngineDSP no_output() {
+        return new ToneEngineDSP(Wellen.DEFAULT_SAMPLING_RATE,
+                                 Wellen.DEFAULT_AUDIOBLOCK_SIZE,
+                                 Wellen.DEFAULT_AUDIO_DEVICE,
+                                 Wellen.NO_CHANNELS,
+                                 Wellen.DEFAULT_NUMBER_OF_INSTRUMENTS);
     }
 
     @Override
@@ -292,6 +300,30 @@ public class ToneEngineDSP extends ToneEngine implements AudioBufferRenderer, DS
         fCurrentBufferRight = signal_right;
     }
 
+    public float get_gain() {
+        return fGain.get_gain();
+    }
+
+    public void set_gain(float gain) {
+        fGain.set_gain(gain);
+    }
+
+    public void add_effect(EffectStereo effect) {
+        fEffects.add(effect);
+    }
+
+    public boolean remove_effect(EffectStereo effect) {
+        return fEffects.remove(effect);
+    }
+
+    public void register_audioblock_callback(AudioOutputCallback audioblock_callback) {
+        fAudioblockCallback = audioblock_callback;
+    }
+
+    private int getInstrumentID() {
+        return Math.max(fCurrentInstrumentID, 0) % fInstruments.size();
+    }
+
     private float getNextInstrumentSampleMono() {
         float mSignal = 0;
         for (InstrumentDSP mInstrument : fInstruments) {
@@ -327,39 +359,6 @@ public class ToneEngineDSP extends ToneEngine implements AudioBufferRenderer, DS
         }
         return mSignalSum;
     }
-
-    public float get_gain() {
-        return fGain.get_gain();
-    }
-
-    public void set_gain(float gain) {
-        fGain.set_gain(gain);
-    }
-
-    public void add_effect(EffectStereo effect) {
-        fEffects.add(effect);
-    }
-
-    public boolean remove_effect(EffectStereo effect) {
-        return fEffects.remove(effect);
-    }
-
-    public void register_audioblock_callback(AudioOutputCallback audioblock_callback) {
-        fAudioblockCallback = audioblock_callback;
-    }
-
-    private int getInstrumentID() {
-        return Math.max(fCurrentInstrumentID, 0) % fInstruments.size();
-    }
-
-    public static ToneEngineDSP no_output() {
-        return new ToneEngineDSP(Wellen.DEFAULT_SAMPLING_RATE,
-                                 Wellen.DEFAULT_AUDIOBLOCK_SIZE,
-                                 Wellen.DEFAULT_AUDIO_DEVICE,
-                                 Wellen.NO_CHANNELS,
-                                 Wellen.DEFAULT_NUMBER_OF_INSTRUMENTS);
-    }
-
     public interface AudioOutputCallback {
 
         void audioblock(float[][] output_signals);

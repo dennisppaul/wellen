@@ -10,26 +10,24 @@ package wellen.extra.daisysp;
  */
 public class AnalogBassDrum {
 
-    private float sample_rate_;
     private float accent_, f0_, tone_, decay_;
     private float attack_fm_amount_, self_fm_amount_;
-    private boolean trig_, sustain_;
-    private int pulse_remaining_samples_;
+    private float fm_pulse_lp_;
     private int fm_pulse_remaining_samples_;
+    private float lp_out_;
+    private boolean mTrigger = false;
+    //for use in sin + cos osc. in sustain mode
+    private float phase_;
     private float pulse_;
     private float pulse_height_;
     private float pulse_lp_;
-    private float fm_pulse_lp_;
-    private float retrig_pulse_;
-    private float lp_out_;
-    private float tone_lp_;
-    private float sustain_gain_;
+    private int pulse_remaining_samples_;
     private final Svf resonator_ = new Svf();
-
-    //for use in sin + cos osc. in sustain mode
-    private float phase_;
-
-    private boolean mTrigger = false;
+    private float retrig_pulse_;
+    private float sample_rate_;
+    private float sustain_gain_;
+    private float tone_lp_;
+    private boolean trig_, sustain_;
 
     public void Init(float sample_rate) {
         sample_rate_ = sample_rate;
@@ -59,16 +57,6 @@ public class AnalogBassDrum {
 
         resonator_.Init(sample_rate_);
     }
-
-    private float Diode(float x) {
-        if (x >= 0.0f) {
-            return x;
-        } else {
-            x *= 2.0f;
-            return 0.7f * x / (1.0f + DaisySP.fabsf(x));
-        }
-    }
-
 
     public float Process() {
         float s = Process(mTrigger);
@@ -197,5 +185,14 @@ public class AnalogBassDrum {
 
     public void SetSelfFmAmount(float self_fm_amount) {
         self_fm_amount_ = self_fm_amount * 50.f;
+    }
+
+    private float Diode(float x) {
+        if (x >= 0.0f) {
+            return x;
+        } else {
+            x *= 2.0f;
+            return 0.7f * x / (1.0f + DaisySP.fabsf(x));
+        }
     }
 }

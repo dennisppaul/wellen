@@ -234,20 +234,6 @@ loadScripts(document, 'script');</script>
 <h2>Field Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="DEFAULT_FREQUENCY">
-<h3>DEFAULT_FREQUENCY</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">DEFAULT_FREQUENCY</span></div>
-<dl class="notes">
-<dt>See Also:</dt>
-<dd>
-<ul class="see-list">
-<li><a href="../../constant-values.html#wellen.dsp.Wavetable.DEFAULT_FREQUENCY">Constant Field Values</a></li>
-</ul>
-</dd>
-</dl>
-</section>
-</li>
-<li>
 <section class="detail" id="DEFAULT_AMPLITUDE">
 <h3>DEFAULT_AMPLITUDE</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">DEFAULT_AMPLITUDE</span></div>
@@ -256,6 +242,20 @@ loadScripts(document, 'script');</script>
 <dd>
 <ul class="see-list">
 <li><a href="../../constant-values.html#wellen.dsp.Wavetable.DEFAULT_AMPLITUDE">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="DEFAULT_FREQUENCY">
+<h3>DEFAULT_FREQUENCY</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">DEFAULT_FREQUENCY</span></div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../constant-values.html#wellen.dsp.Wavetable.DEFAULT_FREQUENCY">Constant Field Values</a></li>
 </ul>
 </dd>
 </dl>
@@ -297,23 +297,6 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="set_waveform(int)">
-<h3>set_waveform</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_waveform</span><wbr><span class="parameters">(int&nbsp;waveform)</span></div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="Oscillator.html#set_waveform(int)">set_waveform</a></code>&nbsp;in class&nbsp;<code><a href="Oscillator.html" title="class in wellen.dsp">Oscillator</a></code></dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="set_waveform(int,int)">
-<h3>set_waveform</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_waveform</span><wbr><span class="parameters">(int&nbsp;harmonics,
- int&nbsp;waveform)</span></div>
-</section>
-</li>
-<li>
 <section class="detail" id="fill(float[],int)">
 <h3>fill</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">fill</span><wbr><span class="parameters">(float[]&nbsp;wavetable,
@@ -329,30 +312,23 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="noise(float[])">
+<h3>noise</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">noise</span><wbr><span class="parameters">(float[]&nbsp;wavetable)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="pulse(float[],float)">
+<h3>pulse</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">pulse</span><wbr><span class="parameters">(float[]&nbsp;wavetable,
+ float&nbsp;pulse_width)</span></div>
+</section>
+</li>
+<li>
 <section class="detail" id="sawtooth(float[],int)">
 <h3>sawtooth</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float[]</span>&nbsp;<span class="element-name">sawtooth</span><wbr><span class="parameters">(float[]&nbsp;wavetable,
  int&nbsp;harmonics)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="square(float[],int)">
-<h3>square</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float[]</span>&nbsp;<span class="element-name">square</span><wbr><span class="parameters">(float[]&nbsp;wavetable,
- int&nbsp;harmonics)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="triangle(float[],int)">
-<h3>triangle</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float[]</span>&nbsp;<span class="element-name">triangle</span><wbr><span class="parameters">(float[]&nbsp;wavetable,
- int&nbsp;harmonics)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="sine(float[])">
-<h3>sine</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">sine</span><wbr><span class="parameters">(float[]&nbsp;wavetable)</span></div>
 </section>
 </li>
 <li>
@@ -369,9 +345,16 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="triangle(float[])">
-<h3>triangle</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">triangle</span><wbr><span class="parameters">(float[]&nbsp;wavetable)</span></div>
+<section class="detail" id="sine(float[])">
+<h3>sine</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">sine</span><wbr><span class="parameters">(float[]&nbsp;wavetable)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="square(float[],int)">
+<h3>square</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float[]</span>&nbsp;<span class="element-name">square</span><wbr><span class="parameters">(float[]&nbsp;wavetable,
+ int&nbsp;harmonics)</span></div>
 </section>
 </li>
 <li>
@@ -381,16 +364,33 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="pulse(float[],float)">
-<h3>pulse</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">pulse</span><wbr><span class="parameters">(float[]&nbsp;wavetable,
- float&nbsp;pulse_width)</span></div>
+<section class="detail" id="triangle(float[],int)">
+<h3>triangle</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float[]</span>&nbsp;<span class="element-name">triangle</span><wbr><span class="parameters">(float[]&nbsp;wavetable,
+ int&nbsp;harmonics)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="noise(float[])">
-<h3>noise</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">noise</span><wbr><span class="parameters">(float[]&nbsp;wavetable)</span></div>
+<section class="detail" id="triangle(float[])">
+<h3>triangle</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">triangle</span><wbr><span class="parameters">(float[]&nbsp;wavetable)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="set_waveform(int)">
+<h3>set_waveform</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_waveform</span><wbr><span class="parameters">(int&nbsp;waveform)</span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="Oscillator.html#set_waveform(int)">set_waveform</a></code>&nbsp;in class&nbsp;<code><a href="Oscillator.html" title="class in wellen.dsp">Oscillator</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="set_waveform(int,int)">
+<h3>set_waveform</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_waveform</span><wbr><span class="parameters">(int&nbsp;harmonics,
+ int&nbsp;waveform)</span></div>
 </section>
 </li>
 <li>
@@ -429,22 +429,22 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="set_offset(float)">
-<h3>set_offset</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_offset</span><wbr><span class="parameters">(float&nbsp;offset)</span></div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="Oscillator.html#set_offset(float)">set_offset</a></code>&nbsp;in class&nbsp;<code><a href="Oscillator.html" title="class in wellen.dsp">Oscillator</a></code></dd>
-</dl>
-</section>
-</li>
-<li>
 <section class="detail" id="get_offset()">
 <h3>get_offset</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">get_offset</span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Oscillator.html#get_offset()">get_offset</a></code>&nbsp;in class&nbsp;<code><a href="Oscillator.html" title="class in wellen.dsp">Oscillator</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="set_offset(float)">
+<h3>set_offset</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_offset</span><wbr><span class="parameters">(float&nbsp;offset)</span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="Oscillator.html#set_offset(float)">set_offset</a></code>&nbsp;in class&nbsp;<code><a href="Oscillator.html" title="class in wellen.dsp">Oscillator</a></code></dd>
 </dl>
 </section>
 </li>
@@ -465,6 +465,8 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Oscillator.html#set_amplitude(float)">set_amplitude</a></code>&nbsp;in class&nbsp;<code><a href="Oscillator.html" title="class in wellen.dsp">Oscillator</a></code></dd>
+<dt>Parameters:</dt>
+<dd><code>amplitude</code> - amplitude</dd>
 </dl>
 </section>
 </li>

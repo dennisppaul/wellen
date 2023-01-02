@@ -9,9 +9,9 @@ import wellen.dsp.*;
  * note that *global* in- and out-points can be defined with `set_in()` + `set_out()`.
  */
 
-Sampler mSampler;
-
 static final float BORDER = 32;
+
+Sampler mSampler;
 
 void settings() {
     size(640, 480);

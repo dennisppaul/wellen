@@ -52,8 +52,8 @@ void draw() {
 }
 
 static class Loop implements BeatListener {
-    final int note;
     final int instrument;
+    final int note;
     boolean playing;
     Loop(int pInstrument, int pNote) {
         note = pNote;

@@ -13,14 +13,10 @@ package wellen.extra.daisysp;
  */
 public class Svf {
 
-    private float sr_, fc_, res_, drive_, freq_, damp_;
-    private float notch_, low_, high_, band_, peak_;
     private float input_;
+    private float notch_, low_, high_, band_, peak_;
     private float out_low_, out_high_, out_band_, out_peak_, out_notch_;
-
-    private float MIN(float x, float y) {
-        return ((x) < (y)) ? (x) : (y);
-    }
+    private float sr_, fc_, res_, drive_, freq_, damp_;
 
     /**
      * sets the drive of the filter affects the response of the resonance of the filter
@@ -148,5 +144,9 @@ public class Svf {
         // recalculate damp
         //damp = (MIN(2.0f * powf(res_, 0.25f), MIN(2.0f, 2.0f / freq - freq * 0.5f)));
         damp_ = MIN(2.0f * (1.0f - DaisySP.powf(res_, 0.25f)), MIN(2.0f, 2.0f / freq_ - freq_ * 0.5f));
+    }
+
+    private float MIN(float x, float y) {
+        return ((x) < (y)) ? (x) : (y);
     }
 }

@@ -44,7 +44,6 @@ package wellen.tests.dsp.tarsos;
 /**
  * A Window function represents a curve which is applied to a sample buffer to reduce the introduction of spectral
  * leakage in the Fourier transform.
- *
  * <p>
  * <b>Windowing</b>
  * <p>

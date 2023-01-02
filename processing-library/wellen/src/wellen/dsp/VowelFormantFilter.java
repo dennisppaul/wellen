@@ -11,23 +11,12 @@ public class VowelFormantFilter implements DSPNodeProcess {
      * Good for spectral rich input like saw or square
      */
 
+    public static final int NUM_OF_VOWELS = 5;
     public static final int VOWEL_A = 0;
     public static final int VOWEL_E = 1;
     public static final int VOWEL_I = 2;
     public static final int VOWEL_O = 3;
     public static final int VOWEL_U = 4;
-    public static final int NUM_OF_VOWELS = 5;
-
-    public VowelFormantFilter() {
-        set_vowel(VOWEL_A);
-    }
-
-    //---------------------------------------------------------------------------------
-
-    private final double[] memory = new double[10];
-
-    //-------------------------------------------------------------VOWEL COEFFICIENTS
-
     private static final double[][] coeff = {
             {8.11044e-06, 8.943665402, -36.83889529, 92.01697887, -154.337906, 181.6233289, -151.8651235, 89.09614114,
              -35.10298511, 8.388101016, -0.923313471  ///A
@@ -40,7 +29,15 @@ public class VowelFormantFilter implements DSPNodeProcess {
             {4.09431e-07, 8.997322763, -37.20218544, 93.11385476, -156.2530937, 183.7080141,  ///U
              -153.2631681, 89.59539726, -35.12454591, 8.338655623, -0.910251753}};
 
+    //---------------------------------------------------------------------------------
     private static final double[] mCoeff = new double[coeff[0].length];
+
+    //-------------------------------------------------------------VOWEL COEFFICIENTS
+    private final double[] memory = new double[10];
+
+    public VowelFormantFilter() {
+        set_vowel(VOWEL_A);
+    }
 
     //---------------------------------------------------------------------------------
 

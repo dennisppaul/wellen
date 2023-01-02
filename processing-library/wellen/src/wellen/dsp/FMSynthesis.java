@@ -29,7 +29,6 @@ import static processing.core.PConstants.TWO_PI;
  * <p>
  * formula taken from [Anders Øland &amp; Roger B. Dannenberg: FM Synthesis -- Introduction to Computer Music Carnegie
  * Mellon University](http://www.cs.cmu.edu/~music/icm-online/readings/fm-synthesis/fm_synthesis.pdf)
- *
  * <pre>
  * <code>
  * f(t) = A sin(2πCt + D sin(2πMt))
@@ -42,10 +41,10 @@ import static processing.core.PConstants.TWO_PI;
  */
 public class FMSynthesis implements DSPNodeOutput {
 
-    private Wavetable mCarrier;
-    private Wavetable mModulator;
-    private float mModulationDepth;
     private float mAmplitude;
+    private Wavetable mCarrier;
+    private float mModulationDepth;
+    private Wavetable mModulator;
 
     public FMSynthesis(Wavetable pCarrier, Wavetable pModulator) {
         mCarrier = pCarrier;

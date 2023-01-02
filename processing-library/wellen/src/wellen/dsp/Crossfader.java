@@ -28,12 +28,10 @@ public class Crossfader implements DSPNodeOutput {
      * 50% and Input B at 50%, and a value of 1 means Input A at 0% and Input B at 100%.
      */
     public float ratio = 0.5f;
-
     /**
      *
      */
     public DSPNodeOutput signal_a;
-
     /**
      *
      */

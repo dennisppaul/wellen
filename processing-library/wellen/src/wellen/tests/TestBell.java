@@ -47,16 +47,16 @@ public class TestBell extends PApplet {
     private static class InstrumentBell extends InstrumentDSP {
 
         private static final int NUM_OSC = 7;
-        private final Wavetable[] mVCOs;
         private final ADSR[] mADSRs;
-        private final float[] mOscillatorDetune;
-        private final float[] mOscillatorAmplitudes;
-        private float mDetune;
-        private float mBaseRelease;
-        private float mReleaseFalloff;
-        private float mAmplitudeFalloff;
         private float mAmplify = 2.5f;
+        private float mAmplitudeFalloff;
+        private float mBaseRelease;
+        private float mDetune;
+        private final float[] mOscillatorAmplitudes;
+        private final float[] mOscillatorDetune;
+        private float mReleaseFalloff;
         private final boolean mUseTriangleForLowFrequencies = true;
+        private final Wavetable[] mVCOs;
 
         public InstrumentBell(int pID) {
             super(pID);

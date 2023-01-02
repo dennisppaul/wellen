@@ -29,11 +29,11 @@ public class ExampleInstruments10ADSRwithGUI extends PApplet {
      *     [A   ][D][S   ][R]
      */
 
+    private int mNote;
     private Slider mSliderAttack;
     private Slider mSliderDecay;
-    private Slider mSliderSustain;
     private Slider mSliderRelease;
-    private int mNote;
+    private Slider mSliderSustain;
 
     public void settings() {
         size(640, 480);
@@ -107,6 +107,13 @@ public class ExampleInstruments10ADSRwithGUI extends PApplet {
         strokeWeight(1);
     }
 
+    private void updateADSR() {
+        Tone.instrument().set_attack(mSliderAttack.value);
+        Tone.instrument().set_decay(mSliderDecay.value);
+        Tone.instrument().set_sustain(mSliderSustain.value);
+        Tone.instrument().set_release(mSliderRelease.value);
+    }
+
     private void updateDiagram(float mXOffset, float mYOffset) {
         float mX = mouseX - mXOffset;
         float mY = -mouseY + mYOffset;
@@ -128,23 +135,16 @@ public class ExampleInstruments10ADSRwithGUI extends PApplet {
         mSliderRelease.y = 0;
     }
 
-    private void updateADSR() {
-        Tone.instrument().set_attack(mSliderAttack.value);
-        Tone.instrument().set_decay(mSliderDecay.value);
-        Tone.instrument().set_sustain(mSliderSustain.value);
-        Tone.instrument().set_release(mSliderRelease.value);
-    }
-
     private static class Slider {
 
-        private static final float size = 120;
         private static final float radius = 8;
+        private static final float size = 120;
+        boolean drag;
+        boolean hoover;
+        boolean horizontal;
+        float value;
         float x;
         float y;
-        float value;
-        boolean horizontal;
-        boolean hoover;
-        boolean drag;
 
         public Slider() {
             x = 0;
@@ -153,6 +153,14 @@ public class ExampleInstruments10ADSRwithGUI extends PApplet {
             horizontal = true;
             hoover = false;
             drag = false;
+        }
+
+        float current_position_x() {
+            return horizontal ? x + size * value : x;
+        }
+
+        float current_position_y() {
+            return horizontal ? y : y + size * value;
         }
 
         void draw(PGraphics g, int pColor) {
@@ -170,23 +178,10 @@ public class ExampleInstruments10ADSRwithGUI extends PApplet {
             g.ellipse(current_position_x(), current_position_y(), radius * (hoover ? 2 : 1), radius * (hoover ? 2 : 1));
         }
 
-        void update_value(float pX, float pY) {
-            value = (horizontal ? (pX - x) : (pY - y)) / size;
-            value = min(1, max(0, value));
-        }
-
         boolean hit(float pX, float pY) {
             final float mDistance = PVector.dist(new PVector().set(pX, pY),
                                                  new PVector().set(current_position_x(), current_position_y()));
             return mDistance < radius * 2;
-        }
-
-        float current_position_x() {
-            return horizontal ? x + size * value : x;
-        }
-
-        float current_position_y() {
-            return horizontal ? y : y + size * value;
         }
 
         void update(float mouse_x, float mouse_y, boolean mouse_pressed) {
@@ -202,6 +197,11 @@ public class ExampleInstruments10ADSRwithGUI extends PApplet {
                 hoover = false;
                 drag = false;
             }
+        }
+
+        void update_value(float pX, float pY) {
+            value = (horizontal ? (pX - x) : (pY - y)) / size;
+            value = min(1, max(0, value));
         }
     }
 

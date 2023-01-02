@@ -21,9 +21,9 @@ import wellen.dsp.*;
  *
  */
 
-String mEventReceived = "EVENTS\n---\n";
-
 int mEventCounter = 2;
+
+String mEventReceived = "EVENTS\n---\n";
 
 void settings() {
     size(640, 480);

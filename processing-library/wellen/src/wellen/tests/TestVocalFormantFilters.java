@@ -14,12 +14,15 @@ import java.util.ArrayList;
 
 public class TestVocalFormantFilters extends PApplet {
 
+    private static final boolean USE_FIXED_FILTER = true;
+    private static final int mFirstNum = '1';
+    private final ADSR mADSR = new ADSR();
     private final VowelFormantFilter mFormantFilter = new VowelFormantFilter();
     private final VowelFilterBankHiLow mFormantFilterDIY = new VowelFilterBankHiLow();
+    // https://github.com/joric/bmxplay
+    private boolean mIsKeyPressed = false;
     //    private final VowelFilterBank mFormantFilterDIY = new VowelFilterBank();
     private final Oscillator mOsc = new OscillatorFunction();
-    private final ADSR mADSR = new ADSR();
-    private boolean mIsKeyPressed = false;
 
     public void settings() {
         size(640, 480);
@@ -37,8 +40,6 @@ public class TestVocalFormantFilters extends PApplet {
         background(255);
         DSP.draw_buffers(g, width, height);
     }
-
-    private static final int mFirstNum = '1';
 
     public void mouseMoved() {
 //        if (key >= mFirstNum && key < mFirstNum + mFormantValues.length) {
@@ -104,8 +105,6 @@ public class TestVocalFormantFilters extends PApplet {
         }
     }
 
-    private static final boolean USE_FIXED_FILTER = true;
-
     public void audioblock(float[] output_signal) {
         for (int i = 0; i < output_signal.length; i++) {
             output_signal[i] = mOsc.output();
@@ -127,7 +126,28 @@ public class TestVocalFormantFilters extends PApplet {
         public static final int VOWEL_I = 2;
         public static final int VOWEL_O = 3;
         public static final int VOWEL_U = 4;
-
+        private final float mAttenuation = 0.15f;
+        private final ArrayList<FilterBiquad> mFilter = new ArrayList<>();
+        private int mFormantFilterSetID = VOWEL_A;
+        // see https://github.com/surge-synthesizer/surge/issues/1584
+//        private final float[][] mFormantValues = {{740, 1180, 2640}, // tenor 'a'
+//                                                  {600, 2060, 2840}, // tenor 'e'
+//                                                  {280, 2620, 3380}, // tenor 'i'
+//                                                  {380, 940, 2300}, // tenor 'o'
+//                                                  {320, 920, 2200}  // tenor 'u'
+        private final float[][] mFormantValues = {{800, 1150, 2900, 3900, 4950}, // tenor 'a'
+                                                  {350, 2000, 2800, 3600, 4950}, // tenor 'e'
+                                                  {270, 2140, 2950, 3900, 4950}, // tenor 'i'
+                                                  {450, 800, 2830, 3800, 4950}, // tenor 'o'
+                                                  {325, 700, 2700, 3800, 4950}  // tenor 'u'
+//    private final float[][] mFormantValues = {{650, 1080, 2650, 2900, 3250}, //  'a'
+//                                              {400, 1700, 2600, 3200, 3580}, //  'e'
+//                                              {290, 1870, 2800, 3250, 3540}, //  'i'
+//                                              {400, 800, 2600, 2800, 3000}, //  'o'
+//                                              {350, 600, 2700, 2900, 3300}  //  'u'
+        };
+        private final int mPasses = 2;
+        private float mResonance = 0.25f;
         public VowelFilterBank() {
             for (int i = 0; i < mFormantValues[VOWEL_E].length; i++) {
                 FilterBiquad f = new FilterBiquad();
@@ -159,30 +179,6 @@ public class TestVocalFormantFilters extends PApplet {
             return mSignal;
         }
 
-        private float mResonance = 0.25f;
-        private final float mAttenuation = 0.15f;
-        private final int mPasses = 2;
-        private final ArrayList<FilterBiquad> mFilter = new ArrayList<>();
-        private int mFormantFilterSetID = VOWEL_A;
-
-        // see https://github.com/surge-synthesizer/surge/issues/1584
-//        private final float[][] mFormantValues = {{740, 1180, 2640}, // tenor 'a'
-//                                                  {600, 2060, 2840}, // tenor 'e'
-//                                                  {280, 2620, 3380}, // tenor 'i'
-//                                                  {380, 940, 2300}, // tenor 'o'
-//                                                  {320, 920, 2200}  // tenor 'u'
-        private final float[][] mFormantValues = {{800, 1150, 2900, 3900, 4950}, // tenor 'a'
-                                                  {350, 2000, 2800, 3600, 4950}, // tenor 'e'
-                                                  {270, 2140, 2950, 3900, 4950}, // tenor 'i'
-                                                  {450, 800, 2830, 3800, 4950}, // tenor 'o'
-                                                  {325, 700, 2700, 3800, 4950}  // tenor 'u'
-//    private final float[][] mFormantValues = {{650, 1080, 2650, 2900, 3250}, //  'a'
-//                                              {400, 1700, 2600, 3200, 3580}, //  'e'
-//                                              {290, 1870, 2800, 3250, 3540}, //  'i'
-//                                              {400, 800, 2600, 2800, 3000}, //  'o'
-//                                              {350, 600, 2700, 2900, 3300}  //  'u'
-        };
-
         private void updateFilterBank() {
             for (int i = 0; i < mFilter.size(); i++) {
                 mFilter.get(i).set_frequency(mFormantValues[mFormantFilterSetID][i]);
@@ -198,7 +194,30 @@ public class TestVocalFormantFilters extends PApplet {
         public static final int VOWEL_I = 2;
         public static final int VOWEL_O = 3;
         public static final int VOWEL_U = 4;
-
+        private final float mAttenuation = 0.4f;
+        private final ArrayList<FilterBiquad> mFilterHi = new ArrayList<>();
+        private final ArrayList<FilterBiquad> mFilterLow = new ArrayList<>();
+        private int mFormantFilterSetID = VOWEL_A;
+        // see https://github.com/surge-synthesizer/surge/issues/1584
+        private final float[][] mFormantValues = {{740, 1180, 2640}, // tenor 'a'
+                                                  {600, 2060, 2840}, // tenor 'e'
+                                                  {280, 2620, 3380}, // tenor 'i'
+                                                  {380, 940, 2300}, // tenor 'o'
+                                                  {320, 920, 2200}  // tenor 'u'
+//        private final float[][] mFormantValues = {{800, 1150, 2900, 3900, 4950}, // tenor 'a'
+//                                                  {350, 2000, 2800, 3600, 4950}, // tenor 'e'
+//                                                  {270, 2140, 2950, 3900, 4950}, // tenor 'i'
+//                                                  {450, 800, 2830, 3800, 4950}, // tenor 'o'
+//                                                  {325, 700, 2700, 3800, 4950}  // tenor 'u'
+//    private final float[][] mFormantValues = {{650, 1080, 2650, 2900, 3250}, //  'a'
+//                                              {400, 1700, 2600, 3200, 3580}, //  'e'
+//                                              {290, 1870, 2800, 3250, 3540}, //  'i'
+//                                              {400, 800, 2600, 2800, 3000}, //  'o'
+//                                              {350, 600, 2700, 2900, 3300}  //  'u'
+        };
+        private final float mInitialResonance = 0.5f;
+        private final int mPasses = 2;
+        private float mResonance = 0.92f;
         public VowelFilterBankHiLow() {
             for (int i = 0; i < mFormantValues[VOWEL_E].length; i++) {
                 FilterBiquad mHi = new FilterBiquad();
@@ -238,32 +257,6 @@ public class TestVocalFormantFilters extends PApplet {
             return mSignal;
         }
 
-        private final float mInitialResonance = 0.5f;
-        private float mResonance = 0.92f;
-        private final float mAttenuation = 0.4f;
-        private final int mPasses = 2;
-        private final ArrayList<FilterBiquad> mFilterHi = new ArrayList<>();
-        private final ArrayList<FilterBiquad> mFilterLow = new ArrayList<>();
-        private int mFormantFilterSetID = VOWEL_A;
-
-        // see https://github.com/surge-synthesizer/surge/issues/1584
-        private final float[][] mFormantValues = {{740, 1180, 2640}, // tenor 'a'
-                                                  {600, 2060, 2840}, // tenor 'e'
-                                                  {280, 2620, 3380}, // tenor 'i'
-                                                  {380, 940, 2300}, // tenor 'o'
-                                                  {320, 920, 2200}  // tenor 'u'
-//        private final float[][] mFormantValues = {{800, 1150, 2900, 3900, 4950}, // tenor 'a'
-//                                                  {350, 2000, 2800, 3600, 4950}, // tenor 'e'
-//                                                  {270, 2140, 2950, 3900, 4950}, // tenor 'i'
-//                                                  {450, 800, 2830, 3800, 4950}, // tenor 'o'
-//                                                  {325, 700, 2700, 3800, 4950}  // tenor 'u'
-//    private final float[][] mFormantValues = {{650, 1080, 2650, 2900, 3250}, //  'a'
-//                                              {400, 1700, 2600, 3200, 3580}, //  'e'
-//                                              {290, 1870, 2800, 3250, 3540}, //  'i'
-//                                              {400, 800, 2600, 2800, 3000}, //  'o'
-//                                              {350, 600, 2700, 2900, 3300}  //  'u'
-        };
-
         private void updateFilterBank() {
             for (int i = 0; i < mFilterHi.size(); i++) {
                 final float mSpread = mFormantValues[mFormantFilterSetID][i] * mResonance;
@@ -272,8 +265,6 @@ public class TestVocalFormantFilters extends PApplet {
             }
         }
     }
-
-    // https://github.com/joric/bmxplay
 
     public static void main(String[] args) {
         PApplet.main(TestVocalFormantFilters.class.getName());

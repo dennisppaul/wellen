@@ -12,8 +12,8 @@ public class ExampleDSPAnalysis00FFT extends PApplet {
      * this example demonstrate how to perform Fast Fourier Transformation (FFT).
      */
 
-    private int x = 0;
     private Sampler fSampler;
+    private int x = 0;
 
     public void settings() {
         size(640, 480);

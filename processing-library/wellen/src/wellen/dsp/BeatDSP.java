@@ -31,13 +31,13 @@ import java.util.ArrayList;
 public class BeatDSP implements DSPNodeInput {
 
     private static final String METHOD_NAME = "beat";
-    private final Object fListener;
-    private final int fSamplingRate;
-    private final Method fMethod;
     private int fBeat;
+    private final Object fListener;
+    private final ArrayList<Trigger.Listener> fListeners;
+    private final Method fMethod;
+    private final int fSamplingRate;
     private int fTickCounter;
     private float fTickInterval;
-    private final ArrayList<Trigger.Listener> fListeners;
 
     public BeatDSP(Object pListener, int pSamplingRate) {
         Method mMethod;
@@ -68,6 +68,14 @@ public class BeatDSP implements DSPNodeInput {
         this(null, Wellen.DEFAULT_SAMPLING_RATE);
     }
 
+    public static BeatDSP start(Object pListener, int pSamplingRate) {
+        return new BeatDSP(pListener);
+    }
+
+    public static BeatDSP start(Object pListener) {
+        return new BeatDSP(pListener, Wellen.DEFAULT_SAMPLING_RATE);
+    }
+
     public ArrayList<Trigger.Listener> listeners() {
         return fListeners;
     }
@@ -78,14 +86,6 @@ public class BeatDSP implements DSPNodeInput {
 
     public boolean remove(Trigger.Listener pTriggerListener) {
         return listeners().remove(pTriggerListener);
-    }
-
-    public static BeatDSP start(Object pListener, int pSamplingRate) {
-        return new BeatDSP(pListener);
-    }
-
-    public static BeatDSP start(Object pListener) {
-        return new BeatDSP(pListener, Wellen.DEFAULT_SAMPLING_RATE);
     }
 
     public void set_bpm(float pBPM) {
@@ -140,7 +140,6 @@ public class BeatDSP implements DSPNodeInput {
             l.trigger(fBeat);
         }
     }
-
     public interface Listener {
         public abstract void trigger(int beat_count);
     }

@@ -9,13 +9,13 @@ import wellen.dsp.Sampler;
 
 public class TestSAMTuningPhonemeLoops extends PApplet {
 
-    private SAM mSAM;
-    private SingFragment[] mWords;
-    private Sampler mSampler;
-    private int mWordIndex = -1;
+    private static final float BORDER = 32;
     private float mLoopIn = 0.5f;
     private float mLoopOut = 0.9f;
-    private static final float BORDER = 32;
+    private SAM mSAM;
+    private Sampler mSampler;
+    private int mWordIndex = -1;
+    private SingFragment[] mWords;
 
     public void settings() {
         size(640, 480);
@@ -27,61 +27,27 @@ public class TestSAMTuningPhonemeLoops extends PApplet {
         mSAM = new SAM();
         mSAM.set_sing_mode(true);
 
-        mWords = new SingFragment[]{new SingFragment("EH", Note.NOTE_C3, 4, 0.50241286f, 0.8981233f), new SingFragment(
-                "VERIY",
-                Note.NOTE_D3,
-                4,
-                0.85431075f,
-                0.9947749f), new SingFragment("TAYM", Note.NOTE_D3 + 1, 2, 0.2726049f, 0.43558058f), new SingFragment(
-                "AY",
-                Note.NOTE_F3,
-                4,
-                0.07763485f,
-                0.3692169f), new SingFragment("SIYIY", Note.NOTE_G3, 4, 0.49991727f, 0.89988416f), new SingFragment(
-                "YUW",
-                Note.NOTE_F3,
-                4,
-                0.5f,
-                0.9f), new SingFragment("FAO", Note.NOTE_D3 + 1, 4, 0.5917517f, 0.98083735f), new SingFragment("LIHNX",
-                                                                                                               Note.NOTE_F3,
-                                                                                                               2,
-                                                                                                               0.4180811f,
-                                                                                                               0.61693764f),
+        mWords = new SingFragment[]{new SingFragment("EH", Note.NOTE_C3, 4, 0.50241286f, 0.8981233f),
+                                    new SingFragment("VERIY", Note.NOTE_D3, 4, 0.85431075f, 0.9947749f),
+                                    new SingFragment("TAYM", Note.NOTE_D3 + 1, 2, 0.2726049f, 0.43558058f),
+                                    new SingFragment("AY", Note.NOTE_F3, 4, 0.07763485f, 0.3692169f),
+                                    new SingFragment("SIYIY", Note.NOTE_G3, 4, 0.49991727f, 0.89988416f),
+                                    new SingFragment("YUW", Note.NOTE_F3, 4, 0.5f, 0.9f),
+                                    new SingFragment("FAO", Note.NOTE_D3 + 1, 4, 0.5917517f, 0.98083735f),
+                                    new SingFragment("LIHNX", Note.NOTE_F3, 2, 0.4180811f, 0.61693764f),
                                     new SingFragment("", Note.NOTE_F3, 2, 0.5f, 0.9f),
 
-                                    new SingFragment("AY", Note.NOTE_C3, 2, 0.07763485f, 0.3692169f), new SingFragment(
-                "GEHT",
-                Note.NOTE_A3 + 1,
-                4,
-                0.5871952f,
-                0.64489114f), new SingFragment("DAWN", Note.NOTE_G3 + 1, 4, 0.6535342f, 0.76152956f), new SingFragment(
-                "AAN",
-                Note.NOTE_G3,
-                2,
-                0.028384725f,
-                0.5691239f), new SingFragment("MAY", Note.NOTE_F3, 4, 0.36823878f, 0.59779024f),
+                                    new SingFragment("AY", Note.NOTE_C3, 2, 0.07763485f, 0.3692169f),
+                                    new SingFragment("GEHT", Note.NOTE_A3 + 1, 4, 0.5871952f, 0.64489114f),
+                                    new SingFragment("DAWN", Note.NOTE_G3 + 1, 4, 0.6535342f, 0.76152956f),
+                                    new SingFragment("AAN", Note.NOTE_G3, 2, 0.028384725f, 0.5691239f),
+                                    new SingFragment("MAY", Note.NOTE_F3, 4, 0.36823878f, 0.59779024f),
                                     new SingFragment("NIYZ", Note.NOTE_D3 + 1, 4, 0.42345494f, 0.60453105f),
                                     new SingFragment("AEND", Note.NOTE_F3, 4, 0.10612828f, 0.34875825f),
                                     new SingFragment("PREY", Note.NOTE_C3, 4, 0.56590533f, 0.7307875f),
                                     new SingFragment("", Note.NOTE_C3, 6, 0.5f, 0.9f),};
         step();
         DSP.start(this);
-    }
-
-    static class SingFragment {
-        final String text;
-        final int pitch;
-        final int duration;
-        final float loop_in;
-        final float loop_out;
-
-        SingFragment(String pText, int pPitch, int pDuration, float pLoopIn, float pLoopOut) {
-            text = pText;
-            pitch = pPitch;
-            duration = pDuration;
-            loop_in = pLoopIn;
-            loop_out = pLoopOut;
-        }
     }
 
     public void draw() {
@@ -159,10 +125,6 @@ public class TestSAMTuningPhonemeLoops extends PApplet {
         }
     }
 
-    private float get_value_from_mouse_X() {
-        return map(mouseX, BORDER, width - BORDER, 0, 1);
-    }
-
     public void mousePressed() {
         mSampler.rewind();
         mSampler.start();
@@ -170,6 +132,16 @@ public class TestSAMTuningPhonemeLoops extends PApplet {
 
     public void mouseReleased() {
         mSampler.stop();
+    }
+
+    public void audioblock(float[] output_signal) {
+        for (int i = 0; i < output_signal.length; i++) {
+            output_signal[i] = mSampler.output() * 0.1f;
+        }
+    }
+
+    private float get_value_from_mouse_X() {
+        return map(mouseX, BORDER, width - BORDER, 0, 1);
     }
 
     private void step() {
@@ -184,9 +156,18 @@ public class TestSAMTuningPhonemeLoops extends PApplet {
         mSampler.forward();
     }
 
-    public void audioblock(float[] output_signal) {
-        for (int i = 0; i < output_signal.length; i++) {
-            output_signal[i] = mSampler.output() * 0.1f;
+    static class SingFragment {
+        final int duration;
+        final float loop_in;
+        final float loop_out;
+        final int pitch;
+        final String text;
+        SingFragment(String pText, int pPitch, int pDuration, float pLoopIn, float pLoopOut) {
+            text = pText;
+            pitch = pPitch;
+            duration = pDuration;
+            loop_in = pLoopIn;
+            loop_out = pLoopOut;
         }
     }
 

@@ -8,28 +8,27 @@ package wellen.extra.daisysp;
  *         <p>
  *         Ported from soundpipe by Ben Sergentanis, May 2020
  *         <p>
- *         TODO(does not sound good … might be something fishy with the random functions)
+ *                         TODO(does not sound good … might be something fishy with the random functions)
  */
 public class Drip {
 
-    private static final float WUTR_SOUND_DECAY = 0.95f;
-    private static final float WUTR_SYSTEM_DECAY = 0.996f;
-    private static final float WUTR_GAIN = 1.0f;
-    private static final float WUTR_NUM_SOURCES = 10.0f;
+    private static final float MAX_SHAKE = 2000.0f;
+    private static final long WRAP_RND = 1L << 31L; // < 1073741824
     private static final float WUTR_CENTER_FREQ0 = 450.0f;
     private static final float WUTR_CENTER_FREQ1 = 600.0f;
     private static final float WUTR_CENTER_FREQ2 = 750.0f;
-    private static final float WUTR_RESON = 0.9985f;
     private static final float WUTR_FREQ_SWEEP = 1.0001f;
-    private static final float MAX_SHAKE = 2000.0f;
-
+    private static final float WUTR_GAIN = 1.0f;
+    private static final float WUTR_NUM_SOURCES = 10.0f;
+    private static final float WUTR_RESON = 0.9985f;
+    private static final float WUTR_SOUND_DECAY = 0.95f;
+    private static final float WUTR_SYSTEM_DECAY = 0.996f;
     private float gains0_, gains1_, gains2_, kloop_, dettack_, num_tubes_, damp_, shake_max_, freq_, freq1_, freq2_,
             amp_, snd_level_, outputs00_, outputs01_, outputs10_, outputs11_, outputs20_, outputs21_, total_energy_,
             center_freqs0_, center_freqs1_, center_freqs2_, num_objects_save_, sound_decay_, system_decay_, finalZ0_,
             finalZ1_, finalZ2_, coeffs01_, coeffs00_, coeffs11_, coeffs10_, coeffs21_, coeffs20_, shake_energy_,
             shake_damp_, shake_max_save_, num_objects_, sample_rate_, res_freq0_, res_freq1_, res_freq2_, inputs1_,
             inputs2_;
-
     private boolean mTrigger = false;
 
     /**
@@ -219,8 +218,6 @@ public class Drip {
         snd_level_ = sndLevel;
         return lastOutput;
     }
-
-    private static final long WRAP_RND = 1L << 31L; // < 1073741824
 
     private long my_random(int max) {
         return ((DaisySP.rand() % WRAP_RND) % (max + 1));

@@ -5,22 +5,19 @@ package wellen.tests.dsp.tarsos;
  */
 class Grain {
 
-    /**
-     * The position in millseconds.
-     */
-    double position;
-
+    boolean active;
     /**
      * The age of the grain in milliseconds.
      */
     double age;
-
     /**
      * The grain size of the grain. Fixed at instantiation.
      */
     double grainSize;
-
-    boolean active;
+    /**
+     * The position in millseconds.
+     */
+    double position;
 
     /**
      * Sets the given Grain to start immediately.

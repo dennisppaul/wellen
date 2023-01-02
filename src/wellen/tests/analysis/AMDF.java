@@ -42,28 +42,23 @@ package wellen.tests.analysis;
 public class AMDF implements PitchDetector {
 
 
-    private static final double DEFAULT_MIN_FREQUENCY = 82.0;
     private static final double DEFAULT_MAX_FREQUENCY = 1000.0;
+    private static final double DEFAULT_MIN_FREQUENCY = 82.0;
     private static final double DEFAULT_RATIO = 5.0;
     private static final double DEFAULT_SENSITIVITY = 0.1;
-
-    private final float sampleRate;
-
     private final double[] amd;
     private final long maxPeriod;
     private final long minPeriod;
     private final double ratio;
-    private final double sensitivity;
-
     /**
      * The result of the pitch detection iteration.
      */
     private final PitchDetectionResult result;
-
+    private final float sampleRate;
+    private final double sensitivity;
     public AMDF(float sampleRate, int bufferSize) {
         this(sampleRate, bufferSize, DEFAULT_MIN_FREQUENCY, DEFAULT_MAX_FREQUENCY);
     }
-
     public AMDF(float sampleRate, int bufferSize, double minFrequency, double maxFrequency) {
         this.sampleRate = sampleRate;
         amd = new double[bufferSize];

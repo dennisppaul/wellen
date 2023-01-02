@@ -13,6 +13,8 @@ public abstract class Generator {
     by Perry R. Cook and Gary P. Scavone, 1995--2021.
     */
 
+    protected StkFrames lastFrame_;
+
     /***************************************************/
 
 
@@ -40,8 +42,6 @@ public abstract class Generator {
     case an out-of-range value will trigger an StkError exception.
     */
     public abstract StkFrames tick(StkFrames frames, int channel);
-
-    protected StkFrames lastFrame_;
 }
 
 

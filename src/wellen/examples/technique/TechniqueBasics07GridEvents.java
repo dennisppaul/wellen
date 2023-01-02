@@ -12,11 +12,11 @@ public class TechniqueBasics07GridEvents extends PApplet {
      * this example demonstrates how to use grid events to create a composition.
      */
 
-    private final Grid fGrid = new Grid();
     private final int fBaseNoteDefault = 36;
     private int fBaseNote = fBaseNoteDefault;
     private final int fBaseNoteIncrease = 7;
     private final int fBaseNoteIncreaseMax = 2;
+    private final Grid fGrid = new Grid();
 
     public void settings() {
         size(640, 480);

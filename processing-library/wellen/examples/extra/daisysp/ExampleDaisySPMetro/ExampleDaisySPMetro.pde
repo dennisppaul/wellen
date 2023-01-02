@@ -3,11 +3,11 @@ import wellen.dsp.*;
 
 import wellen.extra.daisysp.*;
 
+boolean mBeat;
+
 Metro mMetro;
 
 Pluck mPluck;
-
-boolean mBeat;
 
 void settings() {
     size(640, 480);

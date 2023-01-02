@@ -12,10 +12,6 @@ public class AdEnv {
     /* Distinct stages that the phase of the envelope can be located in. */
 
     /**
-     * located at phase location 0, and not currently running
-     */
-    public static final int ADENV_SEG_IDLE = 0;
-    /**
      * First segment of envelope where phase moves from MIN value to MAX value
      */
     public static final int ADENV_SEG_ATTACK = 1;
@@ -24,9 +20,35 @@ public class AdEnv {
      */
     public static final int ADENV_SEG_DECAY = 2;
     /**
+     * located at phase location 0, and not currently running
+     */
+    public static final int ADENV_SEG_IDLE = 0;
+    /**
      * The final segment of the envelope (currently decay)
      */
     public static final int ADENV_SEG_LAST = 3;
+    private float c_inc_, curve_x_, retrig_val_;
+    private int current_segment_, prev_segment_;
+    private int phase_;
+    private float sample_rate_, min_, max_, output_, curve_scalar_;
+    private final float[] segment_time_ = new float[ADENV_SEG_LAST];
+    private int trigger_;
+
+    // 10x multiply version
+    private static float EXPF(float x) {
+        x = 1.0f + x / 1024.0f;
+        x *= x;
+        x *= x;
+        x *= x;
+        x *= x;
+        x *= x;
+        x *= x;
+        x *= x;
+        x *= x;
+        x *= x;
+        x *= x;
+        return x;
+    }
 
     /**
      * Initializes the ad envelope.
@@ -142,6 +164,15 @@ public class AdEnv {
         trigger_ = 1;
     }
 
+    //#define EXPF expf
+    // This causes with infinity with certain curves,
+    // which then causes NaN erros...
+    //#define EXPF expf_fast
+
+    // To resolve annoying bugs when using this you can:
+    // if (val != val)
+    //     val = 0.0f; // This will un-NaN the value.
+
     /**
      * Sets the length of time (in seconds) for a specific segment.
      */
@@ -190,36 +221,4 @@ public class AdEnv {
     public boolean IsRunning() {
         return current_segment_ != ADENV_SEG_IDLE;
     }
-
-    //#define EXPF expf
-    // This causes with infinity with certain curves,
-    // which then causes NaN erros...
-    //#define EXPF expf_fast
-
-    // To resolve annoying bugs when using this you can:
-    // if (val != val)
-    //     val = 0.0f; // This will un-NaN the value.
-
-    // 10x multiply version
-    private static float EXPF(float x) {
-        x = 1.0f + x / 1024.0f;
-        x *= x;
-        x *= x;
-        x *= x;
-        x *= x;
-        x *= x;
-        x *= x;
-        x *= x;
-        x *= x;
-        x *= x;
-        x *= x;
-        return x;
-    }
-
-    private int current_segment_, prev_segment_;
-    private final float[] segment_time_ = new float[ADENV_SEG_LAST];
-    private float sample_rate_, min_, max_, output_, curve_scalar_;
-    private float c_inc_, curve_x_, retrig_val_;
-    private int phase_;
-    private int trigger_;
 }

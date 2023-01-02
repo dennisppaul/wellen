@@ -28,6 +28,22 @@ import static wellen.extra.daisysp.DaisySP.sqrtf;
  */
 public class SyntheticSnareDrum {
 
+    private float accent_, f0_, fm_amount_, decay_, snappy_;
+    private float drum_amplitude_;
+    private final Svf drum_lp_ = new Svf();
+    private boolean even = true;
+    private float fm_;
+    private int hold_counter_;
+    private boolean mTrigger = false;
+    private final float[] phase_ = new float[2];
+    private float sample_rate_;
+    private float snare_amplitude_;
+    private final Svf snare_hp_ = new Svf();
+    private final Svf snare_lp_ = new Svf();
+    private boolean sustain_;
+    private float sustain_gain_;
+    private boolean trig_;
+
     /**
      * Init the module \param sample_rate Audio engine sample rate
      */
@@ -182,7 +198,6 @@ public class SyntheticSnareDrum {
         sustain_ = sustain;
     }
 
-
     /**
      * Set how much accent to use \param accent Works 0-1.
      */
@@ -224,23 +239,4 @@ public class SyntheticSnareDrum {
         float triangle = (phase < 0.5f ? phase : 1.0f - phase) * 4.0f - 1.3f;
         return 2.0f * triangle / (1.0f + fabsf(triangle));
     }
-
-    private boolean even = true;
-    private float sample_rate_;
-    private boolean trig_;
-    private boolean sustain_;
-    private float accent_, f0_, fm_amount_, decay_, snappy_;
-
-    private final float[] phase_ = new float[2];
-    private float drum_amplitude_;
-    private float snare_amplitude_;
-    private float fm_;
-    private float sustain_gain_;
-    private int hold_counter_;
-
-    private final Svf drum_lp_ = new Svf();
-    private final Svf snare_hp_ = new Svf();
-    private final Svf snare_lp_ = new Svf();
-
-    private boolean mTrigger = false;
 }

@@ -28,16 +28,15 @@ import java.util.ArrayList;
  */
 public class Trigger implements DSPNodeInput {
 
-    public static final int EVENT_RISING_EDGE = 1;
     public static final int EVENT_FALLING_EDGE = -1;
-
+    public static final int EVENT_RISING_EDGE = 1;
     private static final String METHOD_NAME = "trigger";
-    private final Object mListener;
-    private float mPreviousSignal = 0.0f;
-    private Method mMethod = null;
-    private boolean mEnableRisingEdge = true;
     private boolean mEnableFallingEdge = true;
+    private boolean mEnableRisingEdge = true;
+    private final Object mListener;
     private final ArrayList<Listener> mListeners;
+    private Method mMethod = null;
+    private float mPreviousSignal = 0.0f;
 
     public Trigger() {
         this(null);
@@ -101,7 +100,6 @@ public class Trigger implements DSPNodeInput {
             l.trigger(pEventType);
         }
     }
-
     public interface Listener {
         void trigger(int pEventType);
     }

@@ -3,9 +3,9 @@ import wellen.dsp.*;
 
 import wellen.extra.daisysp.*;
 
-Adsr mAdsr;
-
 AdEnv mAdEnv;
+
+Adsr mAdsr;
 
 Oscillator mOscillator;
 

@@ -75,6 +75,57 @@ public class Grid {
         this(24);
     }
 
+    private static int get_num_pulses() {
+        return 24 * 4;
+    }
+
+    private static void printBar(Grid events, int beat) {
+        if (events.event(beat, Wellen.NOTE_QUARTER)) {
+            System.out.print("|");
+//            System.out.print("|" + events.event_count(beat, Wellen.NOTE_QUARTER) + "|");
+        }
+    }
+
+    private static void printNoteEvents(String event_name, Grid events, float note_type) {
+        System.out.print(event_name + ": ");
+        for (int i = 0; i < get_num_pulses(); i++) {
+            printBar(events, i);
+            System.out.print(events.event(i, note_type) ? (events.event_count(i, note_type) % 10) : "-");
+        }
+        System.out.println();
+    }
+
+    private static void printPhaseEvents(String event_name, Grid events, int phase, int offset) {
+        System.out.print(event_name + ": ");
+        for (int i = 0; i < get_num_pulses(); i++) {
+            printBar(events, i);
+            int mPhaseEventCount = events.event_phase_count(i, phase, offset);
+            System.out.print(mPhaseEventCount != Wellen.NO_EVENT ? (mPhaseEventCount % 10) : "-");
+        }
+        System.out.println();
+    }
+
+    private static void run_test() {
+        Grid mEvents = new Grid();
+        mEvents.set_PPQN(24);
+        printNoteEvents("WHOLE     ", mEvents, Wellen.NOTE_WHOLE);
+        printNoteEvents("HALF      ", mEvents, Wellen.NOTE_HALF);
+        printNoteEvents("QUARTER   ", mEvents, Wellen.NOTE_QUARTER);
+        printNoteEvents("EIGHTH    ", mEvents, Wellen.NOTE_EIGHTH);
+        printNoteEvents("SIXTEENTH ", mEvents, Wellen.NOTE_SIXTEENTH);
+        printNoteEvents("THIRTYSEC ", mEvents, Wellen.NOTE_THIRTYSECOND);
+        System.out.println("( PPQN " + mEvents.get_PPQN() + " )");
+        printPhaseEvents("PHASE 3   ", mEvents, 3, 0);
+        printPhaseEvents("PHASE 5   ", mEvents, 5, 0);
+        printPhaseEvents("PHASE 7   ", mEvents, 7, 0);
+        printPhaseEvents("PHASE 8   ", mEvents, 8, 0);
+        printPhaseEvents("PHASE 24>1",
+                         mEvents,
+                         mEvents.get_PPQN(),
+                         1); // i.e quarter note ( 24 pulses ) with an offset of 1 pulse.
+        System.out.println("( PPQN " + mEvents.get_PPQN() + " )");
+    }
+
     /**
      * @return the number of beats per quarter note.
      */
@@ -112,6 +163,8 @@ public class Grid {
         return event(beat, Wellen.NOTE_QUARTER);
     }
 
+    /* ------------------------------------------------------------------------------------------------------------- */
+
     public boolean is_eighth(int beat) {
         return event(beat, Wellen.NOTE_EIGHTH);
     }
@@ -135,60 +188,7 @@ public class Grid {
         return (int) (fPPQN / note);
     }
 
-    /* ------------------------------------------------------------------------------------------------------------- */
-
     public static void main(String[] args) {
         run_test();
-    }
-
-    private static void run_test() {
-        Grid mEvents = new Grid();
-        mEvents.set_PPQN(24);
-        printNoteEvents("WHOLE     ", mEvents, Wellen.NOTE_WHOLE);
-        printNoteEvents("HALF      ", mEvents, Wellen.NOTE_HALF);
-        printNoteEvents("QUARTER   ", mEvents, Wellen.NOTE_QUARTER);
-        printNoteEvents("EIGHTH    ", mEvents, Wellen.NOTE_EIGHTH);
-        printNoteEvents("SIXTEENTH ", mEvents, Wellen.NOTE_SIXTEENTH);
-        printNoteEvents("THIRTYSEC ", mEvents, Wellen.NOTE_THIRTYSECOND);
-        System.out.println("( PPQN " + mEvents.get_PPQN() + " )");
-        printPhaseEvents("PHASE 3   ", mEvents, 3, 0);
-        printPhaseEvents("PHASE 5   ", mEvents, 5, 0);
-        printPhaseEvents("PHASE 7   ", mEvents, 7, 0);
-        printPhaseEvents("PHASE 8   ", mEvents, 8, 0);
-        printPhaseEvents("PHASE 24>1",
-                         mEvents,
-                         mEvents.get_PPQN(),
-                         1); // i.e quarter note ( 24 pulses ) with an offset of 1 pulse.
-        System.out.println("( PPQN " + mEvents.get_PPQN() + " )");
-    }
-
-    private static void printPhaseEvents(String event_name, Grid events, int phase, int offset) {
-        System.out.print(event_name + ": ");
-        for (int i = 0; i < get_num_pulses(); i++) {
-            printBar(events, i);
-            int mPhaseEventCount = events.event_phase_count(i, phase, offset);
-            System.out.print(mPhaseEventCount != Wellen.NO_EVENT ? (mPhaseEventCount % 10) : "-");
-        }
-        System.out.println();
-    }
-
-    private static void printNoteEvents(String event_name, Grid events, float note_type) {
-        System.out.print(event_name + ": ");
-        for (int i = 0; i < get_num_pulses(); i++) {
-            printBar(events, i);
-            System.out.print(events.event(i, note_type) ? (events.event_count(i, note_type) % 10) : "-");
-        }
-        System.out.println();
-    }
-
-    private static int get_num_pulses() {
-        return 24 * 4;
-    }
-
-    private static void printBar(Grid events, int beat) {
-        if (events.event(beat, Wellen.NOTE_QUARTER)) {
-            System.out.print("|");
-//            System.out.print("|" + events.event_count(beat, Wellen.NOTE_QUARTER) + "|");
-        }
     }
 }

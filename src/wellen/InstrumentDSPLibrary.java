@@ -28,7 +28,8 @@ import wellen.dsp.Wavetable;
 /**
  * a collection of DSP instruments.
  * <p>
- * these instruments can be used to replace the default instrument ( i.e {@link InstrumentDSP} ) e.g by using the method
+ * these instruments can be used to replace the default instrument ( i.e {@link InstrumentDSP} ) e.g by using the
+ * method
  * <code>Tone.replace_instrument(InstrumentDSP)</code>.
  * <p>
  * all instruments are extended from {@link InstrumentDSP}, however some the original functionality is extended, changed
@@ -260,7 +261,6 @@ public class InstrumentDSPLibrary {
         public Signal output_signal() {
             return Signal.create(mSampler.output() * get_amplitude());
         }
-
 
         public void note_off() {
             mIsPlaying = false;

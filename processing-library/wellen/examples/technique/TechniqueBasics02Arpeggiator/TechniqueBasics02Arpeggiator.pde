@@ -8,11 +8,11 @@ import wellen.dsp.*;
  * press keys 1 – 5 to trigger different patterns.
  */
 
-int fColor;
+Arpeggiator fArpeggiator;
 
 Beat fBeat;
 
-Arpeggiator fArpeggiator;
+int fColor;
 
 boolean fToggle;
 

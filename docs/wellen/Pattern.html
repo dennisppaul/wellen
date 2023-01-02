@@ -181,6 +181,30 @@ implements <a href="Loopable.html" title="interface in wellen">Loopable</a></spa
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="print(java.lang.String)">
+<h3>print</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">print</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;s)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="println()">
+<h3>println</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">println</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="println(java.lang.String)">
+<h3>println</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">println</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;s)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="run_test()">
+<h3>run_test</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">run_test</span>()</div>
+</section>
+</li>
+<li>
 <section class="detail" id="set_length(int)">
 <h3>set_length</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_length</span><wbr><span class="parameters">(int&nbsp;length)</span></div>
@@ -199,6 +223,16 @@ implements <a href="Loopable.html" title="interface in wellen">Loopable</a></spa
 </section>
 </li>
 <li>
+<section class="detail" id="get_loop()">
+<h3>get_loop</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">get_loop</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="Loopable.html#get_loop()">get_loop</a></code>&nbsp;in interface&nbsp;<code><a href="Loopable.html" title="interface in wellen">Loopable</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="set_loop(int)">
 <h3>set_loop</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_loop</span><wbr><span class="parameters">(int&nbsp;pLoop)</span></div>
@@ -213,12 +247,12 @@ implements <a href="Loopable.html" title="interface in wellen">Loopable</a></spa
 </section>
 </li>
 <li>
-<section class="detail" id="get_loop()">
-<h3>get_loop</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">get_loop</span>()</div>
+<section class="detail" id="get_in_point()">
+<h3>get_in_point</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">get_in_point</span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="Loopable.html#get_loop()">get_loop</a></code>&nbsp;in interface&nbsp;<code><a href="Loopable.html" title="interface in wellen">Loopable</a></code></dd>
+<dd><code><a href="Loopable.html#get_in_point()">get_in_point</a></code>&nbsp;in interface&nbsp;<code><a href="Loopable.html" title="interface in wellen">Loopable</a></code></dd>
 </dl>
 </section>
 </li>
@@ -235,12 +269,12 @@ implements <a href="Loopable.html" title="interface in wellen">Loopable</a></spa
 </section>
 </li>
 <li>
-<section class="detail" id="get_in_point()">
-<h3>get_in_point</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">get_in_point</span>()</div>
+<section class="detail" id="get_out_point()">
+<h3>get_out_point</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">get_out_point</span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="Loopable.html#get_in_point()">get_in_point</a></code>&nbsp;in interface&nbsp;<code><a href="Loopable.html" title="interface in wellen">Loopable</a></code></dd>
+<dd><code><a href="Loopable.html#get_out_point()">get_out_point</a></code>&nbsp;in interface&nbsp;<code><a href="Loopable.html" title="interface in wellen">Loopable</a></code></dd>
 </dl>
 </section>
 </li>
@@ -252,16 +286,6 @@ implements <a href="Loopable.html" title="interface in wellen">Loopable</a></spa
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>out_point</code> - out point for pattern</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="get_out_point()">
-<h3>get_out_point</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">get_out_point</span>()</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="Loopable.html#get_out_point()">get_out_point</a></code>&nbsp;in interface&nbsp;<code><a href="Loopable.html" title="interface in wellen">Loopable</a></code></dd>
 </dl>
 </section>
 </li>
@@ -340,33 +364,9 @@ implements <a href="Loopable.html" title="interface in wellen">Loopable</a></spa
 </section>
 </li>
 <li>
-<section class="detail" id="println()">
-<h3>println</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">println</span>()</div>
-</section>
-</li>
-<li>
-<section class="detail" id="print(java.lang.String)">
-<h3>print</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">print</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;s)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="println(java.lang.String)">
-<h3>println</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">println</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;s)</span></div>
-</section>
-</li>
-<li>
 <section class="detail" id="main(java.lang.String[])">
 <h3>main</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">main</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]&nbsp;args)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="run_test()">
-<h3>run_test</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">run_test</span>()</div>
 </section>
 </li>
 </ul>

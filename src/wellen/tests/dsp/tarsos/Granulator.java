@@ -13,71 +13,62 @@ import java.util.Arrays;
  */
 public class Granulator {
 
-    public static final float ADAPTIVE_INTERP_LOW_THRESH = 0.5f;
     public static final float ADAPTIVE_INTERP_HIGH_THRESH = 2.5f;
-
+    public static final float ADAPTIVE_INTERP_LOW_THRESH = 0.5f;
     /**
      * The position in milliseconds.
      */
     protected double position;
+    private final float[] audioBuffer;
+    private int audioBufferWatermark;
+    /**
+     * A list of dead grains.
+     */
+    private final ArrayList<Grain> deadGrains;
+    /**
+     * Flag to indicate special case for the first grain.
+     */
+    private boolean firstGrain = true;
+    /**
+     * A list of free grains.
+     */
+    private final ArrayList<Grain> freeGrains;
+    private float grainInterval;
+    private float grainRandomness;
+    private float grainSize;
+    /**
+     * The list of current grains.
+     */
+    private final ArrayList<Grain> grains;
+    /**
+     * The length of one sample in milliseconds.
+     */
+    private final double msPerSample;
+    private final float[] outputBuffer;
 
+    ///** The interpolation type. */
+    //protected InterpolationType interpolationType;
+    /**
+     * The pitch, bound to the pitch envelope.
+     */
+    private float pitchFactor;
     /**
      * The millisecond position increment per sample. Calculated from the ratio of the AudioContext's sample rate and
      * the sample’s sample rate.
      */
     private final double positionIncrement;
-
-
-    private float grainInterval;
-    private float grainSize;
-    private float grainRandomness;
-
     /**
      * The time in milliseconds since the last grain was activated.
      */
     private float timeSinceLastGrain;
-
-    /**
-     * The length of one sample in milliseconds.
-     */
-    private final double msPerSample;
-
-    /**
-     * The pitch, bound to the pitch envelope.
-     */
-    private float pitchFactor;
-
     /**
      * The pitch, bound to the pitch envelope.
      */
     private float timeStretchFactor;
-
-    /**
-     * The list of current grains.
-     */
-    private final ArrayList<Grain> grains;
-
-    /**
-     * A list of free grains.
-     */
-    private final ArrayList<Grain> freeGrains;
-
-    /**
-     * A list of dead grains.
-     */
-    private final ArrayList<Grain> deadGrains;
-
-    ///** The interpolation type. */
-    //protected InterpolationType interpolationType;
-
     /**
      * The window used by grains.
      */
     private final float[] window;
-    private final float[] audioBuffer;
-    private int audioBufferWatermark;
-    private final float[] outputBuffer;
-
     /**
      * Instantiates a new GranularSamplePlayer.
      *
@@ -107,31 +98,8 @@ public class Granulator {
         positionIncrement = msPerSample;
     }
 
-
     public void start() {
         timeSinceLastGrain = 0;
-    }
-
-
-    /**
-     * Flag to indicate special case for the first grain.
-     */
-    private boolean firstGrain = true;
-
-    /**
-     * Special case method for playing first grain.
-     */
-    private void firstGrain() {
-        if (firstGrain) {
-            Grain g = new Grain();
-            g.position = position;
-            g.age = grainSize / 4f;
-            g.grainSize = grainSize;
-
-            grains.add(g);
-            firstGrain = false;
-            timeSinceLastGrain = grainInterval / 2f;
-        }
     }
 
     public boolean process(float[] signal_buffer) {
@@ -206,7 +174,6 @@ public class Granulator {
 
         return true;
     }
-
 
     /**
      * Retrieves a frame of audio using linear interpolation. If the frame is not in the sample range then zeros are
@@ -288,11 +255,6 @@ public class Granulator {
         return result;
     }
 
-
-    private double msToSamples(double posInMs) {
-        return (posInMs) / msPerSample;
-    }
-
     /**
      * Returns the value of the buffer at the given fraction along its length (0 = start, 1 = end). Uses linear
      * interpolation.
@@ -308,6 +270,34 @@ public class Granulator {
         return (1 - offset) * window[lowerIndex] + offset * window[upperIndex];
     }
 
+    public void setTimestretchFactor(float currentFactor) {
+        timeStretchFactor = currentFactor;
+    }
+
+    public void setPitchShiftFactor(float currentFactor) {
+        pitchFactor = currentFactor;
+    }
+
+    public void setGrainInterval(int grainInterval) {
+        this.grainInterval = grainInterval;
+    }
+
+    public void setGrainSize(int grainSize) {
+        this.grainSize = grainSize;
+
+    }
+
+    public void setGrainRandomness(float grainRandomness) {
+        this.grainRandomness = grainRandomness;
+    }
+
+    /**
+     * @param position in seconds
+     */
+    public void setPosition(float position) {
+        this.position = position * 1000;
+    }
+
     /**
      * Calculate next position for the given Grain.
      *
@@ -320,35 +310,24 @@ public class Granulator {
         g.position += direction * positionIncrement * pitchFactor;
     }
 
-    public void setTimestretchFactor(float currentFactor) {
-        timeStretchFactor = currentFactor;
-    }
-
-    public void setPitchShiftFactor(float currentFactor) {
-        pitchFactor = currentFactor;
-    }
-
-
-    public void setGrainInterval(int grainInterval) {
-        this.grainInterval = grainInterval;
-    }
-
-
-    public void setGrainSize(int grainSize) {
-        this.grainSize = grainSize;
-
-    }
-
-    public void setGrainRandomness(float grainRandomness) {
-        this.grainRandomness = grainRandomness;
-    }
-
-
     /**
-     * @param position in seconds
+     * Special case method for playing first grain.
      */
-    public void setPosition(float position) {
-        this.position = position * 1000;
+    private void firstGrain() {
+        if (firstGrain) {
+            Grain g = new Grain();
+            g.position = position;
+            g.age = grainSize / 4f;
+            g.grainSize = grainSize;
+
+            grains.add(g);
+            firstGrain = false;
+            timeSinceLastGrain = grainInterval / 2f;
+        }
+    }
+
+    private double msToSamples(double posInMs) {
+        return (posInMs) / msPerSample;
     }
 }
 

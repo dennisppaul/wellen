@@ -4,6 +4,7 @@ import wellen.dsp.*;
 /*
  * this example demonstrates how to use multiple tone engines ( i.e midi + internal ) at the same time.
  */
+int mNote;
 
 ToneEngineDSP mToneEngineDSP;
 
@@ -32,7 +33,6 @@ void draw() {
             mToneEngineMIDI.is_playing() ? 100 : 5,
             mToneEngineMIDI.is_playing() ? 100 : 5);
 }
-int mNote;
 
 void mousePressed() {
     mNote = 45 + (int) random(0, 12);

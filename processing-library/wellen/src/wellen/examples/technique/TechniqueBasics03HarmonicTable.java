@@ -9,9 +9,9 @@ import wellen.Tone;
 
 public class TechniqueBasics03HarmonicTable extends PApplet {
 
-    private int fStep;
-    private final HarmonicTable fHarmonicTable = new HarmonicTable();
     private int fBaseNote;
+    private final HarmonicTable fHarmonicTable = new HarmonicTable();
+    private int fStep;
 
     public void settings() {
         size(640, 480);

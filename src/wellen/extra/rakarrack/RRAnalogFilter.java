@@ -44,15 +44,15 @@ package wellen.extra.rakarrack;
 */
 
 public class RRAnalogFilter extends RRFilterI {
-    public static final int TYPE_LPF_1_POLE = 0;
-    public static final int TYPE_HPF_1_POLE = 1;
-    public static final int TYPE_LPF_2_POLE = 2;
-    public static final int TYPE_HPF_2_POLE = 3;
     public static final int TYPE_BPF_2_POLE = 4;
+    public static final int TYPE_HIGH_SHELF_2_POLE = 8;
+    public static final int TYPE_HPF_1_POLE = 1;
+    public static final int TYPE_HPF_2_POLE = 3;
+    public static final int TYPE_LOW_SHELF_2_POLE = 7;
+    public static final int TYPE_LPF_1_POLE = 0;
+    public static final int TYPE_LPF_2_POLE = 2;
     public static final int TYPE_NOTCH_2_POLE = 5;
     public static final int TYPE_PEAK_2_POLE = 6;
-    public static final int TYPE_LOW_SHELF_2_POLE = 7;
-    public static final int TYPE_HIGH_SHELF_2_POLE = 8;
     private boolean abovenq;                            //this is 1 if the frequency is above the nyquist
     private final float[] c = new float[3];
     private final float[] d = new float[3];             //coefficients
@@ -223,6 +223,24 @@ public class RRAnalogFilter extends RRFilterI {
         computefiltercoefs();
     }
 
+    private float H(float freq) {
+        float fr = freq / RRUtilities.SAMPLE_RATE * RRUtilities.D_PI;
+        float x = c[0], y = 0.0f;
+        for (int n = 1; n < 3; n++) {
+            x += (float) Math.cos((float) n * fr) * c[n];
+            y -= (float) Math.sin((float) n * fr) * c[n];
+        }
+        float h = x * x + y * y;
+        x = 1.0f;
+        y = 0.0f;
+        for (int n = 1; n < 3; n++) {
+            x -= (float) Math.cos((float) n * fr) * d[n];
+            y += (float) Math.sin((float) n * fr) * d[n];
+        }
+        h = h / (x * x + y * y);
+        return ((float) Math.pow(h, (float) (stages + 1) / 2.0f));
+    }
+
     private void computefiltercoefs() {
         int zerocoefs = 0;        //this is used if the freq is too high
         float tmp;
@@ -289,6 +307,33 @@ public class RRAnalogFilter extends RRFilterI {
         }
     }
 
+    private void filter_BPF_2_pole(int zerocoefs, float freq, float tmpq) {
+        float omega;
+        float tmp;
+        float sn;
+        float alpha;
+        float cs;
+        if (zerocoefs == 0) {
+            omega = RRUtilities.D_PI * freq / RRUtilities.SAMPLE_RATE;
+            sn = (float) Math.sin(omega);
+            cs = (float) Math.cos(omega);
+            alpha = sn / (2.0f * tmpq);
+            tmp = 1.0f + alpha;
+            c[0] = alpha / tmp * (float) Math.sqrt(tmpq + 1.0f);
+            c[1] = 0.0f;
+            c[2] = -alpha / tmp * (float) Math.sqrt(tmpq + 1.0f);
+            d[1] = -2.0f * cs / tmp * (-1.0f);
+            d[2] = (1.0f - alpha) / tmp * (-1.0f);
+        } else {
+            c[0] = 0.0f;
+            c[1] = 0.0f;
+            c[2] = 0.0f;
+            d[1] = 0.0f;
+            d[2] = 0.0f;
+        }
+        order = 2;
+    }
+
     private void filter_HIGH_SHELF_2_pole(int zerocoefs, float freq, float tmpq, float tmpgain) {
         float beta;
         float sn;
@@ -312,6 +357,48 @@ public class RRAnalogFilter extends RRFilterI {
             d[2] = ((tmpgain + 1.0f) - (tmpgain - 1.0f) * cs - beta * sn) / tmp * (-1.0f);
         } else {
             c[0] = 1.0f;
+            c[1] = 0.0f;
+            c[2] = 0.0f;
+            d[1] = 0.0f;
+            d[2] = 0.0f;
+        }
+        order = 2;
+    }
+
+    private void filter_HPF_1_pole(int zerocoefs, float freq) {
+        float tmp;
+        if (zerocoefs == 0) {
+            tmp = (float) Math.exp(-RRUtilities.D_PI * freq / RRUtilities.SAMPLE_RATE);
+        } else {
+            tmp = 0.0f;
+        }
+        c[0] = (1.0f + tmp) * .5f;
+        c[1] = -(1.0f + tmp) * .5f;
+        c[2] = 0.0f;
+        d[1] = tmp;
+        d[2] = 0.0f;
+        order = 1;
+    }
+
+    private void filter_HPF_2_pole(int zerocoefs, float freq, float tmpq) {
+        float sn;
+        float alpha;
+        float omega;
+        float tmp;
+        float cs;
+        if (zerocoefs == 0) {
+            omega = RRUtilities.D_PI * freq / RRUtilities.SAMPLE_RATE;
+            sn = (float) Math.sin(omega);
+            cs = (float) Math.cos(omega);
+            alpha = sn / (2.0f * tmpq);
+            tmp = 1.0f + alpha;
+            c[0] = (1.0f + cs) / 2.0f / tmp;
+            c[1] = -(1.0f + cs) / tmp;
+            c[2] = (1.0f + cs) / 2.0f / tmp;
+            d[1] = -2.0f * cs / tmp * (-1.0f);
+            d[2] = (1.0f - alpha) / tmp * (-1.0f);
+        } else {
+            c[0] = 0.0f;
             c[1] = 0.0f;
             c[2] = 0.0f;
             d[1] = 0.0f;
@@ -351,24 +438,38 @@ public class RRAnalogFilter extends RRFilterI {
         order = 2;
     }
 
-    private void filter_PEAK_2_pole(int zerocoefs, float freq, float tmpq, float tmpgain) {
-        float alpha;
+    private void filter_LPF_1_pole(int zerocoefs, float freq) {
+        float tmp;
+        if (zerocoefs == 0) {
+            tmp = (float) Math.exp(-RRUtilities.D_PI * freq / RRUtilities.SAMPLE_RATE);
+        } else {
+            tmp = 0.0f;
+        }
+        c[0] = 1.0f - tmp;
+        c[1] = 0.0f;
+        c[2] = 0.0f;
+        d[1] = tmp;
+        d[2] = 0.0f;
+        order = 1;
+    }
+
+    private void filter_LPF_2_pole(int zerocoefs, float freq, float tmpq) {
         float cs;
         float sn;
-        float tmp;
+        float alpha;
         float omega;
+        float tmp;
         if (zerocoefs == 0) {
             omega = RRUtilities.D_PI * freq / RRUtilities.SAMPLE_RATE;
             sn = (float) Math.sin(omega);
             cs = (float) Math.cos(omega);
-            tmpq *= 3.0f;
             alpha = sn / (2.0f * tmpq);
-            tmp = 1.0f + alpha / tmpgain;
-            c[0] = (1.0f + alpha * tmpgain) / tmp;
-            c[1] = (-2.0f * cs) / tmp;
-            c[2] = (1.0f - alpha * tmpgain) / tmp;
+            tmp = 1 + alpha;
+            c[0] = (1.0f - cs) * .5f / tmp;
+            c[1] = (1.0f - cs) / tmp;
+            c[2] = (1.0f - cs) * .5f / tmp;
             d[1] = -2.0f * cs / tmp * (-1.0f);
-            d[2] = (1.0f - alpha / tmpgain) / tmp * (-1.0f);
+            d[2] = (1.0f - alpha) / tmp * (-1.0f);
         } else {
             c[0] = 1.0f;
             c[1] = 0.0f;
@@ -406,77 +507,24 @@ public class RRAnalogFilter extends RRFilterI {
         order = 2;
     }
 
-    private void filter_BPF_2_pole(int zerocoefs, float freq, float tmpq) {
-        float omega;
-        float tmp;
-        float sn;
+    private void filter_PEAK_2_pole(int zerocoefs, float freq, float tmpq, float tmpgain) {
         float alpha;
         float cs;
+        float sn;
+        float tmp;
+        float omega;
         if (zerocoefs == 0) {
             omega = RRUtilities.D_PI * freq / RRUtilities.SAMPLE_RATE;
             sn = (float) Math.sin(omega);
             cs = (float) Math.cos(omega);
+            tmpq *= 3.0f;
             alpha = sn / (2.0f * tmpq);
-            tmp = 1.0f + alpha;
-            c[0] = alpha / tmp * (float) Math.sqrt(tmpq + 1.0f);
-            c[1] = 0.0f;
-            c[2] = -alpha / tmp * (float) Math.sqrt(tmpq + 1.0f);
+            tmp = 1.0f + alpha / tmpgain;
+            c[0] = (1.0f + alpha * tmpgain) / tmp;
+            c[1] = (-2.0f * cs) / tmp;
+            c[2] = (1.0f - alpha * tmpgain) / tmp;
             d[1] = -2.0f * cs / tmp * (-1.0f);
-            d[2] = (1.0f - alpha) / tmp * (-1.0f);
-        } else {
-            c[0] = 0.0f;
-            c[1] = 0.0f;
-            c[2] = 0.0f;
-            d[1] = 0.0f;
-            d[2] = 0.0f;
-        }
-        order = 2;
-    }
-
-    private void filter_HPF_2_pole(int zerocoefs, float freq, float tmpq) {
-        float sn;
-        float alpha;
-        float omega;
-        float tmp;
-        float cs;
-        if (zerocoefs == 0) {
-            omega = RRUtilities.D_PI * freq / RRUtilities.SAMPLE_RATE;
-            sn = (float) Math.sin(omega);
-            cs = (float) Math.cos(omega);
-            alpha = sn / (2.0f * tmpq);
-            tmp = 1.0f + alpha;
-            c[0] = (1.0f + cs) / 2.0f / tmp;
-            c[1] = -(1.0f + cs) / tmp;
-            c[2] = (1.0f + cs) / 2.0f / tmp;
-            d[1] = -2.0f * cs / tmp * (-1.0f);
-            d[2] = (1.0f - alpha) / tmp * (-1.0f);
-        } else {
-            c[0] = 0.0f;
-            c[1] = 0.0f;
-            c[2] = 0.0f;
-            d[1] = 0.0f;
-            d[2] = 0.0f;
-        }
-        order = 2;
-    }
-
-    private void filter_LPF_2_pole(int zerocoefs, float freq, float tmpq) {
-        float cs;
-        float sn;
-        float alpha;
-        float omega;
-        float tmp;
-        if (zerocoefs == 0) {
-            omega = RRUtilities.D_PI * freq / RRUtilities.SAMPLE_RATE;
-            sn = (float) Math.sin(omega);
-            cs = (float) Math.cos(omega);
-            alpha = sn / (2.0f * tmpq);
-            tmp = 1 + alpha;
-            c[0] = (1.0f - cs) * .5f / tmp;
-            c[1] = (1.0f - cs) / tmp;
-            c[2] = (1.0f - cs) * .5f / tmp;
-            d[1] = -2.0f * cs / tmp * (-1.0f);
-            d[2] = (1.0f - alpha) / tmp * (-1.0f);
+            d[2] = (1.0f - alpha / tmpgain) / tmp * (-1.0f);
         } else {
             c[0] = 1.0f;
             c[1] = 0.0f;
@@ -487,34 +535,18 @@ public class RRAnalogFilter extends RRFilterI {
         order = 2;
     }
 
-    private void filter_HPF_1_pole(int zerocoefs, float freq) {
-        float tmp;
-        if (zerocoefs == 0) {
-            tmp = (float) Math.exp(-RRUtilities.D_PI * freq / RRUtilities.SAMPLE_RATE);
-        } else {
-            tmp = 0.0f;
-        }
-        c[0] = (1.0f + tmp) * .5f;
-        c[1] = -(1.0f + tmp) * .5f;
-        c[2] = 0.0f;
-        d[1] = tmp;
-        d[2] = 0.0f;
-        order = 1;
-    }
+    private void reversecoeffs() {
+        float tmpd1, tmpd2, tmpc0;
+        tmpd1 = -1.0f * d[1];
+        tmpd2 = -1.0f * d[2];
 
-    private void filter_LPF_1_pole(int zerocoefs, float freq) {
-        float tmp;
-        if (zerocoefs == 0) {
-            tmp = (float) Math.exp(-RRUtilities.D_PI * freq / RRUtilities.SAMPLE_RATE);
-        } else {
-            tmp = 0.0f;
-        }
-        c[0] = 1.0f - tmp;
-        c[1] = 0.0f;
-        c[2] = 0.0f;
-        d[1] = tmp;
-        d[2] = 0.0f;
-        order = 1;
+        tmpc0 = 10.0f * c[0];
+
+        c[0] = tmpc0;
+        d[1] = -1.0f * c[1] * tmpc0;
+        d[2] = -1.0f * c[2] * tmpc0;
+        c[1] = tmpd1 * tmpc0;
+        c[2] = tmpd2 * tmpc0;
     }
 
     private void singlefilterout(float[] smp, fstage x, fstage y, float[] c, float[] d) {
@@ -564,38 +596,6 @@ public class RRAnalogFilter extends RRFilterI {
 
         }
         return (smp);
-    }
-
-    private void reversecoeffs() {
-        float tmpd1, tmpd2, tmpc0;
-        tmpd1 = -1.0f * d[1];
-        tmpd2 = -1.0f * d[2];
-
-        tmpc0 = 10.0f * c[0];
-
-        c[0] = tmpc0;
-        d[1] = -1.0f * c[1] * tmpc0;
-        d[2] = -1.0f * c[2] * tmpc0;
-        c[1] = tmpd1 * tmpc0;
-        c[2] = tmpd2 * tmpc0;
-    }
-
-    private float H(float freq) {
-        float fr = freq / RRUtilities.SAMPLE_RATE * RRUtilities.D_PI;
-        float x = c[0], y = 0.0f;
-        for (int n = 1; n < 3; n++) {
-            x += (float) Math.cos((float) n * fr) * c[n];
-            y -= (float) Math.sin((float) n * fr) * c[n];
-        }
-        float h = x * x + y * y;
-        x = 1.0f;
-        y = 0.0f;
-        for (int n = 1; n < 3; n++) {
-            x -= (float) Math.cos((float) n * fr) * d[n];
-            y += (float) Math.sin((float) n * fr) * d[n];
-        }
-        h = h / (x * x + y * y);
-        return ((float) Math.pow(h, (float) (stages + 1) / 2.0f));
     }
 
     private static class fstage {

@@ -6,9 +6,9 @@ import wellen.dsp.*;
  * in *beats per minute* (bpm) ( i.e quarter notes per minute ).
  */
 
-final int[] mNotes = {Note.NOTE_C3, Note.NOTE_C4, Note.NOTE_A2, Note.NOTE_A3};
-
 int mBeatCount;
+
+final int[] mNotes = {Note.NOTE_C3, Note.NOTE_C4, Note.NOTE_A2, Note.NOTE_A3};
 
 void settings() {
     size(640, 480);

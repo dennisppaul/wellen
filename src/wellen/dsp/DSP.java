@@ -35,25 +35,25 @@ import java.util.Arrays;
  */
 public class DSP implements AudioBufferRenderer {
 
+    private static final int INPUT_LEFT = 2;
+    private static final int INPUT_RIGHT = 3;
+    private static final String METHOD_NAME = "audioblock";
+    private static final int NUM_CACHED_BUFFERS = 4;
+    private static final int OUTPUT_LEFT = 0;
+    private static final int OUTPUT_RIGHT = 1;
+    private static AudioBufferManager mAudioPlayer;
+    private static DSP mInstance = null;
     /**
      * enable to create a copy of a cached buffer for each call to <code>audioblock(...)</code>. this is useful if the
      * processing of the audio signal is not thread-safe.
      */
     public boolean COPY_CACHED_BUFFER = false;
-
-    private static final String METHOD_NAME = "audioblock";
-    private static AudioBufferManager mAudioPlayer;
-    private static DSP mInstance = null;
-    private final Object mListener;
-    private final int mNumberOutputChannels;
-    private final int mNumberInputChannels;
-    private Method mMethod = null;
-    private static final int OUTPUT_LEFT = 0;
-    private static final int OUTPUT_RIGHT = 1;
-    private static final int INPUT_LEFT = 2;
-    private static final int INPUT_RIGHT = 3;
-    private static final int NUM_CACHED_BUFFERS = 4;
     private final float[][] fCachedBuffers = new float[NUM_CACHED_BUFFERS][];
+    private final Object mListener;
+    private Method mMethod = null;
+    /* --- UTILITIES --- */
+    private final int mNumberInputChannels;
+    private final int mNumberOutputChannels;
 
     /**
      * @param pListener             object which implements the <code>audioblock(...)</code> method
@@ -91,51 +91,107 @@ public class DSP implements AudioBufferRenderer {
         }
     }
 
-    public void audioblock(float[][] output_signal, float[][] pInputSignal) {
-        try {
-            Arrays.fill(fCachedBuffers, null);
-            if (mNumberOutputChannels == 1 && mNumberInputChannels == 0) {
-                //noinspection PrimitiveArrayArgumentToVarargsMethod
-                mMethod.invoke(mListener, output_signal[0]);
-                fCachedBuffers[OUTPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(output_signal[0]) : output_signal[0];
-            } else if (mNumberOutputChannels == 1 && mNumberInputChannels == 1) {
-                mMethod.invoke(mListener, output_signal[0], pInputSignal[0]);
-                fCachedBuffers[OUTPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(output_signal[0]) : output_signal[0];
-                fCachedBuffers[INPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(pInputSignal[0]) : pInputSignal[0];
-            } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 0) {
-                mMethod.invoke(mListener, output_signal[0], output_signal[1]);
-                fCachedBuffers[OUTPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(output_signal[0]) : output_signal[0];
-                fCachedBuffers[OUTPUT_RIGHT] = COPY_CACHED_BUFFER ? Wellen.copy(output_signal[1]) : output_signal[1];
-            } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 1) {
-                mMethod.invoke(mListener, output_signal[0], output_signal[1], pInputSignal[0]);
-                fCachedBuffers[OUTPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(output_signal[0]) : output_signal[0];
-                fCachedBuffers[OUTPUT_RIGHT] = COPY_CACHED_BUFFER ? Wellen.copy(output_signal[1]) : output_signal[1];
-                fCachedBuffers[INPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(pInputSignal[0]) : pInputSignal[0];
-            } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 2) {
-                mMethod.invoke(mListener, output_signal[0], output_signal[1], pInputSignal[0], pInputSignal[1]);
-                fCachedBuffers[OUTPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(output_signal[0]) : output_signal[0];
-                fCachedBuffers[OUTPUT_RIGHT] = COPY_CACHED_BUFFER ? Wellen.copy(output_signal[1]) : output_signal[1];
-                fCachedBuffers[INPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(pInputSignal[0]) : pInputSignal[0];
-                fCachedBuffers[INPUT_RIGHT] = COPY_CACHED_BUFFER ? Wellen.copy(pInputSignal[1]) : pInputSignal[1];
-            } else {
-                mMethod.invoke(mListener, output_signal, pInputSignal);
-            }
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException |
-                 NullPointerException ex) {
-            System.err.println("+++ @" + DSP.class.getSimpleName() + " / error in audioblock: " + ex.getCause());
-            ex.printStackTrace();
+    /**
+     * Calculates and returns the root mean square of the signal. Please cache the result since it is calculated every
+     * time.
+     *
+     * @param pBuffer The audio buffer to calculate the RMS for.
+     * @return The <a href="http://en.wikipedia.org/wiki/Root_mean_square">RMS</a> of the signal present in the current
+     *         buffer.
+     */
+    public static float calculate_RMS(final float[] pBuffer) {
+        float mRMS = 0.0f;
+        for (float v : pBuffer) {
+            mRMS += v * v;
         }
+        mRMS = mRMS / (float) pBuffer.length;
+        mRMS = (float) Math.sqrt(mRMS);
+        return mRMS;
     }
 
     /**
-     *
+     * @param g       graphics context to draw into
+     * @param pWidth  visual width of the drawn buffer
+     * @param pHeight visual height of the drawn buffer
      */
-    public static void stop() {
-        if (mAudioPlayer != null) {
-            mAudioPlayer.exit();
-        }
-        mInstance = null;
-        mAudioPlayer = null;
+    public static void draw_buffers(PGraphics g, float pWidth, float pHeight) {
+        Wellen.draw_buffers(g,
+                            pWidth,
+                            pHeight,
+                            DSP.get_output_buffer_left(),
+                            DSP.get_output_buffer_right(),
+                            DSP.get_input_buffer_left(),
+                            DSP.get_input_buffer_right());
+    }
+
+    /**
+     * @return audio block or buffer size
+     */
+    public static int get_buffer_size() {
+        return mAudioPlayer == null ? Wellen.NO_VALUE : mAudioPlayer.get_buffer_size();
+    }
+
+    /**
+     * @return reference to left input buffer
+     */
+    public static float[] get_input_buffer_left() {
+        return mInstance == null ? null : mInstance.fCachedBuffers[INPUT_LEFT];
+    }
+
+    /**
+     * @return reference to right input buffer
+     */
+    public static float[] get_input_buffer_right() {
+        return mInstance == null ? null : mInstance.fCachedBuffers[INPUT_RIGHT];
+    }
+
+    /**
+     * @return reference to output buffer
+     */
+    public static float[] get_output_buffer() {
+        return get_output_buffer_left();
+    }
+
+    /**
+     * @return reference to left output buffer
+     */
+    public static float[] get_output_buffer_left() {
+        return mInstance == null ? null : mInstance.fCachedBuffers[OUTPUT_LEFT];
+    }
+
+    /**
+     * @return reference to right output buffer
+     */
+    public static float[] get_output_buffer_right() {
+        return mInstance == null ? null : mInstance.fCachedBuffers[OUTPUT_RIGHT];
+    }
+
+    /**
+     * @return sample rate
+     */
+    public static int get_sample_rate() {
+        return mAudioPlayer == null ? Wellen.NO_VALUE : mAudioPlayer.get_sample_rate();
+    }
+
+    /**
+     * Converts a linear to a dB value.
+     *
+     * @param pLinearValue linear value to convert
+     * @return converted value in decibel
+     */
+    public static float linear_to_decibel(final float pLinearValue) {
+        return 20.0f * (float) Math.log10(pLinearValue);
+    }
+
+    /**
+     * returns sound pressure level in decibel for given buffer
+     *
+     * @param pBuffer buffer with signal
+     * @return level for buffer in decibel
+     */
+    public static float sound_pressure_level(final float[] pBuffer) {
+        float rms = calculate_RMS(pBuffer);
+        return linear_to_decibel(rms);
     }
 
     /**
@@ -267,107 +323,49 @@ public class DSP implements AudioBufferRenderer {
     }
 
     /**
-     * @return sample rate
-     */
-    public static int get_sample_rate() {
-        return mAudioPlayer == null ? Wellen.NO_VALUE : mAudioPlayer.get_sample_rate();
-    }
-
-    /**
-     * @return audio block or buffer size
-     */
-    public static int get_buffer_size() {
-        return mAudioPlayer == null ? Wellen.NO_VALUE : mAudioPlayer.get_buffer_size();
-    }
-
-    /**
-     * @return reference to output buffer
-     */
-    public static float[] get_output_buffer() {
-        return get_output_buffer_left();
-    }
-
-    /**
-     * @return reference to left output buffer
-     */
-    public static float[] get_output_buffer_left() {
-        return mInstance == null ? null : mInstance.fCachedBuffers[OUTPUT_LEFT];
-    }
-
-    /**
-     * @return reference to right output buffer
-     */
-    public static float[] get_output_buffer_right() {
-        return mInstance == null ? null : mInstance.fCachedBuffers[OUTPUT_RIGHT];
-    }
-
-    /**
-     * @return reference to left input buffer
-     */
-    public static float[] get_input_buffer_left() {
-        return mInstance == null ? null : mInstance.fCachedBuffers[INPUT_LEFT];
-    }
-
-    /**
-     * @return reference to right input buffer
-     */
-    public static float[] get_input_buffer_right() {
-        return mInstance == null ? null : mInstance.fCachedBuffers[INPUT_RIGHT];
-    }
-
-    /**
-     * @param g       graphics context to draw into
-     * @param pWidth  visual width of the drawn buffer
-     * @param pHeight visual height of the drawn buffer
-     */
-    public static void draw_buffers(PGraphics g, float pWidth, float pHeight) {
-        Wellen.draw_buffers(g,
-                            pWidth,
-                            pHeight,
-                            DSP.get_output_buffer_left(),
-                            DSP.get_output_buffer_right(),
-                            DSP.get_input_buffer_left(),
-                            DSP.get_input_buffer_right());
-    }
-
-    /* --- UTILITIES --- */
-
-    /**
-     * Calculates and returns the root mean square of the signal. Please cache the result since it is calculated every
-     * time.
      *
-     * @param pBuffer The audio buffer to calculate the RMS for.
-     * @return The <a href="http://en.wikipedia.org/wiki/Root_mean_square">RMS</a> of the signal present in the current
-     *         buffer.
      */
-    public static float calculate_RMS(final float[] pBuffer) {
-        float mRMS = 0.0f;
-        for (float v : pBuffer) {
-            mRMS += v * v;
+    public static void stop() {
+        if (mAudioPlayer != null) {
+            mAudioPlayer.exit();
         }
-        mRMS = mRMS / (float) pBuffer.length;
-        mRMS = (float) Math.sqrt(mRMS);
-        return mRMS;
+        mInstance = null;
+        mAudioPlayer = null;
     }
 
-    /**
-     * returns sound pressure level in decibel for given buffer
-     *
-     * @param pBuffer buffer with signal
-     * @return level for buffer in decibel
-     */
-    public static float sound_pressure_level(final float[] pBuffer) {
-        float rms = calculate_RMS(pBuffer);
-        return linear_to_decibel(rms);
-    }
-
-    /**
-     * Converts a linear to a dB value.
-     *
-     * @param pLinearValue linear value to convert
-     * @return converted value in decibel
-     */
-    public static float linear_to_decibel(final float pLinearValue) {
-        return 20.0f * (float) Math.log10(pLinearValue);
+    public void audioblock(float[][] output_signal, float[][] pInputSignal) {
+        try {
+            Arrays.fill(fCachedBuffers, null);
+            if (mNumberOutputChannels == 1 && mNumberInputChannels == 0) {
+                //noinspection PrimitiveArrayArgumentToVarargsMethod
+                mMethod.invoke(mListener, output_signal[0]);
+                fCachedBuffers[OUTPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(output_signal[0]) : output_signal[0];
+            } else if (mNumberOutputChannels == 1 && mNumberInputChannels == 1) {
+                mMethod.invoke(mListener, output_signal[0], pInputSignal[0]);
+                fCachedBuffers[OUTPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(output_signal[0]) : output_signal[0];
+                fCachedBuffers[INPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(pInputSignal[0]) : pInputSignal[0];
+            } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 0) {
+                mMethod.invoke(mListener, output_signal[0], output_signal[1]);
+                fCachedBuffers[OUTPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(output_signal[0]) : output_signal[0];
+                fCachedBuffers[OUTPUT_RIGHT] = COPY_CACHED_BUFFER ? Wellen.copy(output_signal[1]) : output_signal[1];
+            } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 1) {
+                mMethod.invoke(mListener, output_signal[0], output_signal[1], pInputSignal[0]);
+                fCachedBuffers[OUTPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(output_signal[0]) : output_signal[0];
+                fCachedBuffers[OUTPUT_RIGHT] = COPY_CACHED_BUFFER ? Wellen.copy(output_signal[1]) : output_signal[1];
+                fCachedBuffers[INPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(pInputSignal[0]) : pInputSignal[0];
+            } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 2) {
+                mMethod.invoke(mListener, output_signal[0], output_signal[1], pInputSignal[0], pInputSignal[1]);
+                fCachedBuffers[OUTPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(output_signal[0]) : output_signal[0];
+                fCachedBuffers[OUTPUT_RIGHT] = COPY_CACHED_BUFFER ? Wellen.copy(output_signal[1]) : output_signal[1];
+                fCachedBuffers[INPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(pInputSignal[0]) : pInputSignal[0];
+                fCachedBuffers[INPUT_RIGHT] = COPY_CACHED_BUFFER ? Wellen.copy(pInputSignal[1]) : pInputSignal[1];
+            } else {
+                mMethod.invoke(mListener, output_signal, pInputSignal);
+            }
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException |
+                 NullPointerException ex) {
+            System.err.println("+++ @" + DSP.class.getSimpleName() + " / error in audioblock: " + ex.getCause());
+            ex.printStackTrace();
+        }
     }
 }

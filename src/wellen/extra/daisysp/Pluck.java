@@ -23,20 +23,17 @@ public class Pluck {
      */
     public static final int PLUCK_MODE_RECURSIVE = 0;
     public static final int PLUCK_MODE_WEIGHTED_AVERAGE = 1;
-
-    private static final int PLUKMIN = 64;
     private static final float INTERPFACTOR = 256.0f;
     private static final int INTERPFACTOR_I = 255;
-
+    private static final int PLUKMIN = 64;
     private float amp_, freq_, decay_, damp_, ifreq_;
-    private float sicps_;
-    private int phs256_, npts_, maxpts_;
     private float[] buf_;
-    private float sample_rate_;
     private boolean init_;
-    private int mode_;
-
     private boolean mTrigger = false;
+    private int mode_;
+    private int phs256_, npts_, maxpts_;
+    private float sample_rate_;
+    private float sicps_;
 
     /**
      * Initializes the Pluck module.

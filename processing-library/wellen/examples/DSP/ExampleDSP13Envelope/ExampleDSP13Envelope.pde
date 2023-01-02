@@ -8,11 +8,11 @@ import wellen.dsp.*;
  * the simplex noise generator.
  */
 
-Noise mNoise;
-
 Envelope mEnvelopeAmplitude;
 
 Envelope mEnvelopeStepSize;
+
+Noise mNoise;
 
 void settings() {
     size(640, 480);

@@ -44,17 +44,37 @@ public class PitchShifter {
 
     private static final int MAX_FRAME_LENGTH = 8192;
     private static final float M_PI = (float) Math.PI;
-    private final float[] gInFIFO = new float[MAX_FRAME_LENGTH];
-    private final float[] gOutFIFO = new float[MAX_FRAME_LENGTH];
-    private final float[] gFFTworksp = new float[2 * MAX_FRAME_LENGTH];
-    private final float[] gLastPhase = new float[MAX_FRAME_LENGTH / 2 + 1];
-    private final float[] gSumPhase = new float[MAX_FRAME_LENGTH / 2 + 1];
-    private final float[] gOutputAccum = new float[2 * MAX_FRAME_LENGTH];
     private final float[] gAnaFreq = new float[MAX_FRAME_LENGTH];
     private final float[] gAnaMagn = new float[MAX_FRAME_LENGTH];
+    private final float[] gFFTworksp = new float[2 * MAX_FRAME_LENGTH];
+    private final float[] gInFIFO = new float[MAX_FRAME_LENGTH];
+    private final float[] gLastPhase = new float[MAX_FRAME_LENGTH / 2 + 1];
+    private final float[] gOutFIFO = new float[MAX_FRAME_LENGTH];
+    private final float[] gOutputAccum = new float[2 * MAX_FRAME_LENGTH];
+    private int gRover = 0;
+    private final float[] gSumPhase = new float[MAX_FRAME_LENGTH / 2 + 1];
     private final float[] gSynFreq = new float[MAX_FRAME_LENGTH];
     private final float[] gSynMagn = new float[MAX_FRAME_LENGTH];
-    private int gRover = 0;
+
+    private static float atan2(float y, float x) {
+        return (float) Math.atan2(y, x);
+    }
+
+    private static float cos(float r) {
+        return (float) Math.cos(r);
+    }
+
+    private static float log(float x) {
+        return (float) Math.log(x);
+    }
+
+    private static float sin(float r) {
+        return (float) Math.sin(r);
+    }
+
+    private static float sqrt(float x) {
+        return (float) Math.sqrt(x);
+    }
 
     public void smbPitchShift(float pitchShift,
                               int numSampsToProcess,
@@ -286,26 +306,6 @@ public class PitchShifter {
                 ur = tr;
             }
         }
-    }
-
-    private static float sin(float r) {
-        return (float) Math.sin(r);
-    }
-
-    private static float cos(float r) {
-        return (float) Math.cos(r);
-    }
-
-    private static float atan2(float y, float x) {
-        return (float) Math.atan2(y, x);
-    }
-
-    private static float sqrt(float x) {
-        return (float) Math.sqrt(x);
-    }
-
-    private static float log(float x) {
-        return (float) Math.log(x);
     }
 
     ///*

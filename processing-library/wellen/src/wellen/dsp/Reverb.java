@@ -148,7 +148,6 @@ public class Reverb implements DSPNodeProcessSignal, DSPNodeProcess, EffectStere
     private final float largest_diff = 0.01f;
     private final GlideVar roomSize;
     private final GlideVar wet;
-
     public Reverb() {
         fslider0 = 0.5f;
         fslider1 = 0.5f;

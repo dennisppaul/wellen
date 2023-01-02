@@ -80,23 +80,19 @@ THE SOFTWARE.
  */
 public class DynamicWavelet implements PitchDetector {
 
+    int[] distances;
+    int[] maxs;
+    int[] mins;
+    private final int differenceLevelsN = 3;
+    private final double maxF = 3000.;
     // algorithm parameters
     private final int maxFLWTlevels = 6;
-    private final double maxF = 3000.;
-    private final int differenceLevelsN = 3;
     private final double maximaThresholdRatio = 0.75;
-
     /**
      * The result of the pitch detection iteration.
      */
     private final PitchDetectionResult result;
-
     private final float sampleRate;
-
-    int[] distances;
-    int[] mins;
-    int[] maxs;
-
     public DynamicWavelet(float sampleRate, int bufferSize) {
         this.sampleRate = sampleRate;
 

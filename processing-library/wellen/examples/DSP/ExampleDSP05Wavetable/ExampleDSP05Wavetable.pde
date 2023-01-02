@@ -1,6 +1,10 @@
 import wellen.*; 
 import wellen.dsp.*; 
 
+
+boolean mInterpolateAmplitudeAndFrequency = false;
+
+Wavetable mWavetable;
 /*
  * this example demonstrates how to use a *wavetable* ( a chunk of memory ) and play it back at different
  * frequencies and amplitudes. in this example a wavetable is used to emulate an oscillator (VCO) with different
@@ -15,10 +19,6 @@ import wellen.dsp.*;
  */
 
 int mWavetableSize = 6;
-
-Wavetable mWavetable;
-
-boolean mInterpolateAmplitudeAndFrequency = false;
 
 void settings() {
     size(640, 480);

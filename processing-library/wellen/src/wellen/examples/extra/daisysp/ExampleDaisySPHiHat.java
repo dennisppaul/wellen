@@ -11,9 +11,9 @@ import wellen.extra.daisysp.SyntheticBassDrum;
 public class ExampleDaisySPHiHat extends PApplet {
     //@add import wellen.extra.daisysp.*;
 
+    private SyntheticBassDrum mBassDrum;
     private int mBeatCount;
     private HiHat mHiHat;
-    private SyntheticBassDrum mBassDrum;
     private ReverbSc mReverb;
 
     public void settings() {

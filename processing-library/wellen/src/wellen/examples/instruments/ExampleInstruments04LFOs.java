@@ -14,9 +14,9 @@ public class ExampleInstruments04LFOs extends PApplet {
      * note that this functionality is not implemented for MIDI and OSC.
      */
 
-    private boolean mToggleLFOParameterSelect = true;
-    private boolean mEnableFrequencyLFO = false;
     private boolean mEnableAmplitudeLFO = false;
+    private boolean mEnableFrequencyLFO = false;
+    private boolean mToggleLFOParameterSelect = true;
 
     public void settings() {
         size(640, 480);

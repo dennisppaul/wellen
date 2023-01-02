@@ -29,18 +29,6 @@ public class Signal {
 
     public final float[] signal;
 
-    public static Signal create(float pSignalLeft, float pSignalRight) {
-        return new Signal(pSignalLeft, pSignalRight);
-    }
-
-    public static Signal create(float pSignal) {
-        return new Signal(pSignal);
-    }
-
-    public static Signal create_stereo(float pSignal) {
-        return new Signal(pSignal, pSignal);
-    }
-
     public Signal(int pChannels) {
         signal = new float[pChannels];
     }
@@ -63,6 +51,18 @@ public class Signal {
     public Signal(Signal pSignal) {
         this(pSignal.signal.length);
         System.arraycopy(pSignal.signal, 0, signal, 0, signal.length);
+    }
+
+    public static Signal create(float pSignalLeft, float pSignalRight) {
+        return new Signal(pSignalLeft, pSignalRight);
+    }
+
+    public static Signal create(float pSignal) {
+        return new Signal(pSignal);
+    }
+
+    public static Signal create_stereo(float pSignal) {
+        return new Signal(pSignal, pSignal);
     }
 
     public float[] signal() {

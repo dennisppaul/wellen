@@ -5,14 +5,14 @@ import wellen.dsp.DSP;
 
 public class TestDSPAtoms extends PApplet {
 
-    private final Atoms.Oscillator osc1 = new Atoms.Oscillator();
-    private final Atoms.Oscillator osc2 = new Atoms.Oscillator();
     private final Atoms.ADSR adsr1 = new Atoms.ADSR();
     private final Atoms.ADSR adsr2 = new Atoms.ADSR();
     private final Atoms.VDelay delay1 = new Atoms.VDelay();
     private final Atoms.VDelay delay2 = new Atoms.VDelay();
     private final Atoms.Flanger flanger1 = new Atoms.Flanger();
     private final Atoms.Flanger flanger2 = new Atoms.Flanger();
+    private final Atoms.Oscillator osc1 = new Atoms.Oscillator();
+    private final Atoms.Oscillator osc2 = new Atoms.Oscillator();
 
     public void settings() {
         size(1024, 768);

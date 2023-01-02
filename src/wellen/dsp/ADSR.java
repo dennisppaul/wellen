@@ -25,7 +25,6 @@ import wellen.Wellen;
  * envelope with (A)ttack (D)ecay (S)ustain (R)elease stages: {@link ADSR}
  * <p>
  * it is usually used to control the amplitude of an *oscillator*.
- *
  * <pre><code>
  *                |-----›|--›|   |--›|
  *                |---A--|-D-|-S-|-R-|
@@ -75,17 +74,6 @@ public class ADSR implements DSPNodeOutput {
     public static final String ADSR_DIAGRAM = "    ^    /\\\n" + "    |   /  \\\n" + "    |  /    \\______\n" + "    "
             + "| /            \\\n" + "    |/              \\\n" + "    +---------------------->\n" + "    [A   " +
             "][D][S " + "  ][R]\n";
-    private static final boolean DEBUG_ADSR = false;
-    private final int mSamplingRate;
-    private final float FADE_TO_ZERO_RATE_SEC;
-    private final boolean USE_FADE_TO_ZERO_STATE = false;
-    private float mAttack = Wellen.DEFAULT_ATTACK;
-    private float mDecay = Wellen.DEFAULT_DECAY;
-    private float mSustain = Wellen.DEFAULT_SUSTAIN;
-    private float mRelease = Wellen.DEFAULT_RELEASE;
-    private ENVELOPE_STATE mState;
-    private float mAmp = 0.0f;
-    private float mDelta = 0.0f;
 
     private enum ENVELOPE_STATE {
         IDLE,
@@ -95,6 +83,18 @@ public class ADSR implements DSPNodeOutput {
         RELEASE,
         PRE_ATTACK_FADE_TO_ZERO
     }
+
+    private static final boolean DEBUG_ADSR = false;
+    private final float FADE_TO_ZERO_RATE_SEC;
+    private final boolean USE_FADE_TO_ZERO_STATE = false;
+    private float mAmp = 0.0f;
+    private float mAttack = Wellen.DEFAULT_ATTACK;
+    private float mDecay = Wellen.DEFAULT_DECAY;
+    private float mDelta = 0.0f;
+    private float mRelease = Wellen.DEFAULT_RELEASE;
+    private final int mSamplingRate;
+    private ENVELOPE_STATE mState;
+    private float mSustain = Wellen.DEFAULT_SUSTAIN;
 
     /**
      * @param pSamplingRate sampling rate in Hz.
@@ -204,10 +204,6 @@ public class ADSR implements DSPNodeOutput {
         mRelease = pRelease;
     }
 
-    private float compute_delta_fraction(float pDelta, float pDuration) {
-        return pDuration > 0 ? (pDelta / mSamplingRate) / pDuration : pDelta;
-    }
-
     private void check_scheduled_attack_state() {
         if (mAmp > 0.0f) {
             if (USE_FADE_TO_ZERO_STATE) {
@@ -230,6 +226,10 @@ public class ADSR implements DSPNodeOutput {
             mDelta = compute_delta_fraction(-mAmp, mRelease);
             setState(ENVELOPE_STATE.RELEASE);
         }
+    }
+
+    private float compute_delta_fraction(float pDelta, float pDuration) {
+        return pDuration > 0 ? (pDelta / mSamplingRate) / pDuration : pDelta;
     }
 
     private void setState(ENVELOPE_STATE pState) {

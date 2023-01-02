@@ -73,55 +73,45 @@ public final class McLeodPitchMethod implements PitchDetector {
      */
     private static final double DEFAULT_CUTOFF = 0.97;
     /**
-     * For performance reasons, peaks below this cutoff are not even considered.
-     */
-    private static final double SMALL_CUTOFF = 0.5;
-
-    /**
      * Pitch annotations below this threshold are considered invalid, they are ignored.
      */
     private static final double LOWER_PITCH_CUTOFF = 80.0; // Hz
-
     /**
-     * Defines the relative size the chosen peak (pitch) has.
+     * For performance reasons, peaks below this cutoff are not even considered.
      */
-    private final double cutoff;
-
-    /**
-     * The audio sample rate. Most audio has a sample rate of 44.1kHz.
-     */
-    private final float sampleRate;
-
-    /**
-     * Contains a normalized square difference function value for each delay (tau).
-     */
-    private final float[] nsdf;
-
-    /**
-     * The x and y coordinate of the top of the curve (nsdf).
-     */
-    private float turningPointX, turningPointY;
-
-    /**
-     * A list with minimum and maximum values of the nsdf curve.
-     */
-    private final List<Integer> maxPositions = new ArrayList<Integer>();
-
-    /**
-     * A list of estimates of the period of the signal (in samples).
-     */
-    private final List<Float> periodEstimates = new ArrayList<Float>();
-
+    private static final double SMALL_CUTOFF = 0.5;
     /**
      * A list of estimates of the amplitudes corresponding with the period estimates.
      */
     private final List<Float> ampEstimates = new ArrayList<Float>();
-
+    /**
+     * Defines the relative size the chosen peak (pitch) has.
+     */
+    private final double cutoff;
+    /**
+     * A list with minimum and maximum values of the nsdf curve.
+     */
+    private final List<Integer> maxPositions = new ArrayList<Integer>();
+    /**
+     * Contains a normalized square difference function value for each delay (tau).
+     */
+    private final float[] nsdf;
+    /**
+     * A list of estimates of the period of the signal (in samples).
+     */
+    private final List<Float> periodEstimates = new ArrayList<Float>();
     /**
      * The result of the pitch detection iteration.
      */
     private final PitchDetectionResult result;
-
+    /**
+     * The audio sample rate. Most audio has a sample rate of 44.1kHz.
+     */
+    private final float sampleRate;
+    /**
+     * The x and y coordinate of the top of the curve (nsdf).
+     */
+    private float turningPointX, turningPointY;
     /**
      * Initializes the normalized square difference value array and stores the sample rate.
      *
@@ -130,7 +120,6 @@ public final class McLeodPitchMethod implements PitchDetector {
     public McLeodPitchMethod(final float audioSampleRate) {
         this(audioSampleRate, DEFAULT_BUFFER_SIZE, DEFAULT_CUTOFF);
     }
-
     /**
      * Create a new pitch detector.
      *
@@ -140,7 +129,6 @@ public final class McLeodPitchMethod implements PitchDetector {
     public McLeodPitchMethod(final float audioSampleRate, final int audioBufferSize) {
         this(audioSampleRate, audioBufferSize, DEFAULT_CUTOFF);
     }
-
     /**
      * Create a new pitch detector.
      *
@@ -153,24 +141,6 @@ public final class McLeodPitchMethod implements PitchDetector {
         nsdf = new float[audioBufferSize];
         this.cutoff = cutoffMPM;
         result = new PitchDetectionResult();
-    }
-
-    /**
-     * Implements the normalized square difference function. See section 4 (and the explanation before) in the MPM
-     * article. This calculation can be optimized by using an FFT. The results should remain the same.
-     *
-     * @param audioBuffer The buffer with audio information.
-     */
-    private void normalizedSquareDifference(final float[] audioBuffer) {
-        for (int tau = 0; tau < audioBuffer.length; tau++) {
-            float acf = 0;
-            float divisorM = 0;
-            for (int i = 0; i < audioBuffer.length - tau; i++) {
-                acf += audioBuffer[i] * audioBuffer[i + tau];
-                divisorM += audioBuffer[i] * audioBuffer[i] + audioBuffer[i + tau] * audioBuffer[i + tau];
-            }
-            nsdf[tau] = 2 * acf / divisorM;
-        }
     }
 
     /*
@@ -243,6 +213,24 @@ public final class McLeodPitchMethod implements PitchDetector {
     }
 
     /**
+     * Implements the normalized square difference function. See section 4 (and the explanation before) in the MPM
+     * article. This calculation can be optimized by using an FFT. The results should remain the same.
+     *
+     * @param audioBuffer The buffer with audio information.
+     */
+    private void normalizedSquareDifference(final float[] audioBuffer) {
+        for (int tau = 0; tau < audioBuffer.length; tau++) {
+            float acf = 0;
+            float divisorM = 0;
+            for (int i = 0; i < audioBuffer.length - tau; i++) {
+                acf += audioBuffer[i] * audioBuffer[i + tau];
+                divisorM += audioBuffer[i] * audioBuffer[i] + audioBuffer[i + tau] * audioBuffer[i + tau];
+            }
+            nsdf[tau] = 2 * acf / divisorM;
+        }
+    }
+
+    /**
      * <p>
      * Finds the x value corresponding with the peak of a parabola.
      * </p>
@@ -256,7 +244,6 @@ public final class McLeodPitchMethod implements PitchDetector {
      * <p>
      * The following ASCII ART shows it a bit more clear, imagine this to be a bit more curvaceous.
      * </p>
-     *
      * <pre>
      *     nsdf(x)
      *       ^
@@ -300,7 +287,6 @@ public final class McLeodPitchMethod implements PitchDetector {
      * last positive zero crossing and the end (if any). Ignoring the first maximum (which is at zero). In this diagram
      * the desired values are marked with a +
      * </p>
-     *
      * <pre>
      *  f(x)
      *   ^

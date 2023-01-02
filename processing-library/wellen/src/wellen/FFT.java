@@ -56,9 +56,9 @@ import java.lang.reflect.Array;
 public class FFT extends FourierTransform {
 
     private static FFT instance;
+    private float[] coslookup;
     private int[] reverse;
     private float[] sinlookup;
-    private float[] coslookup;
 
     /**
      * Constructs an FFT that will accept sample buffers that are
@@ -79,6 +79,41 @@ public class FFT extends FourierTransform {
     }
 
     /**
+     * @param pFrequency frequency
+     * @return frequency
+     */
+    public static float get_frequency(float pFrequency) {
+        return instance().getFreq(pFrequency);
+    }
+
+    /**
+     * @return spectrum
+     */
+    public static float[] get_spectrum() {
+        return instance().getSpectrum();
+    }
+
+    /**
+     * @return instance
+     */
+    public static FFT instance() {
+        if (instance == null) {
+            instance = new FFT(Wellen.DEFAULT_AUDIOBLOCK_SIZE, Wellen.DEFAULT_SAMPLING_RATE);
+            instance.window(FFT.HAMMING);
+        }
+        return instance;
+    }
+
+    /**
+     * @param pSignal signal
+     */
+    public static void perform_forward_transform(float[] pSignal) {
+        float[] mSignalCopy = new float[pSignal.length];
+        System.arraycopy(pSignal, 0, mSignalCopy, 0, Array.getLength(pSignal));
+        instance().forward(mSignalCopy);
+    }
+
+    /**
      * Performs a forward transform on the passed buffers.
      *
      * @param buffReal the real part of the time domain signal to transform
@@ -96,7 +131,6 @@ public class FFT extends FourierTransform {
     }
 
     /**
-     *
      * @param i the frequency band to modify
      * @param a the new amplitude
      */
@@ -121,7 +155,6 @@ public class FFT extends FourierTransform {
     }
 
     /**
-     *
      * @param i the frequency band to modify
      * @param s the scaling factor
      */
@@ -143,7 +176,6 @@ public class FFT extends FourierTransform {
     }
 
     /**
-     *
      * @param buffer the buffer to analyze
      */
     public void forward(float[] buffer) {
@@ -160,8 +192,9 @@ public class FFT extends FourierTransform {
         fillSpectrum();
     }
 
+    // lookup tables
+
     /**
-     *
      * @param buffer the buffer to place the result of the inverse transform in
      */
     public void inverse(float[] buffer) {
@@ -206,8 +239,6 @@ public class FFT extends FourierTransform {
             imag[i] = 0.0f;
         }
     }
-
-    // lookup tables
 
     private void buildReverseTable() {
         int N = timeSize;
@@ -270,41 +301,6 @@ public class FFT extends FourierTransform {
     private float sin(int i) {
         return sinlookup[i];
     }
-
-    /**
-     * @return instance
-     */
-    public static FFT instance() {
-        if (instance == null) {
-            instance = new FFT(Wellen.DEFAULT_AUDIOBLOCK_SIZE, Wellen.DEFAULT_SAMPLING_RATE);
-            instance.window(FFT.HAMMING);
-        }
-        return instance;
-    }
-
-    /**
-     * @return spectrum
-     */
-    public static float[] get_spectrum() {
-        return instance().getSpectrum();
-    }
-
-    /**
-     * @param pFrequency frequency
-     * @return frequency
-     */
-    public static float get_frequency(float pFrequency) {
-        return instance().getFreq(pFrequency);
-    }
-
-    /**
-     * @param pSignal signal
-     */
-    public static void perform_forward_transform(float[] pSignal) {
-        float[] mSignalCopy = new float[pSignal.length];
-        System.arraycopy(pSignal, 0, mSignalCopy, 0, Array.getLength(pSignal));
-        instance().forward(mSignalCopy);
-    }
 }
 
 /**
@@ -329,14 +325,12 @@ public class FFT extends FourierTransform {
  * is equal to about 50 Hz. It is not necessary for you to remember all of these relationships, though it is good to be
  * aware of them. The function <code>getFreq()</code> allows you to query the spectrum with a frequency in Hz and the
  * function <code>getBandWidth()</code> will return the bandwidth in Hz of each frequency band in the spectrum.
- *
  * <b>Usage</b>
  * <p>
  * A typical usage of a FourierTransform is to analyze a signal so that the frequency spectrum may be represented in
  * some way, typically with vertical lines. You could do this in Processing with the following code, where
  * <code>audio</code> is an AudioSource and <code>fft</code> is an FFT (one
  * of the derived classes of FourierTransform).
- *
  * <pre>
  * fft.forward(audio.left);
  * for (int i = 0; i &lt; fft.specSize(); i++)
@@ -345,24 +339,20 @@ public class FFT extends FourierTransform {
  *   line(i, height, i, height - fft.getBand(i) * 4);
  * }
  * </pre>
- *
  * <b>Windowing</b>
  * <p>
  * Windowing is the process of shaping the audio samples before transforming them to the frequency domain. If you call
  * the <code>window()</code> function with an appropriate constant, such as FourierTransform.HAMMING, the sample buffers
  * passed to the object for analysis will be shaped by the current window before being transformed. The result of using
  * a window is to reduce the noise in the spectrum somewhat.
- *
  * <b>Averages</b>
  * <p>
  * FourierTransform also has functions that allow you to request the creation of an average spectrum. An average
  * spectrum is simply a spectrum with fewer bands than the full spectrum where each average band is the average of the
  * amplitudes of some number of contiguous frequency bands in the full spectrum.
- *
  * <code>linAverages()</code> allows you to specify the number of averages
  * that you want and will group frequency bands into groups of equal number. So if you have a spectrum with 512
  * frequency bands and you ask for 64 averages, each average will span 8 bands of the full spectrum.
- *
  * <code>logAverages()</code> will group frequency bands by octave and allows
  * you to specify the size of the smallest octave to use (in Hz) and also how many bands to split each octave into. So
  * you might ask for the smallest octave to be 60 Hz and to split each octave into two bands. The result is that the
@@ -373,7 +363,6 @@ public class FFT extends FourierTransform {
  * always span <code>sampleRate/4 - sampleRate/2</code>, which in the case of audio sampled at 44100 Hz is 11025-22010
  * Hz. These logarithmically spaced averages are usually much more useful than the full spectrum or the linearly spaced
  * averages because they map more directly to how humans perceive sound.
- *
  * <code>calcAvg()</code> allows you to specify the frequency band you want an
  * average calculated for. You might ask for 60-500Hz and this function will group together the bands from the full
  * spectrum that fall into that range and average their amplitudes for you.
@@ -382,7 +371,6 @@ public class FFT extends FourierTransform {
  * <code>noAverages()</code>. This will not impact your ability to use
  * <code>calcAvg()</code>, it will merely prevent the object from calculating
  * an average array every time you use <code>forward()</code>.
- *
  * <b>Inverse Transform</b>
  * <p>
  * FourierTransform also supports taking the inverse transform of a spectrum. This means that a frequency spectrum will
@@ -398,28 +386,28 @@ public class FFT extends FourierTransform {
 abstract class FourierTransform {
 
     /**
-     * A constant indicating no window should be used on sample buffers.
-     */
-    public static final int NONE = 0;
-    /**
      * A constant indicating a Hamming window should be used on sample buffers.
      */
     public static final int HAMMING = 1;
+    /**
+     * A constant indicating no window should be used on sample buffers.
+     */
+    public static final int NONE = 0;
     protected static final int LINAVG = 2;
     protected static final int LOGAVG = 3;
     protected static final int NOAVG = 4;
     protected static final float TWO_PI = (float) (2 * Math.PI);
-    protected int timeSize;
-    protected int sampleRate;
-    protected float bandWidth;
-    protected int whichWindow;
-    protected float[] real;
-    protected float[] imag;
-    protected float[] spectrum;
     protected float[] averages;
-    protected int whichAverage;
-    protected int octaves;
     protected int avgPerOctave;
+    protected float bandWidth;
+    protected float[] imag;
+    protected int octaves;
+    protected float[] real;
+    protected int sampleRate;
+    protected float[] spectrum;
+    protected int timeSize;
+    protected int whichAverage;
+    protected int whichWindow;
 
     /**
      * Construct a FourierTransform that will analyze sample buffers that are

@@ -10,14 +10,13 @@ import wellen.extra.daisysp.Svf;
 
 public class TestVowelizer extends PApplet {
 
-    private final Oscillator mOsc = new OscillatorFunction();
-    private final ADSR mADSR = new ADSR();
-    private boolean mIsKeyPressed = false;
-
+    float formant1, formant2, formant3;
     private final Svf filt1 = new Svf();
     private final Svf filt2 = new Svf();
     private final Svf filt3 = new Svf();
-    float formant1, formant2, formant3;
+    private final ADSR mADSR = new ADSR();
+    private boolean mIsKeyPressed = false;
+    private final Oscillator mOsc = new OscillatorFunction();
 
     public void settings() {
         size(640, 480);

@@ -33,12 +33,11 @@ import static wellen.Wellen.SIGNAL_STEREO;
  */
 public class Patch implements DSPNodeOutputSignal {
 
-    public final int ID;
     public static boolean VERBOSE = false;
-
-    private float fVolume;
-    private final Pan fPan;
     private static int oPatchUID;
+    public final int ID;
+    private final Pan fPan;
+    private float fVolume;
     private final ArrayList<Patch> mPatchs = new ArrayList<>();
 
     public Patch() {
@@ -49,6 +48,11 @@ public class Patch implements DSPNodeOutputSignal {
         fVolume = volume;
         fPan = new Pan();
         ID = oPatchUID++;
+    }
+
+    private static void addSignalAndVolume(Signal pSignalSum, Patch pPatch, Signal pSignal) {
+        pSignalSum.left_add(pSignal.left() * pPatch.get_volume());
+        pSignalSum.right_add(pSignal.right() * pPatch.get_volume());
     }
 
     public ArrayList<Patch> patchs() {
@@ -108,9 +112,15 @@ public class Patch implements DSPNodeOutputSignal {
         return mSignalSum;
     }
 
-
     public Pan pan() {
         return fPan;
+    }
+
+    /**
+     * @return patch volume with 0.0 being no output and 1.0 being 100%
+     */
+    public float get_volume() {
+        return fVolume;
     }
 
     /**
@@ -121,17 +131,5 @@ public class Patch implements DSPNodeOutputSignal {
      */
     public void set_volume(float volume) {
         fVolume = volume;
-    }
-
-    /**
-     * @return patch volume with 0.0 being no output and 1.0 being 100%
-     */
-    public float get_volume() {
-        return fVolume;
-    }
-
-    private static void addSignalAndVolume(Signal pSignalSum, Patch pPatch, Signal pSignal) {
-        pSignalSum.left_add(pSignal.left() * pPatch.get_volume());
-        pSignalSum.right_add(pSignal.right() * pPatch.get_volume());
     }
 }

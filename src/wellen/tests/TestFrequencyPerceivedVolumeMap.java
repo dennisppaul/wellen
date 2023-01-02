@@ -8,14 +8,14 @@ import wellen.Wellen;
 
 public class TestFrequencyPerceivedVolumeMap extends PApplet {
 
-    private final float[] mOffsetSINE_AND_TRIANGLE = new float[]{1.0f, 0.82472223f, 0.67277783f, 0.5425f, 0.43222225f,
-                                                                 0.34027773f, 0.26500002f, 0.2047222f, 0.15777776f,
-                                                                 0.12249999f, 0.09722222f, 0.08027777f, 0.07f,
-                                                                 0.064722225f, 0.06277778f, 0.0625f};
     private final float[] mOffsetSAWTOOTH_AND_SQUARE = new float[]{0.25f, 0.21494445f, 0.18455556f, 0.1585f,
                                                                    0.13644445f, 0.118055545f, 0.103f, 0.09094444f,
                                                                    0.08155555f, 0.074499995f, 0.06944444f, 0.06605555f,
                                                                    0.064f, 0.06294444f, 0.06255556f, 0.0625f};
+    private final float[] mOffsetSINE_AND_TRIANGLE = new float[]{1.0f, 0.82472223f, 0.67277783f, 0.5425f, 0.43222225f,
+                                                                 0.34027773f, 0.26500002f, 0.2047222f, 0.15777776f,
+                                                                 0.12249999f, 0.09722222f, 0.08027777f, 0.07f,
+                                                                 0.064722225f, 0.06277778f, 0.0625f};
     private Slider[] mSlider;
 
     public void settings() {
@@ -113,12 +113,12 @@ public class TestFrequencyPerceivedVolumeMap extends PApplet {
 
         private static final float radius = 8;
         private static float size;
+        boolean drag;
+        boolean hoover;
+        boolean horizontal;
+        float value;
         float x;
         float y;
-        float value;
-        boolean horizontal;
-        boolean hoover;
-        boolean drag;
 
         public Slider(float pSize) {
             size = pSize;

@@ -12,8 +12,8 @@ public class ExampleDSP04LPF extends PApplet {
      * this example demonstrates how to use a *Low-Pass Filter* (LPF) on a sawtooth oscillator in DSP.
      */
 
-    private final Wavetable mWavetable = new Wavetable();
     private final LowPassFilter mFilter = new LowPassFilter();
+    private final Wavetable mWavetable = new Wavetable();
 
     public void settings() {
         size(640, 480);

@@ -33,15 +33,14 @@ import java.util.ArrayList;
  */
 public class MidiIn implements Receiver {
 
-    private static final int SYSEX_START = 0xF0;
-    private static final int SYSEX_END = 0xF7;
+    public static boolean VERBOSE = false;
+    private static final int CONTROL_CHANGE = 0xB0;
     private static final int NOTE_OFF = 0x80;
     private static final int NOTE_ON = 0x90;
-    private static final int CONTROL_CHANGE = 0xB0;
     private static final int PROGRAM_CHANGE = 0xC0;
+    private static final int SYSEX_END = 0xF7;
+    private static final int SYSEX_START = 0xF0;
     private static final int SYSTEM_REALTIME_MESSAGE = 0xF0;
-    public static boolean VERBOSE = false;
-
     private final ArrayList<MidiInListener> mListener;
 
     private MidiIn() {
@@ -70,6 +69,23 @@ public class MidiIn implements Receiver {
             System.err.println("+++ available inputs are: ");
             Wellen.dumpMidiInputDevices();
         }
+    }
+
+    public static String[] availableInputs() {
+        ArrayList<String> mMidiInputs = new ArrayList<>();
+        MidiDevice.Info[] mInfos = MidiSystem.getMidiDeviceInfo();
+        for (MidiDevice.Info mInfo : mInfos) {
+            try {
+                MidiDevice mDevice = MidiSystem.getMidiDevice(mInfo);
+                if (mDevice.getMaxTransmitters() != 0) {
+                    mMidiInputs.add(mInfo.getName());
+                }
+            } catch (MidiUnavailableException e) {
+                e.printStackTrace();
+            }
+        }
+        String[] mMidiOutputsStr = new String[mMidiInputs.size()];
+        return mMidiInputs.toArray(mMidiOutputsStr);
     }
 
     public void addListener(MidiInListener pMidiInListener) {
@@ -122,36 +138,9 @@ public class MidiIn implements Receiver {
     public void close() {
     }
 
-    private void parseSystemMessage(ShortMessage mShortMessage) {
-        if (mShortMessage.getLength() == 1) {
-            final int mClockMessage = parse_byte(mShortMessage.getMessage()[0]);
-            switch (mClockMessage) {
-                case MIDI.MIDI_CLOCK_TICK:
-                    clock_tick();
-                    break;
-                case MIDI.MIDI_CLOCK_START:
-                    clock_start();
-                    break;
-                case MIDI.MIDI_CLOCK_CONTINUE:
-                    clock_continue();
-                    break;
-                case MIDI.MIDI_CLOCK_STOP:
-                    clock_stop();
-                    break;
-            }
-        } else if (mShortMessage.getLength() == 3) {
-            final int mClockMessage = parse_byte(mShortMessage.getMessage()[0]);
-            if (mClockMessage == MIDI.MIDI_SONG_POSITION_POINTER) {
-                final int mOffset16th = mShortMessage.getMessage()[1] + mShortMessage.getMessage()[2] * 128;
-                if (VERBOSE) {
-                    System.out.println("SONG_POSITION_POINTER: " + mOffset16th);
-                }
-                clock_song_position_pointer(mOffset16th);
-            }
-        } else {
-            if (VERBOSE) {
-                System.err.println("+++ MidiIn / unrecognized system message: " + mShortMessage + " (" + mShortMessage.getLength() + ")");
-            }
+    private void clock_continue() {
+        for (MidiInListener m : mListener) {
+            m.clock_continue();
         }
     }
 
@@ -161,21 +150,15 @@ public class MidiIn implements Receiver {
         }
     }
 
-    private void clock_stop() {
-        for (MidiInListener m : mListener) {
-            m.clock_stop();
-        }
-    }
-
-    private void clock_continue() {
-        for (MidiInListener m : mListener) {
-            m.clock_continue();
-        }
-    }
-
     private void clock_start() {
         for (MidiInListener m : mListener) {
             m.clock_start();
+        }
+    }
+
+    private void clock_stop() {
+        for (MidiInListener m : mListener) {
+            m.clock_stop();
         }
     }
 
@@ -183,10 +166,6 @@ public class MidiIn implements Receiver {
         for (MidiInListener m : mListener) {
             m.clock_tick();
         }
-    }
-
-    private int parse_byte(byte b) {
-        return (b & 0xFF);
     }
 
     private Transmitter find(String pMidiOutputDevice) {
@@ -238,10 +217,41 @@ public class MidiIn implements Receiver {
         return null;
     }
 
-    private void receiveProgramChange(int channel, int number, int value) {
-        for (MidiInListener m : mListener) {
-            m.receiveProgramChange(channel, number, value);
+    private void parseSystemMessage(ShortMessage mShortMessage) {
+        if (mShortMessage.getLength() == 1) {
+            final int mClockMessage = parse_byte(mShortMessage.getMessage()[0]);
+            switch (mClockMessage) {
+                case MIDI.MIDI_CLOCK_TICK:
+                    clock_tick();
+                    break;
+                case MIDI.MIDI_CLOCK_START:
+                    clock_start();
+                    break;
+                case MIDI.MIDI_CLOCK_CONTINUE:
+                    clock_continue();
+                    break;
+                case MIDI.MIDI_CLOCK_STOP:
+                    clock_stop();
+                    break;
+            }
+        } else if (mShortMessage.getLength() == 3) {
+            final int mClockMessage = parse_byte(mShortMessage.getMessage()[0]);
+            if (mClockMessage == MIDI.MIDI_SONG_POSITION_POINTER) {
+                final int mOffset16th = mShortMessage.getMessage()[1] + mShortMessage.getMessage()[2] * 128;
+                if (VERBOSE) {
+                    System.out.println("SONG_POSITION_POINTER: " + mOffset16th);
+                }
+                clock_song_position_pointer(mOffset16th);
+            }
+        } else {
+            if (VERBOSE) {
+                System.err.println("+++ MidiIn / unrecognized system message: " + mShortMessage + " (" + mShortMessage.getLength() + ")");
+            }
         }
+    }
+
+    private int parse_byte(byte b) {
+        return (b & 0xFF);
     }
 
     private void receiveControlChange(int channel, int number, int value) {
@@ -262,20 +272,9 @@ public class MidiIn implements Receiver {
         }
     }
 
-    public static String[] availableInputs() {
-        ArrayList<String> mMidiInputs = new ArrayList<>();
-        MidiDevice.Info[] mInfos = MidiSystem.getMidiDeviceInfo();
-        for (MidiDevice.Info mInfo : mInfos) {
-            try {
-                MidiDevice mDevice = MidiSystem.getMidiDevice(mInfo);
-                if (mDevice.getMaxTransmitters() != 0) {
-                    mMidiInputs.add(mInfo.getName());
-                }
-            } catch (MidiUnavailableException e) {
-                e.printStackTrace();
-            }
+    private void receiveProgramChange(int channel, int number, int value) {
+        for (MidiInListener m : mListener) {
+            m.receiveProgramChange(channel, number, value);
         }
-        String[] mMidiOutputsStr = new String[mMidiInputs.size()];
-        return mMidiInputs.toArray(mMidiOutputsStr);
     }
 }

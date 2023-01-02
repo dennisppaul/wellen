@@ -9,17 +9,17 @@ import wellen.Wellen;
 
 public class TechniqueAlgorithmicComposition03Grammar extends PApplet {
 
+    private final int mBaseNote = Note.NOTE_C3;
+    private int mCharCounter = 0;
+    private char mCurrentChar = 0;
     private final String mInput = "RADIO, LIVE TRANSMISSION.\n" + "RADIO, LIVE TRANSMISSION.\n" + "LISTEN TO THE " +
             "SILENCE, LET IT RING ON.\n" + "EYES, DARK GREY LENSES FRIGHTENED OF THE SUN.\n" + "WE WOULD HAVE A FINE "
             + "TIME LIVING IN THE NIGHT,\n" + "LEFT TO BLIND DESTRUCTION,\n" + "WAITING FOR OUR SIGHT.";
-    private final int mBaseNote = Note.NOTE_C3;
-    private final int[] mScale = Scale.MINOR_PENTATONIC;
     private final int mMaxNoteCounter = 12;
-    private boolean mSkipNote;
     private int mNoteCounter = 0;
     private int mNoteStep = 0;
-    private int mCharCounter = 0;
-    private char mCurrentChar = 0;
+    private final int[] mScale = Scale.MINOR_PENTATONIC;
+    private boolean mSkipNote;
 
     public void settings() {
         size(640, 480);

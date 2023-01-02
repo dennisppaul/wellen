@@ -9,11 +9,10 @@ import wellen.extra.daisysp.Pluck;
 public class ExampleDaisySPPluck extends PApplet {
     //@add import wellen.extra.daisysp.*;
 
-    private Pluck mPluck;
-    private boolean mTrigger = false;
-
     private int mMIDINoteCounter = 0;
     private final int[] mMIDINotes = {36, 48, 39, 51};
+    private Pluck mPluck;
+    private boolean mTrigger = false;
 
     public void settings() {
         size(640, 480);

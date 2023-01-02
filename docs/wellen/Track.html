@@ -257,6 +257,18 @@ implements <a href="dsp/DSPNodeOutputSignal.html" title="interface in wellen.dsp
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="println(java.lang.String)">
+<h3>println</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">println</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;s)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="run_test()">
+<h3>run_test</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">run_test</span>()</div>
+</section>
+</li>
+<li>
 <section class="detail" id="tracks()">
 <h3>tracks</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;<a href="Track.html" title="class in wellen">Track</a>&gt;</span>&nbsp;<span class="element-name">tracks</span>()</div>
@@ -349,6 +361,16 @@ implements <a href="dsp/DSPNodeOutputSignal.html" title="interface in wellen.dsp
 </section>
 </li>
 <li>
+<section class="detail" id="get_volume()">
+<h3>get_volume</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">get_volume</span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>track volume with 0.0 being no output and 1.0 being 100%</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="set_volume(float)">
 <h3>set_volume</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_volume</span><wbr><span class="parameters">(float&nbsp;volume)</span></div>
@@ -361,12 +383,12 @@ implements <a href="dsp/DSPNodeOutputSignal.html" title="interface in wellen.dsp
 </section>
 </li>
 <li>
-<section class="detail" id="get_volume()">
-<h3>get_volume</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">get_volume</span>()</div>
+<section class="detail" id="get_in_point()">
+<h3>get_in_point</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">get_in_point</span>()</div>
 <dl class="notes">
-<dt>Returns:</dt>
-<dd>track volume with 0.0 being no output and 1.0 being 100%</dd>
+<dt>Specified by:</dt>
+<dd><code><a href="Loopable.html#get_in_point()">get_in_point</a></code>&nbsp;in interface&nbsp;<code><a href="Loopable.html" title="interface in wellen">Loopable</a></code></dd>
 </dl>
 </section>
 </li>
@@ -382,12 +404,12 @@ implements <a href="dsp/DSPNodeOutputSignal.html" title="interface in wellen.dsp
 </section>
 </li>
 <li>
-<section class="detail" id="get_in_point()">
-<h3>get_in_point</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">get_in_point</span>()</div>
+<section class="detail" id="get_out_point()">
+<h3>get_out_point</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">get_out_point</span>()</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="Loopable.html#get_in_point()">get_in_point</a></code>&nbsp;in interface&nbsp;<code><a href="Loopable.html" title="interface in wellen">Loopable</a></code></dd>
+<dd><code><a href="Loopable.html#get_out_point()">get_out_point</a></code>&nbsp;in interface&nbsp;<code><a href="Loopable.html" title="interface in wellen">Loopable</a></code></dd>
 </dl>
 </section>
 </li>
@@ -399,16 +421,6 @@ implements <a href="dsp/DSPNodeOutputSignal.html" title="interface in wellen.dsp
 <dt>Parameters:</dt>
 <dd><code>out_point</code> - out point in beats. included in length count i.e an in point of 2 and an out point of 5 will
                   result in a duration of 4 beats ( 2, 3, 4, 5 ).</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="get_out_point()">
-<h3>get_out_point</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">get_out_point</span>()</div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="Loopable.html#get_out_point()">get_out_point</a></code>&nbsp;in interface&nbsp;<code><a href="Loopable.html" title="interface in wellen">Loopable</a></code></dd>
 </dl>
 </section>
 </li>
@@ -439,12 +451,6 @@ implements <a href="dsp/DSPNodeOutputSignal.html" title="interface in wellen.dsp
 </section>
 </li>
 <li>
-<section class="detail" id="set_loop(int)">
-<h3>set_loop</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_loop</span><wbr><span class="parameters">(int&nbsp;loop)</span></div>
-</section>
-</li>
-<li>
 <section class="detail" id="get_loop()">
 <h3>get_loop</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">get_loop</span>()</div>
@@ -452,6 +458,12 @@ implements <a href="dsp/DSPNodeOutputSignal.html" title="interface in wellen.dsp
 <dt>Specified by:</dt>
 <dd><code><a href="Loopable.html#get_loop()">get_loop</a></code>&nbsp;in interface&nbsp;<code><a href="Loopable.html" title="interface in wellen">Loopable</a></code></dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="set_loop(int)">
+<h3>set_loop</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_loop</span><wbr><span class="parameters">(int&nbsp;loop)</span></div>
 </section>
 </li>
 <li>
@@ -464,18 +476,6 @@ implements <a href="dsp/DSPNodeOutputSignal.html" title="interface in wellen.dsp
 <section class="detail" id="get_loop_count(int)">
 <h3>get_loop_count</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">get_loop_count</span><wbr><span class="parameters">(int&nbsp;absolut_position)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="println(java.lang.String)">
-<h3>println</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">println</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;s)</span></div>
-</section>
-</li>
-<li>
-<section class="detail" id="run_test()">
-<h3>run_test</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">run_test</span>()</div>
 </section>
 </li>
 </ul>

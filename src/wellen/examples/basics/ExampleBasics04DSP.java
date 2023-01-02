@@ -11,9 +11,9 @@ public class ExampleBasics04DSP extends PApplet {
      * buffer.
      */
 
-    private float mFreq = 440.0f;
     private float mAmp = 0.5f;
     private int mCounter = 0;
+    private float mFreq = 440.0f;
 
     public void settings() {
         size(640, 480);

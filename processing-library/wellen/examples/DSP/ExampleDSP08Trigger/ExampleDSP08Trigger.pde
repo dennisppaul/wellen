@@ -10,16 +10,16 @@ import wellen.dsp.*;
  * it is common to use a low-frequency oscillator (LFO) to generate the signal for the trigger.
  */
 
+int mBeatCount;
+
 final int[] mNotes = {Note.NOTE_C3, Note.NOTE_C4, Note.NOTE_F3 - 1, Note.NOTE_F4 - 1, Note.NOTE_A2,
                               Note.NOTE_A3, Note.NOTE_F4 - 1, Note.NOTE_F3 - 1};
 
-int mBeatCount;
+float mSignal;
 
 Trigger mTrigger;
 
 Wavetable mWavetable;
-
-float mSignal;
 
 void settings() {
     size(640, 480);

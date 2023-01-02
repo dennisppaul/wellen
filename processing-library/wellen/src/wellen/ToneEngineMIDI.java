@@ -28,11 +28,11 @@ import static processing.core.PApplet.constrain;
  */
 public class ToneEngineMIDI extends ToneEngine {
 
-    private static final int mNumberOfInstruments = Wellen.DEFAULT_NUMBER_OF_INSTRUMENTS;
     public static boolean SEND_NOTE_OFF_TO_ALL = false;
+    private static final int mNumberOfInstruments = Wellen.DEFAULT_NUMBER_OF_INSTRUMENTS;
     public final MidiOut mMidiOut;
-    private final ArrayList<InstrumentMIDI> mInstruments;
     private int mCurrentInstrumentID;
+    private final ArrayList<InstrumentMIDI> mInstruments;
 
     public ToneEngineMIDI(String pMidiOutputDeviceName) {
         this(new MidiOut(get_proper_device_name(pMidiOutputDeviceName)));
@@ -51,6 +51,17 @@ public class ToneEngineMIDI extends ToneEngine {
             mInstruments.add(mInstrument);
         }
         mCurrentInstrumentID = 0;
+    }
+
+    public static String get_proper_device_name(String pMidiOutputDeviceName) {
+        String[] mDevices = MidiOut.availableOutputs();
+        for (String mDevice : mDevices) {
+            if (mDevice.startsWith(pMidiOutputDeviceName)) {
+                return mDevice;
+            }
+        }
+        System.err.println("+++ @" + ToneEngineMIDI.class.getSimpleName() + " / couldn't find MIDI device: " + pMidiOutputDeviceName);
+        return "";
     }
 
     public void stop() {
@@ -136,16 +147,5 @@ public class ToneEngineMIDI extends ToneEngine {
                 }
             }
         }));
-    }
-
-    public static String get_proper_device_name(String pMidiOutputDeviceName) {
-        String[] mDevices = MidiOut.availableOutputs();
-        for (String mDevice : mDevices) {
-            if (mDevice.startsWith(pMidiOutputDeviceName)) {
-                return mDevice;
-            }
-        }
-        System.err.println("+++ @" + ToneEngineMIDI.class.getSimpleName() + " / couldn't find MIDI device: " + pMidiOutputDeviceName);
-        return "";
     }
 }

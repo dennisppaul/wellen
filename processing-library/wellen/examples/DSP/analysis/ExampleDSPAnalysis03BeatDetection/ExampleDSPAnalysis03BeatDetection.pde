@@ -7,19 +7,19 @@ import wellen.analysis.*;
  * @TODO(the algorithm is not working particularuly fine …)
  */
 
-final BeatDetection fBeatDetection = new BeatDetection();
-
-ToneEngineDSP fToneEngine;
-
 final int[] fBassPattern = {1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1,};
 
-final int[] fSnarePattern = {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0,};
+boolean fBeatDetected = false;
 
 final boolean[] fBeatDetectedPattern = new boolean[fBassPattern.length];
 
+final BeatDetection fBeatDetection = new BeatDetection();
+
 int fCurrentBeat = fBassPattern.length - 1;
 
-boolean fBeatDetected = false;
+final int[] fSnarePattern = {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0,};
+
+ToneEngineDSP fToneEngine;
 
 void settings() {
     size(640, 480);

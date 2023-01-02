@@ -15,9 +15,9 @@ public class ExampleDSP13Envelope extends PApplet {
      * the simplex noise generator.
      */
 
-    private Noise mNoise;
     private Envelope mEnvelopeAmplitude;
     private Envelope mEnvelopeStepSize;
+    private Noise mNoise;
 
     public void settings() {
         size(640, 480);

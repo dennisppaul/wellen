@@ -12,12 +12,11 @@ import wellen.extra.daisysp.ReverbSc;
 public class ExampleDaisySPOverdrive extends PApplet {
     //@add import wellen.extra.daisysp.*;
 
-    private Pluck mPluck;
-    private ReverbSc mReverb;
-    private Overdrive mOverdrive;
-
     private int mMIDINoteCounter = 0;
     private final int[] mMIDINotes = {36, 48, 39, 51};
+    private Overdrive mOverdrive;
+    private Pluck mPluck;
+    private ReverbSc mReverb;
 
     public void settings() {
         size(640, 480);

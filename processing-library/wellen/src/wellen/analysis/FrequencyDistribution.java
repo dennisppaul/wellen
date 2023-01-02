@@ -30,8 +30,8 @@ import static processing.core.PApplet.pow;
 
 public class FrequencyDistribution {
     private final wellen.FFT fFFT;
-    private float fMaximumFrequency = 8800;
     private final PGraphics fGraphics;
+    private float fMaximumFrequency = 8800;
 
     public FrequencyDistribution(PGraphics graphics) {
         fGraphics = graphics;

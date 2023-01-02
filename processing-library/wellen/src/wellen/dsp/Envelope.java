@@ -79,16 +79,16 @@ public class Envelope implements DSPNodeOutput {
      *
      */
 
-    private int mEnvStage = 0;
-    private float mValue = 0.0f;
     private float mDelta = 0.0f;
-    private float mTimeScale = 1.0f;
-    private float mStageDuration = 0.0f;
+    private int mEnvStage = 0;
     private boolean mEnvelopeDone = true;
-    private boolean mLoop = false;
-    private final ArrayList<Stage> mEnvelopeStages;
     private final ArrayList<EnvelopeListener> mEnvelopeListeners;
+    private final ArrayList<Stage> mEnvelopeStages;
+    private boolean mLoop = false;
     private final float mSamplingRate;
+    private float mStageDuration = 0.0f;
+    private float mTimeScale = 1.0f;
+    private float mValue = 0.0f;
 
     /**
      * @param pSamplingRate sampling rate
@@ -330,7 +330,6 @@ public class Envelope implements DSPNodeOutput {
         Stage(float pValue) {
             this(pValue, 0.0f);
         }
-
         Stage() {
             this(0.0f, 0.0f);
         }

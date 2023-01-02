@@ -13,8 +13,8 @@ public class ExampleBasics02Scales extends PApplet {
      */
 
     private int mNote;
-    private int mStep;
     private int[] mScale;
+    private int mStep;
 
     public void settings() {
         size(640, 480);

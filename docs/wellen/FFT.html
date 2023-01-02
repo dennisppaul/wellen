@@ -285,21 +285,6 @@ loadScripts(document, 'script');</script>
 <h2>Field Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="NONE">
-<h3>NONE</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">NONE</span></div>
-<div class="block">A constant indicating no window should be used on sample buffers.</div>
-<dl class="notes">
-<dt>See Also:</dt>
-<dd>
-<ul class="see-list">
-<li><a href="../constant-values.html#wellen.FFT.NONE">Constant Field Values</a></li>
-</ul>
-</dd>
-</dl>
-</section>
-</li>
-<li>
 <section class="detail" id="HAMMING">
 <h3>HAMMING</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">HAMMING</span></div>
@@ -309,6 +294,21 @@ loadScripts(document, 'script');</script>
 <dd>
 <ul class="see-list">
 <li><a href="../constant-values.html#wellen.FFT.HAMMING">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="NONE">
+<h3>NONE</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">NONE</span></div>
+<div class="block">A constant indicating no window should be used on sample buffers.</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../constant-values.html#wellen.FFT.NONE">Constant Field Values</a></li>
 </ul>
 </dd>
 </dl>
@@ -346,6 +346,48 @@ loadScripts(document, 'script');</script>
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="get_frequency(float)">
+<h3>get_frequency</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">get_frequency</span><wbr><span class="parameters">(float&nbsp;pFrequency)</span></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>pFrequency</code> - frequency</dd>
+<dt>Returns:</dt>
+<dd>frequency</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="get_spectrum()">
+<h3>get_spectrum</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float[]</span>&nbsp;<span class="element-name">get_spectrum</span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>spectrum</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="instance()">
+<h3>instance</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="FFT.html" title="class in wellen">FFT</a></span>&nbsp;<span class="element-name">instance</span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>instance</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="perform_forward_transform(float[])">
+<h3>perform_forward_transform</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">perform_forward_transform</span><wbr><span class="parameters">(float[]&nbsp;pSignal)</span></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>pSignal</code> - signal</dd>
+</dl>
+</section>
+</li>
 <li>
 <section class="detail" id="forward(float[],float[])">
 <h3>forward</h3>
@@ -408,48 +450,6 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>buffer</code> - the buffer to place the result of the inverse transform in</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="instance()">
-<h3>instance</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="FFT.html" title="class in wellen">FFT</a></span>&nbsp;<span class="element-name">instance</span>()</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>instance</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="get_spectrum()">
-<h3>get_spectrum</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float[]</span>&nbsp;<span class="element-name">get_spectrum</span>()</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>spectrum</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="get_frequency(float)">
-<h3>get_frequency</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">get_frequency</span><wbr><span class="parameters">(float&nbsp;pFrequency)</span></div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>pFrequency</code> - frequency</dd>
-<dt>Returns:</dt>
-<dd>frequency</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="perform_forward_transform(float[])">
-<h3>perform_forward_transform</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">perform_forward_transform</span><wbr><span class="parameters">(float[]&nbsp;pSignal)</span></div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>pSignal</code> - signal</dd>
 </dl>
 </section>
 </li>

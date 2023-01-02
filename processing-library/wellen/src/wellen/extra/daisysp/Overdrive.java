@@ -11,8 +11,8 @@ package wellen.extra.daisysp;
  */
 public class Overdrive {
     private float drive_;
-    private float pre_gain_;
     private float post_gain_;
+    private float pre_gain_;
 
     /**
      * Initializes the module with 0 gain

@@ -18,10 +18,10 @@ public class ExampleDSP15EnvelopeListener extends PApplet {
      * and frequency of the oscillator.
      */
 
+    private final float MAX_FREQ = Note.note_to_frequency(48);
+    private final float MIN_FREQ = Note.note_to_frequency(24);
     private Envelope mRampFrequency;
     private Wavetable mWavetable;
-    private final float MIN_FREQ = Note.note_to_frequency(24);
-    private final float MAX_FREQ = Note.note_to_frequency(48);
 
     public void settings() {
         size(640, 480);

@@ -12,8 +12,8 @@ public class ExampleExternal02MIDIClock extends PApplet {
      * external MIDI device or an internal MIDI application ).
      */
 
-    private int mColor;
     private BeatMIDI mBeatMIDI;
+    private int mColor;
 
     public void settings() {
         size(640, 480);

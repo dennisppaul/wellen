@@ -20,15 +20,15 @@ import wellen.dsp.*;
  *     [A   ][D][S   ][R]
  */
 
+int mNote;
+
 Slider mSliderAttack;
 
 Slider mSliderDecay;
 
-Slider mSliderSustain;
-
 Slider mSliderRelease;
 
-int mNote;
+Slider mSliderSustain;
 
 void settings() {
     size(640, 480);
@@ -98,6 +98,13 @@ void drawDiagram() {
     strokeWeight(1);
 }
 
+void updateADSR() {
+    Tone.instrument().set_attack(mSliderAttack.value);
+    Tone.instrument().set_decay(mSliderDecay.value);
+    Tone.instrument().set_sustain(mSliderSustain.value);
+    Tone.instrument().set_release(mSliderRelease.value);
+}
+
 void updateDiagram(float mXOffset, float mYOffset) {
     float mX = mouseX - mXOffset;
     float mY = -mouseY + mYOffset;
@@ -115,24 +122,17 @@ void updateDiagram(float mXOffset, float mYOffset) {
     mSliderRelease.y = 0;
 }
 
-void updateADSR() {
-    Tone.instrument().set_attack(mSliderAttack.value);
-    Tone.instrument().set_decay(mSliderDecay.value);
-    Tone.instrument().set_sustain(mSliderSustain.value);
-    Tone.instrument().set_release(mSliderRelease.value);
-}
-
 static class Slider {
     
-static final float size = 120;
-    
 static final float radius = 8;
+    
+static final float size = 120;
+    boolean drag;
+    boolean hoover;
+    boolean horizontal;
+    float value;
     float x;
     float y;
-    float value;
-    boolean horizontal;
-    boolean hoover;
-    boolean drag;
     
 Slider() {
         x = 0;
@@ -141,6 +141,12 @@ Slider() {
         horizontal = true;
         hoover = false;
         drag = false;
+    }
+    float current_position_x() {
+        return horizontal ? x + size * value : x;
+    }
+    float current_position_y() {
+        return horizontal ? y : y + size * value;
     }
     void draw(PGraphics g, int pColor) {
         g.stroke(pColor);
@@ -154,20 +160,10 @@ Slider() {
         g.fill(pColor);
         g.ellipse(current_position_x(), current_position_y(), radius * (hoover ? 2 : 1), radius * (hoover ? 2 : 1));
     }
-    void update_value(float pX, float pY) {
-        value = (horizontal ? (pX - x) : (pY - y)) / size;
-        value = min(1, max(0, value));
-    }
     boolean hit(float pX, float pY) {
         final float mDistance = PVector.dist(new PVector().set(pX, pY),
                                              new PVector().set(current_position_x(), current_position_y()));
         return mDistance < radius * 2;
-    }
-    float current_position_x() {
-        return horizontal ? x + size * value : x;
-    }
-    float current_position_y() {
-        return horizontal ? y : y + size * value;
     }
     void update(float mouse_x, float mouse_y, boolean mouse_pressed) {
         if (hit(mouse_x, mouse_y)) {
@@ -182,5 +178,9 @@ Slider() {
             hoover = false;
             drag = false;
         }
+    }
+    void update_value(float pX, float pY) {
+        value = (horizontal ? (pX - x) : (pY - y)) / size;
+        value = min(1, max(0, value));
     }
 }

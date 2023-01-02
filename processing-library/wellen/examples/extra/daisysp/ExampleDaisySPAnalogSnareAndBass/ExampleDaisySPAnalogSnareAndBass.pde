@@ -3,9 +3,9 @@ import wellen.dsp.*;
 
 import wellen.extra.daisysp.*;
 
-int mBeatCount;
-
 AnalogBassDrum mBassDrum;
+
+int mBeatCount;
 
 AnalogSnareDrum mSnareDrum;
 

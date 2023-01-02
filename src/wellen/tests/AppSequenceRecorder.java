@@ -8,8 +8,9 @@ import wellen.Tone;
 
 public class AppSequenceRecorder extends PApplet {
 
-    private static final int OFF = -1;
     private static final int NO_INPUT = -2;
+    private static final int OFF = -1;
+    private int mLastInput = NO_INPUT;
     private final Sequencer<Integer> mSequence = new Sequencer<Integer>(OFF,
                                                                         OFF,
                                                                         OFF,
@@ -26,7 +27,6 @@ public class AppSequenceRecorder extends PApplet {
                                                                         OFF,
                                                                         OFF,
                                                                         OFF);
-    private int mLastInput = NO_INPUT;
 
     public void settings() {
         size(640, 480);
@@ -96,7 +96,6 @@ public class AppSequenceRecorder extends PApplet {
             Tone.note_off();
         }
     }
-
 
     public static void main(String[] args) {
         PApplet.main(AppSequenceRecorder.class.getName());

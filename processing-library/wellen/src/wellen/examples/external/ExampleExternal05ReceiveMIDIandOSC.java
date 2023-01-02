@@ -28,8 +28,8 @@ public class ExampleExternal05ReceiveMIDIandOSC extends PApplet {
      *
      */
 
-    private String mEventReceived = "EVENTS\n---\n";
     private int mEventCounter = 2;
+    private String mEventReceived = "EVENTS\n---\n";
 
     public void settings() {
         size(640, 480);

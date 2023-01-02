@@ -10,8 +10,8 @@ import wellen.extra.daisysp.SyntheticSnareDrum;
 public class ExampleDaisySPSyntheticSnareAndBass extends PApplet {
     //@add import wellen.extra.daisysp.*;
 
-    private int mBeatCount;
     private SyntheticBassDrum mBassDrum;
+    private int mBeatCount;
     private SyntheticSnareDrum mSnareDrum;
 
     public void settings() {

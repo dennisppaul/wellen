@@ -26,11 +26,11 @@ import wellen.Wellen;
  */
 public class Delay implements DSPNodeProcess, DSPNodeProcessSignal {
 
-    private final float fSampleRate;
-    private float[] fEchoBuffer;
     private int fBufferPosition;
     private float fDecayRate;
+    private float[] fEchoBuffer;
     private float fNewEchoLength;
+    private final float fSampleRate;
 
     /**
      * @param echo_length in seconds
@@ -63,23 +63,6 @@ public class Delay implements DSPNodeProcess, DSPNodeProcessSignal {
         return Signal.create(process(pSignal.mono()));
     }
 
-    private void adaptyEchoLength() {
-        if (fNewEchoLength != -1) {
-            float[] mNewEchoBuffer = new float[(int) (fSampleRate * fNewEchoLength)];
-            if (fEchoBuffer != null) {
-                for (int i = 0; i < mNewEchoBuffer.length; i++) {
-                    if (fBufferPosition >= fEchoBuffer.length) {
-                        fBufferPosition = 0;
-                    }
-                    mNewEchoBuffer[i] = fEchoBuffer[fBufferPosition];
-                    fBufferPosition++;
-                }
-            }
-            fEchoBuffer = mNewEchoBuffer;
-            fNewEchoLength = -1;
-        }
-    }
-
     /**
      * A decay, should be a value between zero and one.
      *
@@ -101,5 +84,22 @@ public class Delay implements DSPNodeProcess, DSPNodeProcessSignal {
         fBufferPosition++;
 
         return 0;
+    }
+
+    private void adaptyEchoLength() {
+        if (fNewEchoLength != -1) {
+            float[] mNewEchoBuffer = new float[(int) (fSampleRate * fNewEchoLength)];
+            if (fEchoBuffer != null) {
+                for (int i = 0; i < mNewEchoBuffer.length; i++) {
+                    if (fBufferPosition >= fEchoBuffer.length) {
+                        fBufferPosition = 0;
+                    }
+                    mNewEchoBuffer[i] = fEchoBuffer[fBufferPosition];
+                    fBufferPosition++;
+                }
+            }
+            fEchoBuffer = mNewEchoBuffer;
+            fNewEchoLength = -1;
+        }
     }
 }

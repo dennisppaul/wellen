@@ -64,7 +64,6 @@ public class RRSustainer implements EffectStereo {
     private final float prls;
     private int timer;
     private float tmpgain;
-
     public RRSustainer() {
         Pvolume = 64;
         Psustain = 64;
@@ -91,7 +90,6 @@ public class RRSustainer implements EffectStereo {
         oldcompenv = 0.0f;
         cpthresh = cthresh; //dynamic threshold
     }
-
 
     public void out(float[] smpsl, float[] smpsr) {
         float auxtempl;

@@ -46,30 +46,29 @@ package wellen.extra.rakarrack;
 
 public class RRFilterParams {
 
+    public int Pcategory;    //Filter category (Analog/Formant/StVar)
+    public int Pfreq;        // Frequency (64-central frequency)
+    public int Pgain;        //filter's output gain
+    public int Pq;        // Q parameters (resonance or bandwidth)
+    // is "stretched")
+    public int Pstages;    //filter stages+1
+    public int Ptype;        // Filter type  (for analog lpf,hpf,bpf..)
     private int Dfreq;
     private int Dq;
     //stored default parameters
     private int Dtype;
-    public int Pcategory;    //Filter category (Analog/Formant/StVar)
     private int Pcenterfreq, Poctavesfreq;    //the center frequency of the res. func., and the number of octaves
     private int Pformantslowness;    //how slow varies the formants
-    public int Pfreq;        // Frequency (64-central frequency)
     private int Pfreqtrack;    //how the filter frequency is changing according the note frequency
-    public int Pgain;        //filter's output gain
     //Formant filter parameters
     private int Pnumformants;    //how many formants are used
-    public int Pq;        // Q parameters (resonance or bandwidth)
     private final Sequence[] Psequence = new Sequence[RRUtilities.FF_MAX_SEQUENCE];
     private int Psequencereversed;    //if the input from filter envelopes/LFOs/etc. is reversed(negated)
     private int Psequencesize;    //how many vowels are in the sequence
     private int Psequencestretch;    //how the sequence is stretched (how the input from filter envelopes/LFOs/etc.
-    // is "stretched")
-    public int Pstages;    //filter stages+1
-    public int Ptype;        // Filter type  (for analog lpf,hpf,bpf..)
     private int Pvowelclearness;    //how vowels are kept clean (how much try to avoid "mixed" vowels)
     private final Vowel[] Pvowels = new Vowel[RRUtilities.FF_MAX_VOWELS];
     private boolean changed;
-
     public RRFilterParams() {
         for (int i = 0; i < RRUtilities.FF_MAX_VOWELS; i++) {
             Pvowels[i] = new Vowel();
@@ -78,7 +77,6 @@ public class RRFilterParams {
             Psequence[i] = new Sequence();
         }
     }
-
     public RRFilterParams(int Ptype_, int Pfreq_, int Pq_) {
         this();
         // setpresettype("Pfilter");
@@ -91,57 +89,51 @@ public class RRFilterParams {
     }
 
     /*
-     * Parameter control
-     */
-    private float getfreq() {
-        return (((float) Pfreq / 64.0f - 1.0f) * 5.0f);
-    }
-
-    /*
      * Get the parameters from other FilterParams
      */
     public float getq() {
         return (RRUtilities.expf(RRUtilities.powf((float) Pq / 127.0f, 2) * RRUtilities.logf(1000.0f)) - 0.9f);
     }
 
-    private float getfreqtracking(float notefreq) {
-        return (RRUtilities.logf(notefreq / 440.0f) * ((float) Pfreqtrack - 64.0f) / (64.0f * RRUtilities.LOG_2));
-    }
-
     public float getgain() {
         return (((float) Pgain / 64.0f - 1.0f) * 30.0f);    //-30..30dB
     }
 
-    /*
-     * Get the center frequency of the formant's graph
-     */
-    private float getcenterfreq() {
-        return (10000.0f * RRUtilities.powf(10.0f, -(1.0f - (float) Pcenterfreq / 127.0f) * 2.0f));
-    }
+    private void defaults() {
+        Ptype = Dtype;
+        Pfreq = Dfreq;
+        Pq = Dq;
 
-    /*
-     * Get the number of octave that the formant functions applies to
-     */
-    private float getoctavesfreq() {
-        return (0.25f + 10.0f * (float) Poctavesfreq / 127.0f);
-    }
+        Pstages = 0;
+        Pfreqtrack = 64;
+        Pgain = 64;
+        Pcategory = 0;
 
-    /*
-     * Get the frequency from x, where x is [0..1]
-     */
-    private float getfreqx(float x) {
-        if (x > 1.0) {
-            x = 1.0f;
+        Pnumformants = 3;
+        Pformantslowness = 64;
+        for (int j = 0; j < RRUtilities.FF_MAX_VOWELS; j++) {
+            defaults(j);
         }
-        float octf = RRUtilities.powf(2.0f, getoctavesfreq());
-        return (getcenterfreq() / RRUtilities.sqrtf(octf) * RRUtilities.powf(octf, x));
+
+        Psequencesize = 3;
+        for (int i = 0; i < RRUtilities.FF_MAX_SEQUENCE; i++) {
+            Psequence[i].nvowel = i % RRUtilities.FF_MAX_VOWELS;
+        }
+
+        Psequencestretch = 40;
+        Psequencereversed = 0;
+        Pcenterfreq = 64;        //1 kHz
+        Poctavesfreq = 64;
+        Pvowelclearness = 64;
     }
 
-    /*
-     * Get the x coordinate from frequency (used by the UI)
-     */
-    private float getfreqpos(float freq) {
-        return ((RRUtilities.logf(freq) - RRUtilities.logf(getfreqx(0.0f))) / RRUtilities.logf(2.0f) / getoctavesfreq());
+    private void defaults(int n) {
+        int j = n;
+        for (int i = 0; i < RRUtilities.FF_MAX_FORMANTS; i++) {
+            Pvowels[j].formants[i].freq = (int) (RRUtilities.random() * 127.0); //some random freqs
+            Pvowels[j].formants[i].q = 64;
+            Pvowels[j].formants[i].amp = 127;
+        }
     }
 
     /*
@@ -221,15 +213,22 @@ public class RRFilterParams {
     }
 
     /*
-     * Transforms a parameter to the real value
+     * Get the center frequency of the formant's graph
      */
-    private float getformantfreq(int freq) {
-        float result = getfreqx((float) freq / 127.0f);
-        return (result);
+    private float getcenterfreq() {
+        return (10000.0f * RRUtilities.powf(10.0f, -(1.0f - (float) Pcenterfreq / 127.0f) * 2.0f));
     }
 
     private float getformantamp(int amp) {
         float result = RRUtilities.powf(0.1f, (1.0f - (float) amp / 127.0f) * 4.0f);
+        return (result);
+    }
+
+    /*
+     * Transforms a parameter to the real value
+     */
+    private float getformantfreq(int freq) {
+        float result = getfreqx((float) freq / 127.0f);
         return (result);
     }
 
@@ -239,41 +238,33 @@ public class RRFilterParams {
         return (result);
     }
 
-    private void defaults() {
-        Ptype = Dtype;
-        Pfreq = Dfreq;
-        Pq = Dq;
-
-        Pstages = 0;
-        Pfreqtrack = 64;
-        Pgain = 64;
-        Pcategory = 0;
-
-        Pnumformants = 3;
-        Pformantslowness = 64;
-        for (int j = 0; j < RRUtilities.FF_MAX_VOWELS; j++) {
-            defaults(j);
-        }
-
-        Psequencesize = 3;
-        for (int i = 0; i < RRUtilities.FF_MAX_SEQUENCE; i++) {
-            Psequence[i].nvowel = i % RRUtilities.FF_MAX_VOWELS;
-        }
-
-        Psequencestretch = 40;
-        Psequencereversed = 0;
-        Pcenterfreq = 64;        //1 kHz
-        Poctavesfreq = 64;
-        Pvowelclearness = 64;
+    /*
+     * Parameter control
+     */
+    private float getfreq() {
+        return (((float) Pfreq / 64.0f - 1.0f) * 5.0f);
     }
 
-    private void defaults(int n) {
-        int j = n;
-        for (int i = 0; i < RRUtilities.FF_MAX_FORMANTS; i++) {
-            Pvowels[j].formants[i].freq = (int) (RRUtilities.random() * 127.0); //some random freqs
-            Pvowels[j].formants[i].q = 64;
-            Pvowels[j].formants[i].amp = 127;
+    /*
+     * Get the x coordinate from frequency (used by the UI)
+     */
+    private float getfreqpos(float freq) {
+        return ((RRUtilities.logf(freq) - RRUtilities.logf(getfreqx(0.0f))) / RRUtilities.logf(2.0f) / getoctavesfreq());
+    }
+
+    private float getfreqtracking(float notefreq) {
+        return (RRUtilities.logf(notefreq / 440.0f) * ((float) Pfreqtrack - 64.0f) / (64.0f * RRUtilities.LOG_2));
+    }
+
+    /*
+     * Get the frequency from x, where x is [0..1]
+     */
+    private float getfreqx(float x) {
+        if (x > 1.0) {
+            x = 1.0f;
         }
+        float octf = RRUtilities.powf(2.0f, getoctavesfreq());
+        return (getcenterfreq() / RRUtilities.sqrtf(octf) * RRUtilities.powf(octf, x));
     }
 
     private void getfromFilterParams(RRFilterParams pars) {
@@ -314,6 +305,17 @@ public class RRFilterParams {
         Pvowelclearness = pars.Pvowelclearness;
     }
 
+    /*
+     * Get the number of octave that the formant functions applies to
+     */
+    private float getoctavesfreq() {
+        return (0.25f + 10.0f * (float) Poctavesfreq / 127.0f);
+    }
+
+    private static class Sequence {
+        int nvowel;    //the vowel from the position
+    }
+
     private static class Vowel {
         Formant[] formants = new Formant[RRUtilities.FF_MAX_FORMANTS];
 
@@ -326,9 +328,5 @@ public class RRFilterParams {
         private static class Formant {
             int freq, amp, q;    //frequency,amplitude,Q
         }
-    }
-
-    private static class Sequence {
-        int nvowel;    //the vowel from the position
     }
 }

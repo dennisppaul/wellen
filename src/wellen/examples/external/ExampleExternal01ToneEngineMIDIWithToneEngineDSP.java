@@ -11,6 +11,7 @@ public class ExampleExternal01ToneEngineMIDIWithToneEngineDSP extends PApplet {
      * this example demonstrates how to use multiple tone engines ( i.e midi + internal ) at the same time.
      */
 
+    int mNote;
     private ToneEngineDSP mToneEngineDSP;
     private ToneEngineMIDI mToneEngineMIDI;
 
@@ -37,8 +38,6 @@ public class ExampleExternal01ToneEngineMIDIWithToneEngineDSP extends PApplet {
                 mToneEngineMIDI.is_playing() ? 100 : 5,
                 mToneEngineMIDI.is_playing() ? 100 : 5);
     }
-
-    int mNote;
 
     public void mousePressed() {
         mNote = 45 + (int) random(0, 12);

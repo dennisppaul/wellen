@@ -7,21 +7,30 @@ package wellen.extra.daisysp;
  */
 public class Resonator {
 
-    private int resolution_;
-    private float frequency_, brightness_, structure_, damping_;
-
     private static final int kMaxNumModes = 24;
     private static final int kModeBatchSize = 4;
     private static final float ratiofrac_ = 1.f / 12.f;
     private static final float stiff_frac_ = 1.f / 64.f;
     private static final float stiff_frac_2 = 1.f / .6f;
-
-    private float sample_rate_;
-
+    private float frequency_, brightness_, structure_, damping_;
     private final float[] mode_amplitude_ = new float[kMaxNumModes];
     //    private    ResonatorSvf<kModeBatchSize> mode_filters_[kMaxNumModes / kModeBatchSize];
     private final ResonatorSvf[] mode_filters_ = new ResonatorSvf[kMaxNumModes / kModeBatchSize];
+    private int resolution_;
+    private float sample_rate_;
 
+    private static float NthHarmonicCompensation(int n, float stiffness) {
+        float stretch_factor = 1.0f;
+        for (int i = 0; i < n - 1; ++i) {
+            stretch_factor += stiffness;
+            if (stiffness < 0.0f) {
+                stiffness *= 0.93f;
+            } else {
+                stiffness *= 0.98f;
+            }
+        }
+        return 1.0f / stretch_factor;
+    }
 
     /**
      * Initialize the module \param position    Offset the phase of the amplitudes. 0-1 \param resolution Quality vs
@@ -156,19 +165,5 @@ public class Resonator {
             sig = 1.5f - DaisySP.cos(sig * DaisySP.PI_F) * .5f;
         }
         return sig;
-    }
-
-
-    private static float NthHarmonicCompensation(int n, float stiffness) {
-        float stretch_factor = 1.0f;
-        for (int i = 0; i < n - 1; ++i) {
-            stretch_factor += stiffness;
-            if (stiffness < 0.0f) {
-                stiffness *= 0.93f;
-            } else {
-                stiffness *= 0.98f;
-            }
-        }
-        return 1.0f / stretch_factor;
     }
 }

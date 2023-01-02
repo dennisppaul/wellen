@@ -9,8 +9,8 @@ import wellen.dsp.Sampler;
 
 public class TestDistortionWithSample extends PApplet {
 
-    private Sampler mSampler;
     private Distortion mDistortion;
+    private Sampler mSampler;
 
     public void settings() {
         size(640, 480);

@@ -29,10 +29,10 @@ import static processing.core.PApplet.map;
 import static processing.core.PApplet.pow;
 
 public class Sonogram {
-    private int x = 0;
     private final FFT fFFT;
-    private float fMaximumFrequency = 8800;
     private final PGraphics fGraphics;
+    private float fMaximumFrequency = 8800;
+    private int x = 0;
 
     public Sonogram(PGraphics graphics) {
         fGraphics = graphics;

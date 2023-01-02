@@ -48,11 +48,10 @@ import wellen.dsp.EffectStereo;
 
 public class RRNewDist implements EffectMono, EffectStereo {
 
+    public static final int NUM_PRESETS = 3;
     public static final int PRESET_NEW_DIST_1 = 0;
     public static final int PRESET_NEW_DIST_2 = 1;
     public static final int PRESET_NEW_DIST_3 = 2;
-    public static final int NUM_PRESETS = 3;
-
     private final RRAnalogFilter DCl;
     private final RRAnalogFilter DCr;
     private int Pdrive;             //the input amplification
@@ -92,7 +91,6 @@ public class RRNewDist implements EffectMono, EffectStereo {
     private float toggler;
     private final RRWaveShaper wshapel;
     private final RRWaveShaper wshaper;
-
     public RRNewDist() {
         octoutl = new float[RRUtilities.PERIOD];
         octoutr = new float[RRUtilities.PERIOD];
@@ -277,7 +275,6 @@ public class RRNewDist implements EffectMono, EffectStereo {
         panning = ((float) Ppanning + 0.5f) / 127.0f;
     }
 
-
     public void setlrcross(int Plrcross) {
         this.Plrcross = Plrcross;
         lrcross = (float) Plrcross / 127.0f * 1.0f;
@@ -289,7 +286,6 @@ public class RRNewDist implements EffectMono, EffectStereo {
         lpfl.setfreq(fr);
         lpfr.setfreq(fr);
     }
-
 
     public void sethpf(int value) {
         Phpf = value;

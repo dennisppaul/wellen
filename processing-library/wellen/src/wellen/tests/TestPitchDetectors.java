@@ -10,9 +10,9 @@ import wellen.tests.analysis.PitchProcessor;
 
 public class TestPitchDetectors extends PApplet {
 
-    private ToneEngineDSP mToneEngine;
-    private PitchProcessor mPitchProcessor = new PitchProcessor();
     private int mNote = 24;
+    private PitchProcessor mPitchProcessor = new PitchProcessor();
+    private ToneEngineDSP mToneEngine;
 
     public void settings() {
         size(640, 480);

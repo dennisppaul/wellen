@@ -27,6 +27,21 @@ public class StringOsc {
         STRING_NON_LINEARITY_DISPERSION
     }
 
+    private static final int kDelayLineSize = 1024;
+    private final CrossFade crossfade_ = new CrossFade();
+    private float curved_bridge_;
+    private final DcBlock dc_blocker_ = new DcBlock();
+    private float dispersion_noise_;
+    private float frequency_, non_linearity_amount_, brightness_, damping_;
+    private final Tone iir_damping_filter_ = new Tone();
+    private final float[] out_sample_ = new float[2];
+    private float sample_rate_;
+    // Very crappy linear interpolation upsampler used for low pitches that
+    // do not fit the delay line. Rarely used.
+    private float src_phase_;
+    private final DelayLine stretch_ = new DelayLine(kDelayLineSize / 4);
+    private final DelayLine string_ = new DelayLine(kDelayLineSize);
+
     /**
      * Initialize the module. @param sample_rate Audio engine sample rate
      */
@@ -213,23 +228,4 @@ public class StringOsc {
         crossfade_.SetPos(src_phase_);
         return crossfade_.Process(out_sample_[1], out_sample_[0]);
     }
-
-    private static final int kDelayLineSize = 1024;
-
-    private final DelayLine string_ = new DelayLine(kDelayLineSize);
-    private final DelayLine stretch_ = new DelayLine(kDelayLineSize / 4);
-
-    private float frequency_, non_linearity_amount_, brightness_, damping_;
-    private float sample_rate_;
-    private final Tone iir_damping_filter_ = new Tone();
-    private final DcBlock dc_blocker_ = new DcBlock();
-    private final CrossFade crossfade_ = new CrossFade();
-
-    private float dispersion_noise_;
-    private float curved_bridge_;
-
-    // Very crappy linear interpolation upsampler used for low pitches that
-    // do not fit the delay line. Rarely used.
-    private float src_phase_;
-    private final float[] out_sample_ = new float[2];
 }

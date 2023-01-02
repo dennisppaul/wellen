@@ -9,9 +9,9 @@ import wellen.extra.daisysp.Pluck;
 public class ExampleDaisySPMetro extends PApplet {
     //@add import wellen.extra.daisysp.*;
 
+    private boolean mBeat;
     private Metro mMetro;
     private Pluck mPluck;
-    private boolean mBeat;
 
     public void settings() {
         size(640, 480);

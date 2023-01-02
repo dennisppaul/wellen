@@ -54,14 +54,14 @@ import static wellen.extra.rakarrack.RRWaveShaper.TYPE_POW;
 import static wellen.extra.rakarrack.RRWaveShaper.TYPE_SIGMOID;
 
 public class RRDistortion implements EffectMono, EffectStereo {
-    public static final int PRESET_OVERDRIVE_1 = 0;
-    public static final int PRESET_OVERDRIVE_2 = 1;
+    public static final int NUM_PRESETS = 6;
+    public static final int PARAM_STEREO = 9;
     public static final int PRESET_DISTORSION_1 = 2;
     public static final int PRESET_DISTORSION_2 = 3;
     public static final int PRESET_DISTORSION_3 = 4;
     public static final int PRESET_GUITAR_AMP = 5;
-    public static final int NUM_PRESETS = 6;
-    public static final int PARAM_STEREO = 9;
+    public static final int PRESET_OVERDRIVE_1 = 0;
+    public static final int PRESET_OVERDRIVE_2 = 1;
     private final RRAnalogFilter DCl;
     private final RRAnalogFilter DCr;
     private int Pdrive;             //the input amplification
@@ -95,7 +95,6 @@ public class RRDistortion implements EffectMono, EffectStereo {
     private float panning;
     private float togglel;
     private float toggler;
-
     public RRDistortion() {
         octoutl = new float[RRUtilities.PERIOD];
         octoutr = new float[RRUtilities.PERIOD];

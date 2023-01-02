@@ -21,27 +21,38 @@ public class PitchShifter {
      */
     private static final int SHIFT_BUFFER_SIZE = 16384;
     private static int seed = 1;
-
     private final ShiftDelay[] d_ = new ShiftDelay[2];
-    private float pitch_shift_, mod_freq_;
     private int del_size_;
     /**
      * lfo stuff
      */
     private boolean force_recalc_;
-    private float sr_;
-    private boolean shift_up_;
-    private final Phasor[] phs_ = new Phasor[2];
+    private float fun_, mod_a_amt_, mod_b_amt_, prev_phs_a_, prev_phs_b_;
     private final float[] gain_ = new float[2];
     private final float[] mod_ = new float[2];
-    private float transpose_;
-    private float fun_, mod_a_amt_, mod_b_amt_, prev_phs_a_, prev_phs_b_;
-    private final float[] slewed_mod_ = new float[2];
     private final float[] mod_coeff_ = new float[2];
+    private final Phasor[] phs_ = new Phasor[2];
+    private float pitch_shift_, mod_freq_;
     /**
      * pitch stuff
      */
     private final float[] semitone_ratios_ = new float[12];
+    private boolean shift_up_;
+    private final float[] slewed_mod_ = new float[2];
+    private float sr_;
+    private float transpose_;
+
+    private static int hash_xs32(int x) {
+        x ^= x << 13;
+        x ^= x >> 17;
+        x ^= x << 5;
+        return x;
+    }
+
+    private static int myrand() {
+        seed = hash_xs32(seed);
+        return seed;
+    }
 
     /**
      * Initialize pitch shifter
@@ -163,17 +174,5 @@ public class PitchShifter {
         ShiftDelay() {
             super(SHIFT_BUFFER_SIZE);
         }
-    }
-
-    private static int hash_xs32(int x) {
-        x ^= x << 13;
-        x ^= x >> 17;
-        x ^= x << 5;
-        return x;
-    }
-
-    private static int myrand() {
-        seed = hash_xs32(seed);
-        return seed;
     }
 }

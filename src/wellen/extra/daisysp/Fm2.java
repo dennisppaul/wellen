@@ -8,6 +8,13 @@ import static wellen.extra.daisysp.DaisySP.fabsf;
  * @date November, 2020
  */
 public class Fm2 {
+    private static final float kIdxScalar = 0.2f;
+    private static final float kIdxScalarRecip = 1.f / kIdxScalar;
+    private final Oscillator car_ = new Oscillator();
+    private float freq_, lfreq_, ratio_, lratio_;
+    private float idx_;
+    private final Oscillator mod_ = new Oscillator();
+
     /**
      * Initializes the FM2 module.
      *
@@ -90,12 +97,4 @@ public class Fm2 {
         car_.Reset();
         mod_.Reset();
     }
-
-    private static final float kIdxScalar = 0.2f;
-    private static final float kIdxScalarRecip = 1.f / kIdxScalar;
-
-    private final Oscillator mod_ = new Oscillator();
-    private final Oscillator car_ = new Oscillator();
-    private float idx_;
-    private float freq_, lfreq_, ratio_, lratio_;
 }

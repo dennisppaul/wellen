@@ -12,8 +12,8 @@ public class ExampleBasics03Beat extends PApplet {
      * in *beats per minute* (bpm) ( i.e quarter notes per minute ).
      */
 
-    private final int[] mNotes = {Note.NOTE_C3, Note.NOTE_C4, Note.NOTE_A2, Note.NOTE_A3};
     private int mBeatCount;
+    private final int[] mNotes = {Note.NOTE_C3, Note.NOTE_C4, Note.NOTE_A2, Note.NOTE_A3};
 
     public void settings() {
         size(640, 480);

@@ -88,7 +88,6 @@ public class PitchProcessor {
             return detector;
         }
     }
-
     /**
      * The underlying pitch detector;
      */
@@ -145,7 +144,6 @@ public class PitchProcessor {
             return -1.0f;
         }
     }
-
 
     /**
      * @return Whether the algorithm thinks the block of audio is pitched. Keep in mind that an algorithm can come up

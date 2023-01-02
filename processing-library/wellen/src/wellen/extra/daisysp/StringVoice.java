@@ -19,6 +19,17 @@ import static wellen.extra.daisysp.DaisySP.rand_kRandFrac;
  */
 public class StringVoice {
 
+    private float aux_;
+    private float density_, accent_;
+    private final Dust dust_ = new Dust();
+    private final Svf excitation_filter_ = new Svf();
+    private float f0_, brightness_, damping_;
+    private boolean mTrigger = false;
+    private int remaining_noise_samples_;
+    private float sample_rate_;
+    private final StringOsc string_ = new StringOsc();
+    private boolean sustain_, trig_;
+
     /**
      * Initialize the module
      *
@@ -166,25 +177,10 @@ public class StringVoice {
         damping_ = fclamp(damping, 0.f, 1.f);
     }
 
-
     /**
      * Get the raw excitation signal. Must call Process() first.
      */
     public float GetAux() {
         return aux_;
     }
-
-    private float sample_rate_;
-
-    private boolean sustain_, trig_;
-    private float f0_, brightness_, damping_;
-    private float density_, accent_;
-    private float aux_;
-
-    private final Dust dust_ = new Dust();
-    private final Svf excitation_filter_ = new Svf();
-    private final StringOsc string_ = new StringOsc();
-    private int remaining_noise_samples_;
-
-    private boolean mTrigger = false;
 }

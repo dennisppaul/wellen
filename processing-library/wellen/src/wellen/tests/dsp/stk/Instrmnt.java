@@ -12,6 +12,8 @@ public abstract class Instrmnt {
       by Perry R. Cook and Gary P. Scavone, 1995--2021.
     */
 
+    protected StkFrames lastFrame_;
+
     /***************************************************/
 
     //! Class ructor.
@@ -88,7 +90,5 @@ public abstract class Instrmnt {
     public StkFrames tick(StkFrames frames) {
         return tick(frames, 0);
     }
-
-    protected StkFrames lastFrame_;
 
 }

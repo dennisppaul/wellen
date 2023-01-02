@@ -42,6 +42,11 @@ void keyPressed() {
     }
 }
 
+void start_recording() {
+    mRecordedSamples.clear();
+    mIsRecording = true;
+}
+
 void stop_recording() {
     mIsRecording = false;
     /* export samples to WAV file */
@@ -60,9 +65,4 @@ void stop_recording() {
                      Wellen.WAV_FORMAT_IEEE_FLOAT_32BIT);
     println("+++ recorded file ...... : " + WAV_FILE_NAME);
     println("+++ recorded samples ... : " + WAV_FILE_LENGTH);
-}
-
-void start_recording() {
-    mRecordedSamples.clear();
-    mIsRecording = true;
 }

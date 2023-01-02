@@ -238,23 +238,128 @@ implements <a href="../AudioBufferRenderer.html" title="interface in wellen">Aud
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="audioblock(float[][],float[][])">
-<h3>audioblock</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">audioblock</span><wbr><span class="parameters">(float[][]&nbsp;output_signal,
- float[][]&nbsp;pInputSignal)</span></div>
+<section class="detail" id="calculate_RMS(float[])">
+<h3>calculate_RMS</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">calculate_RMS</span><wbr><span class="parameters">(float[]&nbsp;pBuffer)</span></div>
+<div class="block">Calculates and returns the root mean square of the signal. Please cache the result since it is calculated every
+ time.</div>
 <dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="../AudioBufferRenderer.html#audioblock(float%5B%5D%5B%5D,float%5B%5D%5B%5D)">audioblock</a></code>&nbsp;in interface&nbsp;<code><a href="../AudioBufferRenderer.html" title="interface in wellen">AudioBufferRenderer</a></code></dd>
 <dt>Parameters:</dt>
-<dd><code>output_signal</code> - output signal</dd>
-<dd><code>pInputSignal</code> - input signal</dd>
+<dd><code>pBuffer</code> - The audio buffer to calculate the RMS for.</dd>
+<dt>Returns:</dt>
+<dd>The <a href="http://en.wikipedia.org/wiki/Root_mean_square">RMS</a> of the signal present in the current
+         buffer.</dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="stop()">
-<h3>stop</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">stop</span>()</div>
+<section class="detail" id="draw_buffers(processing.core.PGraphics,float,float)">
+<h3>draw_buffers</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">draw_buffers</span><wbr><span class="parameters">(processing.core.PGraphics&nbsp;g,
+ float&nbsp;pWidth,
+ float&nbsp;pHeight)</span></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>g</code> - graphics context to draw into</dd>
+<dd><code>pWidth</code> - visual width of the drawn buffer</dd>
+<dd><code>pHeight</code> - visual height of the drawn buffer</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="get_buffer_size()">
+<h3>get_buffer_size</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">get_buffer_size</span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>audio block or buffer size</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="get_input_buffer_left()">
+<h3>get_input_buffer_left</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float[]</span>&nbsp;<span class="element-name">get_input_buffer_left</span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>reference to left input buffer</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="get_input_buffer_right()">
+<h3>get_input_buffer_right</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float[]</span>&nbsp;<span class="element-name">get_input_buffer_right</span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>reference to right input buffer</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="get_output_buffer()">
+<h3>get_output_buffer</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float[]</span>&nbsp;<span class="element-name">get_output_buffer</span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>reference to output buffer</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="get_output_buffer_left()">
+<h3>get_output_buffer_left</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float[]</span>&nbsp;<span class="element-name">get_output_buffer_left</span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>reference to left output buffer</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="get_output_buffer_right()">
+<h3>get_output_buffer_right</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float[]</span>&nbsp;<span class="element-name">get_output_buffer_right</span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>reference to right output buffer</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="get_sample_rate()">
+<h3>get_sample_rate</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">get_sample_rate</span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>sample rate</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="linear_to_decibel(float)">
+<h3>linear_to_decibel</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">linear_to_decibel</span><wbr><span class="parameters">(float&nbsp;pLinearValue)</span></div>
+<div class="block">Converts a linear to a dB value.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>pLinearValue</code> - linear value to convert</dd>
+<dt>Returns:</dt>
+<dd>converted value in decibel</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="sound_pressure_level(float[])">
+<h3>sound_pressure_level</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">sound_pressure_level</span><wbr><span class="parameters">(float[]&nbsp;pBuffer)</span></div>
+<div class="block">returns sound pressure level in decibel for given buffer</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>pBuffer</code> - buffer with signal</dd>
+<dt>Returns:</dt>
+<dd>level for buffer in decibel</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -386,127 +491,22 @@ implements <a href="../AudioBufferRenderer.html" title="interface in wellen">Aud
 </section>
 </li>
 <li>
-<section class="detail" id="get_sample_rate()">
-<h3>get_sample_rate</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">get_sample_rate</span>()</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>sample rate</dd>
-</dl>
+<section class="detail" id="stop()">
+<h3>stop</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">stop</span>()</div>
 </section>
 </li>
 <li>
-<section class="detail" id="get_buffer_size()">
-<h3>get_buffer_size</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">get_buffer_size</span>()</div>
+<section class="detail" id="audioblock(float[][],float[][])">
+<h3>audioblock</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">audioblock</span><wbr><span class="parameters">(float[][]&nbsp;output_signal,
+ float[][]&nbsp;pInputSignal)</span></div>
 <dl class="notes">
-<dt>Returns:</dt>
-<dd>audio block or buffer size</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="get_output_buffer()">
-<h3>get_output_buffer</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float[]</span>&nbsp;<span class="element-name">get_output_buffer</span>()</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>reference to output buffer</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="get_output_buffer_left()">
-<h3>get_output_buffer_left</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float[]</span>&nbsp;<span class="element-name">get_output_buffer_left</span>()</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>reference to left output buffer</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="get_output_buffer_right()">
-<h3>get_output_buffer_right</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float[]</span>&nbsp;<span class="element-name">get_output_buffer_right</span>()</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>reference to right output buffer</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="get_input_buffer_left()">
-<h3>get_input_buffer_left</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float[]</span>&nbsp;<span class="element-name">get_input_buffer_left</span>()</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>reference to left input buffer</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="get_input_buffer_right()">
-<h3>get_input_buffer_right</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float[]</span>&nbsp;<span class="element-name">get_input_buffer_right</span>()</div>
-<dl class="notes">
-<dt>Returns:</dt>
-<dd>reference to right input buffer</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="draw_buffers(processing.core.PGraphics,float,float)">
-<h3>draw_buffers</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">draw_buffers</span><wbr><span class="parameters">(processing.core.PGraphics&nbsp;g,
- float&nbsp;pWidth,
- float&nbsp;pHeight)</span></div>
-<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../AudioBufferRenderer.html#audioblock(float%5B%5D%5B%5D,float%5B%5D%5B%5D)">audioblock</a></code>&nbsp;in interface&nbsp;<code><a href="../AudioBufferRenderer.html" title="interface in wellen">AudioBufferRenderer</a></code></dd>
 <dt>Parameters:</dt>
-<dd><code>g</code> - graphics context to draw into</dd>
-<dd><code>pWidth</code> - visual width of the drawn buffer</dd>
-<dd><code>pHeight</code> - visual height of the drawn buffer</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="calculate_RMS(float[])">
-<h3>calculate_RMS</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">calculate_RMS</span><wbr><span class="parameters">(float[]&nbsp;pBuffer)</span></div>
-<div class="block">Calculates and returns the root mean square of the signal. Please cache the result since it is calculated every
- time.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>pBuffer</code> - The audio buffer to calculate the RMS for.</dd>
-<dt>Returns:</dt>
-<dd>The <a href="http://en.wikipedia.org/wiki/Root_mean_square">RMS</a> of the signal present in the current
-         buffer.</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="sound_pressure_level(float[])">
-<h3>sound_pressure_level</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">sound_pressure_level</span><wbr><span class="parameters">(float[]&nbsp;pBuffer)</span></div>
-<div class="block">returns sound pressure level in decibel for given buffer</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>pBuffer</code> - buffer with signal</dd>
-<dt>Returns:</dt>
-<dd>level for buffer in decibel</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="linear_to_decibel(float)">
-<h3>linear_to_decibel</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">linear_to_decibel</span><wbr><span class="parameters">(float&nbsp;pLinearValue)</span></div>
-<div class="block">Converts a linear to a dB value.</div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>pLinearValue</code> - linear value to convert</dd>
-<dt>Returns:</dt>
-<dd>converted value in decibel</dd>
+<dd><code>output_signal</code> - output signal</dd>
+<dd><code>pInputSignal</code> - input signal</dd>
 </dl>
 </section>
 </li>

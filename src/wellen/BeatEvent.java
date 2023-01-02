@@ -30,12 +30,12 @@ import java.util.TimerTask;
  */
 public class BeatEvent {
 
-    private final Timer fTimer;
-    private final ArrayList<BeatListener> fListeners;
-    private BeatPool fInstance;
     private int fBeat = -1;
     private boolean fFlagged = false;
+    private BeatPool fInstance;
+    private final ArrayList<BeatListener> fListeners;
     private TimerTask fTask;
+    private final Timer fTimer;
 
     private BeatEvent(int BPM) {
         this();

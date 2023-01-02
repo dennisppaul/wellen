@@ -10,8 +10,8 @@ import wellen.extra.daisysp.Oscillator;
 public class ExampleDaisySPAdEnv extends PApplet {
     //@add import wellen.extra.daisysp.*;
 
-    private Adsr mAdsr;
     private AdEnv mAdEnv;
+    private Adsr mAdsr;
     private Oscillator mOscillator;
 
     public void settings() {

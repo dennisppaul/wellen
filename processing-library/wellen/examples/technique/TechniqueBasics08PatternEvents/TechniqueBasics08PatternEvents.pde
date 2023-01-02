@@ -5,6 +5,10 @@ import wellen.dsp.*;
  * this example demonstrates how to use patterns to create events.
  */
 
+int fBeat = 0;
+
+int fEventPositionPatternC;
+
 final Pattern fPatternA = new Pattern();
 
 final Pattern fPatternB = new Pattern();
@@ -16,10 +20,6 @@ final Sequencer<Integer> fSequenceA = new Sequencer<>(0, 1, 3, 5);
 final Sequencer<Integer> fSequenceB = new Sequencer<>(0, 1, 3, 5);
 
 final Sequencer<Integer> fSequenceC = new Sequencer<>(0, 1, 3, 5, 5, 3, 1, 0);
-
-int fEventPositionPatternC;
-
-int fBeat = 0;
 
 void settings() {
     size(640, 480);

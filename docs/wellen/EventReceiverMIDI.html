@@ -48,7 +48,6 @@ implements <a href="MidiInListener.html" title="interface in wellen">MidiInListe
 <div class="block">listens to incoming MIDI messages.
  <p>
  the following callback methods are available:
-
  <pre>
  <code>
  midi_note_on(int channel, int pitch, int velocity)
@@ -167,6 +166,34 @@ implements <a href="MidiInListener.html" title="interface in wellen">MidiInListe
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="start(java.lang.Object,java.lang.String)">
+<h3>start</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="EventReceiverMIDI.html" title="class in wellen">EventReceiverMIDI</a></span>&nbsp;<span class="element-name">start</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;pParent,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;pMidiInputDevice)</span></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>pParent</code> - object which will receive MIDI messages</dd>
+<dd><code>pMidiInputDevice</code> - MIDI input device to use (e.g. "IAC Driver Bus 1")</dd>
+<dt>Returns:</dt>
+<dd>instance of <code>MIDIInput</code> or <code>null</code> if the device is not available.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="start(java.lang.Object,int)">
+<h3>start</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="EventReceiverMIDI.html" title="class in wellen">EventReceiverMIDI</a></span>&nbsp;<span class="element-name">start</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;pParent,
+ int&nbsp;pMidiInputDeviceID)</span></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>pParent</code> - object which will receive MIDI messages</dd>
+<dd><code>pMidiInputDeviceID</code> - MIDI input device ID to use</dd>
+<dt>Returns:</dt>
+<dd>instance of <code>MIDIInput</code> or <code>null</code> if the device is not available.</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="receiveProgramChange(int,int,int)">
 <h3>receiveProgramChange</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">receiveProgramChange</span><wbr><span class="parameters">(int&nbsp;channel,
@@ -277,34 +304,6 @@ implements <a href="MidiInListener.html" title="interface in wellen">MidiInListe
 <dd><code><a href="MidiInListener.html#clock_song_position_pointer(int)">clock_song_position_pointer</a></code>&nbsp;in interface&nbsp;<code><a href="MidiInListener.html" title="interface in wellen">MidiInListener</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>pOffset16th</code> - offset of the song position in 16th notes</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="start(java.lang.Object,java.lang.String)">
-<h3>start</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="EventReceiverMIDI.html" title="class in wellen">EventReceiverMIDI</a></span>&nbsp;<span class="element-name">start</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;pParent,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;pMidiInputDevice)</span></div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>pParent</code> - object which will receive MIDI messages</dd>
-<dd><code>pMidiInputDevice</code> - MIDI input device to use (e.g. "IAC Driver Bus 1")</dd>
-<dt>Returns:</dt>
-<dd>instance of <code>MIDIInput</code> or <code>null</code> if the device is not available.</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="start(java.lang.Object,int)">
-<h3>start</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="EventReceiverMIDI.html" title="class in wellen">EventReceiverMIDI</a></span>&nbsp;<span class="element-name">start</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;pParent,
- int&nbsp;pMidiInputDeviceID)</span></div>
-<dl class="notes">
-<dt>Parameters:</dt>
-<dd><code>pParent</code> - object which will receive MIDI messages</dd>
-<dd><code>pMidiInputDeviceID</code> - MIDI input device ID to use</dd>
-<dt>Returns:</dt>
-<dd>instance of <code>MIDIInput</code> or <code>null</code> if the device is not available.</dd>
 </dl>
 </section>
 </li>

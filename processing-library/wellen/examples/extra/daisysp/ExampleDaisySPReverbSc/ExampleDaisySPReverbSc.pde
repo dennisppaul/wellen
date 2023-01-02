@@ -3,13 +3,13 @@ import wellen.dsp.*;
 
 import wellen.extra.daisysp.*;
 
-Pluck mPluck;
-
-ReverbSc mReverb;
-
 int mMIDINoteCounter = 0;
 
 final int[] mMIDINotes = {36, 48, 39, 51};
+
+Pluck mPluck;
+
+ReverbSc mReverb;
 
 void settings() {
     size(640, 480);

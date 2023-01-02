@@ -46,30 +46,29 @@ import wellen.dsp.EffectMono;
 import wellen.dsp.EffectStereo;
 
 public class RREchotron implements EffectMono, EffectStereo {
-    public static final int PARAM_VOLUME = 0;
+    public static final int NUM_PARAMS = 16;
+    public static final int NUM_PRESETS = 5;
     public static final int PARAM_DEPTH = 1;
-    public static final int PARAM_WIDTH = 2;
-    public static final int PARAM_LENGTH = 3;
-    public static final int PARAM_FILTER_PRESETS = 4;
-    public static final int PARAM_TEMPO = 5;
-    public static final int PARAM_HIDAMP = 6;
-    public static final int PARAM_LRCROSS = 7;
-    public static final int PARAM_USER = 8;
-    public static final int PARAM_LFO_STEREO = 9;
     public static final int PARAM_FEEDBACK = 10;
-    public static final int PARAM_PANNING = 11;
+    public static final int PARAM_FILTER_DELAY_LINES = 15;
+    public static final int PARAM_FILTER_PRESETS = 4;
+    public static final int PARAM_HIDAMP = 6;
+    public static final int PARAM_LENGTH = 3;
+    public static final int PARAM_LFO_STEREO = 9;
+    public static final int PARAM_LFO_TYPE = 14;
+    public static final int PARAM_LRCROSS = 7;
     public static final int PARAM_MOD_DELAYS = 12;
     public static final int PARAM_MOD_FILTERS = 13;
-    public static final int PARAM_LFO_TYPE = 14;
-    public static final int PARAM_FILTER_DELAY_LINES = 15;
-    public static final int NUM_PARAMS = 16;
-
-    public static final int PRESET_SUMMER = 0;
+    public static final int PARAM_PANNING = 11;
+    public static final int PARAM_TEMPO = 5;
+    public static final int PARAM_USER = 8;
+    public static final int PARAM_VOLUME = 0;
+    public static final int PARAM_WIDTH = 2;
     public static final int PRESET_AMBIENCE = 1;
     public static final int PRESET_ARRANJER = 2;
-    public static final int PRESET_SUCTION = 3;
     public static final int PRESET_SUCFLANGE = 4;
-    public static final int NUM_PRESETS = 5;
+    public static final int PRESET_SUCTION = 3;
+    public static final int PRESET_SUMMER = 0;
     private static final int ECHOTRON_F_SIZE = 32;      //Allow up to 150 points in the file
     private static final int ECHOTRON_MAXFILTERS = 32;  //filters available
     private static final float[][][] FILE_PRESETS = {{
@@ -172,7 +171,6 @@ public class RREchotron implements EffectMono, EffectStereo {
     private float subdiv_fmod;
     private float tempo_coeff;
     private float width;
-
     public RREchotron() {
         lfo = new RREffectLFO();
         dlfo = new RREffectLFO();
@@ -483,49 +481,6 @@ public class RREchotron implements EffectMono, EffectStereo {
         }
     }
 
-    private void setvolume(int Pvolume) {
-        this.Pvolume = Pvolume;
-        outvolume = (float) Pvolume / 127.0f;
-        if (Pvolume == 0) {
-            cleanup();
-        }
-    }
-
-    private void setpanning(int value) {
-        Ppanning = value;
-        rpanning = ((float) Ppanning) / 64.0f;
-        lpanning = 2.0f - rpanning;
-        lpanning = 10.0f * RRUtilities.powf(lpanning, 4);
-        rpanning = 10.0f * RRUtilities.powf(rpanning, 4);
-        lpanning = 1.0f - 1.0f / (lpanning + 1.0f);
-        rpanning = 1.0f - 1.0f / (rpanning + 1.0f);
-        lpanning *= 1.1f;
-        rpanning *= 1.1f;
-        if (lpanning > 1.0f) {
-            lpanning = 1.0f;
-        }
-        if (rpanning > 1.0f) {
-            rpanning = 1.0f;
-        }
-    }
-
-    private void loaddefault() {
-        Plength = 1;
-        fPan[0] = 0.0f;
-        fTime[0] = 1.0f;  //default 1 measure delay
-        fLevel[0] = 0.7f;
-        fLP[0] = 1.0f;
-        fBP[0] = -1.0f;
-        fHP[0] = 1.0f;
-        fFreq[0] = 800.0f;
-
-        fQ[0] = 2.0f;
-        iStages[0] = 1;
-        subdiv_dmod = 1.0f;
-        subdiv_fmod = 1.0f;
-        init_params();
-    }
-
     private void init_params() {
         float hSR = RRUtilities.SAMPLE_RATE * 0.5f;
         float tmp_time;
@@ -584,6 +539,23 @@ public class RREchotron implements EffectMono, EffectStereo {
         }
     }
 
+    private void loaddefault() {
+        Plength = 1;
+        fPan[0] = 0.0f;
+        fTime[0] = 1.0f;  //default 1 measure delay
+        fLevel[0] = 0.7f;
+        fLP[0] = 1.0f;
+        fBP[0] = -1.0f;
+        fHP[0] = 1.0f;
+        fFreq[0] = 800.0f;
+
+        fQ[0] = 2.0f;
+        iStages[0] = 1;
+        subdiv_dmod = 1.0f;
+        subdiv_fmod = 1.0f;
+        init_params();
+    }
+
     private void modulate_delay() {
         float lfmod;
         float rfmod;
@@ -629,14 +601,6 @@ public class RREchotron implements EffectMono, EffectStereo {
             interpl = 0.0f;
             interpr = 0.0f;
         }
-    }
-
-    private void sethidamp(int Phidamp) {
-        this.Phidamp = Phidamp;
-        hidamp = 1.0f - (float) Phidamp / 127.1f;
-        float fr = 20.0f * RRUtilities.powf(2.0f, hidamp * 10.0f);
-        lpfl.setfreq(fr);
-        lpfr.setfreq(fr);
     }
 
     private void setfb(int value) {
@@ -740,6 +704,40 @@ public class RREchotron implements EffectMono, EffectStereo {
         cleanup();
         init_params();
         return error_num;
+    }
+
+    private void sethidamp(int Phidamp) {
+        this.Phidamp = Phidamp;
+        hidamp = 1.0f - (float) Phidamp / 127.1f;
+        float fr = 20.0f * RRUtilities.powf(2.0f, hidamp * 10.0f);
+        lpfl.setfreq(fr);
+        lpfr.setfreq(fr);
+    }
+
+    private void setpanning(int value) {
+        Ppanning = value;
+        rpanning = ((float) Ppanning) / 64.0f;
+        lpanning = 2.0f - rpanning;
+        lpanning = 10.0f * RRUtilities.powf(lpanning, 4);
+        rpanning = 10.0f * RRUtilities.powf(rpanning, 4);
+        lpanning = 1.0f - 1.0f / (lpanning + 1.0f);
+        rpanning = 1.0f - 1.0f / (rpanning + 1.0f);
+        lpanning *= 1.1f;
+        rpanning *= 1.1f;
+        if (lpanning > 1.0f) {
+            lpanning = 1.0f;
+        }
+        if (rpanning > 1.0f) {
+            rpanning = 1.0f;
+        }
+    }
+
+    private void setvolume(int Pvolume) {
+        this.Pvolume = Pvolume;
+        outvolume = (float) Pvolume / 127.0f;
+        if (Pvolume == 0) {
+            cleanup();
+        }
     }
 
     private static class Filterbank {

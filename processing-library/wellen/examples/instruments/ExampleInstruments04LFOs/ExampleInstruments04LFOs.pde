@@ -10,11 +10,11 @@ import wellen.dsp.*;
  * note that this functionality is not implemented for MIDI and OSC.
  */
 
-boolean mToggleLFOParameterSelect = true;
+boolean mEnableAmplitudeLFO = false;
 
 boolean mEnableFrequencyLFO = false;
 
-boolean mEnableAmplitudeLFO = false;
+boolean mToggleLFOParameterSelect = true;
 
 void settings() {
     size(640, 480);

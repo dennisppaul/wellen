@@ -8,14 +8,14 @@ package wellen;
  */
 public class HarmonicTable {
 
-    public static final int UP = 0;
-    public static final int UP_RIGHT = 1;
-    public static final int DOWN_RIGHT = 2;
     public static final int DOWN = 3;
     public static final int DOWN_LEFT = 4;
-    public static final int UP_LEFT = 5;
-    public static final int RIGHT = 6;
+    public static final int DOWN_RIGHT = 2;
     public static final int LEFT = 7;
+    public static final int RIGHT = 6;
+    public static final int UP = 0;
+    public static final int UP_LEFT = 5;
+    public static final int UP_RIGHT = 1;
     private static final int HALF_TONE = 1;
     private static final int MAJOR_THIRD = 4;
     private static final int MINOR_THIRD = 3;

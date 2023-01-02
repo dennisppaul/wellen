@@ -68,7 +68,6 @@ public class RRRBFilter extends RRFilterI {
     private final fstage[] st;
     private int stages;                     //how many times the filter is applied (0.1,1->2,etc.)
     private int type;                       //The type of the filter (LPF1,HPF1,LPF2,HPF2...)
-
     public RRRBFilter(int Ftype, float Ffreq, float Fq, int Fstages) {
         st = new fstage[RRUtilities.MAX_FILTER_STAGES + 1];
         for (int i = 0; i < st.length; i++) {

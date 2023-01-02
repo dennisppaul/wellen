@@ -12,10 +12,10 @@ import wellen.dsp.DSP;
  */
 public class TestRerouteInteralToneEngineWithVirtualSoundCardForDSP extends PApplet {
 
+    float mDecay = 0.9f;
     float[] mDelayBuffer = new float[4096];
     int mDelayID = 0;
     int mDelayOffset = 512;
-    float mDecay = 0.9f;
     float mMix = 0.25f;
 
     public void settings() {

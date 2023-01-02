@@ -14,12 +14,12 @@ public class ExampleDSP09ToneEngineWithDSP extends PApplet {
      * to produce the tone signals.
      */
 
-    private final float[] mDelayBuffer = new float[4096];
-    private final int mDelayOffset = 512;
     private final float mDecay = 0.9f;
+    private final float[] mDelayBuffer = new float[4096];
+    private int mDelayID = 0;
+    private final int mDelayOffset = 512;
     private final float mMix = 0.7f;
     private ToneEngineDSP mToneEngine;
-    private int mDelayID = 0;
 
     public void settings() {
         size(640, 480);

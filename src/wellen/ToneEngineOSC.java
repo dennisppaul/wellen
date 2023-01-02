@@ -32,18 +32,18 @@ public class ToneEngineOSC extends ToneEngine {
 
     // @TODO(add `InstrumentOSC`)
 
-    public static final String OSC_ADDR_PATTERN_NOTE_ON = "/note_on";
-    public static final String OSC_ADDR_PATTERN_NOTE_OFF = "/note_off";
     public static final String OSC_ADDR_PATTERN_CONTROLCHANGE = "/controlchange";
+    public static final String OSC_ADDR_PATTERN_NOTE_OFF = "/note_off";
+    public static final String OSC_ADDR_PATTERN_NOTE_ON = "/note_on";
     public static final String OSC_ADDR_PATTERN_PITCHBEND = "/pitchbend";
     public static final String OSC_ADDR_PATTERN_PROGRAMCHANGE = "/programchange";
-    private static final int mNumberOfInstruments = Wellen.DEFAULT_NUMBER_OF_INSTRUMENTS;
-    private static final int DEFAULT_TRANSMIT_PORT = 7001;
     private static final String DEFAULT_TRANSMIT_IP = "127.0.0.1";
+    private static final int DEFAULT_TRANSMIT_PORT = 7001;
+    private static final int mNumberOfInstruments = Wellen.DEFAULT_NUMBER_OF_INSTRUMENTS;
+    private int mCurrentInstrumentID;
+    private final ArrayList<InstrumentOSC> mInstruments;
     private final OscP5 mOscP5;
     private final NetAddress mRemoteLocation;
-    private final ArrayList<InstrumentOSC> mInstruments;
-    private int mCurrentInstrumentID;
 
     public ToneEngineOSC(String pTransmitIP, int pPortTransmit) {
         final int pPortReceive = 0; // @TODO do we need to supply a *listening port* although it is never used?

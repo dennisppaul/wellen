@@ -13,9 +13,9 @@ public class ExampleDSP10SampleRecorder extends PApplet {
      * `Sampler`. this example also demonstrates how to play a sample backwards.
      */
 
-    private Sampler mSampler;
     private boolean mIsRecording;
     private float[] mRecording;
+    private Sampler mSampler;
 
     public void settings() {
         size(640, 480);

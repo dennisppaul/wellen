@@ -30,12 +30,12 @@ import java.lang.reflect.Method;
  */
 public class EventReceiverOSC {
 
-    private static final String METHOD_NAME = "event_receive";
     private static final int DEFAULT_RECEIVE_PORT = 7001;
+    private static final String METHOD_NAME = "event_receive";
     private static EventReceiverOSC mInstance = null;
-    private final Object mParent;
-    private final OscP5 mOscP5;
     private Method mMethod = null;
+    private final OscP5 mOscP5;
+    private final Object mParent;
 
     /**
      * @param pListener    object which will receive OSC messages
@@ -49,6 +49,26 @@ public class EventReceiverOSC {
         } catch (NoSuchMethodException | SecurityException ex) {
             ex.printStackTrace();
         }
+    }
+
+    /**
+     * @param pListener    object which will receive OSC messages
+     * @param pPortReceive port to listen on for incoming OSC messages
+     * @return instance of {@code EventReceiverOSC}
+     */
+    public static EventReceiverOSC start(Object pListener, int pPortReceive) {
+        if (mInstance == null) {
+            mInstance = new EventReceiverOSC(pListener, pPortReceive);
+        }
+        return mInstance;
+    }
+
+    /**
+     * @param pListener object which will receive OSC messages
+     * @return instance of {@code EventReceiverOSC}
+     */
+    public static EventReceiverOSC start(Object pListener) {
+        return start(pListener, DEFAULT_RECEIVE_PORT);
     }
 
     /**
@@ -81,25 +101,5 @@ public class EventReceiverOSC {
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
             ex.printStackTrace();
         }
-    }
-
-    /**
-     * @param pListener    object which will receive OSC messages
-     * @param pPortReceive port to listen on for incoming OSC messages
-     * @return instance of {@code EventReceiverOSC}
-     */
-    public static EventReceiverOSC start(Object pListener, int pPortReceive) {
-        if (mInstance == null) {
-            mInstance = new EventReceiverOSC(pListener, pPortReceive);
-        }
-        return mInstance;
-    }
-
-    /**
-     * @param pListener object which will receive OSC messages
-     * @return instance of {@code EventReceiverOSC}
-     */
-    public static EventReceiverOSC start(Object pListener) {
-        return start(pListener, DEFAULT_RECEIVE_PORT);
     }
 }

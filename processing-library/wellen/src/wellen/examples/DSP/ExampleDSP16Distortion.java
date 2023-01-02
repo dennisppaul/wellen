@@ -18,8 +18,8 @@ public class ExampleDSP16Distortion extends PApplet {
      * achieve distortion by artificially reducing the bit range.
      */
 
-    private ToneEngineDSP mToneEngine;
     private Distortion mDistortion;
+    private ToneEngineDSP mToneEngine;
 
     public void settings() {
         size(640, 480);

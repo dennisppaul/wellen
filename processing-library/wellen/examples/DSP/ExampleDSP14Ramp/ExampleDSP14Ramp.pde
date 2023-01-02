@@ -14,19 +14,19 @@ import wellen.dsp.*;
  * the envelope to an end value in specified duration.
  */
 
-Envelope mRampFrequency;
-
-Envelope mEnvelopeAmplitude;
-
-Wavetable mWavetable;
-
-final int NOTE_RANGE = 36;
-
 final int BASE_NOTE = Note.NOTE_C1;
 
 final float MIN_FREQ = Note.note_to_frequency(BASE_NOTE);
 
+final int NOTE_RANGE = 36;
+
 final float MAX_FREQ = Note.note_to_frequency(BASE_NOTE + NOTE_RANGE);
+
+Envelope mEnvelopeAmplitude;
+
+Envelope mRampFrequency;
+
+Wavetable mWavetable;
 
 void settings() {
     size(640, 480);

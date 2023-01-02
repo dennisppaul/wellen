@@ -29,6 +29,13 @@ import wellen.Wellen;
  * detect an envelope from an input signal
  */
 public class EnvelopeFollower {
+    private static final float DEFAULT_ATTACK_TIME = 0.0002f;
+    private static final float DEFAULT_RELEASE_TIME = 0.0004f;
+    private float fAttack;
+    private float fEnvelopeOut;
+    private float fRelease;
+    private final float fSampleRate;
+
     /**
      *
      */
@@ -64,19 +71,19 @@ public class EnvelopeFollower {
     }
 
     /**
+     * @return attack time in samples
+     */
+    public float get_attack() {
+        return fAttack;
+    }
+
+    /**
      * defines how fast the envelope raise
      *
      * @param attack_time_samples attack time in samples
      */
     public void set_attack(float attack_time_samples) {
         fAttack = (float) Math.exp(-1.0 / attack_time_samples);
-    }
-
-    /**
-     * @return attack time in samples
-     */
-    public float get_attack() {
-        return fAttack;
     }
 
     /**
@@ -89,19 +96,19 @@ public class EnvelopeFollower {
     }
 
     /**
+     * @return relase time in samples
+     */
+    public float get_release() {
+        return fRelease;
+    }
+
+    /**
      * defines how fast the envelope goes down
      *
      * @param release_time_samples time in samples
      */
     public void set_release(float release_time_samples) {
         fRelease = (float) Math.exp(-1.0 / release_time_samples);
-    }
-
-    /**
-     * @return relase time in samples
-     */
-    public float get_release() {
-        return fRelease;
     }
 
     /**
@@ -126,11 +133,4 @@ public class EnvelopeFollower {
             buffer[i] = fEnvelopeOut;
         }
     }
-
-    private static final float DEFAULT_ATTACK_TIME = 0.0002f;
-    private static final float DEFAULT_RELEASE_TIME = 0.0004f;
-    private float fAttack;
-    private float fRelease;
-    private float fEnvelopeOut;
-    private final float fSampleRate;
 }

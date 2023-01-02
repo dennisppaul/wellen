@@ -8,11 +8,11 @@ import wellen.dsp.*;
  * tracks when <code>output_signal()</code> is called.
  */
 
+static final int PPQN = 24;
+
 final Track fMaster = new Track();
 
 final ModuleToneEngine fModuleBleepBleep = new ModuleToneEngine();
-
-static final int PPQN = 24;
 
 void settings() {
     size(640, 480);
@@ -83,7 +83,7 @@ void beat(int beat_absolute, int beat_relative) {
 
 class ModuleOhhhhUhh extends Track {
     
-final Oscillator mOSC = new OscillatorFunction();
+final float mBaseFreq = Note.note_to_frequency(12);
     
 final VowelFormantFilter mFormantFilter = new VowelFormantFilter();
     
@@ -91,7 +91,7 @@ final float mMaxAmplitude = 0.2f;
     
 final float mNoiseScale = 0.02f;
     
-final float mBaseFreq = Note.note_to_frequency(12);
+final Oscillator mOSC = new OscillatorFunction();
     
 ModuleOhhhhUhh() {
         mOSC.set_frequency(mBaseFreq);

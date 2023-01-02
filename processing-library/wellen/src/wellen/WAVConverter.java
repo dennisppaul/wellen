@@ -12,17 +12,17 @@ public class WAVConverter {
     // @TODO(write header could also support `WAVE_FORMAT_PCM_32BIT_FLOAT`)
     // @TODO(currently fixed to little endianness)
 
+    public static boolean VERBOSE = false;
     private static final String WAV_CHUNK_DATA = "data";
     private static final String WAV_CHUNK_FMT_ = "fmt ";
     private static final String WAV_CHUNK_RIFF = "RIFF";
     private static final String WAV_CHUNK_WAVE = "WAVE";
-    public static boolean VERBOSE = false;
-    private final int mChannels;
     private final int mBitsPerSample;
-    private final int mSampleRate;
-    private final ArrayList<Byte> mHeader;
-    private final ArrayList<Byte> mData;
+    private final int mChannels;
     private final int mCompressionFormat;
+    private final ArrayList<Byte> mData;
+    private final ArrayList<Byte> mHeader;
+    private final int mSampleRate;
 
     public WAVConverter(Info pInfo) {
         this(pInfo.channels, pInfo.bits_per_sample, pInfo.sample_rate, pInfo.format);
@@ -35,34 +35,6 @@ public class WAVConverter {
         mCompressionFormat = pCompressionFormat;
         mData = new ArrayList<>();
         mHeader = new ArrayList<>();
-    }
-
-    public static byte[] convert_samples_to_bytes(float[][] pBuffer,
-                                                  int pChannels,
-                                                  int pBitsPerSample,
-                                                  int pSampleRate) {
-        return convert_samples_to_bytes(pBuffer, pChannels, pBitsPerSample, pSampleRate, Wellen.WAV_FORMAT_PCM);
-    }
-
-    public static byte[] convert_samples_to_bytes(Info pInfo) {
-        WAVConverter mWAVConverter = new WAVConverter(pInfo);
-        mWAVConverter.appendData(pInfo.samples);
-        mWAVConverter.writeHeader();
-        return mWAVConverter.getByteData();
-    }
-
-    public static byte[] convert_samples_to_bytes(float[][] pBuffer,
-                                                  int pChannels,
-                                                  int pBitsPerSample,
-                                                  int pSampleRate,
-                                                  int pCompressionCode) {
-        Info mInfo = new Info();
-        mInfo.samples = pBuffer;
-        mInfo.channels = pChannels;
-        mInfo.bits_per_sample = pBitsPerSample;
-        mInfo.sample_rate = pSampleRate;
-        mInfo.format = pCompressionCode;
-        return convert_samples_to_bytes(mInfo);
     }
 
     public static Info convert_bytes_to_samples(byte[] pHeader) {
@@ -109,8 +81,7 @@ public class WAVConverter {
         }
         if (mWAVStruct.format != Wellen.WAV_FORMAT_PCM && mWAVStruct.format != Wellen.WAV_FORMAT_IEEE_FLOAT_32BIT) {
             System.err.println("+++ WARNING @" + WAVConverter.class.getSimpleName() + " / format not " + "supported. "
-                                       + "currently only `WAV_FORMAT_PCM` + `WAV_FORMAT_IEEE_FLOAT_32BIT` " + "works" +
-                                       "." + " " + "(" + mWAVStruct.format + ")");
+                                       + "currently only `WAV_FORMAT_PCM` + `WAV_FORMAT_IEEE_FLOAT_32BIT` " + "works" + "." + " " + "(" + mWAVStruct.format + ")");
         }
 
         /* data chunk */
@@ -166,33 +137,32 @@ public class WAVConverter {
         return mWAVStruct;
     }
 
-    private static byte[] read__bytes(byte[] pBuffer, int pStart, int pLength) {
-        return PApplet.subset(pBuffer, pStart, pLength);
+    public static byte[] convert_samples_to_bytes(Info pInfo) {
+        WAVConverter mWAVConverter = new WAVConverter(pInfo);
+        mWAVConverter.appendData(pInfo.samples);
+        mWAVConverter.writeHeader();
+        return mWAVConverter.getByteData();
     }
 
-    private static String read_string(byte[] pBuffer, int pStart) {
-        final int mStringLength = 4;
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < mStringLength; i++) {
-            sb.append((char) pBuffer[pStart + i]);
-        }
-        return sb.toString();
+    public static byte[] convert_samples_to_bytes(float[][] pBuffer,
+                                                  int pChannels,
+                                                  int pBitsPerSample,
+                                                  int pSampleRate,
+                                                  int pCompressionCode) {
+        Info mInfo = new Info();
+        mInfo.samples = pBuffer;
+        mInfo.channels = pChannels;
+        mInfo.bits_per_sample = pBitsPerSample;
+        mInfo.sample_rate = pSampleRate;
+        mInfo.format = pCompressionCode;
+        return convert_samples_to_bytes(mInfo);
     }
 
-    private static int read__int32(byte[] pBuffer, int pStart) {
-        return read____int(pBuffer, pStart, 4);
-    }
-
-    private static int read__int16(byte[] pBuffer, int pStart) {
-        return read____int(pBuffer, pStart, 2);
-    }
-
-    private static int read____int(byte[] pBuffer, int pStart, int pBytes) {
-        int v = 0;
-        for (int i = 0; i < pBytes; i++) {
-            v |= (pBuffer[i + pStart] & 0xFF) << (i * 8);
-        }
-        return v;
+    public static byte[] convert_samples_to_bytes(float[][] pBuffer,
+                                                  int pChannels,
+                                                  int pBitsPerSample,
+                                                  int pSampleRate) {
+        return convert_samples_to_bytes(pBuffer, pChannels, pBitsPerSample, pSampleRate, Wellen.WAV_FORMAT_PCM);
     }
 
     private static int findSingleBufferLength(float[][] pBuffer) {
@@ -210,6 +180,35 @@ public class WAVConverter {
             }
             return mBufferLength;
         }
+    }
+
+    private static int read____int(byte[] pBuffer, int pStart, int pBytes) {
+        int v = 0;
+        for (int i = 0; i < pBytes; i++) {
+            v |= (pBuffer[i + pStart] & 0xFF) << (i * 8);
+        }
+        return v;
+    }
+
+    private static byte[] read__bytes(byte[] pBuffer, int pStart, int pLength) {
+        return PApplet.subset(pBuffer, pStart, pLength);
+    }
+
+    private static int read__int16(byte[] pBuffer, int pStart) {
+        return read____int(pBuffer, pStart, 2);
+    }
+
+    private static int read__int32(byte[] pBuffer, int pStart) {
+        return read____int(pBuffer, pStart, 4);
+    }
+
+    private static String read_string(byte[] pBuffer, int pStart) {
+        final int mStringLength = 4;
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < mStringLength; i++) {
+            sb.append((char) pBuffer[pStart + i]);
+        }
+        return sb.toString();
     }
 
     private static void write___byte(ArrayList<Byte> pBuffer, int b) {
@@ -308,11 +307,11 @@ public class WAVConverter {
     }
 
     public static class Info {
-        public int channels;
         public int bits_per_sample;
-        public int sample_rate;
+        public int channels;
         public byte[] data;
-        public float[][] samples;
         public int format;
+        public int sample_rate;
+        public float[][] samples;
     }
 }

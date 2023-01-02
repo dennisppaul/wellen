@@ -37,16 +37,15 @@ import static wellen.Wellen.random;
  */
 public class OscillatorFunction extends Oscillator {
 
-    public static final float DEFAULT_FREQUENCY = 220.0f;
     public static final float DEFAULT_AMPLITUDE = 0.75f;
-
-    private final double mSamplingRate;
-    private int mWaveform;
-    private double mPhase;
-    private double mFrequency;
+    public static final float DEFAULT_FREQUENCY = 220.0f;
     private float mAmplitude;
+    private double mFrequency;
     private float mOffset;
+    private double mPhase;
+    private final double mSamplingRate;
     private double mStepSize;
+    private int mWaveform;
 
     public OscillatorFunction(int pSamplingRate) {
         mSamplingRate = pSamplingRate;
@@ -59,9 +58,8 @@ public class OscillatorFunction extends Oscillator {
         this(Wellen.DEFAULT_SAMPLING_RATE);
     }
 
-    @Override
-    public void set_waveform(int pWaveform) {
-        mWaveform = pWaveform;
+    private static double mod(double a, double b) {
+        return a >= b ? (a - b * (int) (a / b)) : a;
     }
 
     public int get_waveform() {
@@ -69,8 +67,8 @@ public class OscillatorFunction extends Oscillator {
     }
 
     @Override
-    public void set_amplitude(float pAmplitude) {
-        mAmplitude = pAmplitude;
+    public void set_waveform(int pWaveform) {
+        mWaveform = pWaveform;
     }
 
     @Override
@@ -79,8 +77,8 @@ public class OscillatorFunction extends Oscillator {
     }
 
     @Override
-    public void set_offset(float pOffset) {
-        mOffset = pOffset;
+    public void set_amplitude(float pAmplitude) {
+        mAmplitude = pAmplitude;
     }
 
     @Override
@@ -89,16 +87,21 @@ public class OscillatorFunction extends Oscillator {
     }
 
     @Override
-    public void set_frequency(float pFrequency) {
-        if (mFrequency != pFrequency) {
-            mFrequency = pFrequency;
-            mStepSize = mFrequency * (double) TWO_PI / mSamplingRate;
-        }
+    public void set_offset(float pOffset) {
+        mOffset = pOffset;
     }
 
     @Override
     public float get_frequency() {
         return (float) mFrequency;
+    }
+
+    @Override
+    public void set_frequency(float pFrequency) {
+        if (mFrequency != pFrequency) {
+            mFrequency = pFrequency;
+            mStepSize = mFrequency * (double) TWO_PI / mSamplingRate;
+        }
     }
 
     @Override
@@ -128,6 +131,12 @@ public class OscillatorFunction extends Oscillator {
         return (float) s;
     }
 
+    private double process_sawtooth() {
+        mPhase += mFrequency;
+        mPhase = mod(mPhase, mSamplingRate);
+        return (mPhase / (mSamplingRate / 2.0)) + SIGNAL_MIN;
+    }
+
     private double process_sine() {
         mPhase += mStepSize;
         if (mPhase > TWO_PI) {
@@ -136,27 +145,17 @@ public class OscillatorFunction extends Oscillator {
         return Math.sin(mPhase);
     }
 
-    private double process_triangle() {
-        mPhase += mFrequency;
-        mPhase = mod(mPhase, mSamplingRate);
-        final double mPhaseShifted = mPhase - (mSamplingRate / 2.0);
-        final double mPhaseShiftedAbs = mPhaseShifted > 0 ? mPhaseShifted : -mPhaseShifted;
-        return (mPhaseShiftedAbs - (mSamplingRate / 4.0)) / (mSamplingRate / 4.0);
-    }
-
-    private double process_sawtooth() {
-        mPhase += mFrequency;
-        mPhase = mod(mPhase, mSamplingRate);
-        return (mPhase / (mSamplingRate / 2.0)) + SIGNAL_MIN;
-    }
-
     private double process_square() {
         mPhase += mFrequency;
         mPhase = mod(mPhase, mSamplingRate);
         return mPhase > (mSamplingRate / 2.0f) ? SIGNAL_MAX : SIGNAL_MIN;
     }
 
-    private static double mod(double a, double b) {
-        return a >= b ? (a - b * (int) (a / b)) : a;
+    private double process_triangle() {
+        mPhase += mFrequency;
+        mPhase = mod(mPhase, mSamplingRate);
+        final double mPhaseShifted = mPhase - (mSamplingRate / 2.0);
+        final double mPhaseShiftedAbs = mPhaseShifted > 0 ? mPhaseShifted : -mPhaseShifted;
+        return (mPhaseShiftedAbs - (mSamplingRate / 4.0)) / (mSamplingRate / 4.0);
     }
 }

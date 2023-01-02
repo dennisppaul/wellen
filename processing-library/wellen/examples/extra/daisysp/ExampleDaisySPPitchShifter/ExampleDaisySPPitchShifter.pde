@@ -3,9 +3,9 @@ import wellen.dsp.*;
 
 import wellen.extra.daisysp.*;
 
-Sampler mSampler;
-
 PitchShifter mPitchShifter;
+
+Sampler mSampler;
 
 void settings() {
     size(640, 480);

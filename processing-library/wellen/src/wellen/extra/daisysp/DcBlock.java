@@ -4,6 +4,8 @@ package wellen.extra.daisysp;
  * Removes DC component of a signal
  */
 public class DcBlock {
+    private float input_, output_, gain_;
+
     /**
      * Initializes DcBlock module
      */
@@ -23,6 +25,4 @@ public class DcBlock {
         input_ = in;
         return out;
     }
-
-    private float input_, output_, gain_;
 }

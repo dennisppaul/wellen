@@ -10,6 +10,8 @@ import static wellen.extra.daisysp.DaisySP.expf;
  * Ported from Soundpipe by Ben Sergentanis, May 2020
  */
 public class Adsr {
+    public static final int ADSR_SEG_ATTACK = 1;
+    public static final int ADSR_SEG_DECAY = 2;
     /**
      * Distinct stages that the phase of the envelope can be located in.
      * <ul>
@@ -22,11 +24,13 @@ public class Adsr {
      * </ul>
      */
     public static final int ADSR_SEG_IDLE = 0;
-    public static final int ADSR_SEG_ATTACK = 1;
-    public static final int ADSR_SEG_DECAY = 2;
-    public static final int ADSR_SEG_SUSTAIN = 3;
-    public static final int ADSR_SEG_RELEASE = 4;
     public static final int ADSR_SEG_LAST = 5;
+    public static final int ADSR_SEG_RELEASE = 4;
+    public static final int ADSR_SEG_SUSTAIN = 3;
+    private int mode_;
+    private int sample_rate_;
+    private final float[] seg_time_ = new float[ADSR_SEG_LAST];
+    private float sus_, a_, b_, y_, x_, prev_, atk_time_;
 
     /**
      * Initializes the Adsr module.
@@ -136,17 +140,12 @@ public class Adsr {
         return mode_ != ADSR_SEG_IDLE;
     }
 
-    private float Tau2Pole(float tau) {
-        return expf(-1.0f / (tau * sample_rate_));
-    }
-
     private float AdsrFilter() {
         y_ = b_ * x_ + a_ * y_;
         return y_;
     }
 
-    private float sus_, a_, b_, y_, x_, prev_, atk_time_;
-    private final float[] seg_time_ = new float[ADSR_SEG_LAST];
-    private int sample_rate_;
-    private int mode_;
+    private float Tau2Pole(float tau) {
+        return expf(-1.0f / (tau * sample_rate_));
+    }
 }

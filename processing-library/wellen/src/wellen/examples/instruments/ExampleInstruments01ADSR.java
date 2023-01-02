@@ -58,18 +58,6 @@ public class ExampleInstruments01ADSR extends PApplet {
         randomizeADSR();
     }
 
-    private void randomizeADSR() {
-        Tone.instrument().set_attack(random(0.0f, 0.5f));
-        Tone.instrument().set_decay(random(0.0f, 0.5f));
-        Tone.instrument().set_sustain(random(0.0f, 1.0f));
-        Tone.instrument().set_release(random(0.0f, 1.0f));
-        System.out.println("A: " + Tone.instrument().get_attack());
-        System.out.println("D: " + Tone.instrument().get_decay());
-        System.out.println("S: " + Tone.instrument().get_sustain());
-        System.out.println("R: " + Tone.instrument().get_release());
-        System.out.println("-------------");
-    }
-
     private float draw_connection_line(float pStartX, float pDuration, float pLevelStart, float pLevelEnd) {
         final float mScaleX = width * 0.25f;
         final float mScaleY = height * 0.25f;
@@ -81,6 +69,18 @@ public class ExampleInstruments01ADSR extends PApplet {
         line(mEnd.x, 0, mEnd.x, mEnd.y);
         ellipse(mEnd.x, mEnd.y, 6, 6);
         return mEnd.x;
+    }
+
+    private void randomizeADSR() {
+        Tone.instrument().set_attack(random(0.0f, 0.5f));
+        Tone.instrument().set_decay(random(0.0f, 0.5f));
+        Tone.instrument().set_sustain(random(0.0f, 1.0f));
+        Tone.instrument().set_release(random(0.0f, 1.0f));
+        System.out.println("A: " + Tone.instrument().get_attack());
+        System.out.println("D: " + Tone.instrument().get_decay());
+        System.out.println("S: " + Tone.instrument().get_sustain());
+        System.out.println("R: " + Tone.instrument().get_release());
+        System.out.println("-------------");
     }
 
     public static void main(String[] args) {

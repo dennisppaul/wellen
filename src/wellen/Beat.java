@@ -32,13 +32,13 @@ public class Beat {
 
     private static final String METHOD_NAME = "beat";
     private static Beat fInstance = null;
-    private int fBeat;
     private float fBPM;
+    private int fBeat;
     private final Object fListener;
+    private final ArrayList<Listener> fListeners;
     private final Method fMethod;
     private TimerTask fTask;
     private final Timer fTimer;
-    private final ArrayList<Listener> fListeners;
 
     public Beat(Object beat_listener, int BPM) {
         this(beat_listener);
@@ -61,42 +61,6 @@ public class Beat {
         fListeners = new ArrayList<>();
         fTimer = new Timer();
         fBPM = 0;
-    }
-
-    public ArrayList<Listener> listeners() {
-        return fListeners;
-    }
-
-    public void add(Listener beat_trigger_listener) {
-        listeners().add(beat_trigger_listener);
-    }
-
-    public boolean remove(Listener beat_trigger_listener) {
-        return listeners().remove(beat_trigger_listener);
-    }
-
-    public void set_bpm(float BPM) {
-        fBPM = BPM;
-        final int mPeriod = (int) (60.0f / BPM * 1000.0f);
-        if (fTask != null) {
-            fTask.cancel();
-        }
-        fTask = new BeatTimerTaskP5();
-        fTimer.scheduleAtFixedRate(fTask, 1000, mPeriod);
-    }
-
-    public float get_bpm() {
-        return fBPM;
-    }
-
-    public int get_beat_count() {
-        return fBeat;
-    }
-
-    public void clean_up() {
-        fTimer.cancel();
-        fTimer.purge();
-        fTask.cancel();
     }
 
     public static Beat instance() {
@@ -122,6 +86,45 @@ public class Beat {
         }
     }
 
+    public ArrayList<Listener> listeners() {
+        return fListeners;
+    }
+
+    public void add(Listener beat_trigger_listener) {
+        listeners().add(beat_trigger_listener);
+    }
+
+    public boolean remove(Listener beat_trigger_listener) {
+        return listeners().remove(beat_trigger_listener);
+    }
+
+    public float get_bpm() {
+        return fBPM;
+    }
+
+    public void set_bpm(float BPM) {
+        fBPM = BPM;
+        final int mPeriod = (int) (60.0f / BPM * 1000.0f);
+        if (fTask != null) {
+            fTask.cancel();
+        }
+        fTask = new BeatTimerTaskP5();
+        fTimer.scheduleAtFixedRate(fTask, 1000, mPeriod);
+    }
+
+    public int get_beat_count() {
+        return fBeat;
+    }
+
+    public void clean_up() {
+        fTimer.cancel();
+        fTimer.purge();
+        fTask.cancel();
+    }
+    public interface Listener {
+        void trigger(int beat_count);
+    }
+
     private class BeatTimerTaskP5 extends TimerTask {
 
         @Override
@@ -138,9 +141,5 @@ public class Beat {
                 l.trigger(fBeat);
             }
         }
-    }
-
-    public interface Listener {
-        void trigger(int beat_count);
     }
 }

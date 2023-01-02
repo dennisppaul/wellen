@@ -8,11 +8,11 @@ import wellen.dsp.*;
  * note that the distortion in the signal stems from changing the frequency too abruptly.
  */
 
-float mFreq = 344.53125f;
-
 int mCounter = 0;
 
 float mDetune = 1.1f;
+
+float mFreq = 344.53125f;
 
 void settings() {
     size(640, 480);

@@ -9,16 +9,14 @@ package wellen.extra.daisysp;
  */
 public class ModalVoice {
 
-    private float sample_rate_;
-
-    private boolean sustain_, trig_;
-    private float f0_, structure_, brightness_, damping_;
-    private float density_, accent_;
     private float aux_;
-
-    private final ResonatorSvf excitation_filter_ = new ResonatorSvf(1);
-    private final Resonator resonator_ = new Resonator();
+    private float density_, accent_;
     private final Dust dust_ = new Dust();
+    private final ResonatorSvf excitation_filter_ = new ResonatorSvf(1);
+    private float f0_, structure_, brightness_, damping_;
+    private final Resonator resonator_ = new Resonator();
+    private float sample_rate_;
+    private boolean sustain_, trig_;
 
     /**
      * Initialize the module \param sample_rate Audio engine sample rate

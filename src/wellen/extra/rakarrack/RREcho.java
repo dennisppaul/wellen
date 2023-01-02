@@ -52,16 +52,16 @@ import static wellen.extra.rakarrack.RRUtilities.*;
 
 public class RREcho implements EffectMono, EffectStereo {
 
+    public static final int NUM_PRESET = 9;
+    public static final int PRESET_CANYON = 4;
     public static final int PRESET_ECHO_1 = 0;
     public static final int PRESET_ECHO_2 = 1;
     public static final int PRESET_ECHO_3 = 2;
-    public static final int PRESET_SIMPLE_ECHO = 3;
-    public static final int PRESET_CANYON = 4;
+    public static final int PRESET_FEEDBACK_ECHO = 8;
     public static final int PRESET_PANNING_ECHO_1 = 5;
     public static final int PRESET_PANNING_ECHO_2 = 6;
     public static final int PRESET_PANNING_ECHO_3 = 7;
-    public static final int PRESET_FEEDBACK_ECHO = 8;
-    public static final int NUM_PRESET = 9;
+    public static final int PRESET_SIMPLE_ECHO = 3;
     private int Pdelay;
     private boolean Pdirect;
     private int Pfb;            //Feed-back-ul
@@ -95,10 +95,8 @@ public class RREcho implements EffectMono, EffectStereo {
     private int rvfr;
     private int rvkl;
     private int rvkr;
-
     public RREcho() {
-        System.err.println("+++ warning @" + getClass().getSimpleName() + " / something is broken in this effect. " +
-                                   "needs fixing!");
+        System.err.println("+++ warning @" + getClass().getSimpleName() + " / something is broken in this effect. " + "needs fixing!");
         //default values
         Ppreset = 0;
         Pvolume = 50;
@@ -327,6 +325,10 @@ public class RREcho implements EffectMono, EffectStereo {
         return (0);            //in case of bogus parameter number
     }
 
+    void setdirect(boolean Pdirect) {
+        this.Pdirect = Pdirect;
+    }
+
     void setfb(int Pfb) {
         this.Pfb = Pfb;
         fb = (float) Pfb / 128.0f;
@@ -335,10 +337,6 @@ public class RREcho implements EffectMono, EffectStereo {
     void sethidamp(int Phidamp) {
         this.Phidamp = Phidamp;
         hidamp = 1.0f - (float) Phidamp / 127.0f;
-    }
-
-    void setdirect(boolean Pdirect) {
-        this.Pdirect = Pdirect;
     }
 
     private void initdelays() {
@@ -373,25 +371,6 @@ public class RREcho implements EffectMono, EffectStereo {
 
     }
 
-    private void setvolume(int Pvolume) {
-        this.Pvolume = Pvolume;
-        outvolume = (float) Pvolume / 127.0f;
-        if (Pvolume == 0) {
-            cleanup();
-        }
-
-    }
-
-    private void setpanning(int Ppanning) {
-        this.Ppanning = Ppanning;
-        panning = ((float) Ppanning + 0.5f) / 127.0f;
-    }
-
-    private void setreverse(int Preverse) {
-        this.Preverse = Preverse;
-        reverse = (float) Preverse / 127.0f;
-    }
-
     private void setdelay(int Pdelay) {
         this.Pdelay = Pdelay;
         delay = Pdelay;
@@ -406,6 +385,11 @@ public class RREcho implements EffectMono, EffectStereo {
         initdelays();
     }
 
+    private void setlrcross(int Plrcross) {
+        this.Plrcross = Plrcross;
+        lrcross = (float) Plrcross / 127.0f * 1.0f;
+    }
+
     private void setlrdelay(int Plrdelay) {
         float tmp;
         this.Plrdelay = Plrdelay;
@@ -417,8 +401,22 @@ public class RREcho implements EffectMono, EffectStereo {
         initdelays();
     }
 
-    private void setlrcross(int Plrcross) {
-        this.Plrcross = Plrcross;
-        lrcross = (float) Plrcross / 127.0f * 1.0f;
+    private void setpanning(int Ppanning) {
+        this.Ppanning = Ppanning;
+        panning = ((float) Ppanning + 0.5f) / 127.0f;
+    }
+
+    private void setreverse(int Preverse) {
+        this.Preverse = Preverse;
+        reverse = (float) Preverse / 127.0f;
+    }
+
+    private void setvolume(int Pvolume) {
+        this.Pvolume = Pvolume;
+        outvolume = (float) Pvolume / 127.0f;
+        if (Pvolume == 0) {
+            cleanup();
+        }
+
     }
 }

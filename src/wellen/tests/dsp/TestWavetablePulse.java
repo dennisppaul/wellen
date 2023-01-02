@@ -9,9 +9,9 @@ import wellen.dsp.Wavetable;
 
 public class TestWavetablePulse extends PApplet {
 
-    private final Wavetable fWavetable = new Wavetable();
-    private Sonogram fSonogram;
     private FrequencyDistribution fFrequencyDistribution;
+    private Sonogram fSonogram;
+    private final Wavetable fWavetable = new Wavetable();
 
     public void settings() {
         size(640, 480);

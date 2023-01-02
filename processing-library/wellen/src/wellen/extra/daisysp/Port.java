@@ -20,6 +20,10 @@ import static wellen.extra.daisysp.DaisySP.pow;
  * Location: Opcodes/biquad.c
  */
 public class Port {
+    private float c1_, c2_, yt1_, prvhtim_;
+    private float htime_;
+    private float sample_rate_, onedsr_;
+
     /**
      * Initializes Port module
      * <p>
@@ -61,8 +65,4 @@ public class Port {
     public float GetHtime() {
         return htime_;
     }
-
-    private float htime_;
-    private float c1_, c2_, yt1_, prvhtim_;
-    private float sample_rate_, onedsr_;
 }

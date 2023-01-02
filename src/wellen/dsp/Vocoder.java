@@ -123,27 +123,27 @@ public class Vocoder {
      * The envelopes used to smooth the analysis bands.
      */
     private final envelope[] analysis_envelopes;
+    private final int bands;
+    private final int carrier_channels;
+    private final int filters_per_band;
     /**
-     * The filterbank used for synthesis (these are applied to the carrier). The second half of the array is only used
-     * for stereo carriers.
+     * In octaves. 1.0 is unchanged.
      */
-    private final band[] synthesis_bands;
+    private float formant_shift;
+    private float mRectifyVolume;
     /**
      * In seconds. Higher values make the vocoder respond more slowly to changes in the modulator.
      */
     private float reaction_time;
     /**
-     * In octaves. 1.0 is unchanged.
-     */
-    private float formant_shift;
-    /**
      * In hertz.
      */
     private final int sample_rate;
-    private final int bands;
-    private final int filters_per_band;
-    private final int carrier_channels;
-    private float mRectifyVolume;
+    /**
+     * The filterbank used for synthesis (these are applied to the carrier). The second half of the array is only used
+     * for stereo carriers.
+     */
+    private final band[] synthesis_bands;
 
     /* Initialize a instance structure.
      *

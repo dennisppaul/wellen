@@ -85,11 +85,11 @@ public class Sequencer<T> {
         fStep = -1;
     }
 
-    public void set_step(int step) {
-        fStep = step;
-    }
-
     public int get_step() {
         return fStep;
+    }
+
+    public void set_step(int step) {
+        fStep = step;
     }
 }

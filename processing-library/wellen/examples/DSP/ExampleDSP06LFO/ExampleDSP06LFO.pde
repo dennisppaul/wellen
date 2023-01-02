@@ -11,13 +11,13 @@ import wellen.dsp.*;
  * use keys to change waveform of LFOs and VCO.
  */
 
-final Wavetable mVCO = new Wavetable(512);
-
-final Wavetable mFrequencyLFO = new Wavetable(512);
-
 final Wavetable mAmplitudeLFO = new Wavetable(512);
 
 final float mBaseFrequency = 2.0f * Wellen.DEFAULT_SAMPLING_RATE / Wellen.DEFAULT_AUDIOBLOCK_SIZE;
+
+final Wavetable mFrequencyLFO = new Wavetable(512);
+
+final Wavetable mVCO = new Wavetable(512);
 
 void settings() {
     size(640, 480);

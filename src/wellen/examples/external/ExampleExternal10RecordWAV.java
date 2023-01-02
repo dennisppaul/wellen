@@ -48,6 +48,11 @@ public class ExampleExternal10RecordWAV extends PApplet {
         }
     }
 
+    private void start_recording() {
+        mRecordedSamples.clear();
+        mIsRecording = true;
+    }
+
     private void stop_recording() {
         mIsRecording = false;
         /* export samples to WAV file */
@@ -66,11 +71,6 @@ public class ExampleExternal10RecordWAV extends PApplet {
                          Wellen.WAV_FORMAT_IEEE_FLOAT_32BIT);
         println("+++ recorded file ...... : " + WAV_FILE_NAME);
         println("+++ recorded samples ... : " + WAV_FILE_LENGTH);
-    }
-
-    private void start_recording() {
-        mRecordedSamples.clear();
-        mIsRecording = true;
     }
 
     public static void main(String[] args) {

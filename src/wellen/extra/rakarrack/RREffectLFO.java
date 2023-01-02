@@ -48,17 +48,17 @@ import static wellen.extra.rakarrack.RRUtilities.*;
 
 public class RREffectLFO {
 
-    public static final int TYPE_SINE = 0;
-    public static final int TYPE_TRIANGLE = 1;
-    public static final int TYPE_RAMP_RAMP_PLUS = 2;
-    public static final int TYPE_RAMP_RAMP_MINUS = 3;
-    public static final int TYPE_ZIGZAG = 4;
-    public static final int TYPE_MODULATED_SQUARE = 5;
-    public static final int TYPE_MODULATED_SAW = 6;
+    public static final int NUM_TYPES = 10;
     public static final int TYPE_LORENZ_FRACTAL = 7;
     public static final int TYPE_LORENZ_FRACTAL_FAST = 8;
+    public static final int TYPE_MODULATED_SAW = 6;
+    public static final int TYPE_MODULATED_SQUARE = 5;
+    public static final int TYPE_RAMP_RAMP_MINUS = 3;
+    public static final int TYPE_RAMP_RAMP_PLUS = 2;
     public static final int TYPE_SAMPLE_HOLD_RANDOM = 9;
-    public static final int NUM_TYPES = 10;
+    public static final int TYPE_SINE = 0;
+    public static final int TYPE_TRIANGLE = 1;
+    public static final int TYPE_ZIGZAG = 4;
     public int PLFOtype;
     public int Pfreq;
     public int Prandomness;
@@ -99,7 +99,6 @@ public class RREffectLFO {
     private float y1;
     private float z0;
     private float z1;
-
     public RREffectLFO() {
         xl = 0.0f;
         xr = 0.0f;
@@ -250,38 +249,6 @@ public class RREffectLFO {
         return (out);
     }
 
-    private float ls_TYPE_SAMPLE_HOLD_RANDOM(float x) {
-        float out;
-        //Sample/Hold Random
-        if (fmod(x, 0.5f) <= (2.0f * incx)) {           //this function is called by left, then right...so must
-            // toggle each time called
-            rreg = lreg;
-            lreg = RND1();
-
-        }
-
-        if (xlreg < lreg) {
-            xlreg += maxrate;
-        } else {
-            xlreg -= maxrate;
-        }
-        if (xrreg < rreg) {
-            xrreg += maxrate;
-        } else {
-            xrreg -= maxrate;
-        }
-        oldlreg = xlreg * tca + oldlreg * tcb;
-        oldrreg = xrreg * tca + oldrreg * tcb;
-
-        if (holdflag) {
-            out = 2.0f * oldlreg - 1.0f;
-            holdflag = !holdflag;
-        } else {
-            out = 2.0f * oldrreg - 1.0f;
-        }
-        return out;
-    }
-
     private float ls_TYPE_LORENZ_FRACTAL() {
         // Lorenz Fractal
         x1 = x0 + h * a * (y0 - x0);
@@ -331,16 +298,6 @@ public class RREffectLFO {
         return out;
     }
 
-    private float ls_TYPE_ZIGZAG(float x) {
-        float out;
-        float tmpv;
-        //ZigZag
-        x = x * 2.0f - 1.0f;
-        tmpv = 0.33f * sinf(x);
-        out = sinf(sinf(x * D_PI) * x / tmpv);
-        return out;
-    }
-
     private float ls_TYPE_RAMP_RAMP_MINUS(float x) {
         float out;
         //EffectLFO_RAMP Ramp-
@@ -355,6 +312,38 @@ public class RREffectLFO {
         return out;
     }
 
+    private float ls_TYPE_SAMPLE_HOLD_RANDOM(float x) {
+        float out;
+        //Sample/Hold Random
+        if (fmod(x, 0.5f) <= (2.0f * incx)) {           //this function is called by left, then right...so must
+            // toggle each time called
+            rreg = lreg;
+            lreg = RND1();
+
+        }
+
+        if (xlreg < lreg) {
+            xlreg += maxrate;
+        } else {
+            xlreg -= maxrate;
+        }
+        if (xrreg < rreg) {
+            xrreg += maxrate;
+        } else {
+            xrreg -= maxrate;
+        }
+        oldlreg = xlreg * tca + oldlreg * tcb;
+        oldrreg = xrreg * tca + oldrreg * tcb;
+
+        if (holdflag) {
+            out = 2.0f * oldlreg - 1.0f;
+            holdflag = !holdflag;
+        } else {
+            out = 2.0f * oldrreg - 1.0f;
+        }
+        return out;
+    }
+
     private float ls_TYPE_TRIANGLE(float x) {
         float out;
         //EffectLFO_TRIANGLE
@@ -365,6 +354,16 @@ public class RREffectLFO {
         } else {
             out = 4.0f * x - 4.0f;
         }
+        return out;
+    }
+
+    private float ls_TYPE_ZIGZAG(float x) {
+        float out;
+        float tmpv;
+        //ZigZag
+        x = x * 2.0f - 1.0f;
+        tmpv = 0.33f * sinf(x);
+        out = sinf(sinf(x * D_PI) * x / tmpv);
         return out;
     }
 }

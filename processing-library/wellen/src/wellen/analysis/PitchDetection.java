@@ -47,27 +47,21 @@ public final class PitchDetection {
      * The default YIN threshold value. Should be around 0.10~0.15. See YIN paper for more information.
      */
     private static final double DEFAULT_THRESHOLD = 0.20;
-
-    /**
-     * The actual YIN threshold.
-     */
-    private final double fThreshold;
-
+    private float fPitch;
+    private boolean fPitched;
+    private float fProbability;
     /**
      * The audio sample rate. Most audio has a sample rate of 44.1kHz.
      */
     private final float fSampleRate;
-
+    /**
+     * The actual YIN threshold.
+     */
+    private final double fThreshold;
     /**
      * The buffer that stores the calculated values. It is exactly half the size of the input buffer.
      */
     private final float[] fYINBuffer;
-
-    private float fPitch;
-
-    private float fProbability;
-
-    private boolean fPitched;
 
     /**
      * Create a new pitch detector for a stream with the defined sample rate. Processes the audio in blocks of the
@@ -154,39 +148,6 @@ public final class PitchDetection {
     }
 
     /**
-     * Implements the difference function as described in step 2 of the YIN paper.
-     */
-    private void difference(final float[] audioBuffer) {
-        int index, tau;
-        float delta;
-        for (tau = 0; tau < fYINBuffer.length; tau++) {
-            fYINBuffer[tau] = 0;
-        }
-        for (tau = 1; tau < fYINBuffer.length; tau++) {
-            for (index = 0; index < fYINBuffer.length; index++) {
-                delta = audioBuffer[index] - audioBuffer[index + tau];
-                fYINBuffer[tau] += delta * delta;
-            }
-        }
-    }
-
-    /**
-     * The cumulative mean normalized difference function as described in step 3 of the YIN paper. <br>
-     * <code>
-     * yinBuffer[0] == yinBuffer[1] = 1
-     * </code>
-     */
-    private void cumulativeMeanNormalizedDifference() {
-        int tau;
-        fYINBuffer[0] = 1;
-        float runningSum = 0;
-        for (tau = 1; tau < fYINBuffer.length; tau++) {
-            runningSum += fYINBuffer[tau];
-            fYINBuffer[tau] *= tau / runningSum;
-        }
-    }
-
-    /**
      * Implements step 4 of the AUBIO_YIN paper.
      */
     private int absoluteThreshold() {
@@ -224,6 +185,39 @@ public final class PitchDetection {
         }
 
         return tau;
+    }
+
+    /**
+     * The cumulative mean normalized difference function as described in step 3 of the YIN paper. <br>
+     * <code>
+     * yinBuffer[0] == yinBuffer[1] = 1
+     * </code>
+     */
+    private void cumulativeMeanNormalizedDifference() {
+        int tau;
+        fYINBuffer[0] = 1;
+        float runningSum = 0;
+        for (tau = 1; tau < fYINBuffer.length; tau++) {
+            runningSum += fYINBuffer[tau];
+            fYINBuffer[tau] *= tau / runningSum;
+        }
+    }
+
+    /**
+     * Implements the difference function as described in step 2 of the YIN paper.
+     */
+    private void difference(final float[] audioBuffer) {
+        int index, tau;
+        float delta;
+        for (tau = 0; tau < fYINBuffer.length; tau++) {
+            fYINBuffer[tau] = 0;
+        }
+        for (tau = 1; tau < fYINBuffer.length; tau++) {
+            for (index = 0; index < fYINBuffer.length; index++) {
+                delta = audioBuffer[index] - audioBuffer[index + tau];
+                fYINBuffer[tau] += delta * delta;
+            }
+        }
     }
 
     /**

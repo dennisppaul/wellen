@@ -15,9 +15,9 @@ public class ExampleDSPAnalysis04PitchDetection extends PApplet {
      * an oscillator.
      */
 
+    private float fInputAmplification = 1.0f;
     private final PitchDetection fPitchDetection = new PitchDetection();
     private final Wavetable fWavetable = new Wavetable();
-    private float fInputAmplification = 1.0f;
 
     public void settings() {
         size(640, 480);

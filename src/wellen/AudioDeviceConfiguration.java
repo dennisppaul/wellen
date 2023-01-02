@@ -26,19 +26,7 @@ public class AudioDeviceConfiguration {
     /**
      *
      */
-    public int sample_rate = Wellen.DEFAULT_SAMPLING_RATE;
-    /**
-     *
-     */
-    public int sample_buffer_size = Wellen.DEFAULT_AUDIOBLOCK_SIZE; // i.e audio_block_size
-    /**
-     *
-     */
-    public int output_device = Wellen.DEFAULT_AUDIO_DEVICE;
-    /**
-     *
-     */
-    public int number_of_output_channels = Wellen.STEREO;
+    public int bits_per_sample = Wellen.DEFAULT_BITS_PER_SAMPLE;
     /**
      *
      */
@@ -50,7 +38,19 @@ public class AudioDeviceConfiguration {
     /**
      *
      */
-    public int bits_per_sample = Wellen.DEFAULT_BITS_PER_SAMPLE;
+    public int number_of_output_channels = Wellen.STEREO;
+    /**
+     *
+     */
+    public int output_device = Wellen.DEFAULT_AUDIO_DEVICE;
+    /**
+     *
+     */
+    public int sample_buffer_size = Wellen.DEFAULT_AUDIOBLOCK_SIZE; // i.e audio_block_size
+    /**
+     *
+     */
+    public int sample_rate = Wellen.DEFAULT_SAMPLING_RATE;
 
     /**
      * @return instance of {@link wellen.AudioDeviceConfiguration} with default values

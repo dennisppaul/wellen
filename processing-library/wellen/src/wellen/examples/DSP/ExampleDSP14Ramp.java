@@ -23,14 +23,13 @@ public class ExampleDSP14Ramp extends PApplet {
      * the envelope to an end value in specified duration.
      */
 
-    private Envelope mRampFrequency;
-    private Envelope mEnvelopeAmplitude;
-    private Wavetable mWavetable;
-
-    private final int NOTE_RANGE = 36;
     private final int BASE_NOTE = Note.NOTE_C1;
     private final float MIN_FREQ = Note.note_to_frequency(BASE_NOTE);
+    private final int NOTE_RANGE = 36;
     private final float MAX_FREQ = Note.note_to_frequency(BASE_NOTE + NOTE_RANGE);
+    private Envelope mEnvelopeAmplitude;
+    private Envelope mRampFrequency;
+    private Wavetable mWavetable;
 
     public void settings() {
         size(640, 480);

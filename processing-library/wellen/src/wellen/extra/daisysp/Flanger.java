@@ -11,6 +11,16 @@ import static wellen.extra.daisysp.DaisySP.fmin;
  *         'flanging' sound effect.
  */
 public class Flanger {
+    private static final int kDelayLength = 960; // 20 ms at 48kHz = .02 * 48000
+    private final DelayLine del_ = new DelayLine(kDelayLength);
+    private float delay_;
+    private float feedback_;
+    private float lfo_amp_;
+    private float lfo_freq_;
+    //triangle lfos
+    private float lfo_phase_;
+    private float sample_rate_;
+
     /**
      * Initialize the modules \param sample_rate Audio engine sample rate.
      */
@@ -74,7 +84,6 @@ public class Flanger {
         lfo_freq_ = fclamp(freq, -.25f, .25f); //clip at +/- .125 * sr
     }
 
-
     /**
      * Set the internal delay rate.
      *
@@ -96,20 +105,6 @@ public class Flanger {
 
         lfo_amp_ = fmin(lfo_amp_, delay_); //clip this if needed
     }
-
-    private float sample_rate_;
-    private static final int kDelayLength = 960; // 20 ms at 48kHz = .02 * 48000
-
-    private float feedback_;
-
-    //triangle lfos
-    private float lfo_phase_;
-    private float lfo_freq_;
-    private float lfo_amp_;
-
-    private float delay_;
-
-    private final DelayLine del_ = new DelayLine(kDelayLength);
 
     float ProcessLfo() {
         lfo_phase_ += lfo_freq_;

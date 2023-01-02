@@ -11,8 +11,8 @@ import static wellen.Wellen.WAV_FORMAT_IEEE_FLOAT_32BIT;
 
 public class TestImportExportWAV extends PApplet {
 
-    private WAVConverter.Info mWAVInfo;
     private Sampler mSampler;
+    private WAVConverter.Info mWAVInfo;
 
     public void settings() {
         size(640, 480);

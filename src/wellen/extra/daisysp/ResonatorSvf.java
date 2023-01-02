@@ -14,12 +14,6 @@ package wellen.extra.daisysp;
  */
 public class ResonatorSvf {
 
-    private static final float kPiPow3 = DaisySP.PI_F * DaisySP.PI_F * DaisySP.PI_F;
-    private static final float kPiPow5 = kPiPow3 * DaisySP.PI_F * DaisySP.PI_F;
-    private final int batch_size;
-    private final float[] state_1_;
-    private final float[] state_2_;
-
     public enum FilterMode {
         LOW_PASS,
         BAND_PASS,
@@ -27,10 +21,23 @@ public class ResonatorSvf {
         HIGH_PASS
     }
 
+    private static final float kPiPow3 = DaisySP.PI_F * DaisySP.PI_F * DaisySP.PI_F;
+    private static final float kPiPow5 = kPiPow3 * DaisySP.PI_F * DaisySP.PI_F;
+    private final int batch_size;
+    private final float[] state_1_;
+    private final float[] state_2_;
+
     public ResonatorSvf(int pBatchSize) {
         batch_size = pBatchSize;
         state_1_ = new float[batch_size];
         state_2_ = new float[batch_size];
+    }
+
+    private static float fasttan(float f) {
+        final float a = 3.260e-01f * kPiPow3;
+        final float b = 1.823e-01f * kPiPow5;
+        float f2 = f * f;
+        return f * (DaisySP.PI_F + f2 * (a + b * f2));
     }
 
     public void Init() {
@@ -84,12 +91,5 @@ public class ResonatorSvf {
             state_2_[i] = state_2[i];
         }
         return out;
-    }
-
-    private static float fasttan(float f) {
-        final float a = 3.260e-01f * kPiPow3;
-        final float b = 1.823e-01f * kPiPow5;
-        float f2 = f * f;
-        return f * (DaisySP.PI_F + f2 * (a + b * f2));
     }
 }

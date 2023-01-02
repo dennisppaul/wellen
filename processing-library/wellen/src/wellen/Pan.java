@@ -80,24 +80,6 @@ public class Pan implements DSPNodeProcessSignal {
         return mSignal;
     }
 
-    private Signal applyPanning(Signal mSignal) {
-        switch (mPanType) {
-            case PAN_LINEAR:
-                mSignal.signal[SIGNAL_LEFT] *= 1.0f - mPanningNormalized;
-                mSignal.signal[SIGNAL_RIGHT] *= mPanningNormalized;
-                break;
-            case PAN_SQUARE_LAW:
-                mSignal.signal[SIGNAL_LEFT] *= Math.sqrt(1.0f - mPanningNormalized);
-                mSignal.signal[SIGNAL_RIGHT] *= Math.sqrt(mPanningNormalized);
-                break;
-            case PAN_SINE_LAW:
-                mSignal.signal[SIGNAL_LEFT] *= Math.sin((1.0f - mPanningNormalized) * HALF_PI);
-                mSignal.signal[SIGNAL_RIGHT] *= Math.sin(mPanningNormalized * HALF_PI);
-                break;
-        }
-        return mSignal;
-    }
-
     /**
      * map audio signal into stereo space. mono signals are positioned in stereo space. stereo signals are biased
      * according to the current panning value. signals with more than 2 channels are <em>clipped</em> to 2 channels.
@@ -119,5 +101,23 @@ public class Pan implements DSPNodeProcessSignal {
             mSignal = new Signal();
         }
         return applyPanning(mSignal);
+    }
+
+    private Signal applyPanning(Signal mSignal) {
+        switch (mPanType) {
+            case PAN_LINEAR:
+                mSignal.signal[SIGNAL_LEFT] *= 1.0f - mPanningNormalized;
+                mSignal.signal[SIGNAL_RIGHT] *= mPanningNormalized;
+                break;
+            case PAN_SQUARE_LAW:
+                mSignal.signal[SIGNAL_LEFT] *= Math.sqrt(1.0f - mPanningNormalized);
+                mSignal.signal[SIGNAL_RIGHT] *= Math.sqrt(mPanningNormalized);
+                break;
+            case PAN_SINE_LAW:
+                mSignal.signal[SIGNAL_LEFT] *= Math.sin((1.0f - mPanningNormalized) * HALF_PI);
+                mSignal.signal[SIGNAL_RIGHT] *= Math.sin(mPanningNormalized * HALF_PI);
+                break;
+        }
+        return mSignal;
     }
 }

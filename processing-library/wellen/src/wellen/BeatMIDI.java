@@ -32,15 +32,15 @@ public class BeatMIDI implements MidiInListener {
     public static boolean VERBOSE = false;
     private static final int BPM_SAMPLER_SIZE = 12;
     private static final String METHOD_NAME = "beat";
-    private final Object mListener;
-    private final float[] mBPMSampler = new float[BPM_SAMPLER_SIZE];
-    private Method mMethod = null;
-    private int mTickPPQNCounter = 0;
-    private boolean mIsRunning = false;
-    private boolean mResetBeatCounterAtStop = true;
     private float mBPMEstimate = 0;
     private long mBPMMeasure;
+    private final float[] mBPMSampler = new float[BPM_SAMPLER_SIZE];
     private int mBPMSamplerCounter = 0;
+    private boolean mIsRunning = false;
+    private final Object mListener;
+    private Method mMethod = null;
+    private boolean mResetBeatCounterAtStop = true;
+    private int mTickPPQNCounter = 0;
 
     private BeatMIDI(Object pListener, int pBPM) {
         this(pListener);
@@ -70,19 +70,19 @@ public class BeatMIDI implements MidiInListener {
         return mBeatMIDI;
     }
 
-    /**
-     * @param pResetBeatCounterAtStop if `true` the beat counter is reset to `0` when the MIDI clock signal stops.
-     */
-    public void reset_beat_counter_at_stop(boolean pResetBeatCounterAtStop) {
-        mResetBeatCounterAtStop = pResetBeatCounterAtStop;
-    }
-
     private static long _timer() {
         return System.nanoTime();
     }
 
     private static double _timer_divider() {
         return 1000000000;
+    }
+
+    /**
+     * @param pResetBeatCounterAtStop if `true` the beat counter is reset to `0` when the MIDI clock signal stops.
+     */
+    public void reset_beat_counter_at_stop(boolean pResetBeatCounterAtStop) {
+        mResetBeatCounterAtStop = pResetBeatCounterAtStop;
     }
 
     /**

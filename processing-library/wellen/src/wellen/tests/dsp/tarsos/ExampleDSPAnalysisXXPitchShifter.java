@@ -11,8 +11,8 @@ public class ExampleDSPAnalysisXXPitchShifter extends PApplet {
      * this example demonstrates how to use üitch shifter to transform an input signal.
      */
 
-    private final PitchShifter fPitchShifter = new PitchShifter();
     private float fPitchShiftFactor = 1.8f;
+    private final PitchShifter fPitchShifter = new PitchShifter();
 
     public void settings() {
         size(640, 480);

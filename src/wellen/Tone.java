@@ -32,6 +32,130 @@ public abstract class Tone {
     private Tone() {
     }
 
+    public static void control_change(int CC, int value) {
+        instance().control_change(CC, value);
+    }
+
+    public static <T extends Instrument> T create_instrument(Class<T> instrument_class, int ID) {
+        //@TODO(maybe move this to ToneEngine)
+        T mInstrument;
+        try {
+            Constructor<T> c;
+            //@TODO(add constructor for `InstrumentInternal(int ID, int pSamplingRate, int pWavetableSize)`)
+//            if (InstrumentJSyn.class.isAssignableFrom(instrument_class) && instance() instanceof ToneEngineJSyn) {
+//                c = instrument_class.getDeclaredConstructor(ToneEngineJSyn.class, int.class);
+//                mInstrument = c.newInstance(instance(), ID);
+//            } else if (instrument_class == InstrumentMinim.class && instance() instanceof ToneEngineMinim) {
+//                c = instrument_class.getDeclaredConstructor(Minim.class, int.class);
+//                mInstrument = c.newInstance((Minim) ((ToneEngineMinim) instance()).minim(), ID);
+//            } else {
+            c = instrument_class.getDeclaredConstructor(int.class);
+            mInstrument = c.newInstance(ID);
+//            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            mInstrument = null;
+        }
+        return mInstrument;
+    }
+
+    /**
+     * @param damping  default: 0.5
+     * @param roomsize default: 0.5
+     * @param wet      default: 0.33
+     */
+    public static void enable_reverb(float damping, float roomsize, float wet) {
+        if (get_DSP_engine() != null) {
+            get_DSP_engine().enable_reverb(true);
+            get_DSP_engine().get_reverb().set_damp(damping);
+            get_DSP_engine().get_reverb().set_roomsize(roomsize);
+            get_DSP_engine().get_reverb().set_wet(wet);
+        }
+    }
+
+    public static ToneEngineDSP get_DSP_engine() {
+        if (instance() instanceof ToneEngineDSP) {
+            return (ToneEngineDSP) instance();
+        } else {
+            return null;
+        }
+    }
+
+    public static float[] get_buffer() {
+        return instance().get_buffer();
+    }
+
+    public static float[] get_buffer_left() {
+        return instance().get_buffer_left();
+    }
+
+    public static float[] get_buffer_right() {
+        return instance().get_buffer_right();
+    }
+
+    public static ToneEngineMIDI get_midi_engine() {
+        if (instance() instanceof ToneEngineMIDI) {
+            return (ToneEngineMIDI) instance();
+        } else {
+            return null;
+        }
+    }
+
+    public static ToneEngine instance() {
+        if (mInstance == null) {
+            mInstance = ToneEngine.create();
+        }
+        return mInstance;
+    }
+
+    public static Instrument instrument(int ID) {
+        return instance().instrument(ID);
+    }
+
+    public static Instrument instrument() {
+        return instance().instrument();
+    }
+
+    public static ArrayList<? extends Instrument> instruments() {
+        return instance().instruments();
+    }
+
+    public static boolean is_playing() {
+        return instance().is_playing();
+    }
+
+    public static void note_off(int note) {
+        instance().note_off(note);
+    }
+
+    public static void note_off() {
+        instance().note_off();
+    }
+
+    public static void note_on(int note, int velocity, float duration) {
+        instance().note_on(note, velocity, duration);
+    }
+
+    public static void note_on(int note, int velocity) {
+        instance().note_on(note, velocity);
+    }
+
+    public static void pitch_bend(int value) {
+        instance().pitch_bend(value);
+    }
+
+    public static void replace_instrument(Class<? extends Instrument> instrument_class, int ID) {
+        instance().replace_instrument(create_instrument(instrument_class, ID));
+    }
+
+    public static void replace_instrument(Instrument instrument) {
+        instance().replace_instrument(instrument);
+    }
+
+    public static void set_engine(ToneEngine tone_engine) {
+        mInstance = tone_engine;
+    }
+
     public static void start(String... tone_enginge_name) {
         if (mInstance != null) {
             printAlreadyStartedWarning();
@@ -97,13 +221,6 @@ public abstract class Tone {
         }
     }
 
-    public static void stop() {
-        if (mInstance != null) {
-            mInstance.stop();
-        }
-        mInstance = null;
-    }
-
     public static ToneEngineDSP start(int configuration) {
         if (mInstance != null) {
             printAlreadyStartedWarning();
@@ -125,129 +242,11 @@ public abstract class Tone {
         }
     }
 
-    public static void note_on(int note, int velocity, float duration) {
-        instance().note_on(note, velocity, duration);
-    }
-
-    public static void note_on(int note, int velocity) {
-        instance().note_on(note, velocity);
-    }
-
-    public static void note_off(int note) {
-        instance().note_off(note);
-    }
-
-    public static void note_off() {
-        instance().note_off();
-    }
-
-    public static void control_change(int CC, int value) {
-        instance().control_change(CC, value);
-    }
-
-    public static void pitch_bend(int value) {
-        instance().pitch_bend(value);
-    }
-
-    public static boolean is_playing() {
-        return instance().is_playing();
-    }
-
-    public static Instrument instrument(int ID) {
-        return instance().instrument(ID);
-    }
-
-    public static Instrument instrument() {
-        return instance().instrument();
-    }
-
-    public static float[] get_buffer() {
-        return instance().get_buffer();
-    }
-
-    public static float[] get_buffer_left() {
-        return instance().get_buffer_left();
-    }
-
-    public static float[] get_buffer_right() {
-        return instance().get_buffer_right();
-    }
-
-    public static void replace_instrument(Class<? extends Instrument> instrument_class, int ID) {
-        instance().replace_instrument(create_instrument(instrument_class, ID));
-    }
-
-    public static void replace_instrument(Instrument instrument) {
-        instance().replace_instrument(instrument);
-    }
-
-    public static ArrayList<? extends Instrument> instruments() {
-        return instance().instruments();
-    }
-
-    public static <T extends Instrument> T create_instrument(Class<T> instrument_class, int ID) {
-        //@TODO(maybe move this to ToneEngine)
-        T mInstrument;
-        try {
-            Constructor<T> c;
-            //@TODO(add constructor for `InstrumentInternal(int ID, int pSamplingRate, int pWavetableSize)`)
-//            if (InstrumentJSyn.class.isAssignableFrom(instrument_class) && instance() instanceof ToneEngineJSyn) {
-//                c = instrument_class.getDeclaredConstructor(ToneEngineJSyn.class, int.class);
-//                mInstrument = c.newInstance(instance(), ID);
-//            } else if (instrument_class == InstrumentMinim.class && instance() instanceof ToneEngineMinim) {
-//                c = instrument_class.getDeclaredConstructor(Minim.class, int.class);
-//                mInstrument = c.newInstance((Minim) ((ToneEngineMinim) instance()).minim(), ID);
-//            } else {
-            c = instrument_class.getDeclaredConstructor(int.class);
-            mInstrument = c.newInstance(ID);
-//            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            mInstrument = null;
+    public static void stop() {
+        if (mInstance != null) {
+            mInstance.stop();
         }
-        return mInstrument;
-    }
-
-    public static ToneEngine instance() {
-        if (mInstance == null) {
-            mInstance = ToneEngine.create();
-        }
-        return mInstance;
-    }
-
-    public static ToneEngineDSP get_DSP_engine() {
-        if (instance() instanceof ToneEngineDSP) {
-            return (ToneEngineDSP) instance();
-        } else {
-            return null;
-        }
-    }
-
-    /**
-     *
-     * @param damping default: 0.5
-     * @param roomsize default: 0.5
-     * @param wet default: 0.33
-     */
-    public static void enable_reverb(float damping, float roomsize, float wet) {
-        if (get_DSP_engine() != null) {
-            get_DSP_engine().enable_reverb(true);
-            get_DSP_engine().get_reverb().set_damp(damping);
-            get_DSP_engine().get_reverb().set_roomsize(roomsize);
-            get_DSP_engine().get_reverb().set_wet(wet);
-        }
-    }
-
-    public static ToneEngineMIDI get_midi_engine() {
-        if (instance() instanceof ToneEngineMIDI) {
-            return (ToneEngineMIDI) instance();
-        } else {
-            return null;
-        }
-    }
-
-    public static void set_engine(ToneEngine tone_engine) {
-        mInstance = tone_engine;
+        mInstance = null;
     }
 
     private static void printAlreadyStartedWarning() {

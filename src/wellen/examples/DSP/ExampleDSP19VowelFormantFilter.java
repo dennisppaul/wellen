@@ -18,10 +18,10 @@ public class ExampleDSP19VowelFormantFilter extends PApplet {
      * oscillator.
      */
 
-    private final VowelFormantFilter mFormantFilter = new VowelFormantFilter();
-    private final Oscillator mOsc = new OscillatorFunction();
     private final ADSR mADSR = new ADSR();
+    private final VowelFormantFilter mFormantFilter = new VowelFormantFilter();
     private boolean mIsKeyPressed = false;
+    private final Oscillator mOsc = new OscillatorFunction();
 
     public void settings() {
         size(640, 480);

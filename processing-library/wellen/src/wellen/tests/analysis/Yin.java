@@ -34,39 +34,33 @@ package wellen.tests.analysis;
  */
 public final class Yin implements PitchDetector {
     /**
-     * The default YIN threshold value. Should be around 0.10~0.15. See YIN paper for more information.
-     */
-    private static final double DEFAULT_THRESHOLD = 0.20;
-
-    /**
      * The default size of an audio buffer (in samples).
      */
     public static final int DEFAULT_BUFFER_SIZE = 2048;
-
     /**
      * The default overlap of two consecutive audio buffers (in samples).
      */
     public static final int DEFAULT_OVERLAP = 1536;
-
     /**
-     * The actual YIN threshold.
+     * The default YIN threshold value. Should be around 0.10~0.15. See YIN paper for more information.
      */
-    private final double threshold;
-
-    /**
-     * The audio sample rate. Most audio has a sample rate of 44.1kHz.
-     */
-    private final float sampleRate;
-
-    /**
-     * The buffer that stores the calculated values. It is exactly half the size of the input buffer.
-     */
-    private final float[] yinBuffer;
-
+    private static final double DEFAULT_THRESHOLD = 0.20;
     /**
      * The result of the pitch detection iteration.
      */
     private final PitchDetectionResult result;
+    /**
+     * The audio sample rate. Most audio has a sample rate of 44.1kHz.
+     */
+    private final float sampleRate;
+    /**
+     * The actual YIN threshold.
+     */
+    private final double threshold;
+    /**
+     * The buffer that stores the calculated values. It is exactly half the size of the input buffer.
+     */
+    private final float[] yinBuffer;
 
     /**
      * Create a new pitch detector for a stream with the defined sample rate. Processes the audio in blocks of the
@@ -137,39 +131,6 @@ public final class Yin implements PitchDetector {
     }
 
     /**
-     * Implements the difference function as described in step 2 of the YIN paper.
-     */
-    private void difference(final float[] audioBuffer) {
-        int index, tau;
-        float delta;
-        for (tau = 0; tau < yinBuffer.length; tau++) {
-            yinBuffer[tau] = 0;
-        }
-        for (tau = 1; tau < yinBuffer.length; tau++) {
-            for (index = 0; index < yinBuffer.length; index++) {
-                delta = audioBuffer[index] - audioBuffer[index + tau];
-                yinBuffer[tau] += delta * delta;
-            }
-        }
-    }
-
-    /**
-     * The cumulative mean normalized difference function as described in step 3 of the YIN paper. <br>
-     * <code>
-     * yinBuffer[0] == yinBuffer[1] = 1
-     * </code>
-     */
-    private void cumulativeMeanNormalizedDifference() {
-        int tau;
-        yinBuffer[0] = 1;
-        float runningSum = 0;
-        for (tau = 1; tau < yinBuffer.length; tau++) {
-            runningSum += yinBuffer[tau];
-            yinBuffer[tau] *= tau / runningSum;
-        }
-    }
-
-    /**
      * Implements step 4 of the AUBIO_YIN paper.
      */
     private int absoluteThreshold() {
@@ -208,6 +169,39 @@ public final class Yin implements PitchDetector {
         }
 
         return tau;
+    }
+
+    /**
+     * The cumulative mean normalized difference function as described in step 3 of the YIN paper. <br>
+     * <code>
+     * yinBuffer[0] == yinBuffer[1] = 1
+     * </code>
+     */
+    private void cumulativeMeanNormalizedDifference() {
+        int tau;
+        yinBuffer[0] = 1;
+        float runningSum = 0;
+        for (tau = 1; tau < yinBuffer.length; tau++) {
+            runningSum += yinBuffer[tau];
+            yinBuffer[tau] *= tau / runningSum;
+        }
+    }
+
+    /**
+     * Implements the difference function as described in step 2 of the YIN paper.
+     */
+    private void difference(final float[] audioBuffer) {
+        int index, tau;
+        float delta;
+        for (tau = 0; tau < yinBuffer.length; tau++) {
+            yinBuffer[tau] = 0;
+        }
+        for (tau = 1; tau < yinBuffer.length; tau++) {
+            for (index = 0; index < yinBuffer.length; index++) {
+                delta = audioBuffer[index] - audioBuffer[index + tau];
+                yinBuffer[tau] += delta * delta;
+            }
+        }
     }
 
     /**

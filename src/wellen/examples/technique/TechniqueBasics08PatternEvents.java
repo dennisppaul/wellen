@@ -19,14 +19,14 @@ public class TechniqueBasics08PatternEvents extends PApplet {
      * this example demonstrates how to use patterns to create events.
      */
 
+    private int fBeat = 0;
+    private int fEventPositionPatternC;
     private final Pattern fPatternA = new Pattern();
     private final Pattern fPatternB = new Pattern();
     private final Pattern fPatternC = new Pattern();
     private final Sequencer<Integer> fSequenceA = new Sequencer<>(0, 1, 3, 5);
     private final Sequencer<Integer> fSequenceB = new Sequencer<>(0, 1, 3, 5);
     private final Sequencer<Integer> fSequenceC = new Sequencer<>(0, 1, 3, 5, 5, 3, 1, 0);
-    private int fEventPositionPatternC;
-    private int fBeat = 0;
 
     public void settings() {
         size(640, 480);

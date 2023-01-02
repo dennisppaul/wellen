@@ -56,30 +56,30 @@ import static wellen.extra.rakarrack.RRUtilities.lrintf;
 import static wellen.extra.rakarrack.RRUtilities.powf;
 
 public class RRChorus implements EffectStereo {
+    public static final int NUM_PARAMS = 12;
+    public static final int NUM_PRESETS = 10;
+    public static final int PARAM_DELAY = 7;
+    public static final int PARAM_DEPTH = 6;
+    public static final int PARAM_FEEDBACK = 8;
+    public static final int PARAM_FLANGE_MODE = 10;
+    public static final int PARAM_LEFT_RIGHT_CROSS = 9;
+    public static final int PARAM_LFO_FREQ = 2;
+    public static final int PARAM_LFO_RND = 3;
+    public static final int PARAM_LFO_STEREO = 5;
+    public static final int PARAM_LFO_TYPE = 4;
+    public static final int PARAM_OUT_SUB = 11;
+    public static final int PARAM_PANNING = 1;
+    public static final int PARAM_VOLUME = 0;
+    public static final int PRESET_CELESTE_1 = 3;
+    public static final int PRESET_CELESTE_2 = 4;
     public static final int PRESET_CHORUS_1 = 0;
     public static final int PRESET_CHORUS_2 = 1;
     public static final int PRESET_CHORUS_3 = 2;
-    public static final int PRESET_CELESTE_1 = 3;
-    public static final int PRESET_CELESTE_2 = 4;
     public static final int PRESET_FLANGE_1 = 5;
     public static final int PRESET_FLANGE_2 = 6;
     public static final int PRESET_FLANGE_3 = 7;
     public static final int PRESET_FLANGE_4 = 8;
     public static final int PRESET_FLANGE_5 = 9;
-    public static final int NUM_PRESETS = 10;
-    public static final int PARAM_VOLUME = 0;
-    public static final int PARAM_PANNING = 1;
-    public static final int PARAM_LFO_FREQ = 2;
-    public static final int PARAM_LFO_RND = 3;
-    public static final int PARAM_LFO_TYPE = 4;
-    public static final int PARAM_LFO_STEREO = 5;
-    public static final int PARAM_DEPTH = 6;
-    public static final int PARAM_DELAY = 7;
-    public static final int PARAM_FEEDBACK = 8;
-    public static final int PARAM_LEFT_RIGHT_CROSS = 9;
-    public static final int PARAM_FLANGE_MODE = 10;
-    public static final int PARAM_OUT_SUB = 11;
-    public static final int NUM_PARAMS = 12;
     private int Pdelay;             //the delay (ms)
     private int Pdepth;             //the depth of the Chorus(ms)
     private int Pfb;                //feedback
@@ -110,7 +110,6 @@ public class RRChorus implements EffectStereo {
     //    private float mdel;
     private float outvolume;        //this is the volume of effect and is public because need it in system effect.
     private float panning;
-
     public RRChorus() {
         dlk = 0;
         drk = 0;
@@ -353,14 +352,14 @@ public class RRChorus implements EffectStereo {
         return (result);
     }
 
-    private void setdepth(int Pdepth) {
-        this.Pdepth = Pdepth;
-        depth = (powf(8.0f, ((float) Pdepth / 127.0f) * 2.0f) - 1.0f) / 1000.0f;    //seconds
-    }
-
     private void setdelay(int Pdelay) {
         this.Pdelay = Pdelay;
         delay = (powf(10.0f, ((float) Pdelay / 127.0f) * 2.0f) - 1.0f) / 1000.0f;    //seconds
+    }
+
+    private void setdepth(int Pdepth) {
+        this.Pdepth = Pdepth;
+        depth = (powf(8.0f, ((float) Pdepth / 127.0f) * 2.0f) - 1.0f) / 1000.0f;    //seconds
     }
 
     private void setfb(int Pfb) {
@@ -368,9 +367,9 @@ public class RRChorus implements EffectStereo {
         fb = ((float) Pfb - 64.0f) / 64.1f;
     }
 
-    private void setvolume(int Pvolume) {
-        this.Pvolume = Pvolume;
-        outvolume = (float) Pvolume / 127.0f;
+    private void setlrcross(int Plrcross) {
+        this.Plrcross = Plrcross;
+        lrcross = (float) Plrcross / 127.0f;
     }
 
     private void setpanning(int Ppanning) {
@@ -378,8 +377,8 @@ public class RRChorus implements EffectStereo {
         panning = ((float) Ppanning + .5f) / 127.0f;
     }
 
-    private void setlrcross(int Plrcross) {
-        this.Plrcross = Plrcross;
-        lrcross = (float) Plrcross / 127.0f;
+    private void setvolume(int Pvolume) {
+        this.Pvolume = Pvolume;
+        outvolume = (float) Pvolume / 127.0f;
     }
 }

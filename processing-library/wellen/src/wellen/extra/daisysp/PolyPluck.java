@@ -15,8 +15,12 @@ import static wellen.extra.daisysp.Pluck.PLUCK_MODE_RECURSIVE;
 
 public class PolyPluck {
 
+    private int active_voice_;
+    private final DcBlock blk_ = new DcBlock();
     private final int num_voices;
-
+    private float p_damp_, p_decay_;
+    private final Pluck[] plk_;
+    private final float[][] plkbuff_;
     public PolyPluck(int pNumVoices) {
         num_voices = pNumVoices;
         plk_ = new Pluck[num_voices];
@@ -84,10 +88,4 @@ public class PolyPluck {
     public void SetDecay(float p) {
         p_damp_ = p;
     }
-
-    private final DcBlock blk_ = new DcBlock();
-    private final Pluck[] plk_;
-    private final float[][] plkbuff_;
-    private float p_damp_, p_decay_;
-    private int active_voice_;
 }

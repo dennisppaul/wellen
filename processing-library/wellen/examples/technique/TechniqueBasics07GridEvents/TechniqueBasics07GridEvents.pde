@@ -5,8 +5,6 @@ import wellen.dsp.*;
  * this example demonstrates how to use grid events to create a composition.
  */
 
-final Grid fGrid = new Grid();
-
 final int fBaseNoteDefault = 36;
 
 int fBaseNote = fBaseNoteDefault;
@@ -14,6 +12,8 @@ int fBaseNote = fBaseNoteDefault;
 final int fBaseNoteIncrease = 7;
 
 final int fBaseNoteIncreaseMax = 2;
+
+final Grid fGrid = new Grid();
 
 void settings() {
     size(640, 480);

@@ -7,17 +7,17 @@ import wellen.dsp.*;
  * to produce the tone signals.
  */
 
+final float mDecay = 0.9f;
+
 final float[] mDelayBuffer = new float[4096];
 
-final int mDelayOffset = 512;
+int mDelayID = 0;
 
-final float mDecay = 0.9f;
+final int mDelayOffset = 512;
 
 final float mMix = 0.7f;
 
 ToneEngineDSP mToneEngine;
-
-int mDelayID = 0;
 
 void settings() {
     size(640, 480);

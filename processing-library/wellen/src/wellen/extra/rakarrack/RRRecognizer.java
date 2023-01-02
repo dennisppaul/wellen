@@ -70,7 +70,6 @@ public class RRRecognizer {
     private final int[] schmittBuffer;
     private int schmittPointer;
     private final int ultima;
-
     public RRRecognizer(float trig) {
         notes = englishNotes;
         ultima = -1;
@@ -141,59 +140,6 @@ public class RRRecognizer {
         return notes[note];
     }
 
-    private void schmittS16LE(int[] indata) {
-        int i, j;
-
-        for (i = 0; i < RRUtilities.PERIOD; i++) {
-            schmittBuffer[schmittPointer] = indata[i];
-//            *schmittPointer++ = indata[i];
-            schmittPointer++;
-            if (schmittPointer == schmittBuffer.length) {
-//                if (schmittPointer - schmittBuffer >= schmittBuffer.length) {
-                int endpoint;
-                int startpoint;
-                int t1;
-                int t2;
-                int A1;
-                int A2;
-                int tc;
-                boolean schmittTriggered;
-
-                schmittPointer = 0;
-
-                for (j = 0, A1 = 0, A2 = 0; j < schmittBuffer.length; j++) {
-                    if (schmittBuffer[j] > 0 && A1 < schmittBuffer[j]) {
-                        A1 = schmittBuffer[j];
-                    }
-                    if (schmittBuffer[j] < 0 && A2 < -schmittBuffer[j]) {
-                        A2 = -schmittBuffer[j];
-                    }
-                }
-                t1 = RRUtilities.lrintf((float) A1 * trigfact + 0.5f);
-                t2 = -RRUtilities.lrintf((float) A2 * trigfact + 0.5f);
-                startpoint = 0;
-                for (j = 1; j < schmittBuffer.length && schmittBuffer[j] <= t1; j++) ;
-                for (; j < (schmittBuffer.length - 1) && !(schmittBuffer[j] >= t2 && schmittBuffer[j + 1] < t2); j++) ;
-                startpoint = j;
-                schmittTriggered = false;
-                endpoint = startpoint + 1;
-                for (j = startpoint, tc = 0; j < schmittBuffer.length - 1; j++) {
-                    if (!schmittTriggered) {
-                        schmittTriggered = (schmittBuffer[j] >= t1);
-                    } else if (schmittBuffer[j] >= t2 && schmittBuffer[j + 1] < t2) {
-                        endpoint = j;
-                        tc++;
-                        schmittTriggered = false;
-                    }
-                }
-                if (endpoint > startpoint) {
-                    afreq = RRUtilities.SAMPLE_RATE * ((float) tc / (float) (endpoint - startpoint));
-                    displayFrequency(afreq);
-                }
-            }
-        }
-    }
-
     private void displayFrequency(float freq) {
         int i;
         int offset = 4;
@@ -250,15 +196,68 @@ public class RRRecognizer {
         }
     }
 
-    private void setlpf(int value) {
-        float fr = (float) value;
-        lpfl.setfreq(fr);
-        lpfr.setfreq(fr);
+    private void schmittS16LE(int[] indata) {
+        int i, j;
+
+        for (i = 0; i < RRUtilities.PERIOD; i++) {
+            schmittBuffer[schmittPointer] = indata[i];
+//            *schmittPointer++ = indata[i];
+            schmittPointer++;
+            if (schmittPointer == schmittBuffer.length) {
+//                if (schmittPointer - schmittBuffer >= schmittBuffer.length) {
+                int endpoint;
+                int startpoint;
+                int t1;
+                int t2;
+                int A1;
+                int A2;
+                int tc;
+                boolean schmittTriggered;
+
+                schmittPointer = 0;
+
+                for (j = 0, A1 = 0, A2 = 0; j < schmittBuffer.length; j++) {
+                    if (schmittBuffer[j] > 0 && A1 < schmittBuffer[j]) {
+                        A1 = schmittBuffer[j];
+                    }
+                    if (schmittBuffer[j] < 0 && A2 < -schmittBuffer[j]) {
+                        A2 = -schmittBuffer[j];
+                    }
+                }
+                t1 = RRUtilities.lrintf((float) A1 * trigfact + 0.5f);
+                t2 = -RRUtilities.lrintf((float) A2 * trigfact + 0.5f);
+                startpoint = 0;
+                for (j = 1; j < schmittBuffer.length && schmittBuffer[j] <= t1; j++) ;
+                for (; j < (schmittBuffer.length - 1) && !(schmittBuffer[j] >= t2 && schmittBuffer[j + 1] < t2); j++) ;
+                startpoint = j;
+                schmittTriggered = false;
+                endpoint = startpoint + 1;
+                for (j = startpoint, tc = 0; j < schmittBuffer.length - 1; j++) {
+                    if (!schmittTriggered) {
+                        schmittTriggered = (schmittBuffer[j] >= t1);
+                    } else if (schmittBuffer[j] >= t2 && schmittBuffer[j + 1] < t2) {
+                        endpoint = j;
+                        tc++;
+                        schmittTriggered = false;
+                    }
+                }
+                if (endpoint > startpoint) {
+                    afreq = RRUtilities.SAMPLE_RATE * ((float) tc / (float) (endpoint - startpoint));
+                    displayFrequency(afreq);
+                }
+            }
+        }
     }
 
     private void sethpf(int value) {
         float fr = (float) value;
         hpfl.setfreq(fr);
         hpfr.setfreq(fr);
+    }
+
+    private void setlpf(int value) {
+        float fr = (float) value;
+        lpfl.setfreq(fr);
+        lpfr.setfreq(fr);
     }
 }

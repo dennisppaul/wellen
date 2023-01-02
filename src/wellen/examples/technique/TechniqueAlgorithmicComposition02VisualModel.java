@@ -11,8 +11,8 @@ import java.util.ArrayList;
 
 public class TechniqueAlgorithmicComposition02VisualModel extends PApplet {
 
-    private final ArrayList<CircleController> mControllers = new ArrayList<CircleController>();
     private final int NUM_OF_CONTROLLERS = 1;
+    private final ArrayList<CircleController> mControllers = new ArrayList<CircleController>();
 
     public void settings() {
         size(640, 480);
@@ -94,19 +94,27 @@ public class TechniqueAlgorithmicComposition02VisualModel extends PApplet {
 
     private class CircleController {
 
-        final PVector position = new PVector();
-        final PVector pointer = new PVector();
-        private final Sampler mSampler;
-        float radius = 100.0f;
         float counter = 0.0f;
+        final PVector pointer = new PVector();
+        final PVector position = new PVector();
+        float radius = 100.0f;
         float speed = 3.0f;
-
+        private final Sampler mSampler;
         CircleController() {
             byte[] mData = SampleDataSNARE.data;
             mSampler = new Sampler();
             mSampler.load(mData);
             mSampler.loop(true);
             mSampler.set_speed(1);
+        }
+
+        void draw() {
+            noFill();
+            stroke(0);
+            ellipse(position.x, position.y, radius * 2, radius * 2);
+            noStroke();
+            fill(0);
+            ellipse(pointer.x, pointer.y, 10, 10);
         }
 
         float process() {
@@ -120,15 +128,6 @@ public class TechniqueAlgorithmicComposition02VisualModel extends PApplet {
 
             mSampler.set_speed(map(pointer.x, 0, width, 0, 32));
             mSampler.set_amplitude(map(pointer.y, 0, height, 0.0f, 0.9f));
-        }
-
-        void draw() {
-            noFill();
-            stroke(0);
-            ellipse(position.x, position.y, radius * 2, radius * 2);
-            noStroke();
-            fill(0);
-            ellipse(pointer.x, pointer.y, 10, 10);
         }
     }
 

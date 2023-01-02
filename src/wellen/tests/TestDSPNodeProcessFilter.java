@@ -8,8 +8,8 @@ import wellen.dsp.Wavetable;
 
 public class TestDSPNodeProcessFilter extends PApplet {
 
-    private final Wavetable mWavetable = new Wavetable(512);
     private final LowPassFilter mFilter = new LowPassFilter(Wellen.DEFAULT_SAMPLING_RATE);
+    private final Wavetable mWavetable = new Wavetable(512);
 
     public void settings() {
         size(640, 480);

@@ -3,11 +3,11 @@ import wellen.dsp.*;
 
 import wellen.extra.daisysp.*;
 
+SyntheticBassDrum mBassDrum;
+
 int mBeatCount;
 
 HiHat mHiHat;
-
-SyntheticBassDrum mBassDrum;
 
 ReverbSc mReverb;
 

@@ -10,8 +10,8 @@ import wellen.dsp.Signal;
 
 public class TestPanning extends PApplet {
 
-    private ToneEngineDSP mToneEngine;
     private final Pan mPan = new Pan();
+    private ToneEngineDSP mToneEngine;
 
     public void settings() {
         size(640, 480);

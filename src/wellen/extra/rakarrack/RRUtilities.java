@@ -23,34 +23,34 @@ import static wellen.Wellen.DEFAULT_AUDIOBLOCK_SIZE;
 import static wellen.Wellen.DEFAULT_SAMPLING_RATE;
 
 public class RRUtilities {
-    public static final float DENORMAL_GUARD = 1e-18f;
     public static final float ATTACK = 0.175f;
+    public static final float DENORMAL_GUARD = 1e-18f;
+    public static final float D_NOTE = 1.059463f;
+    public static final float D_NOTE_SQRT = 1.029302f;
+    public static final float D_PI = 6.283185f;
+    public static final int FF_MAX_FORMANTS = 12;
+    public static final int FF_MAX_SEQUENCE = 8;
+    public static final int FF_MAX_VOWELS = 6;
+    public static final float LOG_10 = 2.302585f;
+    public static final float LOG_2 = 0.693147f;
+    public static final float LOG_D_NOTE = 0.057762f;
+    public static final float MAX_CHORUS_DELAY = 250.0f;    //ms;
+    public static final int MAX_DELAY = 2;
+    public static final int MAX_FILTER_STAGES = 5;
+    public static final int PERIOD = DEFAULT_AUDIOBLOCK_SIZE;
+    public static final float PI = 3.141598f;
     public static final float SAMPLE_RATE = DEFAULT_SAMPLING_RATE;
     public static final float cSAMPLE_RATE = 1.0f / SAMPLE_RATE;
-    public static final float LOG_2 = 0.693147f;
-    public static final float LOG_10 = 2.302585f;
-    public static final float MAX_CHORUS_DELAY = 250.0f;    //ms;
-    public static final float D_PI = 6.283185f;
-    public static final float PI = 3.141598f;
-    public static final int MAX_DELAY = 2;
-    public static final int FF_MAX_FORMANTS = 12;
-    public static final int FF_MAX_VOWELS = 6;
-    public static final int FF_MAX_SEQUENCE = 8;
-    public static final int PERIOD = DEFAULT_AUDIOBLOCK_SIZE;
     public static final int fPERIOD = PERIOD;
-    public static final int MAX_FILTER_STAGES = 5;
     public static final float[] freqs = new float[12];
     public static final float[] lfreqs = new float[12];
-    public static final float D_NOTE = 1.059463f;
-    public static final float LOG_D_NOTE = 0.057762f;
-    public static final float D_NOTE_SQRT = 1.029302f;
-    public static float Thi = 0.67f;                //High threshold for limiting onset
-    public static float Tlo = -0.65f;               //Low threshold for limiting onset
-    public static float Tlc = -0.6139445f;          //Tlo + sqrt(Tlo/500)
-    public static float Thc = 0.6365834f;           //Thi - sqrt(Thi/600)
     public static float CRUNCH_GAIN = 100.0f;       //Typical voltage gain for most OD stompboxes
-    public static float DIV_TLC_CONST = 0.002f;     // 1/300
     public static float DIV_THC_CONST = 0.0016666f; // 1/600 (approximately)
+    public static float DIV_TLC_CONST = 0.002f;     // 1/300
+    public static float Thc = 0.6365834f;           //Thi - sqrt(Thi/600)
+    public static float Thi = 0.67f;                //High threshold for limiting onset
+    public static float Tlc = -0.6139445f;          //Tlo + sqrt(Tlo/500)
+    public static float Tlo = -0.65f;               //Low threshold for limiting onset
     public static float aFreq;
 
     static {

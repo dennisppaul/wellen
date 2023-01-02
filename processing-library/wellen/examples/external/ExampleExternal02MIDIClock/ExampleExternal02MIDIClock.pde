@@ -6,9 +6,9 @@ import wellen.dsp.*;
  * external MIDI device or an internal MIDI application ).
  */
 
-int mColor;
-
 BeatMIDI mBeatMIDI;
+
+int mColor;
 
 void settings() {
     size(640, 480);

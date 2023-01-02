@@ -19,11 +19,11 @@ public class ExampleDSPAnalysis01SonogramFrequencyDistribution extends PApplet {
      * frequency and amplitude. use mouse+`SHIFT` to change filter cutoff frequency and resonance.
      */
 
-    private final Filter fFilter = new Filter();
-    private final Wavetable fWavetable = new Wavetable();
-    private Sonogram fSonogram;
-    private FrequencyDistribution fFrequencyDistribution;
     private boolean fEnableFilter = false;
+    private final Filter fFilter = new Filter();
+    private FrequencyDistribution fFrequencyDistribution;
+    private Sonogram fSonogram;
+    private final Wavetable fWavetable = new Wavetable();
 
     public void settings() {
         size(640, 480);

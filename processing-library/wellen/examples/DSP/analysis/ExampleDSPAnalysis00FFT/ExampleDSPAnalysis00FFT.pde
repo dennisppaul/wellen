@@ -5,9 +5,9 @@ import wellen.dsp.*;
  * this example demonstrate how to perform Fast Fourier Transformation (FFT).
  */
 
-int x = 0;
-
 Sampler fSampler;
+
+int x = 0;
 
 void settings() {
     size(640, 480);

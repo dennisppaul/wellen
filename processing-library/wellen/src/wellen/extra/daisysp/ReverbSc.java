@@ -20,6 +20,56 @@ import static wellen.extra.daisysp.DaisySP.sqrtf;
  */
 public class ReverbSc {
 
+    private static final float DEFAULT_SRATE = 48000.0f;
+    private static final int DELAYPOS_MASK = 0x0FFFFFFF;
+    private static final int DELAYPOS_SCALE = 0x10000000;
+    private static final int DELAYPOS_SHIFT = 28;
+    private static final int DSY_REVERBSC_MAX_SIZE = 98936;
+    private static final float MAX_PITCHMOD = 20.0f;
+    private static final float MAX_SRATE = 1000000.0f;
+    private static final float MIN_SRATE = 5000.0f;
+    private static final float M_PI = 3.14159265358979323846f;
+    private static final int NUM_DELAY_LINES = 8;
+    private static final int REVSC_NOT_OK = 1;
+    private static final int REVSC_OK = 0;
+
+    //    private static int DelayLineBytesAlloc(float sr, int n) {
+//        int n_bytes = 0;
+//        n_bytes += (DelayLineMaxSamples(sr, n) * (int) sizeof( float));
+//        return n_bytes;
+//    }
+    private static final float kJpScale = 0.25f;
+    private static final float kOutputGain = 0.35f;
+    private static final float[][] kReverbParams = new float[][]{{(2473.0f / DEFAULT_SRATE), 0.0010f, 3.100f, 1966.0f},
+                                                                 {(2767.0f / DEFAULT_SRATE), 0.0011f, 3.500f, 29491.0f},
+                                                                 {(3217.0f / DEFAULT_SRATE), 0.0017f, 1.110f, 22937.0f},
+                                                                 {(3557.0f / DEFAULT_SRATE), 0.0006f, 3.973f, 9830.0f},
+                                                                 {(3907.0f / DEFAULT_SRATE), 0.0010f, 2.341f, 20643.0f},
+                                                                 {(4127.0f / DEFAULT_SRATE), 0.0011f, 1.897f, 22937.0f},
+                                                                 {(2143.0f / DEFAULT_SRATE), 0.0017f, 0.891f, 29491.0f},
+                                                                 {(1933.0f / DEFAULT_SRATE), 0.0006f, 3.221f,
+                                                                  14417.0f}};
+    private float damp_fact_;
+    /* kReverbParams[n][0] = delay time (in seconds)                     */
+    /* kReverbParams[n][1] = random variation in delay time (in seconds) */
+    /* kReverbParams[n][2] = random variation frequency (in 1/sec)       */
+    /* kReverbParams[n][3] = random seed (0 - 32767)                     */
+    private final ReverbScDl[] delay_lines_ = new ReverbScDl[NUM_DELAY_LINES];
+    private float feedback_, lpfreq_;
+    private float i_sample_rate_, i_pitch_mod_, i_skip_init_;
+    private int init_done_;
+    private float mLeft = 0;
+    private float mRight = 0;
+    private float prv_lpfreq_;
+    private float sample_rate_;
+
+    private static int DelayLineMaxSamples(float sr, int n) {
+        float max_del;
+        max_del = kReverbParams[n][0];
+        max_del += (kReverbParams[n][1] * 1.125);
+        return (int) (max_del * sr + 16.5);
+    }
+
     /**
      * Initializes the reverb module, and sets the sample_rate at which the Process function will be called. Returns 0
      * if all good, or 1 if it runs out of delay times exceed maximum allowed.
@@ -226,21 +276,31 @@ public class ReverbSc {
     public void SetLpFreq(final float freq) {
         lpfreq_ = freq;
     }
+//    private final float[] aux_ = new float[DSY_REVERBSC_MAX_SIZE];
 
-    /**
-     * Delay line for internal reverb use
-     */
-    private static class ReverbScDl {
-        int write_pos;         /*< write position */
-        int buffer_size;       /*< buffer size */
-        int read_pos;          /*< read position */
-        int read_pos_frac;     /*< fractional component of read pos */
-        int read_pos_frac_inc; /*< increment for fractional */
-        int dummy;             /*<  dummy var */
-        int seed_val;          /*< randseed */
-        int rand_line_cnt;     /*< number of random lines */
-        float filter_state;    /*< state of filter */
-        float[] buf;           /*< buffer ptr */
+    private int InitDelayLine(ReverbScDl lp, int n) {
+        float read_pos;
+        /* int     i; */
+
+        /* calculate length of delay line */
+        lp.buffer_size = DelayLineMaxSamples(sample_rate_, n);
+        lp.dummy = 0;
+        lp.write_pos = 0;
+        /* set random seed */
+        lp.seed_val = (int) (kReverbParams[n][3] + 0.5);
+        /* set initial delay time */
+        read_pos = (float) lp.seed_val * kReverbParams[n][1] / 32768;
+        read_pos = kReverbParams[n][0] + (read_pos * i_pitch_mod_);
+        read_pos = (float) lp.buffer_size - (read_pos * sample_rate_);
+        lp.read_pos = (int) read_pos;
+        read_pos = (read_pos - (float) lp.read_pos) * (float) DELAYPOS_SCALE;
+        lp.read_pos_frac = (int) (read_pos + 0.5);
+        /* initialise first random line segment */
+        NextRandomLineseg(lp, n);
+        /* clear delay line to zero */
+        lp.filter_state = 0.0f;
+        Arrays.fill(lp.buf, 0);
+        return REVSC_OK;
     }
 
     private void NextRandomLineseg(ReverbScDl lp, int n) {
@@ -269,84 +329,19 @@ public class ReverbSc {
         lp.read_pos_frac_inc = (int) (phs_inc_val * DELAYPOS_SCALE + 0.5);
     }
 
-    private int InitDelayLine(ReverbScDl lp, int n) {
-        float read_pos;
-        /* int     i; */
-
-        /* calculate length of delay line */
-        lp.buffer_size = DelayLineMaxSamples(sample_rate_, n);
-        lp.dummy = 0;
-        lp.write_pos = 0;
-        /* set random seed */
-        lp.seed_val = (int) (kReverbParams[n][3] + 0.5);
-        /* set initial delay time */
-        read_pos = (float) lp.seed_val * kReverbParams[n][1] / 32768;
-        read_pos = kReverbParams[n][0] + (read_pos * i_pitch_mod_);
-        read_pos = (float) lp.buffer_size - (read_pos * sample_rate_);
-        lp.read_pos = (int) read_pos;
-        read_pos = (read_pos - (float) lp.read_pos) * (float) DELAYPOS_SCALE;
-        lp.read_pos_frac = (int) (read_pos + 0.5);
-        /* initialise first random line segment */
-        NextRandomLineseg(lp, n);
-        /* clear delay line to zero */
-        lp.filter_state = 0.0f;
-        Arrays.fill(lp.buf, 0);
-        return REVSC_OK;
+    /**
+     * Delay line for internal reverb use
+     */
+    private static class ReverbScDl {
+        float[] buf;           /*< buffer ptr */
+        int buffer_size;       /*< buffer size */
+        int dummy;             /*<  dummy var */
+        float filter_state;    /*< state of filter */
+        int rand_line_cnt;     /*< number of random lines */
+        int read_pos;          /*< read position */
+        int read_pos_frac;     /*< fractional component of read pos */
+        int read_pos_frac_inc; /*< increment for fractional */
+        int seed_val;          /*< randseed */
+        int write_pos;         /*< write position */
     }
-
-    private static int DelayLineMaxSamples(float sr, int n) {
-        float max_del;
-        max_del = kReverbParams[n][0];
-        max_del += (kReverbParams[n][1] * 1.125);
-        return (int) (max_del * sr + 16.5);
-    }
-
-//    private static int DelayLineBytesAlloc(float sr, int n) {
-//        int n_bytes = 0;
-//        n_bytes += (DelayLineMaxSamples(sr, n) * (int) sizeof( float));
-//        return n_bytes;
-//    }
-
-    private static final int REVSC_OK = 0;
-    private static final int REVSC_NOT_OK = 1;
-
-    private static final int NUM_DELAY_LINES = 8;
-    private static final float DEFAULT_SRATE = 48000.0f;
-    private static final float MIN_SRATE = 5000.0f;
-    private static final float MAX_SRATE = 1000000.0f;
-    private static final float MAX_PITCHMOD = 20.0f;
-    private static final int DELAYPOS_SHIFT = 28;
-    private static final int DELAYPOS_SCALE = 0x10000000;
-    private static final int DELAYPOS_MASK = 0x0FFFFFFF;
-    private static final float M_PI = 3.14159265358979323846f;
-    private static final int DSY_REVERBSC_MAX_SIZE = 98936;
-    private static final float kOutputGain = 0.35f;
-    private static final float kJpScale = 0.25f;
-
-    private float feedback_, lpfreq_;
-    private float i_sample_rate_, i_pitch_mod_, i_skip_init_;
-    private float sample_rate_;
-    private float damp_fact_;
-    private float prv_lpfreq_;
-    private int init_done_;
-    private final ReverbScDl[] delay_lines_ = new ReverbScDl[NUM_DELAY_LINES];
-//    private final float[] aux_ = new float[DSY_REVERBSC_MAX_SIZE];
-
-    /* kReverbParams[n][0] = delay time (in seconds)                     */
-    /* kReverbParams[n][1] = random variation in delay time (in seconds) */
-    /* kReverbParams[n][2] = random variation frequency (in 1/sec)       */
-    /* kReverbParams[n][3] = random seed (0 - 32767)                     */
-
-    private static final float[][] kReverbParams = new float[][]{{(2473.0f / DEFAULT_SRATE), 0.0010f, 3.100f, 1966.0f},
-                                                                 {(2767.0f / DEFAULT_SRATE), 0.0011f, 3.500f, 29491.0f},
-                                                                 {(3217.0f / DEFAULT_SRATE), 0.0017f, 1.110f, 22937.0f},
-                                                                 {(3557.0f / DEFAULT_SRATE), 0.0006f, 3.973f, 9830.0f},
-                                                                 {(3907.0f / DEFAULT_SRATE), 0.0010f, 2.341f, 20643.0f},
-                                                                 {(4127.0f / DEFAULT_SRATE), 0.0011f, 1.897f, 22937.0f},
-                                                                 {(2143.0f / DEFAULT_SRATE), 0.0017f, 0.891f, 29491.0f},
-                                                                 {(1933.0f / DEFAULT_SRATE), 0.0006f, 3.221f,
-                                                                  14417.0f}};
-
-    private float mLeft = 0;
-    private float mRight = 0;
 }

@@ -15,8 +15,8 @@ public class ExampleDSP21SamplerWithLoopPoints extends PApplet {
      * note that *global* in- and out-points can be defined with `set_in()` + `set_out()`.
      */
 
-    private Sampler mSampler;
     private static final float BORDER = 32;
+    private Sampler mSampler;
 
     public void settings() {
         size(640, 480);

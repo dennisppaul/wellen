@@ -58,19 +58,19 @@ public class RRVocoder implements EffectStereo {
     "Vocoder WD","296","35",
     */
 
-    public static final int PARAM_VOLUME = 0;
-    public static final int PARAM_PANNING = 1;
-    public static final int PARAM_MUFFLE = 2;
-    public static final int PARAM_Q = 3;
+    public static final int NUM_PARAMS = 7;
+    public static final int NUM_PRESETS = 4;
     public static final int PARAM_INPUT = 4;
     public static final int PARAM_LEVEL = 5;
+    public static final int PARAM_MUFFLE = 2;
+    public static final int PARAM_PANNING = 1;
+    public static final int PARAM_Q = 3;
     public static final int PARAM_RING = 6;
-    public static final int NUM_PARAMS = 7;
+    public static final int PARAM_VOLUME = 0;
     public static final int PRESET_VOCODER_1 = 0;
     public static final int PRESET_VOCODER_2 = 1;
     public static final int PRESET_VOCODER_3 = 2;
     public static final int PRESET_VOCODER_4 = 3;
-    public static final int NUM_PRESETS = 4;
     public float[] auxresampled;
     //    public float[] efxoutl;
     //    public float[] efxoutr;
@@ -105,7 +105,6 @@ public class RRVocoder implements EffectStereo {
     private float ringworm;
     private final RRAnalogFilter vhp;
     private final RRAnalogFilter vlp;
-
     public RRVocoder(float[] auxresampled_, int bands) {
         VOC_BANDS = bands;
 //        efxoutl = efxoutl_;
@@ -369,6 +368,26 @@ public class RRVocoder implements EffectStereo {
         rpanning = 1.0f - lpanning;
     }
 
+    private void adjustq(float q) {
+        for (int ii = 0; ii < VOC_BANDS; ii++) {
+            filterbank[ii].l.setq(q);
+            filterbank[ii].r.setq(q);
+            filterbank[ii].aux.setq(q);
+        }
+    }
+
+    private void init_filters() {
+        float ff, qq;
+
+        for (int ii = 0; ii < VOC_BANDS; ii++) {
+            ff = filterbank[ii].sfreq;
+            qq = filterbank[ii].sq;
+            filterbank[ii].l.setfreq_and_q(ff, qq);
+            filterbank[ii].r.setfreq_and_q(ff, qq);
+            filterbank[ii].aux.setfreq_and_q(ff, qq);
+        }
+    }
+
     private void setbands(int numbands, float startfreq, float endfreq) {
         float start = startfreq;   //useful variables
         float endband = endfreq;
@@ -392,26 +411,6 @@ public class RRVocoder implements EffectStereo {
             filterbank[k].aux.setfreq_and_q(filterbank[k].sfreq, filterbank[k].sq);
         }
         cleanup();
-    }
-
-    private void init_filters() {
-        float ff, qq;
-
-        for (int ii = 0; ii < VOC_BANDS; ii++) {
-            ff = filterbank[ii].sfreq;
-            qq = filterbank[ii].sq;
-            filterbank[ii].l.setfreq_and_q(ff, qq);
-            filterbank[ii].r.setfreq_and_q(ff, qq);
-            filterbank[ii].aux.setfreq_and_q(ff, qq);
-        }
-    }
-
-    private void adjustq(float q) {
-        for (int ii = 0; ii < VOC_BANDS; ii++) {
-            filterbank[ii].l.setq(q);
-            filterbank[ii].r.setq(q);
-            filterbank[ii].aux.setq(q);
-        }
     }
 
     private static class fbank {

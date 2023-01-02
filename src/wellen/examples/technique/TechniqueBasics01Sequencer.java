@@ -13,7 +13,6 @@ public class TechniqueBasics01Sequencer extends PApplet {
      */
 
     private static final int OFF = -1;
-
     // @formatter:off
     private final Sequencer<Integer> fSequence = new Sequencer<>(0, OFF,  12, OFF,
                                                          0, OFF,  12, OFF,

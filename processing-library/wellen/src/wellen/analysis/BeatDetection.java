@@ -52,11 +52,9 @@ import wellen.Wellen;
  * <p>
  * Implementation based on a <a href= "http://vamp-plugins.org/code-doc/PercussionOnsetDetector_8cpp-source.html" >VAMP
  * plugin example</a> by Chris Cannam at Queen Mary, London:
- *
  * <pre>
  *  Centre for Digital Music, Queen Mary, University of London.
  *  Copyright 2006 Chris Cannam.
- *
  *  Permission is hereby granted, free of charge, to any person
  *  obtaining a copy of this software and associated documentation
  *  files (the "Software"), to deal in the Software without
@@ -64,10 +62,8 @@ import wellen.Wellen;
  *  modify, merge, publish, distribute, sublicense, and/or sell copies
  *  of the Software, and to permit persons to whom the Software is
  *  furnished to do so, subject to the following conditions:
- *
  *  The above copyright notice and this permission notice shall be
  *  included in all copies or substantial portions of the Software.
- *
  *  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
  *  EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
  *  MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
@@ -75,7 +71,6 @@ import wellen.Wellen;
  *  ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
  *  CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  *  WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- *
  *  Except as contained in this notice, the names of the Centre for
  *  Digital Music; Queen Mary, University of London; and Chris Cannam
  *  shall not be used in advertising or otherwise to promote the sale,
@@ -88,54 +83,21 @@ import wellen.Wellen;
  */
 public class BeatDetection {
 
-    public static final double DEFAULT_THRESHOLD = 8;
     public static final double DEFAULT_SENSITIVITY = 20;
-
-    private final FFT fFFT;
-    private final float[] fPriorMagnitudes;
-    private final float[] fCurrentMagnitudes;
+    public static final double DEFAULT_THRESHOLD = 8;
     private float dfMinus1;
     private float dfMinus2;
-    private float fTimeStamp;
+    private final float[] fCurrentMagnitudes;
+    private final FFT fFFT;
+    private final float[] fPriorMagnitudes;
     private final float fSampleRate;
     private double fSensitivity;
     private double fThreshold;
-
-    /**
-     * sensitivity of peak detector applied to broadband detection function
-     *
-     * @param pfSensitivity in percentage [0-100]
-     */
-    public void set_sensitivity(double pfSensitivity) {
-        fSensitivity = pfSensitivity;
-    }
-
-    /**
-     * energy rise within a frequency bin necessary to count toward broadband total
-     *
-     * @param pfThreshold in dB [0-20]
-     */
-    public void set_threshold(double pfThreshold) {
-        fThreshold = pfThreshold;
-    }
-
-    public float get_time_stamp() {
-        return fTimeStamp;
-    }
-
-    public double get_sensitivity() {
-        return fSensitivity;
-    }
-
-    public double get_threshold() {
-        return fThreshold;
-    }
-
+    private float fTimeStamp;
 
     public BeatDetection() {
         this(Wellen.DEFAULT_SAMPLING_RATE, Wellen.DEFAULT_AUDIOBLOCK_SIZE);
     }
-
     /**
      * Create a new percussion onset detector. With a default sensitivity and threshold.
      *
@@ -145,7 +107,6 @@ public class BeatDetection {
     public BeatDetection(float sampleRate, int bufferSize) {
         this(sampleRate, bufferSize, DEFAULT_SENSITIVITY, DEFAULT_THRESHOLD);
     }
-
     /**
      * Create a new percussion onset detector.
      *
@@ -161,6 +122,36 @@ public class BeatDetection {
         fPriorMagnitudes = new float[buffer_size / 2];
         fCurrentMagnitudes = new float[buffer_size / 2];
         fSampleRate = sample_rate;
+    }
+
+    public float get_time_stamp() {
+        return fTimeStamp;
+    }
+
+    public double get_sensitivity() {
+        return fSensitivity;
+    }
+
+    /**
+     * sensitivity of peak detector applied to broadband detection function
+     *
+     * @param pfSensitivity in percentage [0-100]
+     */
+    public void set_sensitivity(double pfSensitivity) {
+        fSensitivity = pfSensitivity;
+    }
+
+    public double get_threshold() {
+        return fThreshold;
+    }
+
+    /**
+     * energy rise within a frequency bin necessary to count toward broadband total
+     *
+     * @param pfThreshold in dB [0-20]
+     */
+    public void set_threshold(double pfThreshold) {
+        fThreshold = pfThreshold;
     }
 
     public float[] process(float[] signal_buffer) {

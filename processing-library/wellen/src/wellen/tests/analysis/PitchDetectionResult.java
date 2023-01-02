@@ -28,7 +28,6 @@ package wellen.tests.analysis;
  * A class with information about the result of a pitch detection on a block of audio.
  * <p>
  * It contains:
- *
  * <ul>
  * <li>The pitch in Hertz.</li>
  * <li>A probability (noisiness, (a)periodicity, salience, voicedness or clarity
@@ -43,7 +42,6 @@ package wellen.tests.analysis;
  * The separate pitched or unpitched boolean can coexist with a defined pitch.
  * E.g. if the algorithm detects 220Hz in a noisy signal it may respond with
  * 220Hz "unpitched".
- *
  * <p>
  * For performance reasons the object is reused. Please create a copy of the object
  * if you want to use it on an other thread.
@@ -55,10 +53,8 @@ public class PitchDetectionResult {
      * The pitch in Hertz.
      */
     private float pitch;
-
-    private float probability;
-
     private boolean pitched;
+    private float probability;
 
     public PitchDetectionResult() {
         pitch = -1;
@@ -77,7 +73,6 @@ public class PitchDetectionResult {
         this.probability = other.probability;
         this.pitched = other.pitched;
     }
-
 
     /**
      * @return The pitch in Hertz.

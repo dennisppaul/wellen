@@ -24,16 +24,16 @@ void setup() {
                                 new TextFragment("TAYM", Note.NOTE_D3 + 1), new TextFragment("AY", Note.NOTE_F3),
                                 new TextFragment("  ", Note.NOTE_F3), new TextFragment("SIYIY", Note.NOTE_G3),
                                 new TextFragment("     ", Note.NOTE_G3), new TextFragment("YUW", Note.NOTE_F3),
-                                new TextFragment("   ", Note.NOTE_F3), new TextFragment("FAOAOAOAO",
-                                                                                        Note.NOTE_D3 + 1),
+                                new TextFragment("   ", Note.NOTE_F3),
+                                new TextFragment("FAOAOAOAO", Note.NOTE_D3 + 1),
                                 new TextFragment("   ", Note.NOTE_D3 + 1), new TextFragment("LIHNX", Note.NOTE_F3),
                                 new TextFragment("     ", Note.NOTE_F3), new TextFragment("AY", Note.NOTE_C3),
-                                new TextFragment("GEHT", Note.NOTE_A3 + 1), new TextFragment("    ",
-                                                                                             Note.NOTE_A3 + 1),
-                                new TextFragment("DAWN", Note.NOTE_G3 + 1), new TextFragment("    ",
-                                                                                             Note.NOTE_G3 + 1),
-                                new TextFragment("AAN", Note.NOTE_G3), new TextFragment("MAY", Note.NOTE_F3),
-                                new TextFragment("   ", Note.NOTE_F3), new TextFragment("NIYZ", Note.NOTE_D3 + 1),
+                                new TextFragment("GEHT", Note.NOTE_A3 + 1),
+                                new TextFragment("    ", Note.NOTE_A3 + 1),
+                                new TextFragment("DAWN", Note.NOTE_G3 + 1),
+                                new TextFragment("    ", Note.NOTE_G3 + 1), new TextFragment("AAN", Note.NOTE_G3),
+                                new TextFragment("MAY", Note.NOTE_F3), new TextFragment("   ", Note.NOTE_F3),
+                                new TextFragment("NIYZ", Note.NOTE_D3 + 1),
                                 new TextFragment("    ", Note.NOTE_D3 + 1), new TextFragment("AEND", Note.NOTE_F3),
                                 new TextFragment("    ", Note.NOTE_F3), new TextFragment("PREY", Note.NOTE_C3),
                                 new TextFragment("    ", Note.NOTE_C3), new TextFragment("", Note.NOTE_C3),
@@ -48,14 +48,6 @@ void setup() {
     // ------- | AEND--------- | PREY--------- |                       |
     DSP.start(this);
     Beat.start(this, 240);
-}
-static class TextFragment {
-    final String text;
-    final int pitch;
-    TextFragment(String pText, int pPitch) {
-        text = pText;
-        pitch = pPitch;
-    }
 }
 
 void draw() {
@@ -83,5 +75,13 @@ void mouseDragged() {
 void audioblock(float[] output_signal) {
     for (int i = 0; i < output_signal.length; i++) {
         output_signal[i] = mSAM.output() * 0.5f;
+    }
+}
+static class TextFragment {
+    final int pitch;
+    final String text;
+    TextFragment(String pText, int pPitch) {
+        text = pText;
+        pitch = pPitch;
     }
 }

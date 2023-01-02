@@ -11,15 +11,13 @@ package wellen.extra.daisysp;
  */
 public class Particle {
     private static final float kRatioFrac = 1.f / 12.f;
-    private float sample_rate_;
     private float aux_, frequency_, density_, gain_, spread_, resonance_;
-    private boolean sync_;
-
-    private float rand_phase_;
-    private float rand_freq_;
-
-    private float pre_gain_;
     private Svf filter_;
+    private float pre_gain_;
+    private float rand_freq_;
+    private float rand_phase_;
+    private float sample_rate_;
+    private boolean sync_;
 
     /**
      * Initialize the module

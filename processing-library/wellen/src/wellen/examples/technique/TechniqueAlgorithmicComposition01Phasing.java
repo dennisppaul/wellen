@@ -57,10 +57,9 @@ public class TechniqueAlgorithmicComposition01Phasing extends PApplet {
 
     private static class Loop implements BeatListener {
 
-        final int note;
         final int instrument;
+        final int note;
         boolean playing;
-
         Loop(int pInstrument, int pNote) {
             note = pNote;
             instrument = pInstrument;

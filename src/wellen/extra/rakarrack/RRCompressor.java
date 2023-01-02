@@ -66,24 +66,24 @@ public class RRCompressor implements EffectStereo {
     "Compressor Threshold","146","1",
     */
 
+    public static final int NUM_PARAMS = 9;
+    public static final int NUM_PRESETS = 7;
+    public static final int PARAM_ATT = 3;
+    public static final int PARAM_A_OUT = 5;
+    public static final int PARAM_KNEE = 6;
+    public static final int PARAM_OUTPUT = 2;
+    public static final int PARAM_PEAK = 8;
+    public static final int PARAM_RATIO = 1;
+    public static final int PARAM_REL = 4;
+    public static final int PARAM_STEREO = 7;
+    public static final int PARAM_THRESHOLD = 0;
     public static final int PRESET_2_TO_1 = 0;
     public static final int PRESET_4_TO_1 = 1;
     public static final int PRESET_8_TO_1 = 2;
-    public static final int PRESET_FINAL_LIMITER = 3;
-    public static final int PRESET_HARMONIC_ENHANCER = 4;
     public static final int PRESET_BAND_COMP_BAND = 5;
     public static final int PRESET_END_COMP_BAND = 6;
-    public static final int NUM_PRESETS = 7;
-    public static final int PARAM_THRESHOLD = 0;
-    public static final int PARAM_RATIO = 1;
-    public static final int PARAM_OUTPUT = 2;
-    public static final int PARAM_ATT = 3;
-    public static final int PARAM_REL = 4;
-    public static final int PARAM_A_OUT = 5;
-    public static final int PARAM_KNEE = 6;
-    public static final int PARAM_STEREO = 7;
-    public static final int PARAM_PEAK = 8;
-    public static final int NUM_PARAMS = 9;
+    public static final int PRESET_FINAL_LIMITER = 3;
+    public static final int PRESET_HARMONIC_ENHANCER = 4;
     private static final float MIN_GAIN = 0.00001f;        // -100dB  This will help prevent evaluation of denormal
     public boolean a_out;
     public int clipping;
@@ -129,7 +129,6 @@ public class RRCompressor implements EffectStereo {
     private float rvolume_db;
     private float thres_db;        // threshold
     private float thres_mx;
-
     public RRCompressor() {
         rvolume = 0.0f;
         rvolume_db = 0.0f;
@@ -290,7 +289,7 @@ public class RRCompressor implements EffectStereo {
             //Right Channel
             if (peak) {
                 if (rtimer > hold) {
-                    rpeak *= 0.9998f;   //The magic number corresponds to ~0.1s based on T/(RC + T), 
+                    rpeak *= 0.9998f;   //The magic number corresponds to ~0.1s based on T/(RC + T),
                     rtimer--;
                 }
                 if (ltimer > hold) {
@@ -436,7 +435,7 @@ public class RRCompressor implements EffectStereo {
                     efxoutr[i] = -0.999f;
                     clipping = 1;
                 }
-                //highly probably there is a more elegant way to do that, but what the hey...    
+                //highly probably there is a more elegant way to do that, but what the hey...
             }
         }
     }

@@ -10,8 +10,8 @@ import wellen.extra.daisysp.PitchShifter;
 public class ExampleDaisySPPitchShifter extends PApplet {
     //@add import wellen.extra.daisysp.*;
 
-    private Sampler mSampler;
     private PitchShifter mPitchShifter;
+    private Sampler mSampler;
 
     public void settings() {
         size(640, 480);

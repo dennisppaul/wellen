@@ -8,8 +8,8 @@ import wellen.Tone;
 public class AppStepSequencerRandom extends PApplet {
 
     private static final int OFF = -1;
-    private final int[] mSequence = new int[16];
     private int mBeatCount = 0;
+    private final int[] mSequence = new int[16];
 
     public void settings() {
         size(640, 480);

@@ -21,6 +21,24 @@ import static wellen.extra.daisysp.DaisySP.rand_kRandFrac;
  */
 public class HiHat {
 
+    public static final int METALLIC_NOISE_RING_MOD = 1;
+    public static final int METALLIC_NOISE_SQUARE = 0;
+    public static final int VCA_LINEAR = 0;
+    public static final int VCA_SWING = 1;
+    private float accent_, f0_, tone_, decay_, noisiness_;
+    private float envelope_;
+    private final Svf hpf_ = new Svf();
+    private MetallicNoiseSource metallic_noise_;
+    private float noise_clock_;
+    private final Svf noise_coloration_svf_ = new Svf();
+    private float noise_sample_;
+    private boolean resonance;
+    private float sample_rate_;
+    private boolean sustain_;
+    private float sustain_gain_;
+    private boolean trig_;
+    private VCA vca;
+
     public HiHat() {
         this(new SquareNoise(), new LinearVCA(), true);
     }
@@ -126,9 +144,6 @@ public class HiHat {
         trig_ = true;
     }
 
-    public static final int VCA_LINEAR = 0;
-    public static final int VCA_SWING = 1;
-
     public void SetVCA(int pVCA) {
         switch (pVCA) {
             case VCA_LINEAR:
@@ -139,9 +154,6 @@ public class HiHat {
                 break;
         }
     }
-
-    public static final int METALLIC_NOISE_SQUARE = 0;
-    public static final int METALLIC_NOISE_RING_MOD = 1;
 
     public void SetMetallicNoise(int pMetallicNoise) {
         switch (pMetallicNoise) {
@@ -221,42 +233,13 @@ public class HiHat {
     private float SemitonesToRatio(float in) {
         return powf(2.f, in * kOneTwelfth);
     }
-
-    private float sample_rate_;
-    private float accent_, f0_, tone_, decay_, noisiness_;
-    private boolean sustain_;
-    private boolean trig_;
-
-    private float envelope_;
-    private float noise_clock_;
-    private float noise_sample_;
-    private float sustain_gain_;
-
-    private boolean resonance;
-    private MetallicNoiseSource metallic_noise_;
-    private VCA vca;
-    private final Svf noise_coloration_svf_ = new Svf();
-    private final Svf hpf_ = new Svf();
-
+    private interface MetallicNoiseSource {
+        void Init(float sample_rate);
+        float Process(float f0);
+    }
     private interface VCA {
 
         float operator(float s, float gain);
-    }
-
-    /**
-     * @author Ben Sergentanis
-     * @brief Swing type VCA
-     * @date Jan 2021
-     *         <p>
-     *         Ported from pichenettes/eurorack/plaits/dsp/drums/hihat.h  to an independent module.  Original code
-     *         written by Emilie Gillet in 2016.
-     */
-    public static class SwingVCA implements VCA {
-        public float operator(float s, float gain) {
-            s *= s > 0.0f ? 10.0f : 0.1f;
-            s = s / (1.0f + fabsf(s));
-            return (s + 1.0f) * gain;
-        }
     }
 
     /**
@@ -273,9 +256,54 @@ public class HiHat {
         }
     }
 
-    private interface MetallicNoiseSource {
-        void Init(float sample_rate);
-        float Process(float f0);
+    /**
+     * @author Ben Sergentanis
+     * @brief Ring mod style metallic noise generator.
+     * @date Jan 2021
+     *         <p>
+     *         Ported from pichenettes/eurorack/plaits/dsp/drums/hihat.h  to an independent module.  Original code
+     *         written by Emilie Gillet in 2016.
+     */
+    public static class RingModNoise implements MetallicNoiseSource {
+        private final Oscillator[] oscillator_ = new Oscillator[6];
+        private float sample_rate_;
+
+        public void Init(float sample_rate) {
+            sample_rate_ = sample_rate;
+
+            for (int i = 0; i < 6; ++i) {
+                oscillator_[i] = new Oscillator();
+                oscillator_[i].Init(sample_rate_);
+            }
+        }
+
+        public float Process(float f0) {
+            final float ratio = f0 / (0.01f + f0);
+            final float f1a = 200.0f / sample_rate_ * ratio;
+            final float f1b = 7530.0f / sample_rate_ * ratio;
+            final float f2a = 510.0f / sample_rate_ * ratio;
+            final float f2b = 8075.0f / sample_rate_ * ratio;
+            final float f3a = 730.0f / sample_rate_ * ratio;
+            final float f3b = 10500.0f / sample_rate_ * ratio;
+
+            float out = ProcessPair(oscillator_[0], oscillator_[1], f1a, f1b);
+            out += ProcessPair(oscillator_[2], oscillator_[3], f2a, f2b);
+            out += ProcessPair(oscillator_[4], oscillator_[5], f3a, f3b);
+
+            return out;
+        }
+
+        private float ProcessPair(Oscillator osc_0, Oscillator osc_1, float f1, float f2) {
+            osc_0.SetWaveform(Oscillator.WAVE_FORM.WAVE_SQUARE);
+            osc_0.SetFreq(f1 * sample_rate_);
+            float temp_1 = osc_0.Process();
+
+            osc_1.SetWaveform(Oscillator.WAVE_FORM.WAVE_SAW);
+            osc_1.SetFreq(f2 * sample_rate_);
+            float temp_2 = osc_1.Process();
+
+            return temp_1 * temp_2;
+        }
     }
 
     /**
@@ -287,6 +315,8 @@ public class HiHat {
      *         written by Emilie Gillet in 2016.
      */
     public static class SquareNoise implements MetallicNoiseSource {
+        private final int[] phase_ = new int[6];
+
         public void Init(float sample_rate) {
             for (int i = 0; i < 6; i++) {
                 phase_[i] = 0;
@@ -328,57 +358,21 @@ public class HiHat {
 
             return 0.33f * (float) (noise) - 1.0f;
         }
-
-        private final int[] phase_ = new int[6];
     }
 
     /**
      * @author Ben Sergentanis
-     * @brief Ring mod style metallic noise generator.
+     * @brief Swing type VCA
      * @date Jan 2021
      *         <p>
      *         Ported from pichenettes/eurorack/plaits/dsp/drums/hihat.h  to an independent module.  Original code
      *         written by Emilie Gillet in 2016.
      */
-    public static class RingModNoise implements MetallicNoiseSource {
-        public void Init(float sample_rate) {
-            sample_rate_ = sample_rate;
-
-            for (int i = 0; i < 6; ++i) {
-                oscillator_[i] = new Oscillator();
-                oscillator_[i].Init(sample_rate_);
-            }
+    public static class SwingVCA implements VCA {
+        public float operator(float s, float gain) {
+            s *= s > 0.0f ? 10.0f : 0.1f;
+            s = s / (1.0f + fabsf(s));
+            return (s + 1.0f) * gain;
         }
-
-        public float Process(float f0) {
-            final float ratio = f0 / (0.01f + f0);
-            final float f1a = 200.0f / sample_rate_ * ratio;
-            final float f1b = 7530.0f / sample_rate_ * ratio;
-            final float f2a = 510.0f / sample_rate_ * ratio;
-            final float f2b = 8075.0f / sample_rate_ * ratio;
-            final float f3a = 730.0f / sample_rate_ * ratio;
-            final float f3b = 10500.0f / sample_rate_ * ratio;
-
-            float out = ProcessPair(oscillator_[0], oscillator_[1], f1a, f1b);
-            out += ProcessPair(oscillator_[2], oscillator_[3], f2a, f2b);
-            out += ProcessPair(oscillator_[4], oscillator_[5], f3a, f3b);
-
-            return out;
-        }
-
-        private float ProcessPair(Oscillator osc_0, Oscillator osc_1, float f1, float f2) {
-            osc_0.SetWaveform(Oscillator.WAVE_FORM.WAVE_SQUARE);
-            osc_0.SetFreq(f1 * sample_rate_);
-            float temp_1 = osc_0.Process();
-
-            osc_1.SetWaveform(Oscillator.WAVE_FORM.WAVE_SAW);
-            osc_1.SetFreq(f2 * sample_rate_);
-            float temp_2 = osc_1.Process();
-
-            return temp_1 * temp_2;
-        }
-
-        private final Oscillator[] oscillator_ = new Oscillator[6];
-        private float sample_rate_;
     }
 }

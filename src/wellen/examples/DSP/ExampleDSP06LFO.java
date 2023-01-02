@@ -17,10 +17,10 @@ public class ExampleDSP06LFO extends PApplet {
      * use keys to change waveform of LFOs and VCO.
      */
 
-    private final Wavetable mVCO = new Wavetable(512);
-    private final Wavetable mFrequencyLFO = new Wavetable(512);
     private final Wavetable mAmplitudeLFO = new Wavetable(512);
     private final float mBaseFrequency = 2.0f * Wellen.DEFAULT_SAMPLING_RATE / Wellen.DEFAULT_AUDIOBLOCK_SIZE;
+    private final Wavetable mFrequencyLFO = new Wavetable(512);
+    private final Wavetable mVCO = new Wavetable(512);
 
     public void settings() {
         size(640, 480);

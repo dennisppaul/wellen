@@ -17,9 +17,9 @@ public class TechniqueBasics02Arpeggiator extends PApplet {
      * press keys 1 – 5 to trigger different patterns.
      */
 
-    private int fColor;
-    private Beat fBeat;
     private Arpeggiator fArpeggiator;
+    private Beat fBeat;
+    private int fColor;
     private boolean fToggle;
 
     public void settings() {

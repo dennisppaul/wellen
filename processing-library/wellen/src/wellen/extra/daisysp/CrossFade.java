@@ -17,26 +17,27 @@ import static wellen.extra.daisysp.DaisySP.sinf;
 public class CrossFade {
 
     /**
-     * LIN = linear
-     */
-    public static final int CROSSFADE_LIN = 0;
-
-    /**
      * CPOW = constant power
      */
     public static final int CROSSFADE_CPOW = 1;
-
-    /**
-     * LOG = logarithmic
-     */
-    public static final int CROSSFADE_LOG = 2;
-
     /**
      * EXP  exponential
      */
     public static final int CROSSFADE_EXP = 3;
-
+    /**
+     * LIN = linear
+     */
+    public static final int CROSSFADE_LIN = 0;
+    /**
+     * LOG = logarithmic
+     */
+    public static final int CROSSFADE_LOG = 2;
     private static final int CROSSFADE_LAST = 4;
+    private static final float REALLYSMALLFLOAT = 0.000001f;
+    private static final float kCrossLogMax = logf(1.0f);
+    private static final float kCrossLogMin = logf(REALLYSMALLFLOAT);
+    private int curve_;
+    private float pos_;
 
     /**
      * Initializes CrossFade module Defaults - current position = .5 - curve = linear
@@ -108,10 +109,4 @@ public class CrossFade {
     public int GetCurve(int curve) {
         return curve_;
     }
-
-    private static final float REALLYSMALLFLOAT = 0.000001f;
-    private static final float kCrossLogMin = logf(REALLYSMALLFLOAT);
-    private static final float kCrossLogMax = logf(1.0f);
-    private float pos_;
-    private int curve_;
 }

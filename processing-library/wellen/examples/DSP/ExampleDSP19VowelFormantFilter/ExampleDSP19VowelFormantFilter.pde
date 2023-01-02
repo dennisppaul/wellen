@@ -9,13 +9,13 @@ import wellen.dsp.*;
  * oscillator.
  */
 
-final VowelFormantFilter mFormantFilter = new VowelFormantFilter();
-
-final Oscillator mOsc = new OscillatorFunction();
-
 final ADSR mADSR = new ADSR();
 
+final VowelFormantFilter mFormantFilter = new VowelFormantFilter();
+
 boolean mIsKeyPressed = false;
+
+final Oscillator mOsc = new OscillatorFunction();
 
 void settings() {
     size(640, 480);

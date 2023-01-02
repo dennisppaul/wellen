@@ -5,9 +5,9 @@ import wellen.dsp.*;
  * this example demonstrates how to use a *Low-Pass Filter* (LPF) on a sawtooth oscillator in DSP.
  */
 
-final Wavetable mWavetable = new Wavetable();
-
 final LowPassFilter mFilter = new LowPassFilter();
+
+final Wavetable mWavetable = new Wavetable();
 
 void settings() {
     size(640, 480);

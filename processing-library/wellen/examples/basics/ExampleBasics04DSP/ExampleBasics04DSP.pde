@@ -6,11 +6,11 @@ import wellen.dsp.*;
  * buffer.
  */
 
-float mFreq = 440.0f;
-
 float mAmp = 0.5f;
 
 int mCounter = 0;
+
+float mFreq = 440.0f;
 
 void settings() {
     size(640, 480);

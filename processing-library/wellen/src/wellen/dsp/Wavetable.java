@@ -32,27 +32,26 @@ import static java.lang.Math.PI;
  */
 public class Wavetable extends Oscillator {
 
-    public static final float DEFAULT_FREQUENCY = 220.0f;
     public static final float DEFAULT_AMPLITUDE = 0.75f;
-    private float mOffset;
-    private final int mSamplingRate;
-    private final float[] mWavetable;
-    private float mPhaseOffset;
-    private float mFrequency;
-    private float mStepSize;
+    public static final float DEFAULT_FREQUENCY = 220.0f;
     private float mAmplitude;
-    private int mInterpolationType;
     private float mArrayPtr;
-    private boolean mEnableJitter;
-    private float mJitterRange;
-    private float mSignal;
-
     private float mDesiredAmplitude;
     private float mDesiredAmplitudeFraction;
     private int mDesiredAmplitudeSteps;
     private float mDesiredFrequency;
     private float mDesiredFrequencyFraction;
     private int mDesiredFrequencySteps;
+    private boolean mEnableJitter;
+    private float mFrequency;
+    private int mInterpolationType;
+    private float mJitterRange;
+    private float mOffset;
+    private float mPhaseOffset;
+    private final int mSamplingRate;
+    private float mSignal;
+    private float mStepSize;
+    private final float[] mWavetable;
 
     public Wavetable() {
         this(Wellen.DEFAULT_WAVETABLE_SIZE, Wellen.DEFAULT_SAMPLING_RATE);
@@ -75,15 +74,6 @@ public class Wavetable extends Oscillator {
         mDesiredAmplitudeFraction = 0.0f;
         mDesiredAmplitudeSteps = 0;
         set_frequency(DEFAULT_FREQUENCY);
-    }
-
-    @Override
-    public void set_waveform(int waveform) {
-        fill(mWavetable, waveform);
-    }
-
-    public void set_waveform(int harmonics, int waveform) {
-        fill(mWavetable, harmonics, waveform);
     }
 
     public static void fill(float[] wavetable, int waveform) {
@@ -127,16 +117,83 @@ public class Wavetable extends Oscillator {
         }
     }
 
-    private static void normalise_table(float[] pWavetable) {
-        int n;
-        float max = 0.f;
-        for (n = 0; n < pWavetable.length; n++) {
-            max = Math.max(pWavetable[n], max);
+    public static void noise(float[] wavetable) {
+        for (int i = 0; i < wavetable.length; i++) {
+            wavetable[i] = (float) (Math.random() * 2.0 - 1.0);
         }
-        if (max > 0) {
-            for (n = 0; n < pWavetable.length; n++) {
-                pWavetable[n] /= max;
+    }
+
+    public static void pulse(float[] wavetable, float pulse_width) {
+        final int mThreshold = (int) (wavetable.length * pulse_width);
+        for (int i = 0; i < wavetable.length; i++) {
+            if (i < mThreshold) {
+                wavetable[i] = 1.0f;
+            } else {
+                wavetable[i] = -1.0f;
             }
+        }
+    }
+
+    public static float[] sawtooth(float[] wavetable, int harmonics) {
+        Arrays.fill(wavetable, 0.0f);
+        float[] amps = new float[harmonics];
+        for (int i = 0; i < harmonics; i++) {
+            amps[i] = 1.f / (i + 1);
+        }
+        return fourier_table(wavetable, harmonics, amps, -0.25f);
+    }
+
+    public static void sawtooth(float[] wavetable, boolean is_ramp_up) {
+        final float mSign = is_ramp_up ? -1.0f : 1.0f;
+        for (int i = 0; i < wavetable.length; i++) {
+            wavetable[i] = mSign * (2.0f * ((float) i / (float) (wavetable.length - 1)) - 1.0f);
+        }
+    }
+
+    public static void sawtooth(float[] wavetable) {
+        sawtooth(wavetable, true);
+    }
+
+    public static void sine(float[] wavetable) {
+        for (int i = 0; i < wavetable.length; i++) {
+            wavetable[i] = PApplet.sin(2.0f * PApplet.PI * ((float) i / (float) (wavetable.length)));
+        }
+    }
+
+    public static float[] square(float[] wavetable, int harmonics) {
+        Arrays.fill(wavetable, 0.0f);
+        float[] amps = new float[harmonics];
+        for (int i = 0; i < harmonics; i += 2) {
+            amps[i] = 1.f / (i + 1);
+        }
+        return fourier_table(wavetable, harmonics, amps, -0.25f);
+    }
+
+    public static void square(float[] wavetable) {
+        for (int i = 0; i < wavetable.length / 2; i++) {
+            wavetable[i] = 1.0f;
+            wavetable[i + wavetable.length / 2] = -1.0f;
+        }
+    }
+
+    public static float[] triangle(float[] wavetable, int harmonics) {
+        Arrays.fill(wavetable, 0.0f);
+        float[] amps = new float[harmonics];
+        for (int i = 0; i < harmonics; i += 2) {
+            amps[i] = 1.f / ((i + 1) * (i + 1));
+        }
+        return fourier_table(wavetable, harmonics, amps, 0);
+    }
+
+    public static void triangle(float[] wavetable) {
+        final int q = wavetable.length / 4;
+        final float qf = wavetable.length * 0.25f;
+        for (int i = 0; i < q; i++) {
+            wavetable[i] = i / qf;
+            //noinspection PointlessArithmeticExpression
+            wavetable[i + (q * 1)] = (qf - i) / qf;
+            wavetable[i + (q * 2)] = -i / qf;
+            wavetable[i + (q * 3)] = -(qf - i) / qf;
         }
     }
 
@@ -155,84 +212,26 @@ public class Wavetable extends Oscillator {
         return pWavetable;
     }
 
-    public static float[] sawtooth(float[] wavetable, int harmonics) {
-        Arrays.fill(wavetable, 0.0f);
-        float[] amps = new float[harmonics];
-        for (int i = 0; i < harmonics; i++) {
-            amps[i] = 1.f / (i + 1);
+    private static void normalise_table(float[] pWavetable) {
+        int n;
+        float max = 0.f;
+        for (n = 0; n < pWavetable.length; n++) {
+            max = Math.max(pWavetable[n], max);
         }
-        return fourier_table(wavetable, harmonics, amps, -0.25f);
-    }
-
-    public static float[] square(float[] wavetable, int harmonics) {
-        Arrays.fill(wavetable, 0.0f);
-        float[] amps = new float[harmonics];
-        for (int i = 0; i < harmonics; i += 2) {
-            amps[i] = 1.f / (i + 1);
-        }
-        return fourier_table(wavetable, harmonics, amps, -0.25f);
-    }
-
-    public static float[] triangle(float[] wavetable, int harmonics) {
-        Arrays.fill(wavetable, 0.0f);
-        float[] amps = new float[harmonics];
-        for (int i = 0; i < harmonics; i += 2) {
-            amps[i] = 1.f / ((i + 1) * (i + 1));
-        }
-        return fourier_table(wavetable, harmonics, amps, 0);
-    }
-
-    public static void sine(float[] wavetable) {
-        for (int i = 0; i < wavetable.length; i++) {
-            wavetable[i] = PApplet.sin(2.0f * PApplet.PI * ((float) i / (float) (wavetable.length)));
-        }
-    }
-
-    public static void sawtooth(float[] wavetable, boolean is_ramp_up) {
-        final float mSign = is_ramp_up ? -1.0f : 1.0f;
-        for (int i = 0; i < wavetable.length; i++) {
-            wavetable[i] = mSign * (2.0f * ((float) i / (float) (wavetable.length - 1)) - 1.0f);
-        }
-    }
-
-    public static void sawtooth(float[] wavetable) {
-        sawtooth(wavetable, true);
-    }
-
-    public static void triangle(float[] wavetable) {
-        final int q = wavetable.length / 4;
-        final float qf = wavetable.length * 0.25f;
-        for (int i = 0; i < q; i++) {
-            wavetable[i] = i / qf;
-            //noinspection PointlessArithmeticExpression
-            wavetable[i + (q * 1)] = (qf - i) / qf;
-            wavetable[i + (q * 2)] = -i / qf;
-            wavetable[i + (q * 3)] = -(qf - i) / qf;
-        }
-    }
-
-    public static void square(float[] wavetable) {
-        for (int i = 0; i < wavetable.length / 2; i++) {
-            wavetable[i] = 1.0f;
-            wavetable[i + wavetable.length / 2] = -1.0f;
-        }
-    }
-
-    public static void pulse(float[] wavetable, float pulse_width) {
-        final int mThreshold = (int) (wavetable.length * pulse_width);
-        for (int i = 0; i < wavetable.length; i++) {
-            if (i < mThreshold) {
-                wavetable[i] = 1.0f;
-            } else {
-                wavetable[i] = -1.0f;
+        if (max > 0) {
+            for (n = 0; n < pWavetable.length; n++) {
+                pWavetable[n] /= max;
             }
         }
     }
 
-    public static void noise(float[] wavetable) {
-        for (int i = 0; i < wavetable.length; i++) {
-            wavetable[i] = (float) (Math.random() * 2.0 - 1.0);
-        }
+    @Override
+    public void set_waveform(int waveform) {
+        fill(mWavetable, waveform);
+    }
+
+    public void set_waveform(int harmonics, int waveform) {
+        fill(mWavetable, harmonics, waveform);
     }
 
     @Override
@@ -268,13 +267,13 @@ public class Wavetable extends Oscillator {
     }
 
     @Override
-    public void set_offset(float offset) {
-        mOffset = offset;
+    public float get_offset() {
+        return mOffset;
     }
 
     @Override
-    public float get_offset() {
-        return mOffset;
+    public void set_offset(float offset) {
+        mOffset = offset;
     }
 
     @Override
@@ -283,7 +282,6 @@ public class Wavetable extends Oscillator {
     }
 
     /**
-     *
      * @param amplitude amplitude
      */
     @Override
@@ -396,21 +394,12 @@ public class Wavetable extends Oscillator {
         }
     }
 
-    private float next_sample() {
-        final float mOutput = mWavetable[(int) (mArrayPtr)];
-        advance_array_ptr();
-        return mOutput;
+    private float computeStepSize() {
+        return mFrequency * ((float) mWavetable.length / (float) mSamplingRate);
     }
 
-    private float next_sample_interpolate_linear() {
-        final int mOffset = (int) (mPhaseOffset * mWavetable.length) % mWavetable.length;
-        final float mArrayPtrOffset = mArrayPtr + mOffset;
-        /* linear interpolation */
-        final float mFrac = mArrayPtrOffset - (int) mArrayPtrOffset;
-        final float a = mWavetable[(int) mArrayPtrOffset];
-        final int p1 = (int) mArrayPtrOffset + 1;
-        final float b = mWavetable[p1 >= mWavetable.length ? p1 - mWavetable.length : p1];
-        final float mOutput = a + mFrac * (b - a);
+    private float next_sample() {
+        final float mOutput = mWavetable[(int) (mArrayPtr)];
         advance_array_ptr();
         return mOutput;
     }
@@ -436,7 +425,16 @@ public class Wavetable extends Oscillator {
         return mOutput;
     }
 
-    private float computeStepSize() {
-        return mFrequency * ((float) mWavetable.length / (float) mSamplingRate);
+    private float next_sample_interpolate_linear() {
+        final int mOffset = (int) (mPhaseOffset * mWavetable.length) % mWavetable.length;
+        final float mArrayPtrOffset = mArrayPtr + mOffset;
+        /* linear interpolation */
+        final float mFrac = mArrayPtrOffset - (int) mArrayPtrOffset;
+        final float a = mWavetable[(int) mArrayPtrOffset];
+        final int p1 = (int) mArrayPtrOffset + 1;
+        final float b = mWavetable[p1 >= mWavetable.length ? p1 - mWavetable.length : p1];
+        final float mOutput = a + mFrac * (b - a);
+        advance_array_ptr();
+        return mOutput;
     }
 }

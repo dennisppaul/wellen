@@ -2,11 +2,11 @@ import wellen.*;
 import wellen.dsp.*; 
 
 
-final float fFreq = 220.0f;
+int fCounter = 0;
 
 AudioFormula fFormula = new MAudioFormulaAwayAndAway();
 
-int fCounter = 0;
+final float fFreq = 220.0f;
 
 void settings() {
     size(640, 480);

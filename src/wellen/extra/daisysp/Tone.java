@@ -8,6 +8,8 @@ import static wellen.extra.daisysp.DaisySP.sqrtf;
  * A first-order recursive low-pass filter with variable frequency response.
  */
 public class Tone {
+    private float out_, prevout_, in_, freq_, c1_, c2_, sample_rate_;
+
     /**
      * Initializes the Tone module. sample_rate - The sample rate of the audio engine being run.
      */
@@ -56,6 +58,4 @@ public class Tone {
         c1_ = c1;
         c2_ = c2;
     }
-
-    private float out_, prevout_, in_, freq_, c1_, c2_, sample_rate_;
 }

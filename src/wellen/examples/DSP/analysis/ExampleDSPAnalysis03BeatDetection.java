@@ -17,13 +17,13 @@ public class ExampleDSPAnalysis03BeatDetection extends PApplet {
      * @TODO(the algorithm is not working particularuly fine …)
      */
 
-    private final BeatDetection fBeatDetection = new BeatDetection();
-    private ToneEngineDSP fToneEngine;
     private final int[] fBassPattern = {1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1,};
-    private final int[] fSnarePattern = {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0,};
-    private final boolean[] fBeatDetectedPattern = new boolean[fBassPattern.length];
-    private int fCurrentBeat = fBassPattern.length - 1;
     private boolean fBeatDetected = false;
+    private final boolean[] fBeatDetectedPattern = new boolean[fBassPattern.length];
+    private final BeatDetection fBeatDetection = new BeatDetection();
+    private int fCurrentBeat = fBassPattern.length - 1;
+    private final int[] fSnarePattern = {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0,};
+    private ToneEngineDSP fToneEngine;
 
     public void settings() {
         size(640, 480);

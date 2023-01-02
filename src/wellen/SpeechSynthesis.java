@@ -29,11 +29,11 @@ import java.util.ArrayList;
  */
 public class SpeechSynthesis {
 
-    private final boolean mVerbose;
-    private final boolean mRemoveSpecialChars;
     private boolean mBlocking = true;
-    private int mWordsPerMinute = 0;
     private String mFileName = null;
+    private final boolean mRemoveSpecialChars;
+    private final boolean mVerbose;
+    private int mWordsPerMinute = 0;
 
     public SpeechSynthesis() {
         mVerbose = false;

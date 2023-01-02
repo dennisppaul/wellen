@@ -185,6 +185,16 @@ public class RRSVFilter extends RRFilterI {
         }
     }
 
+    private void computefiltercoefs() {
+        par.f = freq / SAMPLE_RATE * 4.0f;
+        if (par.f > 0.99999) {
+            par.f = 0.99999f;
+        }
+        par.q = 1.0f - atanf(sqrtf(q)) * 2.0f / PI;
+        par.q = powf(par.q, 1.0f / (float) (stages + 1));
+        par.q_sqrt = sqrtf(par.q);
+    }
+
     private void singlefilterout(float[] smp, fstage x, parameters par) {
 //        switch (type) {
 //            case 0:
@@ -221,16 +231,6 @@ public class RRSVFilter extends RRFilterI {
                     break;
             }
         }
-    }
-
-    private void computefiltercoefs() {
-        par.f = freq / SAMPLE_RATE * 4.0f;
-        if (par.f > 0.99999) {
-            par.f = 0.99999f;
-        }
-        par.q = 1.0f - atanf(sqrtf(q)) * 2.0f / PI;
-        par.q = powf(par.q, 1.0f / (float) (stages + 1));
-        par.q_sqrt = sqrtf(par.q);
     }
 
     private static class fstage {

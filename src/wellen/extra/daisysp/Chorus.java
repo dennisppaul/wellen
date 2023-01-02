@@ -13,6 +13,11 @@ import static wellen.extra.daisysp.DaisySP.fmin;
  */
 public class Chorus {
 
+    private final ChorusEngine[] engines_ = new ChorusEngine[2];
+    private float gain_frac_;
+    private final float[] pan_ = new float[2];
+    private float sigl_, sigr_;
+
     /**
      * Initialize the module
      *
@@ -124,7 +129,6 @@ public class Chorus {
         SetLfoFreq(freq, freq);
     }
 
-
     /**
      * Set both channel delay amounts individually.
      *
@@ -136,7 +140,6 @@ public class Chorus {
         engines_[1].SetDelay(delayr);
     }
 
-
     /**
      * Set both channel delay amounts.
      *
@@ -145,7 +148,6 @@ public class Chorus {
     public void SetDelay(float delay) {
         SetDelay(delay, delay);
     }
-
 
     /**
      * Set both channel delay individually.
@@ -187,17 +189,21 @@ public class Chorus {
         SetFeedback(feedback, feedback);
     }
 
-    private final ChorusEngine[] engines_ = new ChorusEngine[2];
-    private float gain_frac_;
-    private final float[] pan_ = new float[2];
-
-    private float sigl_, sigr_;
-
     /**
      * @author Ben Sergentanis
      * @brief Single Chorus engine. Used in Chorus.
      */
     public static class ChorusEngine {
+
+        private static final int kDelayLength = 2400; // 50 ms at 48kHz = .05 * 48000
+        private final DelayLine del_ = new DelayLine(kDelayLength);
+        private float delay_;
+        private float feedback_;
+        private float lfo_amp_;
+        private float lfo_freq_;
+        //triangle lfos
+        private float lfo_phase_;
+        private float sample_rate_;
 
         /**
          * Initialize the module
@@ -298,15 +304,5 @@ public class Chorus {
 
             return lfo_phase_ * lfo_amp_;
         }
-
-        private static final int kDelayLength = 2400; // 50 ms at 48kHz = .05 * 48000
-        private float sample_rate_;
-        //triangle lfos
-        private float lfo_phase_;
-        private float lfo_freq_;
-        private float lfo_amp_;
-        private float feedback_;
-        private float delay_;
-        private final DelayLine del_ = new DelayLine(kDelayLength);
     }
 }

@@ -7,11 +7,11 @@ import wellen.analysis.*;
  * an oscillator.
  */
 
+float fInputAmplification = 1.0f;
+
 final PitchDetection fPitchDetection = new PitchDetection();
 
 final Wavetable fWavetable = new Wavetable();
-
-float fInputAmplification = 1.0f;
 
 void settings() {
     size(640, 480);

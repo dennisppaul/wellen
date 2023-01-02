@@ -33,14 +33,14 @@ public class Filter implements DSPNodeProcess {
      * .de/blog/articles/audio-plugins-013-filter/) ( nice and brief explanation of low, high, and bandpass filter )
      */
 
-    private float mCutoffFrequency;
-    private float mResonance;
-    private int mFilterMode;
-    private float mFeedbackAmount;
     private float mBuffer0;
     private float mBuffer1;
     private float mBuffer2;
     private float mBuffer3;
+    private float mCutoffFrequency;
+    private float mFeedbackAmount;
+    private int mFilterMode;
+    private float mResonance;
     private final float mSamplingRate;
 
     /**

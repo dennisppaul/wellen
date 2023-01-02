@@ -7,8 +7,8 @@ import wellen.ToneEngineDSP;
 
 public class TestToneEngineInteralWithDSPPostProcess extends PApplet {
 
-    private ToneEngineDSP mToneEngine;
     private MMasterEffect mPostProcessing;
+    private ToneEngineDSP mToneEngine;
 
     public void settings() {
         size(640, 480);
@@ -55,12 +55,12 @@ public class TestToneEngineInteralWithDSPPostProcess extends PApplet {
 
     private static class MMasterEffect implements ToneEngineDSP.AudioOutputCallback {
 
+        float[] buffer = null;
+        float mDecay = 0.9f;
         float[] mDelayBuffer = new float[4096];
         int mDelayID = 0;
         int mDelayOffset = 512;
-        float mDecay = 0.9f;
         float mMix = 0.7f;
-        float[] buffer = null;
 
         @Override
         public void audioblock(float[][] output_signals) {

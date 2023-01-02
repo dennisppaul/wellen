@@ -12,9 +12,9 @@ public class TechniqueBasics04Tracks extends PApplet {
      * this example demonstrates how to build a composition with tracks.
      */
 
-    private final Track fTrack = new Track();
-    private final ModuleToneEngine fModuleBleepBleep = new ModuleToneEngine();
     private static final int PPQN = 24;
+    private final ModuleToneEngine fModuleBleepBleep = new ModuleToneEngine();
+    private final Track fTrack = new Track();
 
     public void settings() {
         size(640, 480);

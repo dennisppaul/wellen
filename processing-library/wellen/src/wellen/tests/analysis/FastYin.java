@@ -49,62 +49,51 @@ package wellen.tests.analysis;
  */
 public final class FastYin implements PitchDetector {
     /**
-     * The default YIN threshold value. Should be around 0.10~0.15. See YIN paper for more information.
-     */
-    private static final double DEFAULT_THRESHOLD = 0.20;
-
-    /**
      * The default size of an audio buffer (in samples).
      */
     public static final int DEFAULT_BUFFER_SIZE = 2048;
-
     /**
      * The default overlap of two consecutive audio buffers (in samples).
      */
     public static final int DEFAULT_OVERLAP = 1536;
-
     /**
-     * The actual YIN threshold.
+     * The default YIN threshold value. Should be around 0.10~0.15. See YIN paper for more information.
      */
-    private final double threshold;
-
+    private static final double DEFAULT_THRESHOLD = 0.20;
     /**
-     * The audio sample rate. Most audio has a sample rate of 44.1kHz.
+     * Holds the FFT data, twice the length of the audio buffer.
      */
-    private final float sampleRate;
-
+    private final float[] audioBufferFFT;
     /**
-     * The buffer that stores the calculated values. It is exactly half the size of the input buffer.
+     * An FFT object to quickly calculate the difference function.
      */
-    private final float[] yinBuffer;
-
+    private final FloatFFT fft;
+    /**
+     * Half of the data, disguised as a convolution kernel.
+     */
+    private final float[] kernel;
     /**
      * The result of the pitch detection iteration.
      */
     private final PitchDetectionResult result;
 
     //------------------------ FFT instance members
-
     /**
-     * Holds the FFT data, twice the length of the audio buffer.
+     * The audio sample rate. Most audio has a sample rate of 44.1kHz.
      */
-    private final float[] audioBufferFFT;
-
+    private final float sampleRate;
     /**
-     * Half of the data, disguised as a convolution kernel.
+     * The actual YIN threshold.
      */
-    private final float[] kernel;
-
+    private final double threshold;
+    /**
+     * The buffer that stores the calculated values. It is exactly half the size of the input buffer.
+     */
+    private final float[] yinBuffer;
     /**
      * Buffer to allow convolution via complex multiplication. It calculates the auto correlation function (ACF).
      */
     private final float[] yinStyleACF;
-
-    /**
-     * An FFT object to quickly calculate the difference function.
-     */
-    private final FloatFFT fft;
-
     /**
      * Create a new pitch detector for a stream with the defined sample rate. Processes the audio in blocks of the
      * defined size.
@@ -115,7 +104,6 @@ public final class FastYin implements PitchDetector {
     public FastYin(final float audioSampleRate, final int bufferSize) {
         this(audioSampleRate, bufferSize, DEFAULT_THRESHOLD);
     }
-
     /**
      * Create a new pitch detector for a stream with the defined sample rate. Processes the audio in blocks of the
      * defined size.
@@ -179,6 +167,63 @@ public final class FastYin implements PitchDetector {
     }
 
     /**
+     * Implements step 4 of the AUBIO_YIN paper.
+     */
+    private int absoluteThreshold() {
+        // Uses another loop construct
+        // than the AUBIO implementation
+        int tau;
+        // first two positions in yinBuffer are always 1
+        // So start at the third (index 2)
+        for (tau = 2; tau < yinBuffer.length; tau++) {
+            if (yinBuffer[tau] < threshold) {
+                while (tau + 1 < yinBuffer.length && yinBuffer[tau + 1] < yinBuffer[tau]) {
+                    tau++;
+                }
+                // found tau, exit loop and return
+                // store the probability
+                // From the YIN paper: The threshold determines the list of
+                // candidates admitted to the set, and can be interpreted as the
+                // proportion of aperiodic power tolerated
+                // within a periodic signal.
+                //
+                // Since we want the periodicity and and not aperiodicity:
+                // periodicity = 1 - aperiodicity
+                result.setProbability(1 - yinBuffer[tau]);
+                break;
+            }
+        }
+
+
+        // if no pitch found, tau => -1
+        if (tau == yinBuffer.length || yinBuffer[tau] >= threshold || result.getProbability() > 1.0) {
+            tau = -1;
+            result.setProbability(0);
+            result.setPitched(false);
+        } else {
+            result.setPitched(true);
+        }
+
+        return tau;
+    }
+
+    /**
+     * The cumulative mean normalized difference function as described in step 3 of the YIN paper. <br>
+     * <code>
+     * yinBuffer[0] == yinBuffer[1] = 1
+     * </code>
+     */
+    private void cumulativeMeanNormalizedDifference() {
+        int tau;
+        yinBuffer[0] = 1;
+        float runningSum = 0;
+        for (tau = 1; tau < yinBuffer.length; tau++) {
+            runningSum += yinBuffer[tau];
+            yinBuffer[tau] *= tau / runningSum;
+        }
+    }
+
+    /**
      * Implements the difference function as described in step 2 of the YIN paper with an FFT to reduce the number of
      * operations.
      */
@@ -227,63 +272,6 @@ public final class FastYin implements PitchDetector {
             // taking only the real part
             yinBuffer[j] = powerTerms[0] + powerTerms[j] - 2 * yinStyleACF[2 * (yinBuffer.length - 1 + j)];
         }
-    }
-
-    /**
-     * The cumulative mean normalized difference function as described in step 3 of the YIN paper. <br>
-     * <code>
-     * yinBuffer[0] == yinBuffer[1] = 1
-     * </code>
-     */
-    private void cumulativeMeanNormalizedDifference() {
-        int tau;
-        yinBuffer[0] = 1;
-        float runningSum = 0;
-        for (tau = 1; tau < yinBuffer.length; tau++) {
-            runningSum += yinBuffer[tau];
-            yinBuffer[tau] *= tau / runningSum;
-        }
-    }
-
-    /**
-     * Implements step 4 of the AUBIO_YIN paper.
-     */
-    private int absoluteThreshold() {
-        // Uses another loop construct
-        // than the AUBIO implementation
-        int tau;
-        // first two positions in yinBuffer are always 1
-        // So start at the third (index 2)
-        for (tau = 2; tau < yinBuffer.length; tau++) {
-            if (yinBuffer[tau] < threshold) {
-                while (tau + 1 < yinBuffer.length && yinBuffer[tau + 1] < yinBuffer[tau]) {
-                    tau++;
-                }
-                // found tau, exit loop and return
-                // store the probability
-                // From the YIN paper: The threshold determines the list of
-                // candidates admitted to the set, and can be interpreted as the
-                // proportion of aperiodic power tolerated
-                // within a periodic signal.
-                //
-                // Since we want the periodicity and and not aperiodicity:
-                // periodicity = 1 - aperiodicity
-                result.setProbability(1 - yinBuffer[tau]);
-                break;
-            }
-        }
-
-
-        // if no pitch found, tau => -1
-        if (tau == yinBuffer.length || yinBuffer[tau] >= threshold || result.getProbability() > 1.0) {
-            tau = -1;
-            result.setProbability(0);
-            result.setPitched(false);
-        } else {
-            result.setPitched(true);
-        }
-
-        return tau;
     }
 
     /**
