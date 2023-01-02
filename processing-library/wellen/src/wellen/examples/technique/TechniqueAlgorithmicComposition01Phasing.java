@@ -67,12 +67,12 @@ public class TechniqueAlgorithmicComposition01Phasing extends PApplet {
             playing = false;
         }
 
-        public void beat(int pBeatCount) {
+        public void beat(int beatCount) {
             Tone.instrument(instrument);
-            if (pBeatCount % 2 == 0) {
+            if (beatCount % 2 == 0) {
                 Tone.note_on(note, 50);
                 playing = true;
-            } else if (pBeatCount % 2 == 1) {
+            } else if (beatCount % 2 == 1) {
                 Tone.note_off(note);
                 playing = false;
             }

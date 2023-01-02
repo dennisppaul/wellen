@@ -47,17 +47,17 @@ void mouseMoved() {
     mFreqOffset = map(mouseX, 0, width, 0.0f, 10.0f);
 }
 
-void beat(int pBeat) {
-    if (pBeat % 2 == 0) {
+void beat(int beat) {
+    if (beat % 2 == 0) {
         mADSR.start();
-    } else if (pBeat % 2 == 1) {
+    } else if (beat % 2 == 1) {
         mADSR.stop();
     }
-    if (pBeat % 8 == 0) {
+    if (beat % 8 == 0) {
         mVCO1.set_frequency(mBaseFrequency);
         mVCO2.set_frequency(mBaseFrequency + mFreqOffset);
     }
-    if (pBeat % 8 == 3) {
+    if (beat % 8 == 3) {
         mVCO1.set_frequency(mBaseFrequency * 2);
         mVCO2.set_frequency((mBaseFrequency + mFreqOffset) * 2);
     }
@@ -125,17 +125,17 @@ void keyPressed() {
     }
 }
 
-void audioblock(float[] pOutputSignal) {
-    for (int i = 0; i < pOutputSignal.length; i++) {
+void audioblock(float[] output_signal) {
+    for (int i = 0; i < output_signal.length; i++) {
         final float a = mVCO1.output();
         final float b = mVCO2.output();
-        pOutputSignal[i] = a + b;
-        pOutputSignal[i] *= 0.5f;
+        output_signal[i] = a + b;
+        output_signal[i] *= 0.5f;
         final float mADSRValue = mADSR.output();
-        pOutputSignal[i] *= mADSRValue;
-        pOutputSignal[i] *= mMasterVolume;
+        output_signal[i] *= mADSRValue;
+        output_signal[i] *= mMasterVolume;
     }
     if (mEnableDistortion) {
-        mDistortion.out(pOutputSignal);
+        mDistortion.out(output_signal);
     }
 }

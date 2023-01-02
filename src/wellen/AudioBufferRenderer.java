@@ -25,8 +25,8 @@ package wellen;
 public interface AudioBufferRenderer {
 
     /**
-     * @param pOutputSignal output signal
+     * @param output_signal output signal
      * @param pInputSignal  input signal
      */
-    void audioblock(float[][] pOutputSignal, float[][] pInputSignal);
+    void audioblock(float[][] output_signal, float[][] pInputSignal);
 }

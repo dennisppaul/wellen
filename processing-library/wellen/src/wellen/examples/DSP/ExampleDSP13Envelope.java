@@ -59,9 +59,9 @@ public class ExampleDSP13Envelope extends PApplet {
         mEnvelopeAmplitude.start();
     }
 
-    public void audioblock(float[] pOutputSignal) {
-        for (int i = 0; i < pOutputSignal.length; i++) {
-            pOutputSignal[i] = mEnvelopeAmplitude.output() * mNoise.output();
+    public void audioblock(float[] output_signal) {
+        for (int i = 0; i < output_signal.length; i++) {
+            output_signal[i] = mEnvelopeAmplitude.output() * mNoise.output();
             mEnvelopeStepSize.output(); // we just need to update the envelope
             mNoise.set_step(mEnvelopeStepSize.get_current_value());
         }

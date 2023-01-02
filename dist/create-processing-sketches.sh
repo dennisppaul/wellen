@@ -59,6 +59,8 @@ do
 			}
 			# remove add-comment
 			s/\/\/@add\ //
+			# remove formatter
+			/\/\/\ @formatter\:/ d
 			# remove first and last line
 			/^\nclass/ d
 			/^}/ d

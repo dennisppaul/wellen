@@ -79,13 +79,13 @@ public class TestButterworthFilter extends PApplet {
         }
     }
 
-    public void audioblock(float[] pOutputSignalLeft, float[] pOutputSignalRight) {
-        for (int i = 0; i < pOutputSignalLeft.length; i++) {
-            pOutputSignalLeft[i] = mOSCLeft.output();
-            pOutputSignalRight[i] = mOSCRight.output();
+    public void audioblock(float[] output_signalLeft, float[] output_signalRight) {
+        for (int i = 0; i < output_signalLeft.length; i++) {
+            output_signalLeft[i] = mOSCLeft.output();
+            output_signalRight[i] = mOSCRight.output();
         }
-        mButterworthFilters.process(pOutputSignalLeft, mFilterFrequency, mFilterBandwidth, mButterworthType);
-        mFilters.process(pOutputSignalRight, mFilterFrequency, mFilterBandwidth, mFilterType);
+        mButterworthFilters.process(output_signalLeft, mFilterFrequency, mFilterBandwidth, mButterworthType);
+        mFilters.process(output_signalRight, mFilterFrequency, mFilterBandwidth, mFilterType);
     }
 
     public static void main(String[] args) {

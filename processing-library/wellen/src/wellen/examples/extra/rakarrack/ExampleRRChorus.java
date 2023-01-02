@@ -39,7 +39,7 @@ public class ExampleRRChorus extends PApplet {
         DSP.draw_buffers(g, width, height);
     }
 
-    public void beat(int pBeat) {
+    public void beat(int beat) {
         if (random(1) > (mIsPlaying ? 0.4f : 0.2f)) {
             if (mIsPlaying) {
                 mADSR.stop();
@@ -101,21 +101,21 @@ public class ExampleRRChorus extends PApplet {
         }
     }
 
-    public void audioblock(float[] pOutputSignalLeft, float[] pOutputSignalRight) {
-        for (int i = 0; i < pOutputSignalLeft.length; i++) {
-            pOutputSignalLeft[i] = mVCO.output();
+    public void audioblock(float[] output_signalLeft, float[] output_signalRight) {
+        for (int i = 0; i < output_signalLeft.length; i++) {
+            output_signalLeft[i] = mVCO.output();
             final float mADSRValue = mADSR.output();
-            pOutputSignalLeft[i] *= mADSRValue;
-            pOutputSignalRight[i] = pOutputSignalLeft[i];
+            output_signalLeft[i] *= mADSRValue;
+            output_signalRight[i] = output_signalLeft[i];
         }
         if (mEnableChorus) {
-            mChorus.out(pOutputSignalLeft, pOutputSignalRight);
+            mChorus.out(output_signalLeft, output_signalRight);
         }
-        for (int i = 0; i < pOutputSignalLeft.length; i++) {
-            pOutputSignalLeft[i] = Wellen.clamp(pOutputSignalLeft[i]);
-            pOutputSignalLeft[i] *= mMasterVolume;
-            pOutputSignalRight[i] = Wellen.clamp(pOutputSignalRight[i]);
-            pOutputSignalRight[i] *= mMasterVolume;
+        for (int i = 0; i < output_signalLeft.length; i++) {
+            output_signalLeft[i] = Wellen.clamp(output_signalLeft[i]);
+            output_signalLeft[i] *= mMasterVolume;
+            output_signalRight[i] = Wellen.clamp(output_signalRight[i]);
+            output_signalRight[i] *= mMasterVolume;
         }
     }
 

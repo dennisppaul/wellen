@@ -14,38 +14,16 @@ public class TechniqueBasics01Sequencer extends PApplet {
 
     private static final int OFF = -1;
 
-    private final Sequencer<Integer> mSequence = new Sequencer<>(0,
-                                                                 OFF,
-                                                                 12,
-                                                                 OFF,
-                                                                 0,
-                                                                 OFF,
-                                                                 12,
-                                                                 OFF,
-                                                                 0,
-                                                                 OFF,
-                                                                 12,
-                                                                 OFF,
-                                                                 0,
-                                                                 OFF,
-                                                                 12,
-                                                                 OFF,
-                                                                 3,
-                                                                 3,
-                                                                 15,
-                                                                 15,
-                                                                 3,
-                                                                 3,
-                                                                 15,
-                                                                 15,
-                                                                 5,
-                                                                 5,
-                                                                 17,
-                                                                 17,
-                                                                 5,
-                                                                 5,
-                                                                 17,
-                                                                 17);
+    // @formatter:off
+    private final Sequencer<Integer> fSequence = new Sequencer<>(0, OFF,  12, OFF,
+                                                         0, OFF,  12, OFF,
+                                                         0, OFF,  12, OFF,
+                                                         0, OFF,  12, OFF,
+                                                         3,   3,  15, 15,
+                                                         3,   3,  15, 15,
+                                                         5,   5,  17, 17,
+                                                         5,   5,  17, 17);
+    // @formatter:on
 
     public void settings() {
         size(640, 480);
@@ -59,14 +37,14 @@ public class TechniqueBasics01Sequencer extends PApplet {
         background(255);
         noStroke();
         fill(0);
-        if (mSequence.get_current() != OFF) {
-            float mNote = (mSequence.get_current() - 18) / 36.0f + 0.1f;
+        if (fSequence.get_current() != OFF) {
+            float mNote = (fSequence.get_current() - 18) / 36.0f + 0.1f;
             ellipse(width * 0.5f, height * 0.5f, width * mNote, width * mNote);
         }
     }
 
     public void beat(int beat) {
-        int mStep = mSequence.step();
+        int mStep = fSequence.step();
         if (mStep != OFF) {
             int mNote = Note.NOTE_C3 + mStep;
             Tone.note_on(mNote, 100);

@@ -6,7 +6,9 @@ import wellen.analysis.PitchDetection;
 import wellen.dsp.DSP;
 import wellen.dsp.Wavetable;
 
-public class ExampleDSPAnalysis00PitchDetection extends PApplet {
+public class ExampleDSPAnalysis04PitchDetection extends PApplet {
+
+    //@add import wellen.analysis.*;
 
     /*
      * this example demonstrates how to detect a pitch from an input signal and play the detected pitch back through
@@ -40,7 +42,7 @@ public class ExampleDSPAnalysis00PitchDetection extends PApplet {
         DSP.draw_buffers(g, width, height);
     }
 
-    public void audioblock(float[] pOutputSignal, float[] pInputSignal) {
+    public void audioblock(float[] output_signal, float[] pInputSignal) {
         /* amplify audio signal */
         for (int i = 0; i < pInputSignal.length; i++) {
             pInputSignal[i] *= fInputAmplification;
@@ -56,12 +58,12 @@ public class ExampleDSPAnalysis00PitchDetection extends PApplet {
         }
 
         /* process output signal */
-        for (int i = 0; i < pOutputSignal.length; i++) {
-            pOutputSignal[i] = fWavetable.output();
+        for (int i = 0; i < output_signal.length; i++) {
+            output_signal[i] = fWavetable.output();
         }
     }
 
     public static void main(String[] args) {
-        PApplet.main(ExampleDSPAnalysis00PitchDetection.class.getName());
+        PApplet.main(ExampleDSPAnalysis04PitchDetection.class.getName());
     }
 }

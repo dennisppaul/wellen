@@ -169,6 +169,14 @@ public class Wellen {
     public static final int BITS_PER_SAMPLE_32 = 32;
     public static final int DEFAULT_BITS_PER_SAMPLE = BITS_PER_SAMPLE_24;
 
+    public static final float NOTE_WHOLE = 0.25f;
+    public static final float NOTE_HALF = 0.5f;
+    public static final int NOTE_QUARTER = 1;
+    public static final int NOTE_EIGHTH = 2;
+    public static final int NOTE_SIXTEENTH = 4;
+    public static final int NOTE_THIRTYSECOND = 8;
+    public static final int NO_EVENT = -1;
+
     public static float bytes_to_floatIEEE(byte[] b, boolean pLittleEndian) {
         if (b.length != 4) {
             System.err.println("+++ WARNING @ " + Wellen.class.getSimpleName() + " / expected exactly 4 bytes.");

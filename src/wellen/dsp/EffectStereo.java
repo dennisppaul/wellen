@@ -24,8 +24,8 @@ package wellen.dsp;
  */
 public interface EffectStereo {
     /**
-     * @param pOutputSignalLeft  output signal (left channel)
-     * @param pOutputSignalRight output signal (right channel)
+     * @param output_signalLeft  output signal (left channel)
+     * @param output_signalRight output signal (right channel)
      */
-    void out(float[] pOutputSignalLeft, float[] pOutputSignalRight);
+    void out(float[] output_signalLeft, float[] output_signalRight);
 }

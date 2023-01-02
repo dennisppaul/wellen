@@ -61,18 +61,18 @@ public class ExampleDaisySPChorus extends PApplet {
         }
     }
 
-    public void beat(int pBeatCount) {
+    public void beat(int beatCount) {
         mPluck.Trig();
         mPluck.SetFreq(DaisySP.mtof(mMIDINotes[mMIDINoteCounter]));
         mMIDINoteCounter++;
         mMIDINoteCounter %= mMIDINotes.length;
     }
 
-    public void audioblock(float[] pOutputSignalLeft, float[] pOutputSignalRight) {
-        for (int i = 0; i < pOutputSignalLeft.length; i++) {
+    public void audioblock(float[] output_signalLeft, float[] output_signalRight) {
+        for (int i = 0; i < output_signalLeft.length; i++) {
             mChorus.Process(mPluck.Process());
-            pOutputSignalLeft[i] = mChorus.GetLeft();
-            pOutputSignalRight[i] = mChorus.GetRight();
+            output_signalLeft[i] = mChorus.GetLeft();
+            output_signalRight[i] = mChorus.GetRight();
         }
     }
 

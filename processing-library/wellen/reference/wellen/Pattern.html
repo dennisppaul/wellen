@@ -25,6 +25,7 @@ loadScripts(document, 'script');</script>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
 <div class="flex-box">
+<header role="banner" class="flex-header"><h1>Wellen -- a framework for exploring and teaching generative music making and algorithmic compositions</h1></header>
 <div class="flex-content">
 <main role="main">
 <!-- ======== START OF CLASS DATA ======== -->
@@ -59,6 +60,10 @@ implements <a href="Loopable.html" title="interface in wellen">Loopable</a></spa
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">Pattern</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(int,int,int)" class="member-name-link">Pattern</a><wbr>(int&nbsp;in_point,
+ int&nbsp;out_point,
+ int&nbsp;loop)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -74,8 +79,8 @@ implements <a href="Loopable.html" title="interface in wellen">Loopable</a></spa
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#event(int,int)" class="member-name-link">event</a><wbr>(int&nbsp;pTick,
- int&nbsp;pLocalPosition)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#event(int,int)" class="member-name-link">event</a><wbr>(int&nbsp;beat,
+ int&nbsp;event_at)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">querry whether an event occured.</div>
 </div>
@@ -86,7 +91,7 @@ implements <a href="Loopable.html" title="interface in wellen">Loopable</a></spa
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_loop()" class="member-name-link">get_loop</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_loop_count(int)" class="member-name-link">get_loop_count</a><wbr>(int&nbsp;pAbsolutPosition)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_loop_count(int)" class="member-name-link">get_loop_count</a><wbr>(int&nbsp;absolut_position)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">returns the current loop where 0 is the first loop.</div>
 </div>
@@ -94,7 +99,7 @@ implements <a href="Loopable.html" title="interface in wellen">Loopable</a></spa
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_out_point()" class="member-name-link">get_out_point</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_relative_position(int)" class="member-name-link">get_relative_position</a><wbr>(int&nbsp;pAbsolutPosition)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_relative_position(int)" class="member-name-link">get_relative_position</a><wbr>(int&nbsp;absolut_position)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">returns the relative postion in repsect to in- and out point</div>
 </div>
@@ -114,14 +119,14 @@ implements <a href="Loopable.html" title="interface in wellen">Loopable</a></spa
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#run_test()" class="member-name-link">run_test</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_in_point(int)" class="member-name-link">set_in_point</a><wbr>(int&nbsp;pInPoint)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_in_point(int)" class="member-name-link">set_in_point</a><wbr>(int&nbsp;in_point)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">set in point for pattern.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_length(int)" class="member-name-link">set_length</a><wbr>(int&nbsp;pLength)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_length(int)" class="member-name-link">set_length</a><wbr>(int&nbsp;length)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">length defines the number of steps before tick is wrapped.</div>
+<div class="block">length defines the number of steps before beat is wrapped.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_loop(int)" class="member-name-link">set_loop</a><wbr>(int&nbsp;pLoop)</code></div>
@@ -129,7 +134,7 @@ implements <a href="Loopable.html" title="interface in wellen">Loopable</a></spa
 <div class="block">set the number of loops.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_out_point(int)" class="member-name-link">set_out_point</a><wbr>(int&nbsp;pOutPoint)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_out_point(int)" class="member-name-link">set_out_point</a><wbr>(int&nbsp;out_point)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">set out point for pattern.</div>
 </div>
@@ -159,6 +164,14 @@ implements <a href="Loopable.html" title="interface in wellen">Loopable</a></spa
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Pattern</span>()</div>
 </section>
 </li>
+<li>
+<section class="detail" id="&lt;init&gt;(int,int,int)">
+<h3>Pattern</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Pattern</span><wbr><span class="parameters">(int&nbsp;in_point,
+ int&nbsp;out_point,
+ int&nbsp;loop)</span></div>
+</section>
+</li>
 </ul>
 </section>
 </li>
@@ -170,8 +183,8 @@ implements <a href="Loopable.html" title="interface in wellen">Loopable</a></spa
 <li>
 <section class="detail" id="set_length(int)">
 <h3>set_length</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_length</span><wbr><span class="parameters">(int&nbsp;pLength)</span></div>
-<div class="block">length defines the number of steps before tick is wrapped.
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_length</span><wbr><span class="parameters">(int&nbsp;length)</span></div>
+<div class="block">length defines the number of steps before beat is wrapped.
  <p>
  e.g an interval of 3 would generate a pattern of 0, 1, 2, 0, 1, 2, 0, 1, …
  <p>
@@ -181,7 +194,7 @@ implements <a href="Loopable.html" title="interface in wellen">Loopable</a></spa
 <dt>Overrides:</dt>
 <dd><code><a href="Loop.html#set_length(int)">set_length</a></code>&nbsp;in class&nbsp;<code><a href="Loop.html" title="class in wellen">Loop</a></code></dd>
 <dt>Parameters:</dt>
-<dd><code>pLength</code> - number of steps before the tick is wrapped</dd>
+<dd><code>length</code> - number of steps before the beat is wrapped</dd>
 </dl>
 </section>
 </li>
@@ -189,10 +202,10 @@ implements <a href="Loopable.html" title="interface in wellen">Loopable</a></spa
 <section class="detail" id="set_loop(int)">
 <h3>set_loop</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_loop</span><wbr><span class="parameters">(int&nbsp;pLoop)</span></div>
-<div class="block">set the number of loops. while the length of a single cycle is set by <pre><code>set_length(int)</code></pre>,
- the number of cycles or repetitions is defined by <pre><code>set_loop(int)</code></pre>. if number of loops is
- set to <pre><code>Wellen.LOOP_INFINITE</code></pre> the loop is repearted infinitely. if set to
- <pre><code>Wellen.NO_LOOP</code></pre> only one cycle is processed.</div>
+<div class="block">set the number of loops. while the length of a single cycle is set by <code>set_length(int)</code>, the number of
+ cycles or repetitions is defined by <code>set_loop(int)</code>. if number of loops is set to
+ <code>Wellen.LOOP_INFINITE</code> the loop is repearted infinitely. if set to
+ <code>Wellen.NO_LOOP</code> only one cycle is processed.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>pLoop</code> - number of loops</dd>
@@ -212,12 +225,12 @@ implements <a href="Loopable.html" title="interface in wellen">Loopable</a></spa
 <li>
 <section class="detail" id="set_in_point(int)">
 <h3>set_in_point</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_in_point</span><wbr><span class="parameters">(int&nbsp;pInPoint)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_in_point</span><wbr><span class="parameters">(int&nbsp;in_point)</span></div>
 <div class="block">set in point for pattern. if out point is equal or smaller than in point length is set to 1 and out point
  accordingly.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>pInPoint</code> - set in point for pattern</dd>
+<dd><code>in_point</code> - set in point for pattern</dd>
 </dl>
 </section>
 </li>
@@ -234,11 +247,11 @@ implements <a href="Loopable.html" title="interface in wellen">Loopable</a></spa
 <li>
 <section class="detail" id="set_out_point(int)">
 <h3>set_out_point</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_out_point</span><wbr><span class="parameters">(int&nbsp;pOutPoint)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_out_point</span><wbr><span class="parameters">(int&nbsp;out_point)</span></div>
 <div class="block">set out point for pattern. this method also affects the length of the pattern.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>pOutPoint</code> - out point for pattern</dd>
+<dd><code>out_point</code> - out point for pattern</dd>
 </dl>
 </section>
 </li>
@@ -255,27 +268,25 @@ implements <a href="Loopable.html" title="interface in wellen">Loopable</a></spa
 <li>
 <section class="detail" id="event(int,int)">
 <h3>event</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">event</span><wbr><span class="parameters">(int&nbsp;pTick,
- int&nbsp;pLocalPosition)</span></div>
-<div class="block">querry whether an event occured. the first value is the absolute tick ( or beat ) to evalute, the second value
- specifies the position in to query. e.g if the pattern is of length 3 ( <pre><code>P(3)</code></pre>, has an
- in&nbsp;point of 0 and loops infinitely, it will generate the following values:
-
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">event</span><wbr><span class="parameters">(int&nbsp;beat,
+ int&nbsp;event_at)</span></div>
+<div class="block">querry whether an event occured. the first value is the absolute beat ( or beat ) to evalute, the second value
+ specifies the position in to query. e.g if the pattern is of length 3 ( <code>P(3)</code>, has an in&nbsp;point
+ of 0 and loops infinitely, it will generate the following values:
  <pre><code>
      TICK   : 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
      P(3)   : 0  1  2  0  1  2  0  1  2  0  1  2  0  1  2  0  1
  </code></pre>
  <p>
- if event is now for example tested againt 0 <pre><code>E(0)</code></pre> it will either return true
- <pre><code>+</code></pre> or false <pre><code>-</code></pre>:
-
+ if event is now for example tested againt 0 <code>E(0)</code> it will either return true
+ <code>+</code> or false <code>-</code>:
  <pre><code>
      TICK   : 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
      P(3)   : 0  1  2  0  1  2  0  1  2  0  1  2  0  1  2  0  1
      E(0)   : +  -  -  +  -  -  +  -  -  +  -  -  +  -  -  +  -
  </code></pre>
  <p>
- e.g an increasing value will produce an event every 3 ticks:
+ e.g an increasing value will produce an event every 3 beats:
  <pre><code>
      Pattern p = new Pattern();
      p.set_length(3);
@@ -287,8 +298,8 @@ implements <a href="Loopable.html" title="interface in wellen">Loopable</a></spa
 <dt>Overrides:</dt>
 <dd><code><a href="Loop.html#event(int,int)">event</a></code>&nbsp;in class&nbsp;<code><a href="Loop.html" title="class in wellen">Loop</a></code></dd>
 <dt>Parameters:</dt>
-<dd><code>pTick</code> - absolute tick ( or beat ) to evaluate</dd>
-<dd><code>pLocalPosition</code> - local position to to test tick against</dd>
+<dd><code>beat</code> - absolute beat to evaluate</dd>
+<dd><code>event_at</code> - local position to to test beat against</dd>
 <dt>Returns:</dt>
 <dd>true if an event occurs</dd>
 </dl>
@@ -297,11 +308,11 @@ implements <a href="Loopable.html" title="interface in wellen">Loopable</a></spa
 <li>
 <section class="detail" id="get_relative_position(int)">
 <h3>get_relative_position</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">get_relative_position</span><wbr><span class="parameters">(int&nbsp;pAbsolutPosition)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">get_relative_position</span><wbr><span class="parameters">(int&nbsp;absolut_position)</span></div>
 <div class="block">returns the relative postion in repsect to in- and out point</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>pAbsolutPosition</code> - current absolut position ( i.e tick )</dd>
+<dd><code>absolut_position</code> - current absolut position ( i.e beat )</dd>
 <dt>Returns:</dt>
 <dd>returns the relative postion. value may be negative.</dd>
 </dl>
@@ -310,20 +321,19 @@ implements <a href="Loopable.html" title="interface in wellen">Loopable</a></spa
 <li>
 <section class="detail" id="get_loop_count(int)">
 <h3>get_loop_count</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">get_loop_count</span><wbr><span class="parameters">(int&nbsp;pAbsolutPosition)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">get_loop_count</span><wbr><span class="parameters">(int&nbsp;absolut_position)</span></div>
 <div class="block">returns the current loop where 0 is the first loop. this method always returns
- <pre><code>Wellen.NO_LOOP_COUNT</code></pre> if one of the following criteria is met:
-
+ <code>Wellen.NO_LOOP_COUNT</code> if one of the following criteria is met:
  <ul>
-     <li>no out point is specified ( i.e <pre><code>set_out_point(NO_OUTPOINT)</code></pre> )</li>
-     <li>loop is set to <pre><code>set_loop(NO_LOOP)</code></pre></li>
+     <li>no out point is specified ( i.e <code>set_out_point(NO_OUTPOINT)</code> )</li>
+     <li>loop is set to <code>set_loop(NO_LOOP)</code></li>
      <li>a number of loops is specified but the position is before the in point</li>
  </ul></div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="Loop.html#get_loop_count(int)">get_loop_count</a></code>&nbsp;in class&nbsp;<code><a href="Loop.html" title="class in wellen">Loop</a></code></dd>
 <dt>Parameters:</dt>
-<dd><code>pAbsolutPosition</code> - current absolut position ( i.e tick )</dd>
+<dd><code>absolut_position</code> - current absolut position ( i.e beat )</dd>
 <dt>Returns:</dt>
 <dd>returns the current loop. value may be negative.</dd>
 </dl>

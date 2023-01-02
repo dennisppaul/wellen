@@ -37,13 +37,13 @@ void mouseMoved() {
     mBeat.set_bpm(map(mouseX, 0, width, 1, 480));
 }
 
-void audioblock(float[] pOutputSignal) {
-    for (int i = 0; i < pOutputSignal.length; i++) {
+void audioblock(float[] output_signal) {
+    for (int i = 0; i < output_signal.length; i++) {
         mBeat.tick();
     }
 }
 
-void beat(int pBeatCount) {
-    int mNote = mNotes[pBeatCount % mNotes.length];
+void beat(int beatCount) {
+    int mNote = mNotes[beatCount % mNotes.length];
     Tone.note_on(mNote, 100, 0.1f);
 }

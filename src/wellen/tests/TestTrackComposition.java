@@ -33,16 +33,16 @@ public class TestTrackComposition extends PApplet {
         mComposition.track(0).set_volume(map(mouseY, 0, height, 0, 0.5f));
     }
 
-    public void beat(int pBeat) {
-        System.out.println("------- " + nf(pBeat, 2));
-        mComposition.update(pBeat);
+    public void beat(int beat) {
+        System.out.println("------- " + nf(beat, 2));
+        mComposition.update(beat);
     }
 
-    public void audioblock(float[] pOutputSignalLeft, float[] pOutputSignalRight) {
-        for (int i = 0; i < pOutputSignalLeft.length; i++) {
+    public void audioblock(float[] output_signalLeft, float[] output_signalRight) {
+        for (int i = 0; i < output_signalLeft.length; i++) {
             Signal s = mComposition.output_signal();
-            pOutputSignalLeft[i] = s.left();
-            pOutputSignalRight[i] = s.right();
+            output_signalLeft[i] = s.left();
+            output_signalRight[i] = s.right();
         }
     }
 

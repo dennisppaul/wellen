@@ -30,9 +30,9 @@ public class ExampleExternal10RecordWAV extends PApplet {
         DSP.draw_buffers(g, width, height);
     }
 
-    public void audioblock(float[] pOutputSignal, float[] pInputSignal) {
-        for (int i = 0; i < pOutputSignal.length; i++) {
-            pOutputSignal[i] = pInputSignal[i];
+    public void audioblock(float[] output_signal, float[] pInputSignal) {
+        for (int i = 0; i < output_signal.length; i++) {
+            output_signal[i] = pInputSignal[i];
             if (mIsRecording) {
                 mRecordedSamples.add(pInputSignal[i]);
             }

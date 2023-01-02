@@ -25,17 +25,17 @@ void draw() {
     ellipse(width * 0.5f, height * 0.5f, mScale, mScale);
 }
 
-void beat(int pBeat) {
+void beat(int beat) {
     mPlaying = true;
-    if (pBeat % 32 == 0) {
+    if (beat % 32 == 0) {
         Tone.note_on(Note.NOTE_A4, 80);
-    } else if (pBeat % 8 == 0) {
+    } else if (beat % 8 == 0) {
         Tone.note_on(Note.NOTE_A3, 110);
-    } else if (pBeat % 2 == 0) {
-        Tone.note_on(Note.NOTE_A2 + (pBeat % 4) * 3, 120);
-    } else if (pBeat % 11 == 0) {
+    } else if (beat % 2 == 0) {
+        Tone.note_on(Note.NOTE_A2 + (beat % 4) * 3, 120);
+    } else if (beat % 11 == 0) {
         Tone.note_on(Note.NOTE_C4, 90, 0.05f);
-    } else if (pBeat % 13 == 0) {
+    } else if (beat % 13 == 0) {
         Tone.note_on(Note.NOTE_C5, 100, 0.1f);
     } else {
         mPlaying = false;

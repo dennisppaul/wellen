@@ -30,69 +30,69 @@ public class Loop {
         return fLength;
     }
 
-    public void set_length(int pLength) {
-        fLength = pLength;
+    public void set_length(int length) {
+        fLength = length;
     }
 
     public int get_offset() {
         return -fOffset;
     }
 
-    public void set_offset(int pOffset) {
-        fOffset = -pOffset;
+    public void set_offset(int offset) {
+        fOffset = -offset;
     }
 
-    public static boolean event(int pTick, int pLoopEvent, int pLoopInterval) {
-        if (pLoopInterval == 0) {
+    public static boolean event(int beat, int loop_event, int interval) {
+        if (interval == 0) {
             return false;
         }
-        return (pTick % pLoopInterval) == pLoopEvent;
+        return (beat % interval) == loop_event;
     }
 
-    public boolean event(int pTick, int pLoopEvent) {
+    public boolean event(int beat, int event_at) {
         if (fLength == 0) {
             return false;
         }
-        return (getTickWithOffset(pTick) % fLength) == pLoopEvent;
+        return (getTickWithOffset(beat) % fLength) == event_at;
     }
 
-    public static boolean before(int pTick, int pThreshold, int pLoopInterval) {
-        if (pLoopInterval == 0) {
+    public static boolean before(int beat, int threshold, int interval) {
+        if (interval == 0) {
             return false;
         }
-        return (pTick % pLoopInterval) < pThreshold;
+        return (beat % interval) < threshold;
     }
 
-    public boolean before(int pTick, int pThreshold) {
+    public boolean before(int beat, int threshold) {
         if (fLength == 0) {
             return false;
         }
-        return (getTickWithOffset(pTick) % fLength) < pThreshold;
+        return (getTickWithOffset(beat) % fLength) < threshold;
     }
 
 
-    public static boolean after(int pTick, int pThreshold, int pLoopInterval) {
-        if (pLoopInterval == 0) {
+    public static boolean after(int beat, int threshold, int interval) {
+        if (interval == 0) {
             return false;
         }
-        return (pTick % pLoopInterval) > pThreshold;
+        return (beat % interval) > threshold;
     }
 
-    public boolean after(int pTick, int pThreshold) {
+    public boolean after(int beat, int threshold) {
         if (fLength == 0) {
             return false;
         }
-        return (getTickWithOffset(pTick) % fLength) > pThreshold;
+        return (getTickWithOffset(beat) % fLength) > threshold;
     }
 
-    private int getTickWithOffset(int pTick) {
-        return pTick + fOffset;
+    private int getTickWithOffset(int beat) {
+        return beat + fOffset;
     }
 
-    public int get_loop_count(int pAbsolutPosition) {
+    public int get_loop_count(int absolut_position) {
         if (fLength > 0) {
-            if (pAbsolutPosition + fOffset >= 0) {
-                return (pAbsolutPosition + fOffset) / fLength;
+            if (absolut_position + fOffset >= 0) {
+                return (absolut_position + fOffset) / fLength;
             } else {
                 return NO_LOOP_COUNT;
             }
@@ -101,12 +101,11 @@ public class Loop {
         }
     }
 
-    public static void main(String[] args) {
+    private static void run_test() {
         Loop l = new Loop();
 
         System.out.println("CNT\tREL\tEVT\tLOP");
-
-        System.out.println("---");
+        System.out.println("--- LENGTH: 3");
         l.set_length(3);
         for (int i = 0; i < 10; i++) {
             System.out.print(i + "\t");
@@ -116,7 +115,7 @@ public class Loop {
             System.out.println();
         }
 
-        System.out.println("---");
+        System.out.println("--- LENGTH: 3 OFFSET: 2");
         l.set_length(5);
         l.set_offset(2);
         for (int i = 0; i < 10; i++) {
@@ -126,5 +125,9 @@ public class Loop {
             System.out.print(l.get_loop_count(i) + "\t");
             System.out.println();
         }
+    }
+
+    public static void main(String[] args) {
+        run_test();
     }
 }

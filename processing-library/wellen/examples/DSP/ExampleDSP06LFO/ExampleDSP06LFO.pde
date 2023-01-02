@@ -94,8 +94,8 @@ void keyPressed() {
     }
 }
 
-void audioblock(float[] pOutputSignal) {
-    for (int i = 0; i < pOutputSignal.length; i++) {
+void audioblock(float[] output_signal) {
+    for (int i = 0; i < output_signal.length; i++) {
         /* get frequency from LFO, map value range from [-1.0, 1.0] to [-40.0, 40.0] */
         float mFreq = map(mFrequencyLFO.output(), -1.0f, 1.0f, -40, 40);
         /* get ampliude from LFO, map value range from [-1.0, 1.0] to [0.0, 1.0] */
@@ -103,6 +103,6 @@ void audioblock(float[] pOutputSignal) {
         /* set VCO */
         mVCO.set_frequency(mFreq + mBaseFrequency);
         mVCO.set_amplitude(mAmp);
-        pOutputSignal[i] = mVCO.output();
+        output_signal[i] = mVCO.output();
     }
 }

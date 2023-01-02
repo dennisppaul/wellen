@@ -51,21 +51,21 @@ public class ExampleDaisySPReverbSc extends PApplet {
         mReverb.SetLpFreq(map(mouseY, 0, height, 0, 20000));
     }
 
-    public void beat(int pBeatCount) {
+    public void beat(int beatCount) {
         mPluck.Trig();
         mPluck.SetFreq(DaisySP.mtof(mMIDINotes[mMIDINoteCounter]));
         mMIDINoteCounter++;
         mMIDINoteCounter %= mMIDINotes.length;
     }
 
-    public void audioblock(float[] pOutputSignalLeft, float[] pOutputSignalRight) {
-        for (int i = 0; i < pOutputSignalLeft.length; i++) {
+    public void audioblock(float[] output_signalLeft, float[] output_signalRight) {
+        for (int i = 0; i < output_signalLeft.length; i++) {
             if (keyPressed) {
-                pOutputSignalLeft[i] = pOutputSignalRight[i] = mPluck.Process();
+                output_signalLeft[i] = output_signalRight[i] = mPluck.Process();
             } else {
                 mReverb.Process(mPluck.Process());
-                pOutputSignalLeft[i] = mReverb.GetLeft();
-                pOutputSignalRight[i] = mReverb.GetRight();
+                output_signalLeft[i] = mReverb.GetLeft();
+                output_signalRight[i] = mReverb.GetRight();
             }
         }
     }

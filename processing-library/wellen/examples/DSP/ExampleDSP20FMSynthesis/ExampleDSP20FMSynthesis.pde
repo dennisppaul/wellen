@@ -43,8 +43,8 @@ void mouseMoved() {
     mFMSynthesis.get_modulator().set_frequency(map(mouseY, 0, height, 0, 4.0f * mVisuallyStableFrequency));
 }
 
-void audioblock(float[] pOutputSignal) {
-    for (int i = 0; i < pOutputSignal.length; i++) {
-        pOutputSignal[i] = mFMSynthesis.output();
+void audioblock(float[] output_signal) {
+    for (int i = 0; i < output_signal.length; i++) {
+        output_signal[i] = mFMSynthesis.output();
     }
 }

@@ -43,13 +43,13 @@ public class ExampleDaisySPModalVoice extends PApplet {
         mModalVoice.SetDamping(map(mouseY, 0, height, 0, 0.6f));
     }
 
-    public void beat(int pBeatCount) {
+    public void beat(int beatCount) {
         mModalVoice.Trig();
     }
 
-    public void audioblock(float[] pOutputSignal) {
-        for (int i = 0; i < pOutputSignal.length; i++) {
-            pOutputSignal[i] = mModalVoice.Process();
+    public void audioblock(float[] output_signal) {
+        for (int i = 0; i < output_signal.length; i++) {
+            output_signal[i] = mModalVoice.Process();
         }
     }
 

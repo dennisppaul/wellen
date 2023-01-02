@@ -64,10 +64,10 @@ public class ExampleDSP18Vocoder extends PApplet {
         }
     }
 
-    public void audioblock(float[] pOutputSignal, float[] pInputSignal) {
+    public void audioblock(float[] output_signal, float[] pInputSignal) {
         for (int i = 0; i < pInputSignal.length; i++) {
             float mCarrier = mVocoderCarrierOsc.output();
-            pOutputSignal[i] = mVocoder.process(mCarrier, pInputSignal[i]);
+            output_signal[i] = mVocoder.process(mCarrier, pInputSignal[i]);
         }
         /* note, there is also a faster audio block processing method available `process(float[], float[], float[])` */
     }

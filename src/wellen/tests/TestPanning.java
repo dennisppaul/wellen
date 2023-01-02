@@ -56,13 +56,13 @@ public class TestPanning extends PApplet {
         mPan.set_panning(map(mouseX, 0, width, -1.0f, 1.0f));
     }
 
-    public void audioblock(float[] pOutputSignalLeft, float[] pOutputSignalRight) {
+    public void audioblock(float[] output_signalLeft, float[] output_signalRight) {
         float[] mOutputSignal = new float[Wellen.DEFAULT_AUDIOBLOCK_SIZE];
         mToneEngine.audioblock(mOutputSignal);
         for (int i = 0; i < mOutputSignal.length; i++) {
             Signal s = mPan.process(mOutputSignal[i]);
-            pOutputSignalLeft[i] = s.signal[Wellen.SIGNAL_LEFT];
-            pOutputSignalRight[i] = s.signal[Wellen.SIGNAL_RIGHT];
+            output_signalLeft[i] = s.signal[Wellen.SIGNAL_LEFT];
+            output_signalRight[i] = s.signal[Wellen.SIGNAL_RIGHT];
         }
     }
 

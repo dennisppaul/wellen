@@ -53,9 +53,9 @@ public class TestDSPNodeProcessFilter extends PApplet {
         }
     }
 
-    public void audioblock(float[] pOutputSignal) {
-        for (int i = 0; i < pOutputSignal.length; i++) {
-            pOutputSignal[i] = mFilter.process(mWavetable.output());
+    public void audioblock(float[] output_signal) {
+        for (int i = 0; i < output_signal.length; i++) {
+            output_signal[i] = mFilter.process(mWavetable.output());
         }
     }
 

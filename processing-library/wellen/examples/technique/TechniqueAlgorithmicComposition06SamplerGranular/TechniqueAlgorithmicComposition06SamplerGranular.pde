@@ -2,19 +2,20 @@ import wellen.*;
 import wellen.dsp.*; 
 
 
-Sampler mSampler;
+Sampler fSampler;
 
-final ArrayList<Sampler> mSamplers = new ArrayList<Sampler>();
+final ArrayList<Sampler> fSamplers = new ArrayList<Sampler>();
 
 void settings() {
     size(640, 480, P3D);
 }
 
 void setup() {
+    System.out.println(sketchPath());
     byte[] mData = loadBytes("../../../resources/a_portrait_in_reverse.raw");
-    mSampler = new Sampler();
-    mSampler.load(mData);
-    mSampler.loop(true);
+    fSampler = new Sampler();
+    fSampler.load(mData);
+    fSampler.loop(true);
     DSP.start(this);
 }
 
@@ -24,26 +25,26 @@ void draw() {
     stroke(0);
     DSP.draw_buffers(g, width, height);
     stroke(0, 31);
-    Wellen.draw_buffer(g, width, height, mSampler.data());
+    Wellen.draw_buffer(g, width, height, fSampler.data());
     stroke(0);
-    drawPosition(mSampler.get_in(), height / 8);
-    drawPosition(mSampler.get_out(), height / 8);
-    drawPosition(mSampler.get_position(), height / 16);
-    for (Sampler s : mSamplers) {
+    drawPosition(fSampler.get_in(), height / 8);
+    drawPosition(fSampler.get_out(), height / 8);
+    drawPosition(fSampler.get_position(), height / 16);
+    for (Sampler s : fSamplers) {
         drawPosition(s.get_position(), height / 16);
     }
 }
 
 void mousePressed() {
     if (mouseButton == LEFT) {
-        mSampler.set_in((int) map(mouseX, 0, width, 0, mSampler.data().length));
-        for (Sampler s : mSamplers) {
-            s.set_in(mSampler.get_in());
+        fSampler.set_in((int) map(mouseX, 0, width, 0, fSampler.data().length));
+        for (Sampler s : fSamplers) {
+            s.set_in(fSampler.get_in());
         }
     } else {
-        mSampler.set_out((int) map(mouseX, 0, width, 0, mSampler.data().length));
-        for (Sampler s : mSamplers) {
-            s.set_out(mSampler.get_out());
+        fSampler.set_out((int) map(mouseX, 0, width, 0, fSampler.data().length));
+        for (Sampler s : fSamplers) {
+            s.set_out(fSampler.get_out());
         }
     }
 }
@@ -51,41 +52,41 @@ void mousePressed() {
 void keyPressed() {
     switch (key) {
         case '+':
-            mSampler.set_speed(mSampler.get_speed() + 0.1f);
-            for (Sampler s : mSamplers) {
-                s.set_speed(mSampler.get_speed());
+            fSampler.set_speed(fSampler.get_speed() + 0.1f);
+            for (Sampler s : fSamplers) {
+                s.set_speed(fSampler.get_speed());
             }
             break;
         case '-':
-            mSampler.set_speed(mSampler.get_speed() - 0.1f);
-            for (Sampler s : mSamplers) {
-                s.set_speed(mSampler.get_speed());
+            fSampler.set_speed(fSampler.get_speed() - 0.1f);
+            for (Sampler s : fSamplers) {
+                s.set_speed(fSampler.get_speed());
             }
             break;
         case ' ':
-            Sampler s = new Sampler(mSampler.data());
+            Sampler s = new Sampler(fSampler.data());
             s.loop(true);
-            s.set_in(mSampler.get_in());
-            s.set_out(mSampler.get_out());
-            mSamplers.add(s);
+            s.set_in(fSampler.get_in());
+            s.set_out(fSampler.get_out());
+            fSamplers.add(s);
             break;
         case 'c':
-            mSamplers.clear();
+            fSamplers.clear();
             break;
     }
 }
 
-void audioblock(float[] pOutputSignal) {
-    for (int i = 0; i < pOutputSignal.length; i++) {
-        pOutputSignal[i] = mSampler.output();
-        for (Sampler s : mSamplers) {
-            pOutputSignal[i] += s.output();
+void audioblock(float[] output_signal) {
+    for (int i = 0; i < output_signal.length; i++) {
+        output_signal[i] = fSampler.output();
+        for (Sampler s : fSamplers) {
+            output_signal[i] += s.output();
         }
-        pOutputSignal[i] /= 1 + mSamplers.size() * 0.1f;
+        output_signal[i] /= 1 + fSamplers.size() * 0.1f;
     }
 }
 
 void drawPosition(int pPosition, int pPadding) {
-    final float x = map(pPosition, 0, mSampler.data().length, 0, width);
+    final float x = map(pPosition, 0, fSampler.data().length, 0, width);
     line(x, 0 + pPadding, x, height - pPadding);
 }

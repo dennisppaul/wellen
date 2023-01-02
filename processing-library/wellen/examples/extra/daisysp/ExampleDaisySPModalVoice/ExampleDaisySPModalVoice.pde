@@ -37,12 +37,12 @@ void mouseDragged() {
     mModalVoice.SetDamping(map(mouseY, 0, height, 0, 0.6f));
 }
 
-void beat(int pBeatCount) {
+void beat(int beatCount) {
     mModalVoice.Trig();
 }
 
-void audioblock(float[] pOutputSignal) {
-    for (int i = 0; i < pOutputSignal.length; i++) {
-        pOutputSignal[i] = mModalVoice.Process();
+void audioblock(float[] output_signal) {
+    for (int i = 0; i < output_signal.length; i++) {
+        output_signal[i] = mModalVoice.Process();
     }
 }

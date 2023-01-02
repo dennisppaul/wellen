@@ -24,9 +24,9 @@ void draw() {
     DSP.draw_buffers(g, width, height);
 }
 
-void audioblock(float[] pOutputSignal, float[] pInputSignal) {
-    for (int i = 0; i < pOutputSignal.length; i++) {
-        pOutputSignal[i] = pInputSignal[i];
+void audioblock(float[] output_signal, float[] pInputSignal) {
+    for (int i = 0; i < output_signal.length; i++) {
+        output_signal[i] = pInputSignal[i];
         if (mIsRecording) {
             mRecordedSamples.add(pInputSignal[i]);
         }

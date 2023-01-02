@@ -25,6 +25,7 @@ loadScripts(document, 'script');</script>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
 <div class="flex-box">
+<header role="banner" class="flex-header"><h1>Wellen -- a framework for exploring and teaching generative music making and algorithmic compositions</h1></header>
 <div class="flex-content">
 <main role="main">
 <!-- ======== START OF CLASS DATA ======== -->
@@ -96,11 +97,11 @@ implements <a href="AudioBufferRenderer.html" title="interface in wellen">AudioB
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">ToneEngineDSP</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(int,int,int,int,int)" class="member-name-link">ToneEngineDSP</a><wbr>(int&nbsp;pSamplingRate,
- int&nbsp;pAudioBlockSize,
- int&nbsp;pOutputDeviceID,
- int&nbsp;pOutputChannels,
- int&nbsp;pNumberOfInstruments)</code></div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(int,int,int,int,int)" class="member-name-link">ToneEngineDSP</a><wbr>(int&nbsp;sampling_rate,
+ int&nbsp;audioblock_size,
+ int&nbsp;output_device_ID,
+ int&nbsp;output_channels,
+ int&nbsp;number_of_instruments)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
@@ -117,40 +118,46 @@ implements <a href="AudioBufferRenderer.html" title="interface in wellen">AudioB
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#add_effect(wellen.dsp.EffectStereo)" class="member-name-link">add_effect</a><wbr>(<a href="dsp/EffectStereo.html" title="interface in wellen.dsp">EffectStereo</a>&nbsp;pEffect)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#add_effect(wellen.dsp.EffectStereo)" class="member-name-link">add_effect</a><wbr>(<a href="dsp/EffectStereo.html" title="interface in wellen.dsp">EffectStereo</a>&nbsp;effect)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#audioblock(float%5B%5D)" class="member-name-link">audioblock</a><wbr>(float[]&nbsp;pSignal)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#audioblock(float%5B%5D)" class="member-name-link">audioblock</a><wbr>(float[]&nbsp;signal)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#audioblock(float%5B%5D%5B%5D,float%5B%5D%5B%5D)" class="member-name-link">audioblock</a><wbr>(float[][]&nbsp;pOutputSignal,
- float[][]&nbsp;pInputSignal)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#audioblock(float%5B%5D%5B%5D,float%5B%5D%5B%5D)" class="member-name-link">audioblock</a><wbr>(float[][]&nbsp;output_signal,
+ float[][]&nbsp;input_signal)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#audioblock(float%5B%5D,float%5B%5D)" class="member-name-link">audioblock</a><wbr>(float[]&nbsp;pSignalLeft,
- float[]&nbsp;pSignalRight)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#audioblock(float%5B%5D,float%5B%5D)" class="member-name-link">audioblock</a><wbr>(float[]&nbsp;signal_left,
+ float[]&nbsp;signal_right)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#control_change(int,int)" class="member-name-link">control_change</a><wbr>(int&nbsp;pCC,
- int&nbsp;pValue)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#control_change(int,int)" class="member-name-link">control_change</a><wbr>(int&nbsp;CC,
+ int&nbsp;value)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ToneEngineDSP.html" title="class in wellen">ToneEngineDSP</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#create_without_audio_output(int)" class="member-name-link">create_without_audio_output</a><wbr>(int&nbsp;pNumberOfInstruments)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#create_without_audio_output(int)" class="member-name-link">create_without_audio_output</a><wbr>(int&nbsp;number_of_instruments)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_buffer_left()" class="member-name-link">get_buffer_left</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#enable_reverb(boolean)" class="member-name-link">enable_reverb</a><wbr>(boolean&nbsp;state)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float[]</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_buffer_right()" class="member-name-link">get_buffer_right</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_buffer_left()" class="member-name-link">get_buffer_left</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_gain()" class="member-name-link">get_gain</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_buffer_right()" class="member-name-link">get_buffer_right</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_gain()" class="member-name-link">get_gain</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="dsp/Reverb.html" title="class in wellen.dsp">Reverb</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_reverb()" class="member-name-link">get_reverb</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Instrument.html" title="class in wellen">Instrument</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#instrument()" class="member-name-link">instrument</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Instrument.html" title="class in wellen">Instrument</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#instrument(int)" class="member-name-link">instrument</a><wbr>(int&nbsp;pInstrumentID)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#instrument(int)" class="member-name-link">instrument</a><wbr>(int&nbsp;instrument_ID)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/ArrayList.html" title="class or interface in java.util" class="external-link">ArrayList</a>&lt;? extends <a href="Instrument.html" title="class in wellen">Instrument</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#instruments()" class="member-name-link">instruments</a>()</code></div>
@@ -186,19 +193,19 @@ implements <a href="AudioBufferRenderer.html" title="interface in wellen">AudioB
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#output_signal()" class="member-name-link">output_signal</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pitch_bend(int)" class="member-name-link">pitch_bend</a><wbr>(int&nbsp;pValue)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pitch_bend(int)" class="member-name-link">pitch_bend</a><wbr>(int&nbsp;value)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#register_audioblock_callback(wellen.ToneEngineDSP.AudioOutputCallback)" class="member-name-link">register_audioblock_callback</a><wbr>(<a href="ToneEngineDSP.AudioOutputCallback.html" title="interface in wellen">ToneEngineDSP.AudioOutputCallback</a>&nbsp;pAudioblockCallback)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#register_audioblock_callback(wellen.ToneEngineDSP.AudioOutputCallback)" class="member-name-link">register_audioblock_callback</a><wbr>(<a href="ToneEngineDSP.AudioOutputCallback.html" title="interface in wellen">ToneEngineDSP.AudioOutputCallback</a>&nbsp;audioblock_callback)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#remove_effect(wellen.dsp.EffectStereo)" class="member-name-link">remove_effect</a><wbr>(<a href="dsp/EffectStereo.html" title="interface in wellen.dsp">EffectStereo</a>&nbsp;pEffect)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#remove_effect(wellen.dsp.EffectStereo)" class="member-name-link">remove_effect</a><wbr>(<a href="dsp/EffectStereo.html" title="interface in wellen.dsp">EffectStereo</a>&nbsp;effect)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#replace_instrument(wellen.Instrument)" class="member-name-link">replace_instrument</a><wbr>(<a href="Instrument.html" title="class in wellen">Instrument</a>&nbsp;pInstrument)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#replace_instrument(wellen.Instrument)" class="member-name-link">replace_instrument</a><wbr>(<a href="Instrument.html" title="class in wellen">Instrument</a>&nbsp;instrument)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_gain(float)" class="member-name-link">set_gain</a><wbr>(float&nbsp;pGain)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_gain(float)" class="member-name-link">set_gain</a><wbr>(float&nbsp;gain)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stop()" class="member-name-link">stop</a>()</code></div>
@@ -246,11 +253,11 @@ implements <a href="AudioBufferRenderer.html" title="interface in wellen">AudioB
 <li>
 <section class="detail" id="&lt;init&gt;(int,int,int,int,int)">
 <h3>ToneEngineDSP</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">ToneEngineDSP</span><wbr><span class="parameters">(int&nbsp;pSamplingRate,
- int&nbsp;pAudioBlockSize,
- int&nbsp;pOutputDeviceID,
- int&nbsp;pOutputChannels,
- int&nbsp;pNumberOfInstruments)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">ToneEngineDSP</span><wbr><span class="parameters">(int&nbsp;sampling_rate,
+ int&nbsp;audioblock_size,
+ int&nbsp;output_device_ID,
+ int&nbsp;output_channels,
+ int&nbsp;number_of_instruments)</span></div>
 </section>
 </li>
 <li>
@@ -270,7 +277,7 @@ implements <a href="AudioBufferRenderer.html" title="interface in wellen">AudioB
 <li>
 <section class="detail" id="create_without_audio_output(int)">
 <h3>create_without_audio_output</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ToneEngineDSP.html" title="class in wellen">ToneEngineDSP</a></span>&nbsp;<span class="element-name">create_without_audio_output</span><wbr><span class="parameters">(int&nbsp;pNumberOfInstruments)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ToneEngineDSP.html" title="class in wellen">ToneEngineDSP</a></span>&nbsp;<span class="element-name">create_without_audio_output</span><wbr><span class="parameters">(int&nbsp;number_of_instruments)</span></div>
 </section>
 </li>
 <li>
@@ -280,6 +287,26 @@ implements <a href="AudioBufferRenderer.html" title="interface in wellen">AudioB
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="ToneEngine.html#stop()">stop</a></code>&nbsp;in class&nbsp;<code><a href="ToneEngine.html" title="class in wellen">ToneEngine</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="enable_reverb(boolean)">
+<h3>enable_reverb</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">enable_reverb</span><wbr><span class="parameters">(boolean&nbsp;state)</span></div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>state</code> - enable reverb</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="get_reverb()">
+<h3>get_reverb</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="dsp/Reverb.html" title="class in wellen.dsp">Reverb</a></span>&nbsp;<span class="element-name">get_reverb</span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>reference to reverb</dd>
 </dl>
 </section>
 </li>
@@ -328,8 +355,8 @@ implements <a href="AudioBufferRenderer.html" title="interface in wellen">AudioB
 <li>
 <section class="detail" id="control_change(int,int)">
 <h3>control_change</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">control_change</span><wbr><span class="parameters">(int&nbsp;pCC,
- int&nbsp;pValue)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">control_change</span><wbr><span class="parameters">(int&nbsp;CC,
+ int&nbsp;value)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="ToneEngine.html#control_change(int,int)">control_change</a></code>&nbsp;in class&nbsp;<code><a href="ToneEngine.html" title="class in wellen">ToneEngine</a></code></dd>
@@ -339,7 +366,7 @@ implements <a href="AudioBufferRenderer.html" title="interface in wellen">AudioB
 <li>
 <section class="detail" id="pitch_bend(int)">
 <h3>pitch_bend</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">pitch_bend</span><wbr><span class="parameters">(int&nbsp;pValue)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">pitch_bend</span><wbr><span class="parameters">(int&nbsp;value)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="ToneEngine.html#pitch_bend(int)">pitch_bend</a></code>&nbsp;in class&nbsp;<code><a href="ToneEngine.html" title="class in wellen">ToneEngine</a></code></dd>
@@ -359,7 +386,7 @@ implements <a href="AudioBufferRenderer.html" title="interface in wellen">AudioB
 <li>
 <section class="detail" id="instrument(int)">
 <h3>instrument</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Instrument.html" title="class in wellen">Instrument</a></span>&nbsp;<span class="element-name">instrument</span><wbr><span class="parameters">(int&nbsp;pInstrumentID)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Instrument.html" title="class in wellen">Instrument</a></span>&nbsp;<span class="element-name">instrument</span><wbr><span class="parameters">(int&nbsp;instrument_ID)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="ToneEngine.html#instrument(int)">instrument</a></code>&nbsp;in class&nbsp;<code><a href="ToneEngine.html" title="class in wellen">ToneEngine</a></code></dd>
@@ -389,7 +416,7 @@ implements <a href="AudioBufferRenderer.html" title="interface in wellen">AudioB
 <li>
 <section class="detail" id="replace_instrument(wellen.Instrument)">
 <h3>replace_instrument</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">replace_instrument</span><wbr><span class="parameters">(<a href="Instrument.html" title="class in wellen">Instrument</a>&nbsp;pInstrument)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">replace_instrument</span><wbr><span class="parameters">(<a href="Instrument.html" title="class in wellen">Instrument</a>&nbsp;instrument)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="ToneEngine.html#replace_instrument(wellen.Instrument)">replace_instrument</a></code>&nbsp;in class&nbsp;<code><a href="ToneEngine.html" title="class in wellen">ToneEngine</a></code></dd>
@@ -419,14 +446,14 @@ implements <a href="AudioBufferRenderer.html" title="interface in wellen">AudioB
 <li>
 <section class="detail" id="audioblock(float[][],float[][])">
 <h3>audioblock</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">audioblock</span><wbr><span class="parameters">(float[][]&nbsp;pOutputSignal,
- float[][]&nbsp;pInputSignal)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">audioblock</span><wbr><span class="parameters">(float[][]&nbsp;output_signal,
+ float[][]&nbsp;input_signal)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="AudioBufferRenderer.html#audioblock(float%5B%5D%5B%5D,float%5B%5D%5B%5D)">audioblock</a></code>&nbsp;in interface&nbsp;<code><a href="AudioBufferRenderer.html" title="interface in wellen">AudioBufferRenderer</a></code></dd>
 <dt>Parameters:</dt>
-<dd><code>pOutputSignal</code> - output signal</dd>
-<dd><code>pInputSignal</code> - input signal</dd>
+<dd><code>output_signal</code> - output signal</dd>
+<dd><code>input_signal</code> - input signal</dd>
 </dl>
 </section>
 </li>
@@ -459,14 +486,14 @@ implements <a href="AudioBufferRenderer.html" title="interface in wellen">AudioB
 <li>
 <section class="detail" id="audioblock(float[])">
 <h3>audioblock</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">audioblock</span><wbr><span class="parameters">(float[]&nbsp;pSignal)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">audioblock</span><wbr><span class="parameters">(float[]&nbsp;signal)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="audioblock(float[],float[])">
 <h3>audioblock</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">audioblock</span><wbr><span class="parameters">(float[]&nbsp;pSignalLeft,
- float[]&nbsp;pSignalRight)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">audioblock</span><wbr><span class="parameters">(float[]&nbsp;signal_left,
+ float[]&nbsp;signal_right)</span></div>
 </section>
 </li>
 <li>
@@ -478,25 +505,25 @@ implements <a href="AudioBufferRenderer.html" title="interface in wellen">AudioB
 <li>
 <section class="detail" id="set_gain(float)">
 <h3>set_gain</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_gain</span><wbr><span class="parameters">(float&nbsp;pGain)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_gain</span><wbr><span class="parameters">(float&nbsp;gain)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="add_effect(wellen.dsp.EffectStereo)">
 <h3>add_effect</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">add_effect</span><wbr><span class="parameters">(<a href="dsp/EffectStereo.html" title="interface in wellen.dsp">EffectStereo</a>&nbsp;pEffect)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">add_effect</span><wbr><span class="parameters">(<a href="dsp/EffectStereo.html" title="interface in wellen.dsp">EffectStereo</a>&nbsp;effect)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="remove_effect(wellen.dsp.EffectStereo)">
 <h3>remove_effect</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">remove_effect</span><wbr><span class="parameters">(<a href="dsp/EffectStereo.html" title="interface in wellen.dsp">EffectStereo</a>&nbsp;pEffect)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">remove_effect</span><wbr><span class="parameters">(<a href="dsp/EffectStereo.html" title="interface in wellen.dsp">EffectStereo</a>&nbsp;effect)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="register_audioblock_callback(wellen.ToneEngineDSP.AudioOutputCallback)">
 <h3>register_audioblock_callback</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">register_audioblock_callback</span><wbr><span class="parameters">(<a href="ToneEngineDSP.AudioOutputCallback.html" title="interface in wellen">ToneEngineDSP.AudioOutputCallback</a>&nbsp;pAudioblockCallback)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">register_audioblock_callback</span><wbr><span class="parameters">(<a href="ToneEngineDSP.AudioOutputCallback.html" title="interface in wellen">ToneEngineDSP.AudioOutputCallback</a>&nbsp;audioblock_callback)</span></div>
 </section>
 </li>
 <li>

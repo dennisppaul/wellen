@@ -59,7 +59,7 @@ public class BeatMIDI implements MidiInListener {
     }
 
     /**
-     * @param pListener  object which implements the method `beat(int pBeatCounter)`
+     * @param pListener  object which implements the method `beat(int beatCounter)`
      * @param pMidiInput MIDI input device to listen to
      * @return {@link BeatMIDI}
      */

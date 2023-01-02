@@ -48,8 +48,8 @@ public class AppStepSequencerRandom extends PApplet {
         }
     }
 
-    public void beat(int pBeatCount) {
-        mBeatCount = pBeatCount;
+    public void beat(int beatCount) {
+        mBeatCount = beatCount;
         int mIndex = mBeatCount % mSequence.length;
         int mNote = mSequence[mIndex];
         if (mNote != OFF) {

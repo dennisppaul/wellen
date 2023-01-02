@@ -25,6 +25,7 @@ loadScripts(document, 'script');</script>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
 <div class="flex-box">
+<header role="banner" class="flex-header"><h1>Wellen -- a framework for exploring and teaching generative music making and algorithmic compositions</h1></header>
 <div class="flex-content">
 <main role="main">
 <!-- ======== START OF CLASS DATA ======== -->
@@ -55,7 +56,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#add(wellen.BeatListener)" class="member-name-link">add</a><wbr>(<a href="BeatListener.html" title="interface in wellen">BeatListener</a>&nbsp;pListener)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#add(wellen.BeatListener)" class="member-name-link">add</a><wbr>(<a href="BeatListener.html" title="interface in wellen">BeatListener</a>&nbsp;listener)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">add <a href="BeatListener.html" title="interface in wellen"><code>BeatListener</code></a></div>
 </div>
@@ -65,7 +66,7 @@ loadScripts(document, 'script');</script>
 <div class="block">removes all <a href="BeatListener.html" title="interface in wellen"><code>BeatListener</code></a></div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="BeatEvent.html" title="class in wellen">BeatEvent</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#create(int)" class="member-name-link">create</a><wbr>(int&nbsp;pBPM)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#create(int)" class="member-name-link">create</a><wbr>(int&nbsp;BPM)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#current_beat_count()" class="member-name-link">current_beat_count</a>()</code></div>
@@ -76,10 +77,10 @@ loadScripts(document, 'script');</script>
 <div class="block">reset beat counter</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_beat_count(int)" class="member-name-link">set_beat_count</a><wbr>(int&nbsp;pBeatCounter)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_beat_count(int)" class="member-name-link">set_beat_count</a><wbr>(int&nbsp;beat_counter)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_bpm(float)" class="member-name-link">set_bpm</a><wbr>(float&nbsp;pBPM)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_bpm(float)" class="member-name-link">set_bpm</a><wbr>(float&nbsp;BPM)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stop()" class="member-name-link">stop</a>()</code></div>
@@ -104,7 +105,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="create(int)">
 <h3>create</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="BeatEvent.html" title="class in wellen">BeatEvent</a></span>&nbsp;<span class="element-name">create</span><wbr><span class="parameters">(int&nbsp;pBPM)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="BeatEvent.html" title="class in wellen">BeatEvent</a></span>&nbsp;<span class="element-name">create</span><wbr><span class="parameters">(int&nbsp;BPM)</span></div>
 </section>
 </li>
 <li>
@@ -116,11 +117,11 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="add(wellen.BeatListener)">
 <h3>add</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">add</span><wbr><span class="parameters">(<a href="BeatListener.html" title="interface in wellen">BeatListener</a>&nbsp;pListener)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">add</span><wbr><span class="parameters">(<a href="BeatListener.html" title="interface in wellen">BeatListener</a>&nbsp;listener)</span></div>
 <div class="block">add <a href="BeatListener.html" title="interface in wellen"><code>BeatListener</code></a></div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>pListener</code> - listener</dd>
+<dd><code>listener</code> - object that listens to beat events</dd>
 </dl>
 </section>
 </li>
@@ -140,7 +141,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="set_beat_count(int)">
 <h3>set_beat_count</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_beat_count</span><wbr><span class="parameters">(int&nbsp;pBeatCounter)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_beat_count</span><wbr><span class="parameters">(int&nbsp;beat_counter)</span></div>
 </section>
 </li>
 <li>
@@ -153,7 +154,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="set_bpm(float)">
 <h3>set_bpm</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_bpm</span><wbr><span class="parameters">(float&nbsp;pBPM)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_bpm</span><wbr><span class="parameters">(float&nbsp;BPM)</span></div>
 </section>
 </li>
 </ul>

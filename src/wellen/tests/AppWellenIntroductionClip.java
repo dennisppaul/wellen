@@ -94,9 +94,9 @@ public class AppWellenIntroductionClip extends PApplet {
             Tone.instrument(instrument).set_oscillator_type(Wellen.WAVEFORM_TRIANGLE);
         }
 
-        public void beat(int pBeatCount) {
+        public void beat(int beatCount) {
 
-            if (instrument == 0 && pBeatCount == 12) {
+            if (instrument == 0 && beatCount == 12) {
                 mIntroDone = true;
                 mBeatA.stop();
                 mBeatB.stop();
@@ -104,10 +104,10 @@ public class AppWellenIntroductionClip extends PApplet {
             }
 
             Tone.instrument(instrument);
-            if (pBeatCount % 2 == 0) {
+            if (beatCount % 2 == 0) {
                 Tone.note_on(note, 35);
                 playing = true;
-            } else if (pBeatCount % 2 == 1) {
+            } else if (beatCount % 2 == 1) {
                 Tone.note_off(note);
                 playing = false;
             }

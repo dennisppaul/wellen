@@ -30,8 +30,8 @@ void draw() {
     DSP.draw_buffers(g, width, height);
 }
 
-void audioblock(float[] pOutputSignal, float[] pInputSignal) {
+void audioblock(float[] output_signal, float[] pInputSignal) {
     for (int i = 0; i < pInputSignal.length; i++) {
-        pOutputSignal[i] = pInputSignal[i] * 0.25f;
+        output_signal[i] = pInputSignal[i] * 0.25f;
     }
 }

@@ -51,8 +51,8 @@ public class ExampleDaisySPSyntheticSnareAndBass extends PApplet {
         }
     }
 
-    public void beat(int pBeatCount) {
-        mBeatCount = pBeatCount;
+    public void beat(int beatCount) {
+        mBeatCount = beatCount;
         if (mBeatCount % 2 == 1) {
             mSnareDrum.Trig();
         } else {
@@ -60,9 +60,9 @@ public class ExampleDaisySPSyntheticSnareAndBass extends PApplet {
         }
     }
 
-    public void audioblock(float[] pOutputSignal) {
-        for (int i = 0; i < pOutputSignal.length; i++) {
-            pOutputSignal[i] = mSnareDrum.Process() + mBassDrum.Process();
+    public void audioblock(float[] output_signal) {
+        for (int i = 0; i < output_signal.length; i++) {
+            output_signal[i] = mSnareDrum.Process() + mBassDrum.Process();
         }
     }
 

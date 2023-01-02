@@ -113,21 +113,21 @@ public class TestVowelizer extends PApplet {
         }
     }
 
-    public void audioblock(float[] pOutputSignal) {
-        for (int i = 0; i < pOutputSignal.length; i++) {
-            pOutputSignal[i] = mOsc.output();
+    public void audioblock(float[] output_signal) {
+        for (int i = 0; i < output_signal.length; i++) {
+            output_signal[i] = mOsc.output();
 
-            filt1.Process(pOutputSignal[i]);
-            filt2.Process(pOutputSignal[i]);
-            filt3.Process(pOutputSignal[i]);
+            filt1.Process(output_signal[i]);
+            filt2.Process(output_signal[i]);
+            filt3.Process(output_signal[i]);
 
             float band1 = filt1.Band();
             float band2 = filt2.Band();
             float band3 = filt3.Band();
 
-            pOutputSignal[i] = (band1 + band2 + band3);
-            pOutputSignal[i] *= 0.5f;
-            pOutputSignal[i] *= mADSR.output();
+            output_signal[i] = (band1 + band2 + band3);
+            output_signal[i] *= 0.5f;
+            output_signal[i] *= mADSR.output();
         }
     }
 

@@ -55,10 +55,10 @@ public class ExampleDaisySPAdEnv extends PApplet {
         mAdEnv.SetMax(map(mouseY, 0, height, 55, 880));
     }
 
-    public void audioblock(float[] pOutputSignal) {
-        for (int i = 0; i < pOutputSignal.length; i++) {
+    public void audioblock(float[] output_signal) {
+        for (int i = 0; i < output_signal.length; i++) {
             mOscillator.SetFreq(mAdEnv.Process());
-            pOutputSignal[i] = mOscillator.Process() * mAdsr.Process(mousePressed);
+            output_signal[i] = mOscillator.Process() * mAdsr.Process(mousePressed);
         }
     }
 

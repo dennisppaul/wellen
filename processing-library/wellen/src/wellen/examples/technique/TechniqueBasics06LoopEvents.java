@@ -12,24 +12,24 @@ public class TechniqueBasics06LoopEvents extends PApplet {
      * this example demonstrates how to use loop events to create a composition.
      */
 
-    private final Loop mLoopA = new Loop();
-    private final Loop mLoopB = new Loop();
-    private final Loop mLoopC = new Loop();
+    private final Loop fLoopA = new Loop();
+    private final Loop fLoopB = new Loop();
+    private final Loop fLoopC = new Loop();
 
     public void settings() {
         size(640, 480);
     }
 
     public void setup() {
-        Beat.start(this, 300);
-
-        mLoopA.set_length(3);
-        mLoopB.set_length(4);
-        mLoopC.set_length(5);
+        fLoopA.set_length(3);
+        fLoopB.set_length(4);
+        fLoopC.set_length(5);
 
         Tone.instrument(0).set_pan(-0.5f);
         Tone.instrument(1).set_pan(0.0f);
         Tone.instrument(2).set_pan(0.5f);
+
+        Beat.start(this, 300);
     }
 
     public void draw() {
@@ -47,19 +47,19 @@ public class TechniqueBasics06LoopEvents extends PApplet {
 
     }
 
-    public void beat(int pBeat) {
+    public void beat(int beat) {
         Tone.instrument(0);
-        if (mLoopA.event(pBeat, 0)) {
+        if (fLoopA.event(beat, 0)) {
             Tone.note_on(36, 80, 0.1f);
         }
 
         Tone.instrument(1);
-        if (mLoopB.event(pBeat, 1)) {
+        if (fLoopB.event(beat, 1)) {
             Tone.note_on(48, 70, 0.1f);
         }
 
         Tone.instrument(2);
-        if (mLoopC.event(pBeat, 2)) {
+        if (fLoopC.event(beat, 2)) {
             Tone.note_on(60, 40, 0.1f);
         }
     }

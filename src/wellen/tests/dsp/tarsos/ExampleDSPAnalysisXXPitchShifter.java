@@ -37,20 +37,20 @@ public class ExampleDSPAnalysisXXPitchShifter extends PApplet {
         DSP.draw_buffers(g, width, height);
     }
 
-    public void audioblock(float[] pOutputSignal, float[] pInputSignal) {
+    public void audioblock(float[] output_signal, float[] pInputSignal) {
         float[] mBuffer = new float[pInputSignal.length];
         Wellen.copy(pInputSignal, mBuffer);
 
 //        fPitchShifter.process(mBuffer);
         fPitchShifter.smbPitchShift(fPitchShiftFactor,
-                                    pOutputSignal.length,
+                                    output_signal.length,
                                     1024,
                                     32,
                                     Wellen.DEFAULT_SAMPLING_RATE,
                                     mBuffer,
-                                    pOutputSignal);
+                                    output_signal);
 
-        Wellen.copy(mBuffer, pOutputSignal);
+        Wellen.copy(mBuffer, output_signal);
     }
 
     public static void main(String[] args) {

@@ -54,8 +54,8 @@ void mouseMoved() {
     mWavetable.set_frequency(1.0f / map(mouseX, 0, width, 0.1f, 5.0f));
 }
 
-void audioblock(float[] pOutputSignal) {
-    for (int i = 0; i < pOutputSignal.length; i++) {
+void audioblock(float[] output_signal) {
+    for (int i = 0; i < output_signal.length; i++) {
         mSignal = mWavetable.output();
         mTrigger.input(mSignal);
     }

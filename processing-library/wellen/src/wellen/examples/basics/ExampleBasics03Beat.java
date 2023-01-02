@@ -32,8 +32,8 @@ public class ExampleBasics03Beat extends PApplet {
         ellipse(width * 0.5f, height * 0.5f, width * mScale, width * mScale);
     }
 
-    public void beat(int pBeatCount) {
-        mBeatCount = pBeatCount;
+    public void beat(int beatCount) {
+        mBeatCount = beatCount;
         int mNote = mNotes[mBeatCount % mNotes.length];
         Tone.note_on(mNote, 100);
     }

@@ -47,15 +47,15 @@ void mouseMoved() {
     }
 }
 
-void beat(int pBeatCount) {
+void beat(int beatCount) {
     mPluck.Trig();
     mPluck.SetFreq(DaisySP.mtof(mMIDINotes[mMIDINoteCounter]));
     mMIDINoteCounter++;
     mMIDINoteCounter %= mMIDINotes.length;
 }
 
-void audioblock(float[] pOutputSignal) {
-    for (int i = 0; i < pOutputSignal.length; i++) {
-        pOutputSignal[i] = mFlanger.Process(mPluck.Process());
+void audioblock(float[] output_signal) {
+    for (int i = 0; i < output_signal.length; i++) {
+        output_signal[i] = mFlanger.Process(mPluck.Process());
     }
 }

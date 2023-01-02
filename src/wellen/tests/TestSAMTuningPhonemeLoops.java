@@ -184,9 +184,9 @@ public class TestSAMTuningPhonemeLoops extends PApplet {
         mSampler.forward();
     }
 
-    public void audioblock(float[] pOutputSignal) {
-        for (int i = 0; i < pOutputSignal.length; i++) {
-            pOutputSignal[i] = mSampler.output() * 0.1f;
+    public void audioblock(float[] output_signal) {
+        for (int i = 0; i < output_signal.length; i++) {
+            output_signal[i] = mSampler.output() * 0.1f;
         }
     }
 

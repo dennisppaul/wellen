@@ -51,21 +51,21 @@ void mouseMoved() {
     mFreqOffset = map(mouseX, 0, width, 0.0f, 3.0f);
 }
 
-void beat(int pBeat) {
-    if (pBeat % 2 == 0) {
+void beat(int beat) {
+    if (beat % 2 == 0) {
         mADSR.start();
-    } else if (pBeat % 2 == 1) {
+    } else if (beat % 2 == 1) {
         mADSR.stop();
     }
-    if (pBeat % 16 == 0) {
+    if (beat % 16 == 0) {
         mFreqNotesCounter++;
         mFreqNotesCounter %= mFreqNotes.length;
     }
-    if (pBeat % 8 == 0) {
+    if (beat % 8 == 0) {
         mVCO1.set_frequency(mBaseFrequency * mFreqNotes[mFreqNotesCounter]);
         mVCO2.set_frequency(mBaseFrequency * mFreqNotes[mFreqNotesCounter] + mFreqOffset);
     }
-    if (pBeat % 8 == 4) {
+    if (beat % 8 == 4) {
         mVCO1.set_frequency(mBaseFrequency * mFreqNotes[mFreqNotesCounter] * 2);
         mVCO2.set_frequency((mBaseFrequency * mFreqNotes[mFreqNotesCounter] + mFreqOffset) * 2);
     }
@@ -112,35 +112,35 @@ void keyPressed() {
     }
 }
 
-void audioblock(float[] pOutputSignalLeft, float[] pOutputSignalRight) {
-    for (int i = 0; i < pOutputSignalLeft.length; i++) {
+void audioblock(float[] output_signalLeft, float[] output_signalRight) {
+    for (int i = 0; i < output_signalLeft.length; i++) {
         final float a = mVCO1.output();
         final float b = mVCO2.output();
         final float mADSRValue = mADSR.output();
         if (mousePressed) {
-            pOutputSignalLeft[i] = a + b;
-            pOutputSignalLeft[i] *= 0.5f;
-            pOutputSignalLeft[i] *= mADSRValue;
+            output_signalLeft[i] = a + b;
+            output_signalLeft[i] *= 0.5f;
+            output_signalLeft[i] *= mADSRValue;
         } else {
-            pOutputSignalLeft[i] = a * mADSRValue;
-            pOutputSignalRight[i] = b * mADSRValue;
+            output_signalLeft[i] = a * mADSRValue;
+            output_signalRight[i] = b * mADSRValue;
         }
     }
     if (mEnableDistortion) {
         if (mousePressed) {
-            mNewDist.out(pOutputSignalLeft);
+            mNewDist.out(output_signalLeft);
         } else {
-            mNewDist.out(pOutputSignalLeft, pOutputSignalRight);
+            mNewDist.out(output_signalLeft, output_signalRight);
         }
     }
-    for (int i = 0; i < pOutputSignalLeft.length; i++) {
-        pOutputSignalLeft[i] = Wellen.clamp(pOutputSignalLeft[i]);
-        pOutputSignalLeft[i] *= mMasterVolume;
+    for (int i = 0; i < output_signalLeft.length; i++) {
+        output_signalLeft[i] = Wellen.clamp(output_signalLeft[i]);
+        output_signalLeft[i] *= mMasterVolume;
         if (mousePressed) {
-            pOutputSignalRight[i] = pOutputSignalLeft[i];
+            output_signalRight[i] = output_signalLeft[i];
         } else {
-            pOutputSignalRight[i] = Wellen.clamp(pOutputSignalRight[i]);
-            pOutputSignalRight[i] *= mMasterVolume;
+            output_signalRight[i] = Wellen.clamp(output_signalRight[i]);
+            output_signalRight[i] *= mMasterVolume;
         }
     }
 }

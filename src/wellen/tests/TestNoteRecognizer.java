@@ -56,14 +56,14 @@ public class TestNoteRecognizer extends PApplet {
         Tone.instrument().set_amplitude(mAmp);
     }
 
-    public void audioblock(float[] pOutputSignalLeft, float[] pOutputSignalRight, float[] pInputSignal) {
+    public void audioblock(float[] output_signalLeft, float[] output_signalRight, float[] pInputSignal) {
         if (!mousePressed) {
-            mToneEngine.audioblock(pOutputSignalLeft, pOutputSignalRight);
+            mToneEngine.audioblock(output_signalLeft, output_signalRight);
         } else {
-            memcpy(pOutputSignalLeft, pInputSignal, pInputSignal.length);
-            memcpy(pOutputSignalRight, pInputSignal, pInputSignal.length);
+            memcpy(output_signalLeft, pInputSignal, pInputSignal.length);
+            memcpy(output_signalRight, pInputSignal, pInputSignal.length);
         }
-        mRecognize.schmittFloat(pOutputSignalLeft, pOutputSignalRight);
+        mRecognize.schmittFloat(output_signalLeft, output_signalRight);
     }
 
     public static void main(String[] args) {

@@ -56,19 +56,19 @@ void keyPressed() {
     }
 }
 
-void audioblock(float[] pOutputSignal, float[] pInputSignal) {
-    RRUtilities.memcpy(pOutputSignal, pInputSignal, pInputSignal.length);
+void audioblock(float[] output_signal, float[] pInputSignal) {
+    RRUtilities.memcpy(output_signal, pInputSignal, pInputSignal.length);
     for (int i = 0; i < mCarrier.length; i++) {
         mCarrier[i] = mVCO.output();
     }
     if (mEnableVocoder) {
-        mVocoder.out(pOutputSignal, new float[Wellen.DEFAULT_AUDIOBLOCK_SIZE]);
+        mVocoder.out(output_signal, new float[Wellen.DEFAULT_AUDIOBLOCK_SIZE]);
     }
-    for (int i = 0; i < pOutputSignal.length; i++) {
+    for (int i = 0; i < output_signal.length; i++) {
         if (mEnableVocoder) {
-            pOutputSignal[i] *= 32;
+            output_signal[i] *= 32;
         }
-        pOutputSignal[i] = Wellen.clamp(pOutputSignal[i]);
-        pOutputSignal[i] *= mMasterVolume;
+        output_signal[i] = Wellen.clamp(output_signal[i]);
+        output_signal[i] *= mMasterVolume;
     }
 }

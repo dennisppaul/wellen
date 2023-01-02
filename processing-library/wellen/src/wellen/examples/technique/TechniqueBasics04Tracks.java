@@ -12,8 +12,8 @@ public class TechniqueBasics04Tracks extends PApplet {
      * this example demonstrates how to build a composition with tracks.
      */
 
-    private final Track mTrack = new Track();
-    private final ModuleToneEngine mModuleBleepBleep = new ModuleToneEngine();
+    private final Track fTrack = new Track();
+    private final ModuleToneEngine fModuleBleepBleep = new ModuleToneEngine();
     private static final int PPQN = 24;
 
     public void settings() {
@@ -21,7 +21,7 @@ public class TechniqueBasics04Tracks extends PApplet {
     }
 
     public void setup() {
-        mTrack.tracks().add(mModuleBleepBleep);
+        fTrack.tracks().add(fModuleBleepBleep);
         Beat.start(this, 120 * PPQN);
     }
 
@@ -34,8 +34,8 @@ public class TechniqueBasics04Tracks extends PApplet {
         Wellen.draw_tone_stereo(g, 128, 96);
     }
 
-    public void beat(int pBeat) {
-        mTrack.update(pBeat);
+    public void beat(int beat) {
+        fTrack.update(beat);
     }
 
     private static class ModuleToneEngine extends Track {

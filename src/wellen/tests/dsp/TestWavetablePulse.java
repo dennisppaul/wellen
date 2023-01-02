@@ -41,12 +41,12 @@ public class TestWavetablePulse extends PApplet {
         DSP.draw_buffers(g, width * 0.5f, height * 0.5f);
     }
 
-    public void audioblock(float[] pOutputSignal) {
-        for (int i = 0; i < pOutputSignal.length; i++) {
-            pOutputSignal[i] = fWavetable.output();
+    public void audioblock(float[] output_signal) {
+        for (int i = 0; i < output_signal.length; i++) {
+            output_signal[i] = fWavetable.output();
         }
-        fSonogram.process(pOutputSignal);
-        fFrequencyDistribution.process(pOutputSignal);
+        fSonogram.process(output_signal);
+        fFrequencyDistribution.process(output_signal);
     }
 
     public void mouseMoved() {

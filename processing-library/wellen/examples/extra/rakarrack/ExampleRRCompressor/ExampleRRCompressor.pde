@@ -53,13 +53,13 @@ void keyPressed() {
     }
 }
 
-void audioblock(float[] pOutputSignal, float[] pInputSignal) {
-    RRUtilities.memcpy(pOutputSignal, pInputSignal, pInputSignal.length);
+void audioblock(float[] output_signal, float[] pInputSignal) {
+    RRUtilities.memcpy(output_signal, pInputSignal, pInputSignal.length);
     if (mEnableCompressor) {
-        mCompressor.out(pOutputSignal, new float[Wellen.DEFAULT_AUDIOBLOCK_SIZE]);
+        mCompressor.out(output_signal, new float[Wellen.DEFAULT_AUDIOBLOCK_SIZE]);
     }
-    for (int i = 0; i < pOutputSignal.length; i++) {
-        pOutputSignal[i] = Wellen.clamp(pOutputSignal[i]);
-        pOutputSignal[i] *= mMasterVolume;
+    for (int i = 0; i < output_signal.length; i++) {
+        output_signal[i] = Wellen.clamp(output_signal[i]);
+        output_signal[i] *= mMasterVolume;
     }
 }

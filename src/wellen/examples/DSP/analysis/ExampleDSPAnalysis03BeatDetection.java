@@ -8,7 +8,9 @@ import wellen.Wellen;
 import wellen.analysis.BeatDetection;
 import wellen.dsp.DSP;
 
-public class ExampleDSPAnalysis01BeatDetection extends PApplet {
+public class ExampleDSPAnalysis03BeatDetection extends PApplet {
+
+    //@add import wellen.analysis.*;
 
     /*
      * this example demonstrates how to detect a beat from an input signal.
@@ -81,7 +83,7 @@ public class ExampleDSPAnalysis01BeatDetection extends PApplet {
         System.out.println(fBeatDetection.get_sensitivity());
     }
 
-    public void beat(int pBeatCount) {
+    public void beat(int beatCount) {
         fBeatDetectedPattern[fCurrentBeat] = fBeatDetected;
         if (fBeatDetected) {
             fBeatDetected = false;
@@ -99,17 +101,17 @@ public class ExampleDSPAnalysis01BeatDetection extends PApplet {
         }
     }
 
-    public void audioblock(float[] pOutputSignal) {
-        fToneEngine.audioblock(pOutputSignal);
+    public void audioblock(float[] output_signal) {
+        fToneEngine.audioblock(output_signal);
 
         /* detect pitch and set oscillator */
-        fBeatDetection.process(pOutputSignal);
+        fBeatDetection.process(output_signal);
         if (fBeatDetection.get_time_stamp() > 0) {
             fBeatDetected = true;
         }
     }
 
     public static void main(String[] args) {
-        PApplet.main(ExampleDSPAnalysis01BeatDetection.class.getName());
+        PApplet.main(ExampleDSPAnalysis03BeatDetection.class.getName());
     }
 }

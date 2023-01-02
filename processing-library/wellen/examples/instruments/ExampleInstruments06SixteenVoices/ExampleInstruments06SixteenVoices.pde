@@ -27,9 +27,9 @@ void draw() {
     ellipse(width * 0.5f, height * 0.5f, width * mScale, width * mScale);
 }
 
-void beat(int pBeatCount) {
-    mBeatCount = pBeatCount;
-    int mInstrument = 15 - pBeatCount % 16;
+void beat(int beatCount) {
+    mBeatCount = beatCount;
+    int mInstrument = 15 - beatCount % 16;
     Tone.instrument(mInstrument);
     if (Tone.is_playing()) {
         Tone.note_off();

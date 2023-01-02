@@ -52,8 +52,8 @@ public class TestDSPAtoms extends PApplet {
         }
     }
 
-    public void audioblock(float[] pOutputSignalLeft, float[] pOutputSignalRight) {
-        Atoms.osci(pOutputSignalRight,
+    public void audioblock(float[] output_signalLeft, float[] output_signalRight) {
+        Atoms.osci(output_signalRight,
                    osc2.amplitude,
                    osc2.frequency,
                    osc2.wavetable_data,
@@ -63,12 +63,12 @@ public class TestDSPAtoms extends PApplet {
                    osc2.vecsize,
                    osc2.sr);
 
-        flanger1.process(delay1.process(adsr1.process(osc1.process(pOutputSignalLeft))));
+        flanger1.process(delay1.process(adsr1.process(osc1.process(output_signalLeft))));
 
-        osc2.process(pOutputSignalRight);
-        adsr2.process(pOutputSignalRight);
-        delay2.process(pOutputSignalRight);
-        flanger2.process(pOutputSignalRight);
+        osc2.process(output_signalRight);
+        adsr2.process(output_signalRight);
+        delay2.process(output_signalRight);
+        flanger2.process(output_signalRight);
     }
 
     public static void main(String[] args) {

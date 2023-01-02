@@ -159,12 +159,12 @@ public class Reverb implements DSPNodeProcessSignal, DSPNodeProcess, EffectStere
         wet = new GlideVar(fslider2, largest_diff);
     }
 
-    public void out(float[] pOutputSignalLeft, float[] pOutputSignalRight) {
-        process(pOutputSignalLeft, pOutputSignalRight, pOutputSignalLeft, pOutputSignalRight);
+    public void out(float[] output_signalLeft, float[] output_signalRight) {
+        process(output_signalLeft, output_signalRight, output_signalLeft, output_signalRight);
     }
 
-    public void process(float[] pOutputSignalLeft,
-                        float[] pOutputSignalRight,
+    public void process(float[] output_signalLeft,
+                        float[] output_signalRight,
                         float[] pInputSignalLeft,
                         float[] pInputSignalRight) {
         fslider0 = damp.get();
@@ -220,7 +220,7 @@ public class Reverb implements DSPNodeProcessSignal, DSPNodeProcess, EffectStere
             fVec11[IOTA & 255] = (fRec3 + (0.5f * fRec0_1));
             fRec0_0 = fVec11[(IOTA - 225) & 255];
             float fRec1 = (fRec0_1 - fRec3);
-            pOutputSignalLeft[i] = ((fSlow4 * fTemp1) + (fSlow3 * fRec1));
+            output_signalLeft[i] = ((fSlow4 * fTemp1) + (fSlow3 * fRec1));
             fRec33_0 = ((fSlow1 * fRec32_1) + (fSlow0 * fRec33_1));
             fVec12[p] = (fTemp2 + (fSlow2 * fRec33_0));
             fRec32_0 = fVec12[(IOTA - 1640) & 2047];
@@ -259,7 +259,7 @@ public class Reverb implements DSPNodeProcessSignal, DSPNodeProcess, EffectStere
             fVec23[IOTA & 255] = (fRec27 + (0.5f * fRec24_1));
             fRec24_0 = fVec23[(IOTA - 248) & 255];
             float fRec25 = (fRec24_1 - fRec27);
-            pOutputSignalRight[i] = ((fSlow4 * fTemp0) + (fSlow3 * fRec25));
+            output_signalRight[i] = ((fSlow4 * fTemp0) + (fSlow3 * fRec25));
             // post processing
             fRec24_1 = fRec24_0;
             fRec26_1 = fRec26_0;

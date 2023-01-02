@@ -42,14 +42,14 @@ public class ExampleDSP11BeatDSP extends PApplet {
         mBeat.set_bpm(map(mouseX, 0, width, 1, 480));
     }
 
-    public void audioblock(float[] pOutputSignal) {
-        for (int i = 0; i < pOutputSignal.length; i++) {
+    public void audioblock(float[] output_signal) {
+        for (int i = 0; i < output_signal.length; i++) {
             mBeat.tick();
         }
     }
 
-    public void beat(int pBeatCount) {
-        int mNote = mNotes[pBeatCount % mNotes.length];
+    public void beat(int beatCount) {
+        int mNote = mNotes[beatCount % mNotes.length];
         Tone.note_on(mNote, 100, 0.1f);
     }
 

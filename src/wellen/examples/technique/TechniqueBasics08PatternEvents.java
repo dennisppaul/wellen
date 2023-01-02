@@ -13,22 +13,20 @@ import wellen.dsp.Reverb;
 
 import static wellen.Wellen.LOOP_INFINITE;
 
-public class TechniqueBasics08Patterns extends PApplet {
+public class TechniqueBasics08PatternEvents extends PApplet {
 
     /*
-     * TODO(this has not been tested and may not be working properly)
      * this example demonstrates how to use patterns to create events.
      */
 
-    private final Pattern mPatternA = new Pattern();
-    private final Pattern mPatternB = new Pattern();
-    private final Pattern mPatternC = new Pattern();
-    private final Sequencer<Integer> mSequenceA = new Sequencer<>(0, 1, 3, 5);
-    private final Sequencer<Integer> mSequenceB = new Sequencer<>(0, 1, 3, 5);
-    private final Sequencer<Integer> mSequenceC = new Sequencer<>(0, 1, 3, 5, 5, 3, 1, 0);
-    private int mEventPositionPatternC;
-
-    private int mBeat = 0;
+    private final Pattern fPatternA = new Pattern();
+    private final Pattern fPatternB = new Pattern();
+    private final Pattern fPatternC = new Pattern();
+    private final Sequencer<Integer> fSequenceA = new Sequencer<>(0, 1, 3, 5);
+    private final Sequencer<Integer> fSequenceB = new Sequencer<>(0, 1, 3, 5);
+    private final Sequencer<Integer> fSequenceC = new Sequencer<>(0, 1, 3, 5, 5, 3, 1, 0);
+    private int fEventPositionPatternC;
+    private int fBeat = 0;
 
     public void settings() {
         size(640, 480);
@@ -39,18 +37,18 @@ public class TechniqueBasics08Patterns extends PApplet {
         Reverb mReverb = new Reverb();
         mToneEngine.add_effect(mReverb);
 
-        mPatternA.set_in_point(0);
-        mPatternA.set_length(8);
-        mPatternA.set_loop(LOOP_INFINITE);
+        fPatternA.set_in_point(0);
+        fPatternA.set_length(8);
+        fPatternA.set_loop(LOOP_INFINITE);
 
-        mPatternB.set_in_point(2);
-        mPatternB.set_length(4);
-        mPatternB.set_loop(LOOP_INFINITE);
+        fPatternB.set_in_point(2);
+        fPatternB.set_length(4);
+        fPatternB.set_loop(LOOP_INFINITE);
 
-        mPatternC.set_in_point(0);
-        mPatternC.set_length(1);
-        mPatternC.set_loop(16);
-        mEventPositionPatternC = 0;
+        fPatternC.set_in_point(0);
+        fPatternC.set_length(1);
+        fPatternC.set_loop(16);
+        fEventPositionPatternC = 0;
 
         Tone.instrument(0).set_pan(-0.5f);
         Tone.instrument(2).set_pan(0.0f);
@@ -74,41 +72,41 @@ public class TechniqueBasics08Patterns extends PApplet {
     }
 
     public void keyPressed() {
-        int mQuantizedInpoint = (mBeat / 8) * 8 + 8;
-        mPatternC.set_in_point(mQuantizedInpoint);
+        int mQuantizedInpoint = (fBeat / 8) * 8 + 8;
+        fPatternC.set_in_point(mQuantizedInpoint);
         switch (key) {
             case '1':
-                mPatternC.set_length(1);
-                mPatternC.set_loop(16);
-                mEventPositionPatternC = 0;
+                fPatternC.set_length(1);
+                fPatternC.set_loop(16);
+                fEventPositionPatternC = 0;
                 break;
             case '2':
-                mPatternC.set_length(4);
-                mPatternC.set_loop(8);
-                mEventPositionPatternC = 2;
+                fPatternC.set_length(4);
+                fPatternC.set_loop(8);
+                fEventPositionPatternC = 2;
                 break;
         }
-        mSequenceC.reset();
+        fSequenceC.reset();
     }
 
-    public void beat(int pBeat) {
-        mBeat = pBeat;
+    public void beat(int beat) {
+        fBeat = beat;
 
         Tone.instrument(0);
-        if (mPatternA.event(pBeat, 0)) {
-            int mNoteOffset = mSequenceA.step();
+        if (fPatternA.event(beat, 0)) {
+            int mNoteOffset = fSequenceA.step();
             Tone.note_on(Scale.get_note(Scale.MINOR_PENTATONIC, Note.NOTE_C2, mNoteOffset), 100, 0.1f);
         }
 
         Tone.instrument(1);
-        if (mPatternB.event(pBeat, 2)) {
-            int mNoteOffset = mSequenceB.step();
+        if (fPatternB.event(beat, 2)) {
+            int mNoteOffset = fSequenceB.step();
             Tone.note_on(Scale.get_note(Scale.MINOR_PENTATONIC, Note.NOTE_C3, mNoteOffset), 70, 0.1f);
         }
 
         Tone.instrument(2);
-        if (mPatternC.event(pBeat, mEventPositionPatternC)) {
-            int mNoteOffset = mSequenceC.step();
+        if (fPatternC.event(beat, fEventPositionPatternC)) {
+            int mNoteOffset = fSequenceC.step();
             if (mNoteOffset != -1) {
                 Tone.note_on(Scale.get_note(Scale.MINOR_PENTATONIC, Note.NOTE_C4, mNoteOffset), 40, 0.05f);
             }
@@ -116,6 +114,6 @@ public class TechniqueBasics08Patterns extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main(TechniqueBasics08Patterns.class.getName());
+        PApplet.main(TechniqueBasics08PatternEvents.class.getName());
     }
 }

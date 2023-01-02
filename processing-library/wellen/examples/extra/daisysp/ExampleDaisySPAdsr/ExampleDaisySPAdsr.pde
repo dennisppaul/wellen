@@ -36,8 +36,8 @@ void mouseMoved() {
     mAdsr.SetSustainLevel(map(mouseY, 0, height, 0, 1));
 }
 
-void audioblock(float[] pOutputSignal) {
-    for (int i = 0; i < pOutputSignal.length; i++) {
-        pOutputSignal[i] = mOscillator.Process() * mAdsr.Process(mousePressed);
+void audioblock(float[] output_signal) {
+    for (int i = 0; i < output_signal.length; i++) {
+        output_signal[i] = mOscillator.Process() * mAdsr.Process(mousePressed);
     }
 }

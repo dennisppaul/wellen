@@ -38,9 +38,9 @@ public class ExampleExternal06SpeechSynthesis extends PApplet {
         ellipse(width * 0.5f, height * 0.5f, width * mScale, width * mScale);
     }
 
-    public void beat(int pBeatCount) {
-        mBeatCount = pBeatCount;
-        int mWordIndex = pBeatCount % mWords.length;
+    public void beat(int beatCount) {
+        mBeatCount = beatCount;
+        int mWordIndex = beatCount % mWords.length;
         mSpeech.say("Daniel", mWords[mWordIndex]);
     }
 

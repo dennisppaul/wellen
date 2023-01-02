@@ -44,8 +44,8 @@ void mouseMoved() {
     }
 }
 
-void beat(int pBeatCount) {
-    mBeatCount = pBeatCount;
+void beat(int beatCount) {
+    mBeatCount = beatCount;
     if (mBeatCount % 2 == 1) {
         mSnareDrum.Trig();
     } else {
@@ -53,8 +53,8 @@ void beat(int pBeatCount) {
     }
 }
 
-void audioblock(float[] pOutputSignal) {
-    for (int i = 0; i < pOutputSignal.length; i++) {
-        pOutputSignal[i] = mBassDrum.Process() * 1.7f + mSnareDrum.Process() * 0.3f;
+void audioblock(float[] output_signal) {
+    for (int i = 0; i < output_signal.length; i++) {
+        output_signal[i] = mBassDrum.Process() * 1.7f + mSnareDrum.Process() * 0.3f;
     }
 }

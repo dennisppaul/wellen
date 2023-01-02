@@ -86,7 +86,7 @@ public class AppSequenceRecorder extends PApplet {
         }
     }
 
-    public void beat(int pBeat) {
+    public void beat(int beat) {
         /* playback next note */
         int mStep = mSequence.step();
         if (mStep != OFF) {

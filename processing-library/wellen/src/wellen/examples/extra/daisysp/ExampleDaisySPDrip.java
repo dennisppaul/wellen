@@ -33,13 +33,13 @@ public class ExampleDaisySPDrip extends PApplet {
         DSP.draw_buffers(g, width, height);
     }
 
-    public void beat(int pBeatCount) {
+    public void beat(int beatCount) {
         mPluck.Trig();
     }
 
-    public void audioblock(float[] pOutputSignal) {
-        for (int i = 0; i < pOutputSignal.length; i++) {
-            pOutputSignal[i] = mPluck.Process();
+    public void audioblock(float[] output_signal) {
+        for (int i = 0; i < output_signal.length; i++) {
+            output_signal[i] = mPluck.Process();
         }
     }
 

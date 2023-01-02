@@ -28,14 +28,14 @@ public class ExampleExternal02MIDIClock extends PApplet {
         background(mBeatMIDI.running() ? mColor : 0);
     }
 
-    public void beat(int pBeat) {
-        /* MIDI clock runs at 24 *pulses per quarter* note (PPQ), therefore `pBeat % 12` triggers eighth note. */
-        if (pBeat % 12 == 0) {
+    public void beat(int beat) {
+        /* MIDI clock runs at 24 *pulses per quarter* note (PPQ), therefore `beat % 12` triggers eighth note. */
+        if (beat % 12 == 0) {
             mColor = color(random(127, 255), random(127, 255), random(127, 255));
-            int mOffset = 4 * ((pBeat / 24) % 8);
+            int mOffset = 4 * ((beat / 24) % 8);
             Tone.note_on(36 + mOffset, 90);
             System.out.println(mBeatMIDI.bpm());
-        } else if (pBeat % 12 == 6) {
+        } else if (beat % 12 == 6) {
             Tone.note_off();
         }
     }

@@ -1,5 +1,5 @@
 LIB_NAME=wellen
-IO_EXAMPLE_PATHS=( examples/basics examples/DSP examples/external examples/instruments examples/technique examples/extra/daisysp examples/extra/rakarrack )
+IO_EXAMPLE_PATHS=( examples/basics examples/DSP examples/DSP/analysis examples/external examples/instruments examples/technique examples/extra/daisysp examples/extra/rakarrack )
 PROJECT_PACKAGE=wellen
 SKETCH_IMPORTS=( wellen.dsp.* )
 BASE_COLOR=59

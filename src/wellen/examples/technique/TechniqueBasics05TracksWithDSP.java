@@ -22,8 +22,8 @@ public class TechniqueBasics05TracksWithDSP extends PApplet {
      * tracks when <code>output_signal()</code> is called.
      */
 
-    private final Track mMaster = new Track();
-    private final ModuleToneEngine mModuleBleepBleep = new ModuleToneEngine();
+    private final Track fMaster = new Track();
+    private final ModuleToneEngine fModuleBleepBleep = new ModuleToneEngine();
     private static final int PPQN = 24;
 
     public void settings() {
@@ -31,8 +31,8 @@ public class TechniqueBasics05TracksWithDSP extends PApplet {
     }
 
     public void setup() {
-        mMaster.tracks().add(mModuleBleepBleep);
-        mMaster.tracks().add(new ModuleOhhhhUhh());
+        fMaster.tracks().add(fModuleBleepBleep);
+        fMaster.tracks().add(new ModuleOhhhhUhh());
         Beat.start(this, 120 * PPQN);
         DSP.start(this, 2);
     }
@@ -42,15 +42,15 @@ public class TechniqueBasics05TracksWithDSP extends PApplet {
         DSP.draw_buffers(g, width, height);
     }
 
-    public void beat(int pBeat) {
-        mMaster.update(pBeat);
+    public void beat(int beat) {
+        fMaster.update(beat);
     }
 
-    public void audioblock(float[] pOutputSignalLeft, float[] pOutputSignalRight) {
-        for (int i = 0; i < pOutputSignalLeft.length; i++) {
-            Signal s = mMaster.output_signal();
-            pOutputSignalLeft[i] = s.left();
-            pOutputSignalRight[i] = s.right();
+    public void audioblock(float[] output_signalLeft, float[] output_signalRight) {
+        for (int i = 0; i < output_signalLeft.length; i++) {
+            Signal s = fMaster.output_signal();
+            output_signalLeft[i] = s.left();
+            output_signalRight[i] = s.right();
         }
     }
 

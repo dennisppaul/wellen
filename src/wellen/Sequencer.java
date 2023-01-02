@@ -39,8 +39,8 @@ public class Sequencer<T> {
     }
 
     @SafeVarargs
-    public Sequencer(T... pData) {
-        fSequence = pData;
+    public Sequencer(T... data) {
+        fSequence = data;
         reset();
     }
 

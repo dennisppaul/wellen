@@ -91,34 +91,34 @@ public class DSP implements AudioBufferRenderer {
         }
     }
 
-    public void audioblock(float[][] pOutputSignal, float[][] pInputSignal) {
+    public void audioblock(float[][] output_signal, float[][] pInputSignal) {
         try {
             Arrays.fill(fCachedBuffers, null);
             if (mNumberOutputChannels == 1 && mNumberInputChannels == 0) {
                 //noinspection PrimitiveArrayArgumentToVarargsMethod
-                mMethod.invoke(mListener, pOutputSignal[0]);
-                fCachedBuffers[OUTPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(pOutputSignal[0]) : pOutputSignal[0];
+                mMethod.invoke(mListener, output_signal[0]);
+                fCachedBuffers[OUTPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(output_signal[0]) : output_signal[0];
             } else if (mNumberOutputChannels == 1 && mNumberInputChannels == 1) {
-                mMethod.invoke(mListener, pOutputSignal[0], pInputSignal[0]);
-                fCachedBuffers[OUTPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(pOutputSignal[0]) : pOutputSignal[0];
+                mMethod.invoke(mListener, output_signal[0], pInputSignal[0]);
+                fCachedBuffers[OUTPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(output_signal[0]) : output_signal[0];
                 fCachedBuffers[INPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(pInputSignal[0]) : pInputSignal[0];
             } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 0) {
-                mMethod.invoke(mListener, pOutputSignal[0], pOutputSignal[1]);
-                fCachedBuffers[OUTPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(pOutputSignal[0]) : pOutputSignal[0];
-                fCachedBuffers[OUTPUT_RIGHT] = COPY_CACHED_BUFFER ? Wellen.copy(pOutputSignal[1]) : pOutputSignal[1];
+                mMethod.invoke(mListener, output_signal[0], output_signal[1]);
+                fCachedBuffers[OUTPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(output_signal[0]) : output_signal[0];
+                fCachedBuffers[OUTPUT_RIGHT] = COPY_CACHED_BUFFER ? Wellen.copy(output_signal[1]) : output_signal[1];
             } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 1) {
-                mMethod.invoke(mListener, pOutputSignal[0], pOutputSignal[1], pInputSignal[0]);
-                fCachedBuffers[OUTPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(pOutputSignal[0]) : pOutputSignal[0];
-                fCachedBuffers[OUTPUT_RIGHT] = COPY_CACHED_BUFFER ? Wellen.copy(pOutputSignal[1]) : pOutputSignal[1];
+                mMethod.invoke(mListener, output_signal[0], output_signal[1], pInputSignal[0]);
+                fCachedBuffers[OUTPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(output_signal[0]) : output_signal[0];
+                fCachedBuffers[OUTPUT_RIGHT] = COPY_CACHED_BUFFER ? Wellen.copy(output_signal[1]) : output_signal[1];
                 fCachedBuffers[INPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(pInputSignal[0]) : pInputSignal[0];
             } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 2) {
-                mMethod.invoke(mListener, pOutputSignal[0], pOutputSignal[1], pInputSignal[0], pInputSignal[1]);
-                fCachedBuffers[OUTPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(pOutputSignal[0]) : pOutputSignal[0];
-                fCachedBuffers[OUTPUT_RIGHT] = COPY_CACHED_BUFFER ? Wellen.copy(pOutputSignal[1]) : pOutputSignal[1];
+                mMethod.invoke(mListener, output_signal[0], output_signal[1], pInputSignal[0], pInputSignal[1]);
+                fCachedBuffers[OUTPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(output_signal[0]) : output_signal[0];
+                fCachedBuffers[OUTPUT_RIGHT] = COPY_CACHED_BUFFER ? Wellen.copy(output_signal[1]) : output_signal[1];
                 fCachedBuffers[INPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(pInputSignal[0]) : pInputSignal[0];
                 fCachedBuffers[INPUT_RIGHT] = COPY_CACHED_BUFFER ? Wellen.copy(pInputSignal[1]) : pInputSignal[1];
             } else {
-                mMethod.invoke(mListener, pOutputSignal, pInputSignal);
+                mMethod.invoke(mListener, output_signal, pInputSignal);
             }
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException |
                  NullPointerException ex) {

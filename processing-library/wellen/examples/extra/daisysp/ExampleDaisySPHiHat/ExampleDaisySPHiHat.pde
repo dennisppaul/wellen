@@ -80,8 +80,8 @@ void mouseMoved() {
     }
 }
 
-void beat(int pBeatCount) {
-    mBeatCount = pBeatCount;
+void beat(int beatCount) {
+    mBeatCount = beatCount;
     if (mBeatCount % 13 != 0 && mBeatCount % 7 != 0) {
         if (mBeatCount % 4 == 0) {
             mHiHat.SetAccent(0.9f);
@@ -96,11 +96,11 @@ void beat(int pBeatCount) {
     }
 }
 
-void audioblock(float[] pOutputSignalLeft, float[] pOutputSignalRight) {
-    for (int i = 0; i < pOutputSignalLeft.length; i++) {
+void audioblock(float[] output_signalLeft, float[] output_signalRight) {
+    for (int i = 0; i < output_signalLeft.length; i++) {
         float s = mHiHat.Process() + mBassDrum.Process() * 0.5f;
         mReverb.Process(s);
-        pOutputSignalLeft[i] = mReverb.GetLeft();
-        pOutputSignalRight[i] = mReverb.GetRight();
+        output_signalLeft[i] = mReverb.GetLeft();
+        output_signalRight[i] = mReverb.GetRight();
     }
 }

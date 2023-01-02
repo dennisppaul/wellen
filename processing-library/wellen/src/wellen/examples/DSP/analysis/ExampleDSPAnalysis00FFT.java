@@ -1,4 +1,4 @@
-package wellen.examples.DSP;
+package wellen.examples.DSP.analysis;
 
 import processing.core.PApplet;
 import wellen.FFT;
@@ -6,25 +6,24 @@ import wellen.Wellen;
 import wellen.dsp.DSP;
 import wellen.dsp.Sampler;
 
-public class ExampleDSP19FFT extends PApplet {
+public class ExampleDSPAnalysis00FFT extends PApplet {
 
     /*
      * this example demonstrate how to perform Fast Fourier Transformation (FFT).
      */
 
     private int x = 0;
-    private Sampler mSampler;
+    private Sampler fSampler;
 
     public void settings() {
         size(640, 480);
     }
 
     public void setup() {
-
-        byte[] mData = loadBytes("../../../resources/teilchen.raw");
-        mSampler = new Sampler();
-        mSampler.load(mData);
-        mSampler.loop(true);
+        byte[] mData = loadBytes("../../../../resources/teilchen.raw");
+        fSampler = new Sampler();
+        fSampler.load(mData);
+        fSampler.loop(true);
         DSP.start(this);
         background(255);
     }
@@ -40,14 +39,14 @@ public class ExampleDSP19FFT extends PApplet {
         x %= width;
     }
 
-    public void audioblock(float[] pOutputSignal) {
-        for (int i = 0; i < pOutputSignal.length; i++) {
-            pOutputSignal[i] = mSampler.output();
+    public void audioblock(float[] output_signal) {
+        for (int i = 0; i < output_signal.length; i++) {
+            output_signal[i] = fSampler.output();
         }
-        FFT.perform_forward_transform(pOutputSignal);
+        FFT.perform_forward_transform(output_signal);
     }
 
     public static void main(String[] args) {
-        Wellen.run_sketch_with_resources(ExampleDSP19FFT.class);
+        Wellen.run_sketch_with_resources(ExampleDSPAnalysis00FFT.class);
     }
 }

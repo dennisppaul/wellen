@@ -70,16 +70,16 @@ public class TestSignalMixing extends PApplet {
         }
     }
 
-    public void audioblock(float[] pOutputSignal) {
+    public void audioblock(float[] output_signal) {
         // see http://www.vttoth.com/CMS/index.php/technical-notes/68
-        for (int i = 0; i < pOutputSignal.length; i++) {
+        for (int i = 0; i < output_signal.length; i++) {
             final float a = mVCO1.output();
             final float b = mVCO2.output();
-            pOutputSignal[i] = a + b;
-            pOutputSignal[i] *= 0.5f;
-            pOutputSignal[i] -= a * b;
-            pOutputSignal[i] = clamp(pOutputSignal[i], -1.0f, 1.0f);
-            pOutputSignal[i] *= mMasterVolume;
+            output_signal[i] = a + b;
+            output_signal[i] *= 0.5f;
+            output_signal[i] -= a * b;
+            output_signal[i] = clamp(output_signal[i], -1.0f, 1.0f);
+            output_signal[i] *= mMasterVolume;
         }
     }
 

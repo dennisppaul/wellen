@@ -35,17 +35,17 @@ public class Gain implements EffectMono, EffectStereo {
     }
 
     @Override
-    public void out(float[] pOutputSignalLeft, float[] pOutputSignalRight) {
-        for (int i = 0; i < pOutputSignalLeft.length; i++) {
-            pOutputSignalLeft[i] *= mGain;
-            if (pOutputSignalRight != null) {
-                pOutputSignalRight[i] *= mGain;
+    public void out(float[] output_signalLeft, float[] output_signalRight) {
+        for (int i = 0; i < output_signalLeft.length; i++) {
+            output_signalLeft[i] *= mGain;
+            if (output_signalRight != null) {
+                output_signalRight[i] *= mGain;
             }
         }
     }
 
     @Override
-    public void out(float[] pOutputSignal) {
-        out(pOutputSignal, null);
+    public void out(float[] output_signal) {
+        out(output_signal, null);
     }
 }

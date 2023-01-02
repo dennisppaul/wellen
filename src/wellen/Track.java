@@ -264,15 +264,15 @@ public class Track implements DSPNodeOutputSignal, Loopable {
         pSignalSum.right_add(pSignal.right() * pTrack.get_volume());
     }
 
-    private static boolean evaluate_in_outpoints(Track pTrack, int pBeat) {
+    private static boolean evaluate_in_outpoints(Track pTrack, int beat) {
         final boolean mNoInOutPoint = (pTrack.get_in_point() == NO_INPOINT && pTrack.get_out_point() == NO_OUTPOINT);
         if (mNoInOutPoint) {
             return true;
         }
-        final boolean mIsBeyondInPoint = (pBeat >= pTrack.get_in_point());
-        final int mLoopCount = pTrack.get_loop_count(pBeat);
+        final boolean mIsBeyondInPoint = (beat >= pTrack.get_in_point());
+        final int mLoopCount = pTrack.get_loop_count(beat);
         final boolean mIsBeforeOutPoint =
-                (pBeat <= pTrack.get_out_point()) || (pTrack.get_out_point() == NO_OUTPOINT) || (mLoopCount < pTrack.get_loop() || pTrack.get_loop() == LOOP_INFINITE);
+                (beat <= pTrack.get_out_point()) || (pTrack.get_out_point() == NO_OUTPOINT) || (mLoopCount < pTrack.get_loop() || pTrack.get_loop() == LOOP_INFINITE);
         //noinspection UnnecessaryLocalVariable
         final boolean mWithinInOutPoint = mIsBeyondInPoint && mIsBeforeOutPoint;
         return mWithinInOutPoint;

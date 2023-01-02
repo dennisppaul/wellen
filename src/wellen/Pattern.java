@@ -26,31 +26,41 @@ import static wellen.Wellen.NO_OUTPOINT;
 
 public class Pattern extends Loop implements Loopable {
 
-    private int fLoop = LOOP_INFINITE;
-    private int fInPoint = NO_INPOINT;
-    private int fOutPoint = NO_OUTPOINT;
+    private int fLoop;
+    private int fInPoint;
+    private int fOutPoint;
+
+    public Pattern() {
+        this(NO_INPOINT, NO_OUTPOINT, LOOP_INFINITE);
+    }
+
+    public Pattern(int in_point, int out_point, int loop) {
+        fInPoint = in_point;
+        fOutPoint = out_point;
+        fLoop = loop;
+    }
 
     /**
-     * length defines the number of steps before tick is wrapped.
+     * length defines the number of steps before beat is wrapped.
      * <p>
      * e.g an interval of 3 would generate a pattern of 0, 1, 2, 0, 1, 2, 0, 1, …
      * <p>
      * setting interval length affects the out point. e.g an interval of 3 and an in point of N would yield an out point
      * of N + ( 3 - 1 ) and would generate a pattern of 0, 1, 2, 0, 1, 2, 0, 1, …
      *
-     * @param pLength number of steps before the tick is wrapped
+     * @param length number of steps before the beat is wrapped
      */
     @Override
-    public void set_length(int pLength) {
-        fLength = pLength;
+    public void set_length(int length) {
+        fLength = length;
         fOutPoint = fInPoint + fLength - 1;
     }
 
     /**
-     * set the number of loops. while the length of a single cycle is set by <pre><code>set_length(int)</code></pre>,
-     * the number of cycles or repetitions is defined by <pre><code>set_loop(int)</code></pre>. if number of loops is
-     * set to <pre><code>Wellen.LOOP_INFINITE</code></pre> the loop is repearted infinitely. if set to
-     * <pre><code>Wellen.NO_LOOP</code></pre> only one cycle is processed.
+     * set the number of loops. while the length of a single cycle is set by <code>set_length(int)</code>, the number of
+     * cycles or repetitions is defined by <code>set_loop(int)</code>. if number of loops is set to
+     * <code>Wellen.LOOP_INFINITE</code> the loop is repearted infinitely. if set to
+     * <code>Wellen.NO_LOOP</code> only one cycle is processed.
      *
      * @param pLoop number of loops
      */
@@ -67,10 +77,10 @@ public class Pattern extends Loop implements Loopable {
      * set in point for pattern. if out point is equal or smaller than in point length is set to 1 and out point
      * accordingly.
      *
-     * @param pInPoint set in point for pattern
+     * @param in_point set in point for pattern
      */
-    public void set_in_point(int pInPoint) {
-        fInPoint = pInPoint;
+    public void set_in_point(int in_point) {
+        fInPoint = in_point;
         if (fOutPoint <= fInPoint) {
             set_length(1);
         }
@@ -84,10 +94,10 @@ public class Pattern extends Loop implements Loopable {
     /**
      * set out point for pattern. this method also affects the length of the pattern.
      *
-     * @param pOutPoint out point for pattern
+     * @param out_point out point for pattern
      */
-    public void set_out_point(int pOutPoint) {
-        set_length(pOutPoint - fInPoint + 1);
+    public void set_out_point(int out_point) {
+        set_length(out_point - fInPoint + 1);
     }
 
     @Override
@@ -96,25 +106,23 @@ public class Pattern extends Loop implements Loopable {
     }
 
     /**
-     * querry whether an event occured. the first value is the absolute tick ( or beat ) to evalute, the second value
-     * specifies the position in to query. e.g if the pattern is of length 3 ( <pre><code>P(3)</code></pre>, has an
-     * in&nbsp;point of 0 and loops infinitely, it will generate the following values:
-     *
+     * querry whether an event occured. the first value is the absolute beat ( or beat ) to evalute, the second value
+     * specifies the position in to query. e.g if the pattern is of length 3 ( <code>P(3)</code>, has an in&nbsp;point
+     * of 0 and loops infinitely, it will generate the following values:
      * <pre><code>
      *     TICK   : 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
      *     P(3)   : 0  1  2  0  1  2  0  1  2  0  1  2  0  1  2  0  1
      * </code></pre>
      * <p>
-     * if event is now for example tested againt 0 <pre><code>E(0)</code></pre> it will either return true
-     * <pre><code>+</code></pre> or false <pre><code>-</code></pre>:
-     *
+     * if event is now for example tested againt 0 <code>E(0)</code> it will either return true
+     * <code>+</code> or false <code>-</code>:
      * <pre><code>
      *     TICK   : 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
      *     P(3)   : 0  1  2  0  1  2  0  1  2  0  1  2  0  1  2  0  1
      *     E(0)   : +  -  -  +  -  -  +  -  -  +  -  -  +  -  -  +  -
      * </code></pre>
      * <p>
-     * e.g an increasing value will produce an event every 3 ticks:
+     * e.g an increasing value will produce an event every 3 beats:
      * <pre><code>
      *     Pattern p = new Pattern();
      *     p.set_length(3);
@@ -123,19 +131,19 @@ public class Pattern extends Loop implements Loopable {
      *     }
      * </code></pre>
      *
-     * @param pTick          absolute tick ( or beat ) to evaluate
-     * @param pLocalPosition local position to to test tick against
+     * @param beat       absolute beat to evaluate
+     * @param event_at local position to to test beat against
      * @return true if an event occurs
      */
     @Override
-    public boolean event(int pTick, int pLocalPosition) {
-        final int mRelativePosition = get_relative_position(pTick);
-        final int mLoopCount = get_loop_count(pTick);
+    public boolean event(int beat, int event_at) {
+        final int mRelativePosition = get_relative_position(beat);
+        final int mLoopCount = get_loop_count(beat);
         final boolean mIsLoopOK =
-                mLoopCount < get_loop() && mLoopCount >= 0 || ((get_loop() == NO_LOOP || get_out_point() == NO_OUTPOINT) && mRelativePosition == pLocalPosition);
+                mLoopCount < get_loop() && mLoopCount >= 0 || ((get_loop() == NO_LOOP || get_out_point() == NO_OUTPOINT) && mRelativePosition == event_at);
         final boolean mIsInpointOK = mRelativePosition >= 0;
         if (mIsLoopOK && mIsInpointOK) {
-            return super.event(mRelativePosition, pLocalPosition);
+            return super.event(mRelativePosition, event_at);
         } else {
             return false;
         }
@@ -144,48 +152,39 @@ public class Pattern extends Loop implements Loopable {
     /**
      * returns the relative postion in repsect to in- and out point
      *
-     * @param pAbsolutPosition current absolut position ( i.e tick )
+     * @param absolut_position current absolut position ( i.e beat )
      * @return returns the relative postion. value may be negative.
      */
-    public int get_relative_position(int pAbsolutPosition) {
-        return Loopable.get_relative_position(this, pAbsolutPosition);
+    public int get_relative_position(int absolut_position) {
+        return Loopable.get_relative_position(this, absolut_position);
     }
 
     /**
      * returns the current loop where 0 is the first loop. this method always returns
-     * <pre><code>Wellen.NO_LOOP_COUNT</code></pre> if one of the following criteria is met:
-     *
+     * <code>Wellen.NO_LOOP_COUNT</code> if one of the following criteria is met:
      * <ul>
-     *     <li>no out point is specified ( i.e <pre><code>set_out_point(NO_OUTPOINT)</code></pre> )</li>
-     *     <li>loop is set to <pre><code>set_loop(NO_LOOP)</code></pre></li>
+     *     <li>no out point is specified ( i.e <code>set_out_point(NO_OUTPOINT)</code> )</li>
+     *     <li>loop is set to <code>set_loop(NO_LOOP)</code></li>
      *     <li>a number of loops is specified but the position is before the in point</li>
      * </ul>
      *
-     * @param pAbsolutPosition current absolut position ( i.e tick )
+     * @param absolut_position current absolut position ( i.e beat )
      * @return returns the current loop. value may be negative.
      */
     @Override
-    public int get_loop_count(int pAbsolutPosition) {
-        return Loopable.get_loop_count(this, pAbsolutPosition);
+    public int get_loop_count(int absolut_position) {
+        return Loopable.get_loop_count(this, absolut_position);
     }
 
     /* ---------------------------------- TEST ---------------------------------- */
 
     @SuppressWarnings("SpellCheckingInspection")
-    private static final String TEST_RESULT_IDEAL = "CNT\tREL\tEVT\tLOP\n" + "---\n" + "0\t0\t+\t0\t\n" + "1\t1\t-\t0"
-            + "\t\n" + "2\t2\t-\t0\t\n" + "3\t0\t+\t1\t\n" + "4\t1\t-\t1\t" + "\n" + "5\t2\t-\t1\t\n" + "6\t0\t-\t-1" +
-            "\t\n" + "7\t1\t-\t-1\t" + "\n" + "8\t2\t-\t-1\t\n" + "9\t0\t-\t-1\t\n" + "10\t1\t-\t-1" + "\t\n" + "11" +
-            "\t2\t-\t-1\t\n" + "---\n" + "0\t-5\t-\t-1\t\n" + "1\t-4\t-\t-1\t\n" + "2\t-3\t-\t-1\t\n" + "3\t-2\t-\t-1" +
-            "\t\n" + "4" + "\t-1\t-\t-1\t\n" + "5\t0\t-\t0\t\n" + "6\t1\t-\t0\t\n" + "7" + "\t2\t+\t0\t\n" + "8\t0\t" +
-            "-\t1\t\n" + "9\t1\t-\t1\t\n" + "10" + "\t2\t+\t1\t\n" + "11\t0\t-\t2\t\n" + "12\t1\t-\t2\t\n" + "13" +
-            "\t2\t+\t2\t\n" + "14\t0\t-\t3\t\n" + "15\t1\t-\t3\t\n" + "16" + "\t2\t+\t3\t\n" + "17\t0\t-\t4\t\n" +
-            "18\t1\t-\t4\t\n" + "19" + "\t2\t+\t4\t\n" + "---\n" + "0\t-7\t-\t-1\t\n" + "1\t-6\t-\t" + "-1\t\n" + "2" +
-            "\t-5\t-\t-1\t\n" + "3\t-4\t-\t-1\t\n" + "4\t-3\t" + "-\t-1\t\n" + "5\t-2\t-\t-1\t\n" + "6\t-1\t-\t-1\t\n"
-            + "7\t0" + "\t+\t-1\t\n" + "8\t1\t-\t-1\t\n" + "9\t2\t-\t-1\t\n" + "10" + "\t3\t-\t-1\t\n" + "11\t4\t-\t" +
-            "-1\t\n" + "12\t5\t-\t-1\t\n" + "13\t6\t-\t-1\t\n" + "14\t7\t-\t-1\t\n" + "15\t8\t-\t-1\t\n" + "16\t9\t" +
-            "-\t-1\t\n" + "17\t10\t-\t-1\t\n" + "18\t11\t-\t-1\t\n" + "19\t12\t-\t-1\t\n" + "---\n" + "0\t-2\t-\t-1\t" +
-            "\n" + "1\t-1" + "\t-\t-1\t\n" + "2\t0\t+\t0\t\n" + "3\t1\t-\t0\t\n" + "4\t2\t" + "-\t0\t\n" + "5\t0\t-\t" +
-            "-1\t\n" + "6\t1\t-\t-1\t\n" + "7\t2\t" + "-\t-1\t\n" + "8\t0\t-\t-1\t\n" + "9\t1\t-\t-1\t\n" + "10\t2" + "\t-\t-1\t\n" + "11\t0\t-\t-1\t\n" + "---\n" + "0\t-2\t-\t-1" + "\t\n" + "1\t-1\t-\t-1\t\n" + "2\t0\t+\t-1\t\n" + "3\t1\t-\t" + "-1\t\n" + "4\t2\t-\t-1\t\n" + "5\t3\t-\t-1\t\n" + "6\t4\t-\t" + "-1\t\n" + "7\t5\t-\t-1\t\n";
+    private static final String TEST_RESULT_IDEAL = "CNT\tREL\tEVT\tLOP\n" + "--- LENGTH: 3 LOOP: 2\n" + "0\t0\t+\t0" +
+            "\t\n" + "1\t1\t-\t0\t\n" + "2\t2\t-\t0\t\n" + "3\t0\t+\t1\t\n" + "4\t1\t-\t1\t\n" + "5\t2\t-\t1\t\n" +
+            "6\t0\t-\t-1\t\n" + "7\t1\t-\t-1\t\n" + "8\t2\t-\t-1\t\n" + "9\t0\t-\t-1\t\n" + "10\t1\t-\t-1\t\n" + "11" +
+            "\t2\t-\t-1\t\n" + "--- LENGTH: 3 LOOP: INF IN: 5\n" + "0\t-5\t-\t-1\t\n" + "1\t-4\t-\t-1\t\n" + "2\t-3\t" +
+            "-\t-1\t\n" + "3\t-2\t-\t-1\t\n" + "4\t-1\t-\t-1\t\n" + "5\t0\t-\t0\t\n" + "6\t0\t-\t1\t\n" + "7\t0\t-\t2" +
+            "\t\n" + "8\t0\t-\t3\t\n" + "9\t0\t-\t4\t\n" + "10\t0\t-\t5\t\n" + "11\t0\t-\t6\t\n" + "12\t0\t-\t7\t\n" + "13\t0\t-\t8\t\n" + "14\t0\t-\t9\t\n" + "15\t0\t-\t10\t\n" + "16\t0\t-\t11\t\n" + "17\t0\t-\t12\t\n" + "18\t0\t-\t13\t\n" + "19\t0\t-\t14\t\n" + "---LOOP: NO IN: 7 OUT: 9\n" + "0\t-7\t-\t-1\t\n" + "1\t-6\t-\t-1\t\n" + "2\t-5\t-\t-1\t\n" + "3\t-4\t-\t-1\t\n" + "4\t-3\t-\t-1\t\n" + "5\t-2\t-\t-1\t\n" + "6\t-1\t-\t-1\t\n" + "7\t0\t+\t-1\t\n" + "8\t1\t-\t-1\t\n" + "9\t2\t-\t-1\t\n" + "10\t3\t-\t-1\t\n" + "11\t4\t-\t-1\t\n" + "12\t5\t-\t-1\t\n" + "13\t6\t-\t-1\t\n" + "14\t7\t-\t-1\t\n" + "15\t8\t-\t-1\t\n" + "16\t9\t-\t-1\t\n" + "17\t10\t-\t-1\t\n" + "18\t11\t-\t-1\t\n" + "19\t12\t-\t-1\t\n" + "--- LOOP: 1 IN: 2 OUT: 4\n" + "0\t-2\t-\t-1\t\n" + "1\t-1\t-\t-1\t\n" + "2\t0\t+\t0\t\n" + "3\t1\t-\t0\t\n" + "4\t2\t-\t0\t\n" + "5\t0\t-\t-1\t\n" + "6\t1\t-\t-1\t\n" + "7\t2\t-\t-1\t\n" + "8\t0\t-\t-1\t\n" + "9\t1\t-\t-1\t\n" + "10\t2\t-\t-1\t\n" + "11\t0\t-\t-1\t\n" + "--- IN: 2 OUT: NO\n" + "0\t-2\t-\t-1\t\n" + "1\t-1\t-\t-1\t\n" + "2\t0\t+\t-1\t\n" + "3\t1\t-\t-1\t\n" + "4\t2\t-\t-1\t\n" + "5\t3\t-\t-1\t\n" + "6\t4\t-\t-1\t\n" + "7\t5\t-\t-1\t\n";
 
     private static String TEST_RESULT = "";
 
@@ -212,7 +211,7 @@ public class Pattern extends Loop implements Loopable {
 
         println("CNT\tREL\tEVT\tLOP");
 
-        println("---");
+        println("--- LENGTH: 3 LOOP: 2");
         p.set_length(3);
         p.set_loop(2);
         for (int i = 0; i < 12; i++) {
@@ -223,10 +222,10 @@ public class Pattern extends Loop implements Loopable {
             println();
         }
 
-        println("---");
-        p.set_in_point(5);
+        println("--- LENGTH: 3 LOOP: INF IN: 5");
         p.set_length(3);
         p.set_loop(LOOP_INFINITE);
+        p.set_in_point(5);
         for (int i = 0; i < 20; i++) {
             print(i + "\t");
             print(p.get_relative_position(i) + "\t");
@@ -239,11 +238,10 @@ public class Pattern extends Loop implements Loopable {
             println();
         }
 
-        println("---");
-
+        println("---LOOP: NO IN: 7 OUT: 9");
+        p.set_loop(NO_LOOP);
         p.set_in_point(7);
         p.set_out_point(9);
-        p.set_loop(NO_LOOP);
         for (int i = 0; i < 20; i++) {
             print(i + "\t");
             print(p.get_relative_position(i) + "\t");
@@ -252,10 +250,10 @@ public class Pattern extends Loop implements Loopable {
             println();
         }
 
-        println("---");
+        println("--- LOOP: 1 IN: 2 OUT: 4");
+        p.set_loop(1);
         p.set_in_point(2);
         p.set_out_point(4);
-        p.set_loop(1);
         for (int i = 0; i < 12; i++) {
             print(i + "\t");
             print(p.get_relative_position(i) + "\t");
@@ -264,7 +262,7 @@ public class Pattern extends Loop implements Loopable {
             println();
         }
 
-        println("---");
+        println("--- IN: 2 OUT: NO");
         p.set_in_point(2);
         p.set_out_point(NO_OUTPOINT);
         for (int i = 0; i < 8; i++) {

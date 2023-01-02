@@ -71,8 +71,8 @@ public class TestPitchDetectors extends PApplet {
         }
     }
 
-    public void audioblock(float[] pOutputSignal, float[] pInputSignal) {
-        mToneEngine.audioblock(pOutputSignal);
+    public void audioblock(float[] output_signal, float[] pInputSignal) {
+        mToneEngine.audioblock(output_signal);
         mPitchProcessor.process(pInputSignal);
     }
 

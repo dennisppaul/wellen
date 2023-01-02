@@ -47,9 +47,9 @@ public class TestWavetableJitter extends PApplet {
         mWavetable.set_jitter_range(map(mouseX, 0, width, 0.0f, 2.0f));
     }
 
-    public void audioblock(float[] pOutputSignal) {
-        for (int i = 0; i < pOutputSignal.length; i++) {
-            pOutputSignal[i] = mWavetable.output() + mWavetableRef.output();
+    public void audioblock(float[] output_signal) {
+        for (int i = 0; i < output_signal.length; i++) {
+            output_signal[i] = mWavetable.output() + mWavetableRef.output();
         }
     }
 

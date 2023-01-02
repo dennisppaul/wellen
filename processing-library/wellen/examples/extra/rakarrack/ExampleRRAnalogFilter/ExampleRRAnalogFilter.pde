@@ -88,13 +88,13 @@ void keyPressed() {
     }
 }
 
-void audioblock(float[] pOutputSignal) {
-    for (int i = 0; i < pOutputSignal.length; i++) {
+void audioblock(float[] output_signal) {
+    for (int i = 0; i < output_signal.length; i++) {
         final float a = mVCO1.output();
         final float b = mVCO2.output();
-        pOutputSignal[i] = a + b;
-        pOutputSignal[i] *= 0.5f;
-        pOutputSignal[i] *= mMasterVolume;
+        output_signal[i] = a + b;
+        output_signal[i] *= 0.5f;
+        output_signal[i] *= mMasterVolume;
     }
-    mAnalogFilter.filterout(pOutputSignal);
+    mAnalogFilter.filterout(output_signal);
 }

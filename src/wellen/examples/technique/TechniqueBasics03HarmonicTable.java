@@ -9,17 +9,17 @@ import wellen.Tone;
 
 public class TechniqueBasics03HarmonicTable extends PApplet {
 
-    private int mStep;
-    private final HarmonicTable mHarmonicTable = new HarmonicTable();
-    private int mBaseNote;
+    private int fStep;
+    private final HarmonicTable fHarmonicTable = new HarmonicTable();
+    private int fBaseNote;
 
     public void settings() {
         size(640, 480);
     }
 
     public void setup() {
-        mBaseNote = Note.NOTE_C4;
-        mStep = HarmonicTable.UP_RIGHT;
+        fBaseNote = Note.NOTE_C4;
+        fStep = HarmonicTable.UP_RIGHT;
         Beat.start(this, 240);
     }
 
@@ -31,11 +31,11 @@ public class TechniqueBasics03HarmonicTable extends PApplet {
         drawStepDirection();
     }
 
-    public void beat(int pBeatCount) {
-        mHarmonicTable.set_note(mBaseNote);
+    public void beat(int beatCount) {
+        fHarmonicTable.set_note(fBaseNote);
 
         Tone.instrument(0);
-        mBaseNote = playNextNote(mStep);
+        fBaseNote = playNextNote(fStep);
 
         Tone.instrument(1);
         playNextNote(HarmonicTable.UP);
@@ -43,8 +43,8 @@ public class TechniqueBasics03HarmonicTable extends PApplet {
         Tone.instrument(2);
         playNextNote(HarmonicTable.DOWN_RIGHT);
 
-        if (mBaseNote > Note.NOTE_C6 || mBaseNote < Note.NOTE_C2) {
-            mBaseNote = Note.NOTE_C4;
+        if (fBaseNote > Note.NOTE_C6 || fBaseNote < Note.NOTE_C2) {
+            fBaseNote = Note.NOTE_C4;
         }
     }
 
@@ -55,11 +55,11 @@ public class TechniqueBasics03HarmonicTable extends PApplet {
         mAngle += 5.0f / 6.0f;
         mAngle %= 1.0f;
         mAngle *= 6;
-        mStep = floor(mAngle);
+        fStep = floor(mAngle);
     }
 
     private void drawStepDirection() {
-        float mAngle = mStep / 6.0f * TWO_PI;
+        float mAngle = fStep / 6.0f * TWO_PI;
         mAngle -= PI * 0.5f;
         PVector p = PVector.fromAngle(mAngle);
         p.mult(55);
@@ -69,7 +69,7 @@ public class TechniqueBasics03HarmonicTable extends PApplet {
     }
 
     private int playNextNote(int pDirection) {
-        int mNote = mHarmonicTable.step(pDirection);
+        int mNote = fHarmonicTable.step(pDirection);
         Tone.note_on(mNote, 70, 0.1f);
         return mNote;
     }

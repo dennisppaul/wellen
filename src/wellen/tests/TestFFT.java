@@ -81,15 +81,15 @@ public class TestFFT extends PApplet {
         Tone.instrument(1).set_amplitude(Tone.instrument(0).get_amplitude() * 0.5f);
     }
 
-    public void audioblock(float[] pOutputSignal, float[] pInputSignal) {
-        mToneEngine.audioblock(pOutputSignal);
-        FFT.perform_forward_transform(pOutputSignal);
+    public void audioblock(float[] output_signal, float[] pInputSignal) {
+        mToneEngine.audioblock(output_signal);
+        FFT.perform_forward_transform(output_signal);
 
 //        for (int i = 0; i < pInputSignal.length; i++) {
-//            pOutputSignal[i] = pInputSignal[i] * 0.25f;
+//            output_signal[i] = pInputSignal[i] * 0.25f;
 //        }
 
-//        mSampleBuffer = concat(mSampleBuffer, pOutputSignal);
+//        mSampleBuffer = concat(mSampleBuffer, output_signal);
 //        if (mSampleBuffer.length == Wellen.DEFAULT_AUDIOBLOCK_SIZE * BUFFER_COLLECTOR_SIZE) {
 //            mFFT.forward(mSampleBuffer);
 //            mSampleBuffer = new float[0];

@@ -7,17 +7,17 @@ import wellen.dsp.*;
 
 int x = 0;
 
-Sampler mSampler;
+Sampler fSampler;
 
 void settings() {
     size(640, 480);
 }
 
 void setup() {
-    byte[] mData = loadBytes("../../../resources/teilchen.raw");
-    mSampler = new Sampler();
-    mSampler.load(mData);
-    mSampler.loop(true);
+    byte[] mData = loadBytes("../../../../resources/teilchen.raw");
+    fSampler = new Sampler();
+    fSampler.load(mData);
+    fSampler.loop(true);
     DSP.start(this);
     background(255);
 }
@@ -33,9 +33,9 @@ void draw() {
     x %= width;
 }
 
-void audioblock(float[] pOutputSignal) {
-    for (int i = 0; i < pOutputSignal.length; i++) {
-        pOutputSignal[i] = mSampler.output();
+void audioblock(float[] output_signal) {
+    for (int i = 0; i < output_signal.length; i++) {
+        output_signal[i] = fSampler.output();
     }
-    FFT.perform_forward_transform(pOutputSignal);
+    FFT.perform_forward_transform(output_signal);
 }

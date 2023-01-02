@@ -46,17 +46,17 @@ void mouseMoved() {
     mOverdrive.SetDrive(map(mouseX, 0, width, 0, 1));
 }
 
-void beat(int pBeatCount) {
+void beat(int beatCount) {
     mPluck.Trig();
     mPluck.SetFreq(DaisySP.mtof(mMIDINotes[mMIDINoteCounter]));
     mMIDINoteCounter++;
     mMIDINoteCounter %= mMIDINotes.length;
 }
 
-void audioblock(float[] pOutputSignalLeft, float[] pOutputSignalRight) {
-    for (int i = 0; i < pOutputSignalLeft.length; i++) {
+void audioblock(float[] output_signalLeft, float[] output_signalRight) {
+    for (int i = 0; i < output_signalLeft.length; i++) {
         mReverb.Process(mOverdrive.Process(mPluck.Process()));
-        pOutputSignalLeft[i] = mReverb.GetLeft();
-        pOutputSignalRight[i] = mReverb.GetRight();
+        output_signalLeft[i] = mReverb.GetLeft();
+        output_signalRight[i] = mReverb.GetRight();
     }
 }

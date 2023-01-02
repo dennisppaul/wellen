@@ -42,13 +42,13 @@ public class ExampleDaisySPMetro extends PApplet {
         mMetro.SetFreq(map(mouseX, 0, width, 0, 16));
     }
 
-    public void audioblock(float[] pOutputSignal) {
-        for (int i = 0; i < pOutputSignal.length; i++) {
+    public void audioblock(float[] output_signal) {
+        for (int i = 0; i < output_signal.length; i++) {
             boolean mTrigger = mMetro.Process();
             if (mTrigger) {
                 mBeat = true;
             }
-            pOutputSignal[i] = mPluck.Process(mTrigger);
+            output_signal[i] = mPluck.Process(mTrigger);
         }
     }
 

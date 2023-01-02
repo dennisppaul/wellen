@@ -49,7 +49,7 @@ void keyReleased() {
     mIsRecording = false;
 }
 
-void audioblock(float[] pOutputSignal, float[] pInputSignal) {
+void audioblock(float[] output_signal, float[] pInputSignal) {
     if (mIsRecording) {
         if (mRecording == null) {
             mRecording = new float[0];
@@ -63,7 +63,7 @@ void audioblock(float[] pOutputSignal, float[] pInputSignal) {
             mRecording = null;
         }
     }
-    for (int i = 0; i < pOutputSignal.length; i++) {
-        pOutputSignal[i] = mSampler.output();
+    for (int i = 0; i < output_signal.length; i++) {
+        output_signal[i] = mSampler.output();
     }
 }

@@ -88,11 +88,11 @@ public class ExampleDSP16Distortion extends PApplet {
         Tone.instrument(0).note_off();
     }
 
-    public void audioblock(float[] pOutputSignal) {
-        mToneEngine.audioblock(pOutputSignal);
-        for (int i = 0; i < pOutputSignal.length; i++) {
+    public void audioblock(float[] output_signal) {
+        mToneEngine.audioblock(output_signal);
+        for (int i = 0; i < output_signal.length; i++) {
             /* apply distortion to process sample. */
-            pOutputSignal[i] = Wellen.clamp(mDistortion.process(pOutputSignal[i]));
+            output_signal[i] = Wellen.clamp(mDistortion.process(output_signal[i]));
             /* note that it might not be a good idea to apply the distortion *after* the ADSR envelope as this can
             cause quite step attacks. */
         }

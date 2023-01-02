@@ -153,8 +153,8 @@ public abstract class Tone {
         return instance().is_playing();
     }
 
-    public static Instrument instrument(int instrument_ID) {
-        return instance().instrument(instrument_ID);
+    public static Instrument instrument(int ID) {
+        return instance().instrument(ID);
     }
 
     public static Instrument instrument() {

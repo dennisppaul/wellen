@@ -162,10 +162,10 @@ public class TestSAMSingsLongerNotes extends PApplet {
     private float mLoopIn = 0.5f;
     private float mLoopOut = 0.9f;
 
-    public void beat(int pBeatCount) {
-        if (pBeatCount % 4 == 0) {
+    public void beat(int beatCount) {
+        if (beatCount % 4 == 0) {
             Tone.note_on(Note.NOTE_C2, 60, 0.1f);
-        } else if (pBeatCount % 4 == 2) {
+        } else if (beatCount % 4 == 2) {
             Tone.note_on(Note.NOTE_C3, 40, 0.1f);
         }
 
@@ -190,9 +190,9 @@ public class TestSAMSingsLongerNotes extends PApplet {
         mWordCounter--;
     }
 
-    public void audioblock(float[] pOutputSignal) {
-        for (int i = 0; i < pOutputSignal.length; i++) {
-            pOutputSignal[i] = mSampler.output() * 0.1f;
+    public void audioblock(float[] output_signal) {
+        for (int i = 0; i < output_signal.length; i++) {
+            output_signal[i] = mSampler.output() * 0.1f;
         }
     }
 

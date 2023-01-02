@@ -48,16 +48,16 @@ void keyPressed() {
     }
 }
 
-void beat(int pBeatCount) {
+void beat(int beatCount) {
     mTrigger = true;
     mPluck.SetFreq(DaisySP.mtof(mMIDINotes[mMIDINoteCounter]));
     mMIDINoteCounter++;
     mMIDINoteCounter %= mMIDINotes.length;
 }
 
-void audioblock(float[] pOutputSignal) {
-    for (int i = 0; i < pOutputSignal.length; i++) {
-        pOutputSignal[i] = mPluck.Process(mTrigger);
+void audioblock(float[] output_signal) {
+    for (int i = 0; i < output_signal.length; i++) {
+        output_signal[i] = mPluck.Process(mTrigger);
         mTrigger = false;
     }
 }

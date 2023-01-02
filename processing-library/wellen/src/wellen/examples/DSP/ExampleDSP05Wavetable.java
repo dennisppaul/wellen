@@ -111,9 +111,9 @@ public class ExampleDSP05Wavetable extends PApplet {
         }
     }
 
-    public void audioblock(float[] pOutputSignal) {
-        for (int i = 0; i < pOutputSignal.length; i++) {
-            pOutputSignal[i] = mWavetable.output();
+    public void audioblock(float[] output_signal) {
+        for (int i = 0; i < output_signal.length; i++) {
+            output_signal[i] = mWavetable.output();
         }
     }
 

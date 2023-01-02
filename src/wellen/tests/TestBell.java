@@ -36,10 +36,10 @@ public class TestBell extends PApplet {
         Wellen.draw_buffer(g, width, height, Tone.get_buffer());
     }
 
-    public void beat(int pBeatCount) {
-        Tone.instrument(pBeatCount % Wellen.DEFAULT_NUMBER_OF_INSTRUMENTS);
+    public void beat(int beatCount) {
+        Tone.instrument(beatCount % Wellen.DEFAULT_NUMBER_OF_INSTRUMENTS);
         final int[] mScale = Scale.MAJOR;
-        final int mOffset = mScale.length - ((pBeatCount + mScale.length) % (mScale.length + 1));
+        final int mOffset = mScale.length - ((beatCount + mScale.length) % (mScale.length + 1));
         int mNote = Scale.get_note(mScale, Note.NOTE_C3, mOffset);
         Tone.note_on(mNote, mOffset == 0 ? 80 : 60);
     }

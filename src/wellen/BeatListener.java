@@ -24,5 +24,5 @@ package wellen;
  */
 public interface BeatListener {
 
-    void beat(int pBeatCount);
+    void beat(int beatCount);
 }

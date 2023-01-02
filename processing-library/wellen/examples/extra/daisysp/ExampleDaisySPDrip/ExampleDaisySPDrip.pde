@@ -27,12 +27,12 @@ void draw() {
     DSP.draw_buffers(g, width, height);
 }
 
-void beat(int pBeatCount) {
+void beat(int beatCount) {
     mPluck.Trig();
 }
 
-void audioblock(float[] pOutputSignal) {
-    for (int i = 0; i < pOutputSignal.length; i++) {
-        pOutputSignal[i] = mPluck.Process();
+void audioblock(float[] output_signal) {
+    for (int i = 0; i < output_signal.length; i++) {
+        output_signal[i] = mPluck.Process();
     }
 }

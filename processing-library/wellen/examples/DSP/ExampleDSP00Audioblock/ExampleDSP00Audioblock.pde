@@ -24,8 +24,8 @@ void draw() {
     DSP.draw_buffers(g, width, height);
 }
 
-void audioblock(float[] pOutputSignal) {
-    for (int i = 0; i < pOutputSignal.length; i++) {
-        pOutputSignal[i] = map(mouseY, 0, height, -1.0f, 1.0f);
+void audioblock(float[] output_signal) {
+    for (int i = 0; i < output_signal.length; i++) {
+        output_signal[i] = map(mouseY, 0, height, -1.0f, 1.0f);
     }
 }

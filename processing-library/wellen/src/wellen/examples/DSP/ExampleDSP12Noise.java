@@ -58,9 +58,9 @@ public class ExampleDSP12Noise extends PApplet {
         }
     }
 
-    public void audioblock(float[] pOutputSignal) {
-        for (int i = 0; i < pOutputSignal.length; i++) {
-            pOutputSignal[i] = mNoise.output();
+    public void audioblock(float[] output_signal) {
+        for (int i = 0; i < output_signal.length; i++) {
+            output_signal[i] = mNoise.output();
         }
     }
 

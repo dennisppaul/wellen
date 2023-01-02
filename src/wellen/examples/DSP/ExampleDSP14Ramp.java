@@ -62,18 +62,18 @@ public class ExampleDSP14Ramp extends PApplet {
         point(x, y);
     }
 
-    public void beat(int pBeatCounter) {
+    public void beat(int beatCounter) {
         final float mFreq = Note.note_to_frequency(BASE_NOTE + (int) random(0, NOTE_RANGE + 1));
         mRampFrequency.ramp_to(mFreq, 0.25f);
         mRampFrequency.start();
         mEnvelopeAmplitude.start();
     }
 
-    public void audioblock(float[] pOutputSignal) {
-        for (int i = 0; i < pOutputSignal.length; i++) {
+    public void audioblock(float[] output_signal) {
+        for (int i = 0; i < output_signal.length; i++) {
             mWavetable.set_frequency(mRampFrequency.output());
             mWavetable.set_amplitude(mEnvelopeAmplitude.output());
-            pOutputSignal[i] = mWavetable.output();
+            output_signal[i] = mWavetable.output();
         }
     }
 

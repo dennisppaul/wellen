@@ -106,17 +106,17 @@ public class TestVocalFormantFilters extends PApplet {
 
     private static final boolean USE_FIXED_FILTER = true;
 
-    public void audioblock(float[] pOutputSignal) {
-        for (int i = 0; i < pOutputSignal.length; i++) {
-            pOutputSignal[i] = mOsc.output();
+    public void audioblock(float[] output_signal) {
+        for (int i = 0; i < output_signal.length; i++) {
+            output_signal[i] = mOsc.output();
             if (USE_FIXED_FILTER) {
-                pOutputSignal[i] = mFormantFilter.process(pOutputSignal[i]);
-                pOutputSignal[i] *= 0.5f;
+                output_signal[i] = mFormantFilter.process(output_signal[i]);
+                output_signal[i] *= 0.5f;
             } else {
-                pOutputSignal[i] = mFormantFilterDIY.process(pOutputSignal[i]);
-                pOutputSignal[i] *= 0.75f;
+                output_signal[i] = mFormantFilterDIY.process(output_signal[i]);
+                output_signal[i] *= 0.75f;
             }
-            pOutputSignal[i] *= mADSR.output();
+            output_signal[i] *= mADSR.output();
         }
     }
 

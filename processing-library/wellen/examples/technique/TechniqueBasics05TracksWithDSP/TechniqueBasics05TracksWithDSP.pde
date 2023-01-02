@@ -8,9 +8,9 @@ import wellen.dsp.*;
  * tracks when <code>output_signal()</code> is called.
  */
 
-final Track mMaster = new Track();
+final Track fMaster = new Track();
 
-final ModuleToneEngine mModuleBleepBleep = new ModuleToneEngine();
+final ModuleToneEngine fModuleBleepBleep = new ModuleToneEngine();
 
 static final int PPQN = 24;
 
@@ -19,8 +19,8 @@ void settings() {
 }
 
 void setup() {
-    mMaster.tracks().add(mModuleBleepBleep);
-    mMaster.tracks().add(new ModuleOhhhhUhh());
+    fMaster.tracks().add(fModuleBleepBleep);
+    fMaster.tracks().add(new ModuleOhhhhUhh());
     Beat.start(this, 120 * PPQN);
     DSP.start(this, 2);
 }
@@ -30,15 +30,15 @@ void draw() {
     DSP.draw_buffers(g, width, height);
 }
 
-void beat(int pBeat) {
-    mMaster.update(pBeat);
+void beat(int beat) {
+    fMaster.update(beat);
 }
 
-void audioblock(float[] pOutputSignalLeft, float[] pOutputSignalRight) {
-    for (int i = 0; i < pOutputSignalLeft.length; i++) {
-        Signal s = mMaster.output_signal();
-        pOutputSignalLeft[i] = s.left();
-        pOutputSignalRight[i] = s.right();
+void audioblock(float[] output_signalLeft, float[] output_signalRight) {
+    for (int i = 0; i < output_signalLeft.length; i++) {
+        Signal s = fMaster.output_signal();
+        output_signalLeft[i] = s.left();
+        output_signalRight[i] = s.right();
     }
 }
 

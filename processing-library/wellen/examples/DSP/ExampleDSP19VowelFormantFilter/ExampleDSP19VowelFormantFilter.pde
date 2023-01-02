@@ -90,11 +90,11 @@ void keyReleased() {
     }
 }
 
-void audioblock(float[] pOutputSignal) {
-    for (int i = 0; i < pOutputSignal.length; i++) {
-        pOutputSignal[i] = mOsc.output();
-        pOutputSignal[i] = mFormantFilter.process(pOutputSignal[i]);
-        pOutputSignal[i] *= 0.5f;
-        pOutputSignal[i] *= mADSR.output();
+void audioblock(float[] output_signal) {
+    for (int i = 0; i < output_signal.length; i++) {
+        output_signal[i] = mOsc.output();
+        output_signal[i] = mFormantFilter.process(output_signal[i]);
+        output_signal[i] *= 0.5f;
+        output_signal[i] *= mADSR.output();
     }
 }

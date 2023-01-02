@@ -27,8 +27,8 @@ void draw() {
     ellipse(width * 0.5f, height * 0.5f, width * mScale, width * mScale);
 }
 
-void beat(int pBeatCount) {
-    mBeatCount = pBeatCount;
+void beat(int beatCount) {
+    mBeatCount = beatCount;
     int mNote = mNotes[mBeatCount % mNotes.length];
     Tone.note_on(mNote, 100);
 }

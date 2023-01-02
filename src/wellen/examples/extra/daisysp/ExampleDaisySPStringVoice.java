@@ -59,16 +59,16 @@ public class ExampleDaisySPStringVoice extends PApplet {
         }
     }
 
-    public void beat(int pBeatCount) {
+    public void beat(int beatCount) {
         mStringVoice.Trig();
         mStringVoice.SetFreq(DaisySP.mtof(mMIDINotes[mMIDINoteCounter]));
         mMIDINoteCounter++;
         mMIDINoteCounter %= mMIDINotes.length;
     }
 
-    public void audioblock(float[] pOutputSignal) {
-        for (int i = 0; i < pOutputSignal.length; i++) {
-            pOutputSignal[i] = mStringVoice.Process();
+    public void audioblock(float[] output_signal) {
+        for (int i = 0; i < output_signal.length; i++) {
+            output_signal[i] = mStringVoice.Process();
         }
     }
 

@@ -45,7 +45,7 @@ public class TechniqueAlgorithmicComposition03Grammar extends PApplet {
         line(20, height * 0.3f, width * 0.5f, height * 0.3f);
     }
 
-    public void beat(int pBeatCount) {
+    public void beat(int beatCount) {
         mCurrentChar = mInput.charAt(mCharCounter);
         grammar(mCurrentChar);
         mCharCounter++;

@@ -36,8 +36,8 @@ void mouseMoved() {
     }
 }
 
-void audioblock(float[] pOutputSignal) {
-    for (int i = 0; i < pOutputSignal.length; i++) {
-        pOutputSignal[i] = mOscillator.Process() * 0.5f;
+void audioblock(float[] output_signal) {
+    for (int i = 0; i < output_signal.length; i++) {
+        output_signal[i] = mOscillator.Process() * 0.5f;
     }
 }

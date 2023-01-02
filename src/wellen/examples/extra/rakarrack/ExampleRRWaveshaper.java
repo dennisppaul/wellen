@@ -86,16 +86,16 @@ public class ExampleRRWaveshaper extends PApplet {
         }
     }
 
-    public void audioblock(float[] pOutputSignal) {
-        for (int i = 0; i < pOutputSignal.length; i++) {
+    public void audioblock(float[] output_signal) {
+        for (int i = 0; i < output_signal.length; i++) {
             final float a = mVCO1.output();
             final float b = mVCO2.output();
-            pOutputSignal[i] = a + b;
-            pOutputSignal[i] *= 0.5f;
+            output_signal[i] = a + b;
+            output_signal[i] *= 0.5f;
         }
-        mWaveshaper.waveshapesmps(pOutputSignal.length, pOutputSignal, mWaveshapeType, mWaveshapeDrive, true);
-        for (int i = 0; i < pOutputSignal.length; i++) {
-            pOutputSignal[i] *= mMasterVolume;
+        mWaveshaper.waveshapesmps(output_signal.length, output_signal, mWaveshapeType, mWaveshapeDrive, true);
+        for (int i = 0; i < output_signal.length; i++) {
+            output_signal[i] *= mMasterVolume;
         }
     }
 

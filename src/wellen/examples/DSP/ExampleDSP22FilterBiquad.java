@@ -65,9 +65,9 @@ public class ExampleDSP22FilterBiquad extends PApplet {
         mFilter.set_peak_gain(map(mouseY, 0, height, 0.0f, 10.0f));
     }
 
-    public void audioblock(float[] pOutputSignal) {
-        for (int i = 0; i < pOutputSignal.length; i++) {
-            pOutputSignal[i] = mFilter.process(random(-0.25f, 0.25f));
+    public void audioblock(float[] output_signal) {
+        for (int i = 0; i < output_signal.length; i++) {
+            output_signal[i] = mFilter.process(random(-0.25f, 0.25f));
         }
     }
 

@@ -130,7 +130,7 @@ button {
  */
 @media screen {
     .flex-box {
-        position:fixed;
+/*         position:fixed; */
         display:flex;
         flex-direction:column;
         height: 100%;
@@ -867,4 +867,10 @@ table.striped > tbody > tr > th {
        font-size:14px;
         padding-right: 12px;
     }
+}
+
+header {
+    clear:both;
+    padding:10px 20px;
+    position:relative;
 }

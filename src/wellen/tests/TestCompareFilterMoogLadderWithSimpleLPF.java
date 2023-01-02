@@ -31,23 +31,23 @@ public class TestCompareFilterMoogLadderWithSimpleLPF extends PApplet {
         DSP.draw_buffers(g, width, height);
     }
 
-    public void beat(int pBeatCounter) {
-        if (pBeatCounter % 128 == 0) {
+    public void beat(int beatCounter) {
+        if (beatCounter % 128 == 0) {
             mFreqOffset = 0;
         }
-        if (pBeatCounter % 128 == 32) {
+        if (beatCounter % 128 == 32) {
             mFreqOffset = 7;
         }
-        if (pBeatCounter % 128 == 64) {
+        if (beatCounter % 128 == 64) {
             mFreqOffset = 0;
         }
-        if (pBeatCounter % 128 == 96) {
+        if (beatCounter % 128 == 96) {
             mFreqOffset = 7 - 12;
         }
-        if (pBeatCounter % 128 == 112) {
+        if (beatCounter % 128 == 112) {
             mFreqOffset = 10 - 12;
         }
-        float mFreqMult = (pBeatCounter % 4) + 1;
+        float mFreqMult = (beatCounter % 4) + 1;
         mWavetable.set_frequency(mFreqMult * Wellen.DEFAULT_SAMPLING_RATE * ((12.0f + mFreqOffset) / 12.0f) / Wellen.DEFAULT_AUDIOBLOCK_SIZE);
     }
 
@@ -72,12 +72,12 @@ public class TestCompareFilterMoogLadderWithSimpleLPF extends PApplet {
         mFilter.set_resonance(map(mouseY, 0, height, 0.0f, 0.97f));
     }
 
-    public void audioblock(float[] pOutputSignal) {
-        for (int i = 0; i < pOutputSignal.length; i++) {
+    public void audioblock(float[] output_signal) {
+        for (int i = 0; i < output_signal.length; i++) {
             if (mousePressed) {
-                pOutputSignal[i] = mMoggLadder.process(mWavetable.output()) * 2.0f;
+                output_signal[i] = mMoggLadder.process(mWavetable.output()) * 2.0f;
             } else {
-                pOutputSignal[i] = mFilter.process(mWavetable.output());
+                output_signal[i] = mFilter.process(mWavetable.output());
             }
         }
     }

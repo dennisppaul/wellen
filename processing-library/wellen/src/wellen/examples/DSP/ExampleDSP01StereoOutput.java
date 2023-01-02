@@ -37,13 +37,13 @@ public class ExampleDSP01StereoOutput extends PApplet {
         mDetune = map(mouseY, 0, height, 1.0f, 1.5f);
     }
 
-    public void audioblock(float[] pOutputSignalLeft, float[] pOutputSignalRight) {
-        for (int i = 0; i < pOutputSignalLeft.length; i++) {
+    public void audioblock(float[] output_signalLeft, float[] output_signalRight) {
+        for (int i = 0; i < output_signalLeft.length; i++) {
             mCounter++;
             float mLeft = 0.5f * sin(2 * PI * mFreq * mCounter / DSP.get_sample_rate());
             float mRight = 0.5f * sin(2 * PI * mFreq * mDetune * mCounter / DSP.get_sample_rate());
-            pOutputSignalLeft[i] = mLeft * 0.7f + mRight * 0.3f;
-            pOutputSignalRight[i] = mLeft * 0.3f + mRight * 0.7f;
+            output_signalLeft[i] = mLeft * 0.7f + mRight * 0.3f;
+            output_signalRight[i] = mLeft * 0.3f + mRight * 0.7f;
         }
     }
 

@@ -8,6 +8,8 @@ import wellen.dsp.Wavetable;
 
 public class ExampleDSPAnalysis02EnvelopeFollower extends PApplet {
 
+    //@add import wellen.analysis.*;
+
     /*
      * this example demonstrates how to detect an envelope from an input signal. it uses that information to set the
      * amplitude of an oscillator.
@@ -15,7 +17,7 @@ public class ExampleDSPAnalysis02EnvelopeFollower extends PApplet {
 
     private final EnvelopeFollower fEnvelopeFollower = new EnvelopeFollower();
     private final Wavetable fWavetable = new Wavetable();
-    private float[] mEnvelopeFollowerBuffer;
+    private float[] fEnvelopeFollowerBuffer;
 
     public void settings() {
         size(640, 480);
@@ -49,24 +51,26 @@ public class ExampleDSPAnalysis02EnvelopeFollower extends PApplet {
 
         stroke(255);
         DSP.draw_buffers(g, width, height);
-        Wellen.draw_buffer(g, width, height, mEnvelopeFollowerBuffer);
+        Wellen.draw_buffer(g, width, height, fEnvelopeFollowerBuffer);
     }
 
     private float getEnvelopeAverage() {
         float mEnvelopeAverage = 0;
-        for (float v : mEnvelopeFollowerBuffer) {
-            mEnvelopeAverage += v;
+        if (fEnvelopeFollowerBuffer != null) {
+            for (float v : fEnvelopeFollowerBuffer) {
+                mEnvelopeAverage += v;
+            }
+            mEnvelopeAverage /= fEnvelopeFollowerBuffer.length;
         }
-        mEnvelopeAverage /= mEnvelopeFollowerBuffer.length;
         return mEnvelopeAverage;
     }
 
-    public void audioblock(float[] pOutputSignal, float[] pInputSignal) {
-        mEnvelopeFollowerBuffer = fEnvelopeFollower.process(pInputSignal);
+    public void audioblock(float[] output_signal, float[] pInputSignal) {
+        fEnvelopeFollowerBuffer = fEnvelopeFollower.process(pInputSignal);
 
-        for (int i = 0; i < pOutputSignal.length; i++) {
-            fWavetable.set_amplitude(mEnvelopeFollowerBuffer[i]);
-            pOutputSignal[i] = fWavetable.output();
+        for (int i = 0; i < output_signal.length; i++) {
+            fWavetable.set_amplitude(fEnvelopeFollowerBuffer[i]);
+            output_signal[i] = fWavetable.output();
         }
     }
 

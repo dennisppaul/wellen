@@ -8,7 +8,7 @@ import wellen.dsp.Oscillator;
 import wellen.dsp.OscillatorFunction;
 import wellen.dsp.VowelFormantFilter;
 
-public class ExampleDSP23VowelFormantFilter extends PApplet {
+public class ExampleDSP19VowelFormantFilter extends PApplet {
 
     /*
      * this example demonstrates how to use the vowel format filter. it shapes a spectral rich signal ( e.g square or
@@ -99,16 +99,16 @@ public class ExampleDSP23VowelFormantFilter extends PApplet {
         }
     }
 
-    public void audioblock(float[] pOutputSignal) {
-        for (int i = 0; i < pOutputSignal.length; i++) {
-            pOutputSignal[i] = mOsc.output();
-            pOutputSignal[i] = mFormantFilter.process(pOutputSignal[i]);
-            pOutputSignal[i] *= 0.5f;
-            pOutputSignal[i] *= mADSR.output();
+    public void audioblock(float[] output_signal) {
+        for (int i = 0; i < output_signal.length; i++) {
+            output_signal[i] = mOsc.output();
+            output_signal[i] = mFormantFilter.process(output_signal[i]);
+            output_signal[i] *= 0.5f;
+            output_signal[i] *= mADSR.output();
         }
     }
 
     public static void main(String[] args) {
-        PApplet.main(ExampleDSP23VowelFormantFilter.class.getName());
+        PApplet.main(ExampleDSP19VowelFormantFilter.class.getName());
     }
 }

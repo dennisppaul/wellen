@@ -64,11 +64,11 @@ void draw() {
     DSP.draw_buffers(g, width, height);
 }
 
-void beat(int pBeatCount) {
-    int mWordIndex = pBeatCount % mWords.length;
+void beat(int beatCount) {
+    int mWordIndex = beatCount % mWords.length;
     mSAM.set_pitch(SAM.get_pitch_from_MIDI_note(mWords[mWordIndex].pitch));
     mSAM.say(mWords[mWordIndex].text, true);
-    Tone.note_on(pBeatCount % 2 == 0 ? Note.NOTE_C2 : Note.NOTE_C3, 50);
+    Tone.note_on(beatCount % 2 == 0 ? Note.NOTE_C2 : Note.NOTE_C3, 50);
 }
 
 void mouseMoved() {
@@ -80,8 +80,8 @@ void mouseDragged() {
     mSAM.set_speed((int) map(mouseX, 0, width, 0, 255));
 }
 
-void audioblock(float[] pOutputSignal) {
-    for (int i = 0; i < pOutputSignal.length; i++) {
-        pOutputSignal[i] = mSAM.output() * 0.5f;
+void audioblock(float[] output_signal) {
+    for (int i = 0; i < output_signal.length; i++) {
+        output_signal[i] = mSAM.output() * 0.5f;
     }
 }

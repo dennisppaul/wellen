@@ -46,7 +46,7 @@ void draw() {
     line(20, height * 0.3f, width * 0.5f, height * 0.3f);
 }
 
-void beat(int pBeatCount) {
+void beat(int beatCount) {
     mCurrentChar = mInput.charAt(mCharCounter);
     grammar(mCurrentChar);
     mCharCounter++;

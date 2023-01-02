@@ -34,9 +34,9 @@ public class ExampleInstruments06SixteenVoices extends PApplet {
         ellipse(width * 0.5f, height * 0.5f, width * mScale, width * mScale);
     }
 
-    public void beat(int pBeatCount) {
-        mBeatCount = pBeatCount;
-        int mInstrument = 15 - pBeatCount % 16;
+    public void beat(int beatCount) {
+        mBeatCount = beatCount;
+        int mInstrument = 15 - beatCount % 16;
         Tone.instrument(mInstrument);
         if (Tone.is_playing()) {
             Tone.note_off();

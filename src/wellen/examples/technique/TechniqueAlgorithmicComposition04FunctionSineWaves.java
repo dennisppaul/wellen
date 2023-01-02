@@ -42,39 +42,39 @@ public class TechniqueAlgorithmicComposition04FunctionSineWaves extends PApplet 
         playNoise(mTime);
     }
 
-    public void beat(int pBeatCount) {
-        playBaseSequence(pBeatCount);
-        playMelodyWithEcho(pBeatCount);
+    public void beat(int beatCount) {
+        playBaseSequence(beatCount);
+        playMelodyWithEcho(beatCount);
     }
 
-    private void playMelodyWithEcho(int pBeatCount) {
-        if (pBeatCount % 4 == 0) {
-            playMelody(pBeatCount / 4, 1.0f);
-        } else if (pBeatCount % 4 == 1) {
-            playMelody(pBeatCount / 4, 0.5f);
-        } else if (pBeatCount % 4 == 2) {
-            playMelody(pBeatCount / 4, 0.25f);
+    private void playMelodyWithEcho(int beatCount) {
+        if (beatCount % 4 == 0) {
+            playMelody(beatCount / 4, 1.0f);
+        } else if (beatCount % 4 == 1) {
+            playMelody(beatCount / 4, 0.5f);
+        } else if (beatCount % 4 == 2) {
+            playMelody(beatCount / 4, 0.25f);
         } else {
-            playMelody(pBeatCount / 4, 0.125f);
+            playMelody(beatCount / 4, 0.125f);
         }
     }
 
-    private void playNoise(float pBeatCount) {
-        float r = pBeatCount;
+    private void playNoise(float beatCount) {
+        float r = beatCount;
         r *= 0.5;
         float mAmplitude = abs(sin(r * r + sin(r * 0.3f) * TWO_PI)) * abs(sin(r / 20.0f));
         Tone.instrument(INSTRUMENT_NOISE).set_amplitude(map(mAmplitude, 0, 1.0f, 0.001f, 0.03f));
     }
 
-    private void playMelody(int pBeatCount, float pVelocityScale) {
+    private void playMelody(int beatCount, float pVelocityScale) {
         Tone.instrument(INSTRUMENT_FLUTE);
-        int mNote = getNote(pBeatCount);
-        int mVelocity = (int) (getVelocity(pBeatCount) * pVelocityScale);
+        int mNote = getNote(beatCount);
+        int mVelocity = (int) (getVelocity(beatCount) * pVelocityScale);
         Tone.note_on(mNote, mVelocity, 0.1f);
     }
 
-    private int getVelocity(int pBeatCount) {
-        float r = pBeatCount % 18; /* 18 beats == 1 phase */
+    private int getVelocity(int beatCount) {
+        float r = beatCount % 18; /* 18 beats == 1 phase */
         r /= 18.0f;
         r *= TWO_PI;
         float mVelocity = sin(r) * 0.5f + 0.5f;
@@ -83,8 +83,8 @@ public class TechniqueAlgorithmicComposition04FunctionSineWaves extends PApplet 
         return (int) mVelocity;
     }
 
-    private int getNote(int pBeatCount) {
-        float r = pBeatCount % 32; /* 32 beats == 1 phase */
+    private int getNote(int beatCount) {
+        float r = beatCount % 32; /* 32 beats == 1 phase */
         r /= 32.0f;
         r *= TWO_PI;
         float mNoteStep = sin(r) * 0.5f + 0.5f;
@@ -93,9 +93,9 @@ public class TechniqueAlgorithmicComposition04FunctionSineWaves extends PApplet 
         return mNote;
     }
 
-    private void playBaseSequence(int pBeatCount) {
+    private void playBaseSequence(int beatCount) {
         Tone.instrument(INSTRUMENT_BASE);
-        int mCounter = pBeatCount % mBaseSequence.length;
+        int mCounter = beatCount % mBaseSequence.length;
         int mStep = mBaseSequence[mCounter];
         if (mStep == X) {
             Tone.note_off();

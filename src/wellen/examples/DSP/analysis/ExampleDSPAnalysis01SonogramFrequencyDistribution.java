@@ -8,7 +8,9 @@ import wellen.dsp.DSP;
 import wellen.dsp.Filter;
 import wellen.dsp.Wavetable;
 
-public class ExampleDSPAnalysis03SonogramFrequencyDistribution extends PApplet {
+public class ExampleDSPAnalysis01SonogramFrequencyDistribution extends PApplet {
+
+    //@add import wellen.analysis.*;
 
     /*
      * this example demonstrates how to visualize an audio signal as a sonogram anbd a frequency distribution.
@@ -42,15 +44,15 @@ public class ExampleDSPAnalysis03SonogramFrequencyDistribution extends PApplet {
         image(fFrequencyDistribution.get_graphics(), width * 0.5f + 1, height * 0.25f, width * 0.5f, height * 0.5f);
     }
 
-    public void audioblock(float[] pOutputSignal) {
-        for (int i = 0; i < pOutputSignal.length; i++) {
-            pOutputSignal[i] = fWavetable.output();
+    public void audioblock(float[] output_signal) {
+        for (int i = 0; i < output_signal.length; i++) {
+            output_signal[i] = fWavetable.output();
             if (fEnableFilter) {
-                pOutputSignal[i] = fFilter.process(pOutputSignal[i]);
+                output_signal[i] = fFilter.process(output_signal[i]);
             }
         }
-        fSonogram.process(pOutputSignal);
-        fFrequencyDistribution.process(pOutputSignal);
+        fSonogram.process(output_signal);
+        fFrequencyDistribution.process(output_signal);
     }
 
     public void mouseMoved() {
@@ -95,13 +97,13 @@ public class ExampleDSPAnalysis03SonogramFrequencyDistribution extends PApplet {
         }
     }
 
-    private void randomize(float[] pWavetable) {
-        for (int i = 0; i < pWavetable.length; i++) {
-            pWavetable[i] = random(-1, 1);
+    private void randomize(float[] wavetable) {
+        for (int i = 0; i < wavetable.length; i++) {
+            wavetable[i] = random(-1, 1);
         }
     }
 
     public static void main(String[] args) {
-        PApplet.main(ExampleDSPAnalysis03SonogramFrequencyDistribution.class.getName());
+        PApplet.main(ExampleDSPAnalysis01SonogramFrequencyDistribution.class.getName());
     }
 }

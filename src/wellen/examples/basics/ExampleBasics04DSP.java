@@ -34,10 +34,10 @@ public class ExampleBasics04DSP extends PApplet {
         mAmp = map(mouseY, 0, height, 0, 1);
     }
 
-    public void audioblock(float[] pOutputSignal) {
-        for (int i = 0; i < pOutputSignal.length; i++) {
+    public void audioblock(float[] output_signal) {
+        for (int i = 0; i < output_signal.length; i++) {
             mCounter++;
-            pOutputSignal[i] = mAmp * sin(2 * PI * mFreq * mCounter / DSP.get_sample_rate());
+            output_signal[i] = mAmp * sin(2 * PI * mFreq * mCounter / DSP.get_sample_rate());
         }
     }
 
