@@ -10,6 +10,7 @@ import wellen.extra.rakarrack.RREchotron;
 import wellen.extra.rakarrack.RRStompBox;
 
 public class ExampleInstruments12MasterEffects extends PApplet {
+    //@add import wellen.extra.rakarrack.*;
 
     /*
      * this example demonstrates how to add effects like reverb, echo or distortion to tone output.

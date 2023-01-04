@@ -11,8 +11,6 @@ import wellen.ToneEngineDSP;
 import wellen.Wellen;
 import wellen.dsp.Reverb;
 
-import static wellen.Wellen.LOOP_INFINITE;
-
 public class TechniqueBasics08PatternEvents extends PApplet {
 
     /*
@@ -39,11 +37,11 @@ public class TechniqueBasics08PatternEvents extends PApplet {
 
         fPatternA.set_in_point(0);
         fPatternA.set_length(8);
-        fPatternA.set_loop(LOOP_INFINITE);
+        fPatternA.set_loop(Wellen.LOOP_INFINITE);
 
         fPatternB.set_in_point(2);
         fPatternB.set_length(4);
-        fPatternB.set_loop(LOOP_INFINITE);
+        fPatternB.set_loop(Wellen.LOOP_INFINITE);
 
         fPatternC.set_in_point(0);
         fPatternC.set_length(1);

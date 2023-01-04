@@ -1,6 +1,7 @@
 import wellen.*; 
 import wellen.dsp.*; 
 
+import wellen.extra.rakarrack.*;
 /*
  * this example demonstrates how to add effects like reverb, echo or distortion to tone output.
  */

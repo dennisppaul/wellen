@@ -31,10 +31,10 @@ void setup() {
     mToneEngine.add_effect(mReverb);
     fPatternA.set_in_point(0);
     fPatternA.set_length(8);
-    fPatternA.set_loop(LOOP_INFINITE);
+    fPatternA.set_loop(Wellen.LOOP_INFINITE);
     fPatternB.set_in_point(2);
     fPatternB.set_length(4);
-    fPatternB.set_loop(LOOP_INFINITE);
+    fPatternB.set_loop(Wellen.LOOP_INFINITE);
     fPatternC.set_in_point(0);
     fPatternC.set_length(1);
     fPatternC.set_loop(16);

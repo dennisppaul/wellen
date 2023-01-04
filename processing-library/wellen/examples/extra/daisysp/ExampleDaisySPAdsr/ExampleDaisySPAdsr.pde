@@ -5,7 +5,7 @@ import wellen.extra.daisysp.*;
 
 Adsr mAdsr;
 
-Oscillator mOscillator;
+OscillatorDaisy mOscillator;
 
 void settings() {
     size(640, 480);
@@ -14,7 +14,7 @@ void settings() {
 void setup() {
     mAdsr = new Adsr();
     mAdsr.Init(Wellen.DEFAULT_SAMPLING_RATE);
-    mOscillator = new Oscillator();
+    mOscillator = new OscillatorDaisy();
     mOscillator.Init(Wellen.DEFAULT_SAMPLING_RATE);
     mOscillator.SetFreq(220);
     mOscillator.SetAmp(0.75f);

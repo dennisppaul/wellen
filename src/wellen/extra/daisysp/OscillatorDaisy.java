@@ -1,11 +1,11 @@
 package wellen.extra.daisysp;
 
-import static wellen.extra.daisysp.Oscillator.WAVE_FORM.WAVE_SIN;
+import static wellen.extra.daisysp.OscillatorDaisy.WAVE_FORM.WAVE_SIN;
 
 /**
  * Synthesis of several waveforms, including polyBLEP bandlimited waveforms.
  */
-public class Oscillator {
+public class OscillatorDaisy {
 
     /**
      * Choices for output waveforms, POLYBLEP are appropriately labeled. Others are naive forms.

@@ -4,13 +4,13 @@ import processing.core.PApplet;
 import wellen.Wellen;
 import wellen.dsp.DSP;
 import wellen.extra.daisysp.Adsr;
-import wellen.extra.daisysp.Oscillator;
+import wellen.extra.daisysp.OscillatorDaisy;
 
 public class ExampleDaisySPAdsr extends PApplet {
     //@add import wellen.extra.daisysp.*;
 
     private Adsr mAdsr;
-    private Oscillator mOscillator;
+    private OscillatorDaisy mOscillator;
 
     public void settings() {
         size(640, 480);
@@ -20,7 +20,7 @@ public class ExampleDaisySPAdsr extends PApplet {
         mAdsr = new Adsr();
         mAdsr.Init(Wellen.DEFAULT_SAMPLING_RATE);
 
-        mOscillator = new Oscillator();
+        mOscillator = new OscillatorDaisy();
         mOscillator.Init(Wellen.DEFAULT_SAMPLING_RATE);
         mOscillator.SetFreq(220);
         mOscillator.SetAmp(0.75f);

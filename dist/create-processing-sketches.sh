@@ -59,6 +59,8 @@ do
 			}
 			# remove add-comment
 			s/\/\/@add\ //
+			# remove @Override
+			s/@Override//
 			# remove formatter
 			/\/\/\ @formatter\:/ d
 			# remove first and last line

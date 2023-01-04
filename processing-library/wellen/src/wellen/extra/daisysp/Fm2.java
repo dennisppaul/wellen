@@ -10,10 +10,10 @@ import static wellen.extra.daisysp.DaisySP.fabsf;
 public class Fm2 {
     private static final float kIdxScalar = 0.2f;
     private static final float kIdxScalarRecip = 1.f / kIdxScalar;
-    private final Oscillator car_ = new Oscillator();
+    private final OscillatorDaisy car_ = new OscillatorDaisy();
     private float freq_, lfreq_, ratio_, lratio_;
     private float idx_;
-    private final Oscillator mod_ = new Oscillator();
+    private final OscillatorDaisy mod_ = new OscillatorDaisy();
 
     /**
      * Initializes the FM2 module.
@@ -34,8 +34,8 @@ public class Fm2 {
         car_.SetAmp(1.f);
         mod_.SetAmp(1.f);
 
-        car_.SetWaveform(Oscillator.WAVE_FORM.WAVE_SIN);
-        mod_.SetWaveform(Oscillator.WAVE_FORM.WAVE_SIN);
+        car_.SetWaveform(OscillatorDaisy.WAVE_FORM.WAVE_SIN);
+        mod_.SetWaveform(OscillatorDaisy.WAVE_FORM.WAVE_SIN);
 
         idx_ = 1.f;
     }

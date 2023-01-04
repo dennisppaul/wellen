@@ -52,7 +52,7 @@ ModuleToneEngine() {
         set_in_out_point(0, 3);
         set_loop(Wellen.LOOP_INFINITE);
     }
-    @Override
+    
     
 Signal output_signal() {
         return mToneEngine.output_signal();

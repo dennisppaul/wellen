@@ -265,14 +265,14 @@ public class HiHat {
      *         written by Emilie Gillet in 2016.
      */
     public static class RingModNoise implements MetallicNoiseSource {
-        private final Oscillator[] oscillator_ = new Oscillator[6];
+        private final OscillatorDaisy[] oscillator_ = new OscillatorDaisy[6];
         private float sample_rate_;
 
         public void Init(float sample_rate) {
             sample_rate_ = sample_rate;
 
             for (int i = 0; i < 6; ++i) {
-                oscillator_[i] = new Oscillator();
+                oscillator_[i] = new OscillatorDaisy();
                 oscillator_[i].Init(sample_rate_);
             }
         }
@@ -293,12 +293,12 @@ public class HiHat {
             return out;
         }
 
-        private float ProcessPair(Oscillator osc_0, Oscillator osc_1, float f1, float f2) {
-            osc_0.SetWaveform(Oscillator.WAVE_FORM.WAVE_SQUARE);
+        private float ProcessPair(OscillatorDaisy osc_0, OscillatorDaisy osc_1, float f1, float f2) {
+            osc_0.SetWaveform(OscillatorDaisy.WAVE_FORM.WAVE_SQUARE);
             osc_0.SetFreq(f1 * sample_rate_);
             float temp_1 = osc_0.Process();
 
-            osc_1.SetWaveform(Oscillator.WAVE_FORM.WAVE_SAW);
+            osc_1.SetWaveform(OscillatorDaisy.WAVE_FORM.WAVE_SAW);
             osc_1.SetFreq(f2 * sample_rate_);
             float temp_2 = osc_1.Process();
 

@@ -9,7 +9,6 @@ import wellen.dsp.Filter;
 import wellen.dsp.Wavetable;
 
 public class ExampleDSPAnalysis01SonogramFrequencyDistribution extends PApplet {
-
     //@add import wellen.analysis.*;
 
     /*

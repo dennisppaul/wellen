@@ -3,19 +3,19 @@ package wellen.examples.extra.daisysp;
 import processing.core.PApplet;
 import wellen.Wellen;
 import wellen.dsp.DSP;
-import wellen.extra.daisysp.Oscillator;
+import wellen.extra.daisysp.OscillatorDaisy;
 
 public class ExampleDaisySPOscillator extends PApplet {
     //@add import wellen.extra.daisysp.*;
 
-    private Oscillator mOscillator;
+    private OscillatorDaisy mOscillator;
 
     public void settings() {
         size(640, 480);
     }
 
     public void setup() {
-        mOscillator = new Oscillator();
+        mOscillator = new OscillatorDaisy();
         mOscillator.Init(Wellen.DEFAULT_SAMPLING_RATE);
         DSP.start(this);
     }
@@ -38,28 +38,28 @@ public class ExampleDaisySPOscillator extends PApplet {
     public void keyPressed() {
         switch (key) {
             case '1':
-                mOscillator.SetWaveform(Oscillator.WAVE_FORM.WAVE_SIN);
+                mOscillator.SetWaveform(OscillatorDaisy.WAVE_FORM.WAVE_SIN);
                 break;
             case '2':
-                mOscillator.SetWaveform(Oscillator.WAVE_FORM.WAVE_TRI);
+                mOscillator.SetWaveform(OscillatorDaisy.WAVE_FORM.WAVE_TRI);
                 break;
             case '3':
-                mOscillator.SetWaveform(Oscillator.WAVE_FORM.WAVE_SAW);
+                mOscillator.SetWaveform(OscillatorDaisy.WAVE_FORM.WAVE_SAW);
                 break;
             case '4':
-                mOscillator.SetWaveform(Oscillator.WAVE_FORM.WAVE_RAMP);
+                mOscillator.SetWaveform(OscillatorDaisy.WAVE_FORM.WAVE_RAMP);
                 break;
             case '5':
-                mOscillator.SetWaveform(Oscillator.WAVE_FORM.WAVE_SQUARE);
+                mOscillator.SetWaveform(OscillatorDaisy.WAVE_FORM.WAVE_SQUARE);
                 break;
             case '6':
-                mOscillator.SetWaveform(Oscillator.WAVE_FORM.WAVE_POLYBLEP_TRI);
+                mOscillator.SetWaveform(OscillatorDaisy.WAVE_FORM.WAVE_POLYBLEP_TRI);
                 break;
             case '7':
-                mOscillator.SetWaveform(Oscillator.WAVE_FORM.WAVE_POLYBLEP_SAW);
+                mOscillator.SetWaveform(OscillatorDaisy.WAVE_FORM.WAVE_POLYBLEP_SAW);
                 break;
             case '8':
-                mOscillator.SetWaveform(Oscillator.WAVE_FORM.WAVE_POLYBLEP_SQUARE);
+                mOscillator.SetWaveform(OscillatorDaisy.WAVE_FORM.WAVE_POLYBLEP_SQUARE);
                 break;
         }
     }
