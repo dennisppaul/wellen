@@ -63,7 +63,7 @@ public class ExampleInstruments08StereoInstruments extends PApplet {
             set_detune(0.01f);
             set_spread(0.5f);
 
-            Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVEFORM_SINE);
+            Wavetable.fill(fVCO.get_wavetable(), Wellen.WAVEFORM_SINE);
 
             mVCOSecond = new Wavetable(DEFAULT_WAVETABLE_SIZE);
             mVCOSecond.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
@@ -88,14 +88,14 @@ public class ExampleInstruments08StereoInstruments extends PApplet {
 
         public Signal output_signal() {
             /* this custom instrument ignores LFOs and LPF */
-            mVCO.set_frequency(get_frequency() * (1.0f - mDetune));
-            mVCO.set_amplitude(get_amplitude());
+            fVCO.set_frequency(get_frequency() * (1.0f - mDetune));
+            fVCO.set_amplitude(get_amplitude());
             mVCOSecond.set_frequency(get_frequency() * (1.0f + mDetune));
             mVCOSecond.set_amplitude(get_amplitude());
 
             /* use inherited ADSR envelope to control the amplitude */
-            final float mADSRAmp = mADSR.output();
-            final float mSignalA = mVCO.output();
+            final float mADSRAmp = fADSR.output();
+            final float mSignalA = fVCO.output();
             final float mSignalB = mVCOSecond.output();
             final float mMix = mSpread * 0.5f + 0.5f;
             final float mInvMix = 1.0f - mMix;

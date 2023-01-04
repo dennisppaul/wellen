@@ -94,13 +94,13 @@ public class TestBell extends PApplet {
             updateADSRs();
         }
 
-        public void set_sustain(float pBaseRelease) {
-            mBaseRelease = pBaseRelease;
+        public void set_sustain(float sustain) {
+            mBaseRelease = sustain;
             updateADSRs();
         }
 
-        public void note_on(int pNote, int pVelocity) {
-            super.note_on(pNote, pVelocity);
+        public void note_on(int note, int velocity) {
+            super.note_on(note, velocity);
             for (ADSR mADSR : mADSRs) {
                 mADSR.start();
             }
@@ -131,17 +131,17 @@ public class TestBell extends PApplet {
         }
 
         public float get_attack() {
-            return mAttack;
+            return fAttack;
         }
 
-        public void set_attack(float pAttack) {
-            mAttack = pAttack;
+        public void set_attack(float attack) {
+            fAttack = attack;
             updateADSRs();
         }
 
         private void updateADSRs() {
             for (int i = 0; i < mVCOs.length; i++) {
-                mADSRs[i].set_attack(mAttack);
+                mADSRs[i].set_attack(fAttack);
                 mADSRs[i].set_decay(mBaseRelease + map(i, 0, mVCOs.length - 1, 0.0f, mReleaseFalloff));
                 mADSRs[i].set_sustain(0.0f);
                 mADSRs[i].set_release(0.0f);

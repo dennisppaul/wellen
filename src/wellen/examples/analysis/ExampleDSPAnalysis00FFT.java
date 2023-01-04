@@ -1,4 +1,4 @@
-package wellen.examples.DSP.analysis;
+package wellen.examples.analysis;
 
 import processing.core.PApplet;
 import wellen.FFT;
@@ -20,7 +20,7 @@ public class ExampleDSPAnalysis00FFT extends PApplet {
     }
 
     public void setup() {
-        byte[] mData = loadBytes("../../../../resources/teilchen.raw");
+        byte[] mData = loadBytes("../../../resources/teilchen.raw");
         fSampler = new Sampler();
         fSampler.load(mData);
         fSampler.loop(true);

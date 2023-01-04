@@ -11,7 +11,7 @@ public class InstrumentMIDI extends Instrument {
     }
 
     @Override
-    public void set_oscillator_type(int pOscillator) {
+    public void set_oscillator_type(int oscillator) {
 
     }
 
@@ -21,7 +21,7 @@ public class InstrumentMIDI extends Instrument {
     }
 
     @Override
-    public void set_frequency_LFO_amplitude(float pAmplitude) {
+    public void set_frequency_LFO_amplitude(float amplitude) {
 
     }
 
@@ -31,7 +31,7 @@ public class InstrumentMIDI extends Instrument {
     }
 
     @Override
-    public void set_frequency_LFO_frequency(float pFrequency) {
+    public void set_frequency_LFO_frequency(float frequency) {
 
     }
 
@@ -41,7 +41,7 @@ public class InstrumentMIDI extends Instrument {
     }
 
     @Override
-    public void set_amplitude_LFO_amplitude(float pAmplitude) {
+    public void set_amplitude_LFO_amplitude(float amplitude) {
 
     }
 
@@ -61,7 +61,7 @@ public class InstrumentMIDI extends Instrument {
     }
 
     @Override
-    public void set_filter_resonance(float pResonance) {
+    public void set_filter_resonance(float resonance) {
 
     }
 
@@ -76,7 +76,7 @@ public class InstrumentMIDI extends Instrument {
     }
 
     @Override
-    public void pitch_bend(float pFreqOffset) {
+    public void pitch_bend(float frequency_offset) {
 
     }
 
@@ -86,7 +86,7 @@ public class InstrumentMIDI extends Instrument {
     }
 
     @Override
-    public void set_amplitude(float pAmplitude) {
+    public void set_amplitude(float amplitude) {
 
     }
 
@@ -102,11 +102,11 @@ public class InstrumentMIDI extends Instrument {
 
     @Override
     public void note_off() {
-        mIsPlaying = false;
+        fIsPlaying = false;
     }
 
     @Override
-    public void note_on(int pNote, int pVelocity) {
-        mIsPlaying = true;
+    public void note_on(int note, int velocity) {
+        fIsPlaying = true;
     }
 }

@@ -1,4 +1,4 @@
-package wellen.examples.DSP.analysis;
+package wellen.examples.analysis;
 
 import processing.core.PApplet;
 import wellen.Wellen;

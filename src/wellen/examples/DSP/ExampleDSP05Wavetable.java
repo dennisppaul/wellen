@@ -34,6 +34,10 @@ public class ExampleDSP05Wavetable extends PApplet {
 
     public void draw() {
         background(255);
+        if (mInterpolateAmplitudeAndFrequency) {
+            fill(0);
+            circle(20, 20, 32);
+        }
         DSP.draw_buffers(g, width, height);
     }
 

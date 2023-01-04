@@ -32,62 +32,62 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
 
     public static final float DEFAULT_FREQUENCY = 220.0f;
     public static final int DEFAULT_WAVETABLE_SIZE = 512;
-    protected final ADSR mADSR;
-    protected final Wavetable mAmplitudeLFO;
-    protected final Wavetable mFrequencyLFO;
-    protected final LowPassFilter mLPF;
-    protected final Wavetable mVCO;
-    private float mAmp;
-    private float mFreq;
-    private float mFreqOffset;
-    private int mNumChannels;
-    private int mOscType;
-    private final int mSamplingRate;
+    protected final ADSR fADSR;
+    protected final Wavetable fAmplitudeLFO;
+    protected final Wavetable fFrequencyLFO;
+    protected final LowPassFilter fLPF;
+    protected final Wavetable fVCO;
+    private float fAmp;
+    private float fFreq;
+    private float fFreqOffset;
+    private int fNumChannels;
+    private int fOscType;
+    private final int fSamplingRate;
 
-    public InstrumentDSP(int pID, int pSamplingRate, int pWavetableSize) {
-        super(pID);
-        mNumChannels = 1;
-        mSamplingRate = pSamplingRate;
-        mADSR = new ADSR(pSamplingRate);
-        mADSR.set_attack(Wellen.DEFAULT_ATTACK);
-        mADSR.set_decay(Wellen.DEFAULT_DECAY);
-        mADSR.set_sustain(Wellen.DEFAULT_SUSTAIN);
-        mADSR.set_release(Wellen.DEFAULT_RELEASE);
+    public InstrumentDSP(int ID, int sampling_rate, int wavetable_size) {
+        super(ID);
+        fNumChannels = 1;
+        fSamplingRate = sampling_rate;
+        fADSR = new ADSR(sampling_rate);
+        fADSR.set_attack(Wellen.DEFAULT_ATTACK);
+        fADSR.set_decay(Wellen.DEFAULT_DECAY);
+        fADSR.set_sustain(Wellen.DEFAULT_SUSTAIN);
+        fADSR.set_release(Wellen.DEFAULT_RELEASE);
         enable_ADSR(true);
 
-        mVCO = new Wavetable(pWavetableSize, pSamplingRate);
-        mVCO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
+        fVCO = new Wavetable(wavetable_size, sampling_rate);
+        fVCO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
         set_oscillator_type(Wellen.WAVEFORM_SINE);
         set_amplitude(0.0f);
         set_frequency(DEFAULT_FREQUENCY);
 
         /* setup LFO for frequency */
-        mFrequencyLFO = new Wavetable(pWavetableSize, pSamplingRate);
-        Wavetable.sine(mFrequencyLFO.get_wavetable());
-        mFrequencyLFO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
-        mFrequencyLFO.set_frequency(0);
-        mFrequencyLFO.set_amplitude(0);
+        fFrequencyLFO = new Wavetable(wavetable_size, sampling_rate);
+        Wavetable.sine(fFrequencyLFO.get_wavetable());
+        fFrequencyLFO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
+        fFrequencyLFO.set_frequency(0);
+        fFrequencyLFO.set_amplitude(0);
         enable_frequency_LFO(false);
 
         /* setup LFO for amplitude */
-        mAmplitudeLFO = new Wavetable(pWavetableSize, pSamplingRate);
-        Wavetable.sine(mAmplitudeLFO.get_wavetable());
-        mAmplitudeLFO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
-        mAmplitudeLFO.set_frequency(0);
-        mAmplitudeLFO.set_amplitude(0);
+        fAmplitudeLFO = new Wavetable(wavetable_size, sampling_rate);
+        Wavetable.sine(fAmplitudeLFO.get_wavetable());
+        fAmplitudeLFO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
+        fAmplitudeLFO.set_frequency(0);
+        fAmplitudeLFO.set_amplitude(0);
         enable_amplitude_LFO(false);
 
         /* setup LPF */
-        mLPF = new LowPassFilter(pSamplingRate);
+        fLPF = new LowPassFilter(sampling_rate);
         enable_LPF(false);
     }
 
-    public InstrumentDSP(int pID, int pSamplingRate) {
-        this(pID, pSamplingRate, DEFAULT_WAVETABLE_SIZE);
+    public InstrumentDSP(int ID, int sampling_rate) {
+        this(ID, sampling_rate, DEFAULT_WAVETABLE_SIZE);
     }
 
-    public InstrumentDSP(int pID) {
-        this(pID, Wellen.DEFAULT_SAMPLING_RATE, DEFAULT_WAVETABLE_SIZE);
+    public InstrumentDSP(int ID) {
+        this(ID, Wellen.DEFAULT_SAMPLING_RATE, DEFAULT_WAVETABLE_SIZE);
     }
 
 //    @Override
@@ -99,170 +99,187 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
 
     @Override
     public Signal output_signal() {
-        final float mLFOFreq = mEnableFrequencyLFO ? mFrequencyLFO.output() : 0.0f;
-        final float mLFOAmp = mEnableAmplitudeLFO ? mAmplitudeLFO.output() : 0.0f;
+        if (fEnableFrequencyLFO) {
+            final float mLFOFreq = fEnableFrequencyLFO ? fFrequencyLFO.output() : 0.0f;
+            fVCO.set_frequency(fFreq + mLFOFreq + fFreqOffset);
+        }
 
-        mVCO.set_frequency(mFreq + mLFOFreq + mFreqOffset);
-        mVCO.set_amplitude((mAmp + mLFOAmp) * (mEnableAmplitudeLFO ? 0.5f : 1.0f));
+        if (fEnableAmplitudeLFO) {
+            final float mLFOAmp = fEnableAmplitudeLFO ? fAmplitudeLFO.output() : 0.0f;
+            fVCO.set_amplitude((fAmp + mLFOAmp) * (fEnableAmplitudeLFO ? 0.5f : 1.0f));
+        }
 
-        final float mADSRAmp = mEnableADSR ? mADSR.output() : 1.0f;
-        float mSample = mVCO.output();
-        if (mEnableLPF) {
-            mSample = mLPF.process(mSample);
+        final float mADSRAmp = fEnableADSR ? fADSR.output() : 1.0f;
+        float mSample = fVCO.output();
+        if (fEnableLPF) {
+            mSample = fLPF.process(mSample);
         }
         mSample = Wellen.clamp(mSample, -1.0f, 1.0f);
 
-        Signal pSignal = new Signal(get_channels());
+        final Signal mSignal = new Signal(get_channels());
         final float s = mADSRAmp * mSample;
         for (int i = 0; i < get_channels(); i++) {
-            pSignal.signal[i] = s;
+            mSignal.signal[i] = s;
         }
-        return pSignal;
+        return mSignal;
     }
 
     @Override
-    public void set_attack(float pAttack) {
-        mAttack = pAttack;
-        mADSR.set_attack(mAttack);
+    public void set_attack(float attack) {
+        fAttack = attack;
+        fADSR.set_attack(fAttack);
     }
 
     @Override
-    public void set_decay(float pDecay) {
-        mDecay = pDecay;
-        mADSR.set_decay(mDecay);
+    public void set_decay(float decay) {
+        fDecay = decay;
+        fADSR.set_decay(fDecay);
     }
 
     @Override
-    public void set_sustain(float pSustain) {
-        mSustain = pSustain;
-        mADSR.set_sustain(mSustain);
+    public void set_sustain(float sustain) {
+        fSustain = sustain;
+        fADSR.set_sustain(fSustain);
     }
 
     @Override
-    public void set_release(float pRelease) {
-        mRelease = pRelease;
-        mADSR.set_release(mRelease);
+    public void set_release(float release) {
+        fRelease = release;
+        fADSR.set_release(fRelease);
     }
 
     @Override
     public int get_oscillator_type() {
-        return mOscType;
+        return fOscType;
     }
 
     @Override
-    public void set_oscillator_type(int pOscillator) {
-        mOscType = pOscillator;
-        Wavetable.fill(mVCO.get_wavetable(), pOscillator);
+    public void set_oscillator_type(int oscillator) {
+        fOscType = oscillator;
+        Wavetable.fill(fVCO.get_wavetable(), oscillator);
     }
 
     @Override
     public float get_frequency_LFO_amplitude() {
-        return mFrequencyLFO.get_amplitude();
+        return fFrequencyLFO.get_amplitude();
     }
 
     @Override
-    public void set_frequency_LFO_amplitude(float pAmplitude) {
-        mFrequencyLFO.set_amplitude(pAmplitude);
+    public void set_frequency_LFO_amplitude(float amplitude) {
+        fFrequencyLFO.set_amplitude(amplitude);
     }
 
     @Override
     public float get_frequency_LFO_frequency() {
-        return mFrequencyLFO.get_frequency();
+        return fFrequencyLFO.get_frequency();
     }
 
     @Override
-    public void set_frequency_LFO_frequency(float pFrequency) {
-        mFrequencyLFO.set_frequency(pFrequency);
+    public void set_frequency_LFO_frequency(float frequency) {
+        fFrequencyLFO.set_frequency(frequency);
     }
 
     @Override
     public float get_amplitude_LFO_amplitude() {
-        return mAmplitudeLFO.get_amplitude();
+        return fAmplitudeLFO.get_amplitude();
     }
 
     @Override
-    public void set_amplitude_LFO_amplitude(float pAmplitude) {
-        mAmplitudeLFO.set_amplitude(pAmplitude);
+    public void set_amplitude_LFO_amplitude(float amplitude) {
+        fAmplitudeLFO.set_amplitude(amplitude);
     }
 
     @Override
     public float get_amplitude_LFO_frequency() {
-        return mAmplitudeLFO.get_frequency();
+        return fAmplitudeLFO.get_frequency();
     }
 
     @Override
-    public void set_amplitude_LFO_frequency(float pFrequency) {
-        mAmplitudeLFO.set_frequency(pFrequency);
+    public void set_amplitude_LFO_frequency(float frequency) {
+        fAmplitudeLFO.set_frequency(frequency);
     }
 
     @Override
     public float get_filter_resonance() {
-        return mLPF.get_resonance();
+        return fLPF.get_resonance();
     }
 
     @Override
-    public void set_filter_resonance(float pResonance) {
-        mLPF.set_resonance(pResonance);
+    public void set_filter_resonance(float resonance) {
+        fLPF.set_resonance(resonance);
     }
 
     @Override
     public float get_filter_frequency() {
-        return mLPF.get_frequency();
+        return fLPF.get_frequency();
     }
 
     @Override
-    public void set_filter_frequency(float pFrequency) {
-        mLPF.set_frequency(pFrequency);
+    public void set_filter_frequency(float frequency) {
+        fLPF.set_frequency(frequency);
     }
 
     @Override
-    public void pitch_bend(float pFreqOffset) {
-        mFreqOffset = pFreqOffset;
+    public void pitch_bend(float frequency_offset) {
+        fFreqOffset = frequency_offset;
+        fVCO.set_frequency(fFreq + fFreqOffset);
     }
 
     @Override
     public float get_amplitude() {
-        return mAmp;
+        return fAmp;
     }
 
     @Override
-    public void set_amplitude(float pAmplitude) {
-        mAmp = pAmplitude;
+    public void set_amplitude(float amplitude) {
+        fAmp = amplitude;
+        fVCO.set_amplitude(fAmp);
+    }
+
+    public void set_amplitude(float amplitude, int interpolation_duration_in_samples) {
+        fAmp = amplitude;
+        fVCO.set_amplitude(fAmp, interpolation_duration_in_samples);
     }
 
     @Override
     public float get_frequency() {
-        return mFreq;
+        return fFreq;
     }
 
     @Override
-    public void set_frequency(float pFrequency) {
-        mFreq = pFrequency;
+    public void set_frequency(float frequency) {
+        fFreq = frequency;
+        fVCO.set_frequency(fFreq + fFreqOffset);
+    }
+
+    public void set_frequency(float frequency, int interpolation_duration_in_samples) {
+        fFreq = frequency;
+        fVCO.set_frequency(fFreq + fFreqOffset, interpolation_duration_in_samples);
     }
 
     @Override
     public void note_off() {
-        mIsPlaying = false;
-        mADSR.stop();
+        fIsPlaying = false;
+        fADSR.stop();
     }
 
     @Override
-    public void note_on(int pNote, int pVelocity) {
-        mIsPlaying = true;
-        set_frequency(note_to_frequency(pNote));
-        set_amplitude(velocity_to_amplitude(pVelocity));
-        mADSR.start();
+    public void note_on(int note, int velocity) {
+        fIsPlaying = true;
+        set_frequency(note_to_frequency(note));
+        set_amplitude(velocity_to_amplitude(velocity));
+        fADSR.start();
     }
 
     public Wavetable get_VCO() {
-        return mVCO;
+        return fVCO;
     }
 
     public int get_channels() {
-        return mNumChannels;
+        return fNumChannels;
     }
 
-    public void set_channels(int pNumChannels) {
-        mNumChannels = pNumChannels;
+    public void set_channels(int num_channels) {
+        fNumChannels = num_channels;
     }
 }

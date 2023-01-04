@@ -90,13 +90,13 @@ public class InstrumentDSPLibrary {
             updateADSRs();
         }
 
-        public void set_sustain(float pBaseRelease) {
-            mBaseRelease = pBaseRelease;
+        public void set_sustain(float sustain) {
+            mBaseRelease = sustain;
             updateADSRs();
         }
 
-        public void note_on(int pNote, int pVelocity) {
-            super.note_on(pNote, pVelocity);
+        public void note_on(int note, int velocity) {
+            super.note_on(note, velocity);
             for (ADSR mADSR : mADSRs) {
                 mADSR.start();
             }
@@ -128,17 +128,17 @@ public class InstrumentDSPLibrary {
         }
 
         public float get_attack() {
-            return mAttack;
+            return fAttack;
         }
 
-        public void set_attack(float pAttack) {
-            mAttack = pAttack;
+        public void set_attack(float attack) {
+            fAttack = attack;
             updateADSRs();
         }
 
         private void updateADSRs() {
             for (int i = 0; i < mVCOs.length; i++) {
-                mADSRs[i].set_attack(mAttack);
+                mADSRs[i].set_attack(fAttack);
                 mADSRs[i].set_decay(mBaseRelease + PApplet.map(i, 0, mVCOs.length - 1, 0.0f, mReleaseFalloff));
                 mADSRs[i].set_sustain(0.0f);
                 mADSRs[i].set_release(0.0f);
@@ -158,22 +158,22 @@ public class InstrumentDSPLibrary {
             mLowerVCO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
             mVeryLowVCO = new Wavetable(DEFAULT_WAVETABLE_SIZE);
             mVeryLowVCO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
-            Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVEFORM_TRIANGLE);
+            Wavetable.fill(fVCO.get_wavetable(), Wellen.WAVEFORM_TRIANGLE);
             Wavetable.fill(mLowerVCO.get_wavetable(), Wellen.WAVEFORM_SINE);
             Wavetable.fill(mVeryLowVCO.get_wavetable(), Wellen.WAVEFORM_SQUARE);
         }
 
         @Override
         public Signal output_signal() {
-            mVCO.set_frequency(get_frequency());
-            mVCO.set_amplitude(get_amplitude() * 0.2f);
+            fVCO.set_frequency(get_frequency());
+            fVCO.set_amplitude(get_amplitude() * 0.2f);
             mLowerVCO.set_frequency(get_frequency() * 0.5f);
             mLowerVCO.set_amplitude(get_amplitude());
             mVeryLowVCO.set_frequency(get_frequency() * 0.25f);
             mVeryLowVCO.set_amplitude(get_amplitude() * 0.075f);
 
-            final float mADSRAmp = mADSR.output();
-            float mSample = mVCO.output();
+            final float mADSRAmp = fADSR.output();
+            float mSample = fVCO.output();
             mSample += mLowerVCO.output();
             mSample += mVeryLowVCO.output();
 
@@ -185,15 +185,15 @@ public class InstrumentDSPLibrary {
 
         public HI_HAT(int pID) {
             super(pID);
-            mADSR.set_attack(0.005f);
-            mADSR.set_decay(0.05f);
-            mADSR.set_sustain(0.0f);
-            mADSR.set_release(0.0f);
+            fADSR.set_attack(0.005f);
+            fADSR.set_decay(0.05f);
+            fADSR.set_sustain(0.0f);
+            fADSR.set_release(0.0f);
         }
 
         @Override
         public Signal output_signal() {
-            return Signal.create(Wellen.random(-get_amplitude(), get_amplitude()) * mADSR.output());
+            return Signal.create(Wellen.random(-get_amplitude(), get_amplitude()) * fADSR.output());
         }
     }
 
@@ -212,10 +212,10 @@ public class InstrumentDSPLibrary {
 
             mFrequencyEnvelope = new ADSR();
 
-            mADSR.set_attack(0.001f);
-            mADSR.set_decay(mDecaySpeed);
-            mADSR.set_sustain(0.0f);
-            mADSR.set_release(0.0f);
+            fADSR.set_attack(0.001f);
+            fADSR.set_decay(mDecaySpeed);
+            fADSR.set_sustain(0.0f);
+            fADSR.set_release(0.0f);
 
             mFrequencyEnvelope.set_attack(0.001f);
             mFrequencyEnvelope.set_decay(mDecaySpeed);
@@ -226,21 +226,21 @@ public class InstrumentDSPLibrary {
         @Override
         public Signal output_signal() {
             final float mFrequencyOffset = mFrequencyEnvelope.output() * mFrequencyRange;
-            mVCO.set_frequency(get_frequency() + mFrequencyOffset);
-            mVCO.set_amplitude(get_amplitude());
+            fVCO.set_frequency(get_frequency() + mFrequencyOffset);
+            fVCO.set_amplitude(get_amplitude());
 
-            float mSample = mVCO.output();
-            final float mADSRAmp = mADSR.output();
+            float mSample = fVCO.output();
+            final float mADSRAmp = fADSR.output();
             return Signal.create(mSample * mADSRAmp);
         }
 
         public void note_off() {
-            mIsPlaying = false;
+            fIsPlaying = false;
         }
 
-        public void note_on(int pNote, int pVelocity) {
-            mIsPlaying = true;
-            mADSR.start();
+        public void note_on(int note, int velocity) {
+            fIsPlaying = true;
+            fADSR.start();
             mFrequencyEnvelope.start();
         }
     }
@@ -263,12 +263,12 @@ public class InstrumentDSPLibrary {
         }
 
         public void note_off() {
-            mIsPlaying = false;
+            fIsPlaying = false;
         }
 
-        public void note_on(int pNote, int pVelocity) {
-            mIsPlaying = true;
-            set_amplitude(velocity_to_amplitude(pVelocity));
+        public void note_on(int note, int velocity) {
+            fIsPlaying = true;
+            set_amplitude(velocity_to_amplitude(velocity));
             mSampler.rewind();
         }
     }

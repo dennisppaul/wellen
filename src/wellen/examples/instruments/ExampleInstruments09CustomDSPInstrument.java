@@ -150,7 +150,7 @@ public class ExampleInstruments09CustomDSPInstrument extends PApplet {
             set_detune(0.01f);
             set_spread(0.5f);
 
-            Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVEFORM_TRIANGLE);
+            Wavetable.fill(fVCO.get_wavetable(), Wellen.WAVEFORM_TRIANGLE);
 
             mVCOSecond = new Wavetable(DEFAULT_WAVETABLE_SIZE);
             mVCOSecond.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
@@ -175,16 +175,16 @@ public class ExampleInstruments09CustomDSPInstrument extends PApplet {
 
         public Signal output_signal() {
             /* this custom instrument ignores LFOs and LPF */
-            mVCO.set_frequency(get_frequency() * (1.0f - mDetune));
-            mVCO.set_amplitude(get_amplitude());
+            fVCO.set_frequency(get_frequency() * (1.0f - mDetune));
+            fVCO.set_amplitude(get_amplitude());
             mVCOSecond.set_frequency(get_frequency() * (1.0f + mDetune));
             mVCOSecond.set_amplitude(get_amplitude());
 
             /* use inherited ADSR envelope to control the amplitude */
-            final float mADSRAmp = mADSR.output();
+            final float mADSRAmp = fADSR.output();
 
             /* spread signal across stereo channels */
-            final float mSignalA = mVCO.output();
+            final float mSignalA = fVCO.output();
             final float mSignalB = mVCOSecond.output();
             final float mMix = mSpread * 0.5f + 0.5f;
             final float mInvMix = 1.0f - mMix;
@@ -218,10 +218,10 @@ public class ExampleInstruments09CustomDSPInstrument extends PApplet {
             mFrequencyEnvelope = new ADSR();
 
             /* the *built-in* ADSR is still available and used to control the amplitude, as usual. */
-            mADSR.set_attack(0.001f);
-            mADSR.set_decay(mDecaySpeed);
-            mADSR.set_sustain(0.0f);
-            mADSR.set_release(0.0f);
+            fADSR.set_attack(0.001f);
+            fADSR.set_decay(mDecaySpeed);
+            fADSR.set_sustain(0.0f);
+            fADSR.set_release(0.0f);
 
             mFrequencyEnvelope.set_attack(0.001f);
             mFrequencyEnvelope.set_decay(mDecaySpeed);
@@ -231,23 +231,23 @@ public class ExampleInstruments09CustomDSPInstrument extends PApplet {
 
         public Signal output_signal() {
             final float mFrequencyOffset = mFrequencyEnvelope.output() * mFrequencyRange;
-            mVCO.set_frequency(get_frequency() + mFrequencyOffset);
-            mVCO.set_amplitude(get_amplitude());
+            fVCO.set_frequency(get_frequency() + mFrequencyOffset);
+            fVCO.set_amplitude(get_amplitude());
 
-            final float mSample = mVCO.output();
-            final float mADSRAmp = mADSR.output();
+            final float mSample = fVCO.output();
+            final float mADSRAmp = fADSR.output();
 
             return Signal.create(mSample * mADSRAmp);
         }
 
         public void note_off() {
-            mIsPlaying = false;
+            fIsPlaying = false;
         }
 
-        public void note_on(int pNote, int pVelocity) {
-            mIsPlaying = true;
+        public void note_on(int note, int velocity) {
+            fIsPlaying = true;
             /* make sure to trigger both ADSRs when a note is played */
-            mADSR.start();
+            fADSR.start();
             mFrequencyEnvelope.start();
         }
     }
@@ -267,24 +267,24 @@ public class ExampleInstruments09CustomDSPInstrument extends PApplet {
             mLowerVCO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
             mVeryLowVCO = new Wavetable(DEFAULT_WAVETABLE_SIZE);
             mVeryLowVCO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
-            Wavetable.fill(mVCO.get_wavetable(), Wellen.WAVEFORM_TRIANGLE);
+            Wavetable.fill(fVCO.get_wavetable(), Wellen.WAVEFORM_TRIANGLE);
             Wavetable.fill(mLowerVCO.get_wavetable(), Wellen.WAVEFORM_SINE);
             Wavetable.fill(mVeryLowVCO.get_wavetable(), Wellen.WAVEFORM_SQUARE);
         }
 
         public Signal output_signal() {
             /* this custom instrument ignores LFOs and LPF */
-            mVCO.set_frequency(get_frequency());
-            mVCO.set_amplitude(get_amplitude() * 0.2f);
+            fVCO.set_frequency(get_frequency());
+            fVCO.set_amplitude(get_amplitude() * 0.2f);
             mLowerVCO.set_frequency(get_frequency() * 0.5f);
             mLowerVCO.set_amplitude(get_amplitude());
             mVeryLowVCO.set_frequency(get_frequency() * 0.25f);
             mVeryLowVCO.set_amplitude(get_amplitude() * 0.075f);
 
             /* use inherited ADSR envelope to control the amplitude */
-            final float mADSRAmp = mADSR.output();
+            final float mADSRAmp = fADSR.output();
             /* multiple samples are combined by a simple addition */
-            float mSample = mVCO.output();
+            float mSample = fVCO.output();
             mSample += mLowerVCO.output();
             mSample += mVeryLowVCO.output();
 
@@ -300,14 +300,14 @@ public class ExampleInstruments09CustomDSPInstrument extends PApplet {
 
         public CustomInstrumentNoise(int pID) {
             super(pID);
-            mADSR.set_attack(0.005f);
-            mADSR.set_decay(0.05f);
-            mADSR.set_sustain(0.0f);
-            mADSR.set_release(0.0f);
+            fADSR.set_attack(0.005f);
+            fADSR.set_decay(0.05f);
+            fADSR.set_sustain(0.0f);
+            fADSR.set_release(0.0f);
         }
 
         public Signal output_signal() {
-            return Signal.create(Wellen.random(-get_amplitude(), get_amplitude()) * mADSR.output());
+            return Signal.create(Wellen.random(-get_amplitude(), get_amplitude()) * fADSR.output());
         }
     }
 
@@ -355,7 +355,7 @@ public class ExampleInstruments09CustomDSPInstrument extends PApplet {
          * is removed.
          */
         public void note_off() {
-            mIsPlaying = false;
+            fIsPlaying = false;
         }
 
         /**
@@ -363,14 +363,14 @@ public class ExampleInstruments09CustomDSPInstrument extends PApplet {
          * ignored, the velocity is interpreted, and the note value is ignored ( although it could be interpreted as
          * sample playback speed ).
          *
-         * @param pNote     ignored in this instrument
-         * @param pVelocity specifies the volume of the sampler with a value range [0, 127]
+         * @param note     ignored in this instrument
+         * @param velocity specifies the volume of the sampler with a value range [0, 127]
          */
-        public void note_on(int pNote, int pVelocity) {
-            mIsPlaying = true;
+        public void note_on(int note, int velocity) {
+            fIsPlaying = true;
             /* use `velocity_to_amplitude(float)` to convert velocities with a value range [0, 127] to amplitude with
              a value range [0.0, 0.1] */
-            set_amplitude(velocity_to_amplitude(pVelocity));
+            set_amplitude(velocity_to_amplitude(velocity));
             mSampler.rewind();
         }
     }

@@ -4,9 +4,14 @@ import wellen.dsp.*;
 /*
  * this example shows how to use different oscillators in an instrument.
  *
+ * it also illustrates how to set the amplitude of an oscillator directly with the `set_amplitude(float, int)`
+ * method. note that this method requires two parameters of which the second one defines the interpolation speed
+ * between old and new amplitude. this technique should be used when changing the amplitude at a high rate to
+ * prevent crackling artifacts.
+ *
  * use keys `1` – `5` to select different wave shapes.
  *
- * note that this functionality is not implemented for MIDI and OSC.
+ * note that these functionalities are not implemented for MIDI and OSC.
  */
 
 int mNote;
@@ -28,7 +33,13 @@ void draw() {
 
 void mousePressed() {
     mNote = Scale.get_note(Scale.CHORD_MAJOR_7TH, Note.NOTE_A2, (int) random(0, 10));
-    Tone.note_on(mNote, 127);
+    Tone.note_on(mNote, 100);
+}
+
+void mouseDragged() {
+    float mAmplitude = map(mouseY, 0, height, 0.0f, 1.0f);
+    int mInterpolationSpeedInSamples = Wellen.millis_to_samples(100);
+    Tone.instrument().set_amplitude(mAmplitude, mInterpolationSpeedInSamples);
 }
 
 void mouseReleased() {
