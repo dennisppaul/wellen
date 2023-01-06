@@ -84,6 +84,10 @@ void keyPressed() {
             Wavetable.square(mWavetable.get_wavetable(), 16);
             break;
         case '8':
+            /* note, that this method is supposed to illustrate how to write data directly into the wavetable
+             * buffer. in this case the same effect can be achieved by calling:
+             * `Wavetable.noise(mWavetable.get_wavetable());`
+             */
             randomize(mWavetable.get_wavetable());
             break;
         case '+':

@@ -35,7 +35,7 @@ public class ExampleDSPAnalysis03BeatDetection extends PApplet {
         Tone.instrument().set_adsr(0.005f, 0.01f, 0.25f, 0.01f);
         Tone.instrument(1);
         Tone.instrument().set_oscillator_type(Wellen.WAVEFORM_NOISE);
-        Tone.instrument().set_adsr(0.005f, 0.5f, 0.01f, 0.01f);
+        Tone.instrument().set_adsr(0.005f, 0.05f, 0.01f, 0.01f);
 
         fBeatDetection.set_sensitivity(60);
         fBeatDetection.set_threshold(3);

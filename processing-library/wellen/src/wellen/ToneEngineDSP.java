@@ -56,7 +56,7 @@ public class ToneEngineDSP extends ToneEngine implements AudioBufferRenderer, DS
     public ToneEngineDSP(int sampling_rate,
                          int audioblock_size,
                          int output_device_ID,
-                         int output_channels,
+                         int number_of_output_channels,
                          int number_of_instruments) {
         fInstruments = new ArrayList<>();
         fEffects = new ArrayList<>();
@@ -72,13 +72,13 @@ public class ToneEngineDSP extends ToneEngine implements AudioBufferRenderer, DS
         fPan = new Pan();
         fPan.set_pan_type(Wellen.PAN_SINE_LAW);
 
-        if (output_device_ID != NO_AUDIO_DEVICE && output_channels > 0) {
+        if (output_device_ID != NO_AUDIO_DEVICE && number_of_output_channels > 0) {
             AudioDeviceConfiguration mConfig = new AudioDeviceConfiguration();
             mConfig.sample_rate = sampling_rate;
             mConfig.sample_buffer_size = audioblock_size;
-            mConfig.output_device = output_device_ID;
-            mConfig.number_of_output_channels = output_channels;
-            mConfig.input_device = 0;
+            mConfig.output_device_ID = output_device_ID;
+            mConfig.number_of_output_channels = number_of_output_channels;
+            mConfig.input_device_ID = 0;
             mConfig.number_of_input_channels = 0;
             fAudioPlayer = new AudioBufferManager(this, mConfig);
         } else {

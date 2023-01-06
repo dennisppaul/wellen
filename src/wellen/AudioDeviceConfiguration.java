@@ -30,7 +30,7 @@ public class AudioDeviceConfiguration {
     /**
      *
      */
-    public int input_device = Wellen.DEFAULT_AUDIO_DEVICE;
+    public int input_device_ID = Wellen.DEFAULT_AUDIO_DEVICE;
     /**
      *
      */
@@ -42,7 +42,7 @@ public class AudioDeviceConfiguration {
     /**
      *
      */
-    public int output_device = Wellen.DEFAULT_AUDIO_DEVICE;
+    public int output_device_ID = Wellen.DEFAULT_AUDIO_DEVICE;
     /**
      *
      */
@@ -82,7 +82,7 @@ public class AudioDeviceConfiguration {
      * @return instance of {@link wellen.AudioDeviceConfiguration}
      */
     public AudioDeviceConfiguration set_output_device(int pOutputDevice) {
-        output_device = pOutputDevice;
+        output_device_ID = pOutputDevice;
         return this;
     }
 
@@ -100,7 +100,7 @@ public class AudioDeviceConfiguration {
      * @return instance of {@link wellen.AudioDeviceConfiguration}
      */
     public AudioDeviceConfiguration set_input_device(int pInputDevice) {
-        input_device = pInputDevice;
+        input_device_ID = pInputDevice;
         return this;
     }
 

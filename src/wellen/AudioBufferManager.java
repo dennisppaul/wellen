@@ -27,14 +27,14 @@ public class AudioBufferManager {
     private final AudioDevice fImplementation;
 
     /**
-     * @param pSampleRenderer renderer to be used
-     * @param pConfiguration  configuration to be used
+     * @param sample_renderer renderer to be used
+     * @param configuration   configuration to be used
      */
-    public AudioBufferManager(AudioBufferRenderer pSampleRenderer, AudioDeviceConfiguration pConfiguration) {
+    public AudioBufferManager(AudioBufferRenderer sample_renderer, AudioDeviceConfiguration configuration) {
         if (AndroidProbe.isAndroid()) {
-            fImplementation = new AudioDeviceImplAndroid(pSampleRenderer, pConfiguration);
+            fImplementation = new AudioDeviceImplAndroid(sample_renderer, configuration);
         } else {
-            fImplementation = new AudioDeviceImplDesktop(pSampleRenderer, pConfiguration);
+            fImplementation = new AudioDeviceImplDesktop(sample_renderer, configuration);
         }
     }
 
@@ -57,5 +57,24 @@ public class AudioBufferManager {
      */
     public int get_buffer_size() {
         return fImplementation.buffer_size();
+    }
+
+    /**
+     * pause or resume audio processing
+     *
+     * @param pause_state <code>true</code> to pause audio processing, <code>false</code> to resume
+     */
+    public void pause(boolean pause_state) {
+        // TODO move this to interface and implement for android as well
+        if (fImplementation instanceof AudioDeviceImplDesktop) {
+            ((AudioDeviceImplDesktop) fImplementation).pause(pause_state);
+        }
+    }
+
+    public boolean is_paused() {
+        if (fImplementation instanceof AudioDeviceImplDesktop) {
+            return ((AudioDeviceImplDesktop) fImplementation).is_paused();
+        }
+        return false;
     }
 }

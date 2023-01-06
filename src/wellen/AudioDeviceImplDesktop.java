@@ -35,7 +35,6 @@ public class AudioDeviceImplDesktop extends Thread implements AudioDevice {
      * - TARGET == input
      */
 
-    //@TODO(make BITS_PER_SAMPLE more flexible)
 //    public void playAudio(float[][] samples) {
 //        try {
 //            // Set up audio format
@@ -151,6 +150,7 @@ public class AudioDeviceImplDesktop extends Thread implements AudioDevice {
     private final int mSampleBufferSize;
     private final int mSampleRate;
     private final AudioBufferRenderer mSampleRenderer;
+    private volatile boolean fThreadSuspended = false;
 
     public AudioDeviceImplDesktop(AudioBufferRenderer pSampleRenderer, AudioDeviceConfiguration pConfiguration) {
         mSampleRenderer = pSampleRenderer;
@@ -184,12 +184,14 @@ public class AudioDeviceImplDesktop extends Thread implements AudioDevice {
 //                                                              mNumOutputChannels,
 //                                                              SIGNED,
 //                                                              LITTLE_ENDIAN);
-            if (pConfiguration.output_device == Wellen.DEFAULT_AUDIO_DEVICE) {
+            if (pConfiguration.output_device_ID == Wellen.DEFAULT_AUDIO_DEVICE) {
                 mOutputLine = AudioSystem.getSourceDataLine(mOutputFormat);
             } else {
-                System.out.println("+ OUTPUT DEVICE: " + AudioSystem.getMixerInfo()[pConfiguration.output_device]);
+                if (VERBOSE) {
+                    System.out.println("+ OUTPUT DEVICE: " + AudioSystem.getMixerInfo()[pConfiguration.output_device_ID]);
+                }
                 mOutputLine = AudioSystem.getSourceDataLine(mOutputFormat,
-                                                            AudioSystem.getMixerInfo()[pConfiguration.output_device]);
+                                                            AudioSystem.getMixerInfo()[pConfiguration.output_device_ID]);
                 if (mNumOutputChannels != mOutputLine.getFormat().getChannels()) {
                     System.err.println("+++ @" + getClass().getSimpleName() + " / output line 'channel numbers' do " + "not match: REQUESTED: " + mNumOutputChannels + " RECEIVED: " + mOutputLine.getFormat()
                                                                                                                                                                                                   .getChannels());
@@ -214,7 +216,7 @@ public class AudioDeviceImplDesktop extends Thread implements AudioDevice {
                                                                  mNumInputChannels,
                                                                  SIGNED,
                                                                  LITTLE_ENDIAN);
-                if (pConfiguration.input_device == Wellen.DEFAULT_AUDIO_DEVICE) {
+                if (pConfiguration.input_device_ID == Wellen.DEFAULT_AUDIO_DEVICE) {
                     mInputLine = AudioSystem.getTargetDataLine(mInputFormat);
                     if (mNumInputChannels != mInputLine.getFormat().getChannels()) {
                         System.err.println("+++ @" + getClass().getSimpleName() + " / input line 'channel numbers' " + "do" + " not match: REQUESTED: " + mNumInputChannels + " RECEIVED:" + " " + mInputLine.getFormat()
@@ -230,8 +232,10 @@ public class AudioDeviceImplDesktop extends Thread implements AudioDevice {
                     }
                 } else {
                     mInputLine = AudioSystem.getTargetDataLine(mInputFormat,
-                                                               AudioSystem.getMixerInfo()[pConfiguration.input_device]);
-                    System.out.println("+ INPUT DEVICE: " + AudioSystem.getMixerInfo()[pConfiguration.input_device]);
+                                                               AudioSystem.getMixerInfo()[pConfiguration.input_device_ID]);
+                    if (VERBOSE) {
+                        System.out.println("+ INPUT DEVICE: " + AudioSystem.getMixerInfo()[pConfiguration.input_device_ID]);
+                    }
                 }
                 mInputByteBuffer = new byte[mSampleBufferSize * fBytesPerSample * mNumInputChannels];
                 mInputLine.open(mInputFormat, mInputByteBuffer.length);
@@ -271,10 +275,31 @@ public class AudioDeviceImplDesktop extends Thread implements AudioDevice {
         }
     }
 
+    public synchronized void pause(boolean pause_state) {
+        fThreadSuspended = pause_state;
+
+        if (!fThreadSuspended) {
+            notify();
+        }
+    }
+
+    public boolean is_paused() {
+        return fThreadSuspended;
+    }
+
     @Override
     public void run() {
         while (mRunBuffer) {
-            boolean mLockAudioBlock;
+            try {
+                if (fThreadSuspended) {
+                    synchronized (this) {
+                        while (fThreadSuspended) wait();
+                    }
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
             /* input */
             float[][] mInputBuffers = new float[mNumInputChannels][];
             for (int j = 0; j < mNumInputChannels; j++) {

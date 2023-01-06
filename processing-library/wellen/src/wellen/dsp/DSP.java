@@ -41,48 +41,48 @@ public class DSP implements AudioBufferRenderer {
     private static final int NUM_CACHED_BUFFERS = 4;
     private static final int OUTPUT_LEFT = 0;
     private static final int OUTPUT_RIGHT = 1;
-    private static AudioBufferManager mAudioPlayer;
-    private static DSP mInstance = null;
+    private static AudioBufferManager fAudioBufferManager;
+    private static DSP fInstance = null;
     /**
      * enable to create a copy of a cached buffer for each call to <code>audioblock(...)</code>. this is useful if the
      * processing of the audio signal is not thread-safe.
      */
     public boolean COPY_CACHED_BUFFER = false;
     private final float[][] fCachedBuffers = new float[NUM_CACHED_BUFFERS][];
-    private final Object mListener;
-    private Method mMethod = null;
+    private final Object fListener;
+    private Method fMethod = null;
     /* --- UTILITIES --- */
-    private final int mNumberInputChannels;
-    private final int mNumberOutputChannels;
+    private final int fNumberInputChannels;
+    private final int fNumberOutputChannels;
 
     /**
-     * @param pListener             object which implements the <code>audioblock(...)</code> method
-     * @param pNumberOutputChannels number of output channels
-     * @param pNumberInputChannels  number of input channels
+     * @param callback                  object which implements the <code>audioblock(...)</code> method
+     * @param number_of_output_channels number of output channels
+     * @param number_of_input_channels  number of input channels
      */
-    public DSP(Object pListener, int pNumberOutputChannels, int pNumberInputChannels) {
-        mListener = pListener;
-        mNumberOutputChannels = pNumberOutputChannels;
-        mNumberInputChannels = pNumberInputChannels;
+    public DSP(Object callback, int number_of_output_channels, int number_of_input_channels) {
+        fListener = callback;
+        fNumberOutputChannels = number_of_output_channels;
+        fNumberInputChannels = number_of_input_channels;
         try {
-            if (mNumberOutputChannels == 2 && mNumberInputChannels == 2) {
-                mMethod = pListener.getClass()
-                                   .getDeclaredMethod(METHOD_NAME,
-                                                      float[].class,
-                                                      float[].class,
-                                                      float[].class,
-                                                      float[].class);
-            } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 0) {
-                mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME, float[].class, float[].class);
-            } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 1) {
-                mMethod = pListener.getClass()
-                                   .getDeclaredMethod(METHOD_NAME, float[].class, float[].class, float[].class);
-            } else if (mNumberOutputChannels == 1 && mNumberInputChannels == 1) {
-                mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME, float[].class, float[].class);
-            } else if (mNumberOutputChannels == 1 && mNumberInputChannels == 0) {
-                mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME, float[].class);
+            if (fNumberOutputChannels == 2 && fNumberInputChannels == 2) {
+                fMethod = callback.getClass()
+                                  .getDeclaredMethod(METHOD_NAME,
+                                                     float[].class,
+                                                     float[].class,
+                                                     float[].class,
+                                                     float[].class);
+            } else if (fNumberOutputChannels == 2 && fNumberInputChannels == 0) {
+                fMethod = callback.getClass().getDeclaredMethod(METHOD_NAME, float[].class, float[].class);
+            } else if (fNumberOutputChannels == 2 && fNumberInputChannels == 1) {
+                fMethod = callback.getClass()
+                                  .getDeclaredMethod(METHOD_NAME, float[].class, float[].class, float[].class);
+            } else if (fNumberOutputChannels == 1 && fNumberInputChannels == 1) {
+                fMethod = callback.getClass().getDeclaredMethod(METHOD_NAME, float[].class, float[].class);
+            } else if (fNumberOutputChannels == 1 && fNumberInputChannels == 0) {
+                fMethod = callback.getClass().getDeclaredMethod(METHOD_NAME, float[].class);
             } else {
-                mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME, float[][].class, float[][].class);
+                fMethod = callback.getClass().getDeclaredMethod(METHOD_NAME, float[][].class, float[][].class);
             }
         } catch (NoSuchMethodException | SecurityException ex) {
             System.err.println("+++ @" + DSP.class.getSimpleName() + " / could not find callback `" + METHOD_NAME +
@@ -92,32 +92,54 @@ public class DSP implements AudioBufferRenderer {
     }
 
     /**
+     * pause or resume audio processing
+     *
+     * @param pause_state <code>true</code> to pause audio processing, <code>false</code> to resume
+     */
+    public static void pause(boolean pause_state) {
+        if (fAudioBufferManager != null) {
+            fAudioBufferManager.pause(pause_state);
+        }
+    }
+
+    /**
+     * querry the pause state of the audio processing
+     * @return <code>true</code> if audio processing is paused, <code>false</code> otherwise
+     */
+    public static boolean is_paused() {
+        if (fAudioBufferManager != null) {
+            return fAudioBufferManager.is_paused();
+        }
+        return false;
+    }
+
+    /**
      * Calculates and returns the root mean square of the signal. Please cache the result since it is calculated every
      * time.
      *
-     * @param pBuffer The audio buffer to calculate the RMS for.
+     * @param buffer The audio buffer to calculate the RMS for.
      * @return The <a href="http://en.wikipedia.org/wiki/Root_mean_square">RMS</a> of the signal present in the current
      *         buffer.
      */
-    public static float calculate_RMS(final float[] pBuffer) {
+    public static float calculate_RMS(final float[] buffer) {
         float mRMS = 0.0f;
-        for (float v : pBuffer) {
+        for (float v : buffer) {
             mRMS += v * v;
         }
-        mRMS = mRMS / (float) pBuffer.length;
+        mRMS = mRMS / (float) buffer.length;
         mRMS = (float) Math.sqrt(mRMS);
         return mRMS;
     }
 
     /**
-     * @param g       graphics context to draw into
-     * @param pWidth  visual width of the drawn buffer
-     * @param pHeight visual height of the drawn buffer
+     * @param g      graphics context to draw into
+     * @param width  visual width of the drawn buffer
+     * @param height visual height of the drawn buffer
      */
-    public static void draw_buffers(PGraphics g, float pWidth, float pHeight) {
+    public static void draw_buffers(PGraphics g, float width, float height) {
         Wellen.draw_buffers(g,
-                            pWidth,
-                            pHeight,
+                            width,
+                            height,
                             DSP.get_output_buffer_left(),
                             DSP.get_output_buffer_right(),
                             DSP.get_input_buffer_left(),
@@ -128,21 +150,21 @@ public class DSP implements AudioBufferRenderer {
      * @return audio block or buffer size
      */
     public static int get_buffer_size() {
-        return mAudioPlayer == null ? Wellen.NO_VALUE : mAudioPlayer.get_buffer_size();
+        return fAudioBufferManager == null ? Wellen.NO_VALUE : fAudioBufferManager.get_buffer_size();
     }
 
     /**
      * @return reference to left input buffer
      */
     public static float[] get_input_buffer_left() {
-        return mInstance == null ? null : mInstance.fCachedBuffers[INPUT_LEFT];
+        return fInstance == null ? null : fInstance.fCachedBuffers[INPUT_LEFT];
     }
 
     /**
      * @return reference to right input buffer
      */
     public static float[] get_input_buffer_right() {
-        return mInstance == null ? null : mInstance.fCachedBuffers[INPUT_RIGHT];
+        return fInstance == null ? null : fInstance.fCachedBuffers[INPUT_RIGHT];
     }
 
     /**
@@ -156,211 +178,213 @@ public class DSP implements AudioBufferRenderer {
      * @return reference to left output buffer
      */
     public static float[] get_output_buffer_left() {
-        return mInstance == null ? null : mInstance.fCachedBuffers[OUTPUT_LEFT];
+        return fInstance == null ? null : fInstance.fCachedBuffers[OUTPUT_LEFT];
     }
 
     /**
      * @return reference to right output buffer
      */
     public static float[] get_output_buffer_right() {
-        return mInstance == null ? null : mInstance.fCachedBuffers[OUTPUT_RIGHT];
+        return fInstance == null ? null : fInstance.fCachedBuffers[OUTPUT_RIGHT];
     }
 
     /**
      * @return sample rate
      */
     public static int get_sample_rate() {
-        return mAudioPlayer == null ? Wellen.NO_VALUE : mAudioPlayer.get_sample_rate();
+        return fAudioBufferManager == null ? Wellen.NO_VALUE : fAudioBufferManager.get_sample_rate();
     }
 
     /**
      * Converts a linear to a dB value.
      *
-     * @param pLinearValue linear value to convert
+     * @param linear_value linear value to convert
      * @return converted value in decibel
      */
-    public static float linear_to_decibel(final float pLinearValue) {
-        return 20.0f * (float) Math.log10(pLinearValue);
+    public static float linear_to_decibel(final float linear_value) {
+        return 20.0f * (float) Math.log10(linear_value);
     }
 
     /**
      * returns sound pressure level in decibel for given buffer
      *
-     * @param pBuffer buffer with signal
+     * @param buffer buffer with signal
      * @return level for buffer in decibel
      */
-    public static float sound_pressure_level(final float[] pBuffer) {
-        float rms = calculate_RMS(pBuffer);
+    public static float sound_pressure_level(final float[] buffer) {
+        float rms = calculate_RMS(buffer);
         return linear_to_decibel(rms);
     }
 
     /**
-     * @param pObject object which implements the <code>audioblock(...)</code> method
+     * @param callback object which implements the <code>audioblock(...)</code> method
      * @return reference to DSP instance
      */
-    public static DSP start(Object pObject) {
-        return start(pObject, 1, 0);
+    public static DSP start(Object callback) {
+        return start(callback, 1, 0);
     }
 
     /**
-     * @param pObject               object which implements the <code>audioblock(...)</code> method
-     * @param pNumberOutputChannels number of output channels
+     * @param callback                  object which implements the <code>audioblock(...)</code> method
+     * @param number_of_output_channels number of output channels
      * @return reference to DSP instance
      */
-    public static DSP start(Object pObject, int pNumberOutputChannels) {
-        return start(pObject, pNumberOutputChannels, 0);
+    public static DSP start(Object callback, int number_of_output_channels) {
+        return start(callback, number_of_output_channels, 0);
     }
 
     /**
-     * @param pObject               object which implements the <code>audioblock(...)</code> method
-     * @param pNumberOutputChannels number of output channels
-     * @param pNumberInputChannels  number of input channels
+     * @param callback                  object which implements the <code>audioblock(...)</code> method
+     * @param number_of_output_channels number of output channels
+     * @param number_of_input_channels  number of input channels
      * @return reference to DSP instance
      */
-    public static DSP start(Object pObject, int pNumberOutputChannels, int pNumberInputChannels) {
-        return start(pObject,
+    public static DSP start(Object callback, int number_of_output_channels, int number_of_input_channels) {
+        return start(callback,
                      Wellen.DEFAULT_AUDIO_DEVICE,
-                     pNumberOutputChannels,
+                     number_of_output_channels,
                      Wellen.DEFAULT_AUDIO_DEVICE,
-                     pNumberInputChannels);
+                     number_of_input_channels);
     }
 
     /**
-     * @param pObject               object which implements the <code>audioblock(...)</code> method
-     * @param pOutputDeviceName     name of output device
-     * @param pNumberOutputChannels number of output channels
-     * @param pInputDeviceName      name of input device
-     * @param pNumberInputChannels  number of input channels
-     * @param pSamplingRate         sampling rate
-     * @param pAudioBlockSize       audio block size
+     * @param callback                  object which implements the <code>audioblock(...)</code> method
+     * @param output_device_name        name of output device
+     * @param number_of_output_channels number of output channels
+     * @param input_device_name         name of input device
+     * @param number_of_input_channels  number of input channels
+     * @param sampling_rate             sampling rate
+     * @param audio_block_size          audio block size
      * @return reference to DSP instance
      */
 
-    public static DSP start(Object pObject,
-                            String pOutputDeviceName,
-                            int pNumberOutputChannels,
-                            String pInputDeviceName,
-                            int pNumberInputChannels,
-                            int pSamplingRate,
-                            int pAudioBlockSize) {
-        return start(pObject,
-                     Wellen.queryAudioInputAndOutputDevices(pOutputDeviceName, false, false),
-                     pNumberOutputChannels,
-                     Wellen.queryAudioInputAndOutputDevices(pInputDeviceName, false, false),
-                     pNumberInputChannels,
-                     pSamplingRate,
-                     pAudioBlockSize);
+    public static DSP start(Object callback,
+                            String output_device_name,
+                            int number_of_output_channels,
+                            String input_device_name,
+                            int number_of_input_channels,
+                            int sampling_rate,
+                            int audio_block_size) {
+        return start(callback,
+                     Wellen.queryAudioInputAndOutputDevices(output_device_name, false, false),
+                     number_of_output_channels,
+                     Wellen.queryAudioInputAndOutputDevices(input_device_name, false, false),
+                     number_of_input_channels,
+                     sampling_rate,
+                     audio_block_size);
     }
 
     /**
-     * @param pObject               object which implements the <code>audioblock(...)</code> method
-     * @param pOutputDevice         output device ID as returned by
-     *                              {@link Wellen#queryAudioInputAndOutputDevices(String, boolean, boolean)}
-     * @param pNumberOutputChannels number of output channels
-     * @param pInputDevice          input device ID as returned by
-     *                              {@link Wellen#queryAudioInputAndOutputDevices(String, boolean, boolean)}
-     * @param pNumberInputChannels  number of input channels
+     * @param callback                  object which implements the <code>audioblock(...)</code> method
+     * @param output_device_ID          output device ID as returned by
+     *                                  {@link Wellen#queryAudioInputAndOutputDevices(String, boolean, boolean)}
+     * @param number_of_output_channels number of output channels
+     * @param input_device_ID           input device ID as returned by
+     *                                  {@link Wellen#queryAudioInputAndOutputDevices(String, boolean, boolean)}
+     * @param number_of_input_channels  number of input channels
      * @return reference to DSP instance
      */
-    public static DSP start(Object pObject,
-                            int pOutputDevice,
-                            int pNumberOutputChannels,
-                            int pInputDevice,
-                            int pNumberInputChannels) {
-        return start(pObject,
-                     pOutputDevice,
-                     pNumberOutputChannels,
-                     pInputDevice,
-                     pNumberInputChannels,
+    public static DSP start(Object callback,
+                            int output_device_ID,
+                            int number_of_output_channels,
+                            int input_device_ID,
+                            int number_of_input_channels) {
+        return start(callback,
+                     output_device_ID,
+                     number_of_output_channels,
+                     input_device_ID,
+                     number_of_input_channels,
                      Wellen.DEFAULT_SAMPLING_RATE,
                      Wellen.DEFAULT_AUDIOBLOCK_SIZE);
     }
 
     /**
-     * @param pObject               object which implements the <code>audioblock(...)</code> method
-     * @param pOutputDevice         output device ID as returned by
-     *                              {@link Wellen#queryAudioInputAndOutputDevices(String, boolean, boolean)}
-     * @param pNumberOutputChannels number of output channels
-     * @param pInputDevice          input device ID as returned by
-     *                              {@link Wellen#queryAudioInputAndOutputDevices(String, boolean, boolean)}
-     * @param pNumberInputChannels  number of input channels
-     * @param pSamplingRate         sampling rate
-     * @param pAudioBlockSize       audio block size
+     * @param callback                  object which implements the <code>audioblock(...)</code> method
+     * @param output_device_ID          output device ID as returned by
+     *                                  {@link Wellen#queryAudioInputAndOutputDevices(String, boolean, boolean)}
+     * @param number_of_output_channels number of output channels
+     * @param input_device_ID           input device ID as returned by
+     *                                  {@link Wellen#queryAudioInputAndOutputDevices(String, boolean, boolean)}
+     * @param number_of_input_channels  number of input channels
+     * @param sampling_rate             sampling rate
+     * @param audio_block_size          audio block size
      * @return reference to DSP instance
      */
-    public static DSP start(Object pObject,
-                            int pOutputDevice,
-                            int pNumberOutputChannels,
-                            int pInputDevice,
-                            int pNumberInputChannels,
-                            int pSamplingRate,
-                            int pAudioBlockSize) {
-        if (mInstance == null) {
-            mInstance = new DSP(pObject, pNumberOutputChannels, pNumberInputChannels);
+    public static DSP start(Object callback,
+                            int output_device_ID,
+                            int number_of_output_channels,
+                            int input_device_ID,
+                            int number_of_input_channels,
+                            int sampling_rate,
+                            int audio_block_size) {
+        if (fInstance == null) {
+            fInstance = new DSP(callback, number_of_output_channels, number_of_input_channels);
             AudioDeviceConfiguration mConfig = new AudioDeviceConfiguration();
-            mConfig.sample_rate = pSamplingRate;
-            mConfig.sample_buffer_size = pAudioBlockSize;
-            mConfig.output_device = pOutputDevice;
-            mConfig.number_of_output_channels = pNumberOutputChannels;
-            mConfig.input_device = pInputDevice;
-            mConfig.number_of_input_channels = pNumberInputChannels;
-            mAudioPlayer = new AudioBufferManager(mInstance, mConfig);
+            mConfig.sample_rate = sampling_rate;
+            mConfig.sample_buffer_size = audio_block_size;
+            mConfig.output_device_ID = output_device_ID;
+            mConfig.number_of_output_channels = number_of_output_channels;
+            mConfig.input_device_ID = input_device_ID;
+            mConfig.number_of_input_channels = number_of_input_channels;
+            fAudioBufferManager = new AudioBufferManager(fInstance, mConfig);
         }
-        return mInstance;
+        return fInstance;
     }
 
     /**
-     * @param pObject object which implements the <code>audioblock(...)</code> method
-     * @param pConfig audio device configuration
+     * @param callback      object which implements the <code>audioblock(...)</code> method
+     * @param configuration audio device configuration
      * @return reference to DSP instance
      */
-    public static DSP start(Object pObject, AudioDeviceConfiguration pConfig) {
-        if (mInstance == null) {
-            mInstance = new DSP(pObject, pConfig.number_of_output_channels, pConfig.number_of_input_channels);
-            mAudioPlayer = new AudioBufferManager(mInstance, pConfig);
+    public static DSP start(Object callback, AudioDeviceConfiguration configuration) {
+        if (fInstance == null) {
+            fInstance = new DSP(callback,
+                                configuration.number_of_output_channels,
+                                configuration.number_of_input_channels);
+            fAudioBufferManager = new AudioBufferManager(fInstance, configuration);
         }
-        return mInstance;
+        return fInstance;
     }
 
     /**
      *
      */
     public static void stop() {
-        if (mAudioPlayer != null) {
-            mAudioPlayer.exit();
+        if (fAudioBufferManager != null) {
+            fAudioBufferManager.exit();
         }
-        mInstance = null;
-        mAudioPlayer = null;
+        fInstance = null;
+        fAudioBufferManager = null;
     }
 
-    public void audioblock(float[][] output_signal, float[][] pInputSignal) {
+    public void audioblock(float[][] output_signal, float[][] input_signal) {
         try {
             Arrays.fill(fCachedBuffers, null);
-            if (mNumberOutputChannels == 1 && mNumberInputChannels == 0) {
+            if (fNumberOutputChannels == 1 && fNumberInputChannels == 0) {
                 //noinspection PrimitiveArrayArgumentToVarargsMethod
-                mMethod.invoke(mListener, output_signal[0]);
+                fMethod.invoke(fListener, output_signal[0]);
                 fCachedBuffers[OUTPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(output_signal[0]) : output_signal[0];
-            } else if (mNumberOutputChannels == 1 && mNumberInputChannels == 1) {
-                mMethod.invoke(mListener, output_signal[0], pInputSignal[0]);
+            } else if (fNumberOutputChannels == 1 && fNumberInputChannels == 1) {
+                fMethod.invoke(fListener, output_signal[0], input_signal[0]);
                 fCachedBuffers[OUTPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(output_signal[0]) : output_signal[0];
-                fCachedBuffers[INPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(pInputSignal[0]) : pInputSignal[0];
-            } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 0) {
-                mMethod.invoke(mListener, output_signal[0], output_signal[1]);
-                fCachedBuffers[OUTPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(output_signal[0]) : output_signal[0];
-                fCachedBuffers[OUTPUT_RIGHT] = COPY_CACHED_BUFFER ? Wellen.copy(output_signal[1]) : output_signal[1];
-            } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 1) {
-                mMethod.invoke(mListener, output_signal[0], output_signal[1], pInputSignal[0]);
+                fCachedBuffers[INPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(input_signal[0]) : input_signal[0];
+            } else if (fNumberOutputChannels == 2 && fNumberInputChannels == 0) {
+                fMethod.invoke(fListener, output_signal[0], output_signal[1]);
                 fCachedBuffers[OUTPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(output_signal[0]) : output_signal[0];
                 fCachedBuffers[OUTPUT_RIGHT] = COPY_CACHED_BUFFER ? Wellen.copy(output_signal[1]) : output_signal[1];
-                fCachedBuffers[INPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(pInputSignal[0]) : pInputSignal[0];
-            } else if (mNumberOutputChannels == 2 && mNumberInputChannels == 2) {
-                mMethod.invoke(mListener, output_signal[0], output_signal[1], pInputSignal[0], pInputSignal[1]);
+            } else if (fNumberOutputChannels == 2 && fNumberInputChannels == 1) {
+                fMethod.invoke(fListener, output_signal[0], output_signal[1], input_signal[0]);
                 fCachedBuffers[OUTPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(output_signal[0]) : output_signal[0];
                 fCachedBuffers[OUTPUT_RIGHT] = COPY_CACHED_BUFFER ? Wellen.copy(output_signal[1]) : output_signal[1];
-                fCachedBuffers[INPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(pInputSignal[0]) : pInputSignal[0];
-                fCachedBuffers[INPUT_RIGHT] = COPY_CACHED_BUFFER ? Wellen.copy(pInputSignal[1]) : pInputSignal[1];
+                fCachedBuffers[INPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(input_signal[0]) : input_signal[0];
+            } else if (fNumberOutputChannels == 2 && fNumberInputChannels == 2) {
+                fMethod.invoke(fListener, output_signal[0], output_signal[1], input_signal[0], input_signal[1]);
+                fCachedBuffers[OUTPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(output_signal[0]) : output_signal[0];
+                fCachedBuffers[OUTPUT_RIGHT] = COPY_CACHED_BUFFER ? Wellen.copy(output_signal[1]) : output_signal[1];
+                fCachedBuffers[INPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(input_signal[0]) : input_signal[0];
+                fCachedBuffers[INPUT_RIGHT] = COPY_CACHED_BUFFER ? Wellen.copy(input_signal[1]) : input_signal[1];
             } else {
-                mMethod.invoke(mListener, output_signal, pInputSignal);
+                fMethod.invoke(fListener, output_signal, input_signal);
             }
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException |
                  NullPointerException ex) {

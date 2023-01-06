@@ -26,7 +26,7 @@ public interface AudioBufferRenderer {
 
     /**
      * @param output_signal output signal
-     * @param pInputSignal  input signal
+     * @param input_signal  input signal
      */
-    void audioblock(float[][] output_signal, float[][] pInputSignal);
+    void audioblock(float[][] output_signal, float[][] input_signal);
 }
