@@ -43,6 +43,7 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
     private int fNumChannels;
     private int fOscType;
     private final int fSamplingRate;
+    public boolean always_interpolate_frequency_amplitude_changes = true;
 
     public InstrumentDSP(int ID, int sampling_rate, int wavetable_size) {
         super(ID);
@@ -220,12 +221,6 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
     }
 
     @Override
-    public void pitch_bend(float frequency_offset) {
-        fFreqOffset = frequency_offset;
-        fVCO.set_frequency(fFreq + fFreqOffset);
-    }
-
-    @Override
     public float get_amplitude() {
         return fAmp;
     }
@@ -233,9 +228,14 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
     @Override
     public void set_amplitude(float amplitude) {
         fAmp = amplitude;
-        fVCO.set_amplitude(fAmp);
+        if (always_interpolate_frequency_amplitude_changes) {
+            fVCO.set_amplitude(fAmp, Wellen.DEFAULT_INTERPOLATE_AMP_FREQ_DURATION);
+        } else {
+            fVCO.set_amplitude(fAmp);
+        }
     }
 
+    @Override
     public void set_amplitude(float amplitude, int interpolation_duration_in_samples) {
         fAmp = amplitude;
         fVCO.set_amplitude(fAmp, interpolation_duration_in_samples);
@@ -249,12 +249,27 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
     @Override
     public void set_frequency(float frequency) {
         fFreq = frequency;
-        fVCO.set_frequency(fFreq + fFreqOffset);
+        updateVCOFrequency();
     }
 
+    @Override
     public void set_frequency(float frequency, int interpolation_duration_in_samples) {
         fFreq = frequency;
         fVCO.set_frequency(fFreq + fFreqOffset, interpolation_duration_in_samples);
+    }
+
+    @Override
+    public void pitch_bend(float frequency_offset) {
+        fFreqOffset = frequency_offset;
+        updateVCOFrequency();
+    }
+
+    private void updateVCOFrequency() {
+        if (always_interpolate_frequency_amplitude_changes) {
+            fVCO.set_frequency(fFreq + fFreqOffset, Wellen.DEFAULT_INTERPOLATE_AMP_FREQ_DURATION);
+        } else {
+            fVCO.set_frequency(fFreq + fFreqOffset);
+        }
     }
 
     @Override
