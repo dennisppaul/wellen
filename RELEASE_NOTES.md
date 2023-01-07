@@ -1,5 +1,34 @@
 # Wellen / Release Notes
 
+## v0.10 (20230107)
+
+- added pitch detection ( using YIN algorithm ) + sing-along example
+- improved buffer drawing in DSP now draws all in- and output buffers
+- added analysis package that includes the following items: 
+    - `BeatDetection`
+    - `EnvelopeFollower`
+    - `FFT` (Fast Fourier Transform)
+    - `FrequencyDistribution`
+    - `PitchDetection`
+    - `RootMeanSquare`
+    - `Sonogram`
+    - `SoundLevelPressure`
+- added visualizations for `Sonogram` + `FrequencyDistribution` with example ( see `ExampleDSPAnalysis01SonogramFrequencyDistribution` )
+- added `PitchShifter`
+- added listener functionality to `Beat` + `BeatDSP` ( similar to `Trigger` )
+- renamed `DSPTrack` to `Track` and merged `DSPModule` into `Track`
+- added `Delay` effect as DSP node
+- renamed `WAVESHAPE` to `WAVEFORM`
+- moved ( most ) DSP related classes to dedicated package ( i.e an extra import directive is required `import wellen.dsp.*;` from now on )
+- added basic support for android platform
+- added new mechanism to configure audio system with `AudioDeviceConfiguration` 
+- added options for 8/24/32-bit in+output ( wellen used to be 16-bit only )
+- added `enable_reverb` to `Tone`
+- added `NoteEvents` which generates recurring events based on the timing concept of musical notation
+- added `ExampleDSP23MultipleDSPInstances` which demonstrates how to operate with multiple audio devices from within one application
+- audio rendering can now be paused and resumed with `DSP.pause(boolean)`
+- `InstrumentDSP` now interpolates frequency and amplitude changes by default. this prevents audible artifacts when changing values fast. the behavior can be deactivated with `InstrumentDSP.always_interpolate_frequency_amplitude_changes = false;`
+
 ## v0.9 (20220914)
 
 - added example with SAM singing
@@ -36,7 +65,7 @@
 - fixed a conversion error which caused noise line input
 - changed default sampling rate to 48KHz
 - added example `ExampleExternal09RecordWAV` for recording line input into WAV files
-- added a series of effects e.g echo, distorion, compressor ( adapted from [rakarrack](http://rakarrack.sourceforge.net) a guitar effect processor app written in C/C++ which in turn is using source code adpated from [ZynAddSubFX](https://en.wikipedia.org/wiki/ZynAddSubFX) )
+- added a series of effects e.g echo, distortion, compressor ( adapted from [rakarrack](http://rakarrack.sourceforge.net) a guitar effect processor app written in C/C++ which in turn is using source code adapted from [ZynAddSubFX](https://en.wikipedia.org/wiki/ZynAddSubFX) )
 - added master effects to `ToneEngineInternal`
 - added master volume to `ToneEngineInternal`
 

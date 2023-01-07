@@ -64,12 +64,15 @@ implements <a href="dsp/DSPNodeOutputSignal.html" title="interface in wellen.dsp
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Field</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static final float</code></div>
-<div class="col-second even-row-color"><code><a href="#DEFAULT_FREQUENCY" class="member-name-link">DEFAULT_FREQUENCY</a></code></div>
+<div class="col-first even-row-color"><code>boolean</code></div>
+<div class="col-second even-row-color"><code><a href="#always_interpolate_frequency_amplitude_changes" class="member-name-link">always_interpolate_frequency_amplitude_changes</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static final int</code></div>
-<div class="col-second odd-row-color"><code><a href="#DEFAULT_WAVETABLE_SIZE" class="member-name-link">DEFAULT_WAVETABLE_SIZE</a></code></div>
+<div class="col-first odd-row-color"><code>static final float</code></div>
+<div class="col-second odd-row-color"><code><a href="#DEFAULT_FREQUENCY" class="member-name-link">DEFAULT_FREQUENCY</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static final int</code></div>
+<div class="col-second even-row-color"><code><a href="#DEFAULT_WAVETABLE_SIZE" class="member-name-link">DEFAULT_WAVETABLE_SIZE</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -81,14 +84,14 @@ implements <a href="dsp/DSPNodeOutputSignal.html" title="interface in wellen.dsp
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int)" class="member-name-link">InstrumentDSP</a><wbr>(int&nbsp;pID)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int)" class="member-name-link">InstrumentDSP</a><wbr>(int&nbsp;ID)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(int,int)" class="member-name-link">InstrumentDSP</a><wbr>(int&nbsp;pID,
- int&nbsp;pSamplingRate)</code></div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(int,int)" class="member-name-link">InstrumentDSP</a><wbr>(int&nbsp;ID,
+ int&nbsp;sampling_rate)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int,int,int)" class="member-name-link">InstrumentDSP</a><wbr>(int&nbsp;pID,
- int&nbsp;pSamplingRate,
- int&nbsp;pWavetableSize)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int,int,int)" class="member-name-link">InstrumentDSP</a><wbr>(int&nbsp;ID,
+ int&nbsp;sampling_rate,
+ int&nbsp;wavetable_size)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -141,56 +144,64 @@ implements <a href="dsp/DSPNodeOutputSignal.html" title="interface in wellen.dsp
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#note_off()" class="member-name-link">note_off</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#note_on(int,int)" class="member-name-link">note_on</a><wbr>(int&nbsp;pNote,
- int&nbsp;pVelocity)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#note_on(int,int)" class="member-name-link">note_on</a><wbr>(int&nbsp;note,
+ int&nbsp;velocity)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="dsp/Signal.html" title="class in wellen.dsp">Signal</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#output_signal()" class="member-name-link">output_signal</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pitch_bend(float)" class="member-name-link">pitch_bend</a><wbr>(float&nbsp;pFreqOffset)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pitch_bend(float)" class="member-name-link">pitch_bend</a><wbr>(float&nbsp;frequency_offset)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_amplitude(float)" class="member-name-link">set_amplitude</a><wbr>(float&nbsp;pAmplitude)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_amplitude(float)" class="member-name-link">set_amplitude</a><wbr>(float&nbsp;amplitude)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_amplitude_LFO_amplitude(float)" class="member-name-link">set_amplitude_LFO_amplitude</a><wbr>(float&nbsp;pAmplitude)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_amplitude(float,int)" class="member-name-link">set_amplitude</a><wbr>(float&nbsp;amplitude,
+ int&nbsp;interpolation_duration_in_samples)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_amplitude_LFO_frequency(float)" class="member-name-link">set_amplitude_LFO_frequency</a><wbr>(float&nbsp;pFrequency)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_amplitude_LFO_amplitude(float)" class="member-name-link">set_amplitude_LFO_amplitude</a><wbr>(float&nbsp;amplitude)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_attack(float)" class="member-name-link">set_attack</a><wbr>(float&nbsp;pAttack)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_amplitude_LFO_frequency(float)" class="member-name-link">set_amplitude_LFO_frequency</a><wbr>(float&nbsp;frequency)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_channels(int)" class="member-name-link">set_channels</a><wbr>(int&nbsp;pNumChannels)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_attack(float)" class="member-name-link">set_attack</a><wbr>(float&nbsp;attack)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_decay(float)" class="member-name-link">set_decay</a><wbr>(float&nbsp;pDecay)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_channels(int)" class="member-name-link">set_channels</a><wbr>(int&nbsp;num_channels)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_filter_frequency(float)" class="member-name-link">set_filter_frequency</a><wbr>(float&nbsp;pFrequency)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_decay(float)" class="member-name-link">set_decay</a><wbr>(float&nbsp;decay)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_filter_resonance(float)" class="member-name-link">set_filter_resonance</a><wbr>(float&nbsp;pResonance)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_filter_frequency(float)" class="member-name-link">set_filter_frequency</a><wbr>(float&nbsp;frequency)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_frequency(float)" class="member-name-link">set_frequency</a><wbr>(float&nbsp;pFrequency)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_filter_resonance(float)" class="member-name-link">set_filter_resonance</a><wbr>(float&nbsp;resonance)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_frequency_LFO_amplitude(float)" class="member-name-link">set_frequency_LFO_amplitude</a><wbr>(float&nbsp;pAmplitude)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_frequency(float)" class="member-name-link">set_frequency</a><wbr>(float&nbsp;frequency)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_frequency_LFO_frequency(float)" class="member-name-link">set_frequency_LFO_frequency</a><wbr>(float&nbsp;pFrequency)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_frequency(float,int)" class="member-name-link">set_frequency</a><wbr>(float&nbsp;frequency,
+ int&nbsp;interpolation_duration_in_samples)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_oscillator_type(int)" class="member-name-link">set_oscillator_type</a><wbr>(int&nbsp;pOscillator)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_frequency_LFO_amplitude(float)" class="member-name-link">set_frequency_LFO_amplitude</a><wbr>(float&nbsp;amplitude)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_release(float)" class="member-name-link">set_release</a><wbr>(float&nbsp;pRelease)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_frequency_LFO_frequency(float)" class="member-name-link">set_frequency_LFO_frequency</a><wbr>(float&nbsp;frequency)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_sustain(float)" class="member-name-link">set_sustain</a><wbr>(float&nbsp;pSustain)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_oscillator_type(int)" class="member-name-link">set_oscillator_type</a><wbr>(int&nbsp;oscillator)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_release(float)" class="member-name-link">set_release</a><wbr>(float&nbsp;release)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_sustain(float)" class="member-name-link">set_sustain</a><wbr>(float&nbsp;sustain)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
@@ -240,6 +251,12 @@ implements <a href="dsp/DSPNodeOutputSignal.html" title="interface in wellen.dsp
 </dl>
 </section>
 </li>
+<li>
+<section class="detail" id="always_interpolate_frequency_amplitude_changes">
+<h3>always_interpolate_frequency_amplitude_changes</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">always_interpolate_frequency_amplitude_changes</span></div>
+</section>
+</li>
 </ul>
 </section>
 </li>
@@ -251,22 +268,22 @@ implements <a href="dsp/DSPNodeOutputSignal.html" title="interface in wellen.dsp
 <li>
 <section class="detail" id="&lt;init&gt;(int,int,int)">
 <h3>InstrumentDSP</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">InstrumentDSP</span><wbr><span class="parameters">(int&nbsp;pID,
- int&nbsp;pSamplingRate,
- int&nbsp;pWavetableSize)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">InstrumentDSP</span><wbr><span class="parameters">(int&nbsp;ID,
+ int&nbsp;sampling_rate,
+ int&nbsp;wavetable_size)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(int,int)">
 <h3>InstrumentDSP</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">InstrumentDSP</span><wbr><span class="parameters">(int&nbsp;pID,
- int&nbsp;pSamplingRate)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">InstrumentDSP</span><wbr><span class="parameters">(int&nbsp;ID,
+ int&nbsp;sampling_rate)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(int)">
 <h3>InstrumentDSP</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">InstrumentDSP</span><wbr><span class="parameters">(int&nbsp;pID)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">InstrumentDSP</span><wbr><span class="parameters">(int&nbsp;ID)</span></div>
 </section>
 </li>
 </ul>
@@ -292,48 +309,48 @@ implements <a href="dsp/DSPNodeOutputSignal.html" title="interface in wellen.dsp
 <li>
 <section class="detail" id="set_attack(float)">
 <h3>set_attack</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_attack</span><wbr><span class="parameters">(float&nbsp;pAttack)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_attack</span><wbr><span class="parameters">(float&nbsp;attack)</span></div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="Instrument.html#set_attack(float)">set_attack</a></code>&nbsp;in class&nbsp;<code><a href="Instrument.html" title="class in wellen">Instrument</a></code></dd>
 <dt>Parameters:</dt>
-<dd><code>pAttack</code> - time parameter defining the time it takes for the set_amp to reach maximum level.</dd>
+<dd><code>attack</code> - time parameter defining the time it takes for the set_amp to reach maximum level.</dd>
 </dl>
 </section>
 </li>
 <li>
 <section class="detail" id="set_decay(float)">
 <h3>set_decay</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_decay</span><wbr><span class="parameters">(float&nbsp;pDecay)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_decay</span><wbr><span class="parameters">(float&nbsp;decay)</span></div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="Instrument.html#set_decay(float)">set_decay</a></code>&nbsp;in class&nbsp;<code><a href="Instrument.html" title="class in wellen">Instrument</a></code></dd>
 <dt>Parameters:</dt>
-<dd><code>pDecay</code> - time parameter defining the time it takes to go from maximum to get_sustain level.</dd>
+<dd><code>decay</code> - time parameter defining the time it takes to go from maximum to get_sustain level.</dd>
 </dl>
 </section>
 </li>
 <li>
 <section class="detail" id="set_sustain(float)">
 <h3>set_sustain</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_sustain</span><wbr><span class="parameters">(float&nbsp;pSustain)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_sustain</span><wbr><span class="parameters">(float&nbsp;sustain)</span></div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="Instrument.html#set_sustain(float)">set_sustain</a></code>&nbsp;in class&nbsp;<code><a href="Instrument.html" title="class in wellen">Instrument</a></code></dd>
 <dt>Parameters:</dt>
-<dd><code>pSustain</code> - level parameter defining the level hold while note is still played.</dd>
+<dd><code>sustain</code> - level parameter defining the level hold while note is still played.</dd>
 </dl>
 </section>
 </li>
 <li>
 <section class="detail" id="set_release(float)">
 <h3>set_release</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_release</span><wbr><span class="parameters">(float&nbsp;pRelease)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_release</span><wbr><span class="parameters">(float&nbsp;release)</span></div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="Instrument.html#set_release(float)">set_release</a></code>&nbsp;in class&nbsp;<code><a href="Instrument.html" title="class in wellen">Instrument</a></code></dd>
 <dt>Parameters:</dt>
-<dd><code>pRelease</code> - time parameter defining the time it takes for the set_amp to reach zero after note is off.</dd>
+<dd><code>release</code> - time parameter defining the time it takes for the set_amp to reach zero after note is off.</dd>
 </dl>
 </section>
 </li>
@@ -350,7 +367,7 @@ implements <a href="dsp/DSPNodeOutputSignal.html" title="interface in wellen.dsp
 <li>
 <section class="detail" id="set_oscillator_type(int)">
 <h3>set_oscillator_type</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_oscillator_type</span><wbr><span class="parameters">(int&nbsp;pOscillator)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_oscillator_type</span><wbr><span class="parameters">(int&nbsp;oscillator)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Instrument.html#set_oscillator_type(int)">set_oscillator_type</a></code>&nbsp;in class&nbsp;<code><a href="Instrument.html" title="class in wellen">Instrument</a></code></dd>
@@ -370,7 +387,7 @@ implements <a href="dsp/DSPNodeOutputSignal.html" title="interface in wellen.dsp
 <li>
 <section class="detail" id="set_frequency_LFO_amplitude(float)">
 <h3>set_frequency_LFO_amplitude</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_frequency_LFO_amplitude</span><wbr><span class="parameters">(float&nbsp;pAmplitude)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_frequency_LFO_amplitude</span><wbr><span class="parameters">(float&nbsp;amplitude)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Instrument.html#set_frequency_LFO_amplitude(float)">set_frequency_LFO_amplitude</a></code>&nbsp;in class&nbsp;<code><a href="Instrument.html" title="class in wellen">Instrument</a></code></dd>
@@ -390,7 +407,7 @@ implements <a href="dsp/DSPNodeOutputSignal.html" title="interface in wellen.dsp
 <li>
 <section class="detail" id="set_frequency_LFO_frequency(float)">
 <h3>set_frequency_LFO_frequency</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_frequency_LFO_frequency</span><wbr><span class="parameters">(float&nbsp;pFrequency)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_frequency_LFO_frequency</span><wbr><span class="parameters">(float&nbsp;frequency)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Instrument.html#set_frequency_LFO_frequency(float)">set_frequency_LFO_frequency</a></code>&nbsp;in class&nbsp;<code><a href="Instrument.html" title="class in wellen">Instrument</a></code></dd>
@@ -410,7 +427,7 @@ implements <a href="dsp/DSPNodeOutputSignal.html" title="interface in wellen.dsp
 <li>
 <section class="detail" id="set_amplitude_LFO_amplitude(float)">
 <h3>set_amplitude_LFO_amplitude</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_amplitude_LFO_amplitude</span><wbr><span class="parameters">(float&nbsp;pAmplitude)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_amplitude_LFO_amplitude</span><wbr><span class="parameters">(float&nbsp;amplitude)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Instrument.html#set_amplitude_LFO_amplitude(float)">set_amplitude_LFO_amplitude</a></code>&nbsp;in class&nbsp;<code><a href="Instrument.html" title="class in wellen">Instrument</a></code></dd>
@@ -430,7 +447,7 @@ implements <a href="dsp/DSPNodeOutputSignal.html" title="interface in wellen.dsp
 <li>
 <section class="detail" id="set_amplitude_LFO_frequency(float)">
 <h3>set_amplitude_LFO_frequency</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_amplitude_LFO_frequency</span><wbr><span class="parameters">(float&nbsp;pFrequency)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_amplitude_LFO_frequency</span><wbr><span class="parameters">(float&nbsp;frequency)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Instrument.html#set_amplitude_LFO_frequency(float)">set_amplitude_LFO_frequency</a></code>&nbsp;in class&nbsp;<code><a href="Instrument.html" title="class in wellen">Instrument</a></code></dd>
@@ -450,7 +467,7 @@ implements <a href="dsp/DSPNodeOutputSignal.html" title="interface in wellen.dsp
 <li>
 <section class="detail" id="set_filter_resonance(float)">
 <h3>set_filter_resonance</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_filter_resonance</span><wbr><span class="parameters">(float&nbsp;pResonance)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_filter_resonance</span><wbr><span class="parameters">(float&nbsp;resonance)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Instrument.html#set_filter_resonance(float)">set_filter_resonance</a></code>&nbsp;in class&nbsp;<code><a href="Instrument.html" title="class in wellen">Instrument</a></code></dd>
@@ -470,20 +487,10 @@ implements <a href="dsp/DSPNodeOutputSignal.html" title="interface in wellen.dsp
 <li>
 <section class="detail" id="set_filter_frequency(float)">
 <h3>set_filter_frequency</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_filter_frequency</span><wbr><span class="parameters">(float&nbsp;pFrequency)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_filter_frequency</span><wbr><span class="parameters">(float&nbsp;frequency)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Instrument.html#set_filter_frequency(float)">set_filter_frequency</a></code>&nbsp;in class&nbsp;<code><a href="Instrument.html" title="class in wellen">Instrument</a></code></dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="pitch_bend(float)">
-<h3>pitch_bend</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">pitch_bend</span><wbr><span class="parameters">(float&nbsp;pFreqOffset)</span></div>
-<dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="Instrument.html#pitch_bend(float)">pitch_bend</a></code>&nbsp;in class&nbsp;<code><a href="Instrument.html" title="class in wellen">Instrument</a></code></dd>
 </dl>
 </section>
 </li>
@@ -500,10 +507,21 @@ implements <a href="dsp/DSPNodeOutputSignal.html" title="interface in wellen.dsp
 <li>
 <section class="detail" id="set_amplitude(float)">
 <h3>set_amplitude</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_amplitude</span><wbr><span class="parameters">(float&nbsp;pAmplitude)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_amplitude</span><wbr><span class="parameters">(float&nbsp;amplitude)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Instrument.html#set_amplitude(float)">set_amplitude</a></code>&nbsp;in class&nbsp;<code><a href="Instrument.html" title="class in wellen">Instrument</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="set_amplitude(float,int)">
+<h3>set_amplitude</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_amplitude</span><wbr><span class="parameters">(float&nbsp;amplitude,
+ int&nbsp;interpolation_duration_in_samples)</span></div>
+<dl class="notes">
+<dt>Overrides:</dt>
+<dd><code><a href="Instrument.html#set_amplitude(float,int)">set_amplitude</a></code>&nbsp;in class&nbsp;<code><a href="Instrument.html" title="class in wellen">Instrument</a></code></dd>
 </dl>
 </section>
 </li>
@@ -520,10 +538,31 @@ implements <a href="dsp/DSPNodeOutputSignal.html" title="interface in wellen.dsp
 <li>
 <section class="detail" id="set_frequency(float)">
 <h3>set_frequency</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_frequency</span><wbr><span class="parameters">(float&nbsp;pFrequency)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_frequency</span><wbr><span class="parameters">(float&nbsp;frequency)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Instrument.html#set_frequency(float)">set_frequency</a></code>&nbsp;in class&nbsp;<code><a href="Instrument.html" title="class in wellen">Instrument</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="set_frequency(float,int)">
+<h3>set_frequency</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_frequency</span><wbr><span class="parameters">(float&nbsp;frequency,
+ int&nbsp;interpolation_duration_in_samples)</span></div>
+<dl class="notes">
+<dt>Overrides:</dt>
+<dd><code><a href="Instrument.html#set_frequency(float,int)">set_frequency</a></code>&nbsp;in class&nbsp;<code><a href="Instrument.html" title="class in wellen">Instrument</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="pitch_bend(float)">
+<h3>pitch_bend</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">pitch_bend</span><wbr><span class="parameters">(float&nbsp;frequency_offset)</span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="Instrument.html#pitch_bend(float)">pitch_bend</a></code>&nbsp;in class&nbsp;<code><a href="Instrument.html" title="class in wellen">Instrument</a></code></dd>
 </dl>
 </section>
 </li>
@@ -540,8 +579,8 @@ implements <a href="dsp/DSPNodeOutputSignal.html" title="interface in wellen.dsp
 <li>
 <section class="detail" id="note_on(int,int)">
 <h3>note_on</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">note_on</span><wbr><span class="parameters">(int&nbsp;pNote,
- int&nbsp;pVelocity)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">note_on</span><wbr><span class="parameters">(int&nbsp;note,
+ int&nbsp;velocity)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="Instrument.html#note_on(int,int)">note_on</a></code>&nbsp;in class&nbsp;<code><a href="Instrument.html" title="class in wellen">Instrument</a></code></dd>
@@ -563,7 +602,7 @@ implements <a href="dsp/DSPNodeOutputSignal.html" title="interface in wellen.dsp
 <li>
 <section class="detail" id="set_channels(int)">
 <h3>set_channels</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_channels</span><wbr><span class="parameters">(int&nbsp;pNumChannels)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_channels</span><wbr><span class="parameters">(int&nbsp;num_channels)</span></div>
 </section>
 </li>
 </ul>

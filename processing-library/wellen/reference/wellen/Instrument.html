@@ -56,7 +56,7 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int)" class="member-name-link">Instrument</a><wbr>(int&nbsp;pID)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(int)" class="member-name-link">Instrument</a><wbr>(int&nbsp;ID)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -73,19 +73,19 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#enable_additional_oscillator(boolean)" class="member-name-link">enable_additional_oscillator</a><wbr>(boolean&nbsp;pEnableAdditionalOscillator)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#enable_additional_oscillator(boolean)" class="member-name-link">enable_additional_oscillator</a><wbr>(boolean&nbsp;enable_additional_oscillator)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#enable_ADSR(boolean)" class="member-name-link">enable_ADSR</a><wbr>(boolean&nbsp;pEnableADSR)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#enable_ADSR(boolean)" class="member-name-link">enable_ADSR</a><wbr>(boolean&nbsp;enable_ADSR)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#enable_amplitude_LFO(boolean)" class="member-name-link">enable_amplitude_LFO</a><wbr>(boolean&nbsp;pEnableAmplitudeLFO)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#enable_amplitude_LFO(boolean)" class="member-name-link">enable_amplitude_LFO</a><wbr>(boolean&nbsp;enable_amplitude_LFO)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#enable_frequency_LFO(boolean)" class="member-name-link">enable_frequency_LFO</a><wbr>(boolean&nbsp;pEnableFrequencyLFO)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#enable_frequency_LFO(boolean)" class="member-name-link">enable_frequency_LFO</a><wbr>(boolean&nbsp;enable_frequency_LFO)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#enable_LPF(boolean)" class="member-name-link">enable_LPF</a><wbr>(boolean&nbsp;pEnableLPF)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#enable_LPF(boolean)" class="member-name-link">enable_LPF</a><wbr>(boolean&nbsp;enable_LPF)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_additional_oscillator_amplitude()" class="member-name-link">get_additional_oscillator_amplitude</a>()</code></div>
@@ -148,68 +148,76 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#note_off()" class="member-name-link">note_off</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#note_on(int,int)" class="member-name-link">note_on</a><wbr>(int&nbsp;pNote,
- int&nbsp;pVelocity)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#note_on(int,int)" class="member-name-link">note_on</a><wbr>(int&nbsp;note,
+ int&nbsp;velocity)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#pitch_bend(float)" class="member-name-link">pitch_bend</a><wbr>(float&nbsp;pFreqOffset)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#pitch_bend(float)" class="member-name-link">pitch_bend</a><wbr>(float&nbsp;frequency_offset)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_additional_oscillator_amplitude(float)" class="member-name-link">set_additional_oscillator_amplitude</a><wbr>(float&nbsp;pAmplitude)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_additional_oscillator_amplitude(float)" class="member-name-link">set_additional_oscillator_amplitude</a><wbr>(float&nbsp;amplitude)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_additional_oscillator_frequency(float)" class="member-name-link">set_additional_oscillator_frequency</a><wbr>(float&nbsp;pFrequency)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_additional_oscillator_frequency(float)" class="member-name-link">set_additional_oscillator_frequency</a><wbr>(float&nbsp;frequency)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_additional_oscillator_type(int)" class="member-name-link">set_additional_oscillator_type</a><wbr>(int&nbsp;pOscillator)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_additional_oscillator_type(int)" class="member-name-link">set_additional_oscillator_type</a><wbr>(int&nbsp;oscillator)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_adsr(float,float,float,float)" class="member-name-link">set_adsr</a><wbr>(float&nbsp;pAttack,
- float&nbsp;pDecay,
- float&nbsp;pSustain,
- float&nbsp;pRelease)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_adsr(float,float,float,float)" class="member-name-link">set_adsr</a><wbr>(float&nbsp;attack,
+ float&nbsp;decay,
+ float&nbsp;sustain,
+ float&nbsp;release)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#set_amplitude(float)" class="member-name-link">set_amplitude</a><wbr>(float&nbsp;pAmplitude)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#set_amplitude_LFO_amplitude(float)" class="member-name-link">set_amplitude_LFO_amplitude</a><wbr>(float&nbsp;pAmplitude)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#set_amplitude_LFO_frequency(float)" class="member-name-link">set_amplitude_LFO_frequency</a><wbr>(float&nbsp;pFrequency)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#set_amplitude(float)" class="member-name-link">set_amplitude</a><wbr>(float&nbsp;amplitude)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_attack(float)" class="member-name-link">set_attack</a><wbr>(float&nbsp;pAttack)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_amplitude(float,int)" class="member-name-link">set_amplitude</a><wbr>(float&nbsp;amplitude,
+ int&nbsp;interpolation_duration_in_samples)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#set_amplitude_LFO_amplitude(float)" class="member-name-link">set_amplitude_LFO_amplitude</a><wbr>(float&nbsp;amplitude)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#set_amplitude_LFO_frequency(float)" class="member-name-link">set_amplitude_LFO_frequency</a><wbr>(float&nbsp;frequency)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_attack(float)" class="member-name-link">set_attack</a><wbr>(float&nbsp;attack)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_decay(float)" class="member-name-link">set_decay</a><wbr>(float&nbsp;decay)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#set_filter_frequency(float)" class="member-name-link">set_filter_frequency</a><wbr>(float&nbsp;frequency)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#set_filter_resonance(float)" class="member-name-link">set_filter_resonance</a><wbr>(float&nbsp;resonance)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#set_frequency(float)" class="member-name-link">set_frequency</a><wbr>(float&nbsp;frequency)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_frequency(float,int)" class="member-name-link">set_frequency</a><wbr>(float&nbsp;frequency,
+ int&nbsp;interpolation_duration_in_samples)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#set_frequency_LFO_amplitude(float)" class="member-name-link">set_frequency_LFO_amplitude</a><wbr>(float&nbsp;amplitude)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#set_frequency_LFO_frequency(float)" class="member-name-link">set_frequency_LFO_frequency</a><wbr>(float&nbsp;frequency)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#set_oscillator_type(int)" class="member-name-link">set_oscillator_type</a><wbr>(int&nbsp;oscillator)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_pan(float)" class="member-name-link">set_pan</a><wbr>(float&nbsp;pan)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_decay(float)" class="member-name-link">set_decay</a><wbr>(float&nbsp;pDecay)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#set_filter_frequency(float)" class="member-name-link">set_filter_frequency</a><wbr>(float&nbsp;pFrequency)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#set_filter_resonance(float)" class="member-name-link">set_filter_resonance</a><wbr>(float&nbsp;pResonance)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#set_frequency(float)" class="member-name-link">set_frequency</a><wbr>(float&nbsp;pFrequency)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#set_frequency_LFO_amplitude(float)" class="member-name-link">set_frequency_LFO_amplitude</a><wbr>(float&nbsp;pAmplitude)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#set_frequency_LFO_frequency(float)" class="member-name-link">set_frequency_LFO_frequency</a><wbr>(float&nbsp;pFrequency)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#set_oscillator_type(int)" class="member-name-link">set_oscillator_type</a><wbr>(int&nbsp;pOscillator)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_pan(float)" class="member-name-link">set_pan</a><wbr>(float&nbsp;pPan)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_release(float)" class="member-name-link">set_release</a><wbr>(float&nbsp;pRelease)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_release(float)" class="member-name-link">set_release</a><wbr>(float&nbsp;release)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_sustain(float)" class="member-name-link">set_sustain</a><wbr>(float&nbsp;pSustain)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_sustain(float)" class="member-name-link">set_sustain</a><wbr>(float&nbsp;sustain)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
@@ -231,7 +239,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;(int)">
 <h3>Instrument</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Instrument</span><wbr><span class="parameters">(int&nbsp;pID)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Instrument</span><wbr><span class="parameters">(int&nbsp;ID)</span></div>
 </section>
 </li>
 </ul>
@@ -257,10 +265,10 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="set_attack(float)">
 <h3>set_attack</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_attack</span><wbr><span class="parameters">(float&nbsp;pAttack)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_attack</span><wbr><span class="parameters">(float&nbsp;attack)</span></div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>pAttack</code> - time parameter defining the time it takes for the set_amp to reach maximum level.</dd>
+<dd><code>attack</code> - time parameter defining the time it takes for the set_amp to reach maximum level.</dd>
 </dl>
 </section>
 </li>
@@ -273,10 +281,10 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="set_decay(float)">
 <h3>set_decay</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_decay</span><wbr><span class="parameters">(float&nbsp;pDecay)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_decay</span><wbr><span class="parameters">(float&nbsp;decay)</span></div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>pDecay</code> - time parameter defining the time it takes to go from maximum to get_sustain level.</dd>
+<dd><code>decay</code> - time parameter defining the time it takes to go from maximum to get_sustain level.</dd>
 </dl>
 </section>
 </li>
@@ -289,10 +297,10 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="set_sustain(float)">
 <h3>set_sustain</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_sustain</span><wbr><span class="parameters">(float&nbsp;pSustain)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_sustain</span><wbr><span class="parameters">(float&nbsp;sustain)</span></div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>pSustain</code> - level parameter defining the level hold while note is still played.</dd>
+<dd><code>sustain</code> - level parameter defining the level hold while note is still played.</dd>
 </dl>
 </section>
 </li>
@@ -305,20 +313,20 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="set_release(float)">
 <h3>set_release</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_release</span><wbr><span class="parameters">(float&nbsp;pRelease)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_release</span><wbr><span class="parameters">(float&nbsp;release)</span></div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>pRelease</code> - time parameter defining the time it takes for the set_amp to reach zero after note is off.</dd>
+<dd><code>release</code> - time parameter defining the time it takes for the set_amp to reach zero after note is off.</dd>
 </dl>
 </section>
 </li>
 <li>
 <section class="detail" id="set_adsr(float,float,float,float)">
 <h3>set_adsr</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_adsr</span><wbr><span class="parameters">(float&nbsp;pAttack,
- float&nbsp;pDecay,
- float&nbsp;pSustain,
- float&nbsp;pRelease)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_adsr</span><wbr><span class="parameters">(float&nbsp;attack,
+ float&nbsp;decay,
+ float&nbsp;sustain,
+ float&nbsp;release)</span></div>
 </section>
 </li>
 <li>
@@ -330,7 +338,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="set_oscillator_type(int)">
 <h3>set_oscillator_type</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_oscillator_type</span><wbr><span class="parameters">(int&nbsp;pOscillator)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_oscillator_type</span><wbr><span class="parameters">(int&nbsp;oscillator)</span></div>
 </section>
 </li>
 <li>
@@ -342,7 +350,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="set_frequency_LFO_amplitude(float)">
 <h3>set_frequency_LFO_amplitude</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_frequency_LFO_amplitude</span><wbr><span class="parameters">(float&nbsp;pAmplitude)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_frequency_LFO_amplitude</span><wbr><span class="parameters">(float&nbsp;amplitude)</span></div>
 </section>
 </li>
 <li>
@@ -354,7 +362,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="set_frequency_LFO_frequency(float)">
 <h3>set_frequency_LFO_frequency</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_frequency_LFO_frequency</span><wbr><span class="parameters">(float&nbsp;pFrequency)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_frequency_LFO_frequency</span><wbr><span class="parameters">(float&nbsp;frequency)</span></div>
 </section>
 </li>
 <li>
@@ -366,7 +374,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="set_amplitude_LFO_amplitude(float)">
 <h3>set_amplitude_LFO_amplitude</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_amplitude_LFO_amplitude</span><wbr><span class="parameters">(float&nbsp;pAmplitude)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_amplitude_LFO_amplitude</span><wbr><span class="parameters">(float&nbsp;amplitude)</span></div>
 </section>
 </li>
 <li>
@@ -378,7 +386,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="set_amplitude_LFO_frequency(float)">
 <h3>set_amplitude_LFO_frequency</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_amplitude_LFO_frequency</span><wbr><span class="parameters">(float&nbsp;pFrequency)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_amplitude_LFO_frequency</span><wbr><span class="parameters">(float&nbsp;frequency)</span></div>
 </section>
 </li>
 <li>
@@ -390,7 +398,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="set_filter_resonance(float)">
 <h3>set_filter_resonance</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_filter_resonance</span><wbr><span class="parameters">(float&nbsp;pResonance)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_filter_resonance</span><wbr><span class="parameters">(float&nbsp;resonance)</span></div>
 </section>
 </li>
 <li>
@@ -402,13 +410,13 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="set_filter_frequency(float)">
 <h3>set_filter_frequency</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_filter_frequency</span><wbr><span class="parameters">(float&nbsp;pFrequency)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_filter_frequency</span><wbr><span class="parameters">(float&nbsp;frequency)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="pitch_bend(float)">
 <h3>pitch_bend</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">pitch_bend</span><wbr><span class="parameters">(float&nbsp;pFreqOffset)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">pitch_bend</span><wbr><span class="parameters">(float&nbsp;frequency_offset)</span></div>
 </section>
 </li>
 <li>
@@ -420,7 +428,14 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="set_amplitude(float)">
 <h3>set_amplitude</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_amplitude</span><wbr><span class="parameters">(float&nbsp;pAmplitude)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_amplitude</span><wbr><span class="parameters">(float&nbsp;amplitude)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="set_amplitude(float,int)">
+<h3>set_amplitude</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_amplitude</span><wbr><span class="parameters">(float&nbsp;amplitude,
+ int&nbsp;interpolation_duration_in_samples)</span></div>
 </section>
 </li>
 <li>
@@ -432,7 +447,14 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="set_frequency(float)">
 <h3>set_frequency</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_frequency</span><wbr><span class="parameters">(float&nbsp;pFrequency)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_frequency</span><wbr><span class="parameters">(float&nbsp;frequency)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="set_frequency(float,int)">
+<h3>set_frequency</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_frequency</span><wbr><span class="parameters">(float&nbsp;frequency,
+ int&nbsp;interpolation_duration_in_samples)</span></div>
 </section>
 </li>
 <li>
@@ -444,7 +466,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="set_additional_oscillator_type(int)">
 <h3>set_additional_oscillator_type</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_additional_oscillator_type</span><wbr><span class="parameters">(int&nbsp;pOscillator)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_additional_oscillator_type</span><wbr><span class="parameters">(int&nbsp;oscillator)</span></div>
 </section>
 </li>
 <li>
@@ -456,7 +478,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="set_additional_oscillator_frequency(float)">
 <h3>set_additional_oscillator_frequency</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_additional_oscillator_frequency</span><wbr><span class="parameters">(float&nbsp;pFrequency)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_additional_oscillator_frequency</span><wbr><span class="parameters">(float&nbsp;frequency)</span></div>
 </section>
 </li>
 <li>
@@ -468,7 +490,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="set_additional_oscillator_amplitude(float)">
 <h3>set_additional_oscillator_amplitude</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_additional_oscillator_amplitude</span><wbr><span class="parameters">(float&nbsp;pAmplitude)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_additional_oscillator_amplitude</span><wbr><span class="parameters">(float&nbsp;amplitude)</span></div>
 </section>
 </li>
 <li>
@@ -480,35 +502,35 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="set_pan(float)">
 <h3>set_pan</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_pan</span><wbr><span class="parameters">(float&nbsp;pPan)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_pan</span><wbr><span class="parameters">(float&nbsp;pan)</span></div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>pPan</code> - panning of instrument with -1.0 is the left side and 1.0 is the right side</dd>
+<dd><code>pan</code> - panning of instrument with -1.0 is the left side and 1.0 is the right side</dd>
 </dl>
 </section>
 </li>
 <li>
 <section class="detail" id="enable_ADSR(boolean)">
 <h3>enable_ADSR</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">enable_ADSR</span><wbr><span class="parameters">(boolean&nbsp;pEnableADSR)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">enable_ADSR</span><wbr><span class="parameters">(boolean&nbsp;enable_ADSR)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="enable_amplitude_LFO(boolean)">
 <h3>enable_amplitude_LFO</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">enable_amplitude_LFO</span><wbr><span class="parameters">(boolean&nbsp;pEnableAmplitudeLFO)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">enable_amplitude_LFO</span><wbr><span class="parameters">(boolean&nbsp;enable_amplitude_LFO)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="enable_frequency_LFO(boolean)">
 <h3>enable_frequency_LFO</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">enable_frequency_LFO</span><wbr><span class="parameters">(boolean&nbsp;pEnableFrequencyLFO)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">enable_frequency_LFO</span><wbr><span class="parameters">(boolean&nbsp;enable_frequency_LFO)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="enable_LPF(boolean)">
 <h3>enable_LPF</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">enable_LPF</span><wbr><span class="parameters">(boolean&nbsp;pEnableLPF)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">enable_LPF</span><wbr><span class="parameters">(boolean&nbsp;enable_LPF)</span></div>
 </section>
 </li>
 <li>
@@ -520,8 +542,8 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="note_on(int,int)">
 <h3>note_on</h3>
-<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">note_on</span><wbr><span class="parameters">(int&nbsp;pNote,
- int&nbsp;pVelocity)</span></div>
+<div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">note_on</span><wbr><span class="parameters">(int&nbsp;note,
+ int&nbsp;velocity)</span></div>
 </section>
 </li>
 <li>
@@ -533,7 +555,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="enable_additional_oscillator(boolean)">
 <h3>enable_additional_oscillator</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">enable_additional_oscillator</span><wbr><span class="parameters">(boolean&nbsp;pEnableAdditionalOscillator)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">enable_additional_oscillator</span><wbr><span class="parameters">(boolean&nbsp;enable_additional_oscillator)</span></div>
 </section>
 </li>
 </ul>

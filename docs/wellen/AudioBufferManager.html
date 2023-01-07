@@ -52,8 +52,8 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(wellen.AudioBufferRenderer,wellen.AudioDeviceConfiguration)" class="member-name-link">AudioBufferManager</a><wbr>(<a href="AudioBufferRenderer.html" title="interface in wellen">AudioBufferRenderer</a>&nbsp;pSampleRenderer,
- <a href="AudioDeviceConfiguration.html" title="class in wellen">AudioDeviceConfiguration</a>&nbsp;pConfiguration)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(wellen.AudioBufferRenderer,wellen.AudioDeviceConfiguration)" class="member-name-link">AudioBufferManager</a><wbr>(<a href="AudioBufferRenderer.html" title="interface in wellen">AudioBufferRenderer</a>&nbsp;sample_renderer,
+ <a href="AudioDeviceConfiguration.html" title="class in wellen">AudioDeviceConfiguration</a>&nbsp;configuration)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -78,6 +78,14 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_sample_rate()" class="member-name-link">get_sample_rate</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#is_paused()" class="member-name-link">is_paused</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#pause(boolean)" class="member-name-link">pause</a><wbr>(boolean&nbsp;pause_state)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">pause or resume audio processing</div>
+</div>
 </div>
 </div>
 </div>
@@ -98,12 +106,12 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="&lt;init&gt;(wellen.AudioBufferRenderer,wellen.AudioDeviceConfiguration)">
 <h3>AudioBufferManager</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">AudioBufferManager</span><wbr><span class="parameters">(<a href="AudioBufferRenderer.html" title="interface in wellen">AudioBufferRenderer</a>&nbsp;pSampleRenderer,
- <a href="AudioDeviceConfiguration.html" title="class in wellen">AudioDeviceConfiguration</a>&nbsp;pConfiguration)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">AudioBufferManager</span><wbr><span class="parameters">(<a href="AudioBufferRenderer.html" title="interface in wellen">AudioBufferRenderer</a>&nbsp;sample_renderer,
+ <a href="AudioDeviceConfiguration.html" title="class in wellen">AudioDeviceConfiguration</a>&nbsp;configuration)</span></div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>pSampleRenderer</code> - renderer to be used</dd>
-<dd><code>pConfiguration</code> - configuration to be used</dd>
+<dd><code>sample_renderer</code> - renderer to be used</dd>
+<dd><code>configuration</code> - configuration to be used</dd>
 </dl>
 </section>
 </li>
@@ -139,6 +147,23 @@ loadScripts(document, 'script');</script>
 <dt>Returns:</dt>
 <dd>audio block or buffer size</dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="pause(boolean)">
+<h3>pause</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">pause</span><wbr><span class="parameters">(boolean&nbsp;pause_state)</span></div>
+<div class="block">pause or resume audio processing</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>pause_state</code> - <code>true</code> to pause audio processing, <code>false</code> to resume</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="is_paused()">
+<h3>is_paused</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">is_paused</span>()</div>
 </section>
 </li>
 </ul>
