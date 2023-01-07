@@ -101,6 +101,31 @@ public class InstrumentMIDI extends Instrument {
     }
 
     @Override
+    public void set_detune(float detune) {
+
+    }
+
+    @Override
+    public float get_detune() {
+        return 0;
+    }
+
+    @Override
+    public void set_detune_amplitude(float detune) {
+
+    }
+
+    @Override
+    public float get_detune_amplitude() {
+        return 0;
+    }
+
+    @Override
+    public void set_detune_oscillator_type(int oscillator) {
+
+    }
+
+    @Override
     public void note_off() {
         fIsPlaying = false;
     }
