@@ -31,6 +31,7 @@ public abstract class Instrument {
     protected boolean fEnableAmplitudeLFO = false;
     protected boolean fEnableFrequencyLFO = false;
     protected boolean fEnableLPF = false;
+    protected boolean fEnableDetune = false;
     protected boolean fIsPlaying = false;
     protected float fPan = 0.0f;
     protected float fRelease = Wellen.DEFAULT_RELEASE;
@@ -142,27 +143,6 @@ public abstract class Instrument {
         set_frequency(frequency);
     }
 
-    public int get_additional_oscillator_type() {
-        return 0;
-    }
-
-    public void set_additional_oscillator_type(int oscillator) {
-    }
-
-    public float get_additional_oscillator_frequency() {
-        return 0;
-    }
-
-    public void set_additional_oscillator_frequency(float frequency) {
-    }
-
-    public float get_additional_oscillator_amplitude() {
-        return 0;
-    }
-
-    public void set_additional_oscillator_amplitude(float amplitude) {
-    }
-
     public float get_pan() {
         return fPan;
     }
@@ -189,6 +169,20 @@ public abstract class Instrument {
     public void enable_LPF(boolean enable_LPF) {
         fEnableLPF = enable_LPF;
     }
+
+    public void enable_detune(boolean enable_detune) {
+        fEnableDetune = enable_detune;
+    }
+
+    public abstract void set_detune(float detune);
+
+    public abstract float get_detune();
+
+    public abstract void set_detune_amplitude(float detune);
+
+    public abstract float get_detune_amplitude();
+
+    public abstract void set_detune_oscillator_type(int oscillator);
 
     public abstract void note_off();
 

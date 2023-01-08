@@ -32,18 +32,24 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
 
     public static final float DEFAULT_FREQUENCY = 220.0f;
     public static final int DEFAULT_WAVETABLE_SIZE = 512;
+    public boolean always_interpolate_frequency_amplitude_changes = true;
+
     protected final ADSR fADSR;
     protected final Wavetable fAmplitudeLFO;
     protected final Wavetable fFrequencyLFO;
     protected final LowPassFilter fLPF;
     protected final Wavetable fVCO;
+    protected final Wavetable fDetuneVCO;
+
     private float fAmp;
     private float fFreq;
     private float fFreqOffset;
     private int fNumChannels;
-    private int fOscType;
+    private int fVCOType;
     private final int fSamplingRate;
-    public boolean always_interpolate_frequency_amplitude_changes = true;
+    private int fDetuneVCOType;
+    private float fDetune;
+    private float fDetuneAmp;
 
     public InstrumentDSP(int ID, int sampling_rate, int wavetable_size) {
         super(ID);
@@ -56,6 +62,15 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
         fADSR.set_release(Wellen.DEFAULT_RELEASE);
         enable_ADSR(true);
 
+        /* setup detune VCO */
+        fDetune = 1.01f;
+        fDetuneAmp = 1.0f;
+        fDetuneVCO = new Wavetable(wavetable_size, sampling_rate);
+        fDetuneVCO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
+        fDetuneVCO.set_amplitude(1.0f);
+        set_detune_oscillator_type(Wellen.WAVEFORM_SINE);
+
+        /* setup main VCO */
         fVCO = new Wavetable(wavetable_size, sampling_rate);
         fVCO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
         set_oscillator_type(Wellen.WAVEFORM_SINE);
@@ -103,6 +118,9 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
         if (fEnableFrequencyLFO) {
             final float mLFOFreq = fEnableFrequencyLFO ? fFrequencyLFO.output() : 0.0f;
             fVCO.set_frequency(fFreq + mLFOFreq + fFreqOffset);
+            if (fEnableDetune) {
+                fDetuneVCO.set_frequency(fVCO.get_frequency() * fDetune);
+            }
         }
 
         if (fEnableAmplitudeLFO) {
@@ -112,6 +130,10 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
 
         final float mADSRAmp = fEnableADSR ? fADSR.output() : 1.0f;
         float mSample = fVCO.output();
+        if (fEnableDetune) {
+            mSample += fDetuneVCO.output() * fVCO.get_amplitude() * fDetuneAmp;
+            mSample *= 0.5f; // TODO not sure if this is good
+        }
         if (fEnableLPF) {
             mSample = fLPF.process(mSample);
         }
@@ -151,12 +173,12 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
 
     @Override
     public int get_oscillator_type() {
-        return fOscType;
+        return fVCOType;
     }
 
     @Override
     public void set_oscillator_type(int oscillator) {
-        fOscType = oscillator;
+        fVCOType = oscillator;
         Wavetable.fill(fVCO.get_wavetable(), oscillator);
     }
 
@@ -256,6 +278,21 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
     public void set_frequency(float frequency, int interpolation_duration_in_samples) {
         fFreq = frequency;
         fVCO.set_frequency(fFreq + fFreqOffset, interpolation_duration_in_samples);
+        fDetuneVCO.set_frequency(getDetuneFreq(), interpolation_duration_in_samples);
+    }
+
+    private float getDetuneFreq() {
+        return (fFreq + fFreqOffset) * fDetune;
+    }
+
+    private void updateVCOFrequency() {
+        if (always_interpolate_frequency_amplitude_changes) {
+            fVCO.set_frequency(fFreq + fFreqOffset, Wellen.DEFAULT_INTERPOLATE_AMP_FREQ_DURATION);
+            fDetuneVCO.set_frequency(getDetuneFreq(), Wellen.DEFAULT_INTERPOLATE_AMP_FREQ_DURATION);
+        } else {
+            fVCO.set_frequency(fFreq + fFreqOffset);
+            fDetuneVCO.set_frequency(getDetuneFreq());
+        }
     }
 
     @Override
@@ -264,12 +301,38 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
         updateVCOFrequency();
     }
 
-    private void updateVCOFrequency() {
-        if (always_interpolate_frequency_amplitude_changes) {
-            fVCO.set_frequency(fFreq + fFreqOffset, Wellen.DEFAULT_INTERPOLATE_AMP_FREQ_DURATION);
-        } else {
-            fVCO.set_frequency(fFreq + fFreqOffset);
-        }
+    /**
+     * detune of second oscillator in relation to main oscillator
+     *
+     * @param detune in percent. a value of 1.0 will tune the second oscillator to the exact frequency as the main
+     *               oscillator. a value of 0.5 will tune the second oscillator to half the frequency of the main
+     *               oscillator, etcetera.
+     */
+    @Override
+    public void set_detune(float detune) {
+        fDetune = detune;
+        fDetuneVCO.set_frequency(getDetuneFreq());
+    }
+
+    @Override
+    public float get_detune() {
+        return fDetune;
+    }
+
+    @Override
+    public void set_detune_amplitude(float amplitude) {
+        fDetuneAmp = amplitude;
+    }
+
+    @Override
+    public float get_detune_amplitude() {
+        return fDetuneAmp;
+    }
+
+    @Override
+    public void set_detune_oscillator_type(int oscillator) {
+        fDetuneVCOType = oscillator;
+        Wavetable.fill(fDetuneVCO.get_wavetable(), oscillator);
     }
 
     @Override
@@ -288,6 +351,10 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
 
     public Wavetable get_VCO() {
         return fVCO;
+    }
+
+    public Wavetable get_detune_VCO() {
+        return fDetuneVCO;
     }
 
     public int get_channels() {

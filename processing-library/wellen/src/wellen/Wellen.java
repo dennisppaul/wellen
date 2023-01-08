@@ -191,7 +191,7 @@ public class Wellen {
     private static final float SIG_8BIT_MAX = 128.0f;
     private static final float SIG_8BIT_MAX_INVERSE = 1.0f / SIG_8BIT_MAX;
 
-    public static final int DEFAULT_INTERPOLATE_AMP_FREQ_DURATION = Wellen.millis_to_samples(10);
+    public static final int DEFAULT_INTERPOLATE_AMP_FREQ_DURATION = Wellen.millis_to_samples(5);
 
     public static float bytes_to_floatIEEE(byte[] b, boolean pLittleEndian) {
         if (b.length != 4) {
