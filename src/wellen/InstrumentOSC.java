@@ -1,5 +1,7 @@
 package wellen;
 
+import wellen.dsp.ADSR;
+
 public class InstrumentOSC extends Instrument {
     public InstrumentOSC(int pID) {
         super(pID);
@@ -98,6 +100,56 @@ public class InstrumentOSC extends Instrument {
     @Override
     public void set_frequency(float pFrequency) {
 
+    }
+
+    @Override
+    public float get_LPF_envelope_cutoff_min() {
+        return 0;
+    }
+
+    @Override
+    public void set_LPF_envelope_cutoff_min(float value) {
+
+    }
+
+    @Override
+    public float get_LPF_envelope_cutoff_max() {
+        return 0;
+    }
+
+    @Override
+    public void set_LPF_envelope_cutoff_max(float value) {
+
+    }
+
+    @Override
+    public float get_LPF_envelope_resonance_min() {
+        return 0;
+    }
+
+    @Override
+    public void set_LPF_envelope_resonance_min(float value) {
+
+    }
+
+    @Override
+    public float get_LPF_envelope_resonance_max() {
+        return 0;
+    }
+
+    @Override
+    public void set_LPF_envelope_resonance_max(float value) {
+
+    }
+
+    @Override
+    public ADSR get_LPF_envelope_cutoff() {
+        return null;
+    }
+
+    @Override
+    public ADSR get_LPF_envelope_resonance() {
+        return null;
     }
 
     @Override

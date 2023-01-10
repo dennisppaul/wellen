@@ -51,6 +51,13 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
     private float fDetune;
     private float fDetuneAmp;
 
+    private final ADSR fLPCutoffEnvelope;
+    private final ADSR fLPResonanceEnvelope;
+    private float fLPFEnvelopCutoffMin;
+    private float fLPFEnvelopCutoffMax;
+    private float fLPFEnvelopResonanceMin;
+    private float fLPFEnvelopResonanceMax;
+
     public InstrumentDSP(int ID, int sampling_rate, int wavetable_size) {
         super(ID);
         fNumChannels = 1;
@@ -96,6 +103,22 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
         /* setup LPF */
         fLPF = new LowPassFilter(sampling_rate);
         enable_LPF(false);
+
+        /* setup LPF envelopes */
+        fLPCutoffEnvelope = new ADSR();
+        fLPCutoffEnvelope.set_attack(0.25f);
+        fLPCutoffEnvelope.set_decay(0.01f);
+        fLPCutoffEnvelope.set_sustain(1.0f);
+        fLPCutoffEnvelope.set_release(0.1f);
+        fLPResonanceEnvelope = new ADSR();
+        fLPResonanceEnvelope.set_attack(0.25f);
+        fLPResonanceEnvelope.set_decay(0.01f);
+        fLPResonanceEnvelope.set_sustain(1.0f);
+        fLPResonanceEnvelope.set_release(0.1f);
+        fLPFEnvelopCutoffMin = 400.0f;
+        fLPFEnvelopCutoffMax = 1200.0f;
+        fLPFEnvelopResonanceMin = 0.2f;
+        fLPFEnvelopResonanceMax = 0.8f;
     }
 
     public InstrumentDSP(int ID, int sampling_rate) {
@@ -135,6 +158,14 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
             mSample *= 0.5f; // TODO not sure if this is good
         }
         if (fEnableLPF) {
+            if (fEnableLPFEnvelopeCutoff) {
+                final float mRange = fLPFEnvelopCutoffMax - fLPFEnvelopCutoffMin;
+                fLPF.set_frequency(fLPFEnvelopCutoffMin + fLPCutoffEnvelope.output() * mRange);
+            }
+            if (fEnableLPFEnvelopeResonance) {
+                final float mRange = fLPFEnvelopResonanceMax - fLPFEnvelopResonanceMin;
+                fLPF.set_resonance(fLPFEnvelopResonanceMin + fLPResonanceEnvelope.output() * mRange);
+            }
             mSample = fLPF.process(mSample);
         }
         mSample = Wellen.clamp(mSample, -1.0f, 1.0f);
@@ -281,6 +312,57 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
         fDetuneVCO.set_frequency(getDetuneFreq(), interpolation_duration_in_samples);
     }
 
+    @Override
+    public float get_LPF_envelope_cutoff_min() {
+        return fLPFEnvelopCutoffMin;
+    }
+
+
+    @Override
+    public void set_LPF_envelope_cutoff_min(float value) {
+        fLPFEnvelopCutoffMin = value;
+    }
+
+    @Override
+    public float get_LPF_envelope_cutoff_max() {
+        return fLPFEnvelopCutoffMax;
+    }
+
+    @Override
+    public void set_LPF_envelope_cutoff_max(float value) {
+        fLPFEnvelopCutoffMax = value;
+    }
+
+    @Override
+    public float get_LPF_envelope_resonance_min() {
+        return fLPFEnvelopResonanceMin;
+    }
+
+    @Override
+    public void set_LPF_envelope_resonance_min(float value) {
+        fLPFEnvelopResonanceMin = value;
+    }
+
+    @Override
+    public float get_LPF_envelope_resonance_max() {
+        return fLPFEnvelopResonanceMax;
+    }
+
+    @Override
+    public void set_LPF_envelope_resonance_max(float value) {
+        fLPFEnvelopResonanceMax = value;
+    }
+
+    @Override
+    public ADSR get_LPF_envelope_cutoff() {
+        return fLPCutoffEnvelope;
+    }
+
+    @Override
+    public ADSR get_LPF_envelope_resonance() {
+        return fLPResonanceEnvelope;
+    }
+
     private float getDetuneFreq() {
         return (fFreq + fFreqOffset) * fDetune;
     }
@@ -339,6 +421,12 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
     public void note_off() {
         fIsPlaying = false;
         fADSR.stop();
+        if (fEnableLPFEnvelopeCutoff) {
+            fLPCutoffEnvelope.stop();
+        }
+        if (fEnableLPFEnvelopeResonance) {
+            fLPResonanceEnvelope.stop();
+        }
     }
 
     @Override
@@ -347,6 +435,12 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
         set_frequency(note_to_frequency(note));
         set_amplitude(velocity_to_amplitude(velocity));
         fADSR.start();
+        if (fEnableLPFEnvelopeCutoff) {
+            fLPCutoffEnvelope.start();
+        }
+        if (fEnableLPFEnvelopeResonance) {
+            fLPResonanceEnvelope.start();
+        }
     }
 
     public Wavetable get_VCO() {

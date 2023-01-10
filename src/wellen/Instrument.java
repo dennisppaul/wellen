@@ -19,6 +19,8 @@
 
 package wellen;
 
+import wellen.dsp.ADSR;
+
 /**
  * base class for all instruments
  */
@@ -31,6 +33,8 @@ public abstract class Instrument {
     protected boolean fEnableAmplitudeLFO = false;
     protected boolean fEnableFrequencyLFO = false;
     protected boolean fEnableLPF = false;
+    protected boolean fEnableLPFEnvelopeCutoff = false;
+    protected boolean fEnableLPFEnvelopeResonance = false;
     protected boolean fEnableDetune = false;
     protected boolean fIsPlaying = false;
     protected float fPan = 0.0f;
@@ -170,9 +174,41 @@ public abstract class Instrument {
         fEnableLPF = enable_LPF;
     }
 
+    public void enable_LPF_envelope_cutoff(boolean enable_LPF_envelope_cutoff) {
+        fEnableLPFEnvelopeCutoff = enable_LPF_envelope_cutoff;
+    }
+
+    public void enable_LPF_envelope_resonance(boolean enable_LPF_envelope_resonance) {
+        fEnableLPFEnvelopeResonance = enable_LPF_envelope_resonance;
+    }
+
     public void enable_detune(boolean enable_detune) {
         fEnableDetune = enable_detune;
     }
+
+    public void enable_additional_oscillator(boolean enable_additional_oscillator) {
+        fEnableAdditionalOscillator = enable_additional_oscillator;
+    }
+
+    public abstract float get_LPF_envelope_cutoff_min();
+
+    public abstract void set_LPF_envelope_cutoff_min(float value);
+
+    public abstract float get_LPF_envelope_cutoff_max();
+
+    public abstract void set_LPF_envelope_cutoff_max(float value);
+
+    public abstract float get_LPF_envelope_resonance_min();
+
+    public abstract void set_LPF_envelope_resonance_min(float value);
+
+    public abstract float get_LPF_envelope_resonance_max();
+
+    public abstract void set_LPF_envelope_resonance_max(float value);
+
+    public abstract ADSR get_LPF_envelope_cutoff();
+
+    public abstract ADSR get_LPF_envelope_resonance();
 
     public abstract void set_detune(float detune);
 
@@ -190,10 +226,6 @@ public abstract class Instrument {
 
     public boolean is_playing() {
         return fIsPlaying;
-    }
-
-    public void enable_additional_oscillator(boolean enable_additional_oscillator) {
-        fEnableAdditionalOscillator = enable_additional_oscillator;
     }
 
     protected float note_to_frequency(int note) {
