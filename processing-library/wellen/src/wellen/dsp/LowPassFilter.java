@@ -2,7 +2,7 @@
  * Wellen
  *
  * This file is part of the *wellen* library (https://github.com/dennisppaul/wellen).
- * Copyright (c) 2022 Dennis P Paul.
+ * Copyright (c) 2023 Dennis P Paul.
  *
  * This library is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,7 +35,6 @@ public class LowPassFilter implements DSPNodeProcess {
      */
 
     private float mCutoffFrequency;
-    //    private final float mIstor;
     private final float[] mDelay = new float[6];
     private float mOldAcr;
     private float mOldFreq;
@@ -49,7 +48,6 @@ public class LowPassFilter implements DSPNodeProcess {
     }
     public LowPassFilter(int pSamplingRate) {
         mSamplingRate = pSamplingRate;
-//        mIstor = 0.0f;
         mResonance = 0.4f;
         mCutoffFrequency = 1000.0f;
 

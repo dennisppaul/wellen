@@ -6,10 +6,17 @@ import wellen.Scale;
 import wellen.Tone;
 import wellen.Wellen;
 
-public class ExampleInstruments14LPFEnvelopes extends PApplet {
+public class ExampleInstruments15LPFEnvelopes extends PApplet {
+
     /*
      * this example shows how to use the low-pass filter (LPF) with two attached envelopes for cutoff frequency and
      * resonance.
+     *
+     * the LPF envelopes are triggered by the <code>Tone.note_on(...)</code> event and are released by the
+     * <code>Tone.note_off()</code> event, similar to the regular ADSR envelope. minimum and maximum values as well as
+     * the envelope shapes can be specified for the envelopes.
+     *
+     * press mouse to play a note.
      */
 
     private int mNote;
@@ -19,13 +26,18 @@ public class ExampleInstruments14LPFEnvelopes extends PApplet {
     }
 
     public void setup() {
+        Tone.instrument().set_release(0.25f);
+
         Tone.instrument().enable_LPF(true);
         Tone.instrument().enable_LPF_envelope_cutoff(true);
         Tone.instrument().enable_LPF_envelope_resonance(true);
-        Tone.instrument().get_LPF_envelope_cutoff().set_adsr(0.25f, 0.01f, 1.0f, 0.25f);
-        Tone.instrument().get_LPF_envelope_resonance().set_adsr(0.25f, 0.01f, 1.0f, 0.25f);
-        /* choose a waveform with a lot of harmonic content e.g sawtooth */
-        Tone.instrument().set_release(0.25f);
+        Tone.instrument().get_LPF_envelope_cutoff().set_adsr(0.25f, 0.0f, 1.0f, 0.25f);
+        Tone.instrument().get_LPF_envelope_resonance().set_adsr(0.25f, 0.0f, 1.0f, 0.25f);
+        Tone.instrument().set_LPF_envelope_cutoff_min(20);
+        Tone.instrument().set_LPF_envelope_cutoff_max(2000);
+        Tone.instrument().set_LPF_envelope_resonance_min(0.1f);
+        Tone.instrument().set_LPF_envelope_resonance_max(0.7f);
+        /* choose a waveform with a lot of harmonic content e.g SAWTOOTH */
         Tone.instrument().set_oscillator_type(Wellen.WAVEFORM_SAWTOOTH);
     }
 
@@ -41,17 +53,11 @@ public class ExampleInstruments14LPFEnvelopes extends PApplet {
         Tone.note_on(mNote, 100);
     }
 
-    public void mouseDragged() {
-        float mAmplitude = map(mouseY, 0, height, 0.0f, 1.0f);
-        int mInterpolationSpeedInSamples = Wellen.millis_to_samples(100);
-        Tone.instrument().set_amplitude(mAmplitude, mInterpolationSpeedInSamples);
-    }
-
     public void mouseReleased() {
         Tone.note_off();
     }
 
     public static void main(String[] args) {
-        PApplet.main(ExampleInstruments14LPFEnvelopes.class.getName());
+        PApplet.main(ExampleInstruments15LPFEnvelopes.class.getName());
     }
 }

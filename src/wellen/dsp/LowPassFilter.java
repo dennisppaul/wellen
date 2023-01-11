@@ -35,7 +35,6 @@ public class LowPassFilter implements DSPNodeProcess {
      */
 
     private float mCutoffFrequency;
-    //    private final float mIstor;
     private final float[] mDelay = new float[6];
     private float mOldAcr;
     private float mOldFreq;
@@ -49,7 +48,6 @@ public class LowPassFilter implements DSPNodeProcess {
     }
     public LowPassFilter(int pSamplingRate) {
         mSamplingRate = pSamplingRate;
-//        mIstor = 0.0f;
         mResonance = 0.4f;
         mCutoffFrequency = 1000.0f;
 

@@ -546,6 +546,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/Instrument.html#enable_amplitude_LFO(boolean)" class="member-name-link">enable_amplitude_LFO(boolean)</a> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="wellen/Instrument.html#enable_detune(boolean)" class="member-name-link">enable_detune(boolean)</a> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="wellen/Instrument.html#enable_frequency_LFO(boolean)" class="member-name-link">enable_frequency_LFO(boolean)</a> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/dsp/Wavetable.html#enable_jitter(boolean)" class="member-name-link">enable_jitter(boolean)</a> - Method in class wellen.dsp.<a href="wellen/dsp/Wavetable.html" title="class in wellen.dsp">Wavetable</a></dt>
@@ -557,6 +559,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="wellen/dsp/Sampler.html#enable_loop(boolean)" class="member-name-link">enable_loop(boolean)</a> - Method in class wellen.dsp.<a href="wellen/dsp/Sampler.html" title="class in wellen.dsp">Sampler</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/Instrument.html#enable_LPF(boolean)" class="member-name-link">enable_LPF(boolean)</a> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/Instrument.html#enable_LPF_envelope_cutoff(boolean)" class="member-name-link">enable_LPF_envelope_cutoff(boolean)</a> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/Instrument.html#enable_LPF_envelope_resonance(boolean)" class="member-name-link">enable_LPF_envelope_resonance(boolean)</a> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/ToneEngineDSP.html#enable_reverb(boolean)" class="member-name-link">enable_reverb(boolean)</a> - Method in class wellen.<a href="wellen/ToneEngineDSP.html" title="class in wellen">ToneEngineDSP</a></dt>
 <dd>&nbsp;</dd>
@@ -778,12 +784,6 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/Sequencer.html#get(int)" class="member-name-link">get(int)</a> - Method in class wellen.<a href="wellen/Sequencer.html" title="class in wellen">Sequencer</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="wellen/Instrument.html#get_additional_oscillator_amplitude()" class="member-name-link">get_additional_oscillator_amplitude()</a> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="wellen/Instrument.html#get_additional_oscillator_frequency()" class="member-name-link">get_additional_oscillator_frequency()</a> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="wellen/Instrument.html#get_additional_oscillator_type()" class="member-name-link">get_additional_oscillator_type()</a> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="wellen/dsp/Distortion.html#get_amplification()" class="member-name-link">get_amplification()</a> - Method in class wellen.dsp.<a href="wellen/dsp/Distortion.html" title="class in wellen.dsp">Distortion</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/dsp/FMSynthesis.html#get_amplitude()" class="member-name-link">get_amplitude()</a> - Method in class wellen.dsp.<a href="wellen/dsp/FMSynthesis.html" title="class in wellen.dsp">FMSynthesis</a></dt>
@@ -871,6 +871,24 @@ loadScripts(document, 'script');</script>
 <dt><a href="wellen/dsp/ADSR.html#get_decay()" class="member-name-link">get_decay()</a> - Method in class wellen.dsp.<a href="wellen/dsp/ADSR.html" title="class in wellen.dsp">ADSR</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/Instrument.html#get_decay()" class="member-name-link">get_decay()</a> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/Instrument.html#get_detune()" class="member-name-link">get_detune()</a> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentDSP.html#get_detune()" class="member-name-link">get_detune()</a> - Method in class wellen.<a href="wellen/InstrumentDSP.html" title="class in wellen">InstrumentDSP</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentMIDI.html#get_detune()" class="member-name-link">get_detune()</a> - Method in class wellen.<a href="wellen/InstrumentMIDI.html" title="class in wellen">InstrumentMIDI</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentOSC.html#get_detune()" class="member-name-link">get_detune()</a> - Method in class wellen.<a href="wellen/InstrumentOSC.html" title="class in wellen">InstrumentOSC</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/Instrument.html#get_detune_amplitude()" class="member-name-link">get_detune_amplitude()</a> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentDSP.html#get_detune_amplitude()" class="member-name-link">get_detune_amplitude()</a> - Method in class wellen.<a href="wellen/InstrumentDSP.html" title="class in wellen">InstrumentDSP</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentMIDI.html#get_detune_amplitude()" class="member-name-link">get_detune_amplitude()</a> - Method in class wellen.<a href="wellen/InstrumentMIDI.html" title="class in wellen">InstrumentMIDI</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentOSC.html#get_detune_amplitude()" class="member-name-link">get_detune_amplitude()</a> - Method in class wellen.<a href="wellen/InstrumentOSC.html" title="class in wellen">InstrumentOSC</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentDSP.html#get_detune_VCO()" class="member-name-link">get_detune_VCO()</a> - Method in class wellen.<a href="wellen/InstrumentDSP.html" title="class in wellen">InstrumentDSP</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/Tone.html#get_DSP_engine()" class="member-name-link">get_DSP_engine()</a> - Static method in class wellen.<a href="wellen/Tone.html" title="class in wellen">Tone</a></dt>
 <dd>&nbsp;</dd>
@@ -985,6 +1003,54 @@ loadScripts(document, 'script');</script>
 <dt><a href="wellen/dsp/Sampler.html#get_loop_out()" class="member-name-link">get_loop_out()</a> - Method in class wellen.dsp.<a href="wellen/dsp/Sampler.html" title="class in wellen.dsp">Sampler</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/dsp/Sampler.html#get_loop_out_normalized()" class="member-name-link">get_loop_out_normalized()</a> - Method in class wellen.dsp.<a href="wellen/dsp/Sampler.html" title="class in wellen.dsp">Sampler</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/Instrument.html#get_LPF_envelope_cutoff()" class="member-name-link">get_LPF_envelope_cutoff()</a> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentDSP.html#get_LPF_envelope_cutoff()" class="member-name-link">get_LPF_envelope_cutoff()</a> - Method in class wellen.<a href="wellen/InstrumentDSP.html" title="class in wellen">InstrumentDSP</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentMIDI.html#get_LPF_envelope_cutoff()" class="member-name-link">get_LPF_envelope_cutoff()</a> - Method in class wellen.<a href="wellen/InstrumentMIDI.html" title="class in wellen">InstrumentMIDI</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentOSC.html#get_LPF_envelope_cutoff()" class="member-name-link">get_LPF_envelope_cutoff()</a> - Method in class wellen.<a href="wellen/InstrumentOSC.html" title="class in wellen">InstrumentOSC</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/Instrument.html#get_LPF_envelope_cutoff_max()" class="member-name-link">get_LPF_envelope_cutoff_max()</a> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentDSP.html#get_LPF_envelope_cutoff_max()" class="member-name-link">get_LPF_envelope_cutoff_max()</a> - Method in class wellen.<a href="wellen/InstrumentDSP.html" title="class in wellen">InstrumentDSP</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentMIDI.html#get_LPF_envelope_cutoff_max()" class="member-name-link">get_LPF_envelope_cutoff_max()</a> - Method in class wellen.<a href="wellen/InstrumentMIDI.html" title="class in wellen">InstrumentMIDI</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentOSC.html#get_LPF_envelope_cutoff_max()" class="member-name-link">get_LPF_envelope_cutoff_max()</a> - Method in class wellen.<a href="wellen/InstrumentOSC.html" title="class in wellen">InstrumentOSC</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/Instrument.html#get_LPF_envelope_cutoff_min()" class="member-name-link">get_LPF_envelope_cutoff_min()</a> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentDSP.html#get_LPF_envelope_cutoff_min()" class="member-name-link">get_LPF_envelope_cutoff_min()</a> - Method in class wellen.<a href="wellen/InstrumentDSP.html" title="class in wellen">InstrumentDSP</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentMIDI.html#get_LPF_envelope_cutoff_min()" class="member-name-link">get_LPF_envelope_cutoff_min()</a> - Method in class wellen.<a href="wellen/InstrumentMIDI.html" title="class in wellen">InstrumentMIDI</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentOSC.html#get_LPF_envelope_cutoff_min()" class="member-name-link">get_LPF_envelope_cutoff_min()</a> - Method in class wellen.<a href="wellen/InstrumentOSC.html" title="class in wellen">InstrumentOSC</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/Instrument.html#get_LPF_envelope_resonance()" class="member-name-link">get_LPF_envelope_resonance()</a> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentDSP.html#get_LPF_envelope_resonance()" class="member-name-link">get_LPF_envelope_resonance()</a> - Method in class wellen.<a href="wellen/InstrumentDSP.html" title="class in wellen">InstrumentDSP</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentMIDI.html#get_LPF_envelope_resonance()" class="member-name-link">get_LPF_envelope_resonance()</a> - Method in class wellen.<a href="wellen/InstrumentMIDI.html" title="class in wellen">InstrumentMIDI</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentOSC.html#get_LPF_envelope_resonance()" class="member-name-link">get_LPF_envelope_resonance()</a> - Method in class wellen.<a href="wellen/InstrumentOSC.html" title="class in wellen">InstrumentOSC</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/Instrument.html#get_LPF_envelope_resonance_max()" class="member-name-link">get_LPF_envelope_resonance_max()</a> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentDSP.html#get_LPF_envelope_resonance_max()" class="member-name-link">get_LPF_envelope_resonance_max()</a> - Method in class wellen.<a href="wellen/InstrumentDSP.html" title="class in wellen">InstrumentDSP</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentMIDI.html#get_LPF_envelope_resonance_max()" class="member-name-link">get_LPF_envelope_resonance_max()</a> - Method in class wellen.<a href="wellen/InstrumentMIDI.html" title="class in wellen">InstrumentMIDI</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentOSC.html#get_LPF_envelope_resonance_max()" class="member-name-link">get_LPF_envelope_resonance_max()</a> - Method in class wellen.<a href="wellen/InstrumentOSC.html" title="class in wellen">InstrumentOSC</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/Instrument.html#get_LPF_envelope_resonance_min()" class="member-name-link">get_LPF_envelope_resonance_min()</a> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentDSP.html#get_LPF_envelope_resonance_min()" class="member-name-link">get_LPF_envelope_resonance_min()</a> - Method in class wellen.<a href="wellen/InstrumentDSP.html" title="class in wellen">InstrumentDSP</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentMIDI.html#get_LPF_envelope_resonance_min()" class="member-name-link">get_LPF_envelope_resonance_min()</a> - Method in class wellen.<a href="wellen/InstrumentMIDI.html" title="class in wellen">InstrumentMIDI</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentOSC.html#get_LPF_envelope_resonance_min()" class="member-name-link">get_LPF_envelope_resonance_min()</a> - Method in class wellen.<a href="wellen/InstrumentOSC.html" title="class in wellen">InstrumentOSC</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/Tone.html#get_midi_engine()" class="member-name-link">get_midi_engine()</a> - Static method in class wellen.<a href="wellen/Tone.html" title="class in wellen">Tone</a></dt>
 <dd>&nbsp;</dd>
@@ -2338,12 +2404,6 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/dsp/Signal.html#set(wellen.dsp.Signal)" class="member-name-link">set(Signal)</a> - Method in class wellen.dsp.<a href="wellen/dsp/Signal.html" title="class in wellen.dsp">Signal</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="wellen/Instrument.html#set_additional_oscillator_amplitude(float)" class="member-name-link">set_additional_oscillator_amplitude(float)</a> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="wellen/Instrument.html#set_additional_oscillator_frequency(float)" class="member-name-link">set_additional_oscillator_frequency(float)</a> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
-<dd>&nbsp;</dd>
-<dt><a href="wellen/Instrument.html#set_additional_oscillator_type(int)" class="member-name-link">set_additional_oscillator_type(int)</a> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="wellen/dsp/ADSR.html#set_adsr(float,float,float,float)" class="member-name-link">set_adsr(float, float, float, float)</a> - Method in class wellen.dsp.<a href="wellen/dsp/ADSR.html" title="class in wellen.dsp">ADSR</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/Instrument.html#set_adsr(float,float,float,float)" class="member-name-link">set_adsr(float, float, float, float)</a> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
@@ -2455,7 +2515,33 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">A decay, should be a value between zero and one.</div>
 </dd>
+<dt><a href="wellen/Instrument.html#set_detune(float)" class="member-name-link">set_detune(float)</a> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentDSP.html#set_detune(float)" class="member-name-link">set_detune(float)</a> - Method in class wellen.<a href="wellen/InstrumentDSP.html" title="class in wellen">InstrumentDSP</a></dt>
+<dd>
+<div class="block">detune of second oscillator in relation to main oscillator</div>
+</dd>
 <dt><a href="wellen/InstrumentDSPLibrary.BELL.html#set_detune(float)" class="member-name-link">set_detune(float)</a> - Method in class wellen.<a href="wellen/InstrumentDSPLibrary.BELL.html" title="class in wellen">InstrumentDSPLibrary.BELL</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentMIDI.html#set_detune(float)" class="member-name-link">set_detune(float)</a> - Method in class wellen.<a href="wellen/InstrumentMIDI.html" title="class in wellen">InstrumentMIDI</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentOSC.html#set_detune(float)" class="member-name-link">set_detune(float)</a> - Method in class wellen.<a href="wellen/InstrumentOSC.html" title="class in wellen">InstrumentOSC</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/Instrument.html#set_detune_amplitude(float)" class="member-name-link">set_detune_amplitude(float)</a> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentDSP.html#set_detune_amplitude(float)" class="member-name-link">set_detune_amplitude(float)</a> - Method in class wellen.<a href="wellen/InstrumentDSP.html" title="class in wellen">InstrumentDSP</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentMIDI.html#set_detune_amplitude(float)" class="member-name-link">set_detune_amplitude(float)</a> - Method in class wellen.<a href="wellen/InstrumentMIDI.html" title="class in wellen">InstrumentMIDI</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentOSC.html#set_detune_amplitude(float)" class="member-name-link">set_detune_amplitude(float)</a> - Method in class wellen.<a href="wellen/InstrumentOSC.html" title="class in wellen">InstrumentOSC</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/Instrument.html#set_detune_oscillator_type(int)" class="member-name-link">set_detune_oscillator_type(int)</a> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentDSP.html#set_detune_oscillator_type(int)" class="member-name-link">set_detune_oscillator_type(int)</a> - Method in class wellen.<a href="wellen/InstrumentDSP.html" title="class in wellen">InstrumentDSP</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentMIDI.html#set_detune_oscillator_type(int)" class="member-name-link">set_detune_oscillator_type(int)</a> - Method in class wellen.<a href="wellen/InstrumentMIDI.html" title="class in wellen">InstrumentMIDI</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentOSC.html#set_detune_oscillator_type(int)" class="member-name-link">set_detune_oscillator_type(int)</a> - Method in class wellen.<a href="wellen/InstrumentOSC.html" title="class in wellen">InstrumentOSC</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/dsp/Delay.html#set_echo_length(float)" class="member-name-link">set_echo_length(float)</a> - Method in class wellen.dsp.<a href="wellen/dsp/Delay.html" title="class in wellen.dsp">Delay</a></dt>
 <dd>&nbsp;</dd>
@@ -2579,6 +2665,38 @@ loadScripts(document, 'script');</script>
 <dt><a href="wellen/dsp/Sampler.html#set_loop_out(int)" class="member-name-link">set_loop_out(int)</a> - Method in class wellen.dsp.<a href="wellen/dsp/Sampler.html" title="class in wellen.dsp">Sampler</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/dsp/Sampler.html#set_loop_out_normalized(float)" class="member-name-link">set_loop_out_normalized(float)</a> - Method in class wellen.dsp.<a href="wellen/dsp/Sampler.html" title="class in wellen.dsp">Sampler</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/Instrument.html#set_LPF_envelope_cutoff_max(float)" class="member-name-link">set_LPF_envelope_cutoff_max(float)</a> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentDSP.html#set_LPF_envelope_cutoff_max(float)" class="member-name-link">set_LPF_envelope_cutoff_max(float)</a> - Method in class wellen.<a href="wellen/InstrumentDSP.html" title="class in wellen">InstrumentDSP</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentMIDI.html#set_LPF_envelope_cutoff_max(float)" class="member-name-link">set_LPF_envelope_cutoff_max(float)</a> - Method in class wellen.<a href="wellen/InstrumentMIDI.html" title="class in wellen">InstrumentMIDI</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentOSC.html#set_LPF_envelope_cutoff_max(float)" class="member-name-link">set_LPF_envelope_cutoff_max(float)</a> - Method in class wellen.<a href="wellen/InstrumentOSC.html" title="class in wellen">InstrumentOSC</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/Instrument.html#set_LPF_envelope_cutoff_min(float)" class="member-name-link">set_LPF_envelope_cutoff_min(float)</a> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentDSP.html#set_LPF_envelope_cutoff_min(float)" class="member-name-link">set_LPF_envelope_cutoff_min(float)</a> - Method in class wellen.<a href="wellen/InstrumentDSP.html" title="class in wellen">InstrumentDSP</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentMIDI.html#set_LPF_envelope_cutoff_min(float)" class="member-name-link">set_LPF_envelope_cutoff_min(float)</a> - Method in class wellen.<a href="wellen/InstrumentMIDI.html" title="class in wellen">InstrumentMIDI</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentOSC.html#set_LPF_envelope_cutoff_min(float)" class="member-name-link">set_LPF_envelope_cutoff_min(float)</a> - Method in class wellen.<a href="wellen/InstrumentOSC.html" title="class in wellen">InstrumentOSC</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/Instrument.html#set_LPF_envelope_resonance_max(float)" class="member-name-link">set_LPF_envelope_resonance_max(float)</a> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentDSP.html#set_LPF_envelope_resonance_max(float)" class="member-name-link">set_LPF_envelope_resonance_max(float)</a> - Method in class wellen.<a href="wellen/InstrumentDSP.html" title="class in wellen">InstrumentDSP</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentMIDI.html#set_LPF_envelope_resonance_max(float)" class="member-name-link">set_LPF_envelope_resonance_max(float)</a> - Method in class wellen.<a href="wellen/InstrumentMIDI.html" title="class in wellen">InstrumentMIDI</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentOSC.html#set_LPF_envelope_resonance_max(float)" class="member-name-link">set_LPF_envelope_resonance_max(float)</a> - Method in class wellen.<a href="wellen/InstrumentOSC.html" title="class in wellen">InstrumentOSC</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/Instrument.html#set_LPF_envelope_resonance_min(float)" class="member-name-link">set_LPF_envelope_resonance_min(float)</a> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentDSP.html#set_LPF_envelope_resonance_min(float)" class="member-name-link">set_LPF_envelope_resonance_min(float)</a> - Method in class wellen.<a href="wellen/InstrumentDSP.html" title="class in wellen">InstrumentDSP</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentMIDI.html#set_LPF_envelope_resonance_min(float)" class="member-name-link">set_LPF_envelope_resonance_min(float)</a> - Method in class wellen.<a href="wellen/InstrumentMIDI.html" title="class in wellen">InstrumentMIDI</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/InstrumentOSC.html#set_LPF_envelope_resonance_min(float)" class="member-name-link">set_LPF_envelope_resonance_min(float)</a> - Method in class wellen.<a href="wellen/InstrumentOSC.html" title="class in wellen">InstrumentOSC</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/analysis/FrequencyDistribution.html#set_maximum_frequency(float)" class="member-name-link">set_maximum_frequency(float)</a> - Method in class wellen.analysis.<a href="wellen/analysis/FrequencyDistribution.html" title="class in wellen.analysis">FrequencyDistribution</a></dt>
 <dd>&nbsp;</dd>

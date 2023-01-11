@@ -116,7 +116,7 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
         fLPResonanceEnvelope.set_sustain(1.0f);
         fLPResonanceEnvelope.set_release(0.1f);
         fLPFEnvelopCutoffMin = 400.0f;
-        fLPFEnvelopCutoffMax = 1200.0f;
+        fLPFEnvelopCutoffMax = 2000.0f;
         fLPFEnvelopResonanceMin = 0.2f;
         fLPFEnvelopResonanceMax = 0.8f;
     }
