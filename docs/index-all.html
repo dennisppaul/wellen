@@ -463,8 +463,6 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/Wellen.html#DISTORTION_SOFT_CLIPPING_CUBIC" class="member-name-link">DISTORTION_SOFT_CLIPPING_CUBIC</a> - Static variable in class wellen.<a href="wellen/Wellen.html" title="class in wellen">Wellen</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="wellen/dsp/Sampler.html#done()" class="member-name-link">done()</a> - Method in class wellen.dsp.<a href="wellen/dsp/Sampler.html" title="class in wellen.dsp">Sampler</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="wellen/HarmonicTable.html#DOWN" class="member-name-link">DOWN</a> - Static variable in class wellen.<a href="wellen/HarmonicTable.html" title="class in wellen">HarmonicTable</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/HarmonicTable.html#DOWN_LEFT" class="member-name-link">DOWN_LEFT</a> - Static variable in class wellen.<a href="wellen/HarmonicTable.html" title="class in wellen">HarmonicTable</a></dt>
@@ -1106,6 +1104,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/dsp/Sampler.html#get_position()" class="member-name-link">get_position()</a> - Method in class wellen.dsp.<a href="wellen/dsp/Sampler.html" title="class in wellen.dsp">Sampler</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="wellen/dsp/Sampler.html#get_position_normalized()" class="member-name-link">get_position_normalized()</a> - Method in class wellen.dsp.<a href="wellen/dsp/Sampler.html" title="class in wellen.dsp">Sampler</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="wellen/Grid.html#get_PPQN()" class="member-name-link">get_PPQN()</a> - Method in class wellen.<a href="wellen/Grid.html" title="class in wellen">Grid</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/analysis/PitchDetection.html#get_probability()" class="member-name-link">get_probability()</a> - Method in class wellen.analysis.<a href="wellen/analysis/PitchDetection.html" title="class in wellen.analysis">PitchDetection</a></dt>
@@ -1380,6 +1380,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/ToneEngineOSC.html#instruments()" class="member-name-link">instruments()</a> - Method in class wellen.<a href="wellen/ToneEngineOSC.html" title="class in wellen">ToneEngineOSC</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="wellen/dsp/Sampler.html#interpolate_samples()" class="member-name-link">interpolate_samples()</a> - Method in class wellen.dsp.<a href="wellen/dsp/Sampler.html" title="class in wellen.dsp">Sampler</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="wellen/dsp/Sampler.html#interpolate_samples(boolean)" class="member-name-link">interpolate_samples(boolean)</a> - Method in class wellen.dsp.<a href="wellen/dsp/Sampler.html" title="class in wellen.dsp">Sampler</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/FFT.html#inverse(float%5B%5D)" class="member-name-link">inverse(float[])</a> - Method in class wellen.<a href="wellen/FFT.html" title="class in wellen">FFT</a></dt>
@@ -1412,6 +1414,8 @@ loadScripts(document, 'script');</script>
 <div class="block">querry the pause state of the audio processing</div>
 </dd>
 <dt><a href="wellen/analysis/PitchDetection.html#is_pitched()" class="member-name-link">is_pitched()</a> - Method in class wellen.analysis.<a href="wellen/analysis/PitchDetection.html" title="class in wellen.analysis">PitchDetection</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/dsp/Sampler.html#is_playing()" class="member-name-link">is_playing()</a> - Method in class wellen.dsp.<a href="wellen/dsp/Sampler.html" title="class in wellen.dsp">Sampler</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/Instrument.html#is_playing()" class="member-name-link">is_playing()</a> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
 <dd>&nbsp;</dd>
@@ -1484,8 +1488,6 @@ loadScripts(document, 'script');</script>
 <div class="block">Sets the number of averages used when computing the spectrum based on the minimum bandwidth for an octave and the
  number of bands per octave.</div>
 </dd>
-<dt><a href="wellen/dsp/Sampler.html#loop(boolean)" class="member-name-link">loop(boolean)</a> - Method in class wellen.dsp.<a href="wellen/dsp/Sampler.html" title="class in wellen.dsp">Sampler</a></dt>
-<dd>&nbsp;</dd>
 <dt><a href="wellen/Loop.html" class="type-name-link" title="class in wellen">Loop</a> - Class in <a href="wellen/package-summary.html">wellen</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/Loop.html#%3Cinit%3E()" class="member-name-link">Loop()</a> - Constructor for class wellen.<a href="wellen/Loop.html" title="class in wellen">Loop</a></dt>
@@ -1774,6 +1776,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/Wellen.html#NOTE_HALF" class="member-name-link">NOTE_HALF</a> - Static variable in class wellen.<a href="wellen/Wellen.html" title="class in wellen">Wellen</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="wellen/dsp/Sampler.html#note_off()" class="member-name-link">note_off()</a> - Method in class wellen.dsp.<a href="wellen/dsp/Sampler.html" title="class in wellen.dsp">Sampler</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="wellen/Instrument.html#note_off()" class="member-name-link">note_off()</a> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/InstrumentDSP.html#note_off()" class="member-name-link">note_off()</a> - Method in class wellen.<a href="wellen/InstrumentDSP.html" title="class in wellen">InstrumentDSP</a></dt>
@@ -1811,6 +1815,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="wellen/ToneEngineMIDI.html#note_off(int)" class="member-name-link">note_off(int)</a> - Method in class wellen.<a href="wellen/ToneEngineMIDI.html" title="class in wellen">ToneEngineMIDI</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/ToneEngineOSC.html#note_off(int)" class="member-name-link">note_off(int)</a> - Method in class wellen.<a href="wellen/ToneEngineOSC.html" title="class in wellen">ToneEngineOSC</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/dsp/Sampler.html#note_on()" class="member-name-link">note_on()</a> - Method in class wellen.dsp.<a href="wellen/dsp/Sampler.html" title="class in wellen.dsp">Sampler</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="wellen/dsp/Sampler.html#note_on(int,int)" class="member-name-link">note_on(int, int)</a> - Method in class wellen.dsp.<a href="wellen/dsp/Sampler.html" title="class in wellen.dsp">Sampler</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/Instrument.html#note_on(int,int)" class="member-name-link">note_on(int, int)</a> - Method in class wellen.<a href="wellen/Instrument.html" title="class in wellen">Instrument</a></dt>
 <dd>&nbsp;</dd>
@@ -2658,6 +2666,8 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="wellen/Track.html#set_loop(int)" class="member-name-link">set_loop(int)</a> - Method in class wellen.<a href="wellen/Track.html" title="class in wellen">Track</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="wellen/dsp/Sampler.html#set_loop_all()" class="member-name-link">set_loop_all()</a> - Method in class wellen.dsp.<a href="wellen/dsp/Sampler.html" title="class in wellen.dsp">Sampler</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="wellen/dsp/Sampler.html#set_loop_in(int)" class="member-name-link">set_loop_in(int)</a> - Method in class wellen.dsp.<a href="wellen/dsp/Sampler.html" title="class in wellen.dsp">Sampler</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/dsp/Sampler.html#set_loop_in_normalized(float)" class="member-name-link">set_loop_in_normalized(float)</a> - Method in class wellen.dsp.<a href="wellen/dsp/Sampler.html" title="class in wellen.dsp">Sampler</a></dt>
@@ -3136,6 +3146,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="wellen/dsp/Trigger.Listener.html" class="type-name-link" title="interface in wellen.dsp">Trigger.Listener</a> - Interface in <a href="wellen/dsp/package-summary.html">wellen.dsp</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="wellen/dsp/Sampler.html#tune_frequency_to(float)" class="member-name-link">tune_frequency_to(float)</a> - Method in class wellen.dsp.<a href="wellen/dsp/Sampler.html" title="class in wellen.dsp">Sampler</a></dt>
+<dd>
+<div class="block">this function can be used to tune a loaded sample to a specific frequency.</div>
+</dd>
 <dt><a href="wellen/Wellen.html#TWO_PI" class="member-name-link">TWO_PI</a> - Static variable in class wellen.<a href="wellen/Wellen.html" title="class in wellen">Wellen</a></dt>
 <dd>&nbsp;</dd>
 </dl>

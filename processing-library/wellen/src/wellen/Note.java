@@ -27,7 +27,7 @@ import processing.core.PApplet;
 public abstract class Note implements MIDI {
 
 
-    private static final int NOTE_OFFSET = (69 - 12);
+    private static final int NOTE_OFFSET = 69;
 
     public static int frequency_to_note(float pFreq) {
         return frequency_to_note(pFreq, 440, NOTE_OFFSET);

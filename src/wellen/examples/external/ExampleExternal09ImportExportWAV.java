@@ -45,7 +45,7 @@ public class ExampleExternal09ImportExportWAV extends PApplet {
 
         mSampler = new Sampler();
         mSampler.set_data(mImportSamples[0]);
-        mSampler.loop(true);
+        mSampler.enable_loop(true);
 
         DSP.start(this);
     }

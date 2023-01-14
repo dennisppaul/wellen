@@ -27,8 +27,9 @@ public class ExampleDSP21SamplerWithLoopPoints extends PApplet {
         mSampler = new Sampler();
         mSampler.load(mData);
         mSampler.forward();
-        mSampler.set_loop_in_normalized(0.58241546f);
-        mSampler.set_loop_out_normalized(0.65975845f);
+        mSampler.set_loop_in_normalized(0.1579227f);
+        mSampler.set_loop_out_normalized(0.23951691f);
+        mSampler.enable_loop(true);
         DSP.start(this);
     }
 
@@ -81,12 +82,13 @@ public class ExampleDSP21SamplerWithLoopPoints extends PApplet {
     }
 
     public void mousePressed() {
-        mSampler.rewind();
         mSampler.start();
+        mSampler.rewind();
+        mSampler.enable_loop(true);
     }
 
     public void mouseReleased() {
-        mSampler.stop();
+        mSampler.enable_loop(false);
     }
 
     public void keyPressed() {

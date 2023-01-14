@@ -23,7 +23,7 @@ public class ExampleDSPAnalysis00FFT extends PApplet {
         byte[] mData = loadBytes("../../../resources/teilchen.raw");
         fSampler = new Sampler();
         fSampler.load(mData);
-        fSampler.loop(true);
+        fSampler.enable_loop(true);
         DSP.start(this);
         background(255);
     }

@@ -43,9 +43,11 @@ public class LowPassFilter implements DSPNodeProcess {
     private float mResonance;
     private final float mSamplingRate;
     private final float[] mTanhstg = new float[3];
+
     public LowPassFilter() {
         this(Wellen.DEFAULT_SAMPLING_RATE);
     }
+
     public LowPassFilter(int pSamplingRate) {
         mSamplingRate = pSamplingRate;
         mResonance = 0.4f;

@@ -36,7 +36,7 @@ void setup() {
     float[][] mImportSamples = Wellen.importWAV(this, WAV_FILE_NAME);
     mSampler = new Sampler();
     mSampler.set_data(mImportSamples[0]);
-    mSampler.loop(true);
+    mSampler.enable_loop(true);
     DSP.start(this);
 }
 

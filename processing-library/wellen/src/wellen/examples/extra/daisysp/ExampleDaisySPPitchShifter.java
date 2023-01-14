@@ -21,7 +21,7 @@ public class ExampleDaisySPPitchShifter extends PApplet {
         byte[] mData = SampleDataSNARE.data;
         mSampler = new Sampler();
         mSampler.load(mData);
-        mSampler.loop(true);
+        mSampler.enable_loop(true);
         mSampler.start();
 
         mPitchShifter = new PitchShifter();
@@ -49,7 +49,7 @@ public class ExampleDaisySPPitchShifter extends PApplet {
         switch (key) {
             case 'l':
             case 'L':
-                mSampler.loop(!mSampler.is_looping());
+                mSampler.enable_loop(!mSampler.is_looping());
                 break;
         }
     }

@@ -254,7 +254,7 @@ public class InstrumentDSPLibrary {
 
             mSampler = new Sampler();
             mSampler.set_data(pSampleData);
-            mSampler.loop(false);
+            mSampler.enable_loop(false);
         }
 
         @Override

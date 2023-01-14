@@ -22,7 +22,7 @@ public class TestSampleEdgeFading extends PApplet {
             r *= 110.0f;
             mSampler.data()[i] = sin(r) * 0.5f;
         }
-        mSampler.loop(true);
+        mSampler.enable_loop(true);
 
         mSampler.set_edge_fading(mSampler.data().length / 4);
 

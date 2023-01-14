@@ -320,7 +320,7 @@ CustomInstrumentSampler(int pID) {
         super(pID); /* call super constructor with instrument ID */
         mSampler = new Sampler();
         mSampler.load(SampleDataSNARE.data);
-        mSampler.loop(false);
+        mSampler.enable_loop(false);
         mReverb = new Reverb();
         mGain = 2.0f;
     }

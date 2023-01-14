@@ -19,7 +19,7 @@ void settings() {
 void setup() {
     mSampler = new Sampler();
     mSampler.load(SampleDataSNARE.data);
-    mSampler.loop(true);
+    mSampler.enable_loop(true);
     mIsRecording = false;
     DSP.start(this, 1, 1);
 }
@@ -59,7 +59,7 @@ void audioblock(float[] output_signal, float[] pInputSignal) {
         if (mRecording != null) {
             System.out.println("+++ recorded " + mRecording.length + " samples.");
             mSampler = new Sampler(mRecording);
-            mSampler.loop(true);
+            mSampler.enable_loop(true);
             mRecording = null;
         }
     }

@@ -25,6 +25,7 @@ import wellen.Wellen;
 
 import java.util.ArrayList;
 
+import static wellen.Note.note_to_frequency;
 import static wellen.Wellen.clamp;
 
 /**
@@ -33,73 +34,72 @@ import static wellen.Wellen.clamp;
 public class Sampler implements DSPNodeOutput {
 
     public static final int NO_LOOP_POINT = -1;
-    private float mAmplitude;
-    private float[] mData;
-    private float mDataIndex;
-    private boolean mDirectionForward;
-    private int mEdgeFadePadding;
-    private float mFrequency;
-    private int mIn;
-    private boolean mInterpolateSamples;
-    private boolean mIsDone;
-    private boolean mIsPlaying;
-    private boolean mLoop;
-    private int mLoopIn;
-    private int mLoopOut;
-    private int mOut;
-    private ArrayList<SamplerListener> mSamplerListeners;
-    private final float mSamplingRate;
-    private float mSpeed;
-    private float mStepSize;
+    private final ArrayList<SamplerListener> fSamplerListeners;
+    private final float fSamplingRate;
+    private float fAmplitude;
+    private float[] fData;
+    private float fDataIndex;
+    private boolean fDirectionForward;
+    private int fEdgeFadePadding;
+    private boolean fEvaluateLoop;
+    private float fFrequency;
+    private float fFrequencyScale;
+    private int fInPoint;
+    private boolean fInterpolateSamples;
+    private boolean fIsPlaying;
+    private int fLoopIn;
+    private int fLoopOut;
+    private int fOutPoint;
+    private float fSpeed;
+    private float fStepSize;
+    private boolean fIsFlaggedDone;
 
     public Sampler() {
         this(0);
     }
 
-    public Sampler(int pWavetableSize) {
-        this(new float[pWavetableSize], Wellen.DEFAULT_SAMPLING_RATE);
+    public Sampler(int data_size) {
+        this(new float[data_size], Wellen.DEFAULT_SAMPLING_RATE);
     }
 
-    public Sampler(float[] pWavetable) {
-        this(pWavetable, Wellen.DEFAULT_SAMPLING_RATE);
+    public Sampler(float[] data) {
+        this(data, Wellen.DEFAULT_SAMPLING_RATE);
     }
 
-    public Sampler(float[] pWavetable, float pSamplingRate) {
-        mData = pWavetable;
-        mSamplingRate = pSamplingRate;
-        mDataIndex = 0;
-        mLoop = false;
-        mInterpolateSamples = false;
-        mEdgeFadePadding = 0;
-        mIn = 0;
-        mOut = 0;
-        mLoopIn = NO_LOOP_POINT;
-        mLoopOut = NO_LOOP_POINT;
-        mIsPlaying = false;
+    public Sampler(float[] data, float sampling_rate) {
+        fSamplerListeners = new ArrayList<>();
+        fSamplingRate = sampling_rate;
+        set_data(data);
+        fDataIndex = 0;
+        fInterpolateSamples = false;
+        fEdgeFadePadding = 0;
+        fIsPlaying = false;
+        fInPoint = 0;
+        fOutPoint = 0;
+        set_in(0);
+        set_out(fData.length - 1);
+        fFrequencyScale = 1.0f;
         set_speed(1.0f);
         set_amplitude(1.0f);
-        set_in(0);
-        set_out(mData.length - 1);
-        mSamplerListeners = new ArrayList<>();
     }
 
-    public boolean add_listener(SamplerListener pSamplerListener) {
-        return mSamplerListeners.add(pSamplerListener);
+    public boolean add_listener(SamplerListener sampler_listener) {
+        return fSamplerListeners.add(sampler_listener);
     }
 
-    public boolean remove_listener(SamplerListener pSamplerListener) {
-        return mSamplerListeners.remove(pSamplerListener);
+    public boolean remove_listener(SamplerListener sampler_listener) {
+        return fSamplerListeners.remove(sampler_listener);
     }
 
     /**
      * load the sample buffer from *raw* byte data. the method assumes a raw format with 32bit float in a value range
-     * from -1.0 to 1.0. from -1.0 to 1.0.
+     * from -1.0 to 1.0.
      *
-     * @param pData raw byte data ( assuming 4 bytes per sample, 32-bit float aka WAVE_FORMAT_IEEE_FLOAT_32BIT )
+     * @param data raw byte data ( assuming 4 bytes per sample, 32-bit float aka WAVE_FORMAT_IEEE_FLOAT_32BIT )
      * @return instance with data loaded
      */
-    public Sampler load(byte[] pData) {
-        load(pData, true);
+    public Sampler load(byte[] data) {
+        load(data, true);
         return this;
     }
 
@@ -107,227 +107,306 @@ public class Sampler implements DSPNodeOutput {
      * load the sample buffer from *raw* byte data. the method assumes a raw format with 32bit float in a value range
      * from -1.0 to 1.0.
      *
-     * @param pData         raw byte data ( assuming 4 bytes per sample, 32-bit float aka WAVE_FORMAT_IEEE_FLOAT_32BIT
+     * @param data          raw byte data ( assuming 4 bytes per sample, 32-bit float aka WAVE_FORMAT_IEEE_FLOAT_32BIT
      *                      )
-     * @param pLittleEndian true if byte data is arranged in little endian order
+     * @param little_endian true if byte data is arranged in little endian order
      * @return instance with data loaded
      */
-    public Sampler load(byte[] pData, boolean pLittleEndian) {
-        if (mData == null || mData.length != pData.length / 4) {
-            mData = new float[pData.length / 4];
+    public Sampler load(byte[] data, boolean little_endian) {
+        if (fData == null || fData.length != data.length / 4) {
+            fData = new float[data.length / 4];
         }
-        Wellen.bytes_to_floatIEEEs(pData, data(), pLittleEndian);
+        set_data(fData);
+        Wellen.bytes_to_floatIEEEs(data, data(), little_endian);
         rewind();
-        set_speed(mSpeed);
-        set_in(0);
-        set_out(mData.length - 1);
         return this;
     }
 
     public int get_in() {
-        return mIn;
+        return fInPoint;
     }
 
-    public void set_in(int pIn) {
-        if (pIn > mOut) {
-            pIn = mOut;
+    public void set_in(int in_point) {
+        if (in_point > fOutPoint) {
+            in_point = fOutPoint;
         }
-        mIn = pIn;
+        fInPoint = in_point;
     }
 
     public int get_out() {
-        return mOut;
+        return fOutPoint;
     }
 
-    public void set_out(int pOut) {
-        mOut = pOut > last_index() ? last_index() : (pOut < mIn ? mIn : pOut);
+    public void set_out(int out_point) {
+        fOutPoint = out_point > last_index() ? last_index() : (out_point < fInPoint ? fInPoint : out_point);
     }
 
     public float get_speed() {
-        return mSpeed;
+        return fSpeed;
     }
 
-    public void set_speed(float pSpeed) {
-        mSpeed = pSpeed;
-        mDirectionForward = pSpeed > 0;
-        set_frequency(PApplet.abs(pSpeed) * mSamplingRate / data().length); /* aka `mStepSize = pSpeed;` */
+    public void set_speed(float speed) {
+        fSpeed = speed;
+        fDirectionForward = speed > 0;
+        set_frequency(PApplet.abs(speed) * fSamplingRate / fData.length); /* aka `step_size = speed` */
     }
 
-    public void set_frequency(float pFrequency) {
-        if (mFrequency != pFrequency) {
-            mFrequency = pFrequency;
-            mStepSize = mFrequency * ((float) mData.length / mSamplingRate);
+    public void set_frequency(float frequency) {
+        if (fFrequency != frequency) {
+            fFrequency = frequency;
+            fStepSize = fFrequency / fFrequencyScale * ((float) fData.length / fSamplingRate);
         }
     }
 
-    public void set_amplitude(float pAmplitude) {
-        mAmplitude = pAmplitude;
+    public void set_amplitude(float amplitude) {
+        fAmplitude = amplitude;
     }
 
     public float[] data() {
-        return mData;
+        return fData;
     }
 
-    public void set_data(float[] pData) {
-        mData = pData;
+    public void set_data(float[] data) {
+        fData = data;
         rewind();
-        set_speed(mSpeed);
+        set_speed(fSpeed);
         set_in(0);
-        set_out(mData.length - 1);
-        mLoopIn = NO_LOOP_POINT;
-        mLoopOut = NO_LOOP_POINT;
+        set_out(fData.length - 1);
+        fLoopIn = NO_LOOP_POINT;
+        fLoopOut = NO_LOOP_POINT;
     }
 
-    public void interpolate_samples(boolean pInterpolateSamples) {
-        mInterpolateSamples = pInterpolateSamples;
+    public void interpolate_samples(boolean interpolate_samples) {
+        fInterpolateSamples = interpolate_samples;
+    }
+
+    public boolean interpolate_samples() {
+        return fInterpolateSamples;
     }
 
     public int get_position() {
-        return (int) mDataIndex;
+        return (int) fDataIndex;
     }
 
-    public boolean done() {
-        return mIsDone;
+    public float get_position_normalized() {
+        return fData.length > 0 ? fDataIndex / fData.length : 0.0f;
+    }
+
+    public boolean is_playing() {
+        return fIsPlaying;
     }
 
     public float output() {
-        float mSample;
-        mDataIndex += mDirectionForward ? mStepSize : -mStepSize;
-        final int mPreviousIndex = (int) mDataIndex;
-        if ((mData.length == 0) || (mDirectionForward ? (mPreviousIndex > mOut && !mLoop) :
-                (mPreviousIndex < mIn && !mLoop))) {
-            if (!mIsDone) {
-                for (SamplerListener l : mSamplerListeners) {
-                    l.is_done();
-                }
-            }
-            mIsDone = true;
+        if (fData.length == 0) {
+            notifyListeners("data is empty");
+            return 0.0f;
+        }
+
+        if (!fIsPlaying) {
+            notifyListeners("not playing");
+            return 0.0f;
+        }
+
+        validateInOutPoints();
+
+        fDataIndex += fDirectionForward ? fStepSize : -fStepSize;
+        final int mRoundedIndex = (int) fDataIndex;
+
+        final float mFrac = fDataIndex - mRoundedIndex;
+        final int mCurrentIndex = wrapIndex(mRoundedIndex);
+        fDataIndex = mCurrentIndex + mFrac;
+
+        if (fDirectionForward ? (mCurrentIndex >= fOutPoint) : (mCurrentIndex <= fInPoint)) {
+            notifyListeners("reached end");
             return 0.0f;
         } else {
-            mIsDone = false;
+            fIsFlaggedDone = false;
         }
-        final float mFrac = mDataIndex - mPreviousIndex;
-        final int mCurrentIndex = wrapIndex(mPreviousIndex);
-        mDataIndex = mCurrentIndex + mFrac;
+
+        float mSample = fData[mCurrentIndex];
 
         /* interpolate */
-        mSample = mData[mCurrentIndex];
-        if (mInterpolateSamples) {
+        if (fInterpolateSamples) {
+            // TODO evaluate direction?
             final int mNextIndex = wrapIndex(mCurrentIndex + 1);
-            final float mNextSample = mData[mNextIndex];
+            final float mNextSample = fData[mNextIndex];
             mSample = mSample * (1.0f - mFrac) + mNextSample * mFrac;
         }
-        mSample *= mAmplitude;
+        mSample *= fAmplitude;
 
         /* fade edges */
-        if (mEdgeFadePadding > 0) {
-            final int mRelativeIndex = mData.length - mCurrentIndex;
-            if (mCurrentIndex < mEdgeFadePadding) {
-                final float mFadeInAmount = (float) mCurrentIndex / mEdgeFadePadding;
+        if (fEdgeFadePadding > 0) {
+            final int mRelativeIndex = fData.length - mCurrentIndex;
+            if (mCurrentIndex < fEdgeFadePadding) {
+                final float mFadeInAmount = (float) mCurrentIndex / fEdgeFadePadding;
                 mSample *= mFadeInAmount;
-            } else if (mRelativeIndex < mEdgeFadePadding) {
-                final float mFadeOutAmount = (float) mRelativeIndex / mEdgeFadePadding;
+            } else if (mRelativeIndex < fEdgeFadePadding) {
+                final float mFadeOutAmount = (float) mRelativeIndex / fEdgeFadePadding;
                 mSample *= mFadeOutAmount;
             }
         }
+
         return mSample;
     }
 
     public int get_edge_fading() {
-        return mEdgeFadePadding;
+        return fEdgeFadePadding;
     }
 
-    public void set_edge_fading(int pEdgeFadePadding) {
-        mEdgeFadePadding = pEdgeFadePadding;
+    public void set_edge_fading(int edge_fade_padding) {
+        fEdgeFadePadding = edge_fade_padding;
     }
 
     public void rewind() {
-        mDataIndex = mDirectionForward ? mIn : mOut;
+        fDataIndex = fDirectionForward ? fInPoint : fOutPoint;
     }
 
     public void forward() {
-        mDataIndex = mDirectionForward ? mOut : mIn;
-    }
-
-    public void loop(boolean pLoop) {
-        enable_loop(pLoop);
+        fDataIndex = fDirectionForward ? fOutPoint : fInPoint;
     }
 
     public boolean is_looping() {
-        return mLoop;
+        return fEvaluateLoop;
     }
 
-    public void enable_loop(boolean pLoop) {
-        mLoop = pLoop;
+    public void enable_loop(boolean loop) {
+        fEvaluateLoop = loop;
+    }
+
+    public void set_loop_all() {
+        fLoopIn = 0;
+        fLoopOut = fData.length > 0 ? (fData.length - 1) : 0;
     }
 
     public void start() {
-        mIsPlaying = true;
+        fIsPlaying = true;
     }
 
     public void stop() {
-        mIsPlaying = false;
+        fIsPlaying = false;
     }
 
     public int get_loop_in() {
-        return mLoopIn;
+        return fLoopIn;
     }
 
-    public void set_loop_in(int pLoopIn) {
-        mLoopIn = clamp(pLoopIn, 0, mData.length - 1);
+    public void set_loop_in(int loop_in_point) {
+        fLoopIn = clamp(loop_in_point, NO_LOOP_POINT, fData.length - 1);
     }
 
     public float get_loop_in_normalized() {
-        if (mData.length < 2) {
+        if (fData.length < 2) {
             return 0.0f;
         }
-        return (float) mLoopIn / (mData.length - 1);
+        return (float) fLoopIn / (fData.length - 1);
     }
 
-    public void set_loop_in_normalized(float pLoopIn) {
-        set_loop_in((int) (pLoopIn * mData.length - 1));
+    public void set_loop_in_normalized(float loop_in_point_normalized) {
+        set_loop_in((int) (loop_in_point_normalized * fData.length - 1));
     }
 
     public int get_loop_out() {
-        return mLoopOut;
+        return fLoopOut;
     }
 
-    public void set_loop_out(int pLoopOut) {
-        mLoopOut = clamp(pLoopOut, 0, mData.length - 1);
+    public void set_loop_out(int loop_out_point) {
+        fLoopOut = clamp(loop_out_point, NO_LOOP_POINT, fData.length - 1);
     }
 
     public float get_loop_out_normalized() {
-        if (mData.length < 2) {
+        if (fData.length < 2) {
             return 0.0f;
         }
-        return (float) mLoopOut / (mData.length - 1);
+        return (float) fLoopOut / (fData.length - 1);
     }
 
-    public void set_loop_out_normalized(float pLoopOut) {
-        set_loop_out((int) (pLoopOut * mData.length - 1));
+    public void set_loop_out_normalized(float loop_out_point_normalized) {
+        set_loop_out((int) (loop_out_point_normalized * fData.length - 1));
+    }
+
+    public void note_on() {
+        rewind();
+        start();
+        enable_loop(true);
+    }
+
+    public void note_on(int note, int velocity) {
+        fIsPlaying = true;
+        set_frequency(note_to_frequency(note));
+        set_amplitude(Wellen.clamp127(velocity) / 127.0f);
+        note_on();
+    }
+
+    public void note_off() {
+        enable_loop(false);
+    }
+
+    /**
+     * this function can be used to tune a loaded sample to a specific frequency. after the sampler has been tuned the
+     * method <code>set_frequency(float)</code> can be used to play the sample at a desired frequency.
+     *
+     * @param frequency_scale the assumed frequency of the sampler data in Hz
+     */
+    public void tune_frequency_to(float frequency_scale) {
+        fFrequencyScale = frequency_scale;
     }
 
     private int last_index() {
-        return mData.length - 1;
+        return fData.length - 1;
+    }
+
+    private void notifyListeners(String pEvent) {
+        if (!fIsFlaggedDone) {
+            for (SamplerListener l : fSamplerListeners) {
+                l.is_done();
+            }
+        }
+        fIsFlaggedDone = true;
+    }
+
+    private void validateInOutPoints() {
+        if (fInPoint < 0) {
+            fInPoint = 0;
+        } else if (fInPoint > fData.length - 1) {
+            fInPoint = fData.length - 1;
+        }
+        if (fOutPoint < 0) {
+            fOutPoint = 0;
+        } else if (fOutPoint > fData.length - 1) {
+            fOutPoint = fData.length - 1;
+        }
+        if (fOutPoint < fInPoint) {
+            fOutPoint = fInPoint;
+        }
+        if (fLoopIn < fInPoint) {
+            fLoopIn = fInPoint;
+        }
+        if (fLoopOut > fOutPoint) {
+            fLoopOut = fOutPoint;
+        }
     }
 
     private int wrapIndex(int i) {
-        if (mIsPlaying && mLoopIn != NO_LOOP_POINT && mLoopOut != NO_LOOP_POINT) {
-            if (mDirectionForward) {
-                if (i > mLoopOut) {
-                    i = mLoopIn;
-                }
-            } else {
-                if (i < mLoopIn) {
-                    i = mLoopOut;
+        /* check if in loop concept viable i.e loop in- and output points are set */
+        if (fEvaluateLoop) {
+            if (fLoopIn != NO_LOOP_POINT && fLoopOut != NO_LOOP_POINT) {
+                if (fDirectionForward) {
+                    if (i > fLoopOut) {
+                        i = fLoopIn;
+                    }
+                } else {
+                    if (i < fLoopIn) {
+                        i = fLoopOut;
+                    }
                 }
             }
-        } else {
-            if (i > mOut) {
-                i = mIn;
-            } else if (i < mIn) {
-                i = mOut;
-            }
+        }
+
+        /* check if within bounds */
+        if (i > fOutPoint) {
+            i = fOutPoint;
+        } else if (i < fInPoint) {
+            i = fInPoint;
         }
         return i;
     }

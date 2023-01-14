@@ -24,7 +24,7 @@ public class ExampleDSP10SampleRecorder extends PApplet {
     public void setup() {
         mSampler = new Sampler();
         mSampler.load(SampleDataSNARE.data);
-        mSampler.loop(true);
+        mSampler.enable_loop(true);
 
         mIsRecording = false;
 
@@ -66,7 +66,7 @@ public class ExampleDSP10SampleRecorder extends PApplet {
             if (mRecording != null) {
                 System.out.println("+++ recorded " + mRecording.length + " samples.");
                 mSampler = new Sampler(mRecording);
-                mSampler.loop(true);
+                mSampler.enable_loop(true);
                 mRecording = null;
             }
         }

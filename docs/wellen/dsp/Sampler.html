@@ -74,12 +74,12 @@ implements <a href="DSPNodeOutput.html" title="interface in wellen.dsp">DSPNodeO
 <div class="table-header col-last">Description</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">Sampler</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(float%5B%5D)" class="member-name-link">Sampler</a><wbr>(float[]&nbsp;pWavetable)</code></div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(float%5B%5D)" class="member-name-link">Sampler</a><wbr>(float[]&nbsp;data)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(float%5B%5D,float)" class="member-name-link">Sampler</a><wbr>(float[]&nbsp;pWavetable,
- float&nbsp;pSamplingRate)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(float%5B%5D,float)" class="member-name-link">Sampler</a><wbr>(float[]&nbsp;data,
+ float&nbsp;sampling_rate)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(int)" class="member-name-link">Sampler</a><wbr>(int&nbsp;pWavetableSize)</code></div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(int)" class="member-name-link">Sampler</a><wbr>(int&nbsp;data_size)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
@@ -96,66 +96,79 @@ implements <a href="DSPNodeOutput.html" title="interface in wellen.dsp">DSPNodeO
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#add_listener(wellen.SamplerListener)" class="member-name-link">add_listener</a><wbr>(<a href="../SamplerListener.html" title="interface in wellen">SamplerListener</a>&nbsp;pSamplerListener)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#add_listener(wellen.SamplerListener)" class="member-name-link">add_listener</a><wbr>(<a href="../SamplerListener.html" title="interface in wellen">SamplerListener</a>&nbsp;sampler_listener)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float[]</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#data()" class="member-name-link">data</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#done()" class="member-name-link">done</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#enable_loop(boolean)" class="member-name-link">enable_loop</a><wbr>(boolean&nbsp;loop)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#enable_loop(boolean)" class="member-name-link">enable_loop</a><wbr>(boolean&nbsp;pLoop)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#forward()" class="member-name-link">forward</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_edge_fading()" class="member-name-link">get_edge_fading</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#forward()" class="member-name-link">forward</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_in()" class="member-name-link">get_in</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_edge_fading()" class="member-name-link">get_edge_fading</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_loop_in()" class="member-name-link">get_loop_in</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_loop_in_normalized()" class="member-name-link">get_loop_in_normalized</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_loop_out()" class="member-name-link">get_loop_out</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_loop_out_normalized()" class="member-name-link">get_loop_out_normalized</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_out()" class="member-name-link">get_out</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_in()" class="member-name-link">get_in</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_position()" class="member-name-link">get_position</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_loop_in()" class="member-name-link">get_loop_in</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_loop_in_normalized()" class="member-name-link">get_loop_in_normalized</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_loop_out()" class="member-name-link">get_loop_out</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_loop_out_normalized()" class="member-name-link">get_loop_out_normalized</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_out()" class="member-name-link">get_out</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_position()" class="member-name-link">get_position</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_position_normalized()" class="member-name-link">get_position_normalized</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get_speed()" class="member-name-link">get_speed</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#interpolate_samples(boolean)" class="member-name-link">interpolate_samples</a><wbr>(boolean&nbsp;pInterpolateSamples)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#interpolate_samples()" class="member-name-link">interpolate_samples</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#interpolate_samples(boolean)" class="member-name-link">interpolate_samples</a><wbr>(boolean&nbsp;interpolate_samples)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#is_looping()" class="member-name-link">is_looping</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#is_looping()" class="member-name-link">is_looping</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#is_playing()" class="member-name-link">is_playing</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Sampler.html" title="class in wellen.dsp">Sampler</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#load(byte%5B%5D)" class="member-name-link">load</a><wbr>(byte[]&nbsp;pData)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#load(byte%5B%5D)" class="member-name-link">load</a><wbr>(byte[]&nbsp;data)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">load the sample buffer from *raw* byte data.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Sampler.html" title="class in wellen.dsp">Sampler</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#load(byte%5B%5D,boolean)" class="member-name-link">load</a><wbr>(byte[]&nbsp;pData,
- boolean&nbsp;pLittleEndian)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#load(byte%5B%5D,boolean)" class="member-name-link">load</a><wbr>(byte[]&nbsp;data,
+ boolean&nbsp;little_endian)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">load the sample buffer from *raw* byte data.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#loop(boolean)" class="member-name-link">loop</a><wbr>(boolean&nbsp;pLoop)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#note_off()" class="member-name-link">note_off</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#note_on()" class="member-name-link">note_on</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#note_on(int,int)" class="member-name-link">note_on</a><wbr>(int&nbsp;note,
+ int&nbsp;velocity)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>float</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#output()" class="member-name-link">output</a>()</code></div>
@@ -163,50 +176,58 @@ implements <a href="DSPNodeOutput.html" title="interface in wellen.dsp">DSPNodeO
 <div class="block">returns the output signal.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#remove_listener(wellen.SamplerListener)" class="member-name-link">remove_listener</a><wbr>(<a href="../SamplerListener.html" title="interface in wellen">SamplerListener</a>&nbsp;pSamplerListener)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#remove_listener(wellen.SamplerListener)" class="member-name-link">remove_listener</a><wbr>(<a href="../SamplerListener.html" title="interface in wellen">SamplerListener</a>&nbsp;sampler_listener)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#rewind()" class="member-name-link">rewind</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_amplitude(float)" class="member-name-link">set_amplitude</a><wbr>(float&nbsp;pAmplitude)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_amplitude(float)" class="member-name-link">set_amplitude</a><wbr>(float&nbsp;amplitude)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_data(float%5B%5D)" class="member-name-link">set_data</a><wbr>(float[]&nbsp;pData)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_data(float%5B%5D)" class="member-name-link">set_data</a><wbr>(float[]&nbsp;data)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_edge_fading(int)" class="member-name-link">set_edge_fading</a><wbr>(int&nbsp;pEdgeFadePadding)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_edge_fading(int)" class="member-name-link">set_edge_fading</a><wbr>(int&nbsp;edge_fade_padding)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_frequency(float)" class="member-name-link">set_frequency</a><wbr>(float&nbsp;pFrequency)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_frequency(float)" class="member-name-link">set_frequency</a><wbr>(float&nbsp;frequency)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_in(int)" class="member-name-link">set_in</a><wbr>(int&nbsp;pIn)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_in(int)" class="member-name-link">set_in</a><wbr>(int&nbsp;in_point)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_loop_in(int)" class="member-name-link">set_loop_in</a><wbr>(int&nbsp;pLoopIn)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_loop_all()" class="member-name-link">set_loop_all</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_loop_in_normalized(float)" class="member-name-link">set_loop_in_normalized</a><wbr>(float&nbsp;pLoopIn)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_loop_in(int)" class="member-name-link">set_loop_in</a><wbr>(int&nbsp;loop_in_point)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_loop_out(int)" class="member-name-link">set_loop_out</a><wbr>(int&nbsp;pLoopOut)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_loop_in_normalized(float)" class="member-name-link">set_loop_in_normalized</a><wbr>(float&nbsp;loop_in_point_normalized)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_loop_out_normalized(float)" class="member-name-link">set_loop_out_normalized</a><wbr>(float&nbsp;pLoopOut)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_loop_out(int)" class="member-name-link">set_loop_out</a><wbr>(int&nbsp;loop_out_point)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_out(int)" class="member-name-link">set_out</a><wbr>(int&nbsp;pOut)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_loop_out_normalized(float)" class="member-name-link">set_loop_out_normalized</a><wbr>(float&nbsp;loop_out_point_normalized)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_speed(float)" class="member-name-link">set_speed</a><wbr>(float&nbsp;pSpeed)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_out(int)" class="member-name-link">set_out</a><wbr>(int&nbsp;out_point)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#start()" class="member-name-link">start</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_speed(float)" class="member-name-link">set_speed</a><wbr>(float&nbsp;speed)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stop()" class="member-name-link">stop</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#start()" class="member-name-link">start</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stop()" class="member-name-link">stop</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#tune_frequency_to(float)" class="member-name-link">tune_frequency_to</a><wbr>(float&nbsp;frequency_scale)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">this function can be used to tune a loaded sample to a specific frequency.</div>
+</div>
 </div>
 </div>
 </div>
@@ -255,20 +276,20 @@ implements <a href="DSPNodeOutput.html" title="interface in wellen.dsp">DSPNodeO
 <li>
 <section class="detail" id="&lt;init&gt;(int)">
 <h3>Sampler</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Sampler</span><wbr><span class="parameters">(int&nbsp;pWavetableSize)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Sampler</span><wbr><span class="parameters">(int&nbsp;data_size)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(float[])">
 <h3>Sampler</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Sampler</span><wbr><span class="parameters">(float[]&nbsp;pWavetable)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Sampler</span><wbr><span class="parameters">(float[]&nbsp;data)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;(float[],float)">
 <h3>Sampler</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Sampler</span><wbr><span class="parameters">(float[]&nbsp;pWavetable,
- float&nbsp;pSamplingRate)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Sampler</span><wbr><span class="parameters">(float[]&nbsp;data,
+ float&nbsp;sampling_rate)</span></div>
 </section>
 </li>
 </ul>
@@ -282,24 +303,24 @@ implements <a href="DSPNodeOutput.html" title="interface in wellen.dsp">DSPNodeO
 <li>
 <section class="detail" id="add_listener(wellen.SamplerListener)">
 <h3>add_listener</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">add_listener</span><wbr><span class="parameters">(<a href="../SamplerListener.html" title="interface in wellen">SamplerListener</a>&nbsp;pSamplerListener)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">add_listener</span><wbr><span class="parameters">(<a href="../SamplerListener.html" title="interface in wellen">SamplerListener</a>&nbsp;sampler_listener)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="remove_listener(wellen.SamplerListener)">
 <h3>remove_listener</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">remove_listener</span><wbr><span class="parameters">(<a href="../SamplerListener.html" title="interface in wellen">SamplerListener</a>&nbsp;pSamplerListener)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">remove_listener</span><wbr><span class="parameters">(<a href="../SamplerListener.html" title="interface in wellen">SamplerListener</a>&nbsp;sampler_listener)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="load(byte[])">
 <h3>load</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Sampler.html" title="class in wellen.dsp">Sampler</a></span>&nbsp;<span class="element-name">load</span><wbr><span class="parameters">(byte[]&nbsp;pData)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Sampler.html" title="class in wellen.dsp">Sampler</a></span>&nbsp;<span class="element-name">load</span><wbr><span class="parameters">(byte[]&nbsp;data)</span></div>
 <div class="block">load the sample buffer from *raw* byte data. the method assumes a raw format with 32bit float in a value range
- from -1.0 to 1.0. from -1.0 to 1.0.</div>
+ from -1.0 to 1.0.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>pData</code> - raw byte data ( assuming 4 bytes per sample, 32-bit float aka WAVE_FORMAT_IEEE_FLOAT_32BIT )</dd>
+<dd><code>data</code> - raw byte data ( assuming 4 bytes per sample, 32-bit float aka WAVE_FORMAT_IEEE_FLOAT_32BIT )</dd>
 <dt>Returns:</dt>
 <dd>instance with data loaded</dd>
 </dl>
@@ -308,15 +329,15 @@ implements <a href="DSPNodeOutput.html" title="interface in wellen.dsp">DSPNodeO
 <li>
 <section class="detail" id="load(byte[],boolean)">
 <h3>load</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Sampler.html" title="class in wellen.dsp">Sampler</a></span>&nbsp;<span class="element-name">load</span><wbr><span class="parameters">(byte[]&nbsp;pData,
- boolean&nbsp;pLittleEndian)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="Sampler.html" title="class in wellen.dsp">Sampler</a></span>&nbsp;<span class="element-name">load</span><wbr><span class="parameters">(byte[]&nbsp;data,
+ boolean&nbsp;little_endian)</span></div>
 <div class="block">load the sample buffer from *raw* byte data. the method assumes a raw format with 32bit float in a value range
  from -1.0 to 1.0.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
-<dd><code>pData</code> - raw byte data ( assuming 4 bytes per sample, 32-bit float aka WAVE_FORMAT_IEEE_FLOAT_32BIT
+<dd><code>data</code> - raw byte data ( assuming 4 bytes per sample, 32-bit float aka WAVE_FORMAT_IEEE_FLOAT_32BIT
                       )</dd>
-<dd><code>pLittleEndian</code> - true if byte data is arranged in little endian order</dd>
+<dd><code>little_endian</code> - true if byte data is arranged in little endian order</dd>
 <dt>Returns:</dt>
 <dd>instance with data loaded</dd>
 </dl>
@@ -331,7 +352,7 @@ implements <a href="DSPNodeOutput.html" title="interface in wellen.dsp">DSPNodeO
 <li>
 <section class="detail" id="set_in(int)">
 <h3>set_in</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_in</span><wbr><span class="parameters">(int&nbsp;pIn)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_in</span><wbr><span class="parameters">(int&nbsp;in_point)</span></div>
 </section>
 </li>
 <li>
@@ -343,7 +364,7 @@ implements <a href="DSPNodeOutput.html" title="interface in wellen.dsp">DSPNodeO
 <li>
 <section class="detail" id="set_out(int)">
 <h3>set_out</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_out</span><wbr><span class="parameters">(int&nbsp;pOut)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_out</span><wbr><span class="parameters">(int&nbsp;out_point)</span></div>
 </section>
 </li>
 <li>
@@ -355,19 +376,19 @@ implements <a href="DSPNodeOutput.html" title="interface in wellen.dsp">DSPNodeO
 <li>
 <section class="detail" id="set_speed(float)">
 <h3>set_speed</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_speed</span><wbr><span class="parameters">(float&nbsp;pSpeed)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_speed</span><wbr><span class="parameters">(float&nbsp;speed)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="set_frequency(float)">
 <h3>set_frequency</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_frequency</span><wbr><span class="parameters">(float&nbsp;pFrequency)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_frequency</span><wbr><span class="parameters">(float&nbsp;frequency)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="set_amplitude(float)">
 <h3>set_amplitude</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_amplitude</span><wbr><span class="parameters">(float&nbsp;pAmplitude)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_amplitude</span><wbr><span class="parameters">(float&nbsp;amplitude)</span></div>
 </section>
 </li>
 <li>
@@ -379,13 +400,19 @@ implements <a href="DSPNodeOutput.html" title="interface in wellen.dsp">DSPNodeO
 <li>
 <section class="detail" id="set_data(float[])">
 <h3>set_data</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_data</span><wbr><span class="parameters">(float[]&nbsp;pData)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_data</span><wbr><span class="parameters">(float[]&nbsp;data)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="interpolate_samples(boolean)">
 <h3>interpolate_samples</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">interpolate_samples</span><wbr><span class="parameters">(boolean&nbsp;pInterpolateSamples)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">interpolate_samples</span><wbr><span class="parameters">(boolean&nbsp;interpolate_samples)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="interpolate_samples()">
+<h3>interpolate_samples</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">interpolate_samples</span>()</div>
 </section>
 </li>
 <li>
@@ -395,9 +422,15 @@ implements <a href="DSPNodeOutput.html" title="interface in wellen.dsp">DSPNodeO
 </section>
 </li>
 <li>
-<section class="detail" id="done()">
-<h3>done</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">done</span>()</div>
+<section class="detail" id="get_position_normalized()">
+<h3>get_position_normalized</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">float</span>&nbsp;<span class="element-name">get_position_normalized</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="is_playing()">
+<h3>is_playing</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">is_playing</span>()</div>
 </section>
 </li>
 <li>
@@ -423,7 +456,7 @@ implements <a href="DSPNodeOutput.html" title="interface in wellen.dsp">DSPNodeO
 <li>
 <section class="detail" id="set_edge_fading(int)">
 <h3>set_edge_fading</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_edge_fading</span><wbr><span class="parameters">(int&nbsp;pEdgeFadePadding)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_edge_fading</span><wbr><span class="parameters">(int&nbsp;edge_fade_padding)</span></div>
 </section>
 </li>
 <li>
@@ -439,12 +472,6 @@ implements <a href="DSPNodeOutput.html" title="interface in wellen.dsp">DSPNodeO
 </section>
 </li>
 <li>
-<section class="detail" id="loop(boolean)">
-<h3>loop</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">loop</span><wbr><span class="parameters">(boolean&nbsp;pLoop)</span></div>
-</section>
-</li>
-<li>
 <section class="detail" id="is_looping()">
 <h3>is_looping</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">is_looping</span>()</div>
@@ -453,7 +480,13 @@ implements <a href="DSPNodeOutput.html" title="interface in wellen.dsp">DSPNodeO
 <li>
 <section class="detail" id="enable_loop(boolean)">
 <h3>enable_loop</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">enable_loop</span><wbr><span class="parameters">(boolean&nbsp;pLoop)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">enable_loop</span><wbr><span class="parameters">(boolean&nbsp;loop)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="set_loop_all()">
+<h3>set_loop_all</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_loop_all</span>()</div>
 </section>
 </li>
 <li>
@@ -477,7 +510,7 @@ implements <a href="DSPNodeOutput.html" title="interface in wellen.dsp">DSPNodeO
 <li>
 <section class="detail" id="set_loop_in(int)">
 <h3>set_loop_in</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_loop_in</span><wbr><span class="parameters">(int&nbsp;pLoopIn)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_loop_in</span><wbr><span class="parameters">(int&nbsp;loop_in_point)</span></div>
 </section>
 </li>
 <li>
@@ -489,7 +522,7 @@ implements <a href="DSPNodeOutput.html" title="interface in wellen.dsp">DSPNodeO
 <li>
 <section class="detail" id="set_loop_in_normalized(float)">
 <h3>set_loop_in_normalized</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_loop_in_normalized</span><wbr><span class="parameters">(float&nbsp;pLoopIn)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_loop_in_normalized</span><wbr><span class="parameters">(float&nbsp;loop_in_point_normalized)</span></div>
 </section>
 </li>
 <li>
@@ -501,7 +534,7 @@ implements <a href="DSPNodeOutput.html" title="interface in wellen.dsp">DSPNodeO
 <li>
 <section class="detail" id="set_loop_out(int)">
 <h3>set_loop_out</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_loop_out</span><wbr><span class="parameters">(int&nbsp;pLoopOut)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_loop_out</span><wbr><span class="parameters">(int&nbsp;loop_out_point)</span></div>
 </section>
 </li>
 <li>
@@ -513,7 +546,38 @@ implements <a href="DSPNodeOutput.html" title="interface in wellen.dsp">DSPNodeO
 <li>
 <section class="detail" id="set_loop_out_normalized(float)">
 <h3>set_loop_out_normalized</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_loop_out_normalized</span><wbr><span class="parameters">(float&nbsp;pLoopOut)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set_loop_out_normalized</span><wbr><span class="parameters">(float&nbsp;loop_out_point_normalized)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="note_on()">
+<h3>note_on</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">note_on</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="note_on(int,int)">
+<h3>note_on</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">note_on</span><wbr><span class="parameters">(int&nbsp;note,
+ int&nbsp;velocity)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="note_off()">
+<h3>note_off</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">note_off</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="tune_frequency_to(float)">
+<h3>tune_frequency_to</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">tune_frequency_to</span><wbr><span class="parameters">(float&nbsp;frequency_scale)</span></div>
+<div class="block">this function can be used to tune a loaded sample to a specific frequency. after the sampler has been tuned the
+ method <code>set_frequency(float)</code> can be used to play the sample at a desired frequency.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>frequency_scale</code> - the assumed frequency of the sampler data in Hz</dd>
+</dl>
 </section>
 </li>
 </ul>

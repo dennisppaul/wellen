@@ -21,7 +21,7 @@ public class TechniqueAlgorithmicComposition06SamplerGranular extends PApplet {
         byte[] mData = loadBytes("../../../resources/a_portrait_in_reverse.raw");
         fSampler = new Sampler();
         fSampler.load(mData);
-        fSampler.loop(true);
+        fSampler.enable_loop(true);
 
         DSP.start(this);
     }
@@ -73,7 +73,7 @@ public class TechniqueAlgorithmicComposition06SamplerGranular extends PApplet {
                 break;
             case ' ':
                 Sampler s = new Sampler(fSampler.data());
-                s.loop(true);
+                s.enable_loop(true);
                 s.set_in(fSampler.get_in());
                 s.set_out(fSampler.get_out());
                 fSamplers.add(s);

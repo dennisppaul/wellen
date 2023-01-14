@@ -331,7 +331,7 @@ public class ExampleInstruments09CustomDSPInstrument extends PApplet {
 
             mSampler = new Sampler();
             mSampler.load(SampleDataSNARE.data);
-            mSampler.loop(false);
+            mSampler.enable_loop(false);
 
             mReverb = new Reverb();
 

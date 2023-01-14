@@ -30,16 +30,23 @@ public class ExampleDSP07Sampler extends PApplet {
         // alternatively load data with `loadBytes("audio.raw")` ( raw format, 32bit IEEE float )
         mSampler = new Sampler();
         mSampler.load(mData);
-        mSampler.loop(true);
+        mSampler.enable_loop(true);
+        mSampler.set_loop_all();
         mSampler.start();
-
         DSP.start(this);
     }
 
     public void draw() {
         background(255);
+
+        stroke(0);
         DSP.draw_buffers(g, width, height);
         line(width * 0.5f, height * 0.5f + 5, width * 0.5f, height * 0.5f - 5);
+
+        fill(0);
+        noStroke();
+        circle(60, 60, mSampler.is_looping() ? 50 : 10);
+        circle(120, 60, mSampler.interpolate_samples() ? 50 : 10);
     }
 
     public void mousePressed() {
@@ -47,15 +54,23 @@ public class ExampleDSP07Sampler extends PApplet {
     }
 
     public void mouseMoved() {
-        mSampler.set_speed(map(mouseX, 0, width, -8, 8));
-        mSampler.set_amplitude(map(mouseY, 0, height, 0.0f, 0.9f));
+        mSampler.set_speed(map(mouseX, 0, width, -4, 4));
+        mSampler.set_amplitude(map(mouseY, 0, height, 0.9f, 0.0f));
     }
 
     public void keyPressed() {
         switch (key) {
             case 'l':
+                mSampler.enable_loop(false);
+                break;
             case 'L':
-                mSampler.loop(!mSampler.is_looping());
+                mSampler.enable_loop(true);
+                break;
+            case 'i':
+                mSampler.interpolate_samples(false);
+                break;
+            case 'I':
+                mSampler.interpolate_samples(true);
                 break;
         }
     }

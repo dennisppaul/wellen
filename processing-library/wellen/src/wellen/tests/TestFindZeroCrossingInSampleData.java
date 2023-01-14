@@ -63,7 +63,7 @@ public class TestFindZeroCrossingInSampleData extends PApplet {
 
     public void setup() {
         mSampler = new Sampler(Wellen.DEFAULT_SAMPLING_RATE);
-        mSampler.loop(true);
+        mSampler.enable_loop(true);
 
         for (int i = 0; i < mSampler.data().length; i++) {
             final float mFrequency = 110.0f;
