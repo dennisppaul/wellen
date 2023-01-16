@@ -46,7 +46,7 @@ public class TestImportExportWAV extends PApplet {
         mSampler = new Sampler();
         byte[] mData = Wellen.importWAVInfo(this, mPath + "test-mono_exported_32bit_float.wav").data;
         mSampler.load(mData);
-        mSampler.loop(true);
+        mSampler.enable_loop(true);
         DSP.start(this);
     }
 

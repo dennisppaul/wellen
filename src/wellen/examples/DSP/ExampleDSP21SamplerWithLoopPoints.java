@@ -45,8 +45,8 @@ public class ExampleDSP21SamplerWithLoopPoints extends PApplet {
 
         /* selection */
         fill(0, 31);
-        float x0 = map(mSampler.get_loop_in(), 0, mSampler.data().length, 0, width);
-        float x1 = map(mSampler.get_loop_out(), 0, mSampler.data().length, 0, width);
+        float x0 = map(mSampler.get_loop_in(), 0, mSampler.get_data().length, 0, width);
+        float x1 = map(mSampler.get_loop_out(), 0, mSampler.get_data().length, 0, width);
         if (mSampler.get_loop_in() >= 0 && mSampler.get_loop_out() >= 0) {
             if (mSampler.get_loop_in() < mSampler.get_loop_out()) {
                 noStroke();
@@ -68,9 +68,9 @@ public class ExampleDSP21SamplerWithLoopPoints extends PApplet {
         noFill();
         stroke(0);
         beginShape();
-        for (int i = 0; i < mSampler.data().length; i++) {
-            float x = map(i, 0, mSampler.data().length, 0, width);
-            float y = map(mSampler.data()[i], -1.0f, 1.0f, 0, height);
+        for (int i = 0; i < mSampler.get_data().length; i++) {
+            float x = map(i, 0, mSampler.get_data().length, 0, width);
+            float y = map(mSampler.get_data()[i], -1.0f, 1.0f, 0, height);
             vertex(x, y);
         }
         endShape();
@@ -100,7 +100,7 @@ public class ExampleDSP21SamplerWithLoopPoints extends PApplet {
                 mSampler.set_loop_out_normalized(map(mouseX, BORDER, width - BORDER, 0, 1));
                 break;
             case 'z':
-                int[] mLoopPoints = Wellen.find_zero_crossings(mSampler.data(),
+                int[] mLoopPoints = Wellen.find_zero_crossings(mSampler.get_data(),
                                                                mSampler.get_loop_in(),
                                                                mSampler.get_loop_out());
                 if (mLoopPoints[0] > 0 && mLoopPoints[1] > 0) {

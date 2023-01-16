@@ -20,7 +20,7 @@ public class TestDistortionWithSample extends PApplet {
         byte[] mData = loadBytes("../../../resources/a_portrait_in_reverse.raw");
         mSampler = new Sampler();
         mSampler.load(mData);
-        mSampler.loop(true);
+        mSampler.enable_loop(true);
 
         mDistortion = new Distortion();
         DSP.start(this);
