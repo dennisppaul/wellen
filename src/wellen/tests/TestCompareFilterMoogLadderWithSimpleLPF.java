@@ -4,14 +4,14 @@ import processing.core.PApplet;
 import wellen.Beat;
 import wellen.Wellen;
 import wellen.dsp.DSP;
-import wellen.dsp.Filter;
-import wellen.dsp.LowPassFilter;
+import wellen.dsp.FilterHighLowBandPass;
+import wellen.dsp.FilterMoogLadderLowPass;
 import wellen.dsp.Wavetable;
 
 public class TestCompareFilterMoogLadderWithSimpleLPF extends PApplet {
-    private final Filter mFilter = new Filter();
+    private final FilterHighLowBandPass mFilter = new FilterHighLowBandPass();
     private int mFreqOffset = 0;
-    private final LowPassFilter mMoggLadder = new LowPassFilter();
+    private final FilterMoogLadderLowPass mMoggLadder = new FilterMoogLadderLowPass();
     private final Wavetable mWavetable = new Wavetable();
 
     public void settings() {

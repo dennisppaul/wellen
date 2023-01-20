@@ -56,9 +56,12 @@ public class Wellen {
     public static final int DEFAULT_AUDIO_DEVICE = -1;
     public static final int DEFAULT_BITS_PER_SAMPLE = BITS_PER_SAMPLE_24;
     public static final float DEFAULT_DECAY = 0.01f;
+    public static final float DEFAULT_FILTER_BANDWIDTH = 100.0f;
+    public static final float DEFAULT_FILTER_FREQUENCY = 1000.0f;
     public static final int DEFAULT_NUMBER_OF_INSTRUMENTS = 16;
     public static final float DEFAULT_RELEASE = 0.075f;
     public static final int DEFAULT_SAMPLING_RATE = 48000;
+    public static final int DEFAULT_INTERPOLATE_AMP_FREQ_DURATION = Wellen.millis_to_samples(5);
     public static final float DEFAULT_SUSTAIN = 0.5f;
     public static final int DEFAULT_WAVETABLE_SIZE = 512;
     public static final int DISTORTION_BIT_CRUSHING = 8;
@@ -79,11 +82,12 @@ public class Wellen {
     public static final int EVENT_PROGRAMCHANGE = 4;
     public static final int EVENT_UNDEFINED = -1;
     public static final int EVENT_VELOCITY = 2;
-    public static final int FILTER_MODE_BANDPASS = 2;
-    public static final int FILTER_MODE_HIGHPASS = 1;
+    public static final int FILTER_MODE_BAND_PASS = 2;
+    public static final int FILTER_MODE_BAND_REJECT = 7;
     public static final int FILTER_MODE_HIGHSHELF = 6;
-    public static final int FILTER_MODE_LOWPASS = 0;
+    public static final int FILTER_MODE_HIGH_PASS = 1;
     public static final int FILTER_MODE_LOWSHELF = 5;
+    public static final int FILTER_MODE_LOW_PASS = 0;
     public static final int FILTER_MODE_NOTCH = 3;
     public static final int FILTER_MODE_PEAK = 4;
     public static final int LOOP_INFINITE = Integer.MAX_VALUE;
@@ -190,8 +194,6 @@ public class Wellen {
     private static final float SIG_32BIT_MAX_INVERSE = 1.0f / SIG_32BIT_MAX;
     private static final float SIG_8BIT_MAX = 128.0f;
     private static final float SIG_8BIT_MAX_INVERSE = 1.0f / SIG_8BIT_MAX;
-
-    public static final int DEFAULT_INTERPOLATE_AMP_FREQ_DURATION = Wellen.millis_to_samples(5);
 
     public static float bytes_to_floatIEEE(byte[] b, boolean pLittleEndian) {
         if (b.length != 4) {

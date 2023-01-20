@@ -104,6 +104,7 @@ public class DSP implements AudioBufferRenderer {
 
     /**
      * querry the pause state of the audio processing
+     *
      * @return <code>true</code> if audio processing is paused, <code>false</code> otherwise
      */
     public static boolean is_paused() {

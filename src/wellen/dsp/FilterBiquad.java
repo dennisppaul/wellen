@@ -21,11 +21,11 @@ package wellen.dsp;
 
 import wellen.Wellen;
 
-import static wellen.Wellen.FILTER_MODE_BANDPASS;
-import static wellen.Wellen.FILTER_MODE_HIGHPASS;
+import static wellen.Wellen.FILTER_MODE_BAND_PASS;
 import static wellen.Wellen.FILTER_MODE_HIGHSHELF;
-import static wellen.Wellen.FILTER_MODE_LOWPASS;
+import static wellen.Wellen.FILTER_MODE_HIGH_PASS;
 import static wellen.Wellen.FILTER_MODE_LOWSHELF;
+import static wellen.Wellen.FILTER_MODE_LOW_PASS;
 import static wellen.Wellen.FILTER_MODE_NOTCH;
 import static wellen.Wellen.FILTER_MODE_PEAK;
 
@@ -52,7 +52,7 @@ public class FilterBiquad implements DSPNodeProcess {
 
     public FilterBiquad(int pSamplingRate) {
         mSamplingRate = pSamplingRate;
-        mode = FILTER_MODE_LOWPASS;
+        mode = FILTER_MODE_LOW_PASS;
         fc = 1000;
         Q = 0.7071f;
         peakGain = 0;
@@ -116,7 +116,7 @@ public class FilterBiquad implements DSPNodeProcess {
         float sqrt_AA = sqrt(AA);
 
         switch (mode) {
-            case FILTER_MODE_LOWPASS:
+            case FILTER_MODE_LOW_PASS:
                 B[0] = (1.0f - cos_w0) / 2.0f;
                 B[1] = 1.0f - cos_w0;
                 B[2] = (1.0f - cos_w0) / 2.0f;
@@ -124,7 +124,7 @@ public class FilterBiquad implements DSPNodeProcess {
                 A[1] = -2.0f * cos_w0;
                 A[2] = 1.0f - alpha;
                 break;
-            case FILTER_MODE_HIGHPASS:
+            case FILTER_MODE_HIGH_PASS:
                 B[0] = (1.0f + cos_w0) / 2.0f;
                 B[1] = -(1.0f + cos_w0);
                 B[2] = (1.0f + cos_w0) / 2.0f;
@@ -132,7 +132,7 @@ public class FilterBiquad implements DSPNodeProcess {
                 A[1] = -2.0f * cos_w0;
                 A[2] = 1.0f - alpha;
                 break;
-            case FILTER_MODE_BANDPASS: // (constant 0 dB peak gain)
+            case FILTER_MODE_BAND_PASS: // (constant 0 dB peak gain)
                 B[0] = alpha;
                 B[1] = 0.0f;
                 B[2] = -alpha;

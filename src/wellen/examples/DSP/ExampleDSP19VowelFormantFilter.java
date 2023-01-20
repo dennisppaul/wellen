@@ -4,9 +4,9 @@ import processing.core.PApplet;
 import wellen.Wellen;
 import wellen.dsp.ADSR;
 import wellen.dsp.DSP;
+import wellen.dsp.FilterVowelFormant;
 import wellen.dsp.Oscillator;
 import wellen.dsp.OscillatorFunction;
-import wellen.dsp.VowelFormantFilter;
 
 public class ExampleDSP19VowelFormantFilter extends PApplet {
 
@@ -19,7 +19,7 @@ public class ExampleDSP19VowelFormantFilter extends PApplet {
      */
 
     private final ADSR mADSR = new ADSR();
-    private final VowelFormantFilter mFormantFilter = new VowelFormantFilter();
+    private final FilterVowelFormant mFormantFilter = new FilterVowelFormant();
     private boolean mIsKeyPressed = false;
     private final Oscillator mOsc = new OscillatorFunction();
 
@@ -49,7 +49,7 @@ public class ExampleDSP19VowelFormantFilter extends PApplet {
     }
 
     public void mouseDragged() {
-        mFormantFilter.lerp_vowel(VowelFormantFilter.VOWEL_I, VowelFormantFilter.VOWEL_O, map(mouseY, 0, height, 0, 1));
+        mFormantFilter.lerp_vowel(FilterVowelFormant.VOWEL_I, FilterVowelFormant.VOWEL_O, map(mouseY, 0, height, 0, 1));
         mouseMoved();
     }
 
@@ -63,19 +63,19 @@ public class ExampleDSP19VowelFormantFilter extends PApplet {
 
             switch (key) {
                 case 'a':
-                    mFormantFilter.set_vowel(VowelFormantFilter.VOWEL_A);
+                    mFormantFilter.set_vowel(FilterVowelFormant.VOWEL_A);
                     break;
                 case 'e':
-                    mFormantFilter.set_vowel(VowelFormantFilter.VOWEL_E);
+                    mFormantFilter.set_vowel(FilterVowelFormant.VOWEL_E);
                     break;
                 case 'i':
-                    mFormantFilter.set_vowel(VowelFormantFilter.VOWEL_I);
+                    mFormantFilter.set_vowel(FilterVowelFormant.VOWEL_I);
                     break;
                 case 'o':
-                    mFormantFilter.set_vowel(VowelFormantFilter.VOWEL_O);
+                    mFormantFilter.set_vowel(FilterVowelFormant.VOWEL_O);
                     break;
                 case 'u':
-                    mFormantFilter.set_vowel(VowelFormantFilter.VOWEL_U);
+                    mFormantFilter.set_vowel(FilterVowelFormant.VOWEL_U);
                     break;
                 case '1':
                     mOsc.set_waveform(Wellen.WAVEFORM_SQUARE);

@@ -3,7 +3,7 @@ package wellen.examples.DSP;
 import processing.core.PApplet;
 import wellen.Wellen;
 import wellen.dsp.DSP;
-import wellen.dsp.LowPassFilter;
+import wellen.dsp.FilterMoogLadderLowPass;
 import wellen.dsp.Wavetable;
 
 public class ExampleDSP04LPF extends PApplet {
@@ -12,7 +12,7 @@ public class ExampleDSP04LPF extends PApplet {
      * this example demonstrates how to use a *Low-Pass Filter* (LPF) on a sawtooth oscillator in DSP.
      */
 
-    private final LowPassFilter mFilter = new LowPassFilter();
+    private final FilterMoogLadderLowPass mFilter = new FilterMoogLadderLowPass();
     private final Wavetable mWavetable = new Wavetable();
 
     public void settings() {

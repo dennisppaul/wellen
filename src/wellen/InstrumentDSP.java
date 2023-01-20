@@ -21,7 +21,7 @@ package wellen;
 
 import wellen.dsp.ADSR;
 import wellen.dsp.DSPNodeOutputSignal;
-import wellen.dsp.LowPassFilter;
+import wellen.dsp.FilterMoogLadderLowPass;
 import wellen.dsp.Signal;
 import wellen.dsp.Wavetable;
 
@@ -37,7 +37,7 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
     protected final ADSR fADSR;
     protected final Wavetable fAmplitudeLFO;
     protected final Wavetable fFrequencyLFO;
-    protected final LowPassFilter fLPF;
+    protected final FilterMoogLadderLowPass fLPF;
     protected final Wavetable fVCO;
     protected final Wavetable fDetuneVCO;
 
@@ -62,7 +62,7 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
         super(ID);
         fNumChannels = 1;
         fSamplingRate = sampling_rate;
-        fADSR = new ADSR(sampling_rate);
+        fADSR = new ADSR(fSamplingRate);
         fADSR.set_attack(Wellen.DEFAULT_ATTACK);
         fADSR.set_decay(Wellen.DEFAULT_DECAY);
         fADSR.set_sustain(Wellen.DEFAULT_SUSTAIN);
@@ -72,20 +72,20 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
         /* setup detune VCO */
         fDetune = 1.01f;
         fDetuneAmp = 1.0f;
-        fDetuneVCO = new Wavetable(wavetable_size, sampling_rate);
+        fDetuneVCO = new Wavetable(wavetable_size, fSamplingRate);
         fDetuneVCO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
         fDetuneVCO.set_amplitude(1.0f);
         set_detune_oscillator_type(Wellen.WAVEFORM_SINE);
 
         /* setup main VCO */
-        fVCO = new Wavetable(wavetable_size, sampling_rate);
+        fVCO = new Wavetable(wavetable_size, fSamplingRate);
         fVCO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
         set_oscillator_type(Wellen.WAVEFORM_SINE);
         set_amplitude(0.0f);
         set_frequency(DEFAULT_FREQUENCY);
 
         /* setup LFO for frequency */
-        fFrequencyLFO = new Wavetable(wavetable_size, sampling_rate);
+        fFrequencyLFO = new Wavetable(wavetable_size, fSamplingRate);
         Wavetable.sine(fFrequencyLFO.get_wavetable());
         fFrequencyLFO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
         fFrequencyLFO.set_frequency(0);
@@ -93,7 +93,7 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
         enable_frequency_LFO(false);
 
         /* setup LFO for amplitude */
-        fAmplitudeLFO = new Wavetable(wavetable_size, sampling_rate);
+        fAmplitudeLFO = new Wavetable(wavetable_size, fSamplingRate);
         Wavetable.sine(fAmplitudeLFO.get_wavetable());
         fAmplitudeLFO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
         fAmplitudeLFO.set_frequency(0);
@@ -101,7 +101,7 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
         enable_amplitude_LFO(false);
 
         /* setup LPF */
-        fLPF = new LowPassFilter(sampling_rate);
+        fLPF = new FilterMoogLadderLowPass(fSamplingRate);
         enable_LPF(false);
 
         /* setup LPF envelopes */
@@ -414,7 +414,11 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
     @Override
     public void set_detune_oscillator_type(int oscillator) {
         fDetuneVCOType = oscillator;
-        Wavetable.fill(fDetuneVCO.get_wavetable(), oscillator);
+        Wavetable.fill(fDetuneVCO.get_wavetable(), fDetuneVCOType);
+    }
+
+    public int get_detune_oscillator_type() {
+        return fDetuneVCOType;
     }
 
     @Override

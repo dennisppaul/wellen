@@ -85,7 +85,7 @@ class ModuleOhhhhUhh extends Track {
     
 final float mBaseFreq = Note.note_to_frequency(12);
     
-final VowelFormantFilter mFormantFilter = new VowelFormantFilter();
+final FilterVowelFormant mFormantFilter = new FilterVowelFormant();
     
 final float mMaxAmplitude = 0.2f;
     
@@ -97,7 +97,7 @@ ModuleOhhhhUhh() {
         mOSC.set_frequency(mBaseFreq);
         mOSC.set_waveform(Wellen.WAVEFORM_SQUARE);
         mOSC.set_amplitude(0.0f);
-        mFormantFilter.set_vowel(VowelFormantFilter.VOWEL_O);
+        mFormantFilter.set_vowel(FilterVowelFormant.VOWEL_O);
     }
     
 Signal output_signal() {
@@ -120,11 +120,11 @@ void beat(int beat_absolute, int beat_relative) {
         Loop mLoop = new Loop();
         mLoop.set_length(PPQN * 4);
         if (mLoop.event(beat_relative, 0)) {
-            mFormantFilter.set_vowel(VowelFormantFilter.VOWEL_O);
+            mFormantFilter.set_vowel(FilterVowelFormant.VOWEL_O);
         } else if (mLoop.event(beat_relative, PPQN * 2)) {
-            mFormantFilter.set_vowel(VowelFormantFilter.VOWEL_A);
+            mFormantFilter.set_vowel(FilterVowelFormant.VOWEL_A);
         } else if (mLoop.event(beat_relative, PPQN * 3)) {
-            mFormantFilter.set_vowel(VowelFormantFilter.VOWEL_U);
+            mFormantFilter.set_vowel(FilterVowelFormant.VOWEL_U);
         }
     }
 }

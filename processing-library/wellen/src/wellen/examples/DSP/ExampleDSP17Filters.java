@@ -3,7 +3,7 @@ package wellen.examples.DSP;
 import processing.core.PApplet;
 import wellen.Wellen;
 import wellen.dsp.DSP;
-import wellen.dsp.Filter;
+import wellen.dsp.FilterHighLowBandPass;
 import wellen.dsp.Wavetable;
 
 public class ExampleDSP17Filters extends PApplet {
@@ -15,7 +15,7 @@ public class ExampleDSP17Filters extends PApplet {
      * oscillator frequency.
      */
 
-    private final Filter mFilter = new Filter();
+    private final FilterHighLowBandPass mFilter = new FilterHighLowBandPass();
     private final Wavetable mWavetable = new Wavetable();
 
     public void settings() {
@@ -37,13 +37,13 @@ public class ExampleDSP17Filters extends PApplet {
     public void keyPressed() {
         switch (key) {
             case '1':
-                mFilter.set_mode(Wellen.FILTER_MODE_LOWPASS);
+                mFilter.set_mode(Wellen.FILTER_MODE_LOW_PASS);
                 break;
             case '2':
-                mFilter.set_mode(Wellen.FILTER_MODE_HIGHPASS);
+                mFilter.set_mode(Wellen.FILTER_MODE_HIGH_PASS);
                 break;
             case '3':
-                mFilter.set_mode(Wellen.FILTER_MODE_BANDPASS);
+                mFilter.set_mode(Wellen.FILTER_MODE_BAND_PASS);
                 break;
             case '4':
                 Wavetable.fill(mWavetable.get_wavetable(), Wellen.OSC_SAWTOOTH);

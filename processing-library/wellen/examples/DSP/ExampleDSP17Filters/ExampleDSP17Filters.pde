@@ -8,7 +8,7 @@ import wellen.dsp.*;
  * oscillator frequency.
  */
 
-final Filter mFilter = new Filter();
+final FilterHighLowBandPass mFilter = new FilterHighLowBandPass();
 
 final Wavetable mWavetable = new Wavetable();
 
@@ -31,13 +31,13 @@ void draw() {
 void keyPressed() {
     switch (key) {
         case '1':
-            mFilter.set_mode(Wellen.FILTER_MODE_LOWPASS);
+            mFilter.set_mode(Wellen.FILTER_MODE_LOW_PASS);
             break;
         case '2':
-            mFilter.set_mode(Wellen.FILTER_MODE_HIGHPASS);
+            mFilter.set_mode(Wellen.FILTER_MODE_HIGH_PASS);
             break;
         case '3':
-            mFilter.set_mode(Wellen.FILTER_MODE_BANDPASS);
+            mFilter.set_mode(Wellen.FILTER_MODE_BAND_PASS);
             break;
         case '4':
             Wavetable.fill(mWavetable.get_wavetable(), Wellen.OSC_SAWTOOTH);

@@ -11,7 +11,7 @@ import wellen.analysis.*;
 
 boolean fEnableFilter = false;
 
-final Filter fFilter = new Filter();
+final FilterHighLowBandPass fFilter = new FilterHighLowBandPass();
 
 FrequencyDistribution fFrequencyDistribution;
 
@@ -77,13 +77,13 @@ void keyPressed() {
             randomize(fWavetable.get_wavetable());
             break;
         case '6':
-            fFilter.set_mode(Wellen.FILTER_MODE_LOWPASS);
+            fFilter.set_mode(Wellen.FILTER_MODE_LOW_PASS);
             break;
         case '7':
-            fFilter.set_mode(Wellen.FILTER_MODE_BANDPASS);
+            fFilter.set_mode(Wellen.FILTER_MODE_BAND_PASS);
             break;
         case '8':
-            fFilter.set_mode(Wellen.FILTER_MODE_HIGHPASS);
+            fFilter.set_mode(Wellen.FILTER_MODE_HIGH_PASS);
             break;
         case '9':
             fEnableFilter = !fEnableFilter;

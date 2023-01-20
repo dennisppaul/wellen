@@ -5,7 +5,7 @@ import wellen.Wellen;
 import wellen.analysis.FrequencyDistribution;
 import wellen.analysis.Sonogram;
 import wellen.dsp.DSP;
-import wellen.dsp.Filter;
+import wellen.dsp.FilterHighLowBandPass;
 import wellen.dsp.Wavetable;
 
 public class ExampleDSPAnalysis01SonogramFrequencyDistribution extends PApplet {
@@ -19,7 +19,7 @@ public class ExampleDSPAnalysis01SonogramFrequencyDistribution extends PApplet {
      */
 
     private boolean fEnableFilter = false;
-    private final Filter fFilter = new Filter();
+    private final FilterHighLowBandPass fFilter = new FilterHighLowBandPass();
     private FrequencyDistribution fFrequencyDistribution;
     private Sonogram fSonogram;
     private final Wavetable fWavetable = new Wavetable();
@@ -82,13 +82,13 @@ public class ExampleDSPAnalysis01SonogramFrequencyDistribution extends PApplet {
                 randomize(fWavetable.get_wavetable());
                 break;
             case '6':
-                fFilter.set_mode(Wellen.FILTER_MODE_LOWPASS);
+                fFilter.set_mode(Wellen.FILTER_MODE_LOW_PASS);
                 break;
             case '7':
-                fFilter.set_mode(Wellen.FILTER_MODE_BANDPASS);
+                fFilter.set_mode(Wellen.FILTER_MODE_BAND_PASS);
                 break;
             case '8':
-                fFilter.set_mode(Wellen.FILTER_MODE_HIGHPASS);
+                fFilter.set_mode(Wellen.FILTER_MODE_HIGH_PASS);
                 break;
             case '9':
                 fEnableFilter = !fEnableFilter;

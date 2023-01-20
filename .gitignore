@@ -2,3 +2,7 @@ src/be/
 processing-library/wellen/src/be/
 AndroidManifest.xml
 sketch.properties
+processing-library/wellen/src/wellen/tests/dsp/filters/
+src/wellen/tests/dsp/filters/
+src/wellen/tests/dsp/theaudioprogrammingbook/
+processing-library/wellen/src/wellen/tests/

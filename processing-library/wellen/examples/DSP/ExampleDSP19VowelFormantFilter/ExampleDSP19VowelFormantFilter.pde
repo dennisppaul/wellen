@@ -11,7 +11,7 @@ import wellen.dsp.*;
 
 final ADSR mADSR = new ADSR();
 
-final VowelFormantFilter mFormantFilter = new VowelFormantFilter();
+final FilterVowelFormant mFormantFilter = new FilterVowelFormant();
 
 boolean mIsKeyPressed = false;
 
@@ -42,7 +42,7 @@ void mouseReleased() {
 }
 
 void mouseDragged() {
-    mFormantFilter.lerp_vowel(VowelFormantFilter.VOWEL_I, VowelFormantFilter.VOWEL_O, map(mouseY, 0, height, 0, 1));
+    mFormantFilter.lerp_vowel(FilterVowelFormant.VOWEL_I, FilterVowelFormant.VOWEL_O, map(mouseY, 0, height, 0, 1));
     mouseMoved();
 }
 
@@ -55,19 +55,19 @@ void keyPressed() {
         mIsKeyPressed = true;
         switch (key) {
             case 'a':
-                mFormantFilter.set_vowel(VowelFormantFilter.VOWEL_A);
+                mFormantFilter.set_vowel(FilterVowelFormant.VOWEL_A);
                 break;
             case 'e':
-                mFormantFilter.set_vowel(VowelFormantFilter.VOWEL_E);
+                mFormantFilter.set_vowel(FilterVowelFormant.VOWEL_E);
                 break;
             case 'i':
-                mFormantFilter.set_vowel(VowelFormantFilter.VOWEL_I);
+                mFormantFilter.set_vowel(FilterVowelFormant.VOWEL_I);
                 break;
             case 'o':
-                mFormantFilter.set_vowel(VowelFormantFilter.VOWEL_O);
+                mFormantFilter.set_vowel(FilterVowelFormant.VOWEL_O);
                 break;
             case 'u':
-                mFormantFilter.set_vowel(VowelFormantFilter.VOWEL_U);
+                mFormantFilter.set_vowel(FilterVowelFormant.VOWEL_U);
                 break;
             case '1':
                 mOsc.set_waveform(Wellen.WAVEFORM_SQUARE);

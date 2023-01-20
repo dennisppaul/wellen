@@ -3,12 +3,12 @@ package wellen.tests;
 import processing.core.PApplet;
 import wellen.Wellen;
 import wellen.dsp.DSP;
-import wellen.dsp.LowPassFilter;
+import wellen.dsp.FilterMoogLadderLowPass;
 import wellen.dsp.Wavetable;
 
 public class TestDSPNodeProcessFilter extends PApplet {
 
-    private final LowPassFilter mFilter = new LowPassFilter(Wellen.DEFAULT_SAMPLING_RATE);
+    private final FilterMoogLadderLowPass mFilter = new FilterMoogLadderLowPass(Wellen.DEFAULT_SAMPLING_RATE);
     private final Wavetable mWavetable = new Wavetable(512);
 
     public void settings() {
