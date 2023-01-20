@@ -91,10 +91,4 @@ now the configured ports are avialable as virtual MIDI ports in macOS.
 - `ExampleExternal02MIDIClock`
 - `ExampleExternal03MIDIExternalKeyboard`
 
-### linux
-
-@todo
-
-### windows
-
-@todo
+<!-- @todo(windows+linux) -->
