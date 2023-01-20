@@ -28,7 +28,7 @@ void draw() {
     background(255);
     DSP.draw_buffers(g, width, height);
     fill(0);
-    float mSize = mRecording != null ? mRecording.length : mSampler.data().length;
+    float mSize = mRecording != null ? mRecording.length : mSampler.get_data().length;
     mSize /= Wellen.DEFAULT_SAMPLING_RATE;
     mSize *= 100.0f;
     ellipse(width * 0.5f, height * 0.5f, mSize + 5, mSize + 5);
@@ -58,8 +58,10 @@ void audioblock(float[] output_signal, float[] pInputSignal) {
     } else {
         if (mRecording != null) {
             System.out.println("+++ recorded " + mRecording.length + " samples.");
-            mSampler = new Sampler(mRecording);
+            mSampler.set_data(mRecording);
             mSampler.enable_loop(true);
+            mSampler.set_loop_all();
+            mSampler.start();
             mRecording = null;
         }
     }

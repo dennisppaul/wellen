@@ -53,7 +53,7 @@ public class ExampleExternal09ImportExportWAV extends PApplet {
     public void draw() {
         background(255);
         stroke(0);
-        Wellen.draw_buffer(g, width, height, mSampler.data());
+        Wellen.draw_buffer(g, width, height, mSampler.get_data());
         DSP.draw_buffers(g, width, height);
     }
 

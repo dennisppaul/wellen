@@ -20,11 +20,17 @@
 package wellen.dsp;
 
 import processing.core.PApplet;
+import processing.core.PGraphics;
 import wellen.SamplerListener;
 import wellen.Wellen;
 
 import java.util.ArrayList;
 
+import static processing.core.PApplet.cos;
+import static processing.core.PApplet.map;
+import static processing.core.PApplet.sin;
+import static processing.core.PConstants.CLOSE;
+import static processing.core.PConstants.TWO_PI;
 import static wellen.Note.note_to_frequency;
 import static wellen.Wellen.clamp;
 
@@ -117,7 +123,7 @@ public class Sampler implements DSPNodeOutput {
             fData = new float[data.length / 4];
         }
         set_data(fData);
-        Wellen.bytes_to_floatIEEEs(data, data(), little_endian);
+        Wellen.bytes_to_floatIEEEs(data, get_data(), little_endian);
         rewind();
         return this;
     }
@@ -162,7 +168,7 @@ public class Sampler implements DSPNodeOutput {
         fAmplitude = amplitude;
     }
 
-    public float[] data() {
+    public float[] get_data() {
         return fData;
     }
 
@@ -190,6 +196,10 @@ public class Sampler implements DSPNodeOutput {
 
     public float get_position_normalized() {
         return fData.length > 0 ? fDataIndex / fData.length : 0.0f;
+    }
+
+    public float get_position_fractional_part() {
+        return fDataIndex - get_position();
     }
 
     public boolean is_playing() {
@@ -409,5 +419,33 @@ public class Sampler implements DSPNodeOutput {
             i = fInPoint;
         }
         return i;
+    }
+
+    public static void draw_sampler_buffer_circular(Sampler sampler,
+                                                    PGraphics g,
+                                                    float radius_min,
+                                                    float radius_max,
+                                                    int step) {
+        g.beginShape();
+        for (int i = 0; i < sampler.get_data().length; i += step) {
+            final float r = TWO_PI * i / sampler.get_data().length;
+            final float mData = map(sampler.get_data()[i], -1.0f, 1.0f, radius_min, radius_max);
+            final float x = cos(r) * mData;
+            final float y = sin(r) * mData;
+            g.vertex(x, y);
+        }
+        g.endShape(CLOSE);
+        g.circle(0, 0, radius_min * 2);
+        g.circle(0, 0, radius_max * 2);
+    }
+
+    public static void draw_sampler_position_circular(Sampler fSampler,
+                                                      PGraphics g,
+                                                      float radius_min,
+                                                      float radius_max) {
+        final float r = TWO_PI * fSampler.get_position() / fSampler.get_data().length;
+        final float x = cos(r);
+        final float y = sin(r);
+        g.line(x * radius_min, y * radius_min, x * radius_max, y * radius_max);
     }
 }

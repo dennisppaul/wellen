@@ -43,9 +43,9 @@ void draw() {
     line(0, height * 0.5f, width, height * 0.5f);
     /* draw samples */
     beginShape();
-    for (int i = 0; i < mSampler.data().length; i += 128) {
-        float x = map(i, 0, mSampler.data().length, 0, width);
-        float y = map(mSampler.data()[i], -1.0f, 1.0f, 0, height);
+    for (int i = 0; i < mSampler.get_data().length; i += 128) {
+        float x = map(i, 0, mSampler.get_data().length, 0, width);
+        float y = map(mSampler.get_data()[i], -1.0f, 1.0f, 0, height);
         vertex(x, y);
     }
     endShape();

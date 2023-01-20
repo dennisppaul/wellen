@@ -25,7 +25,7 @@ void draw() {
     stroke(0);
     DSP.draw_buffers(g, width, height);
     stroke(0, 31);
-    Wellen.draw_buffer(g, width, height, fSampler.data());
+    Wellen.draw_buffer(g, width, height, fSampler.get_data());
     stroke(0);
     drawPosition(fSampler.get_in(), height / 8);
     drawPosition(fSampler.get_out(), height / 8);
@@ -37,12 +37,12 @@ void draw() {
 
 void mousePressed() {
     if (mouseButton == LEFT) {
-        fSampler.set_in((int) map(mouseX, 0, width, 0, fSampler.data().length));
+        fSampler.set_in((int) map(mouseX, 0, width, 0, fSampler.get_data().length));
         for (Sampler s : fSamplers) {
             s.set_in(fSampler.get_in());
         }
     } else {
-        fSampler.set_out((int) map(mouseX, 0, width, 0, fSampler.data().length));
+        fSampler.set_out((int) map(mouseX, 0, width, 0, fSampler.get_data().length));
         for (Sampler s : fSamplers) {
             s.set_out(fSampler.get_out());
         }
@@ -64,7 +64,7 @@ void keyPressed() {
             }
             break;
         case ' ':
-            Sampler s = new Sampler(fSampler.data());
+            Sampler s = new Sampler(fSampler.get_data());
             s.enable_loop(true);
             s.set_in(fSampler.get_in());
             s.set_out(fSampler.get_out());
@@ -87,6 +87,6 @@ void audioblock(float[] output_signal) {
 }
 
 void drawPosition(int pPosition, int pPadding) {
-    final float x = map(pPosition, 0, fSampler.data().length, 0, width);
+    final float x = map(pPosition, 0, fSampler.get_data().length, 0, width);
     line(x, 0 + pPadding, x, height - pPadding);
 }
