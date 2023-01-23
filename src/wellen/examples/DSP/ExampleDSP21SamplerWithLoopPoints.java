@@ -16,7 +16,7 @@ public class ExampleDSP21SamplerWithLoopPoints extends PApplet {
      */
 
     private static final float BORDER = 32;
-    private Sampler mSampler;
+    private Sampler fSampler;
 
     public void settings() {
         size(640, 480);
@@ -24,12 +24,12 @@ public class ExampleDSP21SamplerWithLoopPoints extends PApplet {
 
     public void setup() {
         byte[] mData = loadBytes("../../../resources/hello.raw");
-        mSampler = new Sampler();
-        mSampler.load(mData);
-        mSampler.forward();
-        mSampler.set_loop_in_normalized(0.1579227f);
-        mSampler.set_loop_out_normalized(0.23951691f);
-        mSampler.enable_loop(true);
+        fSampler = new Sampler();
+        fSampler.load(mData);
+        fSampler.forward();
+        fSampler.set_loop_in_normalized(0.1579227f);
+        fSampler.set_loop_out_normalized(0.23951691f);
+        fSampler.enable_loop(true);
         DSP.start(this);
     }
 
@@ -45,10 +45,10 @@ public class ExampleDSP21SamplerWithLoopPoints extends PApplet {
 
         /* selection */
         fill(0, 31);
-        float x0 = map(mSampler.get_loop_in(), 0, mSampler.get_data().length, 0, width);
-        float x1 = map(mSampler.get_loop_out(), 0, mSampler.get_data().length, 0, width);
-        if (mSampler.get_loop_in() >= 0 && mSampler.get_loop_out() >= 0) {
-            if (mSampler.get_loop_in() < mSampler.get_loop_out()) {
+        float x0 = map(fSampler.get_loop_in(), 0, fSampler.get_data().length, 0, width);
+        float x1 = map(fSampler.get_loop_out(), 0, fSampler.get_data().length, 0, width);
+        if (fSampler.get_loop_in() >= 0 && fSampler.get_loop_out() >= 0) {
+            if (fSampler.get_loop_in() < fSampler.get_loop_out()) {
                 noStroke();
                 beginShape();
                 vertex(x0, 0);
@@ -68,9 +68,9 @@ public class ExampleDSP21SamplerWithLoopPoints extends PApplet {
         noFill();
         stroke(0);
         beginShape();
-        for (int i = 0; i < mSampler.get_data().length; i++) {
-            float x = map(i, 0, mSampler.get_data().length, 0, width);
-            float y = map(mSampler.get_data()[i], -1.0f, 1.0f, 0, height);
+        for (int i = 0; i < fSampler.get_data().length; i++) {
+            float x = map(i, 0, fSampler.get_data().length, 0, width);
+            float y = map(fSampler.get_data()[i], -1.0f, 1.0f, 0, height);
             vertex(x, y);
         }
         endShape();
@@ -82,45 +82,45 @@ public class ExampleDSP21SamplerWithLoopPoints extends PApplet {
     }
 
     public void mousePressed() {
-        mSampler.start();
-        mSampler.rewind();
-        mSampler.enable_loop(true);
+        fSampler.start();
+        fSampler.rewind();
+        fSampler.enable_loop(true);
     }
 
     public void mouseReleased() {
-        mSampler.enable_loop(false);
+        fSampler.enable_loop(false);
     }
 
     public void keyPressed() {
         switch (key) {
             case '1':
-                mSampler.set_loop_in_normalized(map(mouseX, BORDER, width - BORDER, 0, 1));
+                fSampler.set_loop_in_normalized(map(mouseX, BORDER, width - BORDER, 0, 1));
                 break;
             case '2':
-                mSampler.set_loop_out_normalized(map(mouseX, BORDER, width - BORDER, 0, 1));
+                fSampler.set_loop_out_normalized(map(mouseX, BORDER, width - BORDER, 0, 1));
                 break;
             case 'z':
-                int[] mLoopPoints = Wellen.find_zero_crossings(mSampler.get_data(),
-                                                               mSampler.get_loop_in(),
-                                                               mSampler.get_loop_out());
+                int[] mLoopPoints = Wellen.find_zero_crossings(fSampler.get_data(),
+                                                               fSampler.get_loop_in(),
+                                                               fSampler.get_loop_out());
                 if (mLoopPoints[0] > 0 && mLoopPoints[1] > 0) {
-                    mSampler.set_loop_in(mLoopPoints[0]);
-                    mSampler.set_loop_out(mLoopPoints[1]);
+                    fSampler.set_loop_in(mLoopPoints[0]);
+                    fSampler.set_loop_out(mLoopPoints[1]);
                 }
                 break;
             case ' ':
-                mSampler.set_loop_in(Sampler.NO_LOOP_POINT);
-                mSampler.set_loop_out(Sampler.NO_LOOP_POINT);
+                fSampler.set_loop_in(Sampler.NO_LOOP_POINT);
+                fSampler.set_loop_out(Sampler.NO_LOOP_POINT);
                 break;
             case 'd':
-                mSampler.set_speed(mSampler.get_speed() * -1);
+                fSampler.set_speed(fSampler.get_speed() * -1);
                 break;
         }
     }
 
     public void audioblock(float[] output_signal) {
         for (int i = 0; i < output_signal.length; i++) {
-            output_signal[i] = mSampler.output();
+            output_signal[i] = fSampler.output();
         }
     }
 

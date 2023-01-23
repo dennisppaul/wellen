@@ -10,8 +10,8 @@ import wellen.extra.daisysp.PitchShifter;
 public class ExampleDaisySPPitchShifter extends PApplet {
     //@add import wellen.extra.daisysp.*;
 
-    private PitchShifter mPitchShifter;
-    private Sampler mSampler;
+    private PitchShifter fPitchShifter;
+    private Sampler fSampler;
 
     public void settings() {
         size(640, 480);
@@ -19,13 +19,13 @@ public class ExampleDaisySPPitchShifter extends PApplet {
 
     public void setup() {
         byte[] mData = SampleDataSNARE.data;
-        mSampler = new Sampler();
-        mSampler.load(mData);
-        mSampler.enable_loop(true);
-        mSampler.start();
+        fSampler = new Sampler();
+        fSampler.load(mData);
+        fSampler.set_loop_all();
+        fSampler.start();
 
-        mPitchShifter = new PitchShifter();
-        mPitchShifter.Init(Wellen.DEFAULT_SAMPLING_RATE);
+        fPitchShifter = new PitchShifter();
+        fPitchShifter.Init(Wellen.DEFAULT_SAMPLING_RATE);
 
         DSP.start(this);
     }
@@ -37,26 +37,26 @@ public class ExampleDaisySPPitchShifter extends PApplet {
     }
 
     public void mousePressed() {
-        mSampler.rewind();
+        fSampler.rewind();
     }
 
     public void mouseMoved() {
-        mPitchShifter.SetDelSize((int) map(mouseX, 0, width, 1, 16384));
-        mPitchShifter.SetTransposition(map(mouseY, 0, height, 1.0f, 24.0f));
+        fPitchShifter.SetDelSize((int) map(mouseX, 0, width, 1, 16384));
+        fPitchShifter.SetTransposition(map(mouseY, 0, height, 1.0f, 24.0f));
     }
 
     public void keyPressed() {
         switch (key) {
             case 'l':
             case 'L':
-                mSampler.enable_loop(!mSampler.is_looping());
+                fSampler.enable_loop(!fSampler.is_looping());
                 break;
         }
     }
 
     public void audioblock(float[] output_signal) {
         for (int i = 0; i < output_signal.length; i++) {
-            output_signal[i] = mPitchShifter.Process(mSampler.output());
+            output_signal[i] = fPitchShifter.Process(fSampler.output());
         }
     }
 
