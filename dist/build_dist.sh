@@ -1,6 +1,6 @@
 #!/bin/sh
 
-ROOT=$(pwd)
+# ROOT=$(pwd)
 ROOT=$(dirname "$0")
 
 cd "$ROOT"

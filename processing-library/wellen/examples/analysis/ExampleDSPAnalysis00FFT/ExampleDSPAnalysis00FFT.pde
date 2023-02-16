@@ -17,7 +17,7 @@ void setup() {
     byte[] mData = loadBytes("../../../resources/teilchen.raw");
     fSampler = new Sampler();
     fSampler.load(mData);
-    fSampler.enable_loop(true);
+    fSampler.set_loop_all();
     DSP.start(this);
     background(255);
 }

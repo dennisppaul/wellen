@@ -3,9 +3,9 @@ import wellen.dsp.*;
 
 import wellen.extra.daisysp.*;
 
-PitchShifter mPitchShifter;
+PitchShifter fPitchShifter;
 
-Sampler mSampler;
+Sampler fSampler;
 
 void settings() {
     size(640, 480);
@@ -13,12 +13,12 @@ void settings() {
 
 void setup() {
     byte[] mData = SampleDataSNARE.data;
-    mSampler = new Sampler();
-    mSampler.load(mData);
-    mSampler.enable_loop(true);
-    mSampler.start();
-    mPitchShifter = new PitchShifter();
-    mPitchShifter.Init(Wellen.DEFAULT_SAMPLING_RATE);
+    fSampler = new Sampler();
+    fSampler.load(mData);
+    fSampler.set_loop_all();
+    fSampler.start();
+    fPitchShifter = new PitchShifter();
+    fPitchShifter.Init(Wellen.DEFAULT_SAMPLING_RATE);
     DSP.start(this);
 }
 
@@ -29,25 +29,25 @@ void draw() {
 }
 
 void mousePressed() {
-    mSampler.rewind();
+    fSampler.rewind();
 }
 
 void mouseMoved() {
-    mPitchShifter.SetDelSize((int) map(mouseX, 0, width, 1, 16384));
-    mPitchShifter.SetTransposition(map(mouseY, 0, height, 1.0f, 24.0f));
+    fPitchShifter.SetDelSize((int) map(mouseX, 0, width, 1, 16384));
+    fPitchShifter.SetTransposition(map(mouseY, 0, height, 1.0f, 24.0f));
 }
 
 void keyPressed() {
     switch (key) {
         case 'l':
         case 'L':
-            mSampler.enable_loop(!mSampler.is_looping());
+            fSampler.enable_loop(!fSampler.is_looping());
             break;
     }
 }
 
 void audioblock(float[] output_signal) {
     for (int i = 0; i < output_signal.length; i++) {
-        output_signal[i] = mPitchShifter.Process(mSampler.output());
+        output_signal[i] = fPitchShifter.Process(fSampler.output());
     }
 }

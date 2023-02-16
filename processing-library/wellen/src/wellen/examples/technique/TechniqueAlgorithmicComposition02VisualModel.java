@@ -104,7 +104,7 @@ public class TechniqueAlgorithmicComposition02VisualModel extends PApplet {
             byte[] mData = SampleDataSNARE.data;
             mSampler = new Sampler();
             mSampler.load(mData);
-            mSampler.enable_loop(true);
+            mSampler.set_loop_all();
             mSampler.set_speed(1);
         }
 

@@ -284,6 +284,7 @@ public class Sampler implements DSPNodeOutput {
     }
 
     public void set_loop_all() {
+        fEvaluateLoop = true;
         fLoopIn = 0;
         fLoopOut = fData.length > 0 ? (fData.length - 1) : 0;
     }

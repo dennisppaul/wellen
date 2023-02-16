@@ -8,7 +8,7 @@ import wellen.dsp.*;
 
 static final String WAV_FILE_NAME = "sine.wav";
 
-Sampler mSampler;
+Sampler fSampler;
 
 void settings() {
     size(640, 480);
@@ -34,21 +34,21 @@ void setup() {
                      Wellen.WAV_FORMAT_IEEE_FLOAT_32BIT);
     /* import samples from WAV file */
     float[][] mImportSamples = Wellen.importWAV(this, WAV_FILE_NAME);
-    mSampler = new Sampler();
-    mSampler.set_data(mImportSamples[0]);
-    mSampler.enable_loop(true);
+    fSampler = new Sampler();
+    fSampler.set_data(mImportSamples[0]);
+    fSampler.set_loop_all();
     DSP.start(this);
 }
 
 void draw() {
     background(255);
     stroke(0);
-    Wellen.draw_buffer(g, width, height, mSampler.get_data());
+    Wellen.draw_buffer(g, width, height, fSampler.get_data());
     DSP.draw_buffers(g, width, height);
 }
 
 void audioblock(float[] output_signal) {
     for (int i = 0; i < output_signal.length; i++) {
-        output_signal[i] = mSampler.output();
+        output_signal[i] = fSampler.output();
     }
 }

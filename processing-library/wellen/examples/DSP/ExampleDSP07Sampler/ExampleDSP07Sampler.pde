@@ -13,7 +13,7 @@ import wellen.dsp.*;
  * can be played again. also note that a sample buffer can be cropped with `set_in()` + `set_out()`.
  */
 
-Sampler mSampler;
+Sampler fSampler;
 
 void settings() {
     size(640, 480);
@@ -22,11 +22,10 @@ void settings() {
 void setup() {
     byte[] mData = SampleDataSNARE.data;
     // alternatively load data with `loadBytes("audio.raw")` ( raw format, 32bit IEEE float )
-    mSampler = new Sampler();
-    mSampler.load(mData);
-    mSampler.enable_loop(true);
-    mSampler.set_loop_all();
-    mSampler.start();
+    fSampler = new Sampler();
+    fSampler.load(mData);
+    fSampler.set_loop_all();
+    fSampler.start();
     DSP.start(this);
 }
 
@@ -37,38 +36,38 @@ void draw() {
     line(width * 0.5f, height * 0.5f + 5, width * 0.5f, height * 0.5f - 5);
     fill(0);
     noStroke();
-    circle(60, 60, mSampler.is_looping() ? 50 : 10);
-    circle(120, 60, mSampler.interpolate_samples() ? 50 : 10);
+    circle(60, 60, fSampler.is_looping() ? 50 : 10);
+    circle(120, 60, fSampler.interpolate_samples() ? 50 : 10);
 }
 
 void mousePressed() {
-    mSampler.rewind();
+    fSampler.rewind();
 }
 
 void mouseMoved() {
-    mSampler.set_speed(map(mouseX, 0, width, -4, 4));
-    mSampler.set_amplitude(map(mouseY, 0, height, 0.9f, 0.0f));
+    fSampler.set_speed(map(mouseX, 0, width, -4, 4));
+    fSampler.set_amplitude(map(mouseY, 0, height, 0.9f, 0.0f));
 }
 
 void keyPressed() {
     switch (key) {
         case 'l':
-            mSampler.enable_loop(false);
+            fSampler.enable_loop(false);
             break;
         case 'L':
-            mSampler.enable_loop(true);
+            fSampler.enable_loop(true);
             break;
         case 'i':
-            mSampler.interpolate_samples(false);
+            fSampler.interpolate_samples(false);
             break;
         case 'I':
-            mSampler.interpolate_samples(true);
+            fSampler.interpolate_samples(true);
             break;
     }
 }
 
 void audioblock(float[] output_signal) {
     for (int i = 0; i < output_signal.length; i++) {
-        output_signal[i] = mSampler.output();
+        output_signal[i] = fSampler.output();
     }
 }

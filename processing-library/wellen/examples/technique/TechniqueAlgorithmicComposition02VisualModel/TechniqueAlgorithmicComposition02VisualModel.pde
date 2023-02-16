@@ -93,7 +93,7 @@ final Sampler mSampler;
         byte[] mData = SampleDataSNARE.data;
         mSampler = new Sampler();
         mSampler.load(mData);
-        mSampler.enable_loop(true);
+        mSampler.set_loop_all();
         mSampler.set_speed(1);
     }
     void draw() {

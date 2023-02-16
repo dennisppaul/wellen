@@ -19,7 +19,7 @@ public class ExampleDSP07Sampler extends PApplet {
      * can be played again. also note that a sample buffer can be cropped with `set_in()` + `set_out()`.
      */
 
-    private Sampler mSampler;
+    private Sampler fSampler;
 
     public void settings() {
         size(640, 480);
@@ -28,11 +28,10 @@ public class ExampleDSP07Sampler extends PApplet {
     public void setup() {
         byte[] mData = SampleDataSNARE.data;
         // alternatively load data with `loadBytes("audio.raw")` ( raw format, 32bit IEEE float )
-        mSampler = new Sampler();
-        mSampler.load(mData);
-        mSampler.enable_loop(true);
-        mSampler.set_loop_all();
-        mSampler.start();
+        fSampler = new Sampler();
+        fSampler.load(mData);
+        fSampler.set_loop_all();
+        fSampler.start();
         DSP.start(this);
     }
 
@@ -45,39 +44,39 @@ public class ExampleDSP07Sampler extends PApplet {
 
         fill(0);
         noStroke();
-        circle(60, 60, mSampler.is_looping() ? 50 : 10);
-        circle(120, 60, mSampler.interpolate_samples() ? 50 : 10);
+        circle(60, 60, fSampler.is_looping() ? 50 : 10);
+        circle(120, 60, fSampler.interpolate_samples() ? 50 : 10);
     }
 
     public void mousePressed() {
-        mSampler.rewind();
+        fSampler.rewind();
     }
 
     public void mouseMoved() {
-        mSampler.set_speed(map(mouseX, 0, width, -4, 4));
-        mSampler.set_amplitude(map(mouseY, 0, height, 0.9f, 0.0f));
+        fSampler.set_speed(map(mouseX, 0, width, -4, 4));
+        fSampler.set_amplitude(map(mouseY, 0, height, 0.9f, 0.0f));
     }
 
     public void keyPressed() {
         switch (key) {
             case 'l':
-                mSampler.enable_loop(false);
+                fSampler.enable_loop(false);
                 break;
             case 'L':
-                mSampler.enable_loop(true);
+                fSampler.enable_loop(true);
                 break;
             case 'i':
-                mSampler.interpolate_samples(false);
+                fSampler.interpolate_samples(false);
                 break;
             case 'I':
-                mSampler.interpolate_samples(true);
+                fSampler.interpolate_samples(true);
                 break;
         }
     }
 
     public void audioblock(float[] output_signal) {
         for (int i = 0; i < output_signal.length; i++) {
-            output_signal[i] = mSampler.output();
+            output_signal[i] = fSampler.output();
         }
     }
 

@@ -38,6 +38,8 @@ public class DSP implements AudioBufferRenderer {
     private static final int INPUT_LEFT = 2;
     private static final int INPUT_RIGHT = 3;
     private static final String METHOD_NAME = "audioblock";
+    private static final String METHOD_NAME_PER_SAMPLE = "audio";
+    private final boolean fProcessPerSample;
     private static final int NUM_CACHED_BUFFERS = 4;
     private static final int OUTPUT_LEFT = 0;
     private static final int OUTPUT_RIGHT = 1;
@@ -64,30 +66,57 @@ public class DSP implements AudioBufferRenderer {
         fListener = callback;
         fNumberOutputChannels = number_of_output_channels;
         fNumberInputChannels = number_of_input_channels;
+        boolean mProcessPerSample = false;
         try {
-            if (fNumberOutputChannels == 2 && fNumberInputChannels == 2) {
-                fMethod = callback.getClass()
-                                  .getDeclaredMethod(METHOD_NAME,
-                                                     float[].class,
-                                                     float[].class,
-                                                     float[].class,
-                                                     float[].class);
-            } else if (fNumberOutputChannels == 2 && fNumberInputChannels == 0) {
-                fMethod = callback.getClass().getDeclaredMethod(METHOD_NAME, float[].class, float[].class);
-            } else if (fNumberOutputChannels == 2 && fNumberInputChannels == 1) {
-                fMethod = callback.getClass()
-                                  .getDeclaredMethod(METHOD_NAME, float[].class, float[].class, float[].class);
-            } else if (fNumberOutputChannels == 1 && fNumberInputChannels == 1) {
-                fMethod = callback.getClass().getDeclaredMethod(METHOD_NAME, float[].class, float[].class);
+            if (fNumberOutputChannels == 1 && fNumberInputChannels == 1) {
+                fMethod = callback.getClass().getDeclaredMethod(METHOD_NAME_PER_SAMPLE, float.class);
+                mProcessPerSample = true;
             } else if (fNumberOutputChannels == 1 && fNumberInputChannels == 0) {
-                fMethod = callback.getClass().getDeclaredMethod(METHOD_NAME, float[].class);
-            } else {
-                fMethod = callback.getClass().getDeclaredMethod(METHOD_NAME, float[][].class, float[][].class);
+                fMethod = callback.getClass().getDeclaredMethod(METHOD_NAME_PER_SAMPLE);
+                mProcessPerSample = true;
             }
-        } catch (NoSuchMethodException | SecurityException ex) {
-            System.err.println("+++ @" + DSP.class.getSimpleName() + " / could not find callback `" + METHOD_NAME +
-                                       "()`.");
-            System.err.println("    hint: check the callback method parameters, they must match the number of input" + " and output " + "channels. default is `" + METHOD_NAME + "(float[])` ( = MONO OUTPUT ).");
+            if (fMethod != null) {
+                if (fNumberOutputChannels > 1 || fNumberInputChannels > 1 || fMethod.getReturnType() != float.class) {
+                    System.err.println("+++ @" + DSP.class.getSimpleName() + " / did find callback `float " + METHOD_NAME_PER_SAMPLE + "(...)` but with wrong signature.");
+                    System.err.println("    hint: check the callback method parameters, " + "they must match the " +
+                                               "number of input channels.");
+                    System.err.println("    also check the return type which needs to be " + "`float`. default is " + "`float " + METHOD_NAME_PER_SAMPLE + "()` ( = NO INPUT, MONO OUTPUT ).");
+                    System.exit(-1);
+                }
+            }
+        } catch (NoSuchMethodException | SecurityException ignored) {
+        }
+        if (!mProcessPerSample) {
+            try {
+                if (fNumberOutputChannels == 2 && fNumberInputChannels == 2) {
+                    fMethod = callback.getClass()
+                                      .getDeclaredMethod(METHOD_NAME,
+                                                         float[].class,
+                                                         float[].class,
+                                                         float[].class,
+                                                         float[].class);
+                } else if (fNumberOutputChannels == 2 && fNumberInputChannels == 0) {
+                    fMethod = callback.getClass().getDeclaredMethod(METHOD_NAME, float[].class, float[].class);
+                } else if (fNumberOutputChannels == 2 && fNumberInputChannels == 1) {
+                    fMethod = callback.getClass()
+                                      .getDeclaredMethod(METHOD_NAME, float[].class, float[].class, float[].class);
+                } else if (fNumberOutputChannels == 1 && fNumberInputChannels == 1) {
+                    fMethod = callback.getClass().getDeclaredMethod(METHOD_NAME, float[].class, float[].class);
+                } else if (fNumberOutputChannels == 1 && fNumberInputChannels == 0) {
+                    fMethod = callback.getClass().getDeclaredMethod(METHOD_NAME, float[].class);
+                } else {
+                    fMethod = callback.getClass().getDeclaredMethod(METHOD_NAME, float[][].class, float[][].class);
+                }
+            } catch (NoSuchMethodException | SecurityException ex) {
+                System.err.println("+++ @" + DSP.class.getSimpleName() + " / could not find callback `" + METHOD_NAME + "(...)` or `" + METHOD_NAME_PER_SAMPLE + "(...)`.");
+                System.err.println("    hint: check the callback method parameters, they " + "must match the number " + "of input and output channels. " + "also check the return type");
+                System.err.print("    default is ( NO INPUT, MONO OUTPUT ): ");
+                System.err.println("`void " + METHOD_NAME + "(float[])` or `float " + METHOD_NAME_PER_SAMPLE + "()`");
+            }
+        }
+        fProcessPerSample = mProcessPerSample;
+        if (fMethod == null) {
+            System.exit(-1);
         }
     }
 
@@ -258,7 +287,6 @@ public class DSP implements AudioBufferRenderer {
      * @param audio_block_size          audio block size
      * @return reference to DSP instance
      */
-
     public static DSP start(Object callback,
                             String output_device_name,
                             int number_of_output_channels,
@@ -362,11 +390,23 @@ public class DSP implements AudioBufferRenderer {
         try {
             Arrays.fill(fCachedBuffers, null);
             if (fNumberOutputChannels == 1 && fNumberInputChannels == 0) {
-                //noinspection PrimitiveArrayArgumentToVarargsMethod
-                fMethod.invoke(fListener, output_signal[0]);
+                if (fProcessPerSample) {
+                    for (int i = 0; i < output_signal[0].length; i++) {
+                        output_signal[0][i] = (Float) fMethod.invoke(fListener);
+                    }
+                } else {
+                    //noinspection PrimitiveArrayArgumentToVarargsMethod
+                    fMethod.invoke(fListener, output_signal[0]);
+                }
                 fCachedBuffers[OUTPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(output_signal[0]) : output_signal[0];
             } else if (fNumberOutputChannels == 1 && fNumberInputChannels == 1) {
-                fMethod.invoke(fListener, output_signal[0], input_signal[0]);
+                if (fProcessPerSample) {
+                    for (int i = 0; i < output_signal[0].length; i++) {
+                        output_signal[0][i] = (Float) fMethod.invoke(fListener, input_signal[0][i]);
+                    }
+                } else {
+                    fMethod.invoke(fListener, output_signal[0], input_signal[0]);
+                }
                 fCachedBuffers[OUTPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(output_signal[0]) : output_signal[0];
                 fCachedBuffers[INPUT_LEFT] = COPY_CACHED_BUFFER ? Wellen.copy(input_signal[0]) : input_signal[0];
             } else if (fNumberOutputChannels == 2 && fNumberInputChannels == 0) {

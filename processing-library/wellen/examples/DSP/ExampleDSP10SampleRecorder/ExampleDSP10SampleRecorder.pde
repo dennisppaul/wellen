@@ -6,21 +6,21 @@ import wellen.dsp.*;
  * `Sampler`. this example also demonstrates how to play a sample backwards.
  */
 
-boolean mIsRecording;
+boolean fIsRecording;
 
-float[] mRecording;
+float[] fRecording;
 
-Sampler mSampler;
+Sampler fSampler;
 
 void settings() {
     size(640, 480);
 }
 
 void setup() {
-    mSampler = new Sampler();
-    mSampler.load(SampleDataSNARE.data);
-    mSampler.enable_loop(true);
-    mIsRecording = false;
+    fSampler = new Sampler();
+    fSampler.load(SampleDataSNARE.data);
+    fSampler.set_loop_all();
+    fIsRecording = false;
     DSP.start(this, 1, 1);
 }
 
@@ -28,44 +28,44 @@ void draw() {
     background(255);
     DSP.draw_buffers(g, width, height);
     fill(0);
-    float mSize = mRecording != null ? mRecording.length : mSampler.get_data().length;
+    float mSize = fRecording != null ? fRecording.length : fSampler.get_data().length;
     mSize /= Wellen.DEFAULT_SAMPLING_RATE;
     mSize *= 100.0f;
     ellipse(width * 0.5f, height * 0.5f, mSize + 5, mSize + 5);
 }
 
 void mouseMoved() {
-    mSampler.set_speed(map(mouseX, 0, width, -5, 5));
-    mSampler.set_amplitude(map(mouseY, 0, height, 0.0f, 0.9f));
+    fSampler.set_speed(map(mouseX, 0, width, -5, 5));
+    fSampler.set_amplitude(map(mouseY, 0, height, 0.0f, 0.9f));
 }
 
 void keyPressed() {
     if (key == ' ') {
-        mIsRecording = true;
+        fIsRecording = true;
     }
 }
 
 void keyReleased() {
-    mIsRecording = false;
+    fIsRecording = false;
 }
 
 void audioblock(float[] output_signal, float[] pInputSignal) {
-    if (mIsRecording) {
-        if (mRecording == null) {
-            mRecording = new float[0];
+    if (fIsRecording) {
+        if (fRecording == null) {
+            fRecording = new float[0];
         }
-        mRecording = concat(mRecording, pInputSignal);
+        fRecording = concat(fRecording, pInputSignal);
     } else {
-        if (mRecording != null) {
-            System.out.println("+++ recorded " + mRecording.length + " samples.");
-            mSampler.set_data(mRecording);
-            mSampler.enable_loop(true);
-            mSampler.set_loop_all();
-            mSampler.start();
-            mRecording = null;
+        if (fRecording != null) {
+            System.out.println("+++ recorded " + fRecording.length + " samples.");
+            fSampler.set_data(fRecording);
+            fSampler.enable_loop(true);
+            fSampler.set_loop_all();
+            fSampler.start();
+            fRecording = null;
         }
     }
     for (int i = 0; i < output_signal.length; i++) {
-        output_signal[i] = mSampler.output();
+        output_signal[i] = fSampler.output();
     }
 }

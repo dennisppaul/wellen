@@ -51,7 +51,6 @@ public class InstrumentDSPLibrary {
         private final float[] mOscillatorAmplitudes;
         private final float[] mOscillatorDetune;
         private float mReleaseFalloff;
-        private final boolean mUseTriangleForLowFrequencies = true;
         private final Wavetable[] mVCOs;
 
         public BELL(int pID) {

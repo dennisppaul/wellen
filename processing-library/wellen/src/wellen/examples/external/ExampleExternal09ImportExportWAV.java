@@ -13,7 +13,7 @@ public class ExampleExternal09ImportExportWAV extends PApplet {
      */
 
     public static final String WAV_FILE_NAME = "sine.wav";
-    private Sampler mSampler;
+    private Sampler fSampler;
 
     public void settings() {
         size(640, 480);
@@ -43,9 +43,9 @@ public class ExampleExternal09ImportExportWAV extends PApplet {
         /* import samples from WAV file */
         float[][] mImportSamples = Wellen.importWAV(this, WAV_FILE_NAME);
 
-        mSampler = new Sampler();
-        mSampler.set_data(mImportSamples[0]);
-        mSampler.enable_loop(true);
+        fSampler = new Sampler();
+        fSampler.set_data(mImportSamples[0]);
+        fSampler.set_loop_all();
 
         DSP.start(this);
     }
@@ -53,13 +53,13 @@ public class ExampleExternal09ImportExportWAV extends PApplet {
     public void draw() {
         background(255);
         stroke(0);
-        Wellen.draw_buffer(g, width, height, mSampler.get_data());
+        Wellen.draw_buffer(g, width, height, fSampler.get_data());
         DSP.draw_buffers(g, width, height);
     }
 
     public void audioblock(float[] output_signal) {
         for (int i = 0; i < output_signal.length; i++) {
-            output_signal[i] = mSampler.output();
+            output_signal[i] = fSampler.output();
         }
     }
 

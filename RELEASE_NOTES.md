@@ -1,5 +1,13 @@
 # Wellen / Release Notes
 
+## v0.11 (20230216)
+
+- added detune oscillator to `InstrumentDSP` which can be enabled per instrument with `enable_detune(boolean)`
+- added envelopes for low-pass filter (LPF) in `InstrumentDSP`
+- `Sampler` can now be *tuned* to a base frequency. after doing so the audible frequency of the sampler can be set by `‌set_frequency(float)`
+- `Sampler` now has `note_on(int,int)` and `note_off` methods
+- added callback `float audio(...)` to `DSP` to allow single sample process
+
 ## v0.10 (20230107)
 
 - added pitch detection ( using YIN algorithm ) + sing-along example
