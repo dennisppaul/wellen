@@ -14,7 +14,7 @@ void settings() {
 }
 
 void setup() {
-    Wellen.dumpAudioInputAndOutputDevices(true);
+    Wellen.dumpAudioInputAndOutputDevices();
     DSP.start(this);
 }
 

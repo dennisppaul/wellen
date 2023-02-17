@@ -54,7 +54,7 @@ public class Wellen {
     public static final float DEFAULT_ATTACK = 0.005f;
     public static final int DEFAULT_AUDIOBLOCK_SIZE = 1024;
     public static final int DEFAULT_AUDIO_DEVICE = -1;
-    public static final int DEFAULT_BITS_PER_SAMPLE = BITS_PER_SAMPLE_24;
+    public static final int DEFAULT_BITS_PER_SAMPLE = BITS_PER_SAMPLE_16;
     public static final float DEFAULT_DECAY = 0.01f;
     public static final float DEFAULT_FILTER_BANDWIDTH = 100.0f;
     public static final float DEFAULT_FILTER_FREQUENCY = 1000.0f;
