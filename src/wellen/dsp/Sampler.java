@@ -41,6 +41,7 @@ public class Sampler implements DSPNodeOutput {
 
     public static final int NO_LOOP_POINT = -1;
     private final ArrayList<SamplerListener> fSamplerListeners;
+    private final ArrayList<Float> fRecording;
     private final float fSamplingRate;
     private float fAmplitude;
     private float[] fData;
@@ -59,6 +60,7 @@ public class Sampler implements DSPNodeOutput {
     private float fSpeed;
     private float fStepSize;
     private boolean fIsFlaggedDone;
+    private boolean fIsRecording;
 
     public Sampler() {
         this(0);
@@ -87,6 +89,8 @@ public class Sampler implements DSPNodeOutput {
         fFrequencyScale = 1.0f;
         set_speed(1.0f);
         set_amplitude(1.0f);
+        fRecording = new ArrayList<>();
+        fIsRecording = false;
     }
 
     public boolean add_listener(SamplerListener sampler_listener) {
@@ -297,6 +301,29 @@ public class Sampler implements DSPNodeOutput {
         fIsPlaying = false;
     }
 
+    public void start_recording() {
+        fIsRecording = true;
+    }
+
+    public void record(float sample) {
+        fRecording.add(sample);
+    }
+
+    public boolean is_recording() {
+        return fIsRecording;
+    }
+
+    public int end_recording() {
+        fIsRecording = false;
+        float[] mData = new float[fRecording.size()];
+        for (int i = 0; i < fRecording.size(); i++) {
+            mData[i] = fRecording.get(i);
+        }
+        fRecording.clear();
+        set_data(mData);
+        return mData.length;
+    }
+
     public int get_loop_in() {
         return fLoopIn;
     }
@@ -366,7 +393,7 @@ public class Sampler implements DSPNodeOutput {
         return fData.length - 1;
     }
 
-    private void notifyListeners(String pEvent) {
+    private void notifyListeners(String event) {
         if (!fIsFlaggedDone) {
             for (SamplerListener l : fSamplerListeners) {
                 l.is_done();
