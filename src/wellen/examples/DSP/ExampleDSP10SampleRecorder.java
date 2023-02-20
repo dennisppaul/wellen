@@ -31,6 +31,9 @@ public class ExampleDSP10SampleRecorder extends PApplet {
         mSize /= Wellen.DEFAULT_SAMPLING_RATE;
         mSize *= 100.0f;
         ellipse(width * 0.5f, height * 0.5f, mSize + 5, mSize + 5);
+
+        float mOriginalSpeedX = map(1, -5, 5, 0, width);
+        line(mOriginalSpeedX, height / 2 - 10, mOriginalSpeedX, height / 2 + 10);
     }
 
     public void mouseMoved() {
@@ -44,16 +47,16 @@ public class ExampleDSP10SampleRecorder extends PApplet {
 
     public void keyReleased() {
         int mLengthRecording = fSampler.end_recording();
-        System.out.println("+++ recorded " + mLengthRecording + " samples.");
+        float mLengthRecordingInSeconds = (float) mLengthRecording / Wellen.DEFAULT_SAMPLING_RATE;
+        print("+++ recorded " + mLengthRecording + " samples");
+        println(" or " + nf(mLengthRecordingInSeconds, 0, 2) + " sec.");
         fSampler.set_loop_all();
         fSampler.start();
     }
 
     public void audioblock(float[] output_signal, float[] pInputSignal) {
         if (fSampler.is_recording()) {
-            for (int i = 0; i < output_signal.length; i++) {
-                fSampler.record(pInputSignal[i]);
-            }
+            fSampler.record(pInputSignal);
         }
         for (int i = 0; i < output_signal.length; i++) {
             output_signal[i] = fSampler.output();

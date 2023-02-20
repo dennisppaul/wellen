@@ -295,6 +295,7 @@ public class Sampler implements DSPNodeOutput {
 
     public void start() {
         fIsPlaying = true;
+        fRecording.clear();
     }
 
     public void stop() {
@@ -305,12 +306,38 @@ public class Sampler implements DSPNodeOutput {
         fIsRecording = true;
     }
 
+    public void resume_recording() {
+        fIsRecording = true;
+    }
+
+    public void pause_recording() {
+        fIsRecording = false;
+    }
+
+    public void delete_recording() {
+        fRecording.clear();
+    }
+
     public void record(float sample) {
-        fRecording.add(sample);
+        if (fIsRecording) {
+            fRecording.add(sample);
+        }
+    }
+
+    public void record(float[] samples) {
+        if (fIsRecording) {
+            for (float sample : samples) {
+                fRecording.add(sample);
+            }
+        }
     }
 
     public boolean is_recording() {
         return fIsRecording;
+    }
+
+    public int get_length_recording() {
+        return fRecording.size();
     }
 
     public int end_recording() {
