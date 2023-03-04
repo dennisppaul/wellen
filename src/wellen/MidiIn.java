@@ -47,25 +47,25 @@ public class MidiIn implements Receiver {
         mListener = new ArrayList<>();
     }
 
-    public MidiIn(int pMidiOutputDeviceID) {
+    public MidiIn(int pMidiInputDeviceID) {
         this();
-        final Transmitter mMidiIn = find(pMidiOutputDeviceID);
+        final Transmitter mMidiIn = find(pMidiInputDeviceID);
         if (mMidiIn != null) {
             mMidiIn.setReceiver(this);
         } else {
-            System.err.println("+++ Error @ MidiIn / could not find midi device: " + pMidiOutputDeviceID);
+            System.err.println("+++ Error @ MidiIn / could not find midi device: " + pMidiInputDeviceID);
             System.err.println("+++ available inputs are: ");
             Wellen.dumpMidiInputDevices();
         }
     }
 
-    public MidiIn(String pMidiOutputDevice) {
+    public MidiIn(String pMidiInputDevice) {
         this();
-        final Transmitter mMidiIn = find(pMidiOutputDevice);
+        final Transmitter mMidiIn = find(pMidiInputDevice);
         if (mMidiIn != null) {
             mMidiIn.setReceiver(this);
         } else {
-            System.err.println("+++ Error @ MidiIn / could not find midi device: " + pMidiOutputDevice);
+            System.err.println("+++ Error @ MidiIn / could not find midi device: " + pMidiInputDevice);
             System.err.println("+++ available inputs are: ");
             Wellen.dumpMidiInputDevices();
         }
@@ -84,8 +84,8 @@ public class MidiIn implements Receiver {
                 e.printStackTrace();
             }
         }
-        String[] mMidiOutputsStr = new String[mMidiInputs.size()];
-        return mMidiInputs.toArray(mMidiOutputsStr);
+        String[] mMidiInputsStr = new String[mMidiInputs.size()];
+        return mMidiInputs.toArray(mMidiInputsStr);
     }
 
     public void addListener(MidiInListener pMidiInListener) {
@@ -168,13 +168,13 @@ public class MidiIn implements Receiver {
         }
     }
 
-    private Transmitter find(String pMidiOutputDevice) {
+    private Transmitter find(String pMidiInputDevice) {
         MidiDevice.Info[] mInfos = MidiSystem.getMidiDeviceInfo();
         for (MidiDevice.Info mInfo : mInfos) {
             try {
                 MidiDevice mDevice = MidiSystem.getMidiDevice(mInfo);
                 if (mDevice.getMaxTransmitters() != 0) {
-                    if (pMidiOutputDevice.equals(mInfo.getName())) {
+                    if (pMidiInputDevice.equals(mInfo.getName())) {
                         if (!mDevice.isOpen()) {
                             mDevice.open();
                         }
@@ -188,7 +188,7 @@ public class MidiIn implements Receiver {
         return null;
     }
 
-    private Transmitter find(int pMidiOutputDeviceID) {
+    private Transmitter find(int pMidiInputDeviceID) {
         try {
             MidiDevice.Info[] mInfos = MidiSystem.getMidiDeviceInfo();
             ArrayList<MidiDevice.Info> mMidiInInfos = new ArrayList<>();
@@ -198,11 +198,11 @@ public class MidiIn implements Receiver {
                     mMidiInInfos.add(mInfo);
                 }
             }
-            if (pMidiOutputDeviceID >= mMidiInInfos.size()) {
+            if (pMidiInputDeviceID >= mMidiInInfos.size()) {
                 return null;
             }
 
-            final MidiDevice.Info mInfo = mMidiInInfos.get(pMidiOutputDeviceID);
+            final MidiDevice.Info mInfo = mMidiInInfos.get(pMidiInputDeviceID);
             if (VERBOSE) {
                 System.out.println("+++ Info @ MidiIn / found midi device: " + mInfo.getName());
             }

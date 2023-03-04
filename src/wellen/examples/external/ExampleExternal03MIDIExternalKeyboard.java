@@ -32,9 +32,6 @@ public class ExampleExternal03MIDIExternalKeyboard extends PApplet {
         ellipse(width * 0.5f, height * 0.5f, mScale, mScale);
     }
 
-    public void midi_control_change(int channel, int number, int value) {
-    }
-
     public void midi_note_off(int channel, int pitch) {
         Tone.instrument(channel);
         mNote = pitch;
