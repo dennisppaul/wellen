@@ -252,7 +252,7 @@ public class InstrumentDSPLibrary {
             super(pID);
 
             mSampler = new Sampler();
-            mSampler.set_data(pSampleData);
+            mSampler.set_buffer(pSampleData);
             mSampler.enable_loop(false);
         }
 
