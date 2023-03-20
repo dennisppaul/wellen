@@ -74,7 +74,7 @@ public class Envelope implements DSPNodeOutput {
      *          |  /        \/      \
      *          | /                  \______
      *          |/__________________________
-     *          |0>>>>>>>1>>>>0.3>0.7>>0.1>>
+     *          |0>>>>>>1>>>>0.3>0.7>>0.1>>>
      *       )
      *
      */
@@ -330,6 +330,7 @@ public class Envelope implements DSPNodeOutput {
         Stage(float pValue) {
             this(pValue, 0.0f);
         }
+
         Stage() {
             this(0.0f, 0.0f);
         }
