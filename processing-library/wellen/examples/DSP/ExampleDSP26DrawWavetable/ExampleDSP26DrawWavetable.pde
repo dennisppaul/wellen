@@ -64,7 +64,7 @@ void keyPressed() {
             Wavetable.sine(fWavetable.get_wavetable());
             break;
         case '2':
-            Arrays.fill(fWavetable.get_wavetable(), 0.0f);
+            java.util.Arrays.fill(fWavetable.get_wavetable(), 0.0f);
             break;
         case '3':
             fWavetable.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_NONE);

@@ -5,8 +5,6 @@ import wellen.Wellen;
 import wellen.dsp.DSP;
 import wellen.dsp.Wavetable;
 
-import java.util.Arrays;
-
 public class ExampleDSP26DrawWavetable extends PApplet {
 
     /*
@@ -72,7 +70,7 @@ public class ExampleDSP26DrawWavetable extends PApplet {
                 Wavetable.sine(fWavetable.get_wavetable());
                 break;
             case '2':
-                Arrays.fill(fWavetable.get_wavetable(), 0.0f);
+                java.util.Arrays.fill(fWavetable.get_wavetable(), 0.0f);
                 break;
             case '3':
                 fWavetable.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_NONE);
