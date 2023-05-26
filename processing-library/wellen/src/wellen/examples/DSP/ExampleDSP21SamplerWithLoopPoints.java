@@ -45,8 +45,8 @@ public class ExampleDSP21SamplerWithLoopPoints extends PApplet {
 
         /* selection */
         fill(0, 31);
-        float x0 = map(fSampler.get_loop_in(), 0, fSampler.get_data().length, 0, width);
-        float x1 = map(fSampler.get_loop_out(), 0, fSampler.get_data().length, 0, width);
+        float x0 = map(fSampler.get_loop_in(), 0, fSampler.get_buffer().length, 0, width);
+        float x1 = map(fSampler.get_loop_out(), 0, fSampler.get_buffer().length, 0, width);
         if (fSampler.get_loop_in() >= 0 && fSampler.get_loop_out() >= 0) {
             if (fSampler.get_loop_in() < fSampler.get_loop_out()) {
                 noStroke();
@@ -68,9 +68,9 @@ public class ExampleDSP21SamplerWithLoopPoints extends PApplet {
         noFill();
         stroke(0);
         beginShape();
-        for (int i = 0; i < fSampler.get_data().length; i++) {
-            float x = map(i, 0, fSampler.get_data().length, 0, width);
-            float y = map(fSampler.get_data()[i], -1.0f, 1.0f, 0, height);
+        for (int i = 0; i < fSampler.get_buffer().length; i++) {
+            float x = map(i, 0, fSampler.get_buffer().length, 0, width);
+            float y = map(fSampler.get_buffer()[i], -1.0f, 1.0f, 0, height);
             vertex(x, y);
         }
         endShape();
@@ -82,7 +82,7 @@ public class ExampleDSP21SamplerWithLoopPoints extends PApplet {
     }
 
     public void mousePressed() {
-        fSampler.start();
+        fSampler.play();
         fSampler.rewind();
         fSampler.enable_loop(true);
     }
@@ -100,7 +100,7 @@ public class ExampleDSP21SamplerWithLoopPoints extends PApplet {
                 fSampler.set_loop_out_normalized(map(mouseX, BORDER, width - BORDER, 0, 1));
                 break;
             case 'z':
-                int[] mLoopPoints = Wellen.find_zero_crossings(fSampler.get_data(),
+                int[] mLoopPoints = Wellen.find_zero_crossings(fSampler.get_buffer(),
                                                                fSampler.get_loop_in(),
                                                                fSampler.get_loop_out());
                 if (mLoopPoints[0] > 0 && mLoopPoints[1] > 0) {

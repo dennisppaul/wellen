@@ -22,7 +22,7 @@ public class ExampleDaisySPPitchShifter extends PApplet {
         fSampler = new Sampler();
         fSampler.load(mData);
         fSampler.set_loop_all();
-        fSampler.start();
+        fSampler.play();
 
         fPitchShifter = new PitchShifter();
         fPitchShifter.Init(Wellen.DEFAULT_SAMPLING_RATE);

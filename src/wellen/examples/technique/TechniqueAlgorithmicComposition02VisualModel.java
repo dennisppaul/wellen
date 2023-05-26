@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class TechniqueAlgorithmicComposition02VisualModel extends PApplet {
 
-    private final int NUM_OF_CONTROLLERS = 1;
+    private final int NUM_OF_CONTROLLERS = 2;
     private final ArrayList<CircleController> mControllers = new ArrayList<CircleController>();
 
     public void settings() {
@@ -99,13 +99,16 @@ public class TechniqueAlgorithmicComposition02VisualModel extends PApplet {
         final PVector position = new PVector();
         float radius = 100.0f;
         float speed = 3.0f;
-        private final Sampler mSampler;
+        private final Sampler fSampler;
+
         CircleController() {
             byte[] mData = SampleDataSNARE.data;
-            mSampler = new Sampler();
-            mSampler.load(mData);
-            mSampler.set_loop_all();
-            mSampler.set_speed(1);
+            fSampler = new Sampler();
+            fSampler.load(mData);
+            fSampler.set_loop_all();
+            fSampler.set_speed(1);
+            fSampler.enable_loop(true);
+            fSampler.play();
         }
 
         void draw() {
@@ -118,7 +121,7 @@ public class TechniqueAlgorithmicComposition02VisualModel extends PApplet {
         }
 
         float process() {
-            return mSampler.output();
+            return fSampler.output();
         }
 
         void update(float pDelta) {
@@ -126,8 +129,8 @@ public class TechniqueAlgorithmicComposition02VisualModel extends PApplet {
             pointer.x = sin(counter) * radius + position.x;
             pointer.y = cos(counter) * radius + position.y;
 
-            mSampler.set_speed(map(pointer.x, 0, width, 0, 32));
-            mSampler.set_amplitude(map(pointer.y, 0, height, 0.0f, 0.9f));
+            fSampler.set_speed(map(pointer.x, 0, width, 0, 32));
+            fSampler.set_amplitude(map(pointer.y, 0, height, 0.0f, 0.9f));
         }
     }
 

@@ -2,7 +2,7 @@ import wellen.*;
 import wellen.dsp.*; 
 
 
-final int NUM_OF_CONTROLLERS = 1;
+final int NUM_OF_CONTROLLERS = 2;
 
 final ArrayList<CircleController> mControllers = new ArrayList<CircleController>();
 
@@ -88,13 +88,15 @@ class CircleController {
     float radius = 100.0f;
     float speed = 3.0f;
     
-final Sampler mSampler;
+final Sampler fSampler;
     CircleController() {
         byte[] mData = SampleDataSNARE.data;
-        mSampler = new Sampler();
-        mSampler.load(mData);
-        mSampler.set_loop_all();
-        mSampler.set_speed(1);
+        fSampler = new Sampler();
+        fSampler.load(mData);
+        fSampler.set_loop_all();
+        fSampler.set_speed(1);
+        fSampler.enable_loop(true);
+        fSampler.play();
     }
     void draw() {
         noFill();
@@ -105,13 +107,13 @@ final Sampler mSampler;
         ellipse(pointer.x, pointer.y, 10, 10);
     }
     float process() {
-        return mSampler.output();
+        return fSampler.output();
     }
     void update(float pDelta) {
         counter += pDelta * speed;
         pointer.x = sin(counter) * radius + position.x;
         pointer.y = cos(counter) * radius + position.y;
-        mSampler.set_speed(map(pointer.x, 0, width, 0, 32));
-        mSampler.set_amplitude(map(pointer.y, 0, height, 0.0f, 0.9f));
+        fSampler.set_speed(map(pointer.x, 0, width, 0, 32));
+        fSampler.set_amplitude(map(pointer.y, 0, height, 0.0f, 0.9f));
     }
 }

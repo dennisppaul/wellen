@@ -27,9 +27,6 @@ void draw() {
     ellipse(width * 0.5f, height * 0.5f, mScale, mScale);
 }
 
-void midi_control_change(int channel, int number, int value) {
-}
-
 void midi_note_off(int channel, int pitch) {
     Tone.instrument(channel);
     mNote = pitch;

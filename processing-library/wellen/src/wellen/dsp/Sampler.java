@@ -44,8 +44,8 @@ public class Sampler implements DSPNodeOutput {
     private final ArrayList<Float> fRecording;
     private final float fSamplingRate;
     private float fAmplitude;
-    private float[] fData;
-    private float fDataIndex;
+    private float[] fBuffer;
+    private float fBufferIndex;
     private boolean fDirectionForward;
     private int fEdgeFadePadding;
     private boolean fEvaluateLoop;
@@ -66,26 +66,26 @@ public class Sampler implements DSPNodeOutput {
         this(0);
     }
 
-    public Sampler(int data_size) {
-        this(new float[data_size], Wellen.DEFAULT_SAMPLING_RATE);
+    public Sampler(int buffer_size) {
+        this(new float[buffer_size], Wellen.DEFAULT_SAMPLING_RATE);
     }
 
-    public Sampler(float[] data) {
-        this(data, Wellen.DEFAULT_SAMPLING_RATE);
+    public Sampler(float[] buffer) {
+        this(buffer, Wellen.DEFAULT_SAMPLING_RATE);
     }
 
-    public Sampler(float[] data, float sampling_rate) {
+    public Sampler(float[] buffer, float sampling_rate) {
         fSamplerListeners = new ArrayList<>();
         fSamplingRate = sampling_rate;
-        set_data(data);
-        fDataIndex = 0;
+        set_buffer(buffer);
+        fBufferIndex = 0;
         fInterpolateSamples = false;
         fEdgeFadePadding = 0;
         fIsPlaying = false;
         fInPoint = 0;
         fOutPoint = 0;
         set_in(0);
-        set_out(fData.length - 1);
+        set_out(fBuffer.length - 1);
         fFrequencyScale = 1.0f;
         set_speed(1.0f);
         set_amplitude(1.0f);
@@ -102,32 +102,32 @@ public class Sampler implements DSPNodeOutput {
     }
 
     /**
-     * load the sample buffer from *raw* byte data. the method assumes a raw format with 32bit float in a value range
-     * from -1.0 to 1.0.
+     * load the sample data from *raw* byte data. the method assumes a raw format with 32bit float in a value range from
+     * -1.0 to 1.0.
      *
-     * @param data raw byte data ( assuming 4 bytes per sample, 32-bit float aka WAVE_FORMAT_IEEE_FLOAT_32BIT )
-     * @return instance with data loaded
+     * @param buffer raw byte data ( assuming 4 bytes per sample, 32-bit float aka WAVE_FORMAT_IEEE_FLOAT_32BIT )
+     * @return instance with buffer loaded
      */
-    public Sampler load(byte[] data) {
-        load(data, true);
+    public Sampler load(byte[] buffer) {
+        load(buffer, true);
         return this;
     }
 
     /**
-     * load the sample buffer from *raw* byte data. the method assumes a raw format with 32bit float in a value range
-     * from -1.0 to 1.0.
+     * load the sample data from *raw* byte data. the method assumes a raw format with 32bit float in a value range from
+     * -1.0 to 1.0.
      *
-     * @param data          raw byte data ( assuming 4 bytes per sample, 32-bit float aka WAVE_FORMAT_IEEE_FLOAT_32BIT
+     * @param buffer        raw byte data ( assuming 4 bytes per sample, 32-bit float aka WAVE_FORMAT_IEEE_FLOAT_32BIT
      *                      )
      * @param little_endian true if byte data is arranged in little endian order
-     * @return instance with data loaded
+     * @return instance with buffer loaded
      */
-    public Sampler load(byte[] data, boolean little_endian) {
-        if (fData == null || fData.length != data.length / 4) {
-            fData = new float[data.length / 4];
+    public Sampler load(byte[] buffer, boolean little_endian) {
+        if (fBuffer == null || fBuffer.length != buffer.length / 4) {
+            fBuffer = new float[buffer.length / 4];
         }
-        set_data(fData);
-        Wellen.bytes_to_floatIEEEs(data, get_data(), little_endian);
+        set_buffer(fBuffer);
+        Wellen.bytes_to_floatIEEEs(buffer, get_buffer(), little_endian);
         rewind();
         return this;
     }
@@ -158,13 +158,13 @@ public class Sampler implements DSPNodeOutput {
     public void set_speed(float speed) {
         fSpeed = speed;
         fDirectionForward = speed > 0;
-        set_frequency(PApplet.abs(speed) * fSamplingRate / fData.length); /* aka `step_size = speed` */
+        set_frequency(PApplet.abs(speed) * fSamplingRate / fBuffer.length); /* aka `step_size = speed` */
     }
 
     public void set_frequency(float frequency) {
         if (fFrequency != frequency) {
             fFrequency = frequency;
-            fStepSize = fFrequency / fFrequencyScale * ((float) fData.length / fSamplingRate);
+            fStepSize = fFrequency / fFrequencyScale * ((float) fBuffer.length / fSamplingRate);
         }
     }
 
@@ -172,16 +172,16 @@ public class Sampler implements DSPNodeOutput {
         fAmplitude = amplitude;
     }
 
-    public float[] get_data() {
-        return fData;
+    public float[] get_buffer() {
+        return fBuffer;
     }
 
-    public void set_data(float[] data) {
-        fData = data;
+    public void set_buffer(float[] buffer) {
+        fBuffer = buffer;
         rewind();
         set_speed(fSpeed);
         set_in(0);
-        set_out(fData.length - 1);
+        set_out(fBuffer.length - 1);
         fLoopIn = NO_LOOP_POINT;
         fLoopOut = NO_LOOP_POINT;
     }
@@ -195,15 +195,15 @@ public class Sampler implements DSPNodeOutput {
     }
 
     public int get_position() {
-        return (int) fDataIndex;
+        return (int) fBufferIndex;
     }
 
     public float get_position_normalized() {
-        return fData.length > 0 ? fDataIndex / fData.length : 0.0f;
+        return fBuffer.length > 0 ? fBufferIndex / fBuffer.length : 0.0f;
     }
 
     public float get_position_fractional_part() {
-        return fDataIndex - get_position();
+        return fBufferIndex - get_position();
     }
 
     public boolean is_playing() {
@@ -211,8 +211,8 @@ public class Sampler implements DSPNodeOutput {
     }
 
     public float output() {
-        if (fData.length == 0) {
-            notifyListeners("data is empty");
+        if (fBuffer.length == 0) {
+            notifyListeners("buffer is empty");
             return 0.0f;
         }
 
@@ -223,12 +223,12 @@ public class Sampler implements DSPNodeOutput {
 
         validateInOutPoints();
 
-        fDataIndex += fDirectionForward ? fStepSize : -fStepSize;
-        final int mRoundedIndex = (int) fDataIndex;
+        fBufferIndex += fDirectionForward ? fStepSize : -fStepSize;
+        final int mRoundedIndex = (int) fBufferIndex;
 
-        final float mFrac = fDataIndex - mRoundedIndex;
+        final float mFrac = fBufferIndex - mRoundedIndex;
         final int mCurrentIndex = wrapIndex(mRoundedIndex);
-        fDataIndex = mCurrentIndex + mFrac;
+        fBufferIndex = mCurrentIndex + mFrac;
 
         if (fDirectionForward ? (mCurrentIndex >= fOutPoint) : (mCurrentIndex <= fInPoint)) {
             notifyListeners("reached end");
@@ -237,20 +237,20 @@ public class Sampler implements DSPNodeOutput {
             fIsFlaggedDone = false;
         }
 
-        float mSample = fData[mCurrentIndex];
+        float mSample = fBuffer[mCurrentIndex];
 
         /* interpolate */
         if (fInterpolateSamples) {
             // TODO evaluate direction?
             final int mNextIndex = wrapIndex(mCurrentIndex + 1);
-            final float mNextSample = fData[mNextIndex];
+            final float mNextSample = fBuffer[mNextIndex];
             mSample = mSample * (1.0f - mFrac) + mNextSample * mFrac;
         }
         mSample *= fAmplitude;
 
         /* fade edges */
         if (fEdgeFadePadding > 0) {
-            final int mRelativeIndex = fData.length - mCurrentIndex;
+            final int mRelativeIndex = fBuffer.length - mCurrentIndex;
             if (mCurrentIndex < fEdgeFadePadding) {
                 final float mFadeInAmount = (float) mCurrentIndex / fEdgeFadePadding;
                 mSample *= mFadeInAmount;
@@ -272,11 +272,11 @@ public class Sampler implements DSPNodeOutput {
     }
 
     public void rewind() {
-        fDataIndex = fDirectionForward ? fInPoint : fOutPoint;
+        fBufferIndex = fDirectionForward ? fInPoint : fOutPoint;
     }
 
     public void forward() {
-        fDataIndex = fDirectionForward ? fOutPoint : fInPoint;
+        fBufferIndex = fDirectionForward ? fOutPoint : fInPoint;
     }
 
     public boolean is_looping() {
@@ -290,10 +290,10 @@ public class Sampler implements DSPNodeOutput {
     public void set_loop_all() {
         fEvaluateLoop = true;
         fLoopIn = 0;
-        fLoopOut = fData.length > 0 ? (fData.length - 1) : 0;
+        fLoopOut = fBuffer.length > 0 ? (fBuffer.length - 1) : 0;
     }
 
-    public void start() {
+    public void play() {
         fIsPlaying = true;
         fRecording.clear();
     }
@@ -342,13 +342,13 @@ public class Sampler implements DSPNodeOutput {
 
     public int end_recording() {
         fIsRecording = false;
-        float[] mData = new float[fRecording.size()];
+        float[] mBuffer = new float[fRecording.size()];
         for (int i = 0; i < fRecording.size(); i++) {
-            mData[i] = fRecording.get(i);
+            mBuffer[i] = fRecording.get(i);
         }
         fRecording.clear();
-        set_data(mData);
-        return mData.length;
+        set_buffer(mBuffer);
+        return mBuffer.length;
     }
 
     public int get_loop_in() {
@@ -356,18 +356,18 @@ public class Sampler implements DSPNodeOutput {
     }
 
     public void set_loop_in(int loop_in_point) {
-        fLoopIn = clamp(loop_in_point, NO_LOOP_POINT, fData.length - 1);
+        fLoopIn = clamp(loop_in_point, NO_LOOP_POINT, fBuffer.length - 1);
     }
 
     public float get_loop_in_normalized() {
-        if (fData.length < 2) {
+        if (fBuffer.length < 2) {
             return 0.0f;
         }
-        return (float) fLoopIn / (fData.length - 1);
+        return (float) fLoopIn / (fBuffer.length - 1);
     }
 
     public void set_loop_in_normalized(float loop_in_point_normalized) {
-        set_loop_in((int) (loop_in_point_normalized * fData.length - 1));
+        set_loop_in((int) (loop_in_point_normalized * fBuffer.length - 1));
     }
 
     public int get_loop_out() {
@@ -375,23 +375,23 @@ public class Sampler implements DSPNodeOutput {
     }
 
     public void set_loop_out(int loop_out_point) {
-        fLoopOut = clamp(loop_out_point, NO_LOOP_POINT, fData.length - 1);
+        fLoopOut = clamp(loop_out_point, NO_LOOP_POINT, fBuffer.length - 1);
     }
 
     public float get_loop_out_normalized() {
-        if (fData.length < 2) {
+        if (fBuffer.length < 2) {
             return 0.0f;
         }
-        return (float) fLoopOut / (fData.length - 1);
+        return (float) fLoopOut / (fBuffer.length - 1);
     }
 
     public void set_loop_out_normalized(float loop_out_point_normalized) {
-        set_loop_out((int) (loop_out_point_normalized * fData.length - 1));
+        set_loop_out((int) (loop_out_point_normalized * fBuffer.length - 1));
     }
 
     public void note_on() {
         rewind();
-        start();
+        play();
         enable_loop(true);
     }
 
@@ -410,14 +410,14 @@ public class Sampler implements DSPNodeOutput {
      * this function can be used to tune a loaded sample to a specific frequency. after the sampler has been tuned the
      * method <code>set_frequency(float)</code> can be used to play the sample at a desired frequency.
      *
-     * @param frequency_scale the assumed frequency of the sampler data in Hz
+     * @param frequency_scale the assumed frequency of the sampler buffer in Hz
      */
     public void tune_frequency_to(float frequency_scale) {
         fFrequencyScale = frequency_scale;
     }
 
     private int last_index() {
-        return fData.length - 1;
+        return fBuffer.length - 1;
     }
 
     private void notifyListeners(String event) {
@@ -432,13 +432,13 @@ public class Sampler implements DSPNodeOutput {
     private void validateInOutPoints() {
         if (fInPoint < 0) {
             fInPoint = 0;
-        } else if (fInPoint > fData.length - 1) {
-            fInPoint = fData.length - 1;
+        } else if (fInPoint > fBuffer.length - 1) {
+            fInPoint = fBuffer.length - 1;
         }
         if (fOutPoint < 0) {
             fOutPoint = 0;
-        } else if (fOutPoint > fData.length - 1) {
-            fOutPoint = fData.length - 1;
+        } else if (fOutPoint > fBuffer.length - 1) {
+            fOutPoint = fBuffer.length - 1;
         }
         if (fOutPoint < fInPoint) {
             fOutPoint = fInPoint;
@@ -482,11 +482,11 @@ public class Sampler implements DSPNodeOutput {
                                                     float radius_max,
                                                     int step) {
         g.beginShape();
-        for (int i = 0; i < sampler.get_data().length; i += step) {
-            final float r = TWO_PI * i / sampler.get_data().length;
-            final float mData = map(sampler.get_data()[i], -1.0f, 1.0f, radius_min, radius_max);
-            final float x = cos(r) * mData;
-            final float y = sin(r) * mData;
+        for (int i = 0; i < sampler.get_buffer().length; i += step) {
+            final float r = TWO_PI * i / sampler.get_buffer().length;
+            final float mSample = map(sampler.get_buffer()[i], -1.0f, 1.0f, radius_min, radius_max);
+            final float x = cos(r) * mSample;
+            final float y = sin(r) * mSample;
             g.vertex(x, y);
         }
         g.endShape(CLOSE);
@@ -498,7 +498,7 @@ public class Sampler implements DSPNodeOutput {
                                                       PGraphics g,
                                                       float radius_min,
                                                       float radius_max) {
-        final float r = TWO_PI * fSampler.get_position() / fSampler.get_data().length;
+        final float r = TWO_PI * fSampler.get_position() / fSampler.get_buffer().length;
         final float x = cos(r);
         final float y = sin(r);
         g.line(x * radius_min, y * radius_min, x * radius_max, y * radius_max);

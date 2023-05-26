@@ -31,7 +31,7 @@ public class ExampleDSP07Sampler extends PApplet {
         fSampler = new Sampler();
         fSampler.load(mData);
         fSampler.set_loop_all();
-        fSampler.start();
+        fSampler.play();
         DSP.start(this);
     }
 

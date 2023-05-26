@@ -17,11 +17,11 @@ public class TechniqueAlgorithmicComposition06SamplerGranular extends PApplet {
     }
 
     public void setup() {
-        System.out.println(sketchPath());
         byte[] mData = loadBytes("../../../resources/a_portrait_in_reverse.raw");
         fSampler = new Sampler();
         fSampler.load(mData);
         fSampler.set_loop_all();
+        fSampler.play();
 
         DSP.start(this);
     }

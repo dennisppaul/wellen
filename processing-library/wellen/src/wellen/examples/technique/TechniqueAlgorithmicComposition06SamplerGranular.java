@@ -17,11 +17,11 @@ public class TechniqueAlgorithmicComposition06SamplerGranular extends PApplet {
     }
 
     public void setup() {
-        System.out.println(sketchPath());
         byte[] mData = loadBytes("../../../resources/a_portrait_in_reverse.raw");
         fSampler = new Sampler();
         fSampler.load(mData);
         fSampler.set_loop_all();
+        fSampler.play();
 
         DSP.start(this);
     }
@@ -32,7 +32,7 @@ public class TechniqueAlgorithmicComposition06SamplerGranular extends PApplet {
         stroke(0);
         DSP.draw_buffers(g, width, height);
         stroke(0, 31);
-        Wellen.draw_buffer(g, width, height, fSampler.get_data());
+        Wellen.draw_buffer(g, width, height, fSampler.get_buffer());
 
         stroke(0);
         drawPosition(fSampler.get_in(), height / 8);
@@ -45,12 +45,12 @@ public class TechniqueAlgorithmicComposition06SamplerGranular extends PApplet {
 
     public void mousePressed() {
         if (mouseButton == LEFT) {
-            fSampler.set_in((int) map(mouseX, 0, width, 0, fSampler.get_data().length));
+            fSampler.set_in((int) map(mouseX, 0, width, 0, fSampler.get_buffer().length));
             for (Sampler s : fSamplers) {
                 s.set_in(fSampler.get_in());
             }
         } else {
-            fSampler.set_out((int) map(mouseX, 0, width, 0, fSampler.get_data().length));
+            fSampler.set_out((int) map(mouseX, 0, width, 0, fSampler.get_buffer().length));
             for (Sampler s : fSamplers) {
                 s.set_out(fSampler.get_out());
             }
@@ -72,12 +72,12 @@ public class TechniqueAlgorithmicComposition06SamplerGranular extends PApplet {
                 }
                 break;
             case ' ':
-                Sampler s = new Sampler(fSampler.get_data());
+                Sampler s = new Sampler(fSampler.get_buffer());
                 s.set_in(fSampler.get_in());
                 s.set_out(fSampler.get_out());
                 s.enable_loop(true);
                 s.set_loop_all();
-                s.start();
+                s.play();
                 fSamplers.add(s);
                 break;
             case 'c':
@@ -97,7 +97,7 @@ public class TechniqueAlgorithmicComposition06SamplerGranular extends PApplet {
     }
 
     private void drawPosition(int pPosition, int pPadding) {
-        final float x = map(pPosition, 0, fSampler.get_data().length, 0, width);
+        final float x = map(pPosition, 0, fSampler.get_buffer().length, 0, width);
         line(x, 0 + pPadding, x, height - pPadding);
     }
 

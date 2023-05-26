@@ -44,7 +44,7 @@ public class ExampleExternal09ImportExportWAV extends PApplet {
         float[][] mImportSamples = Wellen.importWAV(this, WAV_FILE_NAME);
 
         fSampler = new Sampler();
-        fSampler.set_data(mImportSamples[0]);
+        fSampler.set_buffer(mImportSamples[0]);
         fSampler.set_loop_all();
 
         DSP.start(this);
@@ -53,7 +53,7 @@ public class ExampleExternal09ImportExportWAV extends PApplet {
     public void draw() {
         background(255);
         stroke(0);
-        Wellen.draw_buffer(g, width, height, fSampler.get_data());
+        Wellen.draw_buffer(g, width, height, fSampler.get_buffer());
         DSP.draw_buffers(g, width, height);
     }
 

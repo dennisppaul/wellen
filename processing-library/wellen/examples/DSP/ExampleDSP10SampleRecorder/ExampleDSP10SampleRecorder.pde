@@ -21,7 +21,7 @@ void draw() {
     background(255);
     DSP.draw_buffers(g, width, height);
     fill(0);
-    float mSize = fSampler.get_data().length;
+    float mSize = fSampler.get_buffer().length;
     mSize /= Wellen.DEFAULT_SAMPLING_RATE;
     mSize *= 100.0f;
     ellipse(width * 0.5f, height * 0.5f, mSize + 5, mSize + 5);
@@ -44,7 +44,7 @@ void keyReleased() {
     print("+++ recorded " + mLengthRecording + " samples");
     println(" or " + nf(mLengthRecordingInSeconds, 0, 2) + " sec.");
     fSampler.set_loop_all();
-    fSampler.start();
+    fSampler.play();
 }
 
 void audioblock(float[] output_signal, float[] pInputSignal) {
