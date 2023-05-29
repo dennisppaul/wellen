@@ -64,6 +64,18 @@ public class ExampleDSP26DrawWavetable extends PApplet {
         fWavetable.get_wavetable()[i] = map(mouseY, 0, height, -1, 1);
     }
 
+    private void print_buffer_to_array() {
+        print("float[] wavetable_buffer = new float[] { ");
+        for (int i = 0; i < fWavetable.get_wavetable().length; i++) {
+            print(fWavetable.get_wavetable()[i]);
+            print("f");
+            if (i < fWavetable.get_wavetable().length - 1) {
+                print(", ");
+            }
+        }
+        println("};");
+    }
+
     public void keyPressed() {
         switch (key) {
             case '1':
@@ -77,6 +89,9 @@ public class ExampleDSP26DrawWavetable extends PApplet {
                 break;
             case '4':
                 fWavetable.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
+                break;
+            case ' ':
+                print_buffer_to_array();
                 break;
         }
     }

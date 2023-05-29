@@ -210,6 +210,23 @@ public class Sampler implements DSPNodeOutput {
         return fIsPlaying;
     }
 
+    public void set_duration(float seconds) {
+        if (fBuffer == null || fBuffer.length == 0 || seconds == 0.0f) {
+            return;
+        }
+        final float mNormDurationSec = (fBuffer.length / fSamplingRate);
+        final float mSpeed = mNormDurationSec / seconds;
+        set_speed(mSpeed);
+    }
+
+    public float get_duration() {
+        if (fBuffer == null || fBuffer.length == 0 || fSpeed == 0.0f) {
+            return 0;
+        }
+        final float mNormDurationSec = (fBuffer.length / fSamplingRate);
+        return mNormDurationSec / fSpeed;
+    }
+
     public float output() {
         if (fBuffer.length == 0) {
             notifyListeners("buffer is empty");
@@ -250,6 +267,7 @@ public class Sampler implements DSPNodeOutput {
 
         /* fade edges */
         if (fEdgeFadePadding > 0) {
+            // TODO ignores in- and outpoints
             final int mRelativeIndex = fBuffer.length - mCurrentIndex;
             if (mCurrentIndex < fEdgeFadePadding) {
                 final float mFadeInAmount = (float) mCurrentIndex / fEdgeFadePadding;
