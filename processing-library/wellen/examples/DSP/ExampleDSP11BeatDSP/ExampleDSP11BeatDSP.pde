@@ -10,12 +10,10 @@ import wellen.dsp.*;
  * size is introduced ( e.g ( AUDIOBLOCK_SIZE=512 / SAMPLING_RATE=44100Hz ) = 0.01161SEC maximum timing error ).
  */
 
-BeatDSP mBeat;
+BeatDSP fBeat;
 
-final int[] mNotes = {Note.NOTE_C3, Note.NOTE_C4, Note.NOTE_F3 - 1, Note.NOTE_F4 - 1, Note.NOTE_A2,
+final int[] fNotes = {Note.NOTE_C3, Note.NOTE_C4, Note.NOTE_F3 - 1, Note.NOTE_F4 - 1, Note.NOTE_A2,
                               Note.NOTE_A3, Note.NOTE_F4 - 1, Note.NOTE_F3 - 1};
-
-float mSignal;
 
 void settings() {
     size(640, 480);
@@ -23,7 +21,7 @@ void settings() {
 
 void setup() {
     Tone.start();
-    mBeat = BeatDSP.start(this); /* create beat before `DSP.start` */
+    fBeat = BeatDSP.start(this); /* create beat before `DSP.start` */
     DSP.start(this); /* DSP is only used to create beat events */
 }
 
@@ -34,16 +32,16 @@ void draw() {
 }
 
 void mouseMoved() {
-    mBeat.set_bpm(map(mouseX, 0, width, 1, 480));
+    fBeat.set_bpm(map(mouseX, 0, width, 1, 480));
 }
 
 void audioblock(float[] output_signal) {
     for (int i = 0; i < output_signal.length; i++) {
-        mBeat.tick();
+        fBeat.tick();
     }
 }
 
 void beat(int beatCount) {
-    int mNote = mNotes[beatCount % mNotes.length];
+    int mNote = fNotes[beatCount % fNotes.length];
     Tone.note_on(mNote, 100, 0.1f);
 }

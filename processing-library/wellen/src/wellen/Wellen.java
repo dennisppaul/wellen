@@ -34,13 +34,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
 
-import static processing.core.PApplet.day;
-import static processing.core.PApplet.hour;
-import static processing.core.PApplet.minute;
-import static processing.core.PApplet.month;
-import static processing.core.PApplet.nf;
-import static processing.core.PApplet.second;
-import static processing.core.PApplet.year;
+import static processing.core.PApplet.*;
 
 /**
  * contains constants and utility methods for the wellen library.
@@ -186,6 +180,30 @@ public class Wellen {
     public static final int WAVESHAPE_TRIANGLE = 1;
     public static final int WAV_FORMAT_IEEE_FLOAT_32BIT = 3;
     public static final int WAV_FORMAT_PCM = 1;
+
+    public static final int ENVELOPE_FORM_RECTANGULAR = 0;
+    public static final int ENVELOPE_FORM_TRIANGLE = 1;
+    public static final int ENVELOPE_FORM_DOWNWARD_TRIANGLE = 2;
+    public static final int ENVELOPE_FORM_UPWARD_TRIANGLE = 3;
+    public static final int ENVELOPE_FORM_EXPONENTIAL_DECAY = 4;
+    public static final int ENVELOPE_FORM_EXPONENTIAL_INCREASE = 5;
+    public static final int ENVELOPE_FORM_GAUSSIAN = 6;
+    public static final int ENVELOPE_FORM_HANNING = 7;
+    public static final int ENVELOPE_FORM_LANCZOS = 8;
+    public static final int ENVELOPE_FORM_COSINE = 9;
+    public static final int ENVELOPE_FORM_COSINE_SQUARED = 10;
+    public static final int ENVELOPE_FORM_WELCH = 11;
+    public static final int ENVELOPE_FORM_BLACKMAN = 12;
+    public static final int ENVELOPE_FORM_BLACKMAN_HARRIS = 13;
+    public static final int NUM_ENVELOPE_FORM = 14;
+
+    public static final int WAVESHAPER_SIN = 0;
+    public static final int WAVESHAPER_ATAN = 1;
+    public static final int WAVESHAPER_TAN_H = 2;
+    public static final int WAVESHAPER_CUBIC = 3;
+    public static final int WAVESHAPER_HARDCLIP = 4;
+    public static final int NUM_OF_WAVESHAPER_FORMS = 5;
+
     private static final float SIG_16BIT_MAX = 32768.0f;
     private static final float SIG_16BIT_MAX_INVERSE = 1.0f / SIG_16BIT_MAX;
     private static final float SIG_24BIT_MAX = 8388608.0f;
@@ -194,6 +212,8 @@ public class Wellen {
     private static final float SIG_32BIT_MAX_INVERSE = 1.0f / SIG_32BIT_MAX;
     private static final float SIG_8BIT_MAX = 128.0f;
     private static final float SIG_8BIT_MAX_INVERSE = 1.0f / SIG_8BIT_MAX;
+
+    public static boolean CHECK_DEFAULT_AUDIO_DEVICE_SAMPLE_RATE = false;
 
     public static float bytes_to_floatIEEE(byte[] b, boolean pLittleEndian) {
         if (b.length != 4) {
@@ -758,6 +778,119 @@ public class Wellen {
                     }
                 }
             }
+        }
+    }
+
+    public static void fill_envelope(float[] buffer, int type) {
+        final float N = (float) buffer.length;
+        final float N_1 = N - 1.0f;
+        float n = 0.0f;
+
+        switch (type) {
+            case Wellen.ENVELOPE_FORM_RECTANGULAR: {
+                Arrays.fill(buffer, 1.0f);
+            }
+            break;
+            case Wellen.ENVELOPE_FORM_TRIANGLE: {
+                final float A = 0.5f * N_1;
+                for (int i = 0; i < buffer.length; ++i, n += 1.0f) {
+                    buffer[i] = 1.0f - abs((n - A) / A);
+                }
+            }
+            break;
+            case Wellen.ENVELOPE_FORM_DOWNWARD_TRIANGLE: {
+                for (int i = 0; i < buffer.length; ++i, n += 1.0f) {
+                    buffer[i] = 1.0f - n / N_1;
+                }
+            }
+            break;
+            case Wellen.ENVELOPE_FORM_UPWARD_TRIANGLE: {
+                for (int i = 0; i < buffer.length; ++i, n += 1.0f) {
+                    buffer[i] = n / N_1;
+                }
+            }
+            break;
+            case Wellen.ENVELOPE_FORM_EXPONENTIAL_DECAY: {
+                for (int i = 0; i < buffer.length; ++i, n += 1.0f) {
+                    buffer[i] = pow((n - N + 1.0f) / N_1, 4.0f);
+                }
+            }
+            break;
+            case Wellen.ENVELOPE_FORM_EXPONENTIAL_INCREASE: {
+                for (int i = 0; i < buffer.length; ++i, n += 1.0f) {
+                    buffer[i] = pow(n / N_1, 4.0f);
+                }
+            }
+            break;
+            case Wellen.ENVELOPE_FORM_GAUSSIAN: {
+                final float Denom = 0.3f * N_1 / 2.0f;
+                for (int i = 0; i < buffer.length; ++i, n += 1.0f) {
+                    buffer[i] = exp(-0.5f * pow((n - 0.5f * N_1) / Denom, 2.0f));
+                }
+            }
+            break;
+            case Wellen.ENVELOPE_FORM_HANNING: {
+                for (int i = 0; i < buffer.length; ++i, n += 1.0f) {
+                    buffer[i] = 0.5f - 0.5f * cos(2.0f * PApplet.PI * n / N_1);
+                }
+            }
+            break;
+            case Wellen.ENVELOPE_FORM_LANCZOS: {
+                final float SMALL_NUMBER = 1.e-4f;
+                for (int i = 0; i < buffer.length; ++i, n += 1.0f) {
+                    // sinc function sin(x)/x
+                    float Arg = PApplet.PI * (2.0f * n / N_1 - 1.0f);
+                    Arg = max(SMALL_NUMBER, Arg);
+                    buffer[i] = sin(Arg) / Arg;
+                }
+            }
+            break;
+            case Wellen.ENVELOPE_FORM_COSINE: {
+                for (int i = 0; i < buffer.length; ++i, n += 1.0f) {
+                    buffer[i] = sin(n * PApplet.PI / N_1);
+                }
+            }
+            break;
+            case Wellen.ENVELOPE_FORM_COSINE_SQUARED: {
+                for (int i = 0; i < buffer.length; ++i, n += 1.0f) {
+                    buffer[i] = sin(n * PApplet.PI / N_1);
+                    buffer[i] *= buffer[i];
+                }
+            }
+            break;
+            case Wellen.ENVELOPE_FORM_WELCH: {
+                for (int i = 0; i < buffer.length; ++i, n += 1.0f) {
+                    float Temp = 0.5f * N_1;
+                    Temp = (n - Temp) / Temp;
+                    Temp *= Temp;
+
+                    buffer[i] = 1.0f - Temp;
+                }
+            }
+            break;
+            case Wellen.ENVELOPE_FORM_BLACKMAN: {
+                final float A_0 = 0.42659f;
+                final float A_1 = 0.49656f;
+                final float A_2 = 0.076849f;
+
+                for (int i = 0; i < buffer.length; ++i, n += 1.0f) {
+                    final float Theta = 2.0f * PApplet.PI * n / N_1;
+                    buffer[i] = A_0 - A_1 * cos(Theta) + A_2 * cos(2.0f * Theta);
+                }
+            }
+            break;
+            case Wellen.ENVELOPE_FORM_BLACKMAN_HARRIS: {
+                final float A_0 = 0.35875f;
+                final float A_1 = 0.48828f;
+                final float A_2 = 0.14158f;
+                final float A_3 = 0.01168f;
+
+                for (int i = 0; i < buffer.length; ++i, n += 1.0f) {
+                    final float Theta = 2.0f * PApplet.PI * n / N_1;
+                    buffer[i] = A_0 - A_1 * cos(Theta) + A_2 * cos(2.0f * Theta) - A_3 * cos(4.0f * Theta);
+                }
+            }
+            break;
         }
     }
 }

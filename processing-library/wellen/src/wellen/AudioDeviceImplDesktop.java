@@ -22,9 +22,13 @@ package wellen;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioFormat.Encoding;
 import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Line;
 import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.Mixer;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.TargetDataLine;
+
+import static wellen.Wellen.CHECK_DEFAULT_AUDIO_DEVICE_SAMPLE_RATE;
 
 public class AudioDeviceImplDesktop extends Thread implements AudioDevice {
 
@@ -163,7 +167,7 @@ public class AudioDeviceImplDesktop extends Thread implements AudioDevice {
 
         try {
             /* output */
-            final AudioFormat mOutputFormat;
+            AudioFormat mOutputFormat;
             // TODO check if there is any java implementation that allows PCM_FLOAT
 //            mOutputFormat = new AudioFormat(Encoding.PCM_FLOAT,
 //                                            mSampleRate,
@@ -185,7 +189,82 @@ public class AudioDeviceImplDesktop extends Thread implements AudioDevice {
 //                                                              SIGNED,
 //                                                              LITTLE_ENDIAN);
             if (pConfiguration.output_device_ID == Wellen.DEFAULT_AUDIO_DEVICE) {
+                if (CHECK_DEFAULT_AUDIO_DEVICE_SAMPLE_RATE) {
+                    System.out.println("+-------------------------------------------------------+");
+                    System.out.println("+ checking default output device sample rate ... ");
+                    System.out.println("+");
+                    boolean mSampleRateMatch = true;
+                    Mixer mDefaultMixer = AudioSystem.getMixer(null);
+                    Line.Info[] mDefaultSourceDataLine = mDefaultMixer.getSourceLineInfo();
+                    for (Line.Info li : mDefaultSourceDataLine) {
+                        final Line mLine = mDefaultMixer.getLine(li);
+                        if (mLine instanceof SourceDataLine) {
+                            AudioFormat mDefaultAudioFormat = ((SourceDataLine) mLine).getFormat();
+                            if (mSampleRate != mDefaultAudioFormat.getSampleRate()) {
+                                System.out.println("+ AVAILABLE DEFAULT OUTPUT DEVICE CAPABILITIES");
+                                System.out.println("+ - sample rate ........... : " + mDefaultAudioFormat.getSampleRate());
+                                System.out.println("+ - channels .............. : " + mDefaultAudioFormat.getChannels());
+                                System.out.println("+ - general info .......... : " + mDefaultAudioFormat.toString());
+                                System.out.print("+ WARNING desired sample rate '" + mSampleRate + "' ");
+                                System.out.println("and DEFAULT OUTPUT DEVICE sample rate '" + mDefaultAudioFormat.getSampleRate() + "' do not match.");
+                                System.out.println("+ setting sample rate to '" + mDefaultAudioFormat.getSampleRate() + "' ( be aware that this might cause problems later ).");
+                                mOutputFormat = new AudioFormat((SIGNED ? Encoding.PCM_SIGNED : Encoding.PCM_UNSIGNED),
+                                                                mSampleRate,
+                                                                fBitsPerSample,
+                                                                mNumOutputChannels,
+                                                                ((fBitsPerSample + 7) / 8) * mNumOutputChannels,
+                                                                mDefaultAudioFormat.getSampleRate(),
+                                                                LITTLE_ENDIAN);
+                                mSampleRateMatch = false;
+                                System.out.println("+");
+                                System.out.println("+ try setting the sample rate manually in `setup()` e.g:");
+                                System.out.println(
+                                        "+     Tone.start(\"internal\", 48000, Wellen.DEFAULT_AUDIO_DEVICE, 2);");
+                                System.out.println("+");
+                            }
+                        }
+                    }
+                    if (mSampleRateMatch) {
+                        System.out.println("+ sample rate '" + mSampleRate + "' OK.");
+                    }
+                    System.out.println("+-------------------------------------------------------+");
+
+//                    try {
+//                        DataLine.Info mDefaultDataLineInfo = new DataLine.Info(SourceDataLine.class, null);
+//                        SourceDataLine mDefaultSourceDataLine = (SourceDataLine) AudioSystem.getLine
+//                        (mDefaultDataLineInfo);
+//                        AudioFormat mDefaultAudioFormat = mDefaultSourceDataLine.getFormat();
+//                        if (mSampleRate != mDefaultAudioFormat.getSampleRate()) {
+//                            System.out.print("+++ WARNING desired sample rate '" + mSampleRate + "' ");
+//                            System.out.println("and DEFAULT OUTPUT DEVICE sample rate '" + mDefaultAudioFormat
+//                            .getSampleRate() + "' do not match.");
+//                            mOutputFormat = new AudioFormat((SIGNED ? Encoding.PCM_SIGNED : Encoding.PCM_UNSIGNED),
+//                                                            mSampleRate,
+//                                                            fBitsPerSample,
+//                                                            mNumOutputChannels,
+//                                                            ((fBitsPerSample + 7) / 8) * mNumOutputChannels,
+//                                                            mDefaultAudioFormat.getSampleRate(),
+//                                                            LITTLE_ENDIAN);
+//                        }
+//                    } catch (LineUnavailableException e) {
+//                        e.printStackTrace();
+//                    }
+                }
+
                 mOutputLine = AudioSystem.getSourceDataLine(mOutputFormat);
+                if (VERBOSE) {
+                    System.out.println("+-------------------------------------------------------+");
+                    System.out.println("+ DEFAULT OUTPUT DEVICE CAPABILITIES");
+                    System.out.println("+ - number of channels .... : " + mOutputLine.getFormat().getChannels());
+                    System.out.println("+ - sample size in bits ... : " + mOutputLine.getFormat()
+                                                                                     .getSampleSizeInBits());
+                    System.out.println("+ - sample rate ........... : " + mOutputLine.getFormat().getSampleRate());
+                    System.out.println("+ - encoding .............. : " + mOutputLine.getFormat().getEncoding());
+                    System.out.println("+ - endianess ............. : " + (mOutputLine.getFormat()
+                                                                                      .isBigEndian() ? "big-endian" :
+                            "little-endian"));
+                    System.out.println("+-------------------------------------------------------+");
+                }
             } else {
                 if (VERBOSE) {
                     System.out.println("+ OUTPUT DEVICE: " + AudioSystem.getMixerInfo()[pConfiguration.output_device_ID]);
