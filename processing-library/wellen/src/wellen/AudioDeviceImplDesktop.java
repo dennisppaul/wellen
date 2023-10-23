@@ -20,7 +20,6 @@
 package wellen;
 
 import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioFormat.Encoding;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Line;
 import javax.sound.sampled.LineUnavailableException;
@@ -29,6 +28,11 @@ import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.TargetDataLine;
 
 import static wellen.Wellen.CHECK_DEFAULT_AUDIO_DEVICE_SAMPLE_RATE;
+import static wellen.Wellen.ENCODING_ALAW;
+import static wellen.Wellen.ENCODING_PCM_FLOAT;
+import static wellen.Wellen.ENCODING_PCM_SIGNED;
+import static wellen.Wellen.ENCODING_PCM_UNSIGNED;
+import static wellen.Wellen.ENCODING_ULAW;
 
 public class AudioDeviceImplDesktop extends Thread implements AudioDevice {
 
@@ -127,10 +131,6 @@ public class AudioDeviceImplDesktop extends Thread implements AudioDevice {
 //    line.write(new byte[]{(byte) (pcmRight & 0xff), (byte) ((pcmRight >> 8) & 0xff), (byte) ((pcmRight >> 16) &
 //    0xff), (byte) ((pcmRight >> 24) & 0xff)}, 0, 4);
 
-    public static final boolean BIG_ENDIAN = true;
-    public static final boolean LITTLE_ENDIAN = false;
-    public static final boolean SIGNED = true;
-    public static final boolean UNSIGNED = false;
     public static boolean VERBOSE = false;
     private static final float SIG_16BIT_MAX = 32768.0f;
     private static final float SIG_16BIT_MAX_INVERSE = 1.0f / SIG_16BIT_MAX;
@@ -143,18 +143,18 @@ public class AudioDeviceImplDesktop extends Thread implements AudioDevice {
     private final int fBitsPerSample;
     /* --- */
     private final int fBytesPerSample;
-    private int mFrameCounter = 0;
-    private byte[] mInputByteBuffer;
-    private TargetDataLine mInputLine;
     private final int mNumInputChannels;
     private final int mNumOutputChannels;
-    private byte[] mOutputByteBuffer;
-    private SourceDataLine mOutputLine;
-    private boolean mRunBuffer = true;
     private final int mSampleBufferSize;
     private final int mSampleRate;
     private final AudioBufferRenderer mSampleRenderer;
     private volatile boolean fThreadSuspended = false;
+    private int mFrameCounter = 0;
+    private byte[] mInputByteBuffer;
+    private TargetDataLine mInputLine;
+    private byte[] mOutputByteBuffer;
+    private SourceDataLine mOutputLine;
+    private boolean mRunBuffer = true;
 
     public AudioDeviceImplDesktop(AudioBufferRenderer pSampleRenderer, AudioDeviceConfiguration pConfiguration) {
         mSampleRenderer = pSampleRenderer;
@@ -167,27 +167,16 @@ public class AudioDeviceImplDesktop extends Thread implements AudioDevice {
 
         try {
             /* output */
-            AudioFormat mOutputFormat;
             // TODO check if there is any java implementation that allows PCM_FLOAT
-//            mOutputFormat = new AudioFormat(Encoding.PCM_FLOAT,
-//                                            mSampleRate,
-//                                            fBitsPerSample,
-//                                            mNumOutputChannels,
-//                                            ((fBitsPerSample + 7) / 8) * mNumOutputChannels,
-//                                            mSampleRate,
-//                                            LITTLE_ENDIAN);
-            mOutputFormat = new AudioFormat((SIGNED ? Encoding.PCM_SIGNED : Encoding.PCM_UNSIGNED),
-                                            mSampleRate,
-                                            fBitsPerSample,
-                                            mNumOutputChannels,
-                                            ((fBitsPerSample + 7) / 8) * mNumOutputChannels,
-                                            mSampleRate,
-                                            LITTLE_ENDIAN);
-//            final AudioFormat mOutputFormat = new AudioFormat(mSampleRate,
-//                                                              fBitsPerSample,
-//                                                              mNumOutputChannels,
-//                                                              SIGNED,
-//                                                              LITTLE_ENDIAN);
+            AudioFormat mOutputFormat;
+            mOutputFormat = new AudioFormat(getEncoding(pConfiguration.encoding),
+                                            pConfiguration.sample_rate,
+                                            pConfiguration.bits_per_sample,
+                                            pConfiguration.number_of_output_channels,
+                                            getFrameSize(pConfiguration.bits_per_sample,
+                                                         pConfiguration.number_of_output_channels),
+                                            pConfiguration.sample_rate,
+                                            pConfiguration.is_big_endian);
             if (pConfiguration.output_device_ID == Wellen.DEFAULT_AUDIO_DEVICE) {
                 if (CHECK_DEFAULT_AUDIO_DEVICE_SAMPLE_RATE) {
                     System.out.println("+-------------------------------------------------------+");
@@ -204,17 +193,18 @@ public class AudioDeviceImplDesktop extends Thread implements AudioDevice {
                                 System.out.println("+ AVAILABLE DEFAULT OUTPUT DEVICE CAPABILITIES");
                                 System.out.println("+ - sample rate ........... : " + mDefaultAudioFormat.getSampleRate());
                                 System.out.println("+ - channels .............. : " + mDefaultAudioFormat.getChannels());
-                                System.out.println("+ - general info .......... : " + mDefaultAudioFormat.toString());
+                                System.out.println("+ - general info .......... : " + mDefaultAudioFormat);
                                 System.out.print("+ WARNING desired sample rate '" + mSampleRate + "' ");
                                 System.out.println("and DEFAULT OUTPUT DEVICE sample rate '" + mDefaultAudioFormat.getSampleRate() + "' do not match.");
                                 System.out.println("+ setting sample rate to '" + mDefaultAudioFormat.getSampleRate() + "' ( be aware that this might cause problems later ).");
-                                mOutputFormat = new AudioFormat((SIGNED ? Encoding.PCM_SIGNED : Encoding.PCM_UNSIGNED),
-                                                                mSampleRate,
-                                                                fBitsPerSample,
-                                                                mNumOutputChannels,
-                                                                ((fBitsPerSample + 7) / 8) * mNumOutputChannels,
+                                mOutputFormat = new AudioFormat(getEncoding(pConfiguration.encoding),
+                                                                pConfiguration.sample_rate,
+                                                                pConfiguration.bits_per_sample,
+                                                                pConfiguration.number_of_output_channels,
+                                                                getFrameSize(pConfiguration.bits_per_sample,
+                                                                             pConfiguration.number_of_output_channels),
                                                                 mDefaultAudioFormat.getSampleRate(),
-                                                                LITTLE_ENDIAN);
+                                                                pConfiguration.is_big_endian);
                                 mSampleRateMatch = false;
                                 System.out.println("+");
                                 System.out.println("+ try setting the sample rate manually in `setup()` e.g:");
@@ -290,11 +280,14 @@ public class AudioDeviceImplDesktop extends Thread implements AudioDevice {
 
             /* input */
             if (mNumInputChannels > 0) {
-                final AudioFormat mInputFormat = new AudioFormat(mSampleRate,
-                                                                 fBitsPerSample,
-                                                                 mNumInputChannels,
-                                                                 SIGNED,
-                                                                 LITTLE_ENDIAN);
+                final AudioFormat mInputFormat = new AudioFormat(getEncoding(pConfiguration.encoding),
+                                                                 pConfiguration.sample_rate,
+                                                                 pConfiguration.bits_per_sample,
+                                                                 pConfiguration.number_of_input_channels,
+                                                                 getFrameSize(pConfiguration.bits_per_sample,
+                                                                              pConfiguration.number_of_input_channels),
+                                                                 pConfiguration.sample_rate,
+                                                                 pConfiguration.is_big_endian);
                 if (pConfiguration.input_device_ID == Wellen.DEFAULT_AUDIO_DEVICE) {
                     mInputLine = AudioSystem.getTargetDataLine(mInputFormat);
                     if (mNumInputChannels != mInputLine.getFormat().getChannels()) {
@@ -327,6 +320,27 @@ public class AudioDeviceImplDesktop extends Thread implements AudioDevice {
         }
         mOutputLine.start();
         start();
+    }
+
+    AudioFormat.Encoding getEncoding(int encoding) {
+        switch (encoding) {
+            case ENCODING_PCM_SIGNED:
+                return new AudioFormat.Encoding("PCM_SIGNED");
+            case ENCODING_PCM_UNSIGNED:
+                return new AudioFormat.Encoding("PCM_UNSIGNED");
+            case ENCODING_PCM_FLOAT:
+                return new AudioFormat.Encoding("PCM_FLOAT");
+            case ENCODING_ULAW:
+                return new AudioFormat.Encoding("ULAW");
+            case ENCODING_ALAW:
+                return new AudioFormat.Encoding("ALAW");
+        }
+        return new AudioFormat.Encoding("PCM_SIGNED");
+    }
+
+    private int getFrameSize(int bits_per_sample, int number_of_channels) {
+        return (number_of_channels == AudioSystem.NOT_SPECIFIED || bits_per_sample == AudioSystem.NOT_SPECIFIED) ?
+                AudioSystem.NOT_SPECIFIED : ((bits_per_sample + 7) / 8) * number_of_channels;
     }
 
     @Override
@@ -470,6 +484,21 @@ public class AudioDeviceImplDesktop extends Thread implements AudioDevice {
             mFrameCounter++;
         }
     }
+
+//    private AudioFormat getAudioFormat(AudioDeviceConfiguration pConfiguration) {
+//        final int mFrameSize =
+//                (mNumInputChannels == AudioSystem.NOT_SPECIFIED || fBitsPerSample == AudioSystem.NOT_SPECIFIED) ?
+//                        AudioSystem.NOT_SPECIFIED : ((fBitsPerSample + 7) / 8) * mNumInputChannels;
+//        final float mFrameRate = mSampleRate;
+//        final AudioFormat mInputFormat = new AudioFormat(pConfiguration.encoding,
+//                                                         mSampleRate,
+//                                                         fBitsPerSample,
+//                                                         mNumInputChannels,
+//                                                         mFrameSize,
+//                                                         mFrameRate,
+//                                                         pConfiguration.is_big_endian);
+//        return mInputFormat;
+//    }
 
     private float readSample16(byte[] b, int offset) { // low+high
         final float v = ((b[offset + 1] << 8) | (b[offset + 0] & 0xFF));

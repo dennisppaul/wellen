@@ -22,7 +22,6 @@ public class ExampleDSP00Audio extends PApplet {
 
     public void setup() {
         Wellen.dumpAudioInputAndOutputDevices(true);
-        Wellen.dumpAudioInputAndOutputDevices(true);
         DSP.start(this);
     }
 

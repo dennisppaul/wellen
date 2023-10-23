@@ -19,6 +19,8 @@
 
 package wellen;
 
+/* @todo is it better to decouple input- and output? e.g sampling rate, encoding or bits per sample */
+
 /**
  *
  */
@@ -51,6 +53,16 @@ public class AudioDeviceConfiguration {
      *
      */
     public int sample_rate = Wellen.DEFAULT_SAMPLING_RATE;
+
+    /**
+     *
+     */
+    public int encoding = Wellen.DEFAULT_ENCODING;
+
+    /**
+     *
+     */
+    public boolean is_big_endian = Wellen.DEFAULT_ENDIANESS;
 
     /**
      * @return instance of {@link wellen.AudioDeviceConfiguration} with default values

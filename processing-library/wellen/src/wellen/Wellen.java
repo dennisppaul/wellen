@@ -41,6 +41,11 @@ import static processing.core.PApplet.*;
  */
 public class Wellen {
 
+    public static final int ENCODING_PCM_SIGNED = 0;
+    public static final int ENCODING_PCM_UNSIGNED = 1;
+    public static final int ENCODING_PCM_FLOAT = 2;
+    public static final int ENCODING_ULAW = 3;
+    public static final int ENCODING_ALAW = 4;
     public static final int BITS_PER_SAMPLE_16 = 16;
     public static final int BITS_PER_SAMPLE_24 = 24;
     public static final int BITS_PER_SAMPLE_32 = 32;
@@ -49,6 +54,10 @@ public class Wellen {
     public static final int DEFAULT_AUDIOBLOCK_SIZE = 1024;
     public static final int DEFAULT_AUDIO_DEVICE = -1;
     public static final int DEFAULT_BITS_PER_SAMPLE = BITS_PER_SAMPLE_16;
+    public static final int DEFAULT_ENCODING = ENCODING_PCM_SIGNED;
+    public static final boolean ENDIANESS_BIG_ENDIAN = true;
+    public static final boolean ENDIANESS_LITTLE_ENDIAN = false;
+    public static final boolean DEFAULT_ENDIANESS = ENDIANESS_LITTLE_ENDIAN; // TODO `ENDIANESS_LITTLE_ENDIAN` work on MacOS, check this on more systems
     public static final float DEFAULT_DECAY = 0.01f;
     public static final float DEFAULT_FILTER_BANDWIDTH = 100.0f;
     public static final float DEFAULT_FILTER_FREQUENCY = 1000.0f;
@@ -768,6 +777,8 @@ public class Wellen {
                         if (!mFormat.isBigEndian() && mFormat.getEncoding() == AudioFormat.Encoding.PCM_SIGNED) {
                             System.out.print(mIndentionString + "- ");
                             System.out.print(mFormat.getSampleSizeInBits() + "-bits, ");
+                            System.out.print(mFormat.getEncoding() + ", ");
+                            System.out.print((mFormat.isBigEndian() ? "BE" : "LE") + ", ");
                             System.out.print(mFormat.getChannels() + " channel" + (mFormat.getChannels() == 1 ? "" :
                                     "s") + (mFormat.getSampleRate() > 0 ? ", " : ""));
                             if (mFormat.getSampleRate() > 0) {
