@@ -19,21 +19,14 @@ import wellen.dsp.*;
  *     +---------------------->
  *     [A   ][D][S   ][R]
  */
-
 int mNote;
-
 Slider mSliderAttack;
-
 Slider mSliderDecay;
-
 Slider mSliderRelease;
-
 Slider mSliderSustain;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     mSliderAttack = new Slider();
     mSliderDecay = new Slider();
@@ -43,7 +36,6 @@ void setup() {
     updateADSR();
     println(ADSR.ADSR_DIAGRAM);
 }
-
 void draw() {
     background(Tone.is_playing() ? 0 : 255);
     final float mXOffset = (width - Slider.size * 4) * 0.5f;
@@ -53,20 +45,16 @@ void draw() {
     updateDiagram(mXOffset, mYOffset);
     drawDiagram();
 }
-
 void mousePressed() {
     mNote = Scale.get_note(Scale.CHORD_MAJOR_7TH, Note.NOTE_A2, (int) random(0, 10));
     Tone.note_on(mNote, 100);
 }
-
 void mouseReleased() {
     Tone.note_off();
 }
-
 void mouseDragged() {
     updateADSR();
 }
-
 void drawDiagram() {
     int mColor = Tone.is_playing() ? 255 : 0;
     stroke(mColor, 15);
@@ -97,14 +85,12 @@ void drawDiagram() {
          mSliderRelease.current_position_y());
     strokeWeight(1);
 }
-
 void updateADSR() {
     Tone.instrument().set_attack(mSliderAttack.value);
     Tone.instrument().set_decay(mSliderDecay.value);
     Tone.instrument().set_sustain(mSliderSustain.value);
     Tone.instrument().set_release(mSliderRelease.value);
 }
-
 void updateDiagram(float mXOffset, float mYOffset) {
     float mX = mouseX - mXOffset;
     float mY = -mouseY + mYOffset;
@@ -121,20 +107,16 @@ void updateDiagram(float mXOffset, float mYOffset) {
     mSliderRelease.x = mSliderSustain.x;
     mSliderRelease.y = 0;
 }
-
 static class Slider {
-    
-static final float radius = 8;
-    
-static final float size = 120;
+    static final float radius = 8;
+    static final float size = 120;
     boolean drag;
     boolean hoover;
     boolean horizontal;
     float value;
     float x;
     float y;
-    
-Slider() {
+    Slider() {
         x = 0;
         y = 0;
         value = 0.5f;

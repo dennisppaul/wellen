@@ -13,22 +13,16 @@ import wellen.dsp.*;
  * and lastly this example also demonstrates how to modify amplitude and frequency of an oscillator with
  * interpolation. use `SPACE` to toggle interpolation. see explantion inline.
  */
-
 boolean fInterpolateAmplitudeAndFrequency = false;
-
 Wavetable fWavetable;
-
 int fWavetableSize = 6;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     init_wavetable();
     DSP.start(this);
 }
-
 void draw() {
     background(255);
     if (fInterpolateAmplitudeAndFrequency) {
@@ -37,12 +31,10 @@ void draw() {
     }
     DSP.draw_buffers(g, width, height);
 }
-
 void mouseDragged() {
     fWavetable.set_frequency(2.0f * Wellen.DEFAULT_SAMPLING_RATE / Wellen.DEFAULT_AUDIOBLOCK_SIZE);
     fWavetable.set_amplitude(0.25f);
 }
-
 void mouseMoved() {
     final float mNewFrequency = map(mouseX, 0, width, 55, 880);
     final float mNewAmplitude = map(mouseY, 0, height, 0.0f, 0.9f);
@@ -59,7 +51,6 @@ void mouseMoved() {
         fWavetable.set_amplitude(mNewAmplitude);
     }
 }
-
 void keyPressed() {
     switch (key) {
         case '1':
@@ -115,18 +106,15 @@ void keyPressed() {
             break;
     }
 }
-
 void audioblock(float[] output_signal) {
     for (int i = 0; i < output_signal.length; i++) {
         output_signal[i] = fWavetable.output();
     }
 }
-
 void init_wavetable() {
     fWavetable = new Wavetable(1 << fWavetableSize);
     Wavetable.sine(fWavetable.get_wavetable());
 }
-
 void randomize(float[] pWavetable) {
     for (int i = 0; i < pWavetable.length; i++) {
         pWavetable[i] = random(-1, 1);

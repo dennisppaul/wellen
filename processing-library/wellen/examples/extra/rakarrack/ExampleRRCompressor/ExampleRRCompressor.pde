@@ -2,27 +2,20 @@ import wellen.*;
 import wellen.dsp.*; 
 
 import wellen.extra.rakarrack.*;
-
 RRCompressor mCompressor;
-
 boolean mEnableCompressor = true;
-
 final float mMasterVolume = 0.5f;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     mCompressor = new RRCompressor();
     DSP.start(this, 1, 1);
 }
-
 void draw() {
     background(255);
     DSP.draw_buffers(g, width, height);
 }
-
 void keyPressed() {
     switch (key) {
         case '1':
@@ -52,7 +45,6 @@ void keyPressed() {
             break;
     }
 }
-
 void audioblock(float[] output_signal, float[] pInputSignal) {
     RRUtilities.memcpy(output_signal, pInputSignal, pInputSignal.length);
     if (mEnableCompressor) {

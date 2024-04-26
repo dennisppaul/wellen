@@ -12,13 +12,10 @@ import wellen.dsp.*;
  * note that samples can either be played once or looped. if a sample is played once it must be rewound before it
  * can be played again. also note that a sample buffer can be cropped with `set_in()` + `set_out()`.
  */
-
 Sampler fSampler;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     byte[] mData = SampleDataSNARE.data;
     // alternatively load data with `loadBytes("audio.raw")` ( raw format, 32bit IEEE float )
@@ -28,7 +25,6 @@ void setup() {
     fSampler.play();
     DSP.start(this);
 }
-
 void draw() {
     background(255);
     stroke(0);
@@ -39,16 +35,13 @@ void draw() {
     circle(60, 60, fSampler.is_looping() ? 50 : 10);
     circle(120, 60, fSampler.interpolate_samples() ? 50 : 10);
 }
-
 void mousePressed() {
     fSampler.rewind();
 }
-
 void mouseMoved() {
     fSampler.set_speed(map(mouseX, 0, width, -4, 4));
     fSampler.set_amplitude(map(mouseY, 0, height, 0.9f, 0.0f));
 }
-
 void keyPressed() {
     switch (key) {
         case 'l':
@@ -65,7 +58,6 @@ void keyPressed() {
             break;
     }
 }
-
 void audioblock(float[] output_signal) {
     for (int i = 0; i < output_signal.length; i++) {
         output_signal[i] = fSampler.output();

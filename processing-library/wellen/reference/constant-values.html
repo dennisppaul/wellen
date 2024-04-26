@@ -11,7 +11,7 @@
 <link rel="stylesheet" type="text/css" href="script-dir/jquery-ui.min.css" title="Style">
 <link rel="stylesheet" type="text/css" href="jquery-ui.overrides.css" title="Style">
 <script type="text/javascript" src="script.js"></script>
-<script type="text/javascript" src="script-dir/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="script-dir/jquery-3.6.1.min.js"></script>
 <script type="text/javascript" src="script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="constants-summary-page">
@@ -36,26 +36,6 @@ loadScripts(document, 'script');</script>
 <section class="constants-summary" id="wellen">
 <h2 title="wellen">wellen.*</h2>
 <ul class="block-list">
-<li>
-<div class="caption"><span>wellen.<a href="wellen/AudioDeviceImplDesktop.html" title="class in wellen">AudioDeviceImplDesktop</a></span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Constant Field</div>
-<div class="table-header col-last">Value</div>
-<div class="col-first even-row-color"><code id="wellen.AudioDeviceImplDesktop.BIG_ENDIAN">public&nbsp;static&nbsp;final&nbsp;boolean</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/AudioDeviceImplDesktop.html#BIG_ENDIAN">BIG_ENDIAN</a></code></div>
-<div class="col-last even-row-color"><code>true</code></div>
-<div class="col-first odd-row-color"><code id="wellen.AudioDeviceImplDesktop.LITTLE_ENDIAN">public&nbsp;static&nbsp;final&nbsp;boolean</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/AudioDeviceImplDesktop.html#LITTLE_ENDIAN">LITTLE_ENDIAN</a></code></div>
-<div class="col-last odd-row-color"><code>false</code></div>
-<div class="col-first even-row-color"><code id="wellen.AudioDeviceImplDesktop.SIGNED">public&nbsp;static&nbsp;final&nbsp;boolean</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/AudioDeviceImplDesktop.html#SIGNED">SIGNED</a></code></div>
-<div class="col-last even-row-color"><code>true</code></div>
-<div class="col-first odd-row-color"><code id="wellen.AudioDeviceImplDesktop.UNSIGNED">public&nbsp;static&nbsp;final&nbsp;boolean</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/AudioDeviceImplDesktop.html#UNSIGNED">UNSIGNED</a></code></div>
-<div class="col-last odd-row-color"><code>false</code></div>
-</div>
-</li>
 <li>
 <div class="caption"><span>wellen.<a href="wellen/FFT.html" title="class in wellen">FFT</a></span></div>
 <div class="summary-table three-column-summary">
@@ -463,6 +443,12 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code id="wellen.Wellen.DEFAULT_DECAY">public&nbsp;static&nbsp;final&nbsp;float</code></div>
 <div class="col-second even-row-color"><code><a href="wellen/Wellen.html#DEFAULT_DECAY">DEFAULT_DECAY</a></code></div>
 <div class="col-last even-row-color"><code>0.009999999776482582f</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.DEFAULT_ENCODING">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#DEFAULT_ENCODING">DEFAULT_ENCODING</a></code></div>
+<div class="col-last odd-row-color"><code>0</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.DEFAULT_ENDIANESS">public&nbsp;static&nbsp;final&nbsp;boolean</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#DEFAULT_ENDIANESS">DEFAULT_ENDIANESS</a></code></div>
+<div class="col-last even-row-color"><code>false</code></div>
 <div class="col-first odd-row-color"><code id="wellen.Wellen.DEFAULT_FILTER_BANDWIDTH">public&nbsp;static&nbsp;final&nbsp;float</code></div>
 <div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#DEFAULT_FILTER_BANDWIDTH">DEFAULT_FILTER_BANDWIDTH</a></code></div>
 <div class="col-last odd-row-color"><code>100.0f</code></div>
@@ -511,318 +497,339 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code id="wellen.Wellen.DISTORTION_SOFT_CLIPPING_CUBIC">public&nbsp;static&nbsp;final&nbsp;int</code></div>
 <div class="col-second even-row-color"><code><a href="wellen/Wellen.html#DISTORTION_SOFT_CLIPPING_CUBIC">DISTORTION_SOFT_CLIPPING_CUBIC</a></code></div>
 <div class="col-last even-row-color"><code>6</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.ENVELOPE_FORM_BLACKMAN">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#ENVELOPE_FORM_BLACKMAN">ENVELOPE_FORM_BLACKMAN</a></code></div>
-<div class="col-last odd-row-color"><code>12</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.ENVELOPE_FORM_BLACKMAN_HARRIS">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#ENVELOPE_FORM_BLACKMAN_HARRIS">ENVELOPE_FORM_BLACKMAN_HARRIS</a></code></div>
-<div class="col-last even-row-color"><code>13</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.ENVELOPE_FORM_COSINE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#ENVELOPE_FORM_COSINE">ENVELOPE_FORM_COSINE</a></code></div>
-<div class="col-last odd-row-color"><code>9</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.ENVELOPE_FORM_COSINE_SQUARED">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#ENVELOPE_FORM_COSINE_SQUARED">ENVELOPE_FORM_COSINE_SQUARED</a></code></div>
-<div class="col-last even-row-color"><code>10</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.ENVELOPE_FORM_DOWNWARD_TRIANGLE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#ENVELOPE_FORM_DOWNWARD_TRIANGLE">ENVELOPE_FORM_DOWNWARD_TRIANGLE</a></code></div>
-<div class="col-last odd-row-color"><code>2</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.ENVELOPE_FORM_EXPONENTIAL_DECAY">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#ENVELOPE_FORM_EXPONENTIAL_DECAY">ENVELOPE_FORM_EXPONENTIAL_DECAY</a></code></div>
-<div class="col-last even-row-color"><code>4</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.ENVELOPE_FORM_EXPONENTIAL_INCREASE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#ENVELOPE_FORM_EXPONENTIAL_INCREASE">ENVELOPE_FORM_EXPONENTIAL_INCREASE</a></code></div>
-<div class="col-last odd-row-color"><code>5</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.ENVELOPE_FORM_GAUSSIAN">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#ENVELOPE_FORM_GAUSSIAN">ENVELOPE_FORM_GAUSSIAN</a></code></div>
-<div class="col-last even-row-color"><code>6</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.ENVELOPE_FORM_HANNING">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#ENVELOPE_FORM_HANNING">ENVELOPE_FORM_HANNING</a></code></div>
-<div class="col-last odd-row-color"><code>7</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.ENVELOPE_FORM_LANCZOS">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#ENVELOPE_FORM_LANCZOS">ENVELOPE_FORM_LANCZOS</a></code></div>
-<div class="col-last even-row-color"><code>8</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.ENVELOPE_FORM_RECTANGULAR">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#ENVELOPE_FORM_RECTANGULAR">ENVELOPE_FORM_RECTANGULAR</a></code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.ENCODING_ALAW">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#ENCODING_ALAW">ENCODING_ALAW</a></code></div>
+<div class="col-last odd-row-color"><code>4</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.ENCODING_PCM_FLOAT">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#ENCODING_PCM_FLOAT">ENCODING_PCM_FLOAT</a></code></div>
+<div class="col-last even-row-color"><code>2</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.ENCODING_PCM_SIGNED">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#ENCODING_PCM_SIGNED">ENCODING_PCM_SIGNED</a></code></div>
 <div class="col-last odd-row-color"><code>0</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.ENVELOPE_FORM_TRIANGLE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#ENVELOPE_FORM_TRIANGLE">ENVELOPE_FORM_TRIANGLE</a></code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.ENCODING_PCM_UNSIGNED">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#ENCODING_PCM_UNSIGNED">ENCODING_PCM_UNSIGNED</a></code></div>
 <div class="col-last even-row-color"><code>1</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.ENVELOPE_FORM_UPWARD_TRIANGLE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#ENVELOPE_FORM_UPWARD_TRIANGLE">ENVELOPE_FORM_UPWARD_TRIANGLE</a></code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.ENCODING_ULAW">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#ENCODING_ULAW">ENCODING_ULAW</a></code></div>
 <div class="col-last odd-row-color"><code>3</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.ENVELOPE_FORM_WELCH">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#ENVELOPE_FORM_WELCH">ENVELOPE_FORM_WELCH</a></code></div>
-<div class="col-last even-row-color"><code>11</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.EVENT_CHANNEL">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#EVENT_CHANNEL">EVENT_CHANNEL</a></code></div>
-<div class="col-last odd-row-color"><code>0</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.EVENT_CONTROLCHANGE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#EVENT_CONTROLCHANGE">EVENT_CONTROLCHANGE</a></code></div>
-<div class="col-last even-row-color"><code>2</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.EVENT_NOTE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#EVENT_NOTE">EVENT_NOTE</a></code></div>
-<div class="col-last odd-row-color"><code>1</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.EVENT_NOTE_OFF">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#EVENT_NOTE_OFF">EVENT_NOTE_OFF</a></code></div>
-<div class="col-last even-row-color"><code>1</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.EVENT_NOTE_ON">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#EVENT_NOTE_ON">EVENT_NOTE_ON</a></code></div>
-<div class="col-last odd-row-color"><code>0</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.EVENT_PITCHBEND">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#EVENT_PITCHBEND">EVENT_PITCHBEND</a></code></div>
-<div class="col-last even-row-color"><code>3</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.EVENT_PROGRAMCHANGE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#EVENT_PROGRAMCHANGE">EVENT_PROGRAMCHANGE</a></code></div>
-<div class="col-last odd-row-color"><code>4</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.EVENT_UNDEFINED">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#EVENT_UNDEFINED">EVENT_UNDEFINED</a></code></div>
-<div class="col-last even-row-color"><code>-1</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.EVENT_VELOCITY">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#EVENT_VELOCITY">EVENT_VELOCITY</a></code></div>
-<div class="col-last odd-row-color"><code>2</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.FILTER_MODE_BAND_PASS">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#FILTER_MODE_BAND_PASS">FILTER_MODE_BAND_PASS</a></code></div>
-<div class="col-last even-row-color"><code>2</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.FILTER_MODE_BAND_REJECT">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#FILTER_MODE_BAND_REJECT">FILTER_MODE_BAND_REJECT</a></code></div>
-<div class="col-last odd-row-color"><code>7</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.FILTER_MODE_HIGH_PASS">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#FILTER_MODE_HIGH_PASS">FILTER_MODE_HIGH_PASS</a></code></div>
-<div class="col-last even-row-color"><code>1</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.FILTER_MODE_HIGHSHELF">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#FILTER_MODE_HIGHSHELF">FILTER_MODE_HIGHSHELF</a></code></div>
-<div class="col-last odd-row-color"><code>6</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.FILTER_MODE_LOW_PASS">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#FILTER_MODE_LOW_PASS">FILTER_MODE_LOW_PASS</a></code></div>
-<div class="col-last even-row-color"><code>0</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.FILTER_MODE_LOWSHELF">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#FILTER_MODE_LOWSHELF">FILTER_MODE_LOWSHELF</a></code></div>
-<div class="col-last odd-row-color"><code>5</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.FILTER_MODE_NOTCH">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#FILTER_MODE_NOTCH">FILTER_MODE_NOTCH</a></code></div>
-<div class="col-last even-row-color"><code>3</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.FILTER_MODE_PEAK">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#FILTER_MODE_PEAK">FILTER_MODE_PEAK</a></code></div>
-<div class="col-last odd-row-color"><code>4</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.LOOP_INFINITE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#LOOP_INFINITE">LOOP_INFINITE</a></code></div>
-<div class="col-last even-row-color"><code>2147483647</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.MONO">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#MONO">MONO</a></code></div>
-<div class="col-last odd-row-color"><code>1</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.NO_AUDIO_DEVICE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#NO_AUDIO_DEVICE">NO_AUDIO_DEVICE</a></code></div>
-<div class="col-last even-row-color"><code>-2</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.NO_CHANNELS">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#NO_CHANNELS">NO_CHANNELS</a></code></div>
-<div class="col-last odd-row-color"><code>0</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.NO_EVENT">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#NO_EVENT">NO_EVENT</a></code></div>
-<div class="col-last even-row-color"><code>-1</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.NO_INPOINT">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#NO_INPOINT">NO_INPOINT</a></code></div>
-<div class="col-last odd-row-color"><code>0</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.NO_LOOP">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#NO_LOOP">NO_LOOP</a></code></div>
-<div class="col-last even-row-color"><code>-2</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.NO_LOOP_COUNT">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#NO_LOOP_COUNT">NO_LOOP_COUNT</a></code></div>
-<div class="col-last odd-row-color"><code>-1</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.NO_OUTPOINT">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#NO_OUTPOINT">NO_OUTPOINT</a></code></div>
-<div class="col-last even-row-color"><code>-1</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.NO_POSITION">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#NO_POSITION">NO_POSITION</a></code></div>
-<div class="col-last odd-row-color"><code>-1</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.NO_VALUE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#NO_VALUE">NO_VALUE</a></code></div>
-<div class="col-last even-row-color"><code>-1</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.NOISE_GAUSSIAN_WHITE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#NOISE_GAUSSIAN_WHITE">NOISE_GAUSSIAN_WHITE</a></code></div>
-<div class="col-last odd-row-color"><code>1</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.NOISE_GAUSSIAN_WHITE2">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#NOISE_GAUSSIAN_WHITE2">NOISE_GAUSSIAN_WHITE2</a></code></div>
-<div class="col-last even-row-color"><code>2</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.NOISE_PINK">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#NOISE_PINK">NOISE_PINK</a></code></div>
-<div class="col-last odd-row-color"><code>3</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.NOISE_PINK2">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#NOISE_PINK2">NOISE_PINK2</a></code></div>
-<div class="col-last even-row-color"><code>4</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.NOISE_PINK3">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#NOISE_PINK3">NOISE_PINK3</a></code></div>
-<div class="col-last odd-row-color"><code>5</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.NOISE_SIMPLEX">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#NOISE_SIMPLEX">NOISE_SIMPLEX</a></code></div>
-<div class="col-last even-row-color"><code>6</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.NOISE_WHITE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#NOISE_WHITE">NOISE_WHITE</a></code></div>
-<div class="col-last odd-row-color"><code>0</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.NOTE_EIGHTH">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#NOTE_EIGHTH">NOTE_EIGHTH</a></code></div>
-<div class="col-last even-row-color"><code>2</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.NOTE_HALF">public&nbsp;static&nbsp;final&nbsp;float</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#NOTE_HALF">NOTE_HALF</a></code></div>
-<div class="col-last odd-row-color"><code>0.5f</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.NOTE_QUARTER">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#NOTE_QUARTER">NOTE_QUARTER</a></code></div>
-<div class="col-last even-row-color"><code>1</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.NOTE_SIXTEENTH">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#NOTE_SIXTEENTH">NOTE_SIXTEENTH</a></code></div>
-<div class="col-last odd-row-color"><code>4</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.NOTE_THIRTYSECOND">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#NOTE_THIRTYSECOND">NOTE_THIRTYSECOND</a></code></div>
-<div class="col-last even-row-color"><code>8</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.NOTE_WHOLE">public&nbsp;static&nbsp;final&nbsp;float</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#NOTE_WHOLE">NOTE_WHOLE</a></code></div>
-<div class="col-last odd-row-color"><code>0.25f</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.NUM_ENVELOPE_FORM">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#NUM_ENVELOPE_FORM">NUM_ENVELOPE_FORM</a></code></div>
-<div class="col-last even-row-color"><code>14</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.NUM_OF_WAVESHAPER_FORMS">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#NUM_OF_WAVESHAPER_FORMS">NUM_OF_WAVESHAPER_FORMS</a></code></div>
-<div class="col-last odd-row-color"><code>5</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.OSC_SAWTOOTH">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#OSC_SAWTOOTH">OSC_SAWTOOTH</a></code></div>
-<div class="col-last even-row-color"><code>2</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.OSC_SINE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#OSC_SINE">OSC_SINE</a></code></div>
-<div class="col-last odd-row-color"><code>0</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.OSC_SQUARE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#OSC_SQUARE">OSC_SQUARE</a></code></div>
-<div class="col-last even-row-color"><code>3</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.OSC_TRIANGLE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#OSC_TRIANGLE">OSC_TRIANGLE</a></code></div>
-<div class="col-last odd-row-color"><code>1</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.PAN_LINEAR">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#PAN_LINEAR">PAN_LINEAR</a></code></div>
-<div class="col-last even-row-color"><code>0</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.PAN_SINE_LAW">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#PAN_SINE_LAW">PAN_SINE_LAW</a></code></div>
-<div class="col-last odd-row-color"><code>2</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.PAN_SQUARE_LAW">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#PAN_SQUARE_LAW">PAN_SQUARE_LAW</a></code></div>
-<div class="col-last even-row-color"><code>1</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.SIG_INT16_BIG_ENDIAN">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#SIG_INT16_BIG_ENDIAN">SIG_INT16_BIG_ENDIAN</a></code></div>
-<div class="col-last odd-row-color"><code>2</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.SIG_INT16_LITTLE_ENDIAN">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#SIG_INT16_LITTLE_ENDIAN">SIG_INT16_LITTLE_ENDIAN</a></code></div>
-<div class="col-last even-row-color"><code>3</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.SIG_INT24_3_BIG_ENDIAN">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#SIG_INT24_3_BIG_ENDIAN">SIG_INT24_3_BIG_ENDIAN</a></code></div>
-<div class="col-last odd-row-color"><code>4</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.SIG_INT24_3_LITTLE_ENDIAN">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#SIG_INT24_3_LITTLE_ENDIAN">SIG_INT24_3_LITTLE_ENDIAN</a></code></div>
-<div class="col-last even-row-color"><code>5</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.SIG_INT24_4_BIG_ENDIAN">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#SIG_INT24_4_BIG_ENDIAN">SIG_INT24_4_BIG_ENDIAN</a></code></div>
-<div class="col-last odd-row-color"><code>6</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.SIG_INT24_4_LITTLE_ENDIAN">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#SIG_INT24_4_LITTLE_ENDIAN">SIG_INT24_4_LITTLE_ENDIAN</a></code></div>
-<div class="col-last even-row-color"><code>7</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.SIG_INT32_BIG_ENDIAN">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#SIG_INT32_BIG_ENDIAN">SIG_INT32_BIG_ENDIAN</a></code></div>
-<div class="col-last odd-row-color"><code>8</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.SIG_INT32_LITTLE_ENDIAN">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#SIG_INT32_LITTLE_ENDIAN">SIG_INT32_LITTLE_ENDIAN</a></code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.ENDIANESS_BIG_ENDIAN">public&nbsp;static&nbsp;final&nbsp;boolean</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#ENDIANESS_BIG_ENDIAN">ENDIANESS_BIG_ENDIAN</a></code></div>
+<div class="col-last even-row-color"><code>true</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.ENDIANESS_LITTLE_ENDIAN">public&nbsp;static&nbsp;final&nbsp;boolean</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#ENDIANESS_LITTLE_ENDIAN">ENDIANESS_LITTLE_ENDIAN</a></code></div>
+<div class="col-last odd-row-color"><code>false</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.ENVELOPE_FORM_BLACKMAN">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#ENVELOPE_FORM_BLACKMAN">ENVELOPE_FORM_BLACKMAN</a></code></div>
+<div class="col-last even-row-color"><code>12</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.ENVELOPE_FORM_BLACKMAN_HARRIS">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#ENVELOPE_FORM_BLACKMAN_HARRIS">ENVELOPE_FORM_BLACKMAN_HARRIS</a></code></div>
+<div class="col-last odd-row-color"><code>13</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.ENVELOPE_FORM_COSINE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#ENVELOPE_FORM_COSINE">ENVELOPE_FORM_COSINE</a></code></div>
 <div class="col-last even-row-color"><code>9</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.SIG_INT8">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#SIG_INT8">SIG_INT8</a></code></div>
-<div class="col-last odd-row-color"><code>0</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.SIG_UINT8">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#SIG_UINT8">SIG_UINT8</a></code></div>
-<div class="col-last even-row-color"><code>1</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.SIGNAL_LEFT">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#SIGNAL_LEFT">SIGNAL_LEFT</a></code></div>
-<div class="col-last odd-row-color"><code>0</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.SIGNAL_MAX">public&nbsp;static&nbsp;final&nbsp;float</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#SIGNAL_MAX">SIGNAL_MAX</a></code></div>
-<div class="col-last even-row-color"><code>1.0f</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.SIGNAL_MIN">public&nbsp;static&nbsp;final&nbsp;float</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#SIGNAL_MIN">SIGNAL_MIN</a></code></div>
-<div class="col-last odd-row-color"><code>-1.0f</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.SIGNAL_MONO">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#SIGNAL_MONO">SIGNAL_MONO</a></code></div>
-<div class="col-last even-row-color"><code>1</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.SIGNAL_PROCESSING_IGNORE_IN_OUTPOINTS">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#SIGNAL_PROCESSING_IGNORE_IN_OUTPOINTS">SIGNAL_PROCESSING_IGNORE_IN_OUTPOINTS</a></code></div>
-<div class="col-last odd-row-color"><code>-3</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.SIGNAL_RIGHT">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#SIGNAL_RIGHT">SIGNAL_RIGHT</a></code></div>
-<div class="col-last even-row-color"><code>1</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.SIGNAL_STEREO">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#SIGNAL_STEREO">SIGNAL_STEREO</a></code></div>
-<div class="col-last odd-row-color"><code>2</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.STEREO">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#STEREO">STEREO</a></code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.ENVELOPE_FORM_COSINE_SQUARED">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#ENVELOPE_FORM_COSINE_SQUARED">ENVELOPE_FORM_COSINE_SQUARED</a></code></div>
+<div class="col-last odd-row-color"><code>10</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.ENVELOPE_FORM_DOWNWARD_TRIANGLE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#ENVELOPE_FORM_DOWNWARD_TRIANGLE">ENVELOPE_FORM_DOWNWARD_TRIANGLE</a></code></div>
 <div class="col-last even-row-color"><code>2</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.TONE_ENGINE_INTERNAL">public&nbsp;static&nbsp;final&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#TONE_ENGINE_INTERNAL">TONE_ENGINE_INTERNAL</a></code></div>
-<div class="col-last odd-row-color"><code>"internal"</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.TONE_ENGINE_INTERNAL_WITH_NO_OUTPUT">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#TONE_ENGINE_INTERNAL_WITH_NO_OUTPUT">TONE_ENGINE_INTERNAL_WITH_NO_OUTPUT</a></code></div>
-<div class="col-last even-row-color"><code>-2</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.TONE_ENGINE_MIDI">public&nbsp;static&nbsp;final&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#TONE_ENGINE_MIDI">TONE_ENGINE_MIDI</a></code></div>
-<div class="col-last odd-row-color"><code>"midi"</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.TONE_ENGINE_OSC">public&nbsp;static&nbsp;final&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#TONE_ENGINE_OSC">TONE_ENGINE_OSC</a></code></div>
-<div class="col-last even-row-color"><code>"osc"</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.TWO_PI">public&nbsp;static&nbsp;final&nbsp;float</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#TWO_PI">TWO_PI</a></code></div>
-<div class="col-last odd-row-color"><code>6.2831854820251465f</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.VERSION_MAJOR">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#VERSION_MAJOR">VERSION_MAJOR</a></code></div>
-<div class="col-last even-row-color"><code>0</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.VERSION_MINOR">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#VERSION_MINOR">VERSION_MINOR</a></code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.ENVELOPE_FORM_EXPONENTIAL_DECAY">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#ENVELOPE_FORM_EXPONENTIAL_DECAY">ENVELOPE_FORM_EXPONENTIAL_DECAY</a></code></div>
+<div class="col-last odd-row-color"><code>4</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.ENVELOPE_FORM_EXPONENTIAL_INCREASE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#ENVELOPE_FORM_EXPONENTIAL_INCREASE">ENVELOPE_FORM_EXPONENTIAL_INCREASE</a></code></div>
+<div class="col-last even-row-color"><code>5</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.ENVELOPE_FORM_GAUSSIAN">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#ENVELOPE_FORM_GAUSSIAN">ENVELOPE_FORM_GAUSSIAN</a></code></div>
+<div class="col-last odd-row-color"><code>6</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.ENVELOPE_FORM_HANNING">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#ENVELOPE_FORM_HANNING">ENVELOPE_FORM_HANNING</a></code></div>
+<div class="col-last even-row-color"><code>7</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.ENVELOPE_FORM_LANCZOS">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#ENVELOPE_FORM_LANCZOS">ENVELOPE_FORM_LANCZOS</a></code></div>
 <div class="col-last odd-row-color"><code>8</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.WAV_FORMAT_IEEE_FLOAT_32BIT">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#WAV_FORMAT_IEEE_FLOAT_32BIT">WAV_FORMAT_IEEE_FLOAT_32BIT</a></code></div>
-<div class="col-last even-row-color"><code>3</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.WAV_FORMAT_PCM">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#WAV_FORMAT_PCM">WAV_FORMAT_PCM</a></code></div>
-<div class="col-last odd-row-color"><code>1</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.WAVEFORM_NOISE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#WAVEFORM_NOISE">WAVEFORM_NOISE</a></code></div>
-<div class="col-last even-row-color"><code>4</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.WAVEFORM_SAWTOOTH">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#WAVEFORM_SAWTOOTH">WAVEFORM_SAWTOOTH</a></code></div>
-<div class="col-last odd-row-color"><code>2</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.WAVEFORM_SINE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#WAVEFORM_SINE">WAVEFORM_SINE</a></code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.ENVELOPE_FORM_RECTANGULAR">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#ENVELOPE_FORM_RECTANGULAR">ENVELOPE_FORM_RECTANGULAR</a></code></div>
 <div class="col-last even-row-color"><code>0</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.WAVEFORM_SQUARE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#WAVEFORM_SQUARE">WAVEFORM_SQUARE</a></code></div>
-<div class="col-last odd-row-color"><code>3</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.WAVEFORM_TRIANGLE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#WAVEFORM_TRIANGLE">WAVEFORM_TRIANGLE</a></code></div>
-<div class="col-last even-row-color"><code>1</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.WAVESHAPE_INTERPOLATE_CUBIC">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#WAVESHAPE_INTERPOLATE_CUBIC">WAVESHAPE_INTERPOLATE_CUBIC</a></code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.ENVELOPE_FORM_TRIANGLE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#ENVELOPE_FORM_TRIANGLE">ENVELOPE_FORM_TRIANGLE</a></code></div>
+<div class="col-last odd-row-color"><code>1</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.ENVELOPE_FORM_UPWARD_TRIANGLE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#ENVELOPE_FORM_UPWARD_TRIANGLE">ENVELOPE_FORM_UPWARD_TRIANGLE</a></code></div>
+<div class="col-last even-row-color"><code>3</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.ENVELOPE_FORM_WELCH">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#ENVELOPE_FORM_WELCH">ENVELOPE_FORM_WELCH</a></code></div>
+<div class="col-last odd-row-color"><code>11</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.EVENT_CHANNEL">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#EVENT_CHANNEL">EVENT_CHANNEL</a></code></div>
+<div class="col-last even-row-color"><code>0</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.EVENT_CONTROLCHANGE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#EVENT_CONTROLCHANGE">EVENT_CONTROLCHANGE</a></code></div>
 <div class="col-last odd-row-color"><code>2</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.WAVESHAPE_INTERPOLATE_LINEAR">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#WAVESHAPE_INTERPOLATE_LINEAR">WAVESHAPE_INTERPOLATE_LINEAR</a></code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.EVENT_NOTE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#EVENT_NOTE">EVENT_NOTE</a></code></div>
 <div class="col-last even-row-color"><code>1</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.WAVESHAPE_INTERPOLATE_NONE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#WAVESHAPE_INTERPOLATE_NONE">WAVESHAPE_INTERPOLATE_NONE</a></code></div>
-<div class="col-last odd-row-color"><code>0</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.WAVESHAPER_ATAN">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#WAVESHAPER_ATAN">WAVESHAPER_ATAN</a></code></div>
-<div class="col-last even-row-color"><code>1</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.WAVESHAPER_CUBIC">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#WAVESHAPER_CUBIC">WAVESHAPER_CUBIC</a></code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.EVENT_NOTE_OFF">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#EVENT_NOTE_OFF">EVENT_NOTE_OFF</a></code></div>
+<div class="col-last odd-row-color"><code>1</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.EVENT_NOTE_ON">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#EVENT_NOTE_ON">EVENT_NOTE_ON</a></code></div>
+<div class="col-last even-row-color"><code>0</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.EVENT_PITCHBEND">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#EVENT_PITCHBEND">EVENT_PITCHBEND</a></code></div>
 <div class="col-last odd-row-color"><code>3</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.WAVESHAPER_HARDCLIP">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#WAVESHAPER_HARDCLIP">WAVESHAPER_HARDCLIP</a></code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.EVENT_PROGRAMCHANGE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#EVENT_PROGRAMCHANGE">EVENT_PROGRAMCHANGE</a></code></div>
 <div class="col-last even-row-color"><code>4</code></div>
-<div class="col-first odd-row-color"><code id="wellen.Wellen.WAVESHAPER_SIN">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#WAVESHAPER_SIN">WAVESHAPER_SIN</a></code></div>
-<div class="col-last odd-row-color"><code>0</code></div>
-<div class="col-first even-row-color"><code id="wellen.Wellen.WAVESHAPER_TAN_H">public&nbsp;static&nbsp;final&nbsp;int</code></div>
-<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#WAVESHAPER_TAN_H">WAVESHAPER_TAN_H</a></code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.EVENT_UNDEFINED">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#EVENT_UNDEFINED">EVENT_UNDEFINED</a></code></div>
+<div class="col-last odd-row-color"><code>-1</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.EVENT_VELOCITY">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#EVENT_VELOCITY">EVENT_VELOCITY</a></code></div>
 <div class="col-last even-row-color"><code>2</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.FILTER_MODE_BAND_PASS">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#FILTER_MODE_BAND_PASS">FILTER_MODE_BAND_PASS</a></code></div>
+<div class="col-last odd-row-color"><code>2</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.FILTER_MODE_BAND_REJECT">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#FILTER_MODE_BAND_REJECT">FILTER_MODE_BAND_REJECT</a></code></div>
+<div class="col-last even-row-color"><code>7</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.FILTER_MODE_HIGH_PASS">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#FILTER_MODE_HIGH_PASS">FILTER_MODE_HIGH_PASS</a></code></div>
+<div class="col-last odd-row-color"><code>1</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.FILTER_MODE_HIGHSHELF">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#FILTER_MODE_HIGHSHELF">FILTER_MODE_HIGHSHELF</a></code></div>
+<div class="col-last even-row-color"><code>6</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.FILTER_MODE_LOW_PASS">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#FILTER_MODE_LOW_PASS">FILTER_MODE_LOW_PASS</a></code></div>
+<div class="col-last odd-row-color"><code>0</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.FILTER_MODE_LOWSHELF">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#FILTER_MODE_LOWSHELF">FILTER_MODE_LOWSHELF</a></code></div>
+<div class="col-last even-row-color"><code>5</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.FILTER_MODE_NOTCH">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#FILTER_MODE_NOTCH">FILTER_MODE_NOTCH</a></code></div>
+<div class="col-last odd-row-color"><code>3</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.FILTER_MODE_PEAK">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#FILTER_MODE_PEAK">FILTER_MODE_PEAK</a></code></div>
+<div class="col-last even-row-color"><code>4</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.LOOP_INFINITE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#LOOP_INFINITE">LOOP_INFINITE</a></code></div>
+<div class="col-last odd-row-color"><code>2147483647</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.MONO">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#MONO">MONO</a></code></div>
+<div class="col-last even-row-color"><code>1</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.NO_AUDIO_DEVICE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#NO_AUDIO_DEVICE">NO_AUDIO_DEVICE</a></code></div>
+<div class="col-last odd-row-color"><code>-2</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.NO_CHANNELS">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#NO_CHANNELS">NO_CHANNELS</a></code></div>
+<div class="col-last even-row-color"><code>0</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.NO_EVENT">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#NO_EVENT">NO_EVENT</a></code></div>
+<div class="col-last odd-row-color"><code>-1</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.NO_INPOINT">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#NO_INPOINT">NO_INPOINT</a></code></div>
+<div class="col-last even-row-color"><code>0</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.NO_LOOP">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#NO_LOOP">NO_LOOP</a></code></div>
+<div class="col-last odd-row-color"><code>-2</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.NO_LOOP_COUNT">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#NO_LOOP_COUNT">NO_LOOP_COUNT</a></code></div>
+<div class="col-last even-row-color"><code>-1</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.NO_OUTPOINT">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#NO_OUTPOINT">NO_OUTPOINT</a></code></div>
+<div class="col-last odd-row-color"><code>-1</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.NO_POSITION">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#NO_POSITION">NO_POSITION</a></code></div>
+<div class="col-last even-row-color"><code>-1</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.NO_VALUE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#NO_VALUE">NO_VALUE</a></code></div>
+<div class="col-last odd-row-color"><code>-1</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.NOISE_GAUSSIAN_WHITE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#NOISE_GAUSSIAN_WHITE">NOISE_GAUSSIAN_WHITE</a></code></div>
+<div class="col-last even-row-color"><code>1</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.NOISE_GAUSSIAN_WHITE2">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#NOISE_GAUSSIAN_WHITE2">NOISE_GAUSSIAN_WHITE2</a></code></div>
+<div class="col-last odd-row-color"><code>2</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.NOISE_PINK">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#NOISE_PINK">NOISE_PINK</a></code></div>
+<div class="col-last even-row-color"><code>3</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.NOISE_PINK2">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#NOISE_PINK2">NOISE_PINK2</a></code></div>
+<div class="col-last odd-row-color"><code>4</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.NOISE_PINK3">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#NOISE_PINK3">NOISE_PINK3</a></code></div>
+<div class="col-last even-row-color"><code>5</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.NOISE_SIMPLEX">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#NOISE_SIMPLEX">NOISE_SIMPLEX</a></code></div>
+<div class="col-last odd-row-color"><code>6</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.NOISE_WHITE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#NOISE_WHITE">NOISE_WHITE</a></code></div>
+<div class="col-last even-row-color"><code>0</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.NOTE_EIGHTH">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#NOTE_EIGHTH">NOTE_EIGHTH</a></code></div>
+<div class="col-last odd-row-color"><code>2</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.NOTE_HALF">public&nbsp;static&nbsp;final&nbsp;float</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#NOTE_HALF">NOTE_HALF</a></code></div>
+<div class="col-last even-row-color"><code>0.5f</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.NOTE_QUARTER">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#NOTE_QUARTER">NOTE_QUARTER</a></code></div>
+<div class="col-last odd-row-color"><code>1</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.NOTE_SIXTEENTH">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#NOTE_SIXTEENTH">NOTE_SIXTEENTH</a></code></div>
+<div class="col-last even-row-color"><code>4</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.NOTE_THIRTYSECOND">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#NOTE_THIRTYSECOND">NOTE_THIRTYSECOND</a></code></div>
+<div class="col-last odd-row-color"><code>8</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.NOTE_WHOLE">public&nbsp;static&nbsp;final&nbsp;float</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#NOTE_WHOLE">NOTE_WHOLE</a></code></div>
+<div class="col-last even-row-color"><code>0.25f</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.NUM_ENVELOPE_FORM">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#NUM_ENVELOPE_FORM">NUM_ENVELOPE_FORM</a></code></div>
+<div class="col-last odd-row-color"><code>14</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.NUM_OF_WAVESHAPER_FORMS">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#NUM_OF_WAVESHAPER_FORMS">NUM_OF_WAVESHAPER_FORMS</a></code></div>
+<div class="col-last even-row-color"><code>5</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.OSC_SAWTOOTH">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#OSC_SAWTOOTH">OSC_SAWTOOTH</a></code></div>
+<div class="col-last odd-row-color"><code>2</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.OSC_SINE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#OSC_SINE">OSC_SINE</a></code></div>
+<div class="col-last even-row-color"><code>0</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.OSC_SQUARE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#OSC_SQUARE">OSC_SQUARE</a></code></div>
+<div class="col-last odd-row-color"><code>3</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.OSC_TRIANGLE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#OSC_TRIANGLE">OSC_TRIANGLE</a></code></div>
+<div class="col-last even-row-color"><code>1</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.PAN_LINEAR">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#PAN_LINEAR">PAN_LINEAR</a></code></div>
+<div class="col-last odd-row-color"><code>0</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.PAN_SINE_LAW">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#PAN_SINE_LAW">PAN_SINE_LAW</a></code></div>
+<div class="col-last even-row-color"><code>2</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.PAN_SQUARE_LAW">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#PAN_SQUARE_LAW">PAN_SQUARE_LAW</a></code></div>
+<div class="col-last odd-row-color"><code>1</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.SIG_INT16_BIG_ENDIAN">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#SIG_INT16_BIG_ENDIAN">SIG_INT16_BIG_ENDIAN</a></code></div>
+<div class="col-last even-row-color"><code>2</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.SIG_INT16_LITTLE_ENDIAN">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#SIG_INT16_LITTLE_ENDIAN">SIG_INT16_LITTLE_ENDIAN</a></code></div>
+<div class="col-last odd-row-color"><code>3</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.SIG_INT24_3_BIG_ENDIAN">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#SIG_INT24_3_BIG_ENDIAN">SIG_INT24_3_BIG_ENDIAN</a></code></div>
+<div class="col-last even-row-color"><code>4</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.SIG_INT24_3_LITTLE_ENDIAN">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#SIG_INT24_3_LITTLE_ENDIAN">SIG_INT24_3_LITTLE_ENDIAN</a></code></div>
+<div class="col-last odd-row-color"><code>5</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.SIG_INT24_4_BIG_ENDIAN">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#SIG_INT24_4_BIG_ENDIAN">SIG_INT24_4_BIG_ENDIAN</a></code></div>
+<div class="col-last even-row-color"><code>6</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.SIG_INT24_4_LITTLE_ENDIAN">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#SIG_INT24_4_LITTLE_ENDIAN">SIG_INT24_4_LITTLE_ENDIAN</a></code></div>
+<div class="col-last odd-row-color"><code>7</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.SIG_INT32_BIG_ENDIAN">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#SIG_INT32_BIG_ENDIAN">SIG_INT32_BIG_ENDIAN</a></code></div>
+<div class="col-last even-row-color"><code>8</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.SIG_INT32_LITTLE_ENDIAN">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#SIG_INT32_LITTLE_ENDIAN">SIG_INT32_LITTLE_ENDIAN</a></code></div>
+<div class="col-last odd-row-color"><code>9</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.SIG_INT8">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#SIG_INT8">SIG_INT8</a></code></div>
+<div class="col-last even-row-color"><code>0</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.SIG_UINT8">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#SIG_UINT8">SIG_UINT8</a></code></div>
+<div class="col-last odd-row-color"><code>1</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.SIGNAL_LEFT">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#SIGNAL_LEFT">SIGNAL_LEFT</a></code></div>
+<div class="col-last even-row-color"><code>0</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.SIGNAL_MAX">public&nbsp;static&nbsp;final&nbsp;float</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#SIGNAL_MAX">SIGNAL_MAX</a></code></div>
+<div class="col-last odd-row-color"><code>1.0f</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.SIGNAL_MIN">public&nbsp;static&nbsp;final&nbsp;float</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#SIGNAL_MIN">SIGNAL_MIN</a></code></div>
+<div class="col-last even-row-color"><code>-1.0f</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.SIGNAL_MONO">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#SIGNAL_MONO">SIGNAL_MONO</a></code></div>
+<div class="col-last odd-row-color"><code>1</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.SIGNAL_PROCESSING_IGNORE_IN_OUTPOINTS">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#SIGNAL_PROCESSING_IGNORE_IN_OUTPOINTS">SIGNAL_PROCESSING_IGNORE_IN_OUTPOINTS</a></code></div>
+<div class="col-last even-row-color"><code>-3</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.SIGNAL_RIGHT">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#SIGNAL_RIGHT">SIGNAL_RIGHT</a></code></div>
+<div class="col-last odd-row-color"><code>1</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.SIGNAL_STEREO">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#SIGNAL_STEREO">SIGNAL_STEREO</a></code></div>
+<div class="col-last even-row-color"><code>2</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.STEREO">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#STEREO">STEREO</a></code></div>
+<div class="col-last odd-row-color"><code>2</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.TONE_ENGINE_INTERNAL">public&nbsp;static&nbsp;final&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#TONE_ENGINE_INTERNAL">TONE_ENGINE_INTERNAL</a></code></div>
+<div class="col-last even-row-color"><code>"internal"</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.TONE_ENGINE_INTERNAL_WITH_NO_OUTPUT">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#TONE_ENGINE_INTERNAL_WITH_NO_OUTPUT">TONE_ENGINE_INTERNAL_WITH_NO_OUTPUT</a></code></div>
+<div class="col-last odd-row-color"><code>-2</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.TONE_ENGINE_MIDI">public&nbsp;static&nbsp;final&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#TONE_ENGINE_MIDI">TONE_ENGINE_MIDI</a></code></div>
+<div class="col-last even-row-color"><code>"midi"</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.TONE_ENGINE_OSC">public&nbsp;static&nbsp;final&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#TONE_ENGINE_OSC">TONE_ENGINE_OSC</a></code></div>
+<div class="col-last odd-row-color"><code>"osc"</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.TWO_PI">public&nbsp;static&nbsp;final&nbsp;float</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#TWO_PI">TWO_PI</a></code></div>
+<div class="col-last even-row-color"><code>6.2831854820251465f</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.VERSION_MAJOR">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#VERSION_MAJOR">VERSION_MAJOR</a></code></div>
+<div class="col-last odd-row-color"><code>0</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.VERSION_MINOR">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#VERSION_MINOR">VERSION_MINOR</a></code></div>
+<div class="col-last even-row-color"><code>8</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.WAV_FORMAT_IEEE_FLOAT_32BIT">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#WAV_FORMAT_IEEE_FLOAT_32BIT">WAV_FORMAT_IEEE_FLOAT_32BIT</a></code></div>
+<div class="col-last odd-row-color"><code>3</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.WAV_FORMAT_PCM">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#WAV_FORMAT_PCM">WAV_FORMAT_PCM</a></code></div>
+<div class="col-last even-row-color"><code>1</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.WAVEFORM_NOISE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#WAVEFORM_NOISE">WAVEFORM_NOISE</a></code></div>
+<div class="col-last odd-row-color"><code>4</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.WAVEFORM_SAWTOOTH">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#WAVEFORM_SAWTOOTH">WAVEFORM_SAWTOOTH</a></code></div>
+<div class="col-last even-row-color"><code>2</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.WAVEFORM_SINE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#WAVEFORM_SINE">WAVEFORM_SINE</a></code></div>
+<div class="col-last odd-row-color"><code>0</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.WAVEFORM_SQUARE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#WAVEFORM_SQUARE">WAVEFORM_SQUARE</a></code></div>
+<div class="col-last even-row-color"><code>3</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.WAVEFORM_TRIANGLE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#WAVEFORM_TRIANGLE">WAVEFORM_TRIANGLE</a></code></div>
+<div class="col-last odd-row-color"><code>1</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.WAVESHAPE_INTERPOLATE_CUBIC">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#WAVESHAPE_INTERPOLATE_CUBIC">WAVESHAPE_INTERPOLATE_CUBIC</a></code></div>
+<div class="col-last even-row-color"><code>2</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.WAVESHAPE_INTERPOLATE_LINEAR">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#WAVESHAPE_INTERPOLATE_LINEAR">WAVESHAPE_INTERPOLATE_LINEAR</a></code></div>
+<div class="col-last odd-row-color"><code>1</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.WAVESHAPE_INTERPOLATE_NONE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#WAVESHAPE_INTERPOLATE_NONE">WAVESHAPE_INTERPOLATE_NONE</a></code></div>
+<div class="col-last even-row-color"><code>0</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.WAVESHAPER_ATAN">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#WAVESHAPER_ATAN">WAVESHAPER_ATAN</a></code></div>
+<div class="col-last odd-row-color"><code>1</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.WAVESHAPER_CUBIC">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#WAVESHAPER_CUBIC">WAVESHAPER_CUBIC</a></code></div>
+<div class="col-last even-row-color"><code>3</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.WAVESHAPER_HARDCLIP">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#WAVESHAPER_HARDCLIP">WAVESHAPER_HARDCLIP</a></code></div>
+<div class="col-last odd-row-color"><code>4</code></div>
+<div class="col-first even-row-color"><code id="wellen.Wellen.WAVESHAPER_SIN">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="wellen/Wellen.html#WAVESHAPER_SIN">WAVESHAPER_SIN</a></code></div>
+<div class="col-last even-row-color"><code>0</code></div>
+<div class="col-first odd-row-color"><code id="wellen.Wellen.WAVESHAPER_TAN_H">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="wellen/Wellen.html#WAVESHAPER_TAN_H">WAVESHAPER_TAN_H</a></code></div>
+<div class="col-last odd-row-color"><code>2</code></div>
 </div>
 </li>
 </ul>

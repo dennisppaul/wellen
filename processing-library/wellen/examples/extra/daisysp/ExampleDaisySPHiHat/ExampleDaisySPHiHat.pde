@@ -2,19 +2,13 @@ import wellen.*;
 import wellen.dsp.*; 
 
 import wellen.extra.daisysp.*;
-
 SyntheticBassDrum mBassDrum;
-
 int mBeatCount;
-
 HiHat mHiHat;
-
 ReverbSc mReverb;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     mHiHat = new HiHat();
     mHiHat.Init(Wellen.DEFAULT_SAMPLING_RATE);
@@ -29,7 +23,6 @@ void setup() {
     DSP.start(this, 2);
     Beat.start(this, 150 * 4);
 }
-
 void draw() {
     background(255);
     noStroke();
@@ -39,7 +32,6 @@ void draw() {
     stroke(255);
     DSP.draw_buffers(g, width, height);
 }
-
 void keyPressed() {
     switch (key) {
         case '1':
@@ -68,7 +60,6 @@ void keyPressed() {
             break;
     }
 }
-
 void mouseMoved() {
     if (keyCode == SHIFT) {
         mHiHat.SetFreq(map(mouseX, 0, width, 0, 1000));
@@ -79,7 +70,6 @@ void mouseMoved() {
         mHiHat.SetNoisiness(map(mouseY, 0, height, 0, 1));
     }
 }
-
 void beat(int beatCount) {
     mBeatCount = beatCount;
     if (mBeatCount % 13 != 0 && mBeatCount % 7 != 0) {
@@ -95,7 +85,6 @@ void beat(int beatCount) {
         mBassDrum.Trig();
     }
 }
-
 void audioblock(float[] output_signalLeft, float[] output_signalRight) {
     for (int i = 0; i < output_signalLeft.length; i++) {
         float s = mHiHat.Process() + mBassDrum.Process() * 0.5f;

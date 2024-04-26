@@ -3,20 +3,16 @@ import wellen.dsp.*;
 
 import wellen.extra.daisysp.*;
 // TODO(does not sound good … might be something fishy with the random functions)
-
 Drip mPluck;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     mPluck = new Drip();
     mPluck.Init(Wellen.DEFAULT_SAMPLING_RATE, 0.1f);
     DSP.start(this);
     Beat.start(this, 60);
 }
-
 void draw() {
     background(255);
     noStroke();
@@ -26,11 +22,9 @@ void draw() {
     stroke(255);
     DSP.draw_buffers(g, width, height);
 }
-
 void beat(int beatCount) {
     mPluck.Trig();
 }
-
 void audioblock(float[] output_signal) {
     for (int i = 0; i < output_signal.length; i++) {
         output_signal[i] = mPluck.Process();

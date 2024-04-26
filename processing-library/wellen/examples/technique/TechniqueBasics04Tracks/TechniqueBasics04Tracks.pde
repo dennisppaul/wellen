@@ -4,22 +4,16 @@ import wellen.dsp.*;
 /*
  * this example demonstrates how to build a composition with tracks.
  */
-
 static final int PPQN = 24;
-
 final ModuleToneEngine fModuleBleepBleep = new ModuleToneEngine();
-
 final Track fTrack = new Track();
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     fTrack.tracks().add(fModuleBleepBleep);
     Beat.start(this, 120 * PPQN);
 }
-
 void draw() {
     background(255);
     translate(16, 16);
@@ -28,19 +22,15 @@ void draw() {
     rect(0, 0, 128, 96);
     Wellen.draw_tone_stereo(g, 128, 96);
 }
-
 void beat(int beat) {
     fTrack.update(beat);
 }
-
 static class ModuleToneEngine extends Track {
-    
-ModuleToneEngine() {
+    ModuleToneEngine() {
         set_in_out_point(0, 3);
         set_loop(Wellen.LOOP_INFINITE);
     }
-    
-void beat(int beat_absolute, int beat_relative) {
+    void beat(int beat_absolute, int beat_relative) {
         boolean mIs16thBeat = beat_relative % (PPQN / 4) == 0;
         if (mIs16thBeat) {
             int mQuarterNoteCount = beat_relative / PPQN;

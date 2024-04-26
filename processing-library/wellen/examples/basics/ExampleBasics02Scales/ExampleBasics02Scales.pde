@@ -5,29 +5,22 @@ import wellen.dsp.*;
  * this example demonstrates how to use *musical scales*. a selection of predefined scales is available in `Scale`,
  * however custom scales can also be created.
  */
-
 int mNote;
-
 int[] mScale;
-
 int mStep;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     mScale = Scale.HALF_TONE;
     mNote = Note.NOTE_C4;
     fill(0);
 }
-
 void draw() {
     background(255);
     float mDiameter = map(mNote, Note.NOTE_C4, Note.NOTE_C5, height * 0.1f, height * 0.8f);
     ellipse(width * 0.5f, height * 0.5f, mDiameter, mDiameter);
 }
-
 void keyPressed() {
     if (key == ' ') {
         mStep++;

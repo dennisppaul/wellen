@@ -5,25 +5,19 @@ import wellen.dsp.*;
  * this example demonstrates how to record an input signal into a WAV file.
  * `s` starts the recording and `e` ends it.
  */
-
 boolean mIsRecording = true;
-
 final ArrayList<Float> mRecordedSamples = new ArrayList();
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     DSP.start(this, 1, 1);
 }
-
 void draw() {
     background(mIsRecording ? 0 : 255);
     stroke(mIsRecording ? 255 : 0);
     DSP.draw_buffers(g, width, height);
 }
-
 void audioblock(float[] output_signal, float[] pInputSignal) {
     for (int i = 0; i < output_signal.length; i++) {
         output_signal[i] = pInputSignal[i];
@@ -32,7 +26,6 @@ void audioblock(float[] output_signal, float[] pInputSignal) {
         }
     }
 }
-
 void keyPressed() {
     if (key == 's') {
         start_recording();
@@ -41,12 +34,10 @@ void keyPressed() {
         stop_recording();
     }
 }
-
 void start_recording() {
     mRecordedSamples.clear();
     mIsRecording = true;
 }
-
 void stop_recording() {
     mIsRecording = false;
     /* export samples to WAV file */

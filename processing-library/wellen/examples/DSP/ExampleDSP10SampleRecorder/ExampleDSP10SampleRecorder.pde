@@ -5,18 +5,14 @@ import wellen.dsp.*;
  * this example demonstrates how to record the input of `DSP` with a `Sampler`. this example also demonstrates how
  * to play a sample backwards.
  */
-
 Sampler fSampler;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     fSampler = new Sampler();
     DSP.start(this, 1, 1);
 }
-
 void draw() {
     background(255);
     DSP.draw_buffers(g, width, height);
@@ -28,16 +24,13 @@ void draw() {
     float mOriginalSpeedX = map(1, -5, 5, 0, width);
     line(mOriginalSpeedX, height / 2 - 10, mOriginalSpeedX, height / 2 + 10);
 }
-
 void mouseMoved() {
     fSampler.set_speed(map(mouseX, 0, width, -5, 5));
     fSampler.set_amplitude(map(mouseY, 0, height, 0.0f, 0.9f));
 }
-
 void keyPressed() {
     fSampler.start_recording();
 }
-
 void keyReleased() {
     int mLengthRecording = fSampler.end_recording();
     float mLengthRecordingInSeconds = (float) mLengthRecording / Wellen.DEFAULT_SAMPLING_RATE;
@@ -46,7 +39,6 @@ void keyReleased() {
     fSampler.set_loop_all();
     fSampler.play();
 }
-
 void audioblock(float[] output_signal, float[] pInputSignal) {
     if (fSampler.is_recording()) {
         fSampler.record(pInputSignal);

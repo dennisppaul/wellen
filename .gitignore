@@ -6,3 +6,34 @@ processing-library/wellen/src/wellen/tests/dsp/filters/
 src/wellen/tests/dsp/filters/
 src/wellen/tests/dsp/theaudioprogrammingbook/
 processing-library/wellen/src/wellen/tests/
+*.iml
+
+### IntelliJ IDEA ###
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### Eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store

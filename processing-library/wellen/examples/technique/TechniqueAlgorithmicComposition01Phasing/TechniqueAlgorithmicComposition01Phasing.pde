@@ -6,23 +6,15 @@ import wellen.dsp.*;
  * <a href="https://en.wikipedia.org/wiki/Phase_music">Phase
  * Music</a>.
  */
-
 BeatEvent mBeatA;
-
 BeatEvent mBeatB;
-
 BeatEvent mBeatC;
-
 Loop mLoopA;
-
 Loop mLoopB;
-
 Loop mLoopC;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     noStroke();
     Tone.start();
@@ -36,7 +28,6 @@ void setup() {
     mLoopC = new Loop(2, Note.NOTE_C4 + 7);
     mBeatC.add(mLoopC);
 }
-
 void draw() {
     background(255);
     fill(0);
@@ -50,7 +41,6 @@ void draw() {
         ellipse(width * 0.75f, height * 0.5f, width * 0.15f, width * 0.15f);
     }
 }
-
 static class Loop implements BeatListener {
     final int instrument;
     final int note;
@@ -60,8 +50,7 @@ static class Loop implements BeatListener {
         instrument = pInstrument;
         playing = false;
     }
-    
-void beat(int beatCount) {
+    void beat(int beatCount) {
         Tone.instrument(instrument);
         if (beatCount % 2 == 0) {
             Tone.note_on(note, 50);

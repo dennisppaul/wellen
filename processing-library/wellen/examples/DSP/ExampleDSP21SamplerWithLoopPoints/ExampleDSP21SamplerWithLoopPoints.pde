@@ -8,15 +8,11 @@ import wellen.dsp.*;
  *
  * note that *global* in- and out-points can be defined with `set_in()` + `set_out()`.
  */
-
 static final float BORDER = 32;
-
 Sampler fSampler;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     byte[] mData = loadBytes("../../../resources/hello.raw");
     fSampler = new Sampler();
@@ -27,7 +23,6 @@ void setup() {
     fSampler.enable_loop(true);
     DSP.start(this);
 }
-
 void draw() {
     background(255);
     translate(BORDER, BORDER);
@@ -71,17 +66,14 @@ void draw() {
     noFill();
     DSP.draw_buffers(g, width, height);
 }
-
 void mousePressed() {
     fSampler.play();
     fSampler.rewind();
     fSampler.enable_loop(true);
 }
-
 void mouseReleased() {
     fSampler.enable_loop(false);
 }
-
 void keyPressed() {
     switch (key) {
         case '1':
@@ -108,7 +100,6 @@ void keyPressed() {
             break;
     }
 }
-
 void audioblock(float[] output_signal) {
     for (int i = 0; i < output_signal.length; i++) {
         output_signal[i] = fSampler.output();

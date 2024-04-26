@@ -2,25 +2,16 @@ import wellen.*;
 import wellen.dsp.*; 
 
 import wellen.extra.rakarrack.*;
-
 ADSR mADSR;
-
 final float mBaseFrequency = 4.0f * Wellen.DEFAULT_SAMPLING_RATE / Wellen.DEFAULT_AUDIOBLOCK_SIZE;
-
 RREcho mEcho;
-
 boolean mEnableEcho = true;
-
 boolean mIsPlaying = false;
-
 final float mMasterVolume = 0.75f;
-
 final Wavetable mVCO = new Wavetable(512);
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     Wavetable.sine(mVCO.get_wavetable());
     mVCO.set_frequency(mBaseFrequency);
@@ -30,16 +21,13 @@ void setup() {
     DSP.start(this, 2);
     Beat.start(this, 120 * 8);
 }
-
 void draw() {
     background(255);
     DSP.draw_buffers(g, width, height);
 }
-
 void mouseMoved() {
     mEcho.Tempo2Delay((int) map(mouseX, 0, width, 10, 300));
 }
-
 void beat(int beat) {
     if (random(1) > 0.8f) {
         if (mIsPlaying) {
@@ -51,7 +39,6 @@ void beat(int beat) {
         mIsPlaying = !mIsPlaying;
     }
 }
-
 void keyPressed() {
     switch (key) {
         case 'q':
@@ -98,7 +85,6 @@ void keyPressed() {
             break;
     }
 }
-
 void audioblock(float[] output_signalLeft, float[] output_signalRight) {
     for (int i = 0; i < output_signalLeft.length; i++) {
         output_signalLeft[i] = mVCO.output();

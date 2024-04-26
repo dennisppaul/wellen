@@ -4,21 +4,14 @@ import wellen.dsp.*;
 /*
  * this example demonstrates how to
  */
-
 BeatDSP fBeat;
-
 ADSR fADSR;
-
 Wavetable fWavetable;
-
 Waveshaper fWaveshaper;
-
 int fWaveshaperForm = Wellen.WAVESHAPER_ATAN;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     fBeat = BeatDSP.start(this);
     fBeat.set_bpm(480);
@@ -32,7 +25,6 @@ void setup() {
     fWaveshaper.set_type(fWaveshaperForm);
     DSP.start(this);
 }
-
 void draw() {
     background(255);
     background(255);
@@ -41,7 +33,6 @@ void draw() {
     stroke(0);
     DSP.draw_buffers(g, width, height);
 }
-
 void keyPressed() {
     switch (key) {
         case '+':
@@ -60,19 +51,16 @@ void keyPressed() {
             break;
     }
 }
-
 void mouseMoved() {
     fWaveshaper.set_amount(map(mouseX, 0, width, 0, 50));
     fWaveshaper.set_output_gain(map(mouseY, 0, height, 0, 1));
 }
-
 void audioblock(float[] output_signal) {
     for (int i = 0; i < output_signal.length; i++) {
         fBeat.tick();
         output_signal[i] = fWaveshaper.process(fWavetable.output() * fADSR.output());
     }
 }
-
 void beat(int beatCount) {
     fADSR.start();
     final int mModifier = (beatCount / 8) % 4;

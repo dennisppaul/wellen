@@ -14,13 +14,10 @@ import wellen.dsp.*;
  * <p>
  * press mouse to play
  */
-
 Sampler mSampler;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     byte[] mData = loadBytes("../../../resources/sine-fade-in-out.raw"); // sinewave wuth 261.63 Hz
     mSampler = new Sampler();
@@ -33,7 +30,6 @@ void setup() {
     mSampler.set_frequency(261.63f);
     DSP.start(this);
 }
-
 void draw() {
     background(255);
     stroke(0);
@@ -52,15 +48,12 @@ void draw() {
     /* draw play head */
     line(mSampler.get_position_normalized() * width, 0, mSampler.get_position_normalized() * width, height);
 }
-
 void mousePressed() {
     mSampler.note_on();
 }
-
 void mouseReleased() {
     mSampler.note_off();
 }
-
 void keyPressed() {
     switch (key) {
         case '1':
@@ -83,7 +76,6 @@ void keyPressed() {
             break;
     }
 }
-
 void audioblock(float[] output_signal) {
     for (int i = 0; i < output_signal.length; i++) {
         output_signal[i] = mSampler.output();

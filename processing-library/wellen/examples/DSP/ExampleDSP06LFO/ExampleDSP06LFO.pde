@@ -10,19 +10,13 @@ import wellen.dsp.*;
  *
  * use keys to change waveform of LFOs and VCO.
  */
-
 final Wavetable mAmplitudeLFO = new Wavetable(512);
-
 final float mBaseFrequency = 2.0f * Wellen.DEFAULT_SAMPLING_RATE / Wellen.DEFAULT_AUDIOBLOCK_SIZE;
-
 final Wavetable mFrequencyLFO = new Wavetable(512);
-
 final Wavetable mVCO = new Wavetable(512);
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     Wavetable.sine(mVCO.get_wavetable());
     mVCO.set_frequency(mBaseFrequency);
@@ -37,22 +31,18 @@ void setup() {
     mAmplitudeLFO.set_frequency(0);
     DSP.start(this);
 }
-
 void draw() {
     background(255);
     DSP.draw_buffers(g, width, height);
 }
-
 void mouseDragged() {
     mAmplitudeLFO.set_frequency(map(mouseX, 0, width, 0.1f, 100.0f));
     mAmplitudeLFO.set_amplitude(map(mouseY, 0, height, 0.0f, 1.0f));
 }
-
 void mouseMoved() {
     mFrequencyLFO.set_frequency(map(mouseX, 0, width, 0.1f, 100.0f));
     mFrequencyLFO.set_amplitude(map(mouseY, 0, height, 0.0f, 1.0f));
 }
-
 void keyPressed() {
     switch (key) {
         case '1':
@@ -93,7 +83,6 @@ void keyPressed() {
             break;
     }
 }
-
 void audioblock(float[] output_signal) {
     for (int i = 0; i < output_signal.length; i++) {
         /* get frequency from LFO, map value range from [-1.0, 1.0] to [-40.0, 40.0] */

@@ -1,17 +1,13 @@
 import wellen.*; 
 import wellen.dsp.*; 
 
-
 static final int INSTRUMENT_DETUNE_STEREO = 0;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     Tone.replace_instrument(new CustomInstrumentDetunedOscillatorsStereo(INSTRUMENT_DETUNE_STEREO));
 }
-
 void draw() {
     background(255);
     fill(0);
@@ -20,17 +16,14 @@ void draw() {
     translate(mTranslate, 0);
     ellipse(0, height * 0.5f, Tone.is_playing() ? 100 : 5, Tone.is_playing() ? 100 : 5);
 }
-
 void mousePressed() {
     int mNote = 45 + (int) random(0, 12);
     Tone.instrument(INSTRUMENT_DETUNE_STEREO);
     Tone.note_on(mNote, 100);
 }
-
 void mouseReleased() {
     Tone.instrument(INSTRUMENT_DETUNE_STEREO).note_off();
 }
-
 static class CustomInstrumentDetunedOscillatorsStereo extends InstrumentDSP {
     /**
      * detunes the oscillators in percentage of the main frequency. one oscillator is detuned below the main
@@ -42,17 +35,13 @@ static class CustomInstrumentDetunedOscillatorsStereo extends InstrumentDSP {
      * <p>
      * > `osc_a_frequency = main_frequency * ( 1.0 + detune) = 222.2`
      */
-    
-float mDetune;
+    float mDetune;
     /**
      * spreads the oscillators over left and right channel: `0.0` no spread, `1.0` fully spread over both channels
      */
-    
-float mSpread;
-    
-final Wavetable mVCOSecond;
-    
-CustomInstrumentDetunedOscillatorsStereo(int pID) {
+    float mSpread;
+    final Wavetable mVCOSecond;
+    CustomInstrumentDetunedOscillatorsStereo(int pID) {
         super(pID);
         set_channels(2);
         set_detune(0.01f);
@@ -62,24 +51,19 @@ CustomInstrumentDetunedOscillatorsStereo(int pID) {
         mVCOSecond.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
         Wavetable.fill(mVCOSecond.get_wavetable(), Wellen.WAVEFORM_SINE);
     }
-    
-float get_detune() {
+    float get_detune() {
         return mDetune;
     }
-    
-void set_detune(float pDetune) {
+    void set_detune(float pDetune) {
         mDetune = pDetune;
     }
-    
-float get_spread() {
+    float get_spread() {
         return mSpread;
     }
-    
-void set_spread(float pSpread) {
+    void set_spread(float pSpread) {
         mSpread = pSpread;
     }
-    
-Signal output_signal() {
+    Signal output_signal() {
         /* this custom instrument ignores LFOs and LPF */
         fVCO.set_frequency(get_frequency() * (1.0f - mDetune));
         fVCO.set_amplitude(get_amplitude());

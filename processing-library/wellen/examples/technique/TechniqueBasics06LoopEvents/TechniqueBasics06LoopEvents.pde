@@ -4,17 +4,12 @@ import wellen.dsp.*;
 /*
  * this example demonstrates how to use loop events to create a composition.
  */
-
 final Loop fLoopA = new Loop();
-
 final Loop fLoopB = new Loop();
-
 final Loop fLoopC = new Loop();
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     fLoopA.set_length(3);
     fLoopB.set_length(4);
@@ -24,7 +19,6 @@ void setup() {
     Tone.instrument(2).set_pan(0.5f);
     Beat.start(this, 300);
 }
-
 void draw() {
     background(255);
     stroke(0);
@@ -36,7 +30,6 @@ void draw() {
     circle(width * 0.5f, height * 0.5f, Tone.instrument(1).is_playing() ? 100 : 10);
     circle(width * 0.5f + 100, height * 0.5f, Tone.instrument(2).is_playing() ? 100 : 10);
 }
-
 void beat(int beat) {
     Tone.instrument(0);
     if (fLoopA.event(beat, 0)) {

@@ -4,21 +4,14 @@ import wellen.dsp.*;
 /*
  * this example demonstrates how to use grid events to create a composition.
  */
-
 final int fBaseNoteDefault = 36;
-
 int fBaseNote = fBaseNoteDefault;
-
 final int fBaseNoteIncrease = 7;
-
 final int fBaseNoteIncreaseMax = 2;
-
 final Grid fGrid = new Grid();
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     Tone.enable_reverb(0.5f, 0.75f, 0.33f);
     fGrid.set_PPQN(24);
@@ -27,7 +20,6 @@ void setup() {
     Tone.instrument(1).set_pan(0.0f);
     Tone.instrument(2).set_pan(0.5f);
 }
-
 void draw() {
     background(255);
     stroke(0);
@@ -39,7 +31,6 @@ void draw() {
     circle(width * 0.5f, height * 0.5f, Tone.instrument(1).is_playing() ? 100 : 10);
     circle(width * 0.5f + 100, height * 0.5f, Tone.instrument(2).is_playing() ? 100 : 10);
 }
-
 void beat(int beat) {
     /* change base note every 4 bars ( or 16 quarter notes ) */
     if (fGrid.event_phase(beat, fGrid.get_PPQN() * 16, 0)) {

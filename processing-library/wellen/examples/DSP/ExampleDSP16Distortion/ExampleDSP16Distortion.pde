@@ -9,22 +9,17 @@ import wellen.dsp.*;
  * for distortion type `DISTORTION_BIT_CRUSHING` a number of bits needs to be specified through `set_bits(int)` to
  * achieve distortion by artificially reducing the bit range.
  */
-
 Distortion mDistortion;
-
 ToneEngineDSP mToneEngine;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     mDistortion = new Distortion();
     mToneEngine = Tone.start(Wellen.TONE_ENGINE_INTERNAL_WITH_NO_OUTPUT);
     Tone.instrument().set_oscillator_type(Wellen.OSC_TRIANGLE);
     DSP.start(this);
 }
-
 void draw() {
     background(255);
     fill(0);
@@ -33,7 +28,6 @@ void draw() {
     line(50, height * 0.1f, width - 50, height * 0.1f);
     DSP.draw_buffers(g, width, height);
 }
-
 void keyPressed() {
     switch (key) {
         case '1':
@@ -65,22 +59,18 @@ void keyPressed() {
             break;
     }
 }
-
 void mouseDragged() {
     mDistortion.set_clip(map(mouseX, 0, width, 0.0f, 1.0f));
     mDistortion.set_bits((int) map(mouseX, 0, width, 1, 17));
     mDistortion.set_amplification(map(mouseY, 0, height, 0.0f, 10.0f));
 }
-
 void mousePressed() {
     int mNote = 36 + (int) random(12);
     Tone.instrument(0).note_on(mNote, 80);
 }
-
 void mouseReleased() {
     Tone.instrument(0).note_off();
 }
-
 void audioblock(float[] output_signal) {
     mToneEngine.audioblock(output_signal);
     for (int i = 0; i < output_signal.length; i++) {

@@ -2,25 +2,16 @@ import wellen.*;
 import wellen.dsp.*; 
 
 import wellen.extra.rakarrack.*;
-
 final float mBaseFrequency = 4.0f * Wellen.DEFAULT_SAMPLING_RATE / Wellen.DEFAULT_AUDIOBLOCK_SIZE;
-
 float mMasterVolume = 0.5f;
-
 final Wavetable mVCO1 = new Wavetable(512);
-
 final Wavetable mVCO2 = new Wavetable(512);
-
 int mWaveshapeDrive = 90;
-
 int mWaveshapeType = RRWaveShaper.TYPE_ARCTANGENT;
-
 RRWaveShaper mWaveshaper;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     Wavetable.sine(mVCO1.get_wavetable());
     mVCO1.set_frequency(mBaseFrequency);
@@ -31,17 +22,14 @@ void setup() {
     mWaveshaper = new RRWaveShaper();
     DSP.start(this);
 }
-
 void draw() {
     background(255);
     DSP.draw_buffers(g, width, height);
 }
-
 void mouseMoved() {
     mWaveshapeDrive = (int) map(mouseX, 0, width, 0.0f, 127.0f);
     mMasterVolume = map(mouseY, 0, height, 0.0f, 1.0f);
 }
-
 void keyPressed() {
     switch (key) {
         case 'q':
@@ -82,7 +70,6 @@ void keyPressed() {
             break;
     }
 }
-
 void audioblock(float[] output_signal) {
     for (int i = 0; i < output_signal.length; i++) {
         final float a = mVCO1.output();

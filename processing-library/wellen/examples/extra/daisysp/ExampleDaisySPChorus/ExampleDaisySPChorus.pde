@@ -2,19 +2,13 @@ import wellen.*;
 import wellen.dsp.*; 
 
 import wellen.extra.daisysp.*;
-
 Chorus mChorus;
-
 int mMIDINoteCounter = 0;
-
 final int[] mMIDINotes = {36, 48, 39, 51};
-
 Pluck mPluck;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     mChorus = new Chorus();
     mChorus.Init(Wellen.DEFAULT_SAMPLING_RATE);
@@ -26,7 +20,6 @@ void setup() {
     DSP.start(this, 2);
     Beat.start(this, 240);
 }
-
 void draw() {
     background(255);
     noStroke();
@@ -36,7 +29,6 @@ void draw() {
     stroke(255);
     DSP.draw_buffers(g, width, height);
 }
-
 void mouseMoved() {
     switch (keyCode) {
         case SHIFT:
@@ -52,14 +44,12 @@ void mouseMoved() {
             mChorus.SetDelay(map(mouseX, 0, width, 0, 1), map(mouseY, 0, height, 0, 1));
     }
 }
-
 void beat(int beatCount) {
     mPluck.Trig();
     mPluck.SetFreq(DaisySP.mtof(mMIDINotes[mMIDINoteCounter]));
     mMIDINoteCounter++;
     mMIDINoteCounter %= mMIDINotes.length;
 }
-
 void audioblock(float[] output_signalLeft, float[] output_signalRight) {
     for (int i = 0; i < output_signalLeft.length; i++) {
         mChorus.Process(mPluck.Process());

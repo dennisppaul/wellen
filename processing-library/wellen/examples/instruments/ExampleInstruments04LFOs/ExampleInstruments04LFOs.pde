@@ -9,21 +9,15 @@ import wellen.dsp.*;
  *
  * note that this functionality is not implemented for MIDI and OSC.
  */
-
 boolean mEnableAmplitudeLFO = false;
-
 boolean mEnableFrequencyLFO = false;
-
 boolean mToggleLFOParameterSelect = true;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     Tone.start();
 }
-
 void draw() {
     background(255);
     noStroke();
@@ -35,16 +29,13 @@ void draw() {
     noFill();
     ellipse(mToggleLFOParameterSelect ? 40 : 80, height * 0.5f, 25, 25);
 }
-
 void mousePressed() {
     int mNote = 45 + (int) random(0, 12);
     Tone.note_on(mNote, 100);
 }
-
 void mouseReleased() {
     Tone.note_off();
 }
-
 void mouseDragged() {
     if (mToggleLFOParameterSelect) {
         Tone.instrument().set_frequency_LFO_amplitude(map(mouseY, 0, height, 0.0f, 50.0f));
@@ -54,7 +45,6 @@ void mouseDragged() {
         Tone.instrument().set_amplitude_LFO_frequency(map(mouseX, 0, width, 0.0f, 50.0f));
     }
 }
-
 void keyPressed() {
     switch (key) {
         case '1':

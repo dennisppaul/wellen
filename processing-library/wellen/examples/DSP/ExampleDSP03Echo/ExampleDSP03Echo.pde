@@ -11,26 +11,21 @@ float[] mDelayBuffer = new float[4096];
 int mDelayID = 0;
 int mDelayOffset = 512;
 float mMix = 0.25f;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     DSP.start(this, 1, 1);
 }
-
 void draw() {
     background(255);
     stroke(0);
     DSP.draw_buffers(g, width, height);
 }
-
 void mouseMoved() {
     mMix = map(mouseX, 0, width, 0.2f, 0.95f);
     mDelayOffset = (int) map(mouseY, 0, height, 1, mDelayBuffer.length);
 }
-
 void audioblock(float[] output_signal, float[] pInputSignal) {
     for (int i = 0; i < pInputSignal.length; i++) {
         mDelayID++;

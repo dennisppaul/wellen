@@ -9,16 +9,13 @@ import wellen.dsp.*;
  *
  * note that this functionality is not implemented for MIDI and OSC.
  */
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     println(ADSR.ADSR_DIAGRAM);
     randomizeADSR();
 }
-
 void draw() {
     background(Tone.is_playing() ? 0 : 255);
     int mColor = Tone.is_playing() ? 255 : 0;
@@ -33,20 +30,16 @@ void draw() {
     mStart = draw_connection_line(mStart, Tone.instrument().get_release(), Tone.instrument().get_sustain(), 0.0f);
     line(0.0f, 0.0f, mStart, 0.0f);
 }
-
 void mousePressed() {
     int mNote = Scale.get_note(Scale.CHORD_MAJOR_7TH, Note.NOTE_A2, (int) random(0, 10));
     Tone.note_on(mNote, 100);
 }
-
 void mouseReleased() {
     Tone.note_off();
 }
-
 void keyPressed() {
     randomizeADSR();
 }
-
 float draw_connection_line(float pStartX, float pDuration, float pLevelStart, float pLevelEnd) {
     final float mScaleX = width * 0.25f;
     final float mScaleY = height * 0.25f;
@@ -59,7 +52,6 @@ float draw_connection_line(float pStartX, float pDuration, float pLevelStart, fl
     ellipse(mEnd.x, mEnd.y, 6, 6);
     return mEnd.x;
 }
-
 void randomizeADSR() {
     Tone.instrument().set_attack(random(0.0f, 0.5f));
     Tone.instrument().set_decay(random(0.0f, 0.5f));

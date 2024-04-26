@@ -8,48 +8,36 @@ import wellen.dsp.*;
  * keys `1 – 3` select signal shapes, keys `a, e, i, o, u` select vowels, mouse changes the frequency of the
  * oscillator.
  */
-
 final ADSR mADSR = new ADSR();
-
 final FilterVowelFormant mFormantFilter = new FilterVowelFormant();
-
 boolean mIsKeyPressed = false;
-
 final Oscillator mOsc = new OscillatorFunction();
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     mOsc.set_frequency(55);
     mOsc.set_amplitude(0.33f);
     mOsc.set_waveform(Wellen.WAVEFORM_SQUARE);
     DSP.start(this);
 }
-
 void draw() {
     background(255);
     DSP.draw_buffers(g, width, height);
 }
-
 void mousePressed() {
     mADSR.start();
 }
-
 void mouseReleased() {
     mADSR.stop();
 }
-
 void mouseDragged() {
     mFormantFilter.lerp_vowel(FilterVowelFormant.VOWEL_I, FilterVowelFormant.VOWEL_O, map(mouseY, 0, height, 0, 1));
     mouseMoved();
 }
-
 void mouseMoved() {
     mOsc.set_frequency(map(mouseX, 0, width, 1, 110));
 }
-
 void keyPressed() {
     if (!mIsKeyPressed) {
         mIsKeyPressed = true;
@@ -82,14 +70,12 @@ void keyPressed() {
         mADSR.start();
     }
 }
-
 void keyReleased() {
     if (mIsKeyPressed) {
         mIsKeyPressed = false;
         mADSR.stop();
     }
 }
-
 void audioblock(float[] output_signal) {
     for (int i = 0; i < output_signal.length; i++) {
         output_signal[i] = mOsc.output();

@@ -7,19 +7,13 @@ import wellen.dsp.*;
  *
  * press keys 1 – 5 to trigger different patterns.
  */
-
 Arpeggiator fArpeggiator;
-
 Beat fBeat;
-
 int fColor;
-
 boolean fToggle;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     Wellen.dumpMidiInputDevices();
     fBeat = Beat.start(this, 120 * 24);
@@ -34,7 +28,6 @@ void setup() {
     fArpeggiator.pattern(4 * 3, 4, 0.2f);
     fArpeggiator.pattern(6 * 3, 5, 0.1f);
 }
-
 void draw() {
     background(255);
     if (fToggle) {
@@ -42,7 +35,6 @@ void draw() {
         ellipse(width * 0.5f, height * 0.5f, 100, 100);
     }
 }
-
 void keyPressed() {
     switch (key) {
         case '1':
@@ -62,7 +54,6 @@ void keyPressed() {
             break;
     }
 }
-
 void beat(int beat) {
     if (beat % 24 == 0) {
         fToggle = !fToggle;

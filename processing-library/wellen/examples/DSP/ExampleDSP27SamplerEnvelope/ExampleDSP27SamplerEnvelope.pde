@@ -6,17 +6,12 @@ import wellen.dsp.*;
  *
  * press `+` or `-` to change the envelope form. press `space` to play the envelope.
  */
-
 Sampler fEnvelope;
-
 int fEnvelopeForm = Wellen.ENVELOPE_FORM_BLACKMAN;
-
 Wavetable fWavetable;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     fEnvelope = new Sampler(1024);
     Wellen.fill_envelope(fEnvelope.get_buffer(), fEnvelopeForm);
@@ -26,7 +21,6 @@ void setup() {
     fWavetable.set_waveform(Wellen.WAVEFORM_TRIANGLE);
     DSP.start(this);
 }
-
 void draw() {
     background(255);
     stroke(0);
@@ -42,12 +36,10 @@ void draw() {
     stroke(255);
     Wellen.draw_buffer(g, mWidth, mHeight, fEnvelope.get_buffer());
 }
-
 void mouseMoved() {
     final float mDuration = map(mouseX, 0, width, 0, 5);
     fEnvelope.set_duration(mDuration);
 }
-
 void keyPressed() {
     switch (key) {
         case '+':
@@ -70,7 +62,6 @@ void keyPressed() {
             break;
     }
 }
-
 void audioblock(float[] output_signal) {
     for (int i = 0; i < output_signal.length; i++) {
         output_signal[i] = fWavetable.output() * fEnvelope.output();

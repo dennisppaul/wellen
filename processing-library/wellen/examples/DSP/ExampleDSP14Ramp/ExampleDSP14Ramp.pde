@@ -13,25 +13,16 @@ import wellen.dsp.*;
  * `ramp_to(float, float)` clears all current stages from the envelope and creates a ramp from the current value of
  * the envelope to an end value in specified duration.
  */
-
 final int BASE_NOTE = Note.NOTE_C1;
-
 final float MIN_FREQ = Note.note_to_frequency(BASE_NOTE);
-
 final int NOTE_RANGE = 36;
-
 final float MAX_FREQ = Note.note_to_frequency(BASE_NOTE + NOTE_RANGE);
-
 Envelope mEnvelopeAmplitude;
-
 Envelope mRampFrequency;
-
 Wavetable mWavetable;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     mRampFrequency = new Envelope();
     mRampFrequency.set_current_value(MIN_FREQ);
@@ -44,7 +35,6 @@ void setup() {
     DSP.start(this);
     Beat.start(this, 120);
 }
-
 void draw() {
     final float mValue = mRampFrequency.get_current_value();
     final float x = frameCount % width;
@@ -54,14 +44,12 @@ void draw() {
     }
     point(x, y);
 }
-
 void beat(int beatCounter) {
     final float mFreq = Note.note_to_frequency(BASE_NOTE + (int) random(0, NOTE_RANGE + 1));
     mRampFrequency.ramp_to(mFreq, 0.25f);
     mRampFrequency.start();
     mEnvelopeAmplitude.start();
 }
-
 void audioblock(float[] output_signal) {
     for (int i = 0; i < output_signal.length; i++) {
         mWavetable.set_frequency(mRampFrequency.output());

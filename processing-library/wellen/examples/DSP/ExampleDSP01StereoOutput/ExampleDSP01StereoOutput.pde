@@ -7,33 +7,25 @@ import wellen.dsp.*;
  *
  * note that the distortion in the signal stems from changing the frequency too abruptly.
  */
-
 int mCounter = 0;
-
 float mDetune = 1.1f;
-
 float mFreq = 344.53125f;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     Wellen.dumpAudioInputAndOutputDevices();
     DSP.start(this, 2);
 }
-
 void draw() {
     background(255);
     stroke(0);
     DSP.draw_buffers(g, width, height);
 }
-
 void mouseMoved() {
     mFreq = map(mouseX, 0, width, 86.1328125f, 344.53125f);
     mDetune = map(mouseY, 0, height, 1.0f, 1.5f);
 }
-
 void audioblock(float[] output_signalLeft, float[] output_signalRight) {
     for (int i = 0; i < output_signalLeft.length; i++) {
         mCounter++;

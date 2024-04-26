@@ -4,13 +4,10 @@ import wellen.dsp.*;
 /*
  * this examples demonstrates how to play all 16 instruments at the same time.
  */
-
 int mBeatCount;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     for (int i = 0; i < Tone.instruments().size(); i++) {
         final float mPan = 2.0f * i / Tone.instruments().size() - 1.0f;
@@ -18,7 +15,6 @@ void setup() {
     }
     Beat.start(this, 120 * 3);
 }
-
 void draw() {
     background(255);
     noStroke();
@@ -26,7 +22,6 @@ void draw() {
     float mScale = (mBeatCount % 32) * 0.025f + 0.25f;
     ellipse(width * 0.5f, height * 0.5f, width * mScale, width * mScale);
 }
-
 void beat(int beatCount) {
     mBeatCount = beatCount;
     int mInstrument = 15 - beatCount % 16;

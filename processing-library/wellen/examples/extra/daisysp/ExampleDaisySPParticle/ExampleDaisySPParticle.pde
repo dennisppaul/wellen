@@ -2,24 +2,19 @@ import wellen.*;
 import wellen.dsp.*; 
 
 import wellen.extra.daisysp.*;
-
 Particle mOscillator;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     mOscillator = new Particle();
     mOscillator.Init(Wellen.DEFAULT_SAMPLING_RATE);
     DSP.start(this);
 }
-
 void draw() {
     background(255);
     DSP.draw_buffers(g, width, height);
 }
-
 void mouseMoved() {
     switch (keyCode) {
         case CONTROL:
@@ -36,7 +31,6 @@ void mouseMoved() {
             break;
     }
 }
-
 void keyPressed() {
     switch (key) {
         case 's':
@@ -47,17 +41,14 @@ void keyPressed() {
             break;
     }
 }
-
 void keyReleased() {
     keyCode = 0;
 }
-
 void audioblock(float[] output_signal) {
     for (int i = 0; i < output_signal.length; i++) {
         output_signal[i] = mOscillator.Process();
     }
 }
-
 void randomize(float[] pWavetable) {
     for (int i = 0; i < pWavetable.length; i++) {
         pWavetable[i] = random(-1, 1);

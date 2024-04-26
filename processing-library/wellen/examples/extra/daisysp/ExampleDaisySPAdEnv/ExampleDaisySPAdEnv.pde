@@ -2,17 +2,12 @@ import wellen.*;
 import wellen.dsp.*; 
 
 import wellen.extra.daisysp.*;
-
 AdEnv mAdEnv;
-
 Adsr mAdsr;
-
 OscillatorDaisy mOscillator;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     mAdEnv = new AdEnv();
     mAdEnv.Init(Wellen.DEFAULT_SAMPLING_RATE);
@@ -28,7 +23,6 @@ void setup() {
     mOscillator.SetAmp(0.75f);
     DSP.start(this);
 }
-
 void draw() {
     background(255);
     noStroke();
@@ -38,16 +32,13 @@ void draw() {
     stroke(255);
     DSP.draw_buffers(g, width, height);
 }
-
 void mousePressed() {
     mAdEnv.Trigger();
 }
-
 void mouseMoved() {
     mAdEnv.SetMin(map(mouseX, 0, width, 55, 880));
     mAdEnv.SetMax(map(mouseY, 0, height, 55, 880));
 }
-
 void audioblock(float[] output_signal) {
     for (int i = 0; i < output_signal.length; i++) {
         mOscillator.SetFreq(mAdEnv.Process());

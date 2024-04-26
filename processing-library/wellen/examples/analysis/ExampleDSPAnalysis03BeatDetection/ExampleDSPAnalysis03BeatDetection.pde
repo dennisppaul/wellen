@@ -6,25 +6,16 @@ import wellen.analysis.*;
  * this example demonstrates how to detect a beat from an input signal.
  * @TODO(the algorithm is not working particularuly fine …)
  */
-
 final int[] fBassPattern = {1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1,};
-
 boolean fBeatDetected = false;
-
 final boolean[] fBeatDetectedPattern = new boolean[fBassPattern.length];
-
 final BeatDetection fBeatDetection = new BeatDetection();
-
 int fCurrentBeat = fBassPattern.length - 1;
-
 final int[] fSnarePattern = {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0,};
-
 ToneEngineDSP fToneEngine;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     fToneEngine = Tone.start(Wellen.TONE_ENGINE_INTERNAL_WITH_NO_OUTPUT);
     Tone.instrument(0);
@@ -37,7 +28,6 @@ void setup() {
     DSP.start(this, 1);
     Beat.start(this, 120 * 4);
 }
-
 void draw() {
     background(255);
     fill(0);
@@ -60,12 +50,10 @@ void draw() {
         }
     }
 }
-
 void mousePressed() {
     Tone.instrument(1);
     Tone.note_on(36, 80, 0.1f);
 }
-
 void mouseMoved() {
     fBeatDetection.set_threshold(map(mouseX, 0, width, 0, 20));
     fBeatDetection.set_sensitivity(map(mouseY, 0, height, 0, 100));
@@ -73,7 +61,6 @@ void mouseMoved() {
     System.out.print(", ");
     System.out.println(fBeatDetection.get_sensitivity());
 }
-
 void beat(int beatCount) {
     fBeatDetectedPattern[fCurrentBeat] = fBeatDetected;
     if (fBeatDetected) {
@@ -90,7 +77,6 @@ void beat(int beatCount) {
         Tone.note_on(36, 80, 0.05f);
     }
 }
-
 void audioblock(float[] output_signal) {
     fToneEngine.audioblock(output_signal);
     /* detect pitch and set oscillator */

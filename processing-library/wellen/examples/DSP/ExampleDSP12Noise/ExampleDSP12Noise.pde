@@ -4,28 +4,22 @@ import wellen.dsp.*;
 /*
  * this example demonstrates different noise generators.
  */
-
 final Noise mNoise = new Noise();
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     mNoise.set_amplitude(0.25f);
     DSP.start(this);
 }
-
 void draw() {
     background(255);
     DSP.draw_buffers(g, width, height);
 }
-
 void mouseMoved() {
     mNoise.set_step(map(mouseX, 0, width, 0.0f, 0.1f));
     mNoise.set_amplitude(map(mouseY, 0, height, 0.0f, 0.33f));
 }
-
 void keyPressed() {
     switch (key) {
         case '1':
@@ -51,7 +45,6 @@ void keyPressed() {
             break;
     }
 }
-
 void audioblock(float[] output_signal) {
     for (int i = 0; i < output_signal.length; i++) {
         output_signal[i] = mNoise.output();

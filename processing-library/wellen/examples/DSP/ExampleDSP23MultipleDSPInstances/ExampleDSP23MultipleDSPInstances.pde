@@ -14,19 +14,14 @@ import wellen.dsp.*;
  * the case it is often more efficient to use a single audio device and accumulate the outputs of a composition into
  * a single multi-channel buffer.
  */
-
 final ArrayList<DSProcessor> fDSProcessors = new ArrayList();
-
 static final int NUM_OF_PROCESSORS = 16;
-
 static final int[] OUTPUT_DEVICE_IDs = {7, // i.e AirPlay
                                                 10 // i.e MacBook Pro Speakers
 };
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     Wellen.dumpAudioInputAndOutputDevices();
     /* create signal processors with one output channel and no input channel */
@@ -41,14 +36,10 @@ void setup() {
         fDSProcessors.add(mDSP);
     }
 }
-
 class DSProcessor implements AudioBufferRenderer {
-    
-float[] buffer;
-    
-final Wavetable osc;
-    
-DSProcessor() {
+    float[] buffer;
+    final Wavetable osc;
+    DSProcessor() {
         /* simple audio processor with a single sine wave oscillator set to a random frequency */
         osc = new Wavetable();
         Wavetable.sine(osc.get_wavetable());
@@ -57,15 +48,13 @@ DSProcessor() {
         buffer = null;
     }
     
-    
-void audioblock(float[][] output_signal, float[][] input_signal) {
+    void audioblock(float[][] output_signal, float[][] input_signal) {
         buffer = output_signal[0];
         for (int i = 0; i < output_signal[0].length; i++) {
             output_signal[0][i] = osc.output();
         }
     }
 }
-
 void draw() {
     background(255);
     /* accumulate and draw signal processor output */

@@ -2,20 +2,16 @@ import wellen.*;
 import wellen.dsp.*; 
 
 import wellen.extra.daisysp.*;
-
 Fm2 mOscillator;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     mOscillator = new Fm2();
     mOscillator.Init(Wellen.DEFAULT_SAMPLING_RATE);
     mOscillator.SetIndex(2);
     DSP.start(this);
 }
-
 void draw() {
     background(255);
     noStroke();
@@ -25,7 +21,6 @@ void draw() {
     stroke(255);
     DSP.draw_buffers(g, width, height);
 }
-
 void mouseMoved() {
     if (keyCode == ALT) {
         mOscillator.SetFrequency(map(mouseX, 0, width, 0, 10));
@@ -35,7 +30,6 @@ void mouseMoved() {
         mOscillator.SetIndex(map(mouseY, 0, height, 0, 5));
     }
 }
-
 void audioblock(float[] output_signal) {
     for (int i = 0; i < output_signal.length; i++) {
         output_signal[i] = mOscillator.Process() * 0.5f;

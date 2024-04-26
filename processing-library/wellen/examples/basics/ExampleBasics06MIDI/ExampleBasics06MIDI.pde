@@ -5,13 +5,10 @@ import wellen.dsp.*;
  * this example demonstrates how to use the MIDI tone engine to control a MIDI instrument ( i.e sending MIDI events
  * to a MIDI device ). make sure to set up the MIDI configuration properly in system control.
  */
-
 int mNote;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     Wellen.dumpMidiOutputDevices();
     /*
@@ -21,13 +18,11 @@ void setup() {
      */
     Tone.start("midi", "Bus 1");
 }
-
 void draw() {
     background(255);
     fill(0);
     ellipse(width * 0.5f, height * 0.5f, Tone.is_playing() ? 100 : 5, Tone.is_playing() ? 100 : 5);
 }
-
 void mousePressed() {
     /* `instrument` in this context is equivalent to a *MIDI channel* ID. this also means that sound characteristics
     ( e.g `osc_type` ) are not available. */
@@ -35,7 +30,6 @@ void mousePressed() {
     mNote = 45 + (int) random(0, 12);
     Tone.note_on(mNote, 100);
 }
-
 void mouseReleased() {
     Tone.note_off(mNote);
 }

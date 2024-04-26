@@ -5,15 +5,11 @@ import wellen.dsp.*;
  * this example demonstrates how to export sample data to a WAV file and then import the WAV file to play it back
  * with a sampler.
  */
-
 static final String WAV_FILE_NAME = "sine.wav";
-
 Sampler fSampler;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     final int WAV_FILE_LENGTH = Wellen.DEFAULT_SAMPLING_RATE / 100; /* file length is 1/100 second */
     final int NUM_OF_CHANNELS = 1; /* export single channel aka mono WAV file */
@@ -39,14 +35,12 @@ void setup() {
     fSampler.set_loop_all();
     DSP.start(this);
 }
-
 void draw() {
     background(255);
     stroke(0);
     Wellen.draw_buffer(g, width, height, fSampler.get_buffer());
     DSP.draw_buffers(g, width, height);
 }
-
 void audioblock(float[] output_signal) {
     for (int i = 0; i < output_signal.length; i++) {
         output_signal[i] = fSampler.output();

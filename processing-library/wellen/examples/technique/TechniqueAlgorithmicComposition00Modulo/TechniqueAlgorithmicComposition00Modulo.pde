@@ -1,18 +1,14 @@
 import wellen.*; 
 import wellen.dsp.*; 
 
-
 boolean mPlaying = false;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     Tone.instrument().set_oscillator_type(Wellen.WAVEFORM_TRIANGLE);
     Beat.start(this, 120 * 4);
 }
-
 void draw() {
     background(255);
     fill(0);
@@ -24,7 +20,6 @@ void draw() {
     }
     ellipse(width * 0.5f, height * 0.5f, mScale, mScale);
 }
-
 void beat(int beat) {
     mPlaying = true;
     if (beat % 32 == 0) {

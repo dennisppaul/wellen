@@ -1,22 +1,16 @@
 import wellen.*; 
 import wellen.dsp.*; 
 
-
 int fCounter = 0;
-
 AudioFormula fFormula = new MAudioFormulaAwayAndAway();
-
 final float fFreq = 220.0f;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     Wellen.dumpAudioInputAndOutputDevices();
     DSP.start(this);
 }
-
 void draw() {
     background(255);
     stroke(0);
@@ -28,7 +22,6 @@ void draw() {
         }
     }
 }
-
 void keyPressed() {
     switch (key) {
         case '1':
@@ -39,7 +32,6 @@ void keyPressed() {
             break;
     }
 }
-
 void audioblock(float[] output_signal) {
     for (int i = 0; i < output_signal.length; i++) {
         output_signal[i] = fFormula.render(fCounter++);
@@ -49,8 +41,7 @@ interface AudioFormula {
     float render(int pCounter);
 }
 class AudioFormulaKnisterKnister implements AudioFormula {
-    
-float render(int pCounter) {
+    float render(int pCounter) {
         final float mSeconds = (float) pCounter / DSP.get_sample_rate();
         float v;
         v = abs(sin(mSeconds * cos(mSeconds * 1.1f))) * 0.1f;
@@ -65,8 +56,7 @@ float render(int pCounter) {
     }
 }
 class MAudioFormulaAwayAndAway implements AudioFormula {
-    
-float render(int pCounter) {
+    float render(int pCounter) {
         final float mSeconds = (float) pCounter / DSP.get_sample_rate();
         final float mSecondsRad = 2.0f * PI * mSeconds;
         float v;

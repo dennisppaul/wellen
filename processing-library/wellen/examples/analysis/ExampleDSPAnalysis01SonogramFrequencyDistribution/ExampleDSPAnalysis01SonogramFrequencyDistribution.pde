@@ -8,28 +8,20 @@ import wellen.analysis.*;
  * use number keys to change oscillator wave shapes and filter configuration. use mouse to change oscillator
  * frequency and amplitude. use mouse+`SHIFT` to change filter cutoff frequency and resonance.
  */
-
 boolean fEnableFilter = false;
-
 final FilterHighLowBandPass fFilter = new FilterHighLowBandPass();
-
 FrequencyDistribution fFrequencyDistribution;
-
 Sonogram fSonogram;
-
 final Wavetable fWavetable = new Wavetable();
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     fSonogram = new Sonogram(createGraphics(width, height));
     fFrequencyDistribution = new FrequencyDistribution(createGraphics(width, height));
     Wavetable.sine(fWavetable.get_wavetable());
     DSP.start(this);
 }
-
 void draw() {
     background(0);
     fSonogram.draw();
@@ -37,7 +29,6 @@ void draw() {
     fFrequencyDistribution.draw();
     image(fFrequencyDistribution.get_graphics(), width * 0.5f + 1, height * 0.25f, width * 0.5f, height * 0.5f);
 }
-
 void audioblock(float[] output_signal) {
     for (int i = 0; i < output_signal.length; i++) {
         output_signal[i] = fWavetable.output();
@@ -48,7 +39,6 @@ void audioblock(float[] output_signal) {
     fSonogram.process(output_signal);
     fFrequencyDistribution.process(output_signal);
 }
-
 void mouseMoved() {
     if (keyCode == SHIFT) {
         fFilter.set_frequency(map(mouseX, 0, width, 55, Wellen.DEFAULT_SAMPLING_RATE / 2.0f));
@@ -58,7 +48,6 @@ void mouseMoved() {
         fWavetable.set_amplitude(map(mouseY, 0, height, 0.0f, 0.9f));
     }
 }
-
 void keyPressed() {
     switch (key) {
         case '1':
@@ -90,7 +79,6 @@ void keyPressed() {
             break;
     }
 }
-
 void randomize(float[] wavetable) {
     for (int i = 0; i < wavetable.length; i++) {
         wavetable[i] = random(-1, 1);

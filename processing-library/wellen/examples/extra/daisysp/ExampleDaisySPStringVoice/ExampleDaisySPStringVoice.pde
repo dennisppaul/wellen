@@ -2,24 +2,18 @@ import wellen.*;
 import wellen.dsp.*; 
 
 import wellen.extra.daisysp.*;
-
 int mMIDINoteCounter = 0;
-
 final int[] mMIDINotes = {36, 48, 39, 51};
-
 StringVoice mStringVoice;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     mStringVoice = new StringVoice();
     mStringVoice.Init(Wellen.DEFAULT_SAMPLING_RATE);
     DSP.start(this);
     Beat.start(this, 240);
 }
-
 void draw() {
     background(0);
     noStroke();
@@ -29,7 +23,6 @@ void draw() {
     stroke(0);
     DSP.draw_buffers(g, width, height);
 }
-
 void mouseMoved() {
     if (keyCode == SHIFT) {
         mStringVoice.SetAccent(map(mouseX, 0, width, 0, 1));
@@ -40,7 +33,6 @@ void mouseMoved() {
         mStringVoice.SetDamping(map(mouseY, 0, height, 0, 1));
     }
 }
-
 void keyPressed() {
     switch (key) {
         case 's':
@@ -51,14 +43,12 @@ void keyPressed() {
             break;
     }
 }
-
 void beat(int beatCount) {
     mStringVoice.Trig();
     mStringVoice.SetFreq(DaisySP.mtof(mMIDINotes[mMIDINoteCounter]));
     mMIDINoteCounter++;
     mMIDINoteCounter %= mMIDINotes.length;
 }
-
 void audioblock(float[] output_signal) {
     for (int i = 0; i < output_signal.length; i++) {
         output_signal[i] = mStringVoice.Process();

@@ -4,15 +4,11 @@ import wellen.dsp.*;
 /*
  * this example demonstrate how to perform Fast Fourier Transformation (FFT).
  */
-
 Sampler fSampler;
-
 int x = 0;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     byte[] mData = loadBytes("../../../resources/teilchen.raw");
     fSampler = new Sampler();
@@ -21,7 +17,6 @@ void setup() {
     DSP.start(this);
     background(255);
 }
-
 void draw() {
     for (int i = 0; i < FFT.get_spectrum().length; i++) {
         float y = pow(map(i, 0, FFT.get_spectrum().length, 1, 0), 4) * height;
@@ -32,7 +27,6 @@ void draw() {
     x++;
     x %= width;
 }
-
 void audioblock(float[] output_signal) {
     for (int i = 0; i < output_signal.length; i++) {
         output_signal[i] = fSampler.output();

@@ -2,17 +2,12 @@ import wellen.*;
 import wellen.dsp.*; 
 
 import wellen.extra.daisysp.*;
-
 AnalogBassDrum mBassDrum;
-
 int mBeatCount;
-
 AnalogSnareDrum mSnareDrum;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     mBassDrum = new AnalogBassDrum();
     mBassDrum.Init(Wellen.DEFAULT_SAMPLING_RATE);
@@ -22,7 +17,6 @@ void setup() {
     DSP.start(this);
     Beat.start(this, 120);
 }
-
 void draw() {
     background(255);
     noStroke();
@@ -32,7 +26,6 @@ void draw() {
     stroke(255);
     DSP.draw_buffers(g, width, height);
 }
-
 void mouseMoved() {
     if (keyCode == SHIFT) {
         mSnareDrum.SetFreq(map(mouseX, 0, width, 0, 400));
@@ -43,7 +36,6 @@ void mouseMoved() {
         mBassDrum.SetAccent(map(mouseY, 0, height, 0, 1));
     }
 }
-
 void beat(int beatCount) {
     mBeatCount = beatCount;
     if (mBeatCount % 2 == 1) {
@@ -52,7 +44,6 @@ void beat(int beatCount) {
         mBassDrum.Trig();
     }
 }
-
 void audioblock(float[] output_signal) {
     for (int i = 0; i < output_signal.length; i++) {
         output_signal[i] = mBassDrum.Process() * 1.7f + mSnareDrum.Process() * 0.3f;

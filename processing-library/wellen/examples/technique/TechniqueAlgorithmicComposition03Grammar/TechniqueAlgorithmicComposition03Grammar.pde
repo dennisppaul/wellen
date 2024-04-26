@@ -1,39 +1,27 @@
 import wellen.*; 
 import wellen.dsp.*; 
 
-
 final int mBaseNote = Note.NOTE_C3;
-
 int mCharCounter = 0;
-
 char mCurrentChar = 0;
-
 final String mInput = "RADIO, LIVE TRANSMISSION.\n" + "RADIO, LIVE TRANSMISSION.\n" + "LISTEN TO THE " +
         "SILENCE, LET IT RING ON.\n" + "EYES, DARK GREY LENSES FRIGHTENED OF THE SUN.\n" + "WE WOULD HAVE A FINE "
         + "TIME LIVING IN THE NIGHT,\n" + "LEFT TO BLIND DESTRUCTION,\n" + "WAITING FOR OUR SIGHT.";
-
 final int mMaxNoteCounter = 12;
-
 int mNoteCounter = 0;
-
 int mNoteStep = 0;
-
 final int[] mScale = Scale.MINOR_PENTATONIC;
-
 boolean mSkipNote;
-
 void settings() {
     size(640, 480);
     pixelDensity(displayDensity());
 }
-
 void setup() {
     textFont(createFont("Helvetica-Bold", 10));
     Tone.instrument(1).set_oscillator_type(Wellen.WAVEFORM_SAWTOOTH);
     Tone.instrument(2).set_oscillator_type(Wellen.WAVEFORM_SINE);
     Beat.start(this, 240);
 }
-
 void draw() {
     background(255);
     fill(0);
@@ -45,7 +33,6 @@ void draw() {
     stroke(0, 91);
     line(20, height * 0.3f, width * 0.5f, height * 0.3f);
 }
-
 void beat(int beatCount) {
     mCurrentChar = mInput.charAt(mCharCounter);
     grammar(mCurrentChar);
@@ -63,7 +50,6 @@ void beat(int beatCount) {
     Tone.instrument(2);
     Tone.note_on(Note.NOTE_C2, 100, 0.15f);
 }
-
 void grammar(char c) {
     mSkipNote = false;
     switch (c) {

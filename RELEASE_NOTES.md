@@ -1,5 +1,18 @@
 # Wellen / Release Notes
 
+## v0.12 (20240426)
+
+- `Sampler` can now record samples
+- `Sampler` can now set to a specfic duration in seconds
+- `Sampler` is now trigger with `play()` ( instead of `start()` )
+- added example with `Vocoder` and `SAM` combined
+- added example that demonstrates how to use a `Sampler` as an envelope
+- added example where the `Wavetable` data can be drawn interactively
+- added `Waveshaper` with example
+- added option to check and adjust sample rate for default audio output devices with `Wellen.CHECK_DEFAULT_AUDIO_DEVICE_SAMPLE_RATE = true;`
+- added encoding and endianess options to `AudioDeviceConfiguration`
+- added option to *correct* sampling rate with `Wellen.CHECK_DEFAULT_AUDIO_DEVICE_SAMPLE_RATE = true;` ( for output device ) to fix error in windows OS.
+
 ## v0.11 (20230216)
 
 - added detune oscillator to `InstrumentDSP` which can be enabled per instrument with `enable_detune(boolean)`

@@ -1,15 +1,11 @@
 import wellen.*; 
 import wellen.dsp.*; 
 
-
 Sampler fSampler;
-
 final ArrayList<Sampler> fSamplers = new ArrayList<Sampler>();
-
 void settings() {
     size(640, 480, P3D);
 }
-
 void setup() {
     byte[] mData = loadBytes("../../../resources/a_portrait_in_reverse.raw");
     fSampler = new Sampler();
@@ -18,7 +14,6 @@ void setup() {
     fSampler.play();
     DSP.start(this);
 }
-
 void draw() {
     background(255);
     noFill();
@@ -34,7 +29,6 @@ void draw() {
         drawPosition(s.get_position(), height / 16);
     }
 }
-
 void mousePressed() {
     if (mouseButton == LEFT) {
         fSampler.set_in((int) map(mouseX, 0, width, 0, fSampler.get_buffer().length));
@@ -48,7 +42,6 @@ void mousePressed() {
         }
     }
 }
-
 void keyPressed() {
     switch (key) {
         case '+':
@@ -77,7 +70,6 @@ void keyPressed() {
             break;
     }
 }
-
 void audioblock(float[] output_signal) {
     for (int i = 0; i < output_signal.length; i++) {
         output_signal[i] = fSampler.output();
@@ -87,7 +79,6 @@ void audioblock(float[] output_signal) {
         output_signal[i] /= 1 + fSamplers.size() * 0.1f;
     }
 }
-
 void drawPosition(int pPosition, int pPadding) {
     final float x = map(pPosition, 0, fSampler.get_buffer().length, 0, width);
     line(x, 0 + pPadding, x, height - pPadding);

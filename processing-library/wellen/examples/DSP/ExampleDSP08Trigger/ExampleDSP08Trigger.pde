@@ -9,22 +9,15 @@ import wellen.dsp.*;
  *
  * it is common to use a low-frequency oscillator (LFO) to generate the signal for the trigger.
  */
-
 int mBeatCount;
-
 final int[] mNotes = {Note.NOTE_C3, Note.NOTE_C4, Note.NOTE_F3 - 1, Note.NOTE_F4 - 1, Note.NOTE_A2,
                               Note.NOTE_A3, Note.NOTE_F4 - 1, Note.NOTE_F3 - 1};
-
 float mSignal;
-
 Trigger mTrigger;
-
 Wavetable mWavetable;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     mTrigger = new Trigger(this);
     mTrigger.trigger_falling_edge(true);
@@ -37,7 +30,6 @@ void setup() {
     Tone.start();
     DSP.start(this); /* DSP is only used to create trigger events */
 }
-
 void draw() {
     background(255);
     noStroke();
@@ -48,19 +40,16 @@ void draw() {
     stroke(255);
     ellipse(width * 0.5f, map(mSignal, -1.0f, 1.0f, 0, height), 10, 10);
 }
-
 void mouseMoved() {
     /* set oscillation speed a value between 0.1SEC and 5SEC */
     mWavetable.set_frequency(1.0f / map(mouseX, 0, width, 0.1f, 5.0f));
 }
-
 void audioblock(float[] output_signal) {
     for (int i = 0; i < output_signal.length; i++) {
         mSignal = mWavetable.output();
         mTrigger.input(mSignal);
     }
 }
-
 void trigger() {
     mBeatCount++;
     int mNote = mNotes[mBeatCount % mNotes.length];

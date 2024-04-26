@@ -7,15 +7,11 @@ import wellen.dsp.*;
  *
  * move and drag mouse to change parameters.
  */
-
 SAM mSAM;
-
 TextFragment[] mWords;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     mSAM = new SAM();
     mSAM.set_sing_mode(true);
@@ -49,29 +45,24 @@ void setup() {
     DSP.start(this);
     Beat.start(this, 240);
 }
-
 void draw() {
     background(255);
     stroke(0);
     DSP.draw_buffers(g, width, height);
 }
-
 void beat(int beatCount) {
     int mWordIndex = beatCount % mWords.length;
     mSAM.set_pitch(SAM.get_pitch_from_MIDI_note(mWords[mWordIndex].pitch));
     mSAM.say(mWords[mWordIndex].text, true);
     Tone.note_on(beatCount % 2 == 0 ? Note.NOTE_C2 : Note.NOTE_C3, 50);
 }
-
 void mouseMoved() {
     mSAM.set_mouth((int) map(mouseX, 0, width, 0, 255));
     mSAM.set_throat((int) map(mouseY, 0, height, 0, 255));
 }
-
 void mouseDragged() {
     mSAM.set_speed((int) map(mouseX, 0, width, 0, 255));
 }
-
 void audioblock(float[] output_signal) {
     for (int i = 0; i < output_signal.length; i++) {
         output_signal[i] = mSAM.output() * 0.5f;

@@ -8,11 +8,9 @@ import wellen.dsp.*;
  *
  * note that a microphone or some other line in must be available to run this example.
  */
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     Wellen.dumpAudioInputAndOutputDevices(true);
     DSP.start(this,
@@ -22,14 +20,12 @@ void setup() {
                                       .set_bits_per_sample(24)
                                       .set_sample_rate(44100));
 }
-
 void draw() {
     background(255);
     stroke(0);
     final int mBufferSize = DSP.get_buffer_size();
     DSP.draw_buffers(g, width, height);
 }
-
 void audioblock(float[] output_signal, float[] pInputSignal) {
     for (int i = 0; i < pInputSignal.length; i++) {
         output_signal[i] = pInputSignal[i] * 0.25f;

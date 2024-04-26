@@ -9,15 +9,11 @@ import wellen.dsp.*;
  * wavetable to sine shape, `2` to reset wavetable, `3` to disable interpolation and `4` to enable linear
  * interpolation.
  */
-
 Wavetable fWavetable;
-
 final int fWavetableSize = 128;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     fWavetable = new Wavetable(fWavetableSize);
     fWavetable.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
@@ -28,7 +24,6 @@ void setup() {
     }
     DSP.start(this);
 }
-
 void draw() {
     background(255);
     noStroke();
@@ -44,20 +39,17 @@ void draw() {
     stroke(0);
     DSP.draw_buffers(g, width, height);
 }
-
 void mouseMoved() {
     final float mNewFrequency = map(mouseX, 0, width, 1, 110);
     final float mNewAmplitude = map(mouseY, 0, height, 0, 1);
     fWavetable.set_frequency(mNewFrequency, Wellen.millis_to_samples(100));
     fWavetable.set_amplitude(mNewAmplitude, Wellen.millis_to_samples(10));
 }
-
 void mouseDragged() {
     int i = (int) map(mouseX, 0, width, 0, fWavetable.get_wavetable().length);
     i = constrain(i, 0, fWavetable.get_wavetable().length - 1);
     fWavetable.get_wavetable()[i] = map(mouseY, 0, height, -1, 1);
 }
-
 void print_buffer_to_array() {
     print("float[] wavetable_buffer = new float[] { ");
     for (int i = 0; i < fWavetable.get_wavetable().length; i++) {
@@ -69,7 +61,6 @@ void print_buffer_to_array() {
     }
     println("};");
 }
-
 void keyPressed() {
     switch (key) {
         case '1':
@@ -89,7 +80,6 @@ void keyPressed() {
             break;
     }
 }
-
 void audioblock(float[] output_signal) {
     for (int i = 0; i < output_signal.length; i++) {
         output_signal[i] = fWavetable.output();

@@ -5,11 +5,9 @@ import wellen.extra.rakarrack.*;
 /*
  * this example demonstrates how to add effects like reverb, echo or distortion to tone output.
  */
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     ToneEngineDSP mToneEngine = Tone.get_DSP_engine();
     RREchotron mEchotron = new RREchotron();
@@ -25,7 +23,6 @@ void setup() {
     mToneEngine.add_effect(mGain);
     Tone.instrument().set_oscillator_type(Wellen.WAVEFORM_SAWTOOTH);
 }
-
 void draw() {
     background(255);
     fill(0);
@@ -36,12 +33,10 @@ void draw() {
                         Tone.get_DSP_engine().get_buffer_left(),
                         Tone.get_DSP_engine().get_buffer_right());
 }
-
 void mousePressed() {
     int mNote = 24 + 6 * (int) random(0, 8);
     Tone.note_on(mNote, 100);
 }
-
 void mouseReleased() {
     Tone.note_off();
 }

@@ -7,17 +7,12 @@ import wellen.dsp.*;
  * the left circle shows the amplitude controlled by an envelope, while the right circle visualizes the step size of
  * the simplex noise generator.
  */
-
 Envelope mEnvelopeAmplitude;
-
 Envelope mEnvelopeStepSize;
-
 Noise mNoise;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     mEnvelopeAmplitude = new Envelope();
     mEnvelopeAmplitude.add_stage(0.0f, 2.0f);
@@ -31,7 +26,6 @@ void setup() {
     mNoise.set_type(Wellen.NOISE_SIMPLEX);
     DSP.start(this);
 }
-
 void draw() {
     background(255);
     DSP.draw_buffers(g, width, height);
@@ -45,12 +39,10 @@ void draw() {
             40,
             40);
 }
-
 void mousePressed() {
     mEnvelopeStepSize.start();
     mEnvelopeAmplitude.start();
 }
-
 void audioblock(float[] output_signal) {
     for (int i = 0; i < output_signal.length; i++) {
         output_signal[i] = mEnvelopeAmplitude.output() * mNoise.output();

@@ -2,31 +2,19 @@ import wellen.*;
 import wellen.dsp.*; 
 
 import wellen.extra.rakarrack.*;
-
 static final float[] mFreqNotes = {1.0f, 1.0f, 1.19661538f, 1.34315385f};
-
 ADSR mADSR;
-
 final float mBaseFrequency = 2.0f * Wellen.DEFAULT_SAMPLING_RATE / Wellen.DEFAULT_AUDIOBLOCK_SIZE;
-
 boolean mEnableDistortion = true;
-
 int mFreqNotesCounter = mFreqNotes.length - 1;
-
 float mFreqOffset = 1;
-
 final float mMasterVolume = 0.85f;
-
 RRNewDist mNewDist;
-
 final Wavetable mVCO1 = new Wavetable();
-
 final Wavetable mVCO2 = new Wavetable();
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     Wavetable.triangle(mVCO1.get_wavetable());
     mVCO1.set_frequency(mBaseFrequency);
@@ -39,18 +27,15 @@ void setup() {
     DSP.start(this, 2);
     Beat.start(this, 120 * 8);
 }
-
 void draw() {
     background(255);
     DSP.draw_buffers(g, width, height);
 }
-
 void mouseMoved() {
     mVCO1.set_amplitude(map(mouseY, 0, height, 0.0f, 1.0f));
     mVCO2.set_amplitude(map(mouseY, 0, height, 0.0f, 1.0f));
     mFreqOffset = map(mouseX, 0, width, 0.0f, 3.0f);
 }
-
 void beat(int beat) {
     if (beat % 2 == 0) {
         mADSR.start();
@@ -70,7 +55,6 @@ void beat(int beat) {
         mVCO2.set_frequency((mBaseFrequency * mFreqNotes[mFreqNotesCounter] + mFreqOffset) * 2);
     }
 }
-
 void keyPressed() {
     switch (key) {
         case 'q':
@@ -111,7 +95,6 @@ void keyPressed() {
             break;
     }
 }
-
 void audioblock(float[] output_signalLeft, float[] output_signalRight) {
     for (int i = 0; i < output_signalLeft.length; i++) {
         final float a = mVCO1.output();

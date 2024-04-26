@@ -2,23 +2,15 @@ import wellen.*;
 import wellen.dsp.*; 
 
 import wellen.extra.rakarrack.*;
-
 final float mBaseFrequency = 4.0f * Wellen.DEFAULT_SAMPLING_RATE / Wellen.DEFAULT_AUDIOBLOCK_SIZE;
-
 final float[] mCarrier = new float[Wellen.DEFAULT_AUDIOBLOCK_SIZE];
-
 boolean mEnableVocoder = true;
-
 final float mMasterVolume = 0.5f;
-
 final Wavetable mVCO = new Wavetable(512);
-
 RRVocoder mVocoder;
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     Wavetable.square(mVCO.get_wavetable());
     mVCO.set_frequency(55);
@@ -26,16 +18,13 @@ void setup() {
     mVocoder = new RRVocoder(mCarrier, 32);
     DSP.start(this, 1, 1);
 }
-
 void draw() {
     background(255);
     DSP.draw_buffers(g, width, height);
 }
-
 void mouseMoved() {
     mVCO.set_frequency(map(mouseY, 0, height, 0.1f, 1000.0f));
 }
-
 void keyPressed() {
     switch (key) {
         case '1':
@@ -55,7 +44,6 @@ void keyPressed() {
             break;
     }
 }
-
 void audioblock(float[] output_signal, float[] pInputSignal) {
     RRUtilities.memcpy(output_signal, pInputSignal, pInputSignal.length);
     for (int i = 0; i < mCarrier.length; i++) {

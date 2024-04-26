@@ -4,27 +4,17 @@ import wellen.dsp.*;
 /*
  * this example demonstrates how to use patterns to create events.
  */
-
 int fBeat = 0;
-
 int fEventPositionPatternC;
-
 final Pattern fPatternA = new Pattern();
-
 final Pattern fPatternB = new Pattern();
-
 final Pattern fPatternC = new Pattern();
-
 final Sequencer<Integer> fSequenceA = new Sequencer<>(0, 1, 3, 5);
-
 final Sequencer<Integer> fSequenceB = new Sequencer<>(0, 1, 3, 5);
-
 final Sequencer<Integer> fSequenceC = new Sequencer<>(0, 1, 3, 5, 5, 3, 1, 0);
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     ToneEngineDSP mToneEngine = Tone.get_DSP_engine();
     Reverb mReverb = new Reverb();
@@ -44,7 +34,6 @@ void setup() {
     Tone.instrument(1).set_pan(0.5f);
     Beat.start(this, 120 * 4);
 }
-
 void draw() {
     background(255);
     stroke(0);
@@ -56,7 +45,6 @@ void draw() {
     circle(width * 0.5f, height * 0.5f, Tone.instrument(2).is_playing() ? 100 : 10);
     circle(width * 0.5f + 100, height * 0.5f, Tone.instrument(1).is_playing() ? 100 : 10);
 }
-
 void keyPressed() {
     int mQuantizedInpoint = (fBeat / 8) * 8 + 8;
     fPatternC.set_in_point(mQuantizedInpoint);
@@ -74,7 +62,6 @@ void keyPressed() {
     }
     fSequenceC.reset();
 }
-
 void beat(int beat) {
     fBeat = beat;
     Tone.instrument(0);

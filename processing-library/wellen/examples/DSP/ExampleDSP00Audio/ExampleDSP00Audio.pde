@@ -10,21 +10,17 @@ import wellen.dsp.*;
  * note that although this example is very simple and easy to understand it is adivsed to process audio in blocks as
  * demonstrated in the example `ExampleDSP00Audioblock`.
  */
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     Wellen.dumpAudioInputAndOutputDevices(true);
     DSP.start(this);
 }
-
 void draw() {
     background(255);
     DSP.draw_buffers(g, width, height);
 }
-
 float audio() {
     float output = random(-0.1f, 0.1f);
     float amplification = map(mouseY, 0, height, 0.0f, 1.0f);

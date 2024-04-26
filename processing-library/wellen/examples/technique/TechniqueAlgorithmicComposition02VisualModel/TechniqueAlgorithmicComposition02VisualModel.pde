@@ -1,15 +1,11 @@
 import wellen.*; 
 import wellen.dsp.*; 
 
-
 final int NUM_OF_CONTROLLERS = 2;
-
 final ArrayList<CircleController> mControllers = new ArrayList<CircleController>();
-
 void settings() {
     size(640, 480);
 }
-
 void setup() {
     for (int i = 0; i < NUM_OF_CONTROLLERS; i++) {
         CircleController c = new CircleController();
@@ -21,7 +17,6 @@ void setup() {
     Wellen.dumpAudioInputAndOutputDevices();
     DSP.start(this);
 }
-
 void draw() {
     background(255);
     final float mDelta = 1.0f / frameRate;
@@ -33,14 +28,12 @@ void draw() {
         c.update(mDelta);
     }
 }
-
 void mouseDragged() {
     CircleController c = getCircleController();
     if (c != null) {
         c.position.set(mouseX, mouseY);
     }
 }
-
 void keyPressed() {
     CircleController c = getCircleController();
     if (c != null) {
@@ -61,7 +54,6 @@ void keyPressed() {
         }
     }
 }
-
 CircleController getCircleController() {
     for (CircleController c : mControllers) {
         if (PVector.dist(c.position, new PVector().set(mouseX, mouseY)) - 10 < c.radius) {
@@ -70,7 +62,6 @@ CircleController getCircleController() {
     }
     return null;
 }
-
 void audioblock(float[] output_signal) {
     for (int i = 0; i < output_signal.length; i++) {
         for (CircleController c : mControllers) {
@@ -80,15 +71,13 @@ void audioblock(float[] output_signal) {
         output_signal[i] = Wellen.clamp(output_signal[i], -1.0f, 1.0f);
     }
 }
-
 class CircleController {
     float counter = 0.0f;
     final PVector pointer = new PVector();
     final PVector position = new PVector();
     float radius = 100.0f;
     float speed = 3.0f;
-    
-final Sampler fSampler;
+    final Sampler fSampler;
     CircleController() {
         byte[] mData = SampleDataSNARE.data;
         fSampler = new Sampler();
