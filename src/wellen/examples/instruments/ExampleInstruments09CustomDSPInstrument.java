@@ -332,6 +332,7 @@ public class ExampleInstruments09CustomDSPInstrument extends PApplet {
             mSampler = new Sampler();
             mSampler.load(SampleDataSNARE.data);
             mSampler.enable_loop(false);
+            mSampler.play();
 
             mReverb = new Reverb();
 
@@ -341,7 +342,7 @@ public class ExampleInstruments09CustomDSPInstrument extends PApplet {
         /**
          * called by tone engine to request the next audio sample of the instrument.
          *
-         * @return
+         * @return the next audio sample of the instrument
          */
         public Signal output_signal() {
             /* `output(Signal)` is called to request a new sample: sampler returns a new sample which is then
