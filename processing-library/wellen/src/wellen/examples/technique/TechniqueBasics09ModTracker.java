@@ -7,7 +7,6 @@ import wellen.Tone;
 import wellen.ToneEngineDSP;
 import wellen.dsp.Gain;
 import wellen.dsp.Reverb;
-import wellen.extra.rakarrack.RRStompBox;
 
 public class TechniqueBasics09ModTracker extends PApplet {
 
@@ -62,8 +61,8 @@ public class TechniqueBasics09ModTracker extends PApplet {
             return;
         }
 
-        RRStompBox mDistortion = new RRStompBox();
-        mDistortion.setpreset(RRStompBox.PRESET_ODIE);
+        wellen.extra.rakarrack.RRStompBox mDistortion = new wellen.extra.rakarrack.RRStompBox();
+        mDistortion.setpreset(wellen.extra.rakarrack.RRStompBox.PRESET_ODIE);
         mToneEngine.add_effect(mDistortion);
 
         Reverb mReverb = new Reverb();

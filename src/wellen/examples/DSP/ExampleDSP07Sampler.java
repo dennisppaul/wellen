@@ -17,6 +17,15 @@ public class ExampleDSP07Sampler extends PApplet {
      *
      * note that samples can either be played once or looped. if a sample is played once it must be rewound before it
      * can be played again. also note that a sample buffer can be cropped with `set_in()` + `set_out()`.
+     *
+     * samples can be loaded from external sources as *raw* bytes with `loadBytes(byte[])`. the raw format needs to be in
+     * the 32bit IEEE float format and only contain a single channel ( i.e mono ). tools like
+     * [Audacity](https://www.audacityteam.org) or [FFmpeg](https://ffmpeg.org) can be used to generate it. e.g the latter
+     * can be used to convert sound file to *raw* bytes with the following command where `INPUT_FILE`, `OUTPUT_FILE` and
+     * `$OUTPUT_SAMPLE_RATE` need to be adjusted:
+     *
+     * `ffmpeg -i $INPUT_FILE -f f32le -acodec pcm_f32le -ac 1 -ar $OUTPUT_SAMPLE_RATE "$OUTPUT_FILE.raw"`
+     *
      */
 
     private Sampler fSampler;
