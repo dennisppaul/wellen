@@ -275,13 +275,14 @@ static class CustomInstrumentSampler extends InstrumentDSP {
         mSampler = new Sampler();
         mSampler.load(SampleDataSNARE.data);
         mSampler.enable_loop(false);
+        mSampler.play();
         mReverb = new Reverb();
         mGain = 2.0f;
     }
     /**
      * called by tone engine to request the next audio sample of the instrument.
      *
-     * @return
+     * @return the next audio sample of the instrument
      */
     Signal output_signal() {
         /* `output(Signal)` is called to request a new sample: sampler returns a new sample which is then

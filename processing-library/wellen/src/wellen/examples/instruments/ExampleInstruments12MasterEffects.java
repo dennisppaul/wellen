@@ -27,9 +27,9 @@ public class ExampleInstruments12MasterEffects extends PApplet {
         mEchotron.setpreset(RREchotron.PRESET_SUMMER);
         mToneEngine.add_effect(mEchotron);
 
-        RRStompBox mDisortion = new RRStompBox();
-        mDisortion.setpreset(RRStompBox.PRESET_ODIE);
-        mToneEngine.add_effect(mDisortion);
+        RRStompBox mDistortion = new RRStompBox();
+        mDistortion.setpreset(RRStompBox.PRESET_ODIE);
+        mToneEngine.add_effect(mDistortion);
 
         Reverb mReverb = new Reverb();
         mToneEngine.add_effect(mReverb);
