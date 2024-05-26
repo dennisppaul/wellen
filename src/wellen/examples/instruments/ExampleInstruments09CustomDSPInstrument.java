@@ -62,7 +62,7 @@ public class ExampleInstruments09CustomDSPInstrument extends PApplet {
     }
 
     public void setup() {
-        Tone.replace_instrument(new CustomInstrumentSampler(INSTRUMENT_SNARE_DRUM));
+        Tone.replace_instrument(new CustomInstrumentSnare(INSTRUMENT_SNARE_DRUM));
         Tone.replace_instrument(new CustomInstrumentKickDrum(INSTRUMENT_KICK_DRUM));
         Tone.replace_instrument(new CustomInstrumentNoise(INSTRUMENT_HIHAT));
         Tone.replace_instrument(new CustomInstrumentMultipleOscillators(INSTRUMENT_FAT_LEAD));
@@ -314,7 +314,7 @@ public class ExampleInstruments09CustomDSPInstrument extends PApplet {
     /**
      * custom DSP instrument that implements a snare drum by playing a pre-recorded sample.
      */
-    private static class CustomInstrumentSampler extends InstrumentDSP {
+    private static class CustomInstrumentSnare extends InstrumentDSP {
 
         private final float mGain;
         private final Reverb mReverb;
@@ -326,7 +326,7 @@ public class ExampleInstruments09CustomDSPInstrument extends PApplet {
          *
          * @param pID instrument ID
          */
-        public CustomInstrumentSampler(int pID) {
+        public CustomInstrumentSnare(int pID) {
             super(pID); /* call super constructor with instrument ID */
 
             mSampler = new Sampler();

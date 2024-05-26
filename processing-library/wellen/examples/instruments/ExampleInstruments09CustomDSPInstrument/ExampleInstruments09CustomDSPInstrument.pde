@@ -46,7 +46,7 @@ void settings() {
     size(640, 480);
 }
 void setup() {
-    Tone.replace_instrument(new CustomInstrumentSampler(INSTRUMENT_SNARE_DRUM));
+    Tone.replace_instrument(new CustomInstrumentSnare(INSTRUMENT_SNARE_DRUM));
     Tone.replace_instrument(new CustomInstrumentKickDrum(INSTRUMENT_KICK_DRUM));
     Tone.replace_instrument(new CustomInstrumentNoise(INSTRUMENT_HIHAT));
     Tone.replace_instrument(new CustomInstrumentMultipleOscillators(INSTRUMENT_FAT_LEAD));
@@ -260,7 +260,7 @@ static class CustomInstrumentNoise extends InstrumentDSP {
 /**
  * custom DSP instrument that implements a snare drum by playing a pre-recorded sample.
  */
-static class CustomInstrumentSampler extends InstrumentDSP {
+static class CustomInstrumentSnare extends InstrumentDSP {
     final float mGain;
     final Reverb mReverb;
     final Sampler mSampler;
@@ -270,7 +270,7 @@ static class CustomInstrumentSampler extends InstrumentDSP {
      *
      * @param pID instrument ID
      */
-    CustomInstrumentSampler(int pID) {
+    CustomInstrumentSnare(int pID) {
         super(pID); /* call super constructor with instrument ID */
         mSampler = new Sampler();
         mSampler.load(SampleDataSNARE.data);

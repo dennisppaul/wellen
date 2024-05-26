@@ -41,186 +41,186 @@ import static processing.core.PApplet.*;
  */
 public class Wellen {
 
-    public static final int ENCODING_PCM_SIGNED = 0;
-    public static final int ENCODING_PCM_UNSIGNED = 1;
-    public static final int ENCODING_PCM_FLOAT = 2;
-    public static final int ENCODING_ULAW = 3;
-    public static final int ENCODING_ALAW = 4;
-    public static final int BITS_PER_SAMPLE_16 = 16;
-    public static final int BITS_PER_SAMPLE_24 = 24;
-    public static final int BITS_PER_SAMPLE_32 = 32;
-    public static final int BITS_PER_SAMPLE_8 = 8;
-    public static final float DEFAULT_ATTACK = 0.005f;
-    public static final int DEFAULT_AUDIOBLOCK_SIZE = 1024;
-    public static final int DEFAULT_AUDIO_DEVICE = -1;
-    public static final int DEFAULT_BITS_PER_SAMPLE = BITS_PER_SAMPLE_16;
-    public static final int DEFAULT_ENCODING = ENCODING_PCM_SIGNED;
-    public static final boolean ENDIANESS_BIG_ENDIAN = true;
-    public static final boolean ENDIANESS_LITTLE_ENDIAN = false;
-    public static final boolean DEFAULT_ENDIANESS = ENDIANESS_LITTLE_ENDIAN; // TODO `ENDIANESS_LITTLE_ENDIAN` work on MacOS, check this on more systems
-    public static final float DEFAULT_DECAY = 0.01f;
-    public static final float DEFAULT_FILTER_BANDWIDTH = 100.0f;
-    public static final float DEFAULT_FILTER_FREQUENCY = 1000.0f;
-    public static final int DEFAULT_NUMBER_OF_INSTRUMENTS = 16;
-    public static final float DEFAULT_RELEASE = 0.075f;
-    public static final int DEFAULT_SAMPLING_RATE = 48000;
-    public static final int DEFAULT_INTERPOLATE_AMP_FREQ_DURATION = Wellen.millis_to_samples(5);
-    public static final float DEFAULT_SUSTAIN = 0.5f;
-    public static final int DEFAULT_WAVETABLE_SIZE = 512;
-    public static final int DISTORTION_BIT_CRUSHING = 8;
-    public static final int DISTORTION_FOLDBACK = 1;
-    public static final int DISTORTION_FOLDBACK_SINGLE = 2;
-    public static final int DISTORTION_FULL_WAVE_RECTIFICATION = 3;
-    public static final int DISTORTION_HALF_WAVE_RECTIFICATION = 4;
-    public static final int DISTORTION_HARD_CLIPPING = 0;
-    public static final int DISTORTION_INFINITE_CLIPPING = 5;
-    public static final int DISTORTION_SOFT_CLIPPING_ARC_TANGENT = 7;
-    public static final int DISTORTION_SOFT_CLIPPING_CUBIC = 6;
-    public static final int EVENT_CHANNEL = 0;
-    public static final int EVENT_CONTROLCHANGE = 2;
-    public static final int EVENT_NOTE = 1;
-    public static final int EVENT_NOTE_OFF = 1;
-    public static final int EVENT_NOTE_ON = 0;
-    public static final int EVENT_PITCHBEND = 3;
-    public static final int EVENT_PROGRAMCHANGE = 4;
-    public static final int EVENT_UNDEFINED = -1;
-    public static final int EVENT_VELOCITY = 2;
-    public static final int FILTER_MODE_BAND_PASS = 2;
-    public static final int FILTER_MODE_BAND_REJECT = 7;
-    public static final int FILTER_MODE_HIGHSHELF = 6;
-    public static final int FILTER_MODE_HIGH_PASS = 1;
-    public static final int FILTER_MODE_LOWSHELF = 5;
-    public static final int FILTER_MODE_LOW_PASS = 0;
-    public static final int FILTER_MODE_NOTCH = 3;
-    public static final int FILTER_MODE_PEAK = 4;
-    public static final int LOOP_INFINITE = Integer.MAX_VALUE;
-    public static final int MONO = 1;
-    public static final int NOISE_GAUSSIAN_WHITE = 1;
-    public static final int NOISE_GAUSSIAN_WHITE2 = 2;
-    public static final int NOISE_PINK = 3;
-    public static final int NOISE_PINK2 = 4;
-    public static final int NOISE_PINK3 = 5;
-    public static final int NOISE_SIMPLEX = 6;
-    public static final int NOISE_WHITE = 0;
-    public static final int NOTE_EIGHTH = 2;
-    public static final float NOTE_HALF = 0.5f;
-    public static final int NOTE_QUARTER = 1;
-    public static final int NOTE_SIXTEENTH = 4;
-    public static final int NOTE_THIRTYSECOND = 8;
-    public static final float NOTE_WHOLE = 0.25f;
-    public static final int NO_AUDIO_DEVICE = -2;
-    public static final int NO_CHANNELS = 0;
-    public static final int NO_EVENT = -1;
-    public static final int NO_INPOINT = 0;
-    public static final int NO_LOOP = -2;
-    public static final int NO_LOOP_COUNT = -1;
-    public static final int NO_OUTPOINT = -1;
-    public static final int NO_POSITION = -1;
-    public static final int NO_VALUE = -1;
-    public static final int PAN_LINEAR = 0;
-    public static final int PAN_SINE_LAW = 2;
-    public static final int PAN_SQUARE_LAW = 1;
-    public static final int SIGNAL_LEFT = 0;
-    public static final float SIGNAL_MAX = 1.0f;
-    public static final float SIGNAL_MIN = -1.0f;
-    public static final int SIGNAL_MONO = 1;
-    public static final int SIGNAL_PROCESSING_IGNORE_IN_OUTPOINTS = -3;
-    public static final int SIGNAL_RIGHT = 1;
-    public static final int SIGNAL_STEREO = 2;
-    public static final int SIG_INT16_BIG_ENDIAN = 2;
-    public static final int SIG_INT16_LITTLE_ENDIAN = 3;
-    public static final int SIG_INT24_3_BIG_ENDIAN = 4;
-    public static final int SIG_INT24_3_LITTLE_ENDIAN = 5;
-    public static final int SIG_INT24_4_BIG_ENDIAN = 6;
-    public static final int SIG_INT24_4_LITTLE_ENDIAN = 7;
-    public static final int SIG_INT32_BIG_ENDIAN = 8;
-    public static final int SIG_INT32_LITTLE_ENDIAN = 9;
-    public static final int SIG_INT8 = 0;
-    public static final int SIG_UINT8 = 1;
-    public static final int STEREO = 2;
-    public static final String TONE_ENGINE_INTERNAL = "internal";
-    public static final int TONE_ENGINE_INTERNAL_WITH_NO_OUTPUT = -2;
-    public static final String TONE_ENGINE_MIDI = "midi";
-    public static final String TONE_ENGINE_OSC = "osc";
-    public static final float TWO_PI = PApplet.TWO_PI;
-    public static final int VERSION_MAJOR = 0;
-    public static final int VERSION_MINOR = 8;
-    public static final int WAVEFORM_NOISE = 4;
+    public static final int     ENCODING_PCM_SIGNED                   = 0;
+    public static final int     ENCODING_PCM_UNSIGNED                 = 1;
+    public static final int     ENCODING_PCM_FLOAT                    = 2;
+    public static final int     ENCODING_ULAW                         = 3;
+    public static final int     ENCODING_ALAW                         = 4;
+    public static final int     BITS_PER_SAMPLE_16                    = 16;
+    public static final int     BITS_PER_SAMPLE_24                    = 24;
+    public static final int     BITS_PER_SAMPLE_32                    = 32;
+    public static final int     BITS_PER_SAMPLE_8                     = 8;
+    public static final float   DEFAULT_ATTACK                        = 0.005f;
+    public static final int     DEFAULT_AUDIOBLOCK_SIZE               = 1024;
+    public static final int     DEFAULT_AUDIO_DEVICE                  = -1;
+    public static final int     DEFAULT_BITS_PER_SAMPLE               = BITS_PER_SAMPLE_16;
+    public static final int     DEFAULT_ENCODING                      = ENCODING_PCM_SIGNED;
+    public static final boolean ENDIANESS_BIG_ENDIAN                  = true;
+    public static final boolean ENDIANESS_LITTLE_ENDIAN               = false;
+    public static final boolean DEFAULT_ENDIANESS                     = ENDIANESS_LITTLE_ENDIAN; // TODO `ENDIANESS_LITTLE_ENDIAN` work on MacOS, check this on more systems
+    public static final float   DEFAULT_DECAY                         = 0.01f;
+    public static final float   DEFAULT_FILTER_BANDWIDTH              = 100.0f;
+    public static final float   DEFAULT_FILTER_FREQUENCY              = 1000.0f;
+    public static final int     DEFAULT_NUMBER_OF_INSTRUMENTS         = 16;
+    public static final float   DEFAULT_RELEASE                       = 0.075f;
+    public static final int     DEFAULT_SAMPLING_RATE                 = 48000;
+    public static final int     DEFAULT_INTERPOLATE_AMP_FREQ_DURATION = Wellen.millis_to_samples(5);
+    public static final float   DEFAULT_SUSTAIN                       = 0.5f;
+    public static final int     DEFAULT_WAVETABLE_SIZE                = 512;
+    public static final int     DISTORTION_BIT_CRUSHING               = 8;
+    public static final int     DISTORTION_FOLDBACK                   = 1;
+    public static final int     DISTORTION_FOLDBACK_SINGLE            = 2;
+    public static final int     DISTORTION_FULL_WAVE_RECTIFICATION    = 3;
+    public static final int     DISTORTION_HALF_WAVE_RECTIFICATION    = 4;
+    public static final int     DISTORTION_HARD_CLIPPING              = 0;
+    public static final int     DISTORTION_INFINITE_CLIPPING          = 5;
+    public static final int     DISTORTION_SOFT_CLIPPING_ARC_TANGENT  = 7;
+    public static final int     DISTORTION_SOFT_CLIPPING_CUBIC        = 6;
+    public static final int     EVENT_CHANNEL                         = 0;
+    public static final int     EVENT_CONTROLCHANGE                   = 2;
+    public static final int     EVENT_NOTE                            = 1;
+    public static final int     EVENT_NOTE_OFF                        = 1;
+    public static final int     EVENT_NOTE_ON                         = 0;
+    public static final int     EVENT_PITCHBEND                       = 3;
+    public static final int     EVENT_PROGRAMCHANGE                   = 4;
+    public static final int     EVENT_UNDEFINED                       = -1;
+    public static final int     EVENT_VELOCITY                        = 2;
+    public static final int     FILTER_MODE_BAND_PASS                 = 2;
+    public static final int     FILTER_MODE_BAND_REJECT               = 7;
+    public static final int     FILTER_MODE_HIGHSHELF                 = 6;
+    public static final int     FILTER_MODE_HIGH_PASS                 = 1;
+    public static final int     FILTER_MODE_LOWSHELF                  = 5;
+    public static final int     FILTER_MODE_LOW_PASS                  = 0;
+    public static final int     FILTER_MODE_NOTCH                     = 3;
+    public static final int     FILTER_MODE_PEAK                      = 4;
+    public static final int     LOOP_INFINITE                         = Integer.MAX_VALUE;
+    public static final int     MONO                                  = 1;
+    public static final int     NOISE_GAUSSIAN_WHITE                  = 1;
+    public static final int     NOISE_GAUSSIAN_WHITE2                 = 2;
+    public static final int     NOISE_PINK                            = 3;
+    public static final int     NOISE_PINK2                           = 4;
+    public static final int     NOISE_PINK3                           = 5;
+    public static final int     NOISE_SIMPLEX                         = 6;
+    public static final int     NOISE_WHITE                           = 0;
+    public static final int     NOTE_EIGHTH                           = 2;
+    public static final float   NOTE_HALF                             = 0.5f;
+    public static final int     NOTE_QUARTER                          = 1;
+    public static final int     NOTE_SIXTEENTH                        = 4;
+    public static final int     NOTE_THIRTYSECOND                     = 8;
+    public static final float   NOTE_WHOLE                            = 0.25f;
+    public static final int     NO_AUDIO_DEVICE                       = -2;
+    public static final int     NO_CHANNELS                           = 0;
+    public static final int     NO_EVENT                              = -1;
+    public static final int     NO_INPOINT                            = 0;
+    public static final int     NO_LOOP                               = -2;
+    public static final int     NO_LOOP_COUNT                         = -1;
+    public static final int     NO_OUTPOINT                           = -1;
+    public static final int     NO_POSITION                           = -1;
+    public static final int     NO_VALUE                              = -1;
+    public static final int     PAN_LINEAR                            = 0;
+    public static final int     PAN_SINE_LAW                          = 2;
+    public static final int     PAN_SQUARE_LAW                        = 1;
+    public static final int     SIGNAL_LEFT                           = 0;
+    public static final float   SIGNAL_MAX                            = 1.0f;
+    public static final float   SIGNAL_MIN                            = -1.0f;
+    public static final int     SIGNAL_MONO                           = 1;
+    public static final int     SIGNAL_PROCESSING_IGNORE_IN_OUTPOINTS = -3;
+    public static final int     SIGNAL_RIGHT                          = 1;
+    public static final int     SIGNAL_STEREO                         = 2;
+    public static final int     SIG_INT16_BIG_ENDIAN                  = 2;
+    public static final int     SIG_INT16_LITTLE_ENDIAN               = 3;
+    public static final int     SIG_INT24_3_BIG_ENDIAN                = 4;
+    public static final int     SIG_INT24_3_LITTLE_ENDIAN             = 5;
+    public static final int     SIG_INT24_4_BIG_ENDIAN                = 6;
+    public static final int     SIG_INT24_4_LITTLE_ENDIAN             = 7;
+    public static final int     SIG_INT32_BIG_ENDIAN                  = 8;
+    public static final int     SIG_INT32_LITTLE_ENDIAN               = 9;
+    public static final int     SIG_INT8                              = 0;
+    public static final int     SIG_UINT8                             = 1;
+    public static final int     STEREO                                = 2;
+    public static final String  TONE_ENGINE_INTERNAL                  = "internal";
+    public static final int     TONE_ENGINE_INTERNAL_WITH_NO_OUTPUT   = -2;
+    public static final String  TONE_ENGINE_MIDI                      = "midi";
+    public static final String  TONE_ENGINE_OSC                       = "osc";
+    public static final float   TWO_PI                                = PApplet.TWO_PI;
+    public static final int     VERSION_MAJOR                         = 0;
+    public static final int     VERSION_MINOR                         = 8;
+    public static final int     WAVEFORM_NOISE                        = 4;
     /**
      * @deprecated use WAVEFORM_ instead
      */
     @Deprecated
-    public static final int OSC_NOISE = WAVEFORM_NOISE;
-    public static final int WAVEFORM_SAWTOOTH = 2;
-    public static final int OSC_SAWTOOTH = WAVEFORM_SAWTOOTH;
-    public static final int WAVEFORM_SINE = 0;
-    public static final int OSC_SINE = WAVEFORM_SINE;
-    public static final int WAVEFORM_SQUARE = 3;
-    public static final int OSC_SQUARE = WAVEFORM_SQUARE;
-    public static final int WAVEFORM_TRIANGLE = 1;
-    public static final int OSC_TRIANGLE = WAVEFORM_TRIANGLE;
-    public static final int WAVESHAPE_INTERPOLATE_CUBIC = 2;
-    public static final int WAVESHAPE_INTERPOLATE_LINEAR = 1;
-    public static final int WAVESHAPE_INTERPOLATE_NONE = 0;
+    public static final int     OSC_NOISE                             = WAVEFORM_NOISE;
+    public static final int     WAVEFORM_SAWTOOTH                     = 2;
+    public static final int     OSC_SAWTOOTH                          = WAVEFORM_SAWTOOTH;
+    public static final int     WAVEFORM_SINE                         = 0;
+    public static final int     OSC_SINE                              = WAVEFORM_SINE;
+    public static final int     WAVEFORM_SQUARE                       = 3;
+    public static final int     OSC_SQUARE                            = WAVEFORM_SQUARE;
+    public static final int     WAVEFORM_TRIANGLE                     = 1;
+    public static final int     OSC_TRIANGLE                          = WAVEFORM_TRIANGLE;
+    public static final int     WAVESHAPE_INTERPOLATE_CUBIC           = 2;
+    public static final int     WAVESHAPE_INTERPOLATE_LINEAR          = 1;
+    public static final int     WAVESHAPE_INTERPOLATE_NONE            = 0;
     /**
      * @deprecated use WAVEFORM_ instead
      */
     @Deprecated
-    public static final int WAVESHAPE_NOISE = 4;
+    public static final int     WAVESHAPE_NOISE                       = 4;
     /**
      * @deprecated use WAVEFORM_ instead
      */
     @Deprecated
-    public static final int WAVESHAPE_SAWTOOTH = 2;
+    public static final int     WAVESHAPE_SAWTOOTH                    = 2;
     /**
      * @deprecated use WAVEFORM_ instead
      */
     @Deprecated()
-    public static final int WAVESHAPE_SINE = 0;
+    public static final int     WAVESHAPE_SINE                        = 0;
     /**
      * @deprecated use WAVEFORM_ instead
      */
     @Deprecated
-    public static final int WAVESHAPE_SQUARE = 3;
+    public static final int     WAVESHAPE_SQUARE                      = 3;
     /**
      * @deprecated use WAVEFORM_ instead
      */
     @Deprecated
-    public static final int WAVESHAPE_TRIANGLE = 1;
-    public static final int WAV_FORMAT_IEEE_FLOAT_32BIT = 3;
-    public static final int WAV_FORMAT_PCM = 1;
+    public static final int     WAVESHAPE_TRIANGLE                    = 1;
+    public static final int     WAV_FORMAT_IEEE_FLOAT_32BIT           = 3;
+    public static final int     WAV_FORMAT_PCM                        = 1;
 
-    public static final int ENVELOPE_FORM_RECTANGULAR = 0;
-    public static final int ENVELOPE_FORM_TRIANGLE = 1;
-    public static final int ENVELOPE_FORM_DOWNWARD_TRIANGLE = 2;
-    public static final int ENVELOPE_FORM_UPWARD_TRIANGLE = 3;
-    public static final int ENVELOPE_FORM_EXPONENTIAL_DECAY = 4;
+    public static final int ENVELOPE_FORM_RECTANGULAR          = 0;
+    public static final int ENVELOPE_FORM_TRIANGLE             = 1;
+    public static final int ENVELOPE_FORM_DOWNWARD_TRIANGLE    = 2;
+    public static final int ENVELOPE_FORM_UPWARD_TRIANGLE      = 3;
+    public static final int ENVELOPE_FORM_EXPONENTIAL_DECAY    = 4;
     public static final int ENVELOPE_FORM_EXPONENTIAL_INCREASE = 5;
-    public static final int ENVELOPE_FORM_GAUSSIAN = 6;
-    public static final int ENVELOPE_FORM_HANNING = 7;
-    public static final int ENVELOPE_FORM_LANCZOS = 8;
-    public static final int ENVELOPE_FORM_COSINE = 9;
-    public static final int ENVELOPE_FORM_COSINE_SQUARED = 10;
-    public static final int ENVELOPE_FORM_WELCH = 11;
-    public static final int ENVELOPE_FORM_BLACKMAN = 12;
-    public static final int ENVELOPE_FORM_BLACKMAN_HARRIS = 13;
-    public static final int NUM_ENVELOPE_FORM = 14;
+    public static final int ENVELOPE_FORM_GAUSSIAN             = 6;
+    public static final int ENVELOPE_FORM_HANNING              = 7;
+    public static final int ENVELOPE_FORM_LANCZOS              = 8;
+    public static final int ENVELOPE_FORM_COSINE               = 9;
+    public static final int ENVELOPE_FORM_COSINE_SQUARED       = 10;
+    public static final int ENVELOPE_FORM_WELCH                = 11;
+    public static final int ENVELOPE_FORM_BLACKMAN             = 12;
+    public static final int ENVELOPE_FORM_BLACKMAN_HARRIS      = 13;
+    public static final int NUM_ENVELOPE_FORM                  = 14;
 
-    public static final int WAVESHAPER_SIN = 0;
-    public static final int WAVESHAPER_ATAN = 1;
-    public static final int WAVESHAPER_TAN_H = 2;
-    public static final int WAVESHAPER_CUBIC = 3;
-    public static final int WAVESHAPER_HARDCLIP = 4;
+    public static final int WAVESHAPER_SIN          = 0;
+    public static final int WAVESHAPER_ATAN         = 1;
+    public static final int WAVESHAPER_TAN_H        = 2;
+    public static final int WAVESHAPER_CUBIC        = 3;
+    public static final int WAVESHAPER_HARDCLIP     = 4;
     public static final int NUM_OF_WAVESHAPER_FORMS = 5;
 
-    private static final float SIG_16BIT_MAX = 32768.0f;
+    private static final float SIG_16BIT_MAX         = 32768.0f;
     private static final float SIG_16BIT_MAX_INVERSE = 1.0f / SIG_16BIT_MAX;
-    private static final float SIG_24BIT_MAX = 8388608.0f;
+    private static final float SIG_24BIT_MAX         = 8388608.0f;
     private static final float SIG_24BIT_MAX_INVERSE = 1.0f / SIG_24BIT_MAX;
-    private static final float SIG_32BIT_MAX = 2147483648.0f;
+    private static final float SIG_32BIT_MAX         = 2147483648.0f;
     private static final float SIG_32BIT_MAX_INVERSE = 1.0f / SIG_32BIT_MAX;
-    private static final float SIG_8BIT_MAX = 128.0f;
-    private static final float SIG_8BIT_MAX_INVERSE = 1.0f / SIG_8BIT_MAX;
+    private static final float SIG_8BIT_MAX          = 128.0f;
+    private static final float SIG_8BIT_MAX_INVERSE  = 1.0f / SIG_8BIT_MAX;
 
     public static boolean CHECK_DEFAULT_AUDIO_DEVICE_SAMPLE_RATE = false;
 
@@ -240,6 +240,7 @@ public class Wellen {
         return bytes_to_floatIEEE(mBytes, pLittleEndian);
     }
 
+
     public static void bytes_to_floatIEEEs(byte[] pBytes, float[] pSignal, boolean pLittleEndian) {
         if (pBytes.length / 4 == pSignal.length) {
             for (int i = 0; i < pSignal.length; i++) {
@@ -250,14 +251,20 @@ public class Wellen {
         }
     }
 
+    public static float[] bytes_to_floatIEEEs(byte[] pBytes) {
+        final float[] mSignal = new float[pBytes.length / 4];
+        bytes_to_floatIEEEs(pBytes, mSignal, true);
+        return mSignal;
+    }
+
     public static void bytes_to_floats(byte[] pBytes, float[] pFloats, int pBitsPerFloat) {
         final int mBytesPerFloat = pBitsPerFloat / 8;
         for (int i = 0; i < pFloats.length; i++) {
             final double mScale = 1.0 / ((1 << (pBitsPerFloat - 1)) - 1);
-            long f = 0;
+            long         f      = 0;
             for (int j = 0; j < mBytesPerFloat; j++) {
                 final long mBitShift = j * 8;
-                long b = pBytes[i * mBytesPerFloat + j];
+                long       b         = pBytes[i * mBytesPerFloat + j];
                 f += b << mBitShift;
             }
             pFloats[i] = (float) (f * mScale);
@@ -465,7 +472,7 @@ public class Wellen {
                                  int pCompressionType) {
         if (pCompressionType == WAV_FORMAT_IEEE_FLOAT_32BIT && pBitsPerSignal != 32) {
             System.err.println("+++ WARNING @" + Wellen.class.getSimpleName() + ".exportWAV / if WAV format is *IEEE "
-                                       + "float* 32 " + "bits" + " per sample are required.");
+                               + "float* 32 " + "bits" + " per sample are required.");
             pBitsPerSignal = 32;
         }
         final byte[] mWAVBytes = WAVConverter.convert_samples_to_bytes(pBuffer,
@@ -498,22 +505,22 @@ public class Wellen {
     }
 
     public static int[] find_zero_crossings(float[] pSampleData, final int pInPoint, final int pOutPoint) {
-        final int ZERO_CROSSING_EDGE_NONE = 0;
-        final int ZERO_CROSSING_EDGE_RISING = 1;
+        final int ZERO_CROSSING_EDGE_NONE    = 0;
+        final int ZERO_CROSSING_EDGE_RISING  = 1;
         final int ZERO_CROSSING_EDGE_FALLING = -1;
-        int mAdaptedInPoint = pInPoint;
-        int mAdaptedOutPoint = pOutPoint;
+        int       mAdaptedInPoint            = pInPoint;
+        int       mAdaptedOutPoint           = pOutPoint;
         if (pInPoint > 0 && pOutPoint > 0 && pInPoint < pSampleData.length - 1 && pOutPoint < pSampleData.length - 1) {
             int mInPointEdgeKind = ZERO_CROSSING_EDGE_NONE;
             {
                 float mInValue = pSampleData[pInPoint];
                 if (mInValue != 0.0f) {
                     for (int i = pInPoint + 1; i < pSampleData.length; i++) {
-                        float v = pSampleData[i];
-                        boolean mRisingEdge = (mInValue < 0 && v >= 0);
+                        float   v            = pSampleData[i];
+                        boolean mRisingEdge  = (mInValue < 0 && v >= 0);
                         boolean mFallingEdge = (mInValue > 0 && v <= 0);
                         if (mRisingEdge || mFallingEdge) {
-                            mAdaptedInPoint = i;
+                            mAdaptedInPoint  = i;
                             mInPointEdgeKind = mRisingEdge ? ZERO_CROSSING_EDGE_RISING : ZERO_CROSSING_EDGE_FALLING;
                             break;
                         }
@@ -524,8 +531,8 @@ public class Wellen {
                 float mOutValue = pSampleData[pOutPoint];
                 if (mOutValue != 0.0f && pOutPoint > 0) {
                     for (int i = pOutPoint - 1; i > 0; i--) {
-                        float v = pSampleData[i];
-                        boolean mRisingEdge = (mOutValue < 0 && v >= 0);
+                        float   v            = pSampleData[i];
+                        boolean mRisingEdge  = (mOutValue < 0 && v >= 0);
                         boolean mFallingEdge = (mOutValue > 0 && v <= 0);
                         if (mInPointEdgeKind == 0 && (mRisingEdge || mFallingEdge)) {
                             mAdaptedOutPoint = i;
@@ -563,7 +570,7 @@ public class Wellen {
 
     public static byte[] floatIEEEs_to_bytes(float[] pFloats, boolean pLittleEndian) {
         ByteBuffer buffer = ByteBuffer.allocate(4 * pFloats.length)
-                                      .order(pLittleEndian ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN);
+                .order(pLittleEndian ? ByteOrder.LITTLE_ENDIAN : ByteOrder.BIG_ENDIAN);
 
         for (float value : pFloats) {
             buffer.putFloat(value);
@@ -574,9 +581,9 @@ public class Wellen {
     public static void floats_to_bytes(byte[] pBytes, float[] pFloats, int pBitsPerFloat) {
         final int mBytesPerFloat = pBitsPerFloat / 8;
         for (int i = 0; i < pFloats.length; i++) {
-            final float f = pFloats[i];
-            final int mScale = (1 << (pBitsPerFloat - 1)) - 1;
-            final long y = (long) (mScale * f);
+            final float f      = pFloats[i];
+            final int   mScale = (1 << (pBitsPerFloat - 1)) - 1;
+            final long  y      = (long) (mScale * f);
             for (int j = 0; j < mBytesPerFloat; j++) {
                 final int mBitShift = j * 8;
                 pBytes[i * mBytesPerFloat + j] = (byte) ((y >>> mBitShift) & 0xFF);
@@ -603,14 +610,14 @@ public class Wellen {
     }
 
     public static float[][] importWAV(PApplet p, String pFilepath) {
-        byte[] mWAVBytes = p.loadBytes(pFilepath);
+        byte[]            mWAVBytes  = p.loadBytes(pFilepath);
         WAVConverter.Info mWAVStruct = WAVConverter.convert_bytes_to_samples(mWAVBytes);
         return mWAVStruct.samples;
     }
 
     public static WAVConverter.Info importWAVInfo(PApplet p, String pFilepath) {
-        byte[] mWAVBytes = p.loadBytes(pFilepath);
-        WAVConverter.Info mWAVInfo = WAVConverter.convert_bytes_to_samples(mWAVBytes);
+        byte[]            mWAVBytes = p.loadBytes(pFilepath);
+        WAVConverter.Info mWAVInfo  = WAVConverter.convert_bytes_to_samples(mWAVBytes);
         mWAVInfo.data = mWAVBytes;
         return mWAVInfo;
     }
@@ -647,10 +654,10 @@ public class Wellen {
 
         int mSelectedID = Wellen.DEFAULT_AUDIO_DEVICE;
         for (int i = 0; i < AudioSystem.getMixerInfo().length; i++) {
-            int mInputChannels = 0;
+            int mInputChannels  = 0;
             int mOutputChannels = 0;
 
-            Mixer mMixer = AudioSystem.getMixer(AudioSystem.getMixerInfo()[i]);
+            Mixer       mMixer       = AudioSystem.getMixer(AudioSystem.getMixerInfo()[i]);
             Line.Info[] mSourceLines = mMixer.getSourceLineInfo();
             for (Line.Info li : mSourceLines) {
                 try {
@@ -678,7 +685,7 @@ public class Wellen {
             }
 
             if (mInputChannels + mOutputChannels > 0) {
-                final String mID = i + getSpacesFrom(i, 3) + ":";
+                final String mID   = i + getSpacesFrom(i, 3) + ":";
                 final String mName = AudioSystem.getMixerInfo()[i].getName();
                 if (pPrintDevices) {
                     System.out.println("+ ID #" + mID + " ( INPUT:" + mInputChannels + " / OUTPUT:" + mOutputChannels + " )" + " : " + "\"" + mName + "\"");
@@ -754,7 +761,7 @@ public class Wellen {
     }
 
     private static String getSpacesFrom(int pNumbers, int pTotalNumberOfCharacters) {
-        int l = pTotalNumberOfCharacters - String.valueOf(pNumbers).length();
+        int           l  = pTotalNumberOfCharacters - String.valueOf(pNumbers).length();
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < l; i++) {
             sb.append(' ');
@@ -771,7 +778,7 @@ public class Wellen {
         for (Line.Info mLineInfo : mLineInfos) {
             if (mLineInfo instanceof DataLine.Info) {
                 DataLine.Info mDataLineInfo = (DataLine.Info) mLineInfo;
-                AudioFormat[] mFormats = mDataLineInfo.getFormats();
+                AudioFormat[] mFormats      = mDataLineInfo.getFormats();
                 if (mDataLineInfo.getLineClass() == mDataLineInfoClass) {
                     for (AudioFormat mFormat : mFormats) {
                         if (!mFormat.isBigEndian() && mFormat.getEncoding() == AudioFormat.Encoding.PCM_SIGNED) {
@@ -780,7 +787,7 @@ public class Wellen {
                             System.out.print(mFormat.getEncoding() + ", ");
                             System.out.print((mFormat.isBigEndian() ? "BE" : "LE") + ", ");
                             System.out.print(mFormat.getChannels() + " channel" + (mFormat.getChannels() == 1 ? "" :
-                                    "s") + (mFormat.getSampleRate() > 0 ? ", " : ""));
+                                                                                           "s") + (mFormat.getSampleRate() > 0 ? ", " : ""));
                             if (mFormat.getSampleRate() > 0) {
                                 System.out.print((int) mFormat.getSampleRate() + "Hz");
                             }
@@ -793,9 +800,9 @@ public class Wellen {
     }
 
     public static void fill_envelope(float[] buffer, int type) {
-        final float N = (float) buffer.length;
+        final float N   = (float) buffer.length;
         final float N_1 = N - 1.0f;
-        float n = 0.0f;
+        float       n   = 0.0f;
 
         switch (type) {
             case Wellen.ENVELOPE_FORM_RECTANGULAR: {
@@ -851,7 +858,7 @@ public class Wellen {
                 for (int i = 0; i < buffer.length; ++i, n += 1.0f) {
                     // sinc function sin(x)/x
                     float Arg = PApplet.PI * (2.0f * n / N_1 - 1.0f);
-                    Arg = max(SMALL_NUMBER, Arg);
+                    Arg       = max(SMALL_NUMBER, Arg);
                     buffer[i] = sin(Arg) / Arg;
                 }
             }

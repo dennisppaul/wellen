@@ -18,9 +18,13 @@ static final int   TRACKS       = 4;
 static final int   TRACK_LENGTH = 16;
 static final float TRACK_WIDTH  = 100;
 static final float TRACK_HEIGHT = 25;
+/* set this to `true` to replace the first 3 tracks’ default sounds
+ * with a percussion sounds.
+ */
+static final boolean ENABLE_PERCUSSION = false;
 Track[]      fTracks;
 StepSelected fSelected;
-boolean fIsShiftPressed = false;
+boolean      fIsShiftPressed = false;
 void settings() {
     size(640, 480);
 }
@@ -33,6 +37,11 @@ void setup() {
         Tone.instrument(i).set_pan(map(i, 0, TRACKS - 1, -1, 1));
     }
     fSelected = new StepSelected(fTracks);
+    if (ENABLE_PERCUSSION) {
+        Tone.replace_instrument(InstrumentDSPLibrary.SNARE.class, 0);
+        Tone.replace_instrument(InstrumentDSPLibrary.KICK_DRUM.class, 1);
+        Tone.replace_instrument(InstrumentDSPLibrary.HI_HAT.class, 2);
+    }
     addMasterEffects();
     Beat.start(this, 130 * 4);
 }

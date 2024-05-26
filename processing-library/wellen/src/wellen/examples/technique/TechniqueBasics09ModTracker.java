@@ -3,6 +3,7 @@ package wellen.examples.technique;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 import wellen.Beat;
+import wellen.InstrumentDSPLibrary;
 import wellen.Tone;
 import wellen.ToneEngineDSP;
 import wellen.dsp.Gain;
@@ -29,10 +30,14 @@ public class TechniqueBasics09ModTracker extends PApplet {
     private static final float TRACK_WIDTH  = 100;
     private static final float TRACK_HEIGHT = 25;
 
+    /* set this to `true` to replace the first 3 tracks’ default sounds
+     * with a percussion sounds.
+     */
+    private static final boolean ENABLE_PERCUSSION = false;
+
     private Track[]      fTracks;
     private StepSelected fSelected;
-
-    private boolean fIsShiftPressed = false;
+    private boolean      fIsShiftPressed = false;
 
     public void settings() {
         size(640, 480);
@@ -48,6 +53,12 @@ public class TechniqueBasics09ModTracker extends PApplet {
             Tone.instrument(i).set_pan(map(i, 0, TRACKS - 1, -1, 1));
         }
         fSelected = new StepSelected(fTracks);
+
+        if (ENABLE_PERCUSSION) {
+            Tone.replace_instrument(InstrumentDSPLibrary.SNARE.class, 0);
+            Tone.replace_instrument(InstrumentDSPLibrary.KICK_DRUM.class, 1);
+            Tone.replace_instrument(InstrumentDSPLibrary.HI_HAT.class, 2);
+        }
 
         addMasterEffects();
 

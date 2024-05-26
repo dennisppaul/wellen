@@ -117,8 +117,7 @@ public class Sampler implements DSPNodeOutput {
      * load the sample data from *raw* byte data. the method assumes a raw format with 32bit float in a value range from
      * -1.0 to 1.0.
      *
-     * @param buffer        raw byte data ( assuming 4 bytes per sample, 32-bit float aka WAVE_FORMAT_IEEE_FLOAT_32BIT
-     *                      )
+     * @param buffer        raw byte data ( assuming 4 bytes per sample, 32-bit float aka WAVE_FORMAT_IEEE_FLOAT_32BIT )
      * @param little_endian true if byte data is arranged in little endian order
      * @return instance with buffer loaded
      */

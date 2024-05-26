@@ -32,7 +32,7 @@ import wellen.dsp.Wavetable;
  * method
  * <code>Tone.replace_instrument(InstrumentDSP)</code>.
  * <p>
- * all instruments are extended from {@link InstrumentDSP}, however some the original functionality is extended, changed
+ * all instruments are extended from {@link InstrumentDSP}, however some of the original functionality is extended, changed
  * or even removed.
  * <p>
  * note that these instruments only work with the internal tone engine. however, due to the modular nature of the
@@ -42,22 +42,22 @@ public class InstrumentDSPLibrary {
 
     public static class BELL extends InstrumentDSP {
 
-        private static final int NUM_OSC = 7;
-        private final ADSR[] mADSRs;
-        private float mAmplify = 1.0f;
-        private float mAmplitudeFalloff;
-        private float mBaseRelease;
-        private float mDetune;
-        private final float[] mOscillatorAmplitudes;
-        private final float[] mOscillatorDetune;
-        private float mReleaseFalloff;
-        private final Wavetable[] mVCOs;
+        private static final int         NUM_OSC  = 7;
+        private final        ADSR[]      mADSRs;
+        private              float       mAmplify = 1.0f;
+        private              float       mAmplitudeFalloff;
+        private              float       mBaseRelease;
+        private              float       mDetune;
+        private final        float[]     mOscillatorAmplitudes;
+        private final        float[]     mOscillatorDetune;
+        private              float       mReleaseFalloff;
+        private final        Wavetable[] mVCOs;
 
         public BELL(int pID) {
             super(pID);
-            mVCOs = new Wavetable[NUM_OSC];
-            mADSRs = new ADSR[NUM_OSC];
-            mOscillatorDetune = new float[NUM_OSC];
+            mVCOs                 = new Wavetable[NUM_OSC];
+            mADSRs                = new ADSR[NUM_OSC];
+            mOscillatorDetune     = new float[NUM_OSC];
             mOscillatorAmplitudes = new float[NUM_OSC];
             for (int i = 0; i < NUM_OSC; i++) {
                 mVCOs[i] = new Wavetable();
@@ -172,7 +172,7 @@ public class InstrumentDSPLibrary {
             mVeryLowVCO.set_amplitude(get_amplitude() * 0.075f);
 
             final float mADSRAmp = fADSR.output();
-            float mSample = fVCO.output();
+            float       mSample  = fVCO.output();
             mSample += mLowerVCO.output();
             mSample += mVeryLowVCO.output();
 
@@ -198,8 +198,8 @@ public class InstrumentDSPLibrary {
 
     public static class KICK_DRUM extends InstrumentDSP {
 
-        private final float mDecaySpeed = 0.25f;
-        private final ADSR mFrequencyEnvelope;
+        private final float mDecaySpeed     = 0.25f;
+        private final ADSR  mFrequencyEnvelope;
         private final float mFrequencyRange = 80;
 
         public KICK_DRUM(int pID) {
@@ -228,7 +228,7 @@ public class InstrumentDSPLibrary {
             fVCO.set_frequency(get_frequency() + mFrequencyOffset);
             fVCO.set_amplitude(get_amplitude());
 
-            float mSample = fVCO.output();
+            float       mSample  = fVCO.output();
             final float mADSRAmp = fADSR.output();
             return Signal.create(mSample * mADSRAmp);
         }
@@ -239,6 +239,7 @@ public class InstrumentDSPLibrary {
 
         public void note_on(int note, int velocity) {
             fIsPlaying = true;
+            set_amplitude(velocity_to_amplitude(velocity));
             fADSR.start();
             mFrequencyEnvelope.start();
         }
@@ -254,6 +255,7 @@ public class InstrumentDSPLibrary {
             mSampler = new Sampler();
             mSampler.set_buffer(pSampleData);
             mSampler.enable_loop(false);
+            mSampler.play();
         }
 
         @Override
@@ -269,6 +271,12 @@ public class InstrumentDSPLibrary {
             fIsPlaying = true;
             set_amplitude(velocity_to_amplitude(velocity));
             mSampler.rewind();
+        }
+    }
+
+    public static class SNARE extends SAMPLER {
+        public SNARE(int pID) {
+            super(pID, Wellen.bytes_to_floatIEEEs(SampleDataSNARE.data));
         }
     }
 }
