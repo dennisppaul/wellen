@@ -40,6 +40,12 @@ import wellen.dsp.Wavetable;
  */
 public class InstrumentDSPLibrary {
 
+    public static class DEFAULT extends InstrumentDSP {
+        public DEFAULT(int pID) {
+            super(pID);
+        }
+    }
+
     public static class BELL extends InstrumentDSP {
 
         private static final int         NUM_OSC  = 7;
