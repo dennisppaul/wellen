@@ -249,6 +249,7 @@ public class Sampler implements DSPNodeOutput {
 
         if (fDirectionForward ? (mCurrentIndex >= fOutPoint) : (mCurrentIndex <= fInPoint)) {
             notifyListeners("reached end");
+            fIsPlaying = false;
             return 0.0f;
         } else {
             fIsFlaggedDone = false;
@@ -444,7 +445,7 @@ public class Sampler implements DSPNodeOutput {
     private void notifyListeners(String event) {
         if (!fIsFlaggedDone) {
             for (SamplerListener l : fSamplerListeners) {
-                l.is_done();
+                l.is_done(this);
             }
         }
         fIsFlaggedDone = true;
