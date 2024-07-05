@@ -19,6 +19,8 @@
 
 package wellen;
 
+import wellen.dsp.Sampler;
+
 public interface SamplerListener {
-    void is_done();
+    void is_done(Sampler pSampler);
 }

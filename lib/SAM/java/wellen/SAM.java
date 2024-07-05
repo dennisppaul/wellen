@@ -2,7 +2,7 @@
  * Wellen
  *
  * This file is part of the *wellen* library (https://github.com/dennisppaul/wellen).
- * Copyright (c) 2022 Dennis P Paul.
+ * Copyright (c) 2024 Dennis P Paul.
  *
  * This library is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,150 +31,12 @@ import java.nio.file.FileSystems;
  */
 public class SAM implements DSPNodeOutput {
 
+    private static final int[] mMIDItoSAMMap = new int[128];
+    /* mapping MIDI pitch to SAM pitch */
     private float[] mBuffer;
     private boolean mIsDoneSpeaking;
     private float mSampleBufferCounter;
     private float mSampleSpeed;
-
-    public SAM() {
-        this(getLibraryPath() + getLibraryPrefix() + getLibraryName() + getLibrarySuffix());
-    }
-
-    public SAM(String pNativeLibraryPath) {
-        loadNativeLibrary(pNativeLibraryPath);
-        defaults();
-        mIsDoneSpeaking = true;
-        mSampleBufferCounter = 0;
-        mBuffer = null;
-    }
-
-    private static String getLibraryName() {
-        return "jni_wellen_sam";
-    }
-
-    private static String getLibraryPrefix() {
-        final String mSuffix;
-        if (System.getProperty("os.name").startsWith("Windows")) {
-            mSuffix = "";
-        } else if (System.getProperty("os.name").startsWith("Mac")) {
-            mSuffix = "lib";
-        } else {
-            mSuffix = "lib";
-        }
-        return mSuffix;
-    }
-
-    private static String getLibrarySuffix() {
-        final String mSuffix;
-        if (System.getProperty("os.name").startsWith("Windows")) {
-            mSuffix = "dll";
-        } else if (System.getProperty("os.name").startsWith("Mac")) {
-            mSuffix = "dylib";
-        } else {
-            mSuffix = "so";
-        }
-        return "." + mSuffix;
-    }
-
-    private static String getLibraryPath() {
-        final URL url = SAM.class.getResource(SAM.class.getSimpleName() + ".class");
-        if (url != null) {
-            String path = url.toString().replace("%20", " ");
-            int n0 = path.indexOf('/');
-            int n1 = path.indexOf("wellen.jar");
-            if (System.getProperty("os.name").startsWith("Windows")) {
-                // In Windows, path string starts with "jar file/C:/..." so the substring up to the first / is removed.
-                n0++;
-            }
-            if ((-1 < n0) && (-1 < n1)) {
-                return path.substring(n0, n1);
-            } else {
-                return "";
-            }
-        }
-        return "";
-    }
-
-    public native float[] get_samples();
-
-    public native void set_mouth(int pMouth);
-
-    public native void set_pitch(int pPitch);
-
-    public native void set_sing_mode(boolean pMode);
-
-    public native void set_speed(int pSpeed);
-
-    public native void set_throat(int pThroat);
-
-    public native String convert_text_to_phonemes(String pText);
-
-    public float[] say(String pText) {
-        return say(pText, false);
-    }
-
-    @Override
-    public float output() {
-        if (!mIsDoneSpeaking && mBuffer != null && mBuffer.length > 0) {
-            float mSamples = mBuffer[(int) mSampleBufferCounter];
-            mSampleBufferCounter += mSampleSpeed;
-            if (mSampleBufferCounter > mBuffer.length - 1) {
-                mIsDoneSpeaking = true;
-            }
-            return mSamples;
-        } else {
-            return 0;
-        }
-    }
-
-    public void rewind() {
-        mIsDoneSpeaking = false;
-        mSampleBufferCounter = 0;
-    }
-
-    public void set_sample_speed(float pSampleSpeed) {
-        mSampleSpeed = pSampleSpeed;
-    }
-
-    private void defaults() {
-        set_pitch(64);
-        set_throat(128);
-        set_speed(72);
-        set_mouth(128);
-        mSampleSpeed = 0.5f;
-    }
-
-    private void loadNativeLibrary(String pNativeLibraryPath) {
-        try {
-            System.loadLibrary(getLibraryName());
-        } catch (java.lang.UnsatisfiedLinkError e) {
-            System.load(FileSystems.getDefault().getPath(pNativeLibraryPath).normalize().toAbsolutePath().toString());
-        }
-    }
-
-    public float[] get_buffer() {
-        return mBuffer;
-    }
-
-    public float[] say(String pText, boolean pUsePhonemes) {
-        speak(pText, pUsePhonemes);
-        mBuffer = get_samples();
-        mIsDoneSpeaking = (mBuffer == null) || mBuffer.length <= 0;
-        mSampleBufferCounter = 0;
-        return mBuffer;
-    }
-
-    private native void speak(String pText, boolean pUsePhonemes);
-
-    private native void speak_ascii(int pASCIIValue);
-
-    /* mapping MIDI pitch to SAM pitch */
-
-    public static int get_pitch_from_MIDI_note(int pMIDINote) {
-        return mMIDItoSAMMap[pMIDINote];
-    }
-
-    private static final int[] mMIDItoSAMMap = new int[128];
 
     static {
         mMIDItoSAMMap[21] = 0; // A0
@@ -285,6 +147,142 @@ public class SAM implements DSPNodeOutput {
         mMIDItoSAMMap[126] = 0; // F#9
         mMIDItoSAMMap[127] = 0; // G9
     }
+
+    public SAM() {
+        this(getLibraryPath() + getLibraryPrefix() + getLibraryName() + getLibrarySuffix());
+    }
+
+    public SAM(String pNativeLibraryPath) {
+        loadNativeLibrary(pNativeLibraryPath);
+        defaults();
+        mIsDoneSpeaking = true;
+        mSampleBufferCounter = 0;
+        mBuffer = null;
+    }
+
+    public static int get_pitch_from_MIDI_note(int pMIDINote) {
+        return mMIDItoSAMMap[pMIDINote];
+    }
+
+    private static String getLibraryName() {
+        return "jni_wellen_sam";
+    }
+
+    private static String getLibraryPath() {
+        final URL url = SAM.class.getResource(SAM.class.getSimpleName() + ".class");
+        if (url != null) {
+            String path = url.toString().replace("%20", " ");
+            int n0 = path.indexOf('/');
+            int n1 = path.indexOf("wellen.jar");
+            if (System.getProperty("os.name").startsWith("Windows")) {
+                // In Windows, path string starts with "jar file/C:/..." so the substring up to the first / is removed.
+                n0++;
+            }
+            if ((-1 < n0) && (-1 < n1)) {
+                return path.substring(n0, n1);
+            } else {
+                return "";
+            }
+        }
+        return "";
+    }
+
+    private static String getLibraryPrefix() {
+        final String mSuffix;
+        if (System.getProperty("os.name").startsWith("Windows")) {
+            mSuffix = "";
+        } else if (System.getProperty("os.name").startsWith("Mac")) {
+            mSuffix = "lib";
+        } else {
+            mSuffix = "lib";
+        }
+        return mSuffix;
+    }
+
+    private static String getLibrarySuffix() {
+        final String mSuffix;
+        if (System.getProperty("os.name").startsWith("Windows")) {
+            mSuffix = "dll";
+        } else if (System.getProperty("os.name").startsWith("Mac")) {
+            mSuffix = "dylib";
+        } else {
+            mSuffix = "so";
+        }
+        return "." + mSuffix;
+    }
+
+    public native float[] get_samples();
+
+    public native void set_mouth(int pMouth);
+
+    public native void set_pitch(int pPitch);
+
+    public native void set_sing_mode(boolean pMode);
+
+    public native void set_speed(int pSpeed);
+
+    public native void set_throat(int pThroat);
+
+    public native String convert_text_to_phonemes(String pText);
+
+    public float[] say(String pText) {
+        return say(pText, false);
+    }
+
+    @Override
+    public float output() {
+        if (!mIsDoneSpeaking && mBuffer != null && mBuffer.length > 0) {
+            float mSamples = mBuffer[(int) mSampleBufferCounter];
+            mSampleBufferCounter += mSampleSpeed;
+            if (mSampleBufferCounter > mBuffer.length - 1) {
+                mIsDoneSpeaking = true;
+            }
+            return mSamples;
+        } else {
+            return 0;
+        }
+    }
+
+    public void rewind() {
+        mIsDoneSpeaking = false;
+        mSampleBufferCounter = 0;
+    }
+
+    public void set_sample_speed(float pSampleSpeed) {
+        mSampleSpeed = pSampleSpeed;
+    }
+
+    public float[] get_buffer() {
+        return mBuffer;
+    }
+
+    public float[] say(String pText, boolean pUsePhonemes) {
+        speak(pText, pUsePhonemes);
+        mBuffer = get_samples();
+        mIsDoneSpeaking = (mBuffer == null) || mBuffer.length <= 0;
+        mSampleBufferCounter = 0;
+        return mBuffer;
+    }
+
+    private void defaults() {
+        set_pitch(64);
+        set_throat(128);
+        set_speed(72);
+        set_mouth(128);
+        mSampleSpeed = 0.5f;
+    }
+
+    private void loadNativeLibrary(String pNativeLibraryPath) {
+        try {
+            System.loadLibrary(getLibraryName());
+        } catch (java.lang.UnsatisfiedLinkError e) {
+            System.load(FileSystems.getDefault().getPath(pNativeLibraryPath).normalize().toAbsolutePath().toString());
+        }
+    }
+
+    private native void speak(String pText, boolean pUsePhonemes);
+
+    private native void speak_ascii(int pASCIIValue);
 
     public static void main(String[] args) {
         /* test */

@@ -48,7 +48,14 @@ include_directories(./cpp)
 
 set(SOURCE_FILES cpp/wellen_SAM_impl.cpp)
 
+# build for x86_64 + arm64
+
+IF (APPLE)
+    set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64")
+ENDIF (APPLE)
+
 # SAM library
+
 message("----- SAM library -----")
 include_directories(./libraries/SAM/include)
 set(SAM_SRC_PATH ./libraries/SAM/src)

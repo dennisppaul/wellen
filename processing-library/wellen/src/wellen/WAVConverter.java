@@ -12,29 +12,29 @@ public class WAVConverter {
     // @TODO(write header could also support `WAVE_FORMAT_PCM_32BIT_FLOAT`)
     // @TODO(currently fixed to little endianness)
 
-    public static boolean VERBOSE = false;
-    private static final String WAV_CHUNK_DATA = "data";
-    private static final String WAV_CHUNK_FMT_ = "fmt ";
-    private static final String WAV_CHUNK_RIFF = "RIFF";
-    private static final String WAV_CHUNK_WAVE = "WAVE";
-    private final int mBitsPerSample;
-    private final int mChannels;
-    private final int mCompressionFormat;
-    private final ArrayList<Byte> mData;
-    private final ArrayList<Byte> mHeader;
-    private final int mSampleRate;
+    public static        boolean         VERBOSE        = false;
+    private static final String          WAV_CHUNK_DATA = "data";
+    private static final String          WAV_CHUNK_FMT_ = "fmt ";
+    private static final String          WAV_CHUNK_RIFF = "RIFF";
+    private static final String          WAV_CHUNK_WAVE = "WAVE";
+    private final        int             mBitsPerSample;
+    private final        int             mChannels;
+    private final        int             mCompressionFormat;
+    private final        ArrayList<Byte> mData;
+    private final        ArrayList<Byte> mHeader;
+    private final        int             mSampleRate;
 
     public WAVConverter(Info pInfo) {
         this(pInfo.channels, pInfo.bits_per_sample, pInfo.sample_rate, pInfo.format);
     }
 
     public WAVConverter(int pChannels, int pBitsPerSample, int pSampleRate, int pCompressionFormat) {
-        mChannels = pChannels;
-        mBitsPerSample = pBitsPerSample;
-        mSampleRate = pSampleRate;
+        mChannels          = pChannels;
+        mBitsPerSample     = pBitsPerSample;
+        mSampleRate        = pSampleRate;
         mCompressionFormat = pCompressionFormat;
-        mData = new ArrayList<>();
-        mHeader = new ArrayList<>();
+        mData              = new ArrayList<>();
+        mHeader            = new ArrayList<>();
     }
 
     public static Info convert_bytes_to_samples(byte[] pHeader) {
@@ -42,7 +42,7 @@ public class WAVConverter {
         // see http://www-mmsp.ece.mcgill.ca/Documents/AudioFormats/WAVE/WAVE.html
         // see https://sites.google.com/site/musicgapi/technical-documents/wav-file-format
         /* RIFF Chunk */
-        int mOffset = 0x00;
+        int          mOffset        = 0x00;
         final String mRIFFChunkName = WAVConverter.read_string(pHeader, mOffset + 0x00);
         if (!mRIFFChunkName.equalsIgnoreCase(WAV_CHUNK_RIFF)) {
             System.err.println("+++ WARNING @" + WAVConverter.class.getSimpleName() + " / expected `" + WAV_CHUNK_RIFF + "`" + " in header.");
@@ -65,14 +65,14 @@ public class WAVConverter {
             System.err.println("+++ WARNING @" + WAVConverter.class.getSimpleName() + " / expected `" + WAV_CHUNK_FMT_ + "` " + "in header.");
         }
         final int mFormatChunkSize = WAVConverter.read__int32(pHeader, mOffset + 0x04);
-        mWAVStruct.format = WAVConverter.read__int16(pHeader, mOffset + 0x08);
-        mWAVStruct.channels = WAVConverter.read__int16(pHeader, mOffset + 0x0A);
-        mWAVStruct.sample_rate = WAVConverter.read__int32(pHeader, mOffset + 0x0C);
+        mWAVStruct.format          = WAVConverter.read__int16(pHeader, mOffset + 0x08);
+        mWAVStruct.channels        = WAVConverter.read__int16(pHeader, mOffset + 0x0A);
+        mWAVStruct.sample_rate     = WAVConverter.read__int32(pHeader, mOffset + 0x0C);
         mWAVStruct.bits_per_sample = WAVConverter.read__int16(pHeader, mOffset + 0x16);
         if (VERBOSE) {
             System.out.println("+++ CHUNK: " + mFormatChunkName);
             System.out.println("    chunk size : " + mFormatChunkSize);
-            System.out.println("    format code: " + mWAVStruct.format);
+            System.out.println("    format code: " + mWAVStruct.format + " (" + getFormatString(mWAVStruct.format) + ")");
             System.out.println("    channels   : " + mWAVStruct.channels);
             System.out.println("    sample rate: " + mWAVStruct.sample_rate);
             System.out.println("    byte/sec   : " + WAVConverter.read__int32(pHeader, mOffset + 0x10));
@@ -81,7 +81,7 @@ public class WAVConverter {
         }
         if (mWAVStruct.format != Wellen.WAV_FORMAT_PCM && mWAVStruct.format != Wellen.WAV_FORMAT_IEEE_FLOAT_32BIT) {
             System.err.println("+++ WARNING @" + WAVConverter.class.getSimpleName() + " / format not " + "supported. "
-                                       + "currently only `WAV_FORMAT_PCM` + `WAV_FORMAT_IEEE_FLOAT_32BIT` " + "works" + "." + " " + "(" + mWAVStruct.format + ")");
+                               + "currently only `WAV_FORMAT_PCM` + `WAV_FORMAT_IEEE_FLOAT_32BIT` " + "works" + "." + " " + "(" + mWAVStruct.format + ")");
         }
 
         /* data chunk */
@@ -89,7 +89,7 @@ public class WAVConverter {
         if (WAVConverter.read_string(pHeader, mOffset + 0x00).equalsIgnoreCase("fact")) {
             // @TODO(hack! skipping `fact` chunk … handle this a bit more elegantly)
             final int mFactChunkSize = WAVConverter.read__int32(pHeader, mOffset + 0x04);
-            final int mPeakOffset = WAVConverter.read__int32(pHeader, mOffset + 0x10);
+            final int mPeakOffset    = WAVConverter.read__int32(pHeader, mOffset + 0x10);
             if (VERBOSE) {
                 System.out.println("+++ skipping `fact` chunk");
                 System.out.println("+++ CHUNK: " + WAVConverter.read_string(pHeader, mOffset + 0x00));
@@ -105,9 +105,9 @@ public class WAVConverter {
         if (!mDataChunkName.equalsIgnoreCase(WAV_CHUNK_DATA)) {
             System.err.println("+++ WARNING @" + WAVConverter.class.getSimpleName() + " / expected `" + WAV_CHUNK_DATA + "`" + " in header.");
         }
-        final int mDataChunkSize = WAVConverter.read__int32(pHeader, mOffset + 0x04);
-        byte[] mInterlacedByteBuffer = WAVConverter.read__bytes(pHeader, mOffset + 0x08, mDataChunkSize);
-        int mDataSize = mInterlacedByteBuffer.length / mWAVStruct.channels / (mWAVStruct.bits_per_sample / 8);
+        final int mDataChunkSize        = WAVConverter.read__int32(pHeader, mOffset + 0x04);
+        byte[]    mInterlacedByteBuffer = WAVConverter.read__bytes(pHeader, mOffset + 0x08, mDataChunkSize);
+        int       mDataSize             = mInterlacedByteBuffer.length / mWAVStruct.channels / (mWAVStruct.bits_per_sample / 8);
         if (VERBOSE) {
             System.out.println("+++ CHUNK: " + mDataChunkName);
             System.out.println("    chunk size       : " + mDataChunkSize);
@@ -116,10 +116,10 @@ public class WAVConverter {
 
         mWAVStruct.samples = new float[mWAVStruct.channels][mDataSize];
         final int mBytesPerSample = mWAVStruct.bits_per_sample / 8;
-        final int mStride = mWAVStruct.channels * mBytesPerSample;
+        final int mStride         = mWAVStruct.channels * mBytesPerSample;
         for (int j = 0; j < mWAVStruct.channels; j++) {
             byte[] mByteSamples = new byte[mBytesPerSample * mDataSize];
-            int c = 0;
+            int    c            = 0;
             for (int i = 0; i < mInterlacedByteBuffer.length; i += mStride) {
                 for (int l = 0; l < mBytesPerSample; l++) {
                     byte b = mInterlacedByteBuffer[i + j * mBytesPerSample + l];
@@ -137,6 +137,21 @@ public class WAVConverter {
         return mWAVStruct;
     }
 
+    private static String getFormatString(int pFormat) {
+        String mFormatString;
+        switch (pFormat) {
+            case Wellen.WAV_FORMAT_PCM:
+                mFormatString = "PCM_16BIT";
+                break;
+            case Wellen.WAV_FORMAT_IEEE_FLOAT_32BIT:
+                mFormatString = "IEEE_FLOAT_32BIT";
+                break;
+            default:
+                mFormatString = "UNKNOWN/UNSUPPORTED";
+        }
+        return mFormatString;
+    }
+
     public static byte[] convert_samples_to_bytes(Info pInfo) {
         WAVConverter mWAVConverter = new WAVConverter(pInfo);
         mWAVConverter.appendData(pInfo.samples);
@@ -150,11 +165,11 @@ public class WAVConverter {
                                                   int pSampleRate,
                                                   int pCompressionCode) {
         Info mInfo = new Info();
-        mInfo.samples = pBuffer;
-        mInfo.channels = pChannels;
+        mInfo.samples         = pBuffer;
+        mInfo.channels        = pChannels;
         mInfo.bits_per_sample = pBitsPerSample;
-        mInfo.sample_rate = pSampleRate;
-        mInfo.format = pCompressionCode;
+        mInfo.sample_rate     = pSampleRate;
+        mInfo.format          = pCompressionCode;
         return convert_samples_to_bytes(mInfo);
     }
 
@@ -203,8 +218,8 @@ public class WAVConverter {
     }
 
     private static String read_string(byte[] pBuffer, int pStart) {
-        final int mStringLength = 4;
-        StringBuilder sb = new StringBuilder();
+        final int     mStringLength = 4;
+        StringBuilder sb            = new StringBuilder();
         for (int i = 0; i < mStringLength; i++) {
             sb.append((char) pBuffer[pStart + i]);
         }
@@ -255,7 +270,7 @@ public class WAVConverter {
     }
 
     public void appendData(float[][] pFloatBuffer) {
-        int mNumberOfFrames = findSingleBufferLength(pFloatBuffer);
+        int     mNumberOfFrames         = findSingleBufferLength(pFloatBuffer);
         float[] mInterleavedFloatBuffer = new float[mNumberOfFrames * mChannels];
         for (int i = 0; i < mNumberOfFrames; i++) {
             for (int mChannel = 0; mChannel < mChannels; mChannel++) {
@@ -272,7 +287,9 @@ public class WAVConverter {
             System.err.println("+++ ERROR @" + WAVConverter.class.getSimpleName() + " / data format not supported.");
             mByteBuffer = null;
         }
-        write__bytes(mData, mByteBuffer);
+        if (mByteBuffer != null) {
+            write__bytes(mData, mByteBuffer);
+        }
     }
 
     public void writeHeader() {
@@ -307,11 +324,11 @@ public class WAVConverter {
     }
 
     public static class Info {
-        public int bits_per_sample;
-        public int channels;
-        public byte[] data;
-        public int format;
-        public int sample_rate;
+        public int       bits_per_sample;
+        public int       channels;
+        public byte[]    data;
+        public int       format;
+        public int       sample_rate;
         public float[][] samples;
     }
 }

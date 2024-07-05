@@ -49,7 +49,7 @@ public abstract class Tone {
 //                c = instrument_class.getDeclaredConstructor(Minim.class, int.class);
 //                mInstrument = c.newInstance((Minim) ((ToneEngineMinim) instance()).minim(), ID);
 //            } else {
-            c = instrument_class.getDeclaredConstructor(int.class);
+            c           = instrument_class.getDeclaredConstructor(int.class);
             mInstrument = c.newInstance(ID);
 //            }
         } catch (Exception ex) {
@@ -83,6 +83,20 @@ public abstract class Tone {
 
     public static float[] get_buffer() {
         return instance().get_buffer();
+    }
+
+    /**
+     * @return reference to left output buffer
+     */
+    public static float[] get_output_buffer_left() {
+        return get_buffer_left();
+    }
+
+    /**
+     * @return reference to right output buffer
+     */
+    public static float[] get_output_buffer_right() {
+        return get_buffer_right();
     }
 
     public static float[] get_buffer_left() {
@@ -251,7 +265,7 @@ public abstract class Tone {
 
     private static void printAlreadyStartedWarning() {
         System.err.println("+++ WARNING @" + Tone.class.getSimpleName() + ".start" + " / tone engine already " +
-                                   "initialized. make sure that `start` is the first call to `Ton`. " + "use " +
-                                   "`set_engine(ToneEngine)` to switch tone engines.");
+                           "initialized. make sure that `start` is the first call to `Ton`. " + "use " +
+                           "`set_engine(ToneEngine)` to switch tone engines.");
     }
 }

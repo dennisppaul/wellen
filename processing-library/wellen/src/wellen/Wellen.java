@@ -30,6 +30,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.Mixer;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.TargetDataLine;
+import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Arrays;
@@ -257,16 +258,28 @@ public class Wellen {
         return mSignal;
     }
 
+    /**
+     * convert byte array to float array.
+     *
+     * @param pBytes        source unsigned byte array
+     * @param pFloats       destination float array
+     * @param pBitsPerFloat number of bits per float ( usually 8, 16, 24, or 32-bits )
+     */
     public static void bytes_to_floats(byte[] pBytes, float[] pFloats, int pBitsPerFloat) {
-        final int mBytesPerFloat = pBitsPerFloat / 8;
+        final int    mBytesPerFloat = pBitsPerFloat / 8;
+        final double mScale         = 1.0 / ((1 << (pBitsPerFloat - 1)) - 1);
         for (int i = 0; i < pFloats.length; i++) {
-            final double mScale = 1.0 / ((1 << (pBitsPerFloat - 1)) - 1);
-            long         f      = 0;
+            long f = 0;
+
             for (int j = 0; j < mBytesPerFloat; j++) {
-                final long mBitShift = j * 8;
-                long       b         = pBytes[i * mBytesPerFloat + j];
-                f += b << mBitShift;
+                int b = pBytes[i * mBytesPerFloat + j] & 0xFF;
+                f |= (long) b << (j * 8);
             }
+
+            if (f >= (1L << (pBitsPerFloat - 1))) {
+                f -= 1L << pBitsPerFloat;
+            }
+
             pFloats[i] = (float) (f * mScale);
         }
     }
@@ -606,7 +619,8 @@ public class Wellen {
     }
 
     public static String get_resource_path() {
-        return Wellen.class.getResource("").getPath();
+        URL mURLPath = Wellen.class.getResource("");
+        return mURLPath == null ? "" : mURLPath.getPath();
     }
 
     public static float[][] importWAV(PApplet p, String pFilepath) {
