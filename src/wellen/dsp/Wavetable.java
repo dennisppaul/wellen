@@ -343,7 +343,7 @@ public class Wavetable extends Oscillator {
         return mSignal;
     }
 
-    public void set_interpolation(int interpolation_type) {
+    public void set_interpolation(final int interpolation_type) {
         mInterpolationType = interpolation_type;
     }
 
@@ -368,14 +368,14 @@ public class Wavetable extends Oscillator {
         }
 
         switch (mInterpolationType) {
-            default:
-                mSignal = next_sample();
-                break;
             case Wellen.WAVESHAPE_INTERPOLATE_LINEAR:
                 mSignal = next_sample_interpolate_linear();
                 break;
             case Wellen.WAVESHAPE_INTERPOLATE_CUBIC:
                 mSignal = next_sample_interpolate_cubic();
+                break;
+            default:
+                mSignal = next_sample();
                 break;
         }
 

@@ -14,7 +14,7 @@ public class ExampleDSPAnalysis03BeatDetection extends PApplet {
 
     /*
      * this example demonstrates how to detect a beat from an input signal.
-     * @TODO(the algorithm is not working particularuly fine …)
+     * @TODO(the algorithm is not working particularly fine …)
      */
 
     private final int[] fBassPattern = {1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1,};

@@ -232,7 +232,8 @@ public class SAM implements DSPNodeOutput {
     @Override
     public float output() {
         if (!mIsDoneSpeaking && mBuffer != null && mBuffer.length > 0) {
-            float mSamples = mBuffer[(int) mSampleBufferCounter];
+            final int mSampleIndex = (int) mSampleBufferCounter > mBuffer.length - 1 ? mBuffer.length - 1 : (int) mSampleBufferCounter;
+            float mSamples = mBuffer[mSampleIndex];
             mSampleBufferCounter += mSampleSpeed;
             if (mSampleBufferCounter > mBuffer.length - 1) {
                 mIsDoneSpeaking = true;
