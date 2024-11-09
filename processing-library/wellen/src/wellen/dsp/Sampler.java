@@ -39,28 +39,28 @@ import static wellen.Wellen.clamp;
  */
 public class Sampler implements DSPNodeOutput {
 
-    public static final int                        NO_LOOP_POINT = -1;
-    private final       ArrayList<SamplerListener> fSamplerListeners;
-    private final       ArrayList<Float>           fRecording;
-    private final       float                      fSamplingRate;
-    private             float                      fAmplitude;
-    private             float[]                    fBuffer;
-    private             double                     fBufferIndex;
-    private             boolean                    fDirectionForward;
-    private             int                        fEdgeFadePadding;
-    private             boolean                    fEvaluateLoop;
-    private             float                      fFrequency;
-    private             float                      fFrequencyScale;
-    private             int                        fInPoint;
-    private             boolean                    fInterpolateSamples;
-    private             boolean                    fIsPlaying;
-    private             int                        fLoopIn;
-    private             int                        fLoopOut;
-    private             int                        fOutPoint;
-    private             float                      fSpeed;
-    private             float                      fStepSize;
-    private             boolean                    fIsFlaggedDone;
-    private             boolean                    fIsRecording;
+    public static final int NO_LOOP_POINT = -1;
+    private final ArrayList<SamplerListener> fSamplerListeners;
+    private final ArrayList<Float> fRecording;
+    private final float fSamplingRate;
+    private float fAmplitude;
+    private float[] fBuffer;
+    private double fBufferIndex;
+    private boolean fDirectionForward;
+    private int fEdgeFadePadding;
+    private boolean fEvaluateLoop;
+    private float fFrequency;
+    private float fFrequencyScale;
+    private int fInPoint;
+    private boolean fInterpolateSamples;
+    private boolean fIsPlaying;
+    private int fLoopIn;
+    private int fLoopOut;
+    private int fOutPoint;
+    private float fSpeed;
+    private float fStepSize;
+    private boolean fIsFlaggedDone;
+    private boolean fIsRecording;
 
     public Sampler() {
         this(0);
@@ -76,21 +76,21 @@ public class Sampler implements DSPNodeOutput {
 
     public Sampler(float[] buffer, float sampling_rate) {
         fSamplerListeners = new ArrayList<>();
-        fSamplingRate     = sampling_rate;
+        fSamplingRate = sampling_rate;
         set_buffer(buffer);
-        fBufferIndex        = 0;
+        fBufferIndex = 0;
         fInterpolateSamples = false;
-        fEdgeFadePadding    = 0;
-        fIsPlaying          = false;
-        fEvaluateLoop       = false;
-        fInPoint            = 0;
-        fOutPoint           = 0;
+        fEdgeFadePadding = 0;
+        fIsPlaying = false;
+        fEvaluateLoop = false;
+        fInPoint = 0;
+        fOutPoint = 0;
         set_in(0);
         set_out(fBuffer.length - 1);
         fFrequencyScale = 1.0f;
         set_speed(1.0f);
         set_amplitude(1.0f);
-        fRecording   = new ArrayList<>();
+        fRecording = new ArrayList<>();
         fIsRecording = false;
     }
 
@@ -129,6 +129,7 @@ public class Sampler implements DSPNodeOutput {
         set_buffer(fBuffer);
         Wellen.bytes_to_floatIEEEs(buffer, get_buffer(), little_endian);
         rewind();
+        stop();
         return this;
     }
 
@@ -156,7 +157,7 @@ public class Sampler implements DSPNodeOutput {
     }
 
     public void set_speed(float speed) {
-        fSpeed            = speed;
+        fSpeed = speed;
         fDirectionForward = speed > 0;
         set_frequency(PApplet.abs(speed) * fSamplingRate / fBuffer.length); /* aka `step_size = speed` */
     }
@@ -164,7 +165,7 @@ public class Sampler implements DSPNodeOutput {
     public void set_frequency(float frequency) {
         if (fFrequency != frequency) {
             fFrequency = frequency;
-            fStepSize  = fFrequency / fFrequencyScale * ((float) fBuffer.length / fSamplingRate);
+            fStepSize = fFrequency / fFrequencyScale * ((float) fBuffer.length / fSamplingRate);
         }
     }
 
@@ -182,7 +183,7 @@ public class Sampler implements DSPNodeOutput {
         set_speed(fSpeed);
         set_in(0);
         set_out(fBuffer.length - 1);
-        fLoopIn  = NO_LOOP_POINT;
+        fLoopIn = NO_LOOP_POINT;
         fLoopOut = NO_LOOP_POINT;
     }
 
@@ -215,7 +216,7 @@ public class Sampler implements DSPNodeOutput {
             return;
         }
         final float mNormDurationSec = (fBuffer.length / fSamplingRate);
-        final float mSpeed           = mNormDurationSec / seconds;
+        final float mSpeed = mNormDurationSec / seconds;
         set_speed(mSpeed);
     }
 
@@ -233,8 +234,12 @@ public class Sampler implements DSPNodeOutput {
             return 0.0f;
         }
 
-        if (!fIsPlaying) {
+        if (!fEvaluateLoop && !fIsPlaying && !fIsFlaggedDone) {
             notifyListeners("not playing");
+            return 0.0f;
+        }
+
+        if (fIsFlaggedDone) {
             return 0.0f;
         }
 
@@ -243,19 +248,18 @@ public class Sampler implements DSPNodeOutput {
         fBufferIndex += fDirectionForward ? fStepSize : -fStepSize;
         final int mRoundedIndex = (int) fBufferIndex;
 
-        final double mFrac         = fBufferIndex - mRoundedIndex;
-        final int    mCurrentIndex = wrapIndex(mRoundedIndex);
+        final double mFrac = fBufferIndex - mRoundedIndex;
+        final int mCurrentIndex = wrapIndex(mRoundedIndex);
         fBufferIndex = mCurrentIndex + mFrac;
 
         if (fDirectionForward ? (mCurrentIndex >= fOutPoint) : (mCurrentIndex <= fInPoint)) {
-            notifyListeners("reached end");
             fIsPlaying = false;
             return 0.0f;
         } else {
+            fIsPlaying = true;
             fIsFlaggedDone = false;
+            return getSample(mCurrentIndex, mFrac);
         }
-
-        return getSample(mCurrentIndex, mFrac);
     }
 
     private float getSample(int mCurrentIndex, double mFrac) {
@@ -264,7 +268,7 @@ public class Sampler implements DSPNodeOutput {
         /* interpolate */
         if (fInterpolateSamples) {
             // TODO evaluate direction?
-            final int    mNextIndex  = wrapIndex(mCurrentIndex + 1);
+            final int mNextIndex = wrapIndex(mCurrentIndex + 1);
             final double mNextSample = fBuffer[mNextIndex];
             mSample = mSample * (1.0 - mFrac) + mNextSample * mFrac;
         }
@@ -311,17 +315,25 @@ public class Sampler implements DSPNodeOutput {
 
     public void set_loop_all() {
         fEvaluateLoop = true;
-        fLoopIn       = 0;
-        fLoopOut      = fBuffer.length > 0 ? (fBuffer.length - 1) : 0;
+        fLoopIn = 0;
+        fLoopOut = fBuffer.length > 0 ? (fBuffer.length - 1) : 0;
     }
 
     public void play() {
         fIsPlaying = true;
+        fIsFlaggedDone = false;
         fRecording.clear();
+    }
+
+    public void pause() {
+        fIsPlaying = false;
+        fIsFlaggedDone = true;
     }
 
     public void stop() {
         fIsPlaying = false;
+        fIsFlaggedDone = true;
+        fBufferIndex = fBuffer.length > 0 ? fBuffer.length - 1 : 0;
     }
 
     public void start_recording() {
@@ -409,6 +421,11 @@ public class Sampler implements DSPNodeOutput {
 
     public void set_loop_out_normalized(float loop_out_point_normalized) {
         set_loop_out((int) (loop_out_point_normalized * fBuffer.length - 1));
+    }
+
+    public void trigger() {
+        rewind();
+        play();
     }
 
     public void note_on() {
@@ -505,10 +522,10 @@ public class Sampler implements DSPNodeOutput {
                                                     int step) {
         g.beginShape();
         for (int i = 0; i < sampler.get_buffer().length; i += step) {
-            final float r       = TWO_PI * i / sampler.get_buffer().length;
+            final float r = TWO_PI * i / sampler.get_buffer().length;
             final float mSample = map(sampler.get_buffer()[i], -1.0f, 1.0f, radius_min, radius_max);
-            final float x       = cos(r) * mSample;
-            final float y       = sin(r) * mSample;
+            final float x = cos(r) * mSample;
+            final float y = sin(r) * mSample;
             g.vertex(x, y);
         }
         g.endShape(CLOSE);

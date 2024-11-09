@@ -449,6 +449,22 @@ public class Wellen {
         queryAudioInputAndOutputDevices(null, true, false);
     }
 
+    public static boolean isMidiDeviceAvailable(String pDeviceName) {
+        final String[] mInputNames = MidiIn.availableInputs();
+        for (String mInputName : mInputNames) {
+            if (mInputName.equals(pDeviceName)) {
+                return true;
+            }
+        }
+        final String[] mOutputNames = MidiOut.availableOutputs();
+        for (String mOutputName : mOutputNames) {
+            if (mOutputName.equals(pDeviceName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public static String[] dumpMidiInputDevices() {
         final String[] mInputNames = MidiIn.availableInputs();
         System.out.println("+-------------------------------------------------------+");

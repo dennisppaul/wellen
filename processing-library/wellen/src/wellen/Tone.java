@@ -19,6 +19,9 @@
 
 package wellen;
 
+import processing.core.PApplet;
+import wellen.dsp.Sampler;
+
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 
@@ -164,6 +167,18 @@ public abstract class Tone {
 
     public static void replace_instrument(Instrument instrument) {
         instance().replace_instrument(instrument);
+    }
+
+    public static Sampler load_sample(PApplet p, String sample_filename) {
+        return instance().load_sample(p, sample_filename);
+    }
+
+    public static Sampler load_sample(byte[] sample_buffer) {
+        return instance().load_sample(sample_buffer);
+    }
+
+    public static boolean remove_sample(Sampler sampler) {
+        return instance().remove_sample(sampler);
     }
 
     public static void set_engine(ToneEngine tone_engine) {

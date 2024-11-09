@@ -4,7 +4,7 @@ import wellen.dsp.*;
 import wellen.analysis.*;
 /*
  * this example demonstrates how to detect a beat from an input signal.
- * @TODO(the algorithm is not working particularuly fine …)
+ * @TODO(the algorithm is not working particularly fine …)
  */
 final int[] fBassPattern = {1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1,};
 boolean fBeatDetected = false;

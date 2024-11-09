@@ -14,6 +14,7 @@ void setup() {
     fSampler = new Sampler();
     fSampler.load(mData);
     fSampler.set_loop_all();
+    fSampler.play();
     DSP.start(this);
     background(255);
 }

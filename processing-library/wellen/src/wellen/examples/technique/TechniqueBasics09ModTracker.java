@@ -51,6 +51,7 @@ public class TechniqueBasics09ModTracker extends PApplet {
             fTracks[i] = new Track(i, TRACK_LENGTH);
             /* distribute instruments across stereo field */
             Tone.instrument(i).set_pan(map(i, 0, TRACKS - 1, -1, 1));
+            Tone.instrument(i).set_amplitude(0.5f);
         }
         fSelected = new StepSelected(fTracks);
 

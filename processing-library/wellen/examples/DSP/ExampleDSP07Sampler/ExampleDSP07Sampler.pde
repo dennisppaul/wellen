@@ -43,9 +43,15 @@ void draw() {
     noStroke();
     circle(60, 60, fSampler.is_looping() ? 50 : 10);
     circle(120, 60, fSampler.interpolate_samples() ? 50 : 10);
+    if (!fSampler.is_playing()) {
+        noFill();
+        stroke(0);
+    }
+    circle(180, 60, 50);
 }
 void mousePressed() {
     fSampler.rewind();
+    fSampler.play();
 }
 void mouseMoved() {
     fSampler.set_speed(map(mouseX, 0, width, -4, 4));
@@ -64,6 +70,13 @@ void keyPressed() {
             break;
         case 'I':
             fSampler.interpolate_samples(true);
+            break;
+        case ' ':
+            if (fSampler.is_playing()) {
+                fSampler.pause();
+            } else {
+                fSampler.play();
+            }
             break;
     }
 }

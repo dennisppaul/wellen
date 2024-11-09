@@ -28,6 +28,7 @@ import static wellen.Wellen.SIGNAL_STEREO;
 public class Signal {
 
     public final float[] signal;
+    public static boolean VERBOSE = true;
 
     public Signal(int pChannels) {
         signal = new float[pChannels];
@@ -149,6 +150,19 @@ public class Signal {
         return this;
     }
 
+    public Signal mult(Signal pSignal) {
+        if (signal.length != pSignal.signal.length) {
+            if (VERBOSE) {
+                System.err.println("Signal: mult() - signal length mismatch");
+            }
+            return this;
+        }
+        for (int i = 0; i < signal.length; i++) {
+            signal[i] *= pSignal.signal[i];
+        }
+        return this;
+    }
+
     public void left_mult(float pSignal) {
         if (signal.length < 1) {
             return;
@@ -175,5 +189,25 @@ public class Signal {
             return;
         }
         signal[SIGNAL_RIGHT] += pSignal;
+    }
+
+    public Signal add(float pSignal) {
+        for (int i = 0; i < signal.length; i++) {
+            signal[i] += pSignal;
+        }
+        return this;
+    }
+
+    public Signal add(Signal pSignal) {
+        if (signal.length != pSignal.signal.length) {
+            if (VERBOSE) {
+                System.err.println("Signal: add() - signal length mismatch");
+            }
+            return this;
+        }
+        for (int i = 0; i < signal.length; i++) {
+            signal[i] += pSignal.signal[i];
+        }
+        return this;
     }
 }
