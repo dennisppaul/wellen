@@ -22,6 +22,8 @@ package wellen;
 import netP5.NetAddress;
 import oscP5.OscMessage;
 import oscP5.OscP5;
+import processing.core.PApplet;
+import wellen.dsp.Sampler;
 
 import java.util.ArrayList;
 
@@ -132,7 +134,23 @@ public class ToneEngineOSC extends ToneEngine {
             mInstruments.set(pInstrument.ID(), (InstrumentOSC) pInstrument);
         } else {
             System.err.println("+++ WARNING @" + getClass().getSimpleName() + ".replace_instrument(Instrument) / " +
-                                       "instrument must be" + " of type `" + InstrumentOSC.class.getSimpleName() + "`");
+                    "instrument must be" + " of type `" + InstrumentOSC.class.getSimpleName() + "`");
         }
+    }
+
+    public Sampler load_sample(PApplet p, String sampleFilename) {
+        System.out.println("+++ WARNING @" + getClass().getSimpleName() + ".load_sample(PApplet, String) / " +
+                "not implemented");
+        return null;
+    }
+
+    public Sampler load_sample(byte[] sampleBuffer) {
+        System.out.println("+++ WARNING @" + getClass().getSimpleName() + ".load_sample(byte[]) / " +
+                "not implemented");
+        return null;
+    }
+
+    public boolean remove_sample(Sampler sampler) {
+        return false;
     }
 }

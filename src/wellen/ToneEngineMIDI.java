@@ -19,6 +19,9 @@
 
 package wellen;
 
+import processing.core.PApplet;
+import wellen.dsp.Sampler;
+
 import java.util.ArrayList;
 
 import static processing.core.PApplet.constrain;
@@ -132,6 +135,23 @@ public class ToneEngineMIDI extends ToneEngine {
                                        "instrument must be" + " of type `" + InstrumentMIDI.class.getSimpleName() +
                                        "`");
         }
+    }
+
+    @Override
+    public Sampler load_sample(PApplet p, String sampleFilename) {
+        System.out.println("+++ @" + getClass().getSimpleName() + ".load_sample(PApplet, String) / not implemented");
+        return null;
+    }
+
+    @Override
+    public Sampler load_sample(byte[] sampleBuffer) {
+        System.out.println("+++ @" + getClass().getSimpleName() + ".load_sample(byte[]) / not implemented");
+        return null;
+    }
+
+    @Override
+    public boolean remove_sample(Sampler sampler) {
+        return false;
     }
 
     private void prepareExitHandler() {

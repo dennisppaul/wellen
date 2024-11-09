@@ -19,6 +19,9 @@
 
 package wellen;
 
+import processing.core.PApplet;
+import wellen.dsp.Sampler;
+
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -131,6 +134,12 @@ public abstract class ToneEngine {
     public float[] get_buffer_right() {
         return null;
     }
+
+    public abstract Sampler load_sample(PApplet p, String sampleFilename);
+
+    public abstract Sampler load_sample(byte[] sampleBuffer);
+
+    public abstract boolean remove_sample(Sampler sampler);
 
     private class NoteOffTask extends TimerTask {
 
