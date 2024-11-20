@@ -1,5 +1,12 @@
 # Wellen / Release Notes
 
+## v0.13 (20241120)
+
+- added *Mod Tracker* examples
+- compiled SAM + midiclock for x86_64 + arm64 on macOS
+- `Tone` can now load and play samples with `Tone.load()` ( currently *raw format, 32bit IEEE float* only )
+- `Sampler` can now pause and resume playback
+
 ## v0.12 (20240426)
 
 - `Sampler` can now record samples

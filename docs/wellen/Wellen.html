@@ -495,8 +495,8 @@ loadScripts(document, 'script');</script>
 <h2>Method Summary</h2>
 <div id="method-summary-table">
 <div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
-<div id="method-summary-table.tabpanel" role="tabpanel">
-<div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
+<div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
+<div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
@@ -513,161 +513,169 @@ loadScripts(document, 'script');</script>
  int&nbsp;pEnd,
  boolean&nbsp;pLittleEndian)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#bytes_to_floatIEEEs(byte%5B%5D,float%5B%5D,boolean)" class="member-name-link">bytes_to_floatIEEEs</a><wbr>(byte[]&nbsp;pBytes,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static float[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#bytes_to_floatIEEEs(byte%5B%5D)" class="member-name-link">bytes_to_floatIEEEs</a><wbr>(byte[]&nbsp;pBytes)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#bytes_to_floatIEEEs(byte%5B%5D,float%5B%5D,boolean)" class="member-name-link">bytes_to_floatIEEEs</a><wbr>(byte[]&nbsp;pBytes,
  float[]&nbsp;pSignal,
  boolean&nbsp;pLittleEndian)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#bytes_to_floats(byte%5B%5D,float%5B%5D,int)" class="member-name-link">bytes_to_floats</a><wbr>(byte[]&nbsp;pBytes,
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#bytes_to_floats(byte%5B%5D,float%5B%5D,int)" class="member-name-link">bytes_to_floats</a><wbr>(byte[]&nbsp;pBytes,
  float[]&nbsp;pFloats,
  int&nbsp;pBitsPerFloat)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static float</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#bytes_to_floats(int,byte%5B%5D,int)" class="member-name-link">bytes_to_floats</a><wbr>(int&nbsp;pFormat,
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">convert byte array to float array.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static float</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#bytes_to_floats(int,byte%5B%5D,int)" class="member-name-link">bytes_to_floats</a><wbr>(int&nbsp;pFormat,
  byte[]&nbsp;pInput,
  int&nbsp;pIndex)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static float</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#clamp(float)" class="member-name-link">clamp</a><wbr>(float&nbsp;pValue)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static float</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#clamp(float,float,float)" class="member-name-link">clamp</a><wbr>(float&nbsp;pValue,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#clamp(float)" class="member-name-link">clamp</a><wbr>(float&nbsp;pValue)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static float</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#clamp(float,float,float)" class="member-name-link">clamp</a><wbr>(float&nbsp;pValue,
  float&nbsp;pMin,
  float&nbsp;pMax)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#clamp(int,int,int)" class="member-name-link">clamp</a><wbr>(int&nbsp;pValue,
- int&nbsp;pMin,
- int&nbsp;pMax)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#clamp127(int)" class="member-name-link">clamp127</a><wbr>(int&nbsp;pValue)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#clamp(int,int,int)" class="member-name-link">clamp</a><wbr>(int&nbsp;pValue,
+ int&nbsp;pMin,
+ int&nbsp;pMax)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#constrain(int,int,int)" class="member-name-link">constrain</a><wbr>(int&nbsp;value,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#clamp127(int)" class="member-name-link">clamp127</a><wbr>(int&nbsp;pValue)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#constrain(int,int,int)" class="member-name-link">constrain</a><wbr>(int&nbsp;value,
  int&nbsp;min,
  int&nbsp;max)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static float[]</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#copy(float%5B%5D)" class="member-name-link">copy</a><wbr>(float[]&nbsp;source)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static float[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#copy(float%5B%5D)" class="member-name-link">copy</a><wbr>(float[]&nbsp;source)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">copy the content of one array to a new array</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#copy(float%5B%5D,float%5B%5D)" class="member-name-link">copy</a><wbr>(float[]&nbsp;source,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#copy(float%5B%5D,float%5B%5D)" class="member-name-link">copy</a><wbr>(float[]&nbsp;source,
  float[]&nbsp;destination)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">copy the content of one array to another array of the same length</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#draw_buffer(processing.core.PGraphics,float,float,float%5B%5D)" class="member-name-link">draw_buffer</a><wbr>(processing.core.PGraphics&nbsp;g,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#draw_buffer(processing.core.PGraphics,float,float,float%5B%5D)" class="member-name-link">draw_buffer</a><wbr>(processing.core.PGraphics&nbsp;g,
  float&nbsp;pWidth,
  float&nbsp;pHeight,
  float[]&nbsp;pBuffer)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#draw_buffer(processing.core.PGraphics,float,float,float%5B%5D,int)" class="member-name-link">draw_buffer</a><wbr>(processing.core.PGraphics&nbsp;g,
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#draw_buffer(processing.core.PGraphics,float,float,float%5B%5D,int)" class="member-name-link">draw_buffer</a><wbr>(processing.core.PGraphics&nbsp;g,
  float&nbsp;pWidth,
  float&nbsp;pHeight,
  float[]&nbsp;pBuffer,
  int&nbsp;pStride)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#draw_buffers(processing.core.PGraphics,float,float,float%5B%5D...)" class="member-name-link">draw_buffers</a><wbr>(processing.core.PGraphics&nbsp;g,
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#draw_buffers(processing.core.PGraphics,float,float,float%5B%5D...)" class="member-name-link">draw_buffers</a><wbr>(processing.core.PGraphics&nbsp;g,
  float&nbsp;pWidth,
  float&nbsp;pHeight,
  float[]...&nbsp;pBuffers)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#draw_tone(processing.core.PGraphics,float,float)" class="member-name-link">draw_tone</a><wbr>(processing.core.PGraphics&nbsp;g,
- float&nbsp;pWidth,
- float&nbsp;pHeight)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#draw_tone_stereo(processing.core.PGraphics,float,float)" class="member-name-link">draw_tone_stereo</a><wbr>(processing.core.PGraphics&nbsp;g,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#draw_tone(processing.core.PGraphics,float,float)" class="member-name-link">draw_tone</a><wbr>(processing.core.PGraphics&nbsp;g,
  float&nbsp;pWidth,
  float&nbsp;pHeight)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#dumpAudioInputAndOutputDevices()" class="member-name-link">dumpAudioInputAndOutputDevices</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#draw_tone_stereo(processing.core.PGraphics,float,float)" class="member-name-link">draw_tone_stereo</a><wbr>(processing.core.PGraphics&nbsp;g,
+ float&nbsp;pWidth,
+ float&nbsp;pHeight)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#dumpAudioInputAndOutputDevices(boolean)" class="member-name-link">dumpAudioInputAndOutputDevices</a><wbr>(boolean&nbsp;pPrintFormats)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#dumpAudioInputAndOutputDevices()" class="member-name-link">dumpAudioInputAndOutputDevices</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#dumpMidiInputDevices()" class="member-name-link">dumpMidiInputDevices</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#dumpAudioInputAndOutputDevices(boolean)" class="member-name-link">dumpAudioInputAndOutputDevices</a><wbr>(boolean&nbsp;pPrintFormats)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#dumpMidiOutputDevices()" class="member-name-link">dumpMidiOutputDevices</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#dumpMidiInputDevices()" class="member-name-link">dumpMidiInputDevices</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#exportWAV(processing.core.PApplet,java.lang.String,float%5B%5D%5B%5D,int,int)" class="member-name-link">exportWAV</a><wbr>(processing.core.PApplet&nbsp;p,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#dumpMidiOutputDevices()" class="member-name-link">dumpMidiOutputDevices</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#exportWAV(processing.core.PApplet,java.lang.String,float%5B%5D%5B%5D,int,int)" class="member-name-link">exportWAV</a><wbr>(processing.core.PApplet&nbsp;p,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;pFilepath,
  float[][]&nbsp;pBuffer,
  int&nbsp;pBitsPerSignal,
  int&nbsp;pSignalRate)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#exportWAV(processing.core.PApplet,java.lang.String,float%5B%5D%5B%5D,int,int,int)" class="member-name-link">exportWAV</a><wbr>(processing.core.PApplet&nbsp;p,
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#exportWAV(processing.core.PApplet,java.lang.String,float%5B%5D%5B%5D,int,int,int)" class="member-name-link">exportWAV</a><wbr>(processing.core.PApplet&nbsp;p,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;pFilepath,
  float[][]&nbsp;pBuffer,
  int&nbsp;pBitsPerSignal,
  int&nbsp;pSignalRate,
  int&nbsp;pCompressionType)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#exportWAV(processing.core.PApplet,java.lang.String,float%5B%5D,int,int)" class="member-name-link">exportWAV</a><wbr>(processing.core.PApplet&nbsp;p,
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#exportWAV(processing.core.PApplet,java.lang.String,float%5B%5D,int,int)" class="member-name-link">exportWAV</a><wbr>(processing.core.PApplet&nbsp;p,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;pFilepath,
  float[]&nbsp;pBuffer,
  int&nbsp;pBitsPerSignal,
  int&nbsp;pSignalRate)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#exportWAVInfo(processing.core.PApplet,java.lang.String,wellen.WAVConverter.Info)" class="member-name-link">exportWAVInfo</a><wbr>(processing.core.PApplet&nbsp;p,
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#exportWAVInfo(processing.core.PApplet,java.lang.String,wellen.WAVConverter.Info)" class="member-name-link">exportWAVInfo</a><wbr>(processing.core.PApplet&nbsp;p,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;pFilepath,
  <a href="WAVConverter.Info.html" title="class in wellen">WAVConverter.Info</a>&nbsp;pWAVInfo)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#fill_envelope(float%5B%5D,int)" class="member-name-link">fill_envelope</a><wbr>(float[]&nbsp;buffer,
- int&nbsp;type)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static int[]</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#find_zero_crossings(float%5B%5D,int,int)" class="member-name-link">find_zero_crossings</a><wbr>(float[]&nbsp;pSampleData,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#fill_envelope(float%5B%5D,int)" class="member-name-link">fill_envelope</a><wbr>(float[]&nbsp;buffer,
+ int&nbsp;type)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static int[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#find_zero_crossings(float%5B%5D,int,int)" class="member-name-link">find_zero_crossings</a><wbr>(float[]&nbsp;pSampleData,
  int&nbsp;pInPoint,
  int&nbsp;pOutPoint)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static float</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#flip(float)" class="member-name-link">flip</a><wbr>(float&nbsp;pValue)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#floatIEEE_to_bytes(float)" class="member-name-link">floatIEEE_to_bytes</a><wbr>(float&nbsp;f)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static float</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#flip(float)" class="member-name-link">flip</a><wbr>(float&nbsp;pValue)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#floatIEEEs_to_bytes(float%5B%5D)" class="member-name-link">floatIEEEs_to_bytes</a><wbr>(float[]&nbsp;pFloats)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#floatIEEE_to_bytes(float)" class="member-name-link">floatIEEE_to_bytes</a><wbr>(float&nbsp;f)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#floatIEEEs_to_bytes(float%5B%5D,boolean)" class="member-name-link">floatIEEEs_to_bytes</a><wbr>(float[]&nbsp;pFloats,
- boolean&nbsp;pLittleEndian)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#floatIEEEs_to_bytes(float%5B%5D)" class="member-name-link">floatIEEEs_to_bytes</a><wbr>(float[]&nbsp;pFloats)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#floats_to_bytes(byte%5B%5D,float%5B%5D,int)" class="member-name-link">floats_to_bytes</a><wbr>(byte[]&nbsp;pBytes,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#floatIEEEs_to_bytes(float%5B%5D,boolean)" class="member-name-link">floatIEEEs_to_bytes</a><wbr>(float[]&nbsp;pFloats,
+ boolean&nbsp;pLittleEndian)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#floats_to_bytes(byte%5B%5D,float%5B%5D,int)" class="member-name-link">floats_to_bytes</a><wbr>(byte[]&nbsp;pBytes,
  float[]&nbsp;pFloats,
  int&nbsp;pBitsPerFloat)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static float[]</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#get_extremum(float%5B%5D)" class="member-name-link">get_extremum</a><wbr>(float[]&nbsp;pSignal)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#get_resource_path()" class="member-name-link">get_resource_path</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static float[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#get_extremum(float%5B%5D)" class="member-name-link">get_extremum</a><wbr>(float[]&nbsp;pSignal)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static float[][]</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#importWAV(processing.core.PApplet,java.lang.String)" class="member-name-link">importWAV</a><wbr>(processing.core.PApplet&nbsp;p,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#get_resource_path()" class="member-name-link">get_resource_path</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static float[][]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#importWAV(processing.core.PApplet,java.lang.String)" class="member-name-link">importWAV</a><wbr>(processing.core.PApplet&nbsp;p,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;pFilepath)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="WAVConverter.Info.html" title="class in wellen">WAVConverter.Info</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#importWAVInfo(processing.core.PApplet,java.lang.String)" class="member-name-link">importWAVInfo</a><wbr>(processing.core.PApplet&nbsp;p,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;pFilepath)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="WAVConverter.Info.html" title="class in wellen">WAVConverter.Info</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#importWAVInfo(processing.core.PApplet,java.lang.String)" class="member-name-link">importWAVInfo</a><wbr>(processing.core.PApplet&nbsp;p,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;pFilepath)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#isMidiDeviceAvailable(java.lang.String)" class="member-name-link">isMidiDeviceAvailable</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;pDeviceName)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#millis_to_samples(float)" class="member-name-link">millis_to_samples</a><wbr>(float&nbsp;pMillis)</code></div>
@@ -2735,11 +2743,24 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="bytes_to_floatIEEEs(byte[])">
+<h3>bytes_to_floatIEEEs</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">float[]</span>&nbsp;<span class="element-name">bytes_to_floatIEEEs</span><wbr><span class="parameters">(byte[]&nbsp;pBytes)</span></div>
+</section>
+</li>
+<li>
 <section class="detail" id="bytes_to_floats(byte[],float[],int)">
 <h3>bytes_to_floats</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">bytes_to_floats</span><wbr><span class="parameters">(byte[]&nbsp;pBytes,
  float[]&nbsp;pFloats,
  int&nbsp;pBitsPerFloat)</span></div>
+<div class="block">convert byte array to float array.</div>
+<dl class="notes">
+<dt>Parameters:</dt>
+<dd><code>pBytes</code> - source unsigned byte array</dd>
+<dd><code>pFloats</code> - destination float array</dd>
+<dd><code>pBitsPerFloat</code> - number of bits per float ( usually 8, 16, 24, or 32-bits )</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -2866,6 +2887,12 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="dumpAudioInputAndOutputDevices()">
 <h3>dumpAudioInputAndOutputDevices</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">dumpAudioInputAndOutputDevices</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="isMidiDeviceAvailable(java.lang.String)">
+<h3>isMidiDeviceAvailable</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isMidiDeviceAvailable</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;pDeviceName)</span></div>
 </section>
 </li>
 <li>

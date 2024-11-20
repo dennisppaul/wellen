@@ -112,8 +112,8 @@ implements <a href="AudioBufferRenderer.html" title="interface in wellen">AudioB
 <h2>Method Summary</h2>
 <div id="method-summary-table">
 <div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
-<div id="method-summary-table.tabpanel" role="tabpanel">
-<div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
+<div id="method-summary-table.tabpanel" role="tabpanel" aria-labelledby="method-summary-table-tab0">
+<div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
@@ -165,6 +165,13 @@ implements <a href="AudioBufferRenderer.html" title="interface in wellen">AudioB
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#is_playing()" class="member-name-link">is_playing</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="dsp/Sampler.html" title="class in wellen.dsp">Sampler</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#load_sample(byte%5B%5D)" class="member-name-link">load_sample</a><wbr>(byte[]&nbsp;sampleBuffer)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="dsp/Sampler.html" title="class in wellen.dsp">Sampler</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#load_sample(processing.core.PApplet,java.lang.String)" class="member-name-link">load_sample</a><wbr>(processing.core.PApplet&nbsp;p,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;sampleFilename)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ToneEngineDSP.html" title="class in wellen">ToneEngineDSP</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#no_output()" class="member-name-link">no_output</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
@@ -201,15 +208,18 @@ implements <a href="AudioBufferRenderer.html" title="interface in wellen">AudioB
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#remove_effect(wellen.dsp.EffectStereo)" class="member-name-link">remove_effect</a><wbr>(<a href="dsp/EffectStereo.html" title="interface in wellen.dsp">EffectStereo</a>&nbsp;effect)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#replace_instrument(wellen.Instrument)" class="member-name-link">replace_instrument</a><wbr>(<a href="Instrument.html" title="class in wellen">Instrument</a>&nbsp;instrument)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#remove_sample(wellen.dsp.Sampler)" class="member-name-link">remove_sample</a><wbr>(<a href="dsp/Sampler.html" title="class in wellen.dsp">Sampler</a>&nbsp;sampler)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_gain(float)" class="member-name-link">set_gain</a><wbr>(float&nbsp;gain)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#replace_instrument(wellen.Instrument)" class="member-name-link">replace_instrument</a><wbr>(<a href="Instrument.html" title="class in wellen">Instrument</a>&nbsp;instrument)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stop()" class="member-name-link">stop</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set_gain(float)" class="member-name-link">set_gain</a><wbr>(float&nbsp;gain)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#stop()" class="member-name-link">stop</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -530,6 +540,37 @@ implements <a href="AudioBufferRenderer.html" title="interface in wellen">AudioB
 <section class="detail" id="register_audioblock_callback(wellen.ToneEngineDSP.AudioOutputCallback)">
 <h3>register_audioblock_callback</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">register_audioblock_callback</span><wbr><span class="parameters">(<a href="ToneEngineDSP.AudioOutputCallback.html" title="interface in wellen">ToneEngineDSP.AudioOutputCallback</a>&nbsp;audioblock_callback)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="load_sample(processing.core.PApplet,java.lang.String)">
+<h3>load_sample</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="dsp/Sampler.html" title="class in wellen.dsp">Sampler</a></span>&nbsp;<span class="element-name">load_sample</span><wbr><span class="parameters">(processing.core.PApplet&nbsp;p,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;sampleFilename)</span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="ToneEngine.html#load_sample(processing.core.PApplet,java.lang.String)">load_sample</a></code>&nbsp;in class&nbsp;<code><a href="ToneEngine.html" title="class in wellen">ToneEngine</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="load_sample(byte[])">
+<h3>load_sample</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="dsp/Sampler.html" title="class in wellen.dsp">Sampler</a></span>&nbsp;<span class="element-name">load_sample</span><wbr><span class="parameters">(byte[]&nbsp;sampleBuffer)</span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="ToneEngine.html#load_sample(byte%5B%5D)">load_sample</a></code>&nbsp;in class&nbsp;<code><a href="ToneEngine.html" title="class in wellen">ToneEngine</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="remove_sample(wellen.dsp.Sampler)">
+<h3>remove_sample</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">remove_sample</span><wbr><span class="parameters">(<a href="dsp/Sampler.html" title="class in wellen.dsp">Sampler</a>&nbsp;sampler)</span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="ToneEngine.html#remove_sample(wellen.dsp.Sampler)">remove_sample</a></code>&nbsp;in class&nbsp;<code><a href="ToneEngine.html" title="class in wellen">ToneEngine</a></code></dd>
+</dl>
 </section>
 </li>
 </ul>
