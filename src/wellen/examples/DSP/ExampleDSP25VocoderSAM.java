@@ -14,9 +14,9 @@ public class ExampleDSP25VocoderSAM extends PApplet {
      * this example demonstrate how to use a vocoder with SAM. see the vocoder example for further explanation.
      */
 
-    private Vocoder mVocoder;
+    private Vocoder   mVocoder;
     private Wavetable mVocoderCarrierOsc;
-    private SAM mSAM;
+    private SAM       mSAM;
 
     public void settings() {
         size(640, 480);
@@ -34,20 +34,20 @@ public class ExampleDSP25VocoderSAM extends PApplet {
         mVocoder.set_volume(8);
 
         mSAM = new SAM();
+        mSAM.set_speed(60);
 
         DSP.start(this, 1);
-        Beat.start(this, 140);
+        Beat.start(this, 25);
     }
 
     public void draw() {
         background(255);
         stroke(0);
-        final int mBufferSize = DSP.get_buffer_size();
         DSP.draw_buffers(g, width, height);
     }
 
     public void beat(int beatCount) {
-        mSAM.say("hello");
+        mSAM.say("Harder, Better, Faster, Stronger");
     }
 
     public void mouseMoved() {
@@ -72,7 +72,7 @@ public class ExampleDSP25VocoderSAM extends PApplet {
 
     public void audioblock(float[] output_signal) {
         for (int i = 0; i < output_signal.length; i++) {
-            float mCarrier = mVocoderCarrierOsc.output();
+            float mCarrier   = mVocoderCarrierOsc.output();
             float mModulator = mSAM.output() * 0.5f;
             output_signal[i] = mVocoder.process(mCarrier, mModulator);
         }
