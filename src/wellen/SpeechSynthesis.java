@@ -29,33 +29,34 @@ import java.util.ArrayList;
  */
 public class SpeechSynthesis {
 
-    private boolean mBlocking = true;
-    private String mFileName = null;
+    private       boolean mBlocking       = true;
+    private       String  mFileName       = null;
     private final boolean mRemoveSpecialChars;
     private final boolean mVerbose;
-    private int mWordsPerMinute = 0;
-
-    public SpeechSynthesis() {
-        mVerbose = false;
-        mRemoveSpecialChars = true;
-    }
+    private       int     mWordsPerMinute = 0;
+    private       Process mProcess;
 
     public SpeechSynthesis(boolean verbose, boolean remove_special_characters) {
-        mVerbose = verbose;
+        mVerbose            = verbose;
         mRemoveSpecialChars = remove_special_characters;
+        mProcess            = null;
+    }
+
+    public SpeechSynthesis() {
+        this(false, true);
     }
 
     public static String[] list() {
-        String[] mCommand = new String[]{"say", "-v", "?"};
+        String[]      mCommand = new String[]{"say", "-v", "?"};
         final Process p;
         try {
             p = Runtime.getRuntime().exec(mCommand);
-            int mExit = p.waitFor();
+            int            mExit    = p.waitFor();
             BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
-            BufferedReader error = new BufferedReader(new InputStreamReader(p.getErrorStream()));
+            BufferedReader error    = new BufferedReader(new InputStreamReader(p.getErrorStream()));
 
             ArrayList<String> mVoices = new ArrayList<>();
-            String s;
+            String            s;
             while ((s = stdInput.readLine()) != null) {
                 String[] mNames = s.split(" ");
                 mVoices.add(mNames[0]);
@@ -75,7 +76,7 @@ public class SpeechSynthesis {
         }
         try {
             if (mRemoveSpecialChars) {
-                final String[] searchList = {"ƒ", "‰", "÷", "ˆ", "‹", "¸", "ﬂ"};
+                final String[] searchList  = {"ƒ", "‰", "÷", "ˆ", "‹", "¸", "ﬂ"};
                 final String[] replaceList = {"Ae", "ae", "Oe", "oe", "Ue", "ue", "sz"};
                 for (int i = 0; i < replaceList.length; i++) {
                     pMessage = pMessage.replace(searchList[i], replaceList[i]);
@@ -97,16 +98,48 @@ public class SpeechSynthesis {
                 }
                 System.out.println();
             }
-            final Process p = Runtime.getRuntime().exec(mCommand);
+            mProcess = Runtime.getRuntime().exec(mCommand);
             if (pBlocking) {
-                int mExit = p.waitFor();
+                int mExit = mProcess.waitFor();
                 if (mVerbose) {
                     System.out.println("+++ exit value: " + mExit);
                 }
+            } else {
+                new Thread(() -> {
+                    try {
+                        int mExit = mProcess.waitFor();
+                        mProcess = null;
+                        if (mVerbose) {
+                            System.out.println("+++ exit value: " + mExit);
+                        }
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }).start();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean is_speaking() {
+        if (mProcess == null) {
+            return false;
+        }
+        return mProcess.isAlive();
+    }
+
+    public void stop() {
+        if (mProcess == null) {
+            return;
+        }
+        if (mProcess.isAlive()) {
+            mProcess.destroy();
+            if (mProcess.isAlive()) {
+                mProcess.destroyForcibly();
+            }
+        }
+        mProcess = null;
     }
 
     public void blocking(boolean pMakeBlocking) {

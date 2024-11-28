@@ -45,9 +45,12 @@ public class MidiOut {
         mMidiOut = find(pMidiOutputDevice);
     }
 
+//    public static String[] availableOutputs() {
+//    }
+
     public static String[] availableOutputs() {
         ArrayList<String> mMidiOutputs = new ArrayList<>();
-        MidiDevice.Info[] mInfos = MidiSystem.getMidiDeviceInfo();
+        MidiDevice.Info[] mInfos       = MidiSystem.getMidiDeviceInfo();
         for (MidiDevice.Info mInfo : mInfos) {
             try {
                 MidiDevice mDevice = MidiSystem.getMidiDevice(mInfo);
@@ -62,6 +65,9 @@ public class MidiOut {
         return mMidiOutputs.toArray(mMidiOutputsStr);
     }
 
+//    public void sendNoteOn(int channel, int pitch, int velocity) {
+//    }
+
     public void sendNoteOn(int channel, int pitch, int velocity) {
         ShortMessage message = new ShortMessage();
         try {
@@ -75,6 +81,9 @@ public class MidiOut {
         }
     }
 
+//    public void sendControllerChange(int channel, int number, int value) {
+//    }
+
     public void sendControllerChange(int channel, int number, int value) {
         ShortMessage message = new ShortMessage();
         try {
@@ -87,6 +96,9 @@ public class MidiOut {
             System.err.println("+++ Message not sent, invalid MIDI data");
         }
     }
+
+//    public void sendNoteOff(int channel, int pitch, int velocity) {
+//    }
 
     public void sendNoteOff(int channel, int pitch, int velocity) {
         ShortMessage message = new ShortMessage();
@@ -148,7 +160,7 @@ public class MidiOut {
 
     private Receiver find(int pMidiOutputDeviceID) {
         MidiDevice.Info[] mInfos = MidiSystem.getMidiDeviceInfo();
-        MidiDevice.Info mInfo = mInfos[pMidiOutputDeviceID];
+        MidiDevice.Info   mInfo  = mInfos[pMidiOutputDeviceID];
         try {
             MidiDevice mDevice = MidiSystem.getMidiDevice(mInfo);
             if (mDevice.getMaxReceivers() != 0) {

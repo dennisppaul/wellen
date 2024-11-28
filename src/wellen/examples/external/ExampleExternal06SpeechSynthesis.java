@@ -10,9 +10,9 @@ public class ExampleExternal06SpeechSynthesis extends PApplet {
      * this example demonstrates how to use the built-in speech synthesis engine ( macOS only ).
      */
 
-    private int mBeatCount;
+    private int             mBeatCount;
     private SpeechSynthesis mSpeech;
-    private String[] mWords;
+    private String[]        mWords;
 
     public void settings() {
         size(640, 480);
@@ -20,13 +20,16 @@ public class ExampleExternal06SpeechSynthesis extends PApplet {
 
     public void setup() {
         String mText = "I know not by what power I am made bold, Nor how it may concern my modesty, In such a " +
-                "presence here to plead" + " my thoughts; But I beseech your grace that I may know The worst that " + "may" + " " + "befall me in " + "this case, If I refuse to " + "wed Demetrius.";
+                       "presence here to plead my thoughts; But I beseech your grace that I may know The worst that " +
+                       "may befall me in this case, If I refuse to wed Demetrius.";
         mWords = split(mText, ' ');
         printArray(SpeechSynthesis.list());
         mSpeech = new SpeechSynthesis();
+        mSpeech.blocking(true);
+        mSpeech.say("Daniel", "A Midsummer Night's Dream Act 1 Scene 1");
         mSpeech.blocking(false);
 
-        Beat.start(this, 140);
+        Beat.start(this, 80);
     }
 
     public void draw() {
@@ -34,6 +37,9 @@ public class ExampleExternal06SpeechSynthesis extends PApplet {
         noStroke();
         fill(0);
         float mScale = (mBeatCount % 32) * 0.025f + 0.25f;
+        if (mSpeech.is_speaking()) {
+            mScale *= 1 + random(0.05f);
+        }
         ellipse(width * 0.5f, height * 0.5f, width * mScale, width * mScale);
     }
 
