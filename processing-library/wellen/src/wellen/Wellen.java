@@ -145,8 +145,13 @@ public class Wellen {
     public static final String  TONE_ENGINE_OSC                       = "osc";
     public static final float   TWO_PI                                = PApplet.TWO_PI;
     public static final int     VERSION_MAJOR                         = 0;
-    public static final int     VERSION_MINOR                         = 8;
+    public static final int     VERSION_MINOR                         = 14;
     public static final int     WAVEFORM_NOISE                        = 4;
+    public static final int     INSTRUMENT_PRESET_SIMPLE              = 0;
+    public static final int     INSTRUMENT_PRESET_SUB_SINE            = 1;
+    public static final int     INSTRUMENT_PRESET_FAT                 = 2;
+    public static final int     INSTRUMENT_PRESET_NOISE               = 3;
+    public static final int     DEFAULT_INSTRUMENT_PRESET             = INSTRUMENT_PRESET_SIMPLE;
     /**
      * @deprecated use WAVEFORM_ instead
      */

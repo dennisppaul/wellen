@@ -12,6 +12,24 @@ public class ExampleExternal02MIDIClock extends PApplet {
      * external MIDI device or an internal MIDI application ).
      */
 
+    /*
+     * steps to enable MIDI clock in ableton live:
+     * 
+     * 1. connect your MIDI device:
+     *     - ensure your MIDI interface or hardware device is connected to your computer.
+     * 2. open ableton live preferences:
+     *     - go to `Live > Settings…` (macOS) or `Options > Preferences` (Windows).
+     *     - navigate to `Link/Tempo/MIDI` tab.
+     * 3. set up MIDI clock output:
+     *     - in the `MIDI Ports` section, locate the output port for your connected MIDI device.
+     *     - enable `Sync` for the relevant output port.
+     * 4. activate MIDI clock:
+     *     - close the preferences window.
+     *     - ensure `Options > External Sync` it is toggled off.
+     * 5. start playback:
+     *     - hit play in ableton live, and the MIDI clock will start transmitting, syncing any connected hardware or software.
+     */
+
     private BeatMIDI mBeatMIDI;
     private int mColor;
 

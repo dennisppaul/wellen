@@ -24,6 +24,7 @@ import wellen.dsp.*;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import static wellen.Wellen.NO_AUDIO_DEVICE;
 import static wellen.Wellen.clamp;
@@ -33,50 +34,51 @@ import static wellen.Wellen.clamp;
  */
 public class ToneEngineDSP extends ToneEngine implements AudioBufferRenderer, DSPNodeOutput, DSPNodeOutputSignal {
 
-    public static boolean VERBOSE = true;
-    public boolean USE_AMP_FRACTION = false;
-    private final AudioBufferManager fAudioPlayer;
-    private AudioOutputCallback fAudioblockCallback = null;
-    private int fCurrentBufferCounter;
-    private float[] fCurrentBufferLeft;
-    private float[] fCurrentBufferRight;
-    private int fCurrentInstrumentID;
-    private final ArrayList<EffectStereo> fEffects;
-    private final Gain fGain;
-    private final ArrayList<InstrumentDSP> fInstruments;
-    private final int fNumberOfInstruments;
-    private final Pan fPan;
-    private final Reverb fReverb;
-    private boolean fReverbEnabled;
+    public static boolean                            VERBOSE             = true;
+    public        boolean                            USE_AMP_FRACTION    = false;
+    private final AudioBufferManager                 fAudioPlayer;
+    private       AudioOutputCallback                fAudioblockCallback = null;
+    private       int                                fCurrentBufferCounter;
+    private       float[]                            fCurrentBufferLeft;
+    private       float[]                            fCurrentBufferRight;
+    private       int                                fCurrentInstrumentID;
+    private final CopyOnWriteArrayList<EffectStereo> fEffects;
+    private final Gain                               fGain;
+    private final ArrayList<InstrumentDSP>           fInstruments;
+    private final int                                fNumberOfInstruments;
+    private final Pan                                fPan;
+    private final Reverb                             fReverb;
+    private       boolean                            fReverbEnabled;
 
     public ToneEngineDSP(int sampling_rate,
                          int audioblock_size,
                          int output_device_ID,
                          int number_of_output_channels,
                          int number_of_instruments) {
-        fInstruments = new ArrayList<>();
-        fEffects = new ArrayList<>();
+        fInstruments         = new ArrayList<>();
+        fEffects             = new CopyOnWriteArrayList<>();
         fNumberOfInstruments = number_of_instruments;
         for (int i = 0; i < fNumberOfInstruments; i++) {
             final InstrumentDSP mInstrument = new InstrumentDSP(i, sampling_rate);
+            mInstrument.preset(Wellen.DEFAULT_INSTRUMENT_PRESET);
             fInstruments.add(mInstrument);
         }
 
-        fGain = new Gain();
-        fReverb = new Reverb();
+        fGain          = new Gain();
+        fReverb        = new Reverb();
         fReverbEnabled = false;
-        fPan = new Pan();
+        fPan           = new Pan();
         fPan.set_pan_type(Wellen.PAN_SINE_LAW);
 
         if (output_device_ID != NO_AUDIO_DEVICE && number_of_output_channels > 0) {
             AudioDeviceConfiguration mConfig = new AudioDeviceConfiguration();
-            mConfig.sample_rate = sampling_rate;
-            mConfig.sample_buffer_size = audioblock_size;
-            mConfig.output_device_ID = output_device_ID;
+            mConfig.sample_rate               = sampling_rate;
+            mConfig.sample_buffer_size        = audioblock_size;
+            mConfig.output_device_ID          = output_device_ID;
             mConfig.number_of_output_channels = number_of_output_channels;
-            mConfig.input_device_ID = 0;
-            mConfig.number_of_input_channels = 0;
-            fAudioPlayer = new AudioBufferManager(this, mConfig);
+            mConfig.input_device_ID           = 0;
+            mConfig.number_of_input_channels  = 0;
+            fAudioPlayer                      = new AudioBufferManager(this, mConfig);
         } else {
             fAudioPlayer = null;
         }
@@ -88,18 +90,18 @@ public class ToneEngineDSP extends ToneEngine implements AudioBufferRenderer, DS
 
     public static ToneEngineDSP create_without_audio_output(int number_of_instruments) {
         return new ToneEngineDSP(Wellen.DEFAULT_SAMPLING_RATE,
-                Wellen.DEFAULT_AUDIOBLOCK_SIZE,
-                Wellen.NO_AUDIO_DEVICE,
-                2,
-                number_of_instruments);
+                                 Wellen.DEFAULT_AUDIOBLOCK_SIZE,
+                                 Wellen.NO_AUDIO_DEVICE,
+                                 2,
+                                 number_of_instruments);
     }
 
     public static ToneEngineDSP no_output() {
         return new ToneEngineDSP(Wellen.DEFAULT_SAMPLING_RATE,
-                Wellen.DEFAULT_AUDIOBLOCK_SIZE,
-                Wellen.DEFAULT_AUDIO_DEVICE,
-                Wellen.NO_CHANNELS,
-                Wellen.DEFAULT_NUMBER_OF_INSTRUMENTS);
+                                 Wellen.DEFAULT_AUDIOBLOCK_SIZE,
+                                 Wellen.DEFAULT_AUDIO_DEVICE,
+                                 Wellen.NO_CHANNELS,
+                                 Wellen.DEFAULT_NUMBER_OF_INSTRUMENTS);
     }
 
     @Override
@@ -180,7 +182,7 @@ public class ToneEngineDSP extends ToneEngine implements AudioBufferRenderer, DS
             fInstruments.set(instrument.ID(), (InstrumentDSP) instrument);
         } else {
             System.err.println("+++ WARNING @" + getClass().getSimpleName() + ".replace_instrument(Instrument) / " +
-                    "instrument must " + "be" + " of type `InstrumentInternal`");
+                               "instrument must " + "be" + " of type `InstrumentInternal`");
         }
     }
 
@@ -202,7 +204,7 @@ public class ToneEngineDSP extends ToneEngine implements AudioBufferRenderer, DS
             audioblock(output_signal[0], output_signal[1]);
         } else {
             System.err.println("+++ WARNING @" + getClass().getSimpleName() + ".audioblock / multiple output " +
-                    "channels are not " + "supported.");
+                               "channels are not " + "supported.");
         }
         if (fAudioblockCallback != null) {
             fAudioblockCallback.audioblock(output_signal);
@@ -233,7 +235,7 @@ public class ToneEngineDSP extends ToneEngine implements AudioBufferRenderer, DS
     public Signal output_signal() {
         Signal mSignalSum = getNextInstrumentSampleStereo();
 
-        float[] pSignalLeft = new float[]{mSignalSum.left()};
+        float[] pSignalLeft  = new float[]{mSignalSum.left()};
         float[] pSignalRight = new float[]{mSignalSum.right()};
         for (EffectStereo mEffect : fEffects) {
             mEffect.out(pSignalLeft, pSignalRight);
@@ -254,7 +256,7 @@ public class ToneEngineDSP extends ToneEngine implements AudioBufferRenderer, DS
         if (fCurrentBufferRight == null) {
             fCurrentBufferRight = new float[Wellen.DEFAULT_AUDIOBLOCK_SIZE];
         }
-        fCurrentBufferLeft[fCurrentBufferCounter] = mSignalSum.left();
+        fCurrentBufferLeft[fCurrentBufferCounter]  = mSignalSum.left();
         fCurrentBufferRight[fCurrentBufferCounter] = mSignalSum.right();
         fCurrentBufferCounter++;
         fCurrentBufferCounter %= fCurrentBufferLeft.length;
@@ -283,12 +285,14 @@ public class ToneEngineDSP extends ToneEngine implements AudioBufferRenderer, DS
             final Signal mSignalSum = getNextInstrumentSampleStereo();
             mSignalSum.add(getNextSampleBankStereo());
 
-            signal_left[i] = mSignalSum.left();
+            signal_left[i]  = mSignalSum.left();
             signal_right[i] = mSignalSum.right();
         }
 
-        for (EffectStereo mEffect : fEffects) {
-            mEffect.out(signal_left, signal_right);
+        synchronized (fEffects) {
+            for (EffectStereo mEffect : fEffects) {
+                mEffect.out(signal_left, signal_right);
+            }
         }
 
         fGain.out(signal_left, signal_right);
@@ -296,7 +300,7 @@ public class ToneEngineDSP extends ToneEngine implements AudioBufferRenderer, DS
         if (fReverbEnabled) {
             fReverb.process(signal_left, signal_right, signal_left, signal_right);
         }
-        fCurrentBufferLeft = signal_left;
+        fCurrentBufferLeft  = signal_left;
         fCurrentBufferRight = signal_right;
     }
 
@@ -386,8 +390,8 @@ public class ToneEngineDSP extends ToneEngine implements AudioBufferRenderer, DS
     }
 
     public Sampler load_sample(PApplet p, String sampleFilename) {
-        byte[] mRawSampleData = p.loadBytes(sampleFilename); // ( raw format, 32bit IEEE float )
-        Sampler mSampler = new Sampler();
+        byte[]  mRawSampleData = p.loadBytes(sampleFilename); // ( raw format, 32bit IEEE float )
+        Sampler mSampler       = new Sampler();
         mSampler.load(mRawSampleData);
         fSampleBank.add(mSampler);
         return mSampler;

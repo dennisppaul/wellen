@@ -153,27 +153,27 @@ public class InstrumentMIDI extends Instrument {
     }
 
     @Override
-    public void set_detune(float detune) {
+    public void set_sub_ratio(float frequency_ratio) {
 
     }
 
     @Override
-    public float get_detune() {
+    public float get_sub_ratio() {
         return 0;
     }
 
     @Override
-    public void set_detune_amplitude(float detune) {
+    public void set_sub_amplitude(float amplitude) {
 
     }
 
     @Override
-    public float get_detune_amplitude() {
+    public float get_sub_amplitude() {
         return 0;
     }
 
     @Override
-    public void set_detune_oscillator_type(int oscillator) {
+    public void set_sub_oscillator_type(int oscillator) {
 
     }
 

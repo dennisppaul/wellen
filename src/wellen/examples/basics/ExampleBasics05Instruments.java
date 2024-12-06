@@ -2,6 +2,7 @@ package wellen.examples.basics;
 
 import processing.core.PApplet;
 import wellen.Tone;
+import wellen.Wellen;
 
 public class ExampleBasics05Instruments extends PApplet {
 
@@ -14,6 +15,7 @@ public class ExampleBasics05Instruments extends PApplet {
     }
 
     public void setup() {
+        Tone.preset(Wellen.INSTRUMENT_PRESET_SIMPLE);
     }
 
     public void draw() {

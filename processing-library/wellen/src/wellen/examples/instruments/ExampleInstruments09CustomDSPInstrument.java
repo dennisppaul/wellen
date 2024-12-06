@@ -147,7 +147,7 @@ public class ExampleInstruments09CustomDSPInstrument extends PApplet {
         public CustomInstrumentDetunedOscillatorsStereo(int pID) {
             super(pID);
             set_channels(2);
-            set_detune(0.01f);
+            this.set_sub_ratio(0.01f);
             set_spread(0.5f);
 
             Wavetable.fill(fVCO.get_wavetable(), Wellen.WAVEFORM_TRIANGLE);
@@ -157,12 +157,12 @@ public class ExampleInstruments09CustomDSPInstrument extends PApplet {
             Wavetable.fill(mVCOSecond.get_wavetable(), Wellen.WAVEFORM_TRIANGLE);
         }
 
-        public float get_detune() {
+        public float get_sub_ratio() {
             return mDetune;
         }
 
-        public void set_detune(float pDetune) {
-            mDetune = pDetune;
+        public void set_sub_ratio(float frequency_ratio) {
+            mDetune = frequency_ratio;
         }
 
         public float get_spread() {

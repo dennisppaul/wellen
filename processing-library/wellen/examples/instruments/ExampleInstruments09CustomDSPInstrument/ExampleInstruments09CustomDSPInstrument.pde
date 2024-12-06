@@ -125,18 +125,18 @@ static class CustomInstrumentDetunedOscillatorsStereo extends InstrumentDSP {
     CustomInstrumentDetunedOscillatorsStereo(int pID) {
         super(pID);
         set_channels(2);
-        set_detune(0.01f);
+        this.set_sub_ratio(0.01f);
         set_spread(0.5f);
         Wavetable.fill(fVCO.get_wavetable(), Wellen.WAVEFORM_TRIANGLE);
         mVCOSecond = new Wavetable(DEFAULT_WAVETABLE_SIZE);
         mVCOSecond.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
         Wavetable.fill(mVCOSecond.get_wavetable(), Wellen.WAVEFORM_TRIANGLE);
     }
-    float get_detune() {
+    float get_sub_ratio() {
         return mDetune;
     }
-    void set_detune(float pDetune) {
-        mDetune = pDetune;
+    void set_sub_ratio(float frequency_ratio) {
+        mDetune = frequency_ratio;
     }
     float get_spread() {
         return mSpread;

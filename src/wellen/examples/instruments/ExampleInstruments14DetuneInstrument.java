@@ -18,10 +18,10 @@ public class ExampleInstruments14DetuneInstrument extends PApplet {
 
     public void setup() {
         Tone.instrument(0).set_oscillator_type(Wellen.WAVEFORM_SAWTOOTH);
-        Tone.instrument(0).enable_detune(true);
-        Tone.instrument(0).set_detune(1.02f);
-        Tone.instrument(0).set_detune_amplitude(0.8f);
-        Tone.instrument(0).set_detune_oscillator_type(Wellen.WAVEFORM_SAWTOOTH);
+        Tone.instrument(0).enable_sub_oscillator(true);
+        Tone.instrument(0).set_sub_ratio(1.02f);
+        Tone.instrument(0).set_sub_amplitude(0.8f);
+        Tone.instrument(0).set_sub_oscillator_type(Wellen.WAVEFORM_SAWTOOTH);
     }
 
     public void draw() {
@@ -41,28 +41,29 @@ public class ExampleInstruments14DetuneInstrument extends PApplet {
     }
 
     public void mouseDragged() {
-        Tone.instrument(0).set_detune_amplitude(map(mouseX, 0, width, 0.1f, 1.0f));
-        Tone.instrument(0).set_detune(map(mouseY, 0, height, 0.9f, 1.1f));
+        Tone.instrument(0).set_sub_amplitude(map(mouseX, 0, width, 0.1f, 1.0f));
+        Tone.instrument(0).set_sub_ratio(map(mouseY, 0, height, 0.1f, 2.1f));
     }
 
     public void keyPressed() {
-        Tone.instrument(0).set_detune_amplitude(0.8f);
         switch (key) {
             case '1':
-                Tone.instrument(0).set_detune(1.0f); // no detune
+                Tone.instrument(0).set_sub_ratio(1.0f); // no detune
                 break;
             case '2':
-                Tone.instrument(0).set_detune(1.25f); // Große Terz
+                Tone.instrument(0).set_sub_ratio(1.25f); // Große Terz
                 break;
             case '3':
-                Tone.instrument(0).set_detune(1.33f); // Quarte
+                Tone.instrument(0).set_sub_ratio(1.33f); // Quarte
                 break;
             case '4':
-                Tone.instrument(0).set_detune(1.5f); // Quinte
+                Tone.instrument(0).set_sub_ratio(1.5f); // Quinte
                 break;
             case '5':
-                Tone.instrument(0).set_detune(2.0f); // Oktave
+                Tone.instrument(0).set_sub_ratio(2.0f); // Oktave
                 break;
+            default:
+                Tone.instrument(0).set_sub_amplitude(0.8f);
         }
     }
 

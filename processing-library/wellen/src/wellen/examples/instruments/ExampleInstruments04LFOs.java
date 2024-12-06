@@ -14,8 +14,8 @@ public class ExampleInstruments04LFOs extends PApplet {
      * note that this functionality is not implemented for MIDI and OSC.
      */
 
-    private boolean mEnableAmplitudeLFO = false;
-    private boolean mEnableFrequencyLFO = false;
+    private boolean mEnableAmplitudeLFO       = false;
+    private boolean mEnableFrequencyLFO       = true;
     private boolean mToggleLFOParameterSelect = true;
 
     public void settings() {
@@ -24,6 +24,9 @@ public class ExampleInstruments04LFOs extends PApplet {
 
     public void setup() {
         Tone.start();
+        Tone.instrument().set_frequency_LFO_amplitude(2.0f);
+        Tone.instrument().set_frequency_LFO_frequency(11.0f);
+        Tone.instrument().enable_frequency_LFO(true);
     }
 
     public void draw() {
@@ -52,9 +55,13 @@ public class ExampleInstruments04LFOs extends PApplet {
         if (mToggleLFOParameterSelect) {
             Tone.instrument().set_frequency_LFO_amplitude(map(mouseY, 0, height, 0.0f, 50.0f));
             Tone.instrument().set_frequency_LFO_frequency(map(mouseX, 0, width, 0.0f, 50.0f));
+            println("LFO_amplitude: " + Tone.instrument().get_frequency_LFO_amplitude());
+            println("LFO_frequency: " + Tone.instrument().get_frequency_LFO_frequency());
         } else {
             Tone.instrument().set_amplitude_LFO_amplitude(map(mouseY, 0, height, 0.0f, 1.0f));
             Tone.instrument().set_amplitude_LFO_frequency(map(mouseX, 0, width, 0.0f, 50.0f));
+            println("LFO_amplitude: " + Tone.instrument().get_amplitude_LFO_amplitude());
+            println("LFO_frequency: " + Tone.instrument().get_amplitude_LFO_frequency());
         }
     }
 

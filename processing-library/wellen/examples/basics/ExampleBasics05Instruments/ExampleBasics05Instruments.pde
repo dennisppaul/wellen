@@ -8,6 +8,7 @@ void settings() {
     size(640, 480);
 }
 void setup() {
+    Tone.preset(Wellen.INSTRUMENT_PRESET_SIMPLE);
 }
 void draw() {
     background(255);

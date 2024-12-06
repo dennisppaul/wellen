@@ -1,12 +1,15 @@
 package wellen.examples.basics;
 
 import processing.core.PApplet;
+import wellen.Note;
 import wellen.Tone;
+import wellen.Wellen;
 
 public class ExampleBasics01Notes extends PApplet {
 
     /*
-     * this example demonstrates how to play *musical notes*.
+     * this example demonstrates how to play *musical notes*. notes are played when mouse
+     * is pressed. keys 1–4 change the presets.
      */
 
     public void settings() {
@@ -23,12 +26,26 @@ public class ExampleBasics01Notes extends PApplet {
     }
 
     public void mousePressed() {
-        int mNote = 45 + (int) random(0, 12);
-        Tone.note_on(mNote, 100);
+        Tone.note_on(Note.NOTE_C3, 100);
     }
 
     public void mouseReleased() {
         Tone.note_off();
+    }
+
+    public void keyPressed() {
+        if (key == '1') {
+            Tone.preset(Wellen.INSTRUMENT_PRESET_SIMPLE);
+        }
+        if (key == '2') {
+            Tone.preset(Wellen.INSTRUMENT_PRESET_SUB_SINE);
+        }
+        if (key == '3') {
+            Tone.preset(Wellen.INSTRUMENT_PRESET_FAT);
+        }
+        if (key == '4') {
+            Tone.preset(Wellen.INSTRUMENT_PRESET_NOISE);
+        }
     }
 
     public static void main(String[] args) {

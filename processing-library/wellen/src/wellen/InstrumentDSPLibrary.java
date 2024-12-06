@@ -71,7 +71,7 @@ public class InstrumentDSPLibrary {
                 Wavetable.fill(mVCOs[i].get_wavetable(), Wellen.WAVEFORM_SINE);
                 mADSRs[i] = new ADSR();
             }
-            set_detune(0.23f);
+            this.set_sub_ratio(0.23f);
             set_amplitude_falloff(0.5f);
             set_sustain(2.1f);
             set_sustain_falloff(-0.4f);
@@ -125,8 +125,8 @@ public class InstrumentDSPLibrary {
             return Signal.create(mSample);
         }
 
-        public void set_detune(float pDetune) {
-            mDetune = pDetune;
+        public void set_sub_ratio(float frequency_ratio) {
+            mDetune = frequency_ratio;
             for (int i = 0; i < NUM_OSC; i++) {
                 mOscillatorDetune[i] = i + 2 + i * PApplet.pow(mDetune, 2);
             }

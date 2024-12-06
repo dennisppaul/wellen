@@ -30,38 +30,37 @@ import wellen.dsp.Wavetable;
  */
 public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
 
-    public static final float DEFAULT_FREQUENCY = 220.0f;
-    public static final int DEFAULT_WAVETABLE_SIZE = 512;
-    public boolean always_interpolate_frequency_amplitude_changes = true;
+    public static final float DEFAULT_FREQUENCY      = 220.0f;
+    public static final int   DEFAULT_WAVETABLE_SIZE = 512;
 
-    protected final ADSR fADSR;
-    protected final Wavetable fAmplitudeLFO;
-    protected final Wavetable fFrequencyLFO;
+    protected final ADSR                    fADSR;
+    protected final Wavetable               fAmplitudeLFO;
+    protected final Wavetable               fFrequencyLFO;
     protected final FilterMoogLadderLowPass fLPF;
-    protected final Wavetable fVCO;
-    protected final Wavetable fDetuneVCO;
-
-    private float fAmp;
-    private float fFreq;
-    private float fFreqOffset;
-    private int fNumChannels;
-    private int fVCOType;
-    private final int fSamplingRate;
-    private int fDetuneVCOType;
-    private float fDetune;
-    private float fDetuneAmp;
-
-    private final ADSR fLPCutoffEnvelope;
-    private final ADSR fLPResonanceEnvelope;
-    private float fLPFEnvelopCutoffMin;
-    private float fLPFEnvelopCutoffMax;
-    private float fLPFEnvelopResonanceMin;
-    private float fLPFEnvelopResonanceMax;
+    protected final Wavetable               fVCO;
+    protected final Wavetable               fSubVCO;
+    public          boolean                 always_interpolate_frequency_amplitude_changes = true;
+    private         float                   fInstrumentFreq;
+    private         float                   fInstrumentVolume;
+    private         float                   fFreqOffset                                    = 0;
+    private final   int                     fSamplingRate;
+    private         int                     fNumChannels;
+    private         int                     fVCOType;
+    private         int                     fSubVCOType;
+    private         float                   fSubVCOFreqRatio;
+    private final   ADSR                    fLPFCutoffEnvelope;
+    private final   ADSR                    fLPFResonanceEnvelope;
+    private         float                   fLPFEnvelopCutoffMin;
+    private         float                   fLPFEnvelopCutoffMax;
+    private         float                   fLPFEnvelopResonanceMin;
+    private         float                   fLPFEnvelopResonanceMax;
 
     public InstrumentDSP(int ID, int sampling_rate, int wavetable_size) {
         super(ID);
-        fNumChannels = 1;
-        fSamplingRate = sampling_rate;
+        fNumChannels      = 1;
+        fSamplingRate     = sampling_rate;
+        fInstrumentVolume = 1.0f;
+
         fADSR = new ADSR(fSamplingRate);
         fADSR.set_attack(Wellen.DEFAULT_ATTACK);
         fADSR.set_decay(Wellen.DEFAULT_DECAY);
@@ -69,19 +68,19 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
         fADSR.set_release(Wellen.DEFAULT_RELEASE);
         enable_ADSR(true);
 
-        /* setup detune VCO */
-        fDetune = 1.01f;
-        fDetuneAmp = 1.0f;
-        fDetuneVCO = new Wavetable(wavetable_size, fSamplingRate);
-        fDetuneVCO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
-        fDetuneVCO.set_amplitude(1.0f);
-        set_detune_oscillator_type(Wellen.WAVEFORM_SINE);
+        /* setup sub VCO */
+        fSubVCO = new Wavetable(wavetable_size, fSamplingRate);
+        fSubVCO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
+        fSubVCO.set_amplitude(1.0f);
+        set_sub_oscillator_type(Wellen.WAVEFORM_SINE);
 
         /* setup main VCO */
         fVCO = new Wavetable(wavetable_size, fSamplingRate);
         fVCO.set_interpolation(Wellen.WAVESHAPE_INTERPOLATE_LINEAR);
         set_oscillator_type(Wellen.WAVEFORM_SINE);
-        set_amplitude(0.0f);
+
+        fSubVCOFreqRatio = 1.01f;
+        set_amplitude(0.7f);
         set_frequency(DEFAULT_FREQUENCY);
 
         /* setup LFO for frequency */
@@ -105,18 +104,18 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
         enable_LPF(false);
 
         /* setup LPF envelopes */
-        fLPCutoffEnvelope = new ADSR();
-        fLPCutoffEnvelope.set_attack(0.25f);
-        fLPCutoffEnvelope.set_decay(0.01f);
-        fLPCutoffEnvelope.set_sustain(1.0f);
-        fLPCutoffEnvelope.set_release(0.1f);
-        fLPResonanceEnvelope = new ADSR();
-        fLPResonanceEnvelope.set_attack(0.25f);
-        fLPResonanceEnvelope.set_decay(0.01f);
-        fLPResonanceEnvelope.set_sustain(1.0f);
-        fLPResonanceEnvelope.set_release(0.1f);
-        fLPFEnvelopCutoffMin = 400.0f;
-        fLPFEnvelopCutoffMax = 2000.0f;
+        fLPFCutoffEnvelope = new ADSR();
+        fLPFCutoffEnvelope.set_attack(0.25f);
+        fLPFCutoffEnvelope.set_decay(0.01f);
+        fLPFCutoffEnvelope.set_sustain(1.0f);
+        fLPFCutoffEnvelope.set_release(0.1f);
+        fLPFResonanceEnvelope = new ADSR();
+        fLPFResonanceEnvelope.set_attack(0.25f);
+        fLPFResonanceEnvelope.set_decay(0.01f);
+        fLPFResonanceEnvelope.set_sustain(1.0f);
+        fLPFResonanceEnvelope.set_release(0.1f);
+        fLPFEnvelopCutoffMin    = 400.0f;
+        fLPFEnvelopCutoffMax    = 2000.0f;
         fLPFEnvelopResonanceMin = 0.2f;
         fLPFEnvelopResonanceMax = 0.8f;
     }
@@ -139,41 +138,53 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
     @Override
     public Signal output_signal() {
         if (fEnableFrequencyLFO) {
-            final float mLFOFreq = fEnableFrequencyLFO ? fFrequencyLFO.output() : 0.0f;
-            fVCO.set_frequency(fFreq + mLFOFreq + fFreqOffset);
-            if (fEnableDetune) {
-                fDetuneVCO.set_frequency(fVCO.get_frequency() * fDetune);
+            final float mLFOFreq = fFrequencyLFO.output();
+            fVCO.set_frequency(getVCOFreq() + mLFOFreq);
+            if (fEnableSubVCO) {
+                fSubVCO.set_frequency(fVCO.get_frequency() * fSubVCOFreqRatio);
             }
         }
 
         if (fEnableAmplitudeLFO) {
-            final float mLFOAmp = fEnableAmplitudeLFO ? fAmplitudeLFO.output() : 0.0f;
-            fVCO.set_amplitude((fAmp + mLFOAmp) * (fEnableAmplitudeLFO ? 0.5f : 1.0f));
+            final float mLFOAmp = fAmplitudeLFO.output();
+            fVCO.set_amplitude((get_amplitude() + mLFOAmp) * (fEnableAmplitudeLFO ? 0.5f : 1.0f));
         }
 
-        final float mADSRAmp = fEnableADSR ? fADSR.output() : 1.0f;
-        float mSample = fVCO.output();
-        if (fEnableDetune) {
-            mSample += fDetuneVCO.output() * fVCO.get_amplitude() * fDetuneAmp;
-            mSample *= 0.5f; // TODO not sure if this is good
+        float mSample = 0.0f;
+        if (fEnableVCO) {
+            mSample += fVCO.output();
         }
+
+        if (fEnableSubVCO) {
+            mSample += fSubVCO.output();
+        }
+
+        if (fEnableNoise) {
+            mSample += ((float) Math.random() * 2.0f - 1.0f) * fNoiseAmplitude;
+        }
+
         if (fEnableLPF) {
             if (fEnableLPFEnvelopeCutoff) {
                 final float mRange = fLPFEnvelopCutoffMax - fLPFEnvelopCutoffMin;
-                fLPF.set_frequency(fLPFEnvelopCutoffMin + fLPCutoffEnvelope.output() * mRange);
+                fLPF.set_frequency(fLPFEnvelopCutoffMin + fLPFCutoffEnvelope.output() * mRange);
             }
             if (fEnableLPFEnvelopeResonance) {
                 final float mRange = fLPFEnvelopResonanceMax - fLPFEnvelopResonanceMin;
-                fLPF.set_resonance(fLPFEnvelopResonanceMin + fLPResonanceEnvelope.output() * mRange);
+                fLPF.set_resonance(fLPFEnvelopResonanceMin + fLPFResonanceEnvelope.output() * mRange);
             }
             mSample = fLPF.process(mSample);
         }
+
+        mSample = Wellen.clamp(mSample, -1.0f, 1.0f);
+
+        final float mADSRAmp = fEnableADSR ? fADSR.output() : 1.0f;
+        mSample *= mADSRAmp;
+        mSample *= fInstrumentVolume;
         mSample = Wellen.clamp(mSample, -1.0f, 1.0f);
 
         final Signal mSignal = new Signal(get_channels());
-        final float s = mADSRAmp * mSample;
         for (int i = 0; i < get_channels(); i++) {
-            mSignal.signal[i] = s;
+            mSignal.signal[i] = mSample;
         }
         return mSignal;
     }
@@ -275,41 +286,39 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
 
     @Override
     public float get_amplitude() {
-        return fAmp;
+        return fVCO.get_amplitude();
     }
 
     @Override
     public void set_amplitude(float amplitude) {
-        fAmp = amplitude;
         if (always_interpolate_frequency_amplitude_changes) {
-            fVCO.set_amplitude(fAmp, Wellen.DEFAULT_INTERPOLATE_AMP_FREQ_DURATION);
+            fVCO.set_amplitude(amplitude, Wellen.DEFAULT_INTERPOLATE_AMP_FREQ_DURATION);
         } else {
-            fVCO.set_amplitude(fAmp);
+            fVCO.set_amplitude(amplitude);
         }
     }
 
     @Override
     public void set_amplitude(float amplitude, int interpolation_duration_in_samples) {
-        fAmp = amplitude;
-        fVCO.set_amplitude(fAmp, interpolation_duration_in_samples);
+        fVCO.set_amplitude(amplitude, interpolation_duration_in_samples);
     }
 
     @Override
     public float get_frequency() {
-        return fFreq;
+        return fInstrumentFreq;
     }
 
     @Override
     public void set_frequency(float frequency) {
-        fFreq = frequency;
-        updateVCOFrequency();
+        fInstrumentFreq = frequency;
+        updateVCOFreq();
     }
 
     @Override
     public void set_frequency(float frequency, int interpolation_duration_in_samples) {
-        fFreq = frequency;
-        fVCO.set_frequency(fFreq + fFreqOffset, interpolation_duration_in_samples);
-        fDetuneVCO.set_frequency(getDetuneFreq(), interpolation_duration_in_samples);
+        fInstrumentFreq = frequency;
+        fVCO.set_frequency(getVCOFreq(), interpolation_duration_in_samples);
+        fSubVCO.set_frequency(getSubVCOFreq(), interpolation_duration_in_samples);
     }
 
     @Override
@@ -317,6 +326,15 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
         return fLPFEnvelopCutoffMin;
     }
 
+    @Override
+    public void set_volume(float volume) {
+        fInstrumentVolume = volume;
+    }
+
+    @Override
+    public float get_volume() {
+        return fInstrumentVolume;
+    }
 
     @Override
     public void set_LPF_envelope_cutoff_min(float value) {
@@ -355,70 +373,74 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
 
     @Override
     public ADSR get_LPF_envelope_cutoff() {
-        return fLPCutoffEnvelope;
+        return fLPFCutoffEnvelope;
     }
 
     @Override
     public ADSR get_LPF_envelope_resonance() {
-        return fLPResonanceEnvelope;
+        return fLPFResonanceEnvelope;
     }
 
-    private float getDetuneFreq() {
-        return (fFreq + fFreqOffset) * fDetune;
+    private float getSubVCOFreq() {
+        return getVCOFreq() * fSubVCOFreqRatio;
     }
 
-    private void updateVCOFrequency() {
+    private float getVCOFreq() {
+        return fInstrumentFreq + fFreqOffset;
+    }
+
+    private void updateVCOFreq() {
         if (always_interpolate_frequency_amplitude_changes) {
-            fVCO.set_frequency(fFreq + fFreqOffset, Wellen.DEFAULT_INTERPOLATE_AMP_FREQ_DURATION);
-            fDetuneVCO.set_frequency(getDetuneFreq(), Wellen.DEFAULT_INTERPOLATE_AMP_FREQ_DURATION);
+            fVCO.set_frequency(getVCOFreq(), Wellen.DEFAULT_INTERPOLATE_AMP_FREQ_DURATION);
+            fSubVCO.set_frequency(getSubVCOFreq(), Wellen.DEFAULT_INTERPOLATE_AMP_FREQ_DURATION);
         } else {
-            fVCO.set_frequency(fFreq + fFreqOffset);
-            fDetuneVCO.set_frequency(getDetuneFreq());
+            fVCO.set_frequency(getVCOFreq());
+            fSubVCO.set_frequency(getSubVCOFreq());
         }
     }
 
     @Override
     public void pitch_bend(float frequency_offset) {
         fFreqOffset = frequency_offset;
-        updateVCOFrequency();
+        updateVCOFreq();
     }
 
     /**
-     * detune of second oscillator in relation to main oscillator
+     * set sub oscillator in relation to main oscillator
      *
-     * @param detune in percent. a value of 1.0 will tune the second oscillator to the exact frequency as the main
-     *               oscillator. a value of 0.5 will tune the second oscillator to half the frequency of the main
-     *               oscillator, etcetera.
+     * @param frequency_ratio in percent. a value of 1.0 will tune the second oscillator to the exact frequency as the main
+     *                        oscillator. a value of 0.5 will tune the second oscillator to half the frequency of the main
+     *                        oscillator, etcetera.
      */
     @Override
-    public void set_detune(float detune) {
-        fDetune = detune;
-        fDetuneVCO.set_frequency(getDetuneFreq());
+    public void set_sub_ratio(float frequency_ratio) {
+        fSubVCOFreqRatio = frequency_ratio;
+        fSubVCO.set_frequency(getSubVCOFreq());
     }
 
     @Override
-    public float get_detune() {
-        return fDetune;
+    public float get_sub_ratio() {
+        return fSubVCOFreqRatio;
     }
 
     @Override
-    public void set_detune_amplitude(float amplitude) {
-        fDetuneAmp = amplitude;
+    public void set_sub_amplitude(float amplitude) {
+        fSubVCO.set_amplitude(amplitude);
     }
 
     @Override
-    public float get_detune_amplitude() {
-        return fDetuneAmp;
+    public float get_sub_amplitude() {
+        return fSubVCO.get_amplitude();
     }
 
     @Override
-    public void set_detune_oscillator_type(int oscillator) {
-        fDetuneVCOType = oscillator;
-        Wavetable.fill(fDetuneVCO.get_wavetable(), fDetuneVCOType);
+    public void set_sub_oscillator_type(int oscillator) {
+        fSubVCOType = oscillator;
+        Wavetable.fill(fSubVCO.get_wavetable(), fSubVCOType);
     }
 
-    public int get_detune_oscillator_type() {
-        return fDetuneVCOType;
+    public int get_sub_oscillator_type() {
+        return fSubVCOType;
     }
 
     @Override
@@ -426,10 +448,10 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
         fIsPlaying = false;
         fADSR.stop();
         if (fEnableLPFEnvelopeCutoff) {
-            fLPCutoffEnvelope.stop();
+            fLPFCutoffEnvelope.stop();
         }
         if (fEnableLPFEnvelopeResonance) {
-            fLPResonanceEnvelope.stop();
+            fLPFResonanceEnvelope.stop();
         }
     }
 
@@ -437,13 +459,13 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
     public void note_on(int note, int velocity) {
         fIsPlaying = true;
         set_frequency(note_to_frequency(note));
-        set_amplitude(velocity_to_amplitude(velocity));
+        set_volume(velocity_to_amplitude(velocity));
         fADSR.start();
         if (fEnableLPFEnvelopeCutoff) {
-            fLPCutoffEnvelope.start();
+            fLPFCutoffEnvelope.start();
         }
         if (fEnableLPFEnvelopeResonance) {
-            fLPResonanceEnvelope.start();
+            fLPFResonanceEnvelope.start();
         }
     }
 
@@ -451,8 +473,8 @@ public class InstrumentDSP extends Instrument implements DSPNodeOutputSignal {
         return fVCO;
     }
 
-    public Wavetable get_detune_VCO() {
-        return fDetuneVCO;
+    public Wavetable get_sub_VCO() {
+        return fSubVCO;
     }
 
     public int get_channels() {

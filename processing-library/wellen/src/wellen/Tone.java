@@ -35,6 +35,12 @@ public abstract class Tone {
     private Tone() {
     }
 
+    public static void preset(int preset) {
+        for (Instrument i : instance().instruments()) {
+            i.preset(preset);
+        }
+    }
+
     public static void control_change(int CC, int value) {
         instance().control_change(CC, value);
     }

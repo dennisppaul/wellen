@@ -9,14 +9,17 @@ import wellen.dsp.*;
  *
  * note that this functionality is not implemented for MIDI and OSC.
  */
-boolean mEnableAmplitudeLFO = false;
-boolean mEnableFrequencyLFO = false;
+boolean mEnableAmplitudeLFO       = false;
+boolean mEnableFrequencyLFO       = true;
 boolean mToggleLFOParameterSelect = true;
 void settings() {
     size(640, 480);
 }
 void setup() {
     Tone.start();
+    Tone.instrument().set_frequency_LFO_amplitude(2.0f);
+    Tone.instrument().set_frequency_LFO_frequency(11.0f);
+    Tone.instrument().enable_frequency_LFO(true);
 }
 void draw() {
     background(255);
@@ -40,9 +43,13 @@ void mouseDragged() {
     if (mToggleLFOParameterSelect) {
         Tone.instrument().set_frequency_LFO_amplitude(map(mouseY, 0, height, 0.0f, 50.0f));
         Tone.instrument().set_frequency_LFO_frequency(map(mouseX, 0, width, 0.0f, 50.0f));
+        println("LFO_amplitude: " + Tone.instrument().get_frequency_LFO_amplitude());
+        println("LFO_frequency: " + Tone.instrument().get_frequency_LFO_frequency());
     } else {
         Tone.instrument().set_amplitude_LFO_amplitude(map(mouseY, 0, height, 0.0f, 1.0f));
         Tone.instrument().set_amplitude_LFO_frequency(map(mouseX, 0, width, 0.0f, 50.0f));
+        println("LFO_amplitude: " + Tone.instrument().get_amplitude_LFO_amplitude());
+        println("LFO_frequency: " + Tone.instrument().get_amplitude_LFO_frequency());
     }
 }
 void keyPressed() {

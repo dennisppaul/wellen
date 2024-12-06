@@ -21,26 +21,30 @@ package wellen;
 
 import wellen.dsp.ADSR;
 
+import static wellen.Wellen.*;
+
 /**
  * base class for all instruments
  */
 public abstract class Instrument {
 
-    protected float fAttack = Wellen.DEFAULT_ATTACK;
-    protected float fDecay = Wellen.DEFAULT_DECAY;
-    protected boolean fEnableADSR = false;
-    protected boolean fEnableAdditionalOscillator = false;
-    protected boolean fEnableAmplitudeLFO = false;
-    protected boolean fEnableFrequencyLFO = false;
-    protected boolean fEnableLPF = false;
-    protected boolean fEnableLPFEnvelopeCutoff = false;
-    protected boolean fEnableLPFEnvelopeResonance = false;
-    protected boolean fEnableDetune = false;
-    protected boolean fIsPlaying = false;
-    protected float fPan = 0.0f;
-    protected float fRelease = Wellen.DEFAULT_RELEASE;
-    protected float fSustain = Wellen.DEFAULT_SUSTAIN;
-    private final int fID;
+    protected     float   fAttack                     = Wellen.DEFAULT_ATTACK;
+    protected     float   fDecay                      = Wellen.DEFAULT_DECAY;
+    protected     boolean fEnableVCO                  = true;
+    protected     boolean fEnableADSR                 = true;
+    protected     boolean fEnableAmplitudeLFO         = false;
+    protected     boolean fEnableFrequencyLFO         = false;
+    protected     boolean fEnableLPF                  = false;
+    protected     boolean fEnableLPFEnvelopeCutoff    = false;
+    protected     boolean fEnableLPFEnvelopeResonance = false;
+    protected     boolean fEnableSubVCO               = false;
+    protected     boolean fEnableNoise                = false;
+    protected     boolean fIsPlaying                  = false;
+    protected     float   fPan                        = 0.0f;
+    protected     float   fRelease                    = Wellen.DEFAULT_RELEASE;
+    protected     float   fSustain                    = Wellen.DEFAULT_SUSTAIN;
+    protected     float   fNoiseAmplitude             = 0.25f;
+    private final int     fID;
 
     public Instrument(int ID) {
         fID = ID;
@@ -158,36 +162,48 @@ public abstract class Instrument {
         fPan = pan;
     }
 
-    public void enable_ADSR(boolean enable_ADSR) {
-        fEnableADSR = enable_ADSR;
+    public void enable_oscillator(boolean enable) {
+        fEnableVCO = enable;
     }
 
-    public void enable_amplitude_LFO(boolean enable_amplitude_LFO) {
-        fEnableAmplitudeLFO = enable_amplitude_LFO;
+    public void enable_ADSR(boolean enable) {
+        fEnableADSR = enable;
     }
 
-    public void enable_frequency_LFO(boolean enable_frequency_LFO) {
-        fEnableFrequencyLFO = enable_frequency_LFO;
+    public void enable_amplitude_LFO(boolean enable) {
+        fEnableAmplitudeLFO = enable;
+    }
+
+    public void enable_frequency_LFO(boolean enable) {
+        fEnableFrequencyLFO = enable;
     }
 
     public void enable_LPF(boolean enable_LPF) {
         fEnableLPF = enable_LPF;
     }
 
-    public void enable_LPF_envelope_cutoff(boolean enable_LPF_envelope_cutoff) {
-        fEnableLPFEnvelopeCutoff = enable_LPF_envelope_cutoff;
+    public void enable_LPF_envelope_cutoff(boolean enable) {
+        fEnableLPFEnvelopeCutoff = enable;
     }
 
-    public void enable_LPF_envelope_resonance(boolean enable_LPF_envelope_resonance) {
-        fEnableLPFEnvelopeResonance = enable_LPF_envelope_resonance;
+    public void enable_LPF_envelope_resonance(boolean enable) {
+        fEnableLPFEnvelopeResonance = enable;
     }
 
-    public void enable_detune(boolean enable_detune) {
-        fEnableDetune = enable_detune;
+    public void enable_sub_oscillator(boolean enable) {
+        fEnableSubVCO = enable;
     }
 
-    public void enable_additional_oscillator(boolean enable_additional_oscillator) {
-        fEnableAdditionalOscillator = enable_additional_oscillator;
+    public void enable_noise(boolean enable) {
+        fEnableNoise = enable;
+    }
+
+    public void set_noise_amplitude(float amplitude) {
+        fNoiseAmplitude = amplitude;
+    }
+
+    public float get_noise_amplitude(float amplitude) {
+        return fNoiseAmplitude;
     }
 
     public abstract float get_LPF_envelope_cutoff_min();
@@ -210,19 +226,26 @@ public abstract class Instrument {
 
     public abstract ADSR get_LPF_envelope_resonance();
 
-    public abstract void set_detune(float detune);
+    public abstract void set_sub_ratio(float frequency_ratio);
 
-    public abstract float get_detune();
+    public abstract float get_sub_ratio();
 
-    public abstract void set_detune_amplitude(float detune);
+    public abstract void set_sub_amplitude(float amplitude);
 
-    public abstract float get_detune_amplitude();
+    public abstract float get_sub_amplitude();
 
-    public abstract void set_detune_oscillator_type(int oscillator);
+    public abstract void set_sub_oscillator_type(int oscillator);
 
     public abstract void note_off();
 
     public abstract void note_on(int note, int velocity);
+
+    public void set_volume(float volume) {
+    }
+
+    public float get_volume() {
+        return 0.0f;
+    }
 
     public boolean is_playing() {
         return fIsPlaying;
@@ -234,5 +257,80 @@ public abstract class Instrument {
 
     protected float velocity_to_amplitude(int velocity) {
         return Wellen.clamp127(velocity) / 127.0f;
+    }
+
+    public void preset(int preset_type) {
+        switch (preset_type) {
+            case INSTRUMENT_PRESET_FAT:
+                preset_fat();
+                break;
+            case INSTRUMENT_PRESET_SUB_SINE:
+                preset_sub_sine();
+                break;
+            case INSTRUMENT_PRESET_NOISE:
+                preset_noise();
+                break;
+            case INSTRUMENT_PRESET_SIMPLE:
+                preset_simple();
+                break;
+        }
+    }
+
+    private void preset_simple() {
+        enable_ADSR(true);
+        enable_oscillator(true);
+        set_oscillator_type(WAVEFORM_TRIANGLE);
+        set_amplitude(0.7f);
+        enable_sub_oscillator(false);
+        enable_LPF(false);
+        enable_frequency_LFO(false);
+        enable_amplitude_LFO(false);
+        enable_noise(false);
+    }
+
+    private void preset_noise() {
+        enable_ADSR(true);
+        enable_oscillator(false);
+        enable_sub_oscillator(false);
+        enable_LPF(false);
+        enable_frequency_LFO(false);
+        enable_amplitude_LFO(false);
+        enable_noise(true);
+        set_noise_amplitude(0.6f);
+    }
+
+    private void preset_sub_sine() {
+        enable_ADSR(true);
+        enable_oscillator(true);
+        set_oscillator_type(Wellen.WAVEFORM_SINE);
+        set_amplitude(0.8f);
+        enable_sub_oscillator(true);
+        set_sub_ratio(0.5f);
+        set_sub_amplitude(0.4f);
+        set_sub_oscillator_type(Wellen.WAVEFORM_SINE);
+        enable_LPF(false);
+        enable_frequency_LFO(false);
+        enable_amplitude_LFO(false);
+        enable_noise(false);
+    }
+
+    private void preset_fat() {
+        enable_ADSR(true);
+        enable_oscillator(true);
+        set_oscillator_type(Wellen.WAVEFORM_SAWTOOTH);
+        set_amplitude(0.8f);
+        enable_sub_oscillator(true);
+        set_sub_ratio(0.505f);
+        set_sub_amplitude(0.6f);
+        set_sub_oscillator_type(Wellen.WAVEFORM_SQUARE);
+        enable_LPF(true);
+        enable_LPF_envelope_cutoff(true);
+        enable_LPF_envelope_resonance(true);
+        enable_frequency_LFO(true);
+        set_frequency_LFO_amplitude(1.0f);
+        set_frequency_LFO_frequency(11.0f);
+        enable_amplitude_LFO(false);
+        enable_noise(true);
+        set_noise_amplitude(0.25f);
     }
 }
