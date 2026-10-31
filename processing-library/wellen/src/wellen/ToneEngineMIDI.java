@@ -24,90 +24,148 @@ import wellen.dsp.Sampler;
 
 import java.util.ArrayList;
 
-import static processing.core.PApplet.constrain;
-
 /**
- * implementation of {@link wellen.ToneEngine} sending MIDI messages to external MIDI devices.
+ * implementation of {@link wellen.ToneEngine} sending MIDI messages to external MIDI devices. instrument IDs are used
+ * as MIDI channels.
  */
 public class ToneEngineMIDI extends ToneEngine {
 
+    /**
+     * if <code>true</code> {@link #note_off()} additionally sends a note-off message for every note ( 0–127 ) on the
+     * current channel. use this for devices that ignore <i>all notes off</i> ( CC 123 ).
+     */
     public static boolean SEND_NOTE_OFF_TO_ALL = false;
     private static final int mNumberOfInstruments = Wellen.DEFAULT_NUMBER_OF_INSTRUMENTS;
+    /**
+     * @deprecated use {@link #get_midi_out()} instead
+     */
+    @Deprecated
     public final MidiOut mMidiOut;
-    private int mCurrentInstrumentID;
     private final ArrayList<InstrumentMIDI> mInstruments;
+    private volatile int mCurrentInstrumentID;
+    private Thread fShutdownHook;
+    private boolean fStopped = false;
 
+    /**
+     * @param pMidiOutputDeviceName name of MIDI output device. the name does not need to match exactly: if no exact
+     *                              match is found the first device that starts with or contains the name is used.
+     */
     public ToneEngineMIDI(String pMidiOutputDeviceName) {
-        this(new MidiOut(get_proper_device_name(pMidiOutputDeviceName)));
+        this(new MidiOut(pMidiOutputDeviceName));
     }
 
+    /**
+     * @param pMidiOutputDeviceID ID of MIDI output device as listed by {@link Wellen#dumpMidiOutputDevices()}
+     */
     public ToneEngineMIDI(int pMidiOutputDeviceID) {
         this(new MidiOut(pMidiOutputDeviceID));
     }
 
-    private ToneEngineMIDI(MidiOut pMidiOut) {
-        mMidiOut = pMidiOut;
+    /**
+     * @param midi_out MIDI output used to send messages
+     */
+    public ToneEngineMIDI(MidiOut midi_out) {
+        mMidiOut = midi_out;
         mInstruments = new ArrayList<>();
-        prepareExitHandler();
         for (int i = 0; i < mNumberOfInstruments; i++) {
-            final InstrumentMIDI mInstrument = new InstrumentMIDI(i);
-            mInstruments.add(mInstrument);
+            mInstruments.add(new InstrumentMIDI(i, midi_out));
         }
         mCurrentInstrumentID = 0;
+        prepareExitHandler();
     }
 
+    /**
+     * @param pMidiOutputDeviceName name or part of name of MIDI output device
+     * @return full name of first matching MIDI output device or an empty string if no device matches
+     */
     public static String get_proper_device_name(String pMidiOutputDeviceName) {
-        String[] mDevices = MidiOut.availableOutputs();
-        for (String mDevice : mDevices) {
-            if (mDevice.startsWith(pMidiOutputDeviceName)) {
-                return mDevice;
-            }
+        final javax.sound.midi.MidiDevice.Info mInfo = MidiDevices.resolve(pMidiOutputDeviceName, false);
+        if (mInfo != null) {
+            return mInfo.getName();
         }
         System.err.println("+++ @" + ToneEngineMIDI.class.getSimpleName() + " / couldn't find MIDI device: " + pMidiOutputDeviceName);
         return "";
     }
 
+    @SuppressWarnings("deprecation")
+    public MidiOut get_midi_out() {
+        return mMidiOut;
+    }
+
+    /**
+     * turns off all held notes on all channels, closes the MIDI output and stops scheduled note-offs.
+     */
     public void stop() {
         super.stop();
-        if (mMidiOut != null) {
-            mMidiOut.close();
+        synchronized (this) {
+            if (fStopped) {
+                return;
+            }
+            fStopped = true;
+        }
+        all_notes_off();
+        get_midi_out().close();
+        if (fShutdownHook != null) {
+            try {
+                Runtime.getRuntime().removeShutdownHook(fShutdownHook);
+            } catch (IllegalStateException ignored) {
+                /* JVM is already shutting down */
+            }
+            fShutdownHook = null;
         }
     }
 
     public void note_on(int note, int velocity) {
-        mMidiOut.sendNoteOn(mCurrentInstrumentID, note, velocity);
-        mInstruments.get(mCurrentInstrumentID).note_on(note, velocity);
+        currentInstrument().note_on(note, velocity);
     }
 
     public void note_off(int note) {
-        mMidiOut.sendNoteOff(mCurrentInstrumentID, note, 0);
-        mInstruments.get(mCurrentInstrumentID).note_off();
+        currentInstrument().note_off(note);
     }
 
+    /**
+     * turns off the last played note on the current channel.
+     */
     public void note_off() {
-        note_off(0);
+        final InstrumentMIDI mInstrument = currentInstrument();
+        mInstrument.note_off();
         if (SEND_NOTE_OFF_TO_ALL) {
-            for (int i = 0; i < 127; i++) {
-                mMidiOut.sendNoteOff(mCurrentInstrumentID, i, 0);
-            }
+            get_midi_out().send_note_off_to_all(mInstrument.channel());
+        }
+    }
+
+    @Override
+    public void note_on_instrument(int instrument_id, int note, int velocity) {
+        instrumentByID(instrument_id).note_on(note, velocity);
+    }
+
+    @Override
+    public void note_off_instrument(int instrument_id, int note) {
+        instrumentByID(instrument_id).note_off(note);
+    }
+
+    /**
+     * turns off all held notes and sends <i>all notes off</i> ( CC 123 ) on all channels.
+     */
+    public void all_notes_off() {
+        for (InstrumentMIDI mInstrument : mInstruments) {
+            mInstrument.all_notes_off();
         }
     }
 
     public void control_change(int pCC, int pValue) {
-        mMidiOut.sendControllerChange(mCurrentInstrumentID, pCC, pValue);
+        currentInstrument().control_change(pCC, pValue);
     }
 
+    /**
+     * @param pValue pitch bend value ( 0–16383 ) with <code>MIDI.PITCH_BEND_CENTER = 8192</code> as center
+     */
     public void pitch_bend(int pValue) {
-        final int mValue = constrain(pValue, 0, 16383);
-        final int LSB_MASK = 0b00000001111111;
-        final int MSB_MASK = 0b11111110000000;
-        final int msb = (mValue & MSB_MASK) / 128;
-        final int lsb = mValue & LSB_MASK;
-        mMidiOut.sendPitchBend(mCurrentInstrumentID, lsb, msb);
+        currentInstrument().send_pitch_bend(pValue);
     }
 
     public boolean is_playing() {
-        return mInstruments.get(mCurrentInstrumentID).is_playing();
+        return currentInstrument().is_playing();
     }
 
     public Instrument instrument(int pInstrumentID) {
@@ -116,7 +174,7 @@ public class ToneEngineMIDI extends ToneEngine {
     }
 
     public Instrument instrument() {
-        return instruments().get(mCurrentInstrumentID);
+        return currentInstrument();
     }
 
     public ArrayList<? extends Instrument> instruments() {
@@ -124,12 +182,21 @@ public class ToneEngineMIDI extends ToneEngine {
     }
 
     public boolean is_initialized() {
-        return mMidiOut.is_initialized();
+        return get_midi_out().is_initialized();
     }
 
     public void replace_instrument(Instrument pInstrument) {
         if (pInstrument instanceof InstrumentMIDI) {
-            mInstruments.set(pInstrument.ID(), (InstrumentMIDI) pInstrument);
+            final InstrumentMIDI mInstrument = (InstrumentMIDI) pInstrument;
+            if (mInstrument.ID() < 0 || mInstrument.ID() >= mInstruments.size()) {
+                System.err.println("+++ WARNING @" + getClass().getSimpleName() + ".replace_instrument(Instrument) / " +
+                                           "instrument ID must be between 0 and " + (mInstruments.size() - 1));
+                return;
+            }
+            if (mInstrument.get_midi_out() == null) {
+                mInstrument.set_midi_out(get_midi_out());
+            }
+            mInstruments.set(mInstrument.ID(), mInstrument);
         } else {
             System.err.println("+++ WARNING @" + getClass().getSimpleName() + ".replace_instrument(Instrument) / " +
                                        "instrument must be" + " of type `" + InstrumentMIDI.class.getSimpleName() +
@@ -154,18 +221,33 @@ public class ToneEngineMIDI extends ToneEngine {
         return false;
     }
 
+    private InstrumentMIDI currentInstrument() {
+        return mInstruments.get(mCurrentInstrumentID);
+    }
+
+    private InstrumentMIDI instrumentByID(int pID) {
+        return mInstruments.get(pID < 0 ? 0 : pID % mNumberOfInstruments);
+    }
+
     private void prepareExitHandler() {
-        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-            public void run() {
-                if (mMidiOut != null) {
-                    for (int j = 0; j < mNumberOfInstruments; j++) {
-                        for (int i = 0; i < 127; i++) {
-                            mMidiOut.sendNoteOff(j, i, 0);
-                        }
-                    }
-                    mMidiOut.close();
+        fShutdownHook = new Thread(() -> {
+            synchronized (ToneEngineMIDI.this) {
+                if (fStopped) {
+                    return;
                 }
+                fStopped = true;
             }
-        }));
+            try {
+                all_notes_off();
+                get_midi_out().close();
+            } catch (RuntimeException ignored) {
+                /* never fail during JVM shutdown */
+            }
+        }, "wellen-midi-shutdown");
+        try {
+            Runtime.getRuntime().addShutdownHook(fShutdownHook);
+        } catch (IllegalStateException e) {
+            fShutdownHook = null;
+        }
     }
 }

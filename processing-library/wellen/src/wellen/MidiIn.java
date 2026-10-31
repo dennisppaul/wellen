@@ -21,260 +21,365 @@ package wellen;
 
 import javax.sound.midi.MidiDevice;
 import javax.sound.midi.MidiMessage;
-import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Receiver;
 import javax.sound.midi.ShortMessage;
+import javax.sound.midi.SysexMessage;
 import javax.sound.midi.Transmitter;
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * handles communication with MIDI devices
+ * receives MIDI messages from a MIDI input device and forwards them to {@link MidiInListener}s.
+ * <p>
+ * listeners are called on the MIDI thread. a note-on message with velocity 0 is forwarded as note-off ( as defined in
+ * the MIDI 1.0 specification ).
  */
 public class MidiIn implements Receiver {
 
     public static boolean VERBOSE = false;
-    private static final int CONTROL_CHANGE = 0xB0;
-    private static final int NOTE_OFF = 0x80;
-    private static final int NOTE_ON = 0x90;
-    private static final int PROGRAM_CHANGE = 0xC0;
-    private static final int SYSEX_END = 0xF7;
-    private static final int SYSEX_START = 0xF0;
-    private static final int SYSTEM_REALTIME_MESSAGE = 0xF0;
-    private final ArrayList<MidiInListener> mListener;
+    private final CopyOnWriteArrayList<MidiInListener> fListeners = new CopyOnWriteArrayList<>();
+    private final String fDeviceName;
+    private MidiDevice fDevice;
+    private Transmitter fTransmitter;
+    private volatile boolean fClosed = false;
+    private boolean fListenerErrorReported = false;
 
-    private MidiIn() {
-        mListener = new ArrayList<>();
-    }
-
-    public MidiIn(int pMidiInputDeviceID) {
-        this();
-        final Transmitter mMidiIn = find(pMidiInputDeviceID);
-        if (mMidiIn != null) {
-            mMidiIn.setReceiver(this);
-        } else {
-            System.err.println("+++ Error @ MidiIn / could not find midi device: " + pMidiInputDeviceID);
-            System.err.println("+++ available inputs are: ");
-            Wellen.dumpMidiInputDevices();
-        }
-    }
-
-    public MidiIn(String pMidiInputDevice) {
-        this();
-        final Transmitter mMidiIn = find(pMidiInputDevice);
-        if (mMidiIn != null) {
-            mMidiIn.setReceiver(this);
-        } else {
-            System.err.println("+++ Error @ MidiIn / could not find midi device: " + pMidiInputDevice);
-            System.err.println("+++ available inputs are: ");
-            Wellen.dumpMidiInputDevices();
-        }
-    }
-
-    public static String[] availableInputs() {
-        ArrayList<String> mMidiInputs = new ArrayList<>();
-        MidiDevice.Info[] mInfos = MidiSystem.getMidiDeviceInfo();
-        for (MidiDevice.Info mInfo : mInfos) {
+    private MidiIn(MidiDevice.Info info, String requested_device) {
+        MidiDevice mDevice = null;
+        Transmitter mTransmitter = null;
+        if (info != null) {
             try {
-                MidiDevice mDevice = MidiSystem.getMidiDevice(mInfo);
-                if (mDevice.getMaxTransmitters() != 0) {
-                    mMidiInputs.add(mInfo.getName());
+                mDevice = MidiDevices.acquire(info);
+                mTransmitter = mDevice.getTransmitter();
+                mTransmitter.setReceiver(this);
+                if (VERBOSE) {
+                    System.out.println("+++ @MidiIn / opened MIDI input device: " + info.getName());
                 }
-            } catch (MidiUnavailableException e) {
-                e.printStackTrace();
+            } catch (MidiUnavailableException | RuntimeException e) {
+                System.err.println("+++ @MidiIn / could not open MIDI input device: " + info.getName() + " ( " + e.getMessage() + " )");
+                if (mTransmitter != null) {
+                    mTransmitter.close();
+                }
+                MidiDevices.release(mDevice);
+                mDevice = null;
+                mTransmitter = null;
             }
+        } else if (requested_device != null) {
+            System.err.println("+++ @MidiIn / could not find MIDI input device: " + requested_device);
+            System.err.println("+++ available inputs are: ");
+            Wellen.dumpMidiInputDevices();
         }
-        String[] mMidiInputsStr = new String[mMidiInputs.size()];
-        return mMidiInputs.toArray(mMidiInputsStr);
+        fDevice = mDevice;
+        fTransmitter = mTransmitter;
+        fDeviceName = info != null && mDevice != null ? info.getName() : "";
     }
 
+    /**
+     * @param midi_input_device_ID ID of MIDI input device as listed by {@link Wellen#dumpMidiInputDevices()}
+     */
+    public MidiIn(int midi_input_device_ID) {
+        this(MidiDevices.resolve(midi_input_device_ID, true), String.valueOf(midi_input_device_ID));
+    }
+
+    /**
+     * @param midi_input_device name of MIDI input device. the name does not need to match exactly: if no exact match
+     *                          is found the first device that starts with or contains the name is used.
+     */
+    public MidiIn(String midi_input_device) {
+        this(MidiDevices.resolve(midi_input_device, true), String.valueOf(midi_input_device));
+    }
+
+    /**
+     * creates a <code>MidiIn</code> that is not connected to any device. MIDI messages can be injected with
+     * {@link #send(MidiMessage, long)} e.g for testing or to forward messages from another source.
+     *
+     * @return unconnected MIDI input
+     */
+    public static MidiIn create_unconnected() {
+        return new MidiIn((MidiDevice.Info) null, null);
+    }
+
+    /**
+     * @return names of all available MIDI input devices
+     */
+    public static String[] available_inputs() {
+        return MidiDevices.names(true);
+    }
+
+    /**
+     * @deprecated use {@link #available_inputs()} instead
+     */
+    @Deprecated
+    public static String[] availableInputs() {
+        return available_inputs();
+    }
+
+    public void add_listener(MidiInListener listener) {
+        if (listener != null) {
+            fListeners.addIfAbsent(listener);
+        }
+    }
+
+    public boolean remove_listener(MidiInListener listener) {
+        return fListeners.remove(listener);
+    }
+
+    /**
+     * @deprecated use {@link #add_listener(MidiInListener)} instead
+     */
+    @Deprecated
     public void addListener(MidiInListener pMidiInListener) {
-        mListener.add(pMidiInListener);
+        add_listener(pMidiInListener);
     }
 
+    /**
+     * @deprecated use {@link #remove_listener(MidiInListener)} instead
+     */
+    @Deprecated
     public void removeListener(MidiInListener pMidiInListener) {
-        mListener.remove(pMidiInListener);
+        remove_listener(pMidiInListener);
     }
 
-    @Override
-    public void send(MidiMessage pMessage, long pTimeStamp) {
-        if (pMessage instanceof ShortMessage) {
-            ShortMessage mShortMessage = (ShortMessage) pMessage;
-            final int mChannel = mShortMessage.getChannel();
-            final int midiData1 = mShortMessage.getData1();
-            final int midiData2 = mShortMessage.getData2();
+    /**
+     * @return <code>true</code> if connected to a MIDI input device
+     */
+    public boolean is_open() {
+        return fTransmitter != null && !fClosed;
+    }
 
-            switch (mShortMessage.getCommand()) {
-                case NOTE_ON:
-                    receiveNoteOn(mChannel, midiData1, midiData2);
+    /**
+     * @return <code>true</code> if connected to a MIDI input device
+     */
+    public boolean is_initialized() {
+        return is_open();
+    }
+
+    /**
+     * @return name of connected device or an empty string if not connected
+     */
+    public String get_device_name() {
+        return fDeviceName;
+    }
+
+    /**
+     * parses a MIDI message and forwards it to all listeners. this method is called by the MIDI system but may also be
+     * called directly to inject messages.
+     */
+    @Override
+    public void send(MidiMessage message, long timestamp) {
+        if (message instanceof ShortMessage) {
+            final ShortMessage m = (ShortMessage) message;
+            if (m.getStatus() >= 0xF0) {
+                parseSystemMessage(m);
+                return;
+            }
+            final int ch = m.getChannel();
+            final int d1 = m.getData1();
+            final int d2 = m.getData2();
+            switch (m.getCommand()) {
+                case MIDI.MIDI_NOTE_ON:
+                    if (d2 == 0) {
+                        /* note-on with velocity 0 is note-off with release velocity 64 */
+                        dispatchNoteOff(ch, d1, 64);
+                    } else {
+                        dispatchNoteOn(ch, d1, d2);
+                    }
                     break;
-                case NOTE_OFF:
-                    receiveNoteOff(mChannel, midiData1);
+                case MIDI.MIDI_NOTE_OFF:
+                    dispatchNoteOff(ch, d1, d2);
                     break;
-                case CONTROL_CHANGE:
-                    receiveControlChange(mChannel, midiData1, midiData2);
+                case MIDI.MIDI_CONTROL_CHANGE:
+                    for (MidiInListener l : fListeners) {
+                        try {
+                            l.receive_control_change(ch, d1, d2);
+                        } catch (RuntimeException e) {
+                            reportListenerError(e);
+                        }
+                    }
                     break;
-                case PROGRAM_CHANGE:
-                    receiveProgramChange(mChannel, midiData1, midiData2);
+                case MIDI.MIDI_PROGRAM_CHANGE:
+                    for (MidiInListener l : fListeners) {
+                        try {
+                            l.receive_program_change(ch, d1);
+                        } catch (RuntimeException e) {
+                            reportListenerError(e);
+                        }
+                    }
                     break;
-                case SYSTEM_REALTIME_MESSAGE:
-                    parseSystemMessage(mShortMessage);
+                case MIDI.MIDI_PITCH_BEND:
+                    final int mValue = (d2 << 7) | d1;
+                    for (MidiInListener l : fListeners) {
+                        try {
+                            l.receive_pitch_bend(ch, mValue);
+                        } catch (RuntimeException e) {
+                            reportListenerError(e);
+                        }
+                    }
+                    break;
+                case MIDI.MIDI_CHANNEL_PRESSURE:
+                    for (MidiInListener l : fListeners) {
+                        try {
+                            l.receive_channel_pressure(ch, d1);
+                        } catch (RuntimeException e) {
+                            reportListenerError(e);
+                        }
+                    }
+                    break;
+                case MIDI.MIDI_POLY_PRESSURE:
+                    for (MidiInListener l : fListeners) {
+                        try {
+                            l.receive_poly_pressure(ch, d1, d2);
+                        } catch (RuntimeException e) {
+                            reportListenerError(e);
+                        }
+                    }
                     break;
                 default:
                     if (VERBOSE) {
-                        // int POLY_PRESSURE = 0xA0; // Polyphonic Key Pressure (Aftertouch)
-                        System.err.println("+++ MidiIn / could not parse command: " + mShortMessage.getCommand() + " "
-                                                   + ": " + mShortMessage);
+                        System.err.println("+++ @MidiIn / could not parse command: " + m.getCommand());
                     }
             }
-        } else {
-            if (VERBOSE) {
-                System.err.println("+++ MidiIn / could not parse midi message as `ShortMessage`: " + pMessage);
+        } else if (message instanceof SysexMessage) {
+            final byte[] mData = message.getMessage();
+            for (MidiInListener l : fListeners) {
+                try {
+                    l.receive_sysex(mData.clone());
+                } catch (RuntimeException e) {
+                    reportListenerError(e);
+                }
             }
+        } else if (VERBOSE && message != null) {
+            System.err.println("+++ @MidiIn / could not parse MIDI message: " + message);
         }
     }
 
+    /**
+     * disconnects from MIDI device and closes the device if it was opened by wellen and is not used anymore.
+     */
     @Override
     public void close() {
-    }
-
-    private void clock_continue() {
-        for (MidiInListener m : mListener) {
-            m.clock_continue();
+        if (fClosed) {
+            return;
         }
-    }
-
-    private void clock_song_position_pointer(int pOffset16th) {
-        for (MidiInListener m : mListener) {
-            m.clock_song_position_pointer(pOffset16th);
-        }
-    }
-
-    private void clock_start() {
-        for (MidiInListener m : mListener) {
-            m.clock_start();
-        }
-    }
-
-    private void clock_stop() {
-        for (MidiInListener m : mListener) {
-            m.clock_stop();
-        }
-    }
-
-    private void clock_tick() {
-        for (MidiInListener m : mListener) {
-            m.clock_tick();
-        }
-    }
-
-    private Transmitter find(String pMidiInputDevice) {
-        MidiDevice.Info[] mInfos = MidiSystem.getMidiDeviceInfo();
-        for (MidiDevice.Info mInfo : mInfos) {
+        fClosed = true;
+        if (fTransmitter != null) {
             try {
-                MidiDevice mDevice = MidiSystem.getMidiDevice(mInfo);
-                if (mDevice.getMaxTransmitters() != 0) {
-                    if (pMidiInputDevice.equals(mInfo.getName())) {
-                        if (!mDevice.isOpen()) {
-                            mDevice.open();
-                        }
-                        return mDevice.getTransmitter();
+                fTransmitter.close();
+            } catch (RuntimeException ignored) {
+            }
+            fTransmitter = null;
+        }
+        MidiDevices.release(fDevice);
+        fDevice = null;
+    }
+
+    private void dispatchNoteOn(int ch, int pitch, int velocity) {
+        for (MidiInListener l : fListeners) {
+            try {
+                l.receive_note_on(ch, pitch, velocity);
+            } catch (RuntimeException e) {
+                reportListenerError(e);
+            }
+        }
+    }
+
+    private void dispatchNoteOff(int ch, int pitch, int velocity) {
+        for (MidiInListener l : fListeners) {
+            try {
+                l.receive_note_off(ch, pitch, velocity);
+            } catch (RuntimeException e) {
+                reportListenerError(e);
+            }
+        }
+    }
+
+    private void parseSystemMessage(ShortMessage m) {
+        final int mStatus = m.getStatus();
+        switch (mStatus) {
+            case MIDI.MIDI_CLOCK_TICK:
+                for (MidiInListener l : fListeners) {
+                    try {
+                        l.clock_tick();
+                    } catch (RuntimeException e) {
+                        reportListenerError(e);
                     }
                 }
-            } catch (MidiUnavailableException e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
-
-    private Transmitter find(int pMidiInputDeviceID) {
-        try {
-            MidiDevice.Info[] mInfos = MidiSystem.getMidiDeviceInfo();
-            ArrayList<MidiDevice.Info> mMidiInInfos = new ArrayList<>();
-            for (MidiDevice.Info mInfo : mInfos) {
-                MidiDevice mDevice = MidiSystem.getMidiDevice(mInfo);
-                if (mDevice.getMaxTransmitters() != 0) {
-                    mMidiInInfos.add(mInfo);
+                break;
+            case MIDI.MIDI_CLOCK_START:
+                for (MidiInListener l : fListeners) {
+                    try {
+                        l.clock_start();
+                    } catch (RuntimeException e) {
+                        reportListenerError(e);
+                    }
                 }
-            }
-            if (pMidiInputDeviceID >= mMidiInInfos.size()) {
-                return null;
-            }
-
-            final MidiDevice.Info mInfo = mMidiInInfos.get(pMidiInputDeviceID);
-            if (VERBOSE) {
-                System.out.println("+++ Info @ MidiIn / found midi device: " + mInfo.getName());
-            }
-            final MidiDevice mDevice = MidiSystem.getMidiDevice(mInfo);
-            if (!mDevice.isOpen()) {
-                mDevice.open();
-            }
-            return mDevice.getTransmitter();
-        } catch (MidiUnavailableException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    private void parseSystemMessage(ShortMessage mShortMessage) {
-        if (mShortMessage.getLength() == 1) {
-            final int mClockMessage = parse_byte(mShortMessage.getMessage()[0]);
-            switch (mClockMessage) {
-                case MIDI.MIDI_CLOCK_TICK:
-                    clock_tick();
-                    break;
-                case MIDI.MIDI_CLOCK_START:
-                    clock_start();
-                    break;
-                case MIDI.MIDI_CLOCK_CONTINUE:
-                    clock_continue();
-                    break;
-                case MIDI.MIDI_CLOCK_STOP:
-                    clock_stop();
-                    break;
-            }
-        } else if (mShortMessage.getLength() == 3) {
-            final int mClockMessage = parse_byte(mShortMessage.getMessage()[0]);
-            if (mClockMessage == MIDI.MIDI_SONG_POSITION_POINTER) {
-                final int mOffset16th = mShortMessage.getMessage()[1] + mShortMessage.getMessage()[2] * 128;
+                break;
+            case MIDI.MIDI_CLOCK_CONTINUE:
+                for (MidiInListener l : fListeners) {
+                    try {
+                        l.clock_continue();
+                    } catch (RuntimeException e) {
+                        reportListenerError(e);
+                    }
+                }
+                break;
+            case MIDI.MIDI_CLOCK_STOP:
+                for (MidiInListener l : fListeners) {
+                    try {
+                        l.clock_stop();
+                    } catch (RuntimeException e) {
+                        reportListenerError(e);
+                    }
+                }
+                break;
+            case MIDI.MIDI_SONG_POSITION_POINTER:
+                final int mOffset16th = m.getData1() | (m.getData2() << 7);
                 if (VERBOSE) {
-                    System.out.println("SONG_POSITION_POINTER: " + mOffset16th);
+                    System.out.println("+++ @MidiIn / song position pointer: " + mOffset16th);
                 }
-                clock_song_position_pointer(mOffset16th);
-            }
-        } else {
-            if (VERBOSE) {
-                System.err.println("+++ MidiIn / unrecognized system message: " + mShortMessage + " (" + mShortMessage.getLength() + ")");
-            }
+                for (MidiInListener l : fListeners) {
+                    try {
+                        l.clock_song_position_pointer(mOffset16th);
+                    } catch (RuntimeException e) {
+                        reportListenerError(e);
+                    }
+                }
+                break;
+            case MIDI.MIDI_SONG_SELECT:
+                for (MidiInListener l : fListeners) {
+                    try {
+                        l.receive_song_select(m.getData1());
+                    } catch (RuntimeException e) {
+                        reportListenerError(e);
+                    }
+                }
+                break;
+            case MIDI.MIDI_TIME_CODE_QUARTER_FRAME:
+                for (MidiInListener l : fListeners) {
+                    try {
+                        l.receive_time_code_quarter_frame(m.getData1());
+                    } catch (RuntimeException e) {
+                        reportListenerError(e);
+                    }
+                }
+                break;
+            case MIDI.MIDI_ACTIVE_SENSING:
+            case MIDI.MIDI_RESET:
+            case MIDI.MIDI_TUNE_REQUEST:
+                /* ignored */
+                break;
+            default:
+                if (VERBOSE) {
+                    System.err.println("+++ @MidiIn / unrecognized system message: " + mStatus + " (" + m.getLength() + ")");
+                }
         }
     }
 
-    private int parse_byte(byte b) {
-        return (b & 0xFF);
-    }
-
-    private void receiveControlChange(int channel, int number, int value) {
-        for (MidiInListener m : mListener) {
-            m.receiveControlChange(channel, number, value);
-        }
-    }
-
-    private void receiveNoteOff(int channel, int pitch) {
-        for (MidiInListener m : mListener) {
-            m.receiveNoteOff(channel, pitch);
-        }
-    }
-
-    private void receiveNoteOn(int channel, int pitch, int velocity) {
-        for (MidiInListener m : mListener) {
-            m.receiveNoteOn(channel, pitch, velocity);
-        }
-    }
-
-    private void receiveProgramChange(int channel, int number, int value) {
-        for (MidiInListener m : mListener) {
-            m.receiveProgramChange(channel, number, value);
+    private void reportListenerError(RuntimeException e) {
+        if (!fListenerErrorReported) {
+            fListenerErrorReported = true;
+            System.err.println("+++ @MidiIn / exception in listener ( further exceptions are not reported ):");
+            e.printStackTrace();
         }
     }
 }

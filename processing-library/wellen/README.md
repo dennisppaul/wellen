@@ -90,5 +90,20 @@ now the configured ports are avialable as virtual MIDI ports in macOS.
 - `ExampleExternal01MIDIToneEngineWithInternalToneEngine`
 - `ExampleExternal02MIDIClock`
 - `ExampleExternal03MIDIExternalKeyboard`
+- `ExampleExternal11MIDIInputOutput`
+- `ExampleExternal12MIDIClockOut`
 
-<!-- @todo(windows+linux) -->
+device names do not need to match exactly: `new MidiIn("KeyStep")` also finds `"Arturia KeyStep 37"`. device IDs refer to the lists printed by `Wellen.dumpMidiInputDevices()` + `Wellen.dumpMidiOutputDevices()`.
+
+### Windows
+
+use [loopMIDI](https://www.tobias-erichsen.de/software/loopmidi.html) to create virtual MIDI ports. note that on windows a MIDI port can only be used by one application at a time.
+
+### Linux
+
+virtual MIDI ports can be created with `sudo modprobe snd-virmidi` ( ALSA ) or with [PipeWire](https://docs.pipewire.org/page_midi.html). device names on linux contain the hardware address e.g `"KeyStep37 [hw:1,0,0]"`; using only the first part of the name ( e.g `"KeyStep37"` ) is recommended.
+
+### Known Limitations
+
+- MIDI callbacks ( e.g `midi_note_on`, `beat` ) are called on the MIDI thread and not on the thread that calls `draw()`. use `Tone.note_on_instrument(instrument, note, velocity)` instead of `Tone.instrument(i); Tone.note_on(...)` in callbacks, or call `dispatch_on_draw_thread(true)` on `EventReceiverMIDI` or `BeatMIDI` to receive callbacks on the drawing thread.
+- on macOS java's built-in MIDI implementation can not send MIDI clock or SysEx messages to MIDI ports, it does not detect MIDI devices that are connected after the sketch started, and it handles incoming SysEx messages poorly. *wellen* automatically uses [CoreMIDI4J](https://github.com/DerekCook/CoreMidi4J) if it is found on the classpath ( e.g by copying `CoreMIDI4J.jar` into the sketch's `code` folder ).

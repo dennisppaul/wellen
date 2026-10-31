@@ -26,9 +26,6 @@ import static processing.core.PApplet.cos;
 import static wellen.Wellen.DEFAULT_FILTER_BANDWIDTH;
 import static wellen.Wellen.DEFAULT_FILTER_FREQUENCY;
 
-/**
- * Low-Pass Filter 1st order
- */
 public class FilterBandPass implements DSPNodeProcess {
 
     private final float fSamplingRate;

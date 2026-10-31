@@ -30,7 +30,7 @@ import java.util.ArrayList;
  */
 public abstract class Tone {
 
-    private static ToneEngine mInstance = null;
+    private static volatile ToneEngine mInstance = null;
 
     private Tone() {
     }
@@ -125,10 +125,17 @@ public abstract class Tone {
     }
 
     public static ToneEngine instance() {
-        if (mInstance == null) {
-            mInstance = ToneEngine.create();
+        ToneEngine mEngine = mInstance;
+        if (mEngine == null) {
+            /* MIDI or beat callbacks may call `Tone` from another thread before `setup()` does */
+            synchronized (Tone.class) {
+                if (mInstance == null) {
+                    mInstance = ToneEngine.create();
+                }
+                mEngine = mInstance;
+            }
         }
-        return mInstance;
+        return mEngine;
     }
 
     public static Instrument instrument(int ID) {
@@ -157,6 +164,29 @@ public abstract class Tone {
 
     public static void note_on(int note, int velocity, float duration) {
         instance().note_on(note, velocity, duration);
+    }
+
+    /**
+     * play a note on a specific instrument without changing the currently selected instrument. use this instead of
+     * <code>Tone.instrument(i); Tone.note_on(note, velocity);</code> in callbacks that run on other threads ( e.g
+     * <code>midi_note_on</code> or <code>beat</code> ).
+     *
+     * @param instrument_id ID of instrument ( for MIDI tone engine: MIDI channel )
+     * @param note          pitch of note ranging from 0 to 127
+     * @param velocity      volume of note ranging from 0 to 127
+     */
+    public static void note_on_instrument(int instrument_id, int note, int velocity) {
+        instance().note_on_instrument(instrument_id, note, velocity);
+    }
+
+    /**
+     * turn off a note on a specific instrument without changing the currently selected instrument.
+     *
+     * @param instrument_id ID of instrument ( for MIDI tone engine: MIDI channel )
+     * @param note          pitch of note to turn off
+     */
+    public static void note_off_instrument(int instrument_id, int note) {
+        instance().note_off_instrument(instrument_id, note);
     }
 
     public static void note_on(int note, int velocity) {

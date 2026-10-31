@@ -135,6 +135,19 @@ public class ToneEngineDSP extends ToneEngine implements AudioBufferRenderer, DS
     }
 
     @Override
+    public void note_on_instrument(int instrument_id, int note, int velocity) {
+        if (USE_AMP_FRACTION) {
+            velocity /= fNumberOfInstruments;
+        }
+        fInstruments.get(Math.max(instrument_id, 0) % fInstruments.size()).note_on(note, velocity);
+    }
+
+    @Override
+    public void note_off_instrument(int instrument_id, int note) {
+        fInstruments.get(Math.max(instrument_id, 0) % fInstruments.size()).note_off();
+    }
+
+    @Override
     public void note_off(int note) {
         note_off();
     }

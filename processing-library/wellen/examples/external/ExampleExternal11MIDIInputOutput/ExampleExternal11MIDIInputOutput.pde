@@ -14,7 +14,7 @@ void settings() {
 void setup() {
     Wellen.dumpMidiInputDevices();
     mMidiIn = new MidiIn("Arturia KeyStep 37");
-    mMidiIn.addListener(new MIDIInput());
+    mMidiIn.add_listener(new MIDIInput());
     mMidiOut = new MidiOut("Arturia KeyStep 37");
 }
 void draw() {
@@ -25,33 +25,27 @@ void draw() {
     ellipse(width * 0.5f, height * 0.5f, mScale, mScale);
 }
 void mousePressed() {
-    mMidiOut.sendNoteOn(10, 48, 100);
+    mMidiOut.send_note_on(10, 48, 100);
 }
+void mouseReleased() {
+    mMidiOut.send_note_off(10, 48);
+}
+/*
+ * all methods of `MidiInListener` are optional, implement only the ones that are needed. note that the methods
+ * are called on the MIDI thread.
+ */
 class MIDIInput implements MidiInListener {
-    void receiveProgramChange(int channel, int number, int value) {
-    }
-    void receiveControlChange(int channel, int number, int value) {
-    }
-    void clock_tick() {
-    }
-    void clock_start() {
-    }
-    void clock_continue() {
-    }
-    void clock_stop() {
-    }
-    void clock_song_position_pointer(int pOffset16th) {
-    }
-    void receiveNoteOff(int channel, int pitch) {
-        Tone.instrument(channel);
-        mNote = pitch;
-        mVelocity = 0;
-        Tone.note_off(mNote);
-    }
-    void receiveNoteOn(int channel, int pitch, int velocity) {
-        Tone.instrument(channel);
+    void receive_note_on(int channel, int pitch, int velocity) {
         mNote = pitch;
         mVelocity = velocity;
-        Tone.note_on(mNote, mVelocity);
+        Tone.note_on_instrument(channel, pitch, velocity);
+    }
+    void receive_note_off(int channel, int pitch, int velocity) {
+        mNote = pitch;
+        mVelocity = 0;
+        Tone.note_off_instrument(channel, pitch);
+    }
+    void receive_pitch_bend(int channel, int value) {
+        println("pitch bend: " + value);
     }
 }

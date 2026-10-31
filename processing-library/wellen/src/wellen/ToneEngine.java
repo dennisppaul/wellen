@@ -37,9 +37,14 @@ public abstract class ToneEngine {
     public static final int INSTRUMENT_WITH_OSCILLATOR_ADSR = 2;
     public static final int INSTRUMENT_WITH_OSCILLATOR_ADSR_FILTER_LFO = 3;
     private final Timer mTimer;
+    /**
+     * guards the temporary instrument selection in {@link #note_on_instrument(int, int, int)} and
+     * {@link #note_off_instrument(int, int)}
+     */
+    protected final Object fSelectionLock = new Object();
 
     ToneEngine() {
-        mTimer = new Timer();
+        mTimer = new Timer("wellen-note-off");
     }
 
     public static ToneEngine create() {
@@ -84,9 +89,43 @@ public abstract class ToneEngine {
      * @param duration duration in seconds before the note is turned off again
      */
     public final void note_on(int note, int velocity, float duration) {
-        TimerTask mTask = new NoteOffTask(note, instrument().ID());
-        mTimer.schedule(mTask, (long) (duration * 1000));
-        note_on(note, velocity);
+        final int mInstrumentID = instrument().ID();
+        note_on_instrument(mInstrumentID, note, velocity);
+        /* schedule note-off *after* note-on so that very short durations can not turn the note off before it starts */
+        mTimer.schedule(new NoteOffTask(note, mInstrumentID), Math.max(0, (long) (duration * 1000)));
+    }
+
+    /**
+     * play a note on a specific instrument without changing the currently selected instrument. unlike the combination
+     * of <code>instrument(int)</code> and <code>note_on(int, int)</code> this method is safe to call from different
+     * threads at the same time ( e.g from a MIDI callback and from <code>draw()</code> ).
+     *
+     * @param instrument_id ID of instrument
+     * @param note          pitch of note ranging from 0 to 127
+     * @param velocity      volume of note ranging from 0 to 127
+     */
+    public void note_on_instrument(int instrument_id, int note, int velocity) {
+        synchronized (fSelectionLock) {
+            final int mPreviousID = instrument().ID();
+            instrument(instrument_id);
+            note_on(note, velocity);
+            instrument(mPreviousID);
+        }
+    }
+
+    /**
+     * turn off a note on a specific instrument without changing the currently selected instrument.
+     *
+     * @param instrument_id ID of instrument
+     * @param note          pitch of note to turn off
+     */
+    public void note_off_instrument(int instrument_id, int note) {
+        synchronized (fSelectionLock) {
+            final int mPreviousID = instrument().ID();
+            instrument(instrument_id);
+            note_off(note);
+            instrument(mPreviousID);
+        }
     }
 
     /**
@@ -152,10 +191,7 @@ public abstract class ToneEngine {
         }
 
         public void run() {
-            int mCurrentInstrument = instrument().ID();
-            instrument(instrument);
-            note_off(note);
-            instrument(mCurrentInstrument);
+            note_off_instrument(instrument, note);
         }
     }
 }

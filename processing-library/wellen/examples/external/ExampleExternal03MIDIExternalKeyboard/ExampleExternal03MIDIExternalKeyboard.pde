@@ -12,6 +12,7 @@ void settings() {
 }
 void setup() {
     Wellen.dumpMidiInputDevices();
+    /* the device name does not need to match exactly e.g "KeyStep" also finds "Arturia KeyStep 37" */
     EventReceiverMIDI.start(this, "Arturia KeyStep 37");
 }
 void draw() {
@@ -21,15 +22,19 @@ void draw() {
     float mScale = Tone.is_playing() ? map(mNote, 24, 96, 5, height * 0.8f) : 5;
     ellipse(width * 0.5f, height * 0.5f, mScale, mScale);
 }
-void midi_note_off(int channel, int pitch) {
-    Tone.instrument(channel);
+/*
+ * MIDI callbacks are called on the MIDI thread ( not on the thread that calls `draw()` ). therefore notes are played
+ * with `Tone.note_on_instrument(...)` which does not change the currently selected instrument and is safe to call
+ * from any thread. alternatively `EventReceiverMIDI.start(...).dispatch_on_draw_thread(true)` moves all callbacks
+ * to the drawing thread ( at the cost of up to one frame latency ).
+ */
+void midi_note_off(int channel, int pitch, int velocity) {
     mNote = pitch;
     mVelocity = 0;
-    Tone.note_off(mNote);
+    Tone.note_off_instrument(channel, pitch);
 }
 void midi_note_on(int channel, int pitch, int velocity) {
-    Tone.instrument(channel);
     mNote = pitch;
     mVelocity = velocity;
-    Tone.note_on(mNote, mVelocity);
+    Tone.note_on_instrument(channel, pitch, velocity);
 }
