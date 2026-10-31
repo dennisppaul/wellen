@@ -454,48 +454,33 @@ public class Wellen {
         queryAudioInputAndOutputDevices(null, true, false);
     }
 
+    /**
+     * @param pDeviceName name of MIDI device. like {@link MidiIn} and {@link MidiOut} the name does not need to match
+     *                    exactly ( see {@link MidiIn#MidiIn(String)} ).
+     * @return <code>true</code> if a MIDI input or output device with this name is available
+     */
     public static boolean isMidiDeviceAvailable(String pDeviceName) {
-        final String[] mInputNames = MidiIn.availableInputs();
-        for (String mInputName : mInputNames) {
-            if (mInputName.equals(pDeviceName)) {
-                return true;
-            }
-        }
-        final String[] mOutputNames = MidiOut.availableOutputs();
-        for (String mOutputName : mOutputNames) {
-            if (mOutputName.equals(pDeviceName)) {
-                return true;
-            }
-        }
-        return false;
+        return MidiDevices.resolve(pDeviceName, true) != null || MidiDevices.resolve(pDeviceName, false) != null;
     }
 
+    /**
+     * prints all available MIDI input devices. the printed IDs can be used with e.g {@link MidiIn#MidiIn(int)}.
+     *
+     * @return names of all available MIDI input devices
+     */
     public static String[] dumpMidiInputDevices() {
-        final String[] mInputNames = MidiIn.availableInputs();
-        System.out.println("+-------------------------------------------------------+");
-        System.out.println("+ MIDI INPUT DEVICES ( aka Ports or Buses )");
-        System.out.println("+-------------------------------------------------------+");
-        for (int i = 0; i < mInputNames.length; i++) {
-            final String mInputName = mInputNames[i];
-            System.out.println("+ " + i + "\t: \"" + mInputName + "\"");
-        }
-        System.out.println("+-------------------------------------------------------+");
-        System.out.println();
-        return mInputNames;
+        MidiDevices.print_devices(true);
+        return MidiDevices.names(true);
     }
 
+    /**
+     * prints all available MIDI output devices. the printed IDs can be used with e.g {@link MidiOut#MidiOut(int)}.
+     *
+     * @return names of all available MIDI output devices
+     */
     public static String[] dumpMidiOutputDevices() {
-        final String[] mOutputNames = MidiOut.availableOutputs();
-        System.out.println("+-------------------------------------------------------+");
-        System.out.println("+ MIDI OUTPUT DEVICES ( aka Ports or Buses )");
-        System.out.println("+-------------------------------------------------------+");
-        for (int i = 0; i < mOutputNames.length; i++) {
-            final String mOutputName = mOutputNames[i];
-            System.out.println("+ " + i + "\t: \"" + mOutputName + "\"");
-        }
-        System.out.println("+-------------------------------------------------------+");
-        System.out.println();
-        return mOutputNames;
+        MidiDevices.print_devices(false);
+        return MidiDevices.names(false);
     }
 
     public static void exportWAV(PApplet p,

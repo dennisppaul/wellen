@@ -1,5 +1,29 @@
 # Wellen / Release Notes
 
+## v0.14
+
+MIDI overhaul. existing sketches compile and run unchanged; old method names are deprecated and still work.
+
+- fixed: a *note-on* message with velocity 0 is now received as *note-off*
+- fixed: `MidiOut(int)` now uses the same device IDs as `Wellen.dumpMidiOutputDevices()` ( set `MidiOut.USE_LEGACY_DEVICE_INDEX = true` for the old numbering )
+- fixed: `BeatMIDI` now delivers beat `0` on the first clock pulse after *start* ( was `1` ) and converts *song position pointer* correctly ( set `BeatMIDI.LEGACY_BEAT_COUNT = true` for the old counting )
+- fixed: `BeatMIDI.bpm()` estimate at start and after *continue*
+- fixed: `ToneEngineMIDI.note_off()` now turns off the last played note ( was note `0` )
+- fixed: notes played with a duration ( `Tone.note_on(note, velocity, duration)` ) could be sent to the wrong instrument when played from different threads
+- fixed: MIDI devices are now closed by `close()` / `stop()`, and a failing listener does not stop other listeners
+- added: receiving *pitch bend*, *channel pressure*, *poly pressure*, *SysEx*, *song select* and *MIDI time code* ( `MidiInListener` + `EventReceiverMIDI` callbacks e.g `midi_pitch_bend(int channel, int value)` )
+- added: `MidiOut` can send *program change*, *pressure*, *all notes off*, *SysEx*, *MIDI clock* and *song position pointer*
+- added: `MidiClockOut` sends MIDI clock i.e *wellen* can act as clock master ( see `ExampleExternal12MIDIClockOut` )
+- added: `Tone.note_on_instrument(instrument, note, velocity)` + `Tone.note_off_instrument(instrument, note)` play notes without changing the selected instrument ( safe in MIDI callbacks )
+- added: `EventReceiverMIDI` + `BeatMIDI` can call callbacks on the drawing thread with `dispatch_on_draw_thread(true)`
+- added: MIDI device names are matched case-insensitively and by prefix ( e.g `"KeyStep"` finds `"Arturia KeyStep 37"` )
+- added: `InstrumentMIDI` maps amplitude, pan, filter cutoff + resonance and pitch bend to MIDI control changes, and tracks held notes
+- added: `MIDI` constants for all notes ( including sharps e.g `NOTE_CS4` and `NOTE_C0` ), control changes ( e.g `CC_SUSTAIN` ) and message types
+- added: CoreMIDI4J is used automatically on macOS if it is on the classpath
+- added: MIDI tests `TestMIDI` ( no hardware needed ) and `TestMIDILoopback` ( virtual MIDI port )
+- deprecated: camelCase MIDI methods ( e.g `MidiOut.sendNoteOn` → `send_note_on`, `MidiIn.addListener` → `add_listener`, `MidiInListener.receiveNoteOn` → `receive_note_on` )
+- deprecated: `midi_program_change(int, int, int)` → `midi_program_change(int channel, int program)`
+
 ## v0.13 (20241120)
 
 - added *Mod Tracker* examples

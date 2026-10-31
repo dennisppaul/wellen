@@ -19,31 +19,42 @@
 
 package wellen;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
- * listens to incoming MIDI messages.
+ * listens to incoming MIDI messages and forwards them to callback methods of a parent object ( e.g a sketch ).
  * <p>
- * the following callback methods are available:
+ * the following callback methods are available ( all are optional ):
  * <pre>
  * <code>
  * midi_note_on(int channel, int pitch, int velocity)
- * midi_note_off(int channel, int pitch)
+ * midi_note_off(int channel, int pitch, int velocity) ( or midi_note_off(int channel, int pitch) )
  * midi_control_change(int channel, int number, int value)
- * midi_program_change(int channel, int number, int value)
+ * midi_program_change(int channel, int program) ( or deprecated midi_program_change(int channel, int number, int value) )
+ * midi_pitch_bend(int channel, int value) ( 0–16383, center 8192 )
+ * midi_channel_pressure(int channel, int pressure)
+ * midi_poly_pressure(int channel, int pitch, int pressure)
+ * midi_sysex(byte[] data)
  * midi_clock_tick()
  * midi_clock_start()
  * midi_clock_continue()
  * midi_clock_stop()
- * event_receive(int command, float[] data)
+ * midi_clock_song_position_pointer(int offset_16th)
+ * event_receive(int event, float[] data)
  * </code>
  * </pre>
+ * a note-on message with velocity 0 is delivered as note-off.
+ * <p>
+ * by default callbacks are called on the MIDI thread. use {@link #dispatch_on_draw_thread(boolean)} to call them on
+ * the processing animation thread instead ( recommended if callbacks draw or change state used in
+ * <code>draw()</code> ).
  */
 public class EventReceiverMIDI implements MidiInListener {
 
     private static final String METHOD_NAME = "event_receive";
-    private static final String METHOD_NAME_CC = "midi_cc";
+    private static final String METHOD_NAME_CHANNEL_PRESSURE = "midi_channel_pressure";
     private static final String METHOD_NAME_CLOCK_CONTINUE = "midi_clock_continue";
     private static final String METHOD_NAME_CLOCK_SONG_POSITION_POINTER = "midi_clock_song_position_pointer";
     private static final String METHOD_NAME_CLOCK_START = "midi_clock_start";
@@ -52,323 +63,319 @@ public class EventReceiverMIDI implements MidiInListener {
     private static final String METHOD_NAME_CONTROL_CHANGE = "midi_control_change";
     private static final String METHOD_NAME_NOTE_OFF = "midi_note_off";
     private static final String METHOD_NAME_NOTE_ON = "midi_note_on";
+    private static final String METHOD_NAME_PITCH_BEND = "midi_pitch_bend";
+    private static final String METHOD_NAME_POLY_PRESSURE = "midi_poly_pressure";
     private static final String METHOD_NAME_PROGRAM_CHANGE = "midi_program_change";
-    private static EventReceiverMIDI mInstance = null;
-    private final boolean VERBOSE = false;
-    private Method mMethod = null;
-    private Method mMethodClockContinue = null;
-    private Method mMethodClockSongPositionPointer = null;
-    private Method mMethodClockStart = null;
-    private Method mMethodClockStop = null;
-    private Method mMethodClockTick = null;
-    private Method mMethodControlChange = null;
-    private Method mMethodNoteOff = null;
-    private Method mMethodNoteOn = null;
-    private Method mMethodProgramChange = null;
-    private final Object mParent;
+    private static final String METHOD_NAME_SYSEX = "midi_sysex";
+    private static final ArrayList<EventReceiverMIDI> fInstances = new ArrayList<>();
+    private final MidiCallbacks fCallbacks;
+    private final Method fMethod;
+    private final Method fMethodChannelPressure;
+    private final Method fMethodClockContinue;
+    private final Method fMethodClockSongPositionPointer;
+    private final Method fMethodClockStart;
+    private final Method fMethodClockStop;
+    private final Method fMethodClockTick;
+    private final Method fMethodControlChange;
+    private final Method fMethodNoteOff;
+    private final Method fMethodNoteOffWithVelocity;
+    private final Method fMethodNoteOn;
+    private final Method fMethodPitchBend;
+    private final Method fMethodPolyPressure;
+    private final Method fMethodProgramChange;
+    private final Method fMethodProgramChangeDeprecated;
+    private final Method fMethodSysex;
+    private MidiIn fMidiIn = null;
+    private boolean fOwnsMidiIn = false;
+    private String fDeviceKey = null;
 
     /**
      * @param pReceiver object which will receive MIDI messages
      */
     public EventReceiverMIDI(Object pReceiver) {
-        mParent = pReceiver;
-        try {
-            mMethod = pReceiver.getClass().getDeclaredMethod(METHOD_NAME, int.class, float[].class);
-        } catch (NoSuchMethodException | SecurityException ex) {
-            if (VERBOSE) {
-                ex.printStackTrace();
-            }
-        }
-        try {
-            mMethodNoteOn = pReceiver.getClass()
-                                     .getDeclaredMethod(METHOD_NAME_NOTE_ON, int.class, int.class, int.class);
-        } catch (NoSuchMethodException | SecurityException ex) {
-            if (VERBOSE) {
-                ex.printStackTrace();
-            }
-        }
-        try {
-            mMethodNoteOff = pReceiver.getClass().getDeclaredMethod(METHOD_NAME_NOTE_OFF, int.class, int.class);
-        } catch (NoSuchMethodException | SecurityException ex) {
-            if (VERBOSE) {
-                ex.printStackTrace();
-            }
-        }
-        try {
-            mMethodControlChange = pReceiver.getClass()
-                                            .getDeclaredMethod(METHOD_NAME_CONTROL_CHANGE,
-                                                               int.class,
-                                                               int.class,
-                                                               int.class);
-        } catch (NoSuchMethodException | SecurityException ex) {
-            if (VERBOSE) {
-                ex.printStackTrace();
-            }
-        }
-        try {
-            mMethodProgramChange = pReceiver.getClass()
-                                            .getDeclaredMethod(METHOD_NAME_PROGRAM_CHANGE,
-                                                               int.class,
-                                                               int.class,
-                                                               int.class);
-        } catch (NoSuchMethodException | SecurityException ex) {
-            if (VERBOSE) {
-                ex.printStackTrace();
-            }
-        }
-
-        try {
-            mMethodClockTick = pReceiver.getClass().getDeclaredMethod(METHOD_NAME_CLOCK_TICK);
-        } catch (NoSuchMethodException | SecurityException ex) {
-            if (VERBOSE) {
-                ex.printStackTrace();
-            }
-        }
-        try {
-            mMethodClockStart = pReceiver.getClass().getDeclaredMethod(METHOD_NAME_CLOCK_START);
-        } catch (NoSuchMethodException | SecurityException ex) {
-            if (VERBOSE) {
-                ex.printStackTrace();
-            }
-        }
-        try {
-            mMethodClockContinue = pReceiver.getClass().getDeclaredMethod(METHOD_NAME_CLOCK_CONTINUE);
-        } catch (NoSuchMethodException | SecurityException ex) {
-            if (VERBOSE) {
-                ex.printStackTrace();
-            }
-        }
-        try {
-            mMethodClockStop = pReceiver.getClass().getDeclaredMethod(METHOD_NAME_CLOCK_STOP);
-        } catch (NoSuchMethodException | SecurityException ex) {
-            if (VERBOSE) {
-                ex.printStackTrace();
-            }
-        }
-        try {
-            mMethodClockSongPositionPointer = pReceiver.getClass()
-                                                       .getDeclaredMethod(METHOD_NAME_CLOCK_SONG_POSITION_POINTER,
-                                                                          int.class);
-        } catch (NoSuchMethodException | SecurityException ex) {
-            if (VERBOSE) {
-                ex.printStackTrace();
-            }
-        }
+        fCallbacks = new MidiCallbacks(pReceiver, getClass().getSimpleName());
+        fMethod = fCallbacks.find(METHOD_NAME, int.class, float[].class);
+        fMethodNoteOn = fCallbacks.find(METHOD_NAME_NOTE_ON, int.class, int.class, int.class);
+        fMethodNoteOffWithVelocity = fCallbacks.find(METHOD_NAME_NOTE_OFF, int.class, int.class, int.class);
+        fMethodNoteOff = fCallbacks.find(METHOD_NAME_NOTE_OFF, int.class, int.class);
+        fMethodControlChange = fCallbacks.find(METHOD_NAME_CONTROL_CHANGE, int.class, int.class, int.class);
+        fMethodProgramChange = fCallbacks.find(METHOD_NAME_PROGRAM_CHANGE, int.class, int.class);
+        fMethodProgramChangeDeprecated = fCallbacks.find(METHOD_NAME_PROGRAM_CHANGE, int.class, int.class, int.class);
+        fMethodPitchBend = fCallbacks.find(METHOD_NAME_PITCH_BEND, int.class, int.class);
+        fMethodChannelPressure = fCallbacks.find(METHOD_NAME_CHANNEL_PRESSURE, int.class, int.class);
+        fMethodPolyPressure = fCallbacks.find(METHOD_NAME_POLY_PRESSURE, int.class, int.class, int.class);
+        fMethodSysex = fCallbacks.find(METHOD_NAME_SYSEX, byte[].class);
+        fMethodClockTick = fCallbacks.find(METHOD_NAME_CLOCK_TICK);
+        fMethodClockStart = fCallbacks.find(METHOD_NAME_CLOCK_START);
+        fMethodClockContinue = fCallbacks.find(METHOD_NAME_CLOCK_CONTINUE);
+        fMethodClockStop = fCallbacks.find(METHOD_NAME_CLOCK_STOP);
+        fMethodClockSongPositionPointer = fCallbacks.find(METHOD_NAME_CLOCK_SONG_POSITION_POINTER, int.class);
     }
 
     /**
+     * starts receiving MIDI messages from a device. calling this method again with the same parent and device returns
+     * the existing instance.
+     *
      * @param pParent          object which will receive MIDI messages
      * @param pMidiInputDevice MIDI input device to use (e.g. "IAC Driver Bus 1")
-     * @return instance of {@code MIDIInput} or {@code null} if the device is not available.
+     * @return instance of {@code EventReceiverMIDI}. use {@link #is_initialized()} to check if the device was found.
      */
     public static EventReceiverMIDI start(Object pParent, String pMidiInputDevice) {
-        if (mInstance == null) {
-            mInstance = new EventReceiverMIDI(pParent);
-            MidiIn mMidiIn = new MidiIn(pMidiInputDevice);
-            mMidiIn.addListener(mInstance);
+        final javax.sound.midi.MidiDevice.Info mInfo = MidiDevices.resolve(pMidiInputDevice, true);
+        final String mKey = "name:" + (mInfo != null ? mInfo.getName() : pMidiInputDevice);
+        synchronized (fInstances) {
+            final EventReceiverMIDI mExisting = findInstance(pParent, mKey);
+            if (mExisting != null) {
+                return mExisting;
+            }
+            final EventReceiverMIDI mInstance = new EventReceiverMIDI(pParent);
+            mInstance.connect(new MidiIn(pMidiInputDevice), true, mKey);
+            return mInstance;
         }
-        return mInstance;
     }
 
     /**
+     * starts receiving MIDI messages from a device. calling this method again with the same parent and device returns
+     * the existing instance.
+     *
      * @param pParent            object which will receive MIDI messages
-     * @param pMidiInputDeviceID MIDI input device ID to use
-     * @return instance of {@code MIDIInput} or {@code null} if the device is not available.
+     * @param pMidiInputDeviceID MIDI input device ID to use ( as listed by {@link Wellen#dumpMidiInputDevices()} )
+     * @return instance of {@code EventReceiverMIDI}. use {@link #is_initialized()} to check if the device was found.
      */
     public static EventReceiverMIDI start(Object pParent, int pMidiInputDeviceID) {
-        if (mInstance == null) {
-            mInstance = new EventReceiverMIDI(pParent);
-            MidiIn mMidiIn = new MidiIn(pMidiInputDeviceID);
-            mMidiIn.addListener(mInstance);
+        final javax.sound.midi.MidiDevice.Info mInfo = MidiDevices.resolve(pMidiInputDeviceID, true);
+        final String mKey = "name:" + (mInfo != null ? mInfo.getName() : ("#" + pMidiInputDeviceID));
+        synchronized (fInstances) {
+            final EventReceiverMIDI mExisting = findInstance(pParent, mKey);
+            if (mExisting != null) {
+                return mExisting;
+            }
+            final EventReceiverMIDI mInstance = new EventReceiverMIDI(pParent);
+            mInstance.connect(new MidiIn(pMidiInputDeviceID), true, mKey);
+            return mInstance;
+        }
+    }
+
+    /**
+     * starts receiving MIDI messages from an existing {@link MidiIn} ( e.g shared with a {@link BeatMIDI} ). the
+     * <code>MidiIn</code> is not closed by {@link #stop()}.
+     *
+     * @param parent  object which will receive MIDI messages
+     * @param midi_in MIDI input
+     * @return instance of {@code EventReceiverMIDI}
+     */
+    public static EventReceiverMIDI start(Object parent, MidiIn midi_in) {
+        final EventReceiverMIDI mInstance = new EventReceiverMIDI(parent);
+        synchronized (fInstances) {
+            mInstance.connect(midi_in, false, "midi_in:" + System.identityHashCode(midi_in));
         }
         return mInstance;
     }
 
-    /**
-     * @param channel channel
-     * @param number  number
-     * @param value   value
-     */
-    @Override
-    public void receiveProgramChange(int channel, int number, int value) {
-        sendEvent(Wellen.EVENT_PROGRAMCHANGE, new float[]{channel, number, value});
-        sendEventProgramChange(channel, number, value);
+    private static EventReceiverMIDI findInstance(Object pParent, String pKey) {
+        for (EventReceiverMIDI m : fInstances) {
+            if (m.fCallbacks.parent() == pParent && pKey.equals(m.fDeviceKey) && m.is_initialized()) {
+                return m;
+            }
+        }
+        return null;
     }
 
     /**
-     * @param channel channel
-     * @param number  number
-     * @param value   value
+     * @return <code>true</code> if connected to a MIDI input device
      */
-    @Override
-    public void receiveControlChange(int channel, int number, int value) {
-        sendEvent(Wellen.EVENT_CONTROLCHANGE, new float[]{channel, number, value});
-        sendEventControlChange(channel, number, value);
+    public boolean is_initialized() {
+        return fMidiIn != null && fMidiIn.is_open();
     }
 
     /**
-     * @param channel channel
-     * @param pitch   pitch
+     * @return MIDI input used by this receiver or <code>null</code> if not started via <code>start(...)</code>
      */
-    @Override
-    public void receiveNoteOff(int channel, int pitch) {
-        sendEvent(Wellen.EVENT_NOTE_OFF, new float[]{channel, pitch});
-        sendEventNoteOff(channel, pitch);
+    public MidiIn get_midi_in() {
+        return fMidiIn;
     }
 
     /**
-     * @param channel  channel
-     * @param pitch    pitch
-     * @param velocity velocity
+     * @param dispatch_on_draw_thread if <code>true</code> callbacks are queued and called on the processing animation
+     *                                thread right before <code>draw()</code>. requires the parent to be a
+     *                                <code>PApplet</code>. note that callbacks are then delayed by up to one frame
+     *                                and are not called while the sketch is paused with <code>noLoop()</code>.
+     * @return this instance
      */
+    public EventReceiverMIDI dispatch_on_draw_thread(boolean dispatch_on_draw_thread) {
+        fCallbacks.set_dispatch_on_draw_thread(dispatch_on_draw_thread, this);
+        return this;
+    }
+
+    /**
+     * @hidden called by processing before each frame if {@link #dispatch_on_draw_thread(boolean)} is enabled
+     */
+    public void pre() {
+        fCallbacks.drain();
+    }
+
+    /**
+     * stops receiving MIDI messages and releases the MIDI device ( if it was opened by this instance ).
+     */
+    public void stop() {
+        synchronized (fInstances) {
+            final Iterator<EventReceiverMIDI> mIterator = fInstances.iterator();
+            while (mIterator.hasNext()) {
+                if (mIterator.next() == this) {
+                    mIterator.remove();
+                }
+            }
+        }
+        if (fMidiIn != null) {
+            fMidiIn.remove_listener(this);
+            if (fOwnsMidiIn) {
+                fMidiIn.close();
+            }
+            fMidiIn = null;
+        }
+        fCallbacks.dispose(this);
+    }
+
+    /* --- MidiInListener --- */
+
     @Override
-    public void receiveNoteOn(int channel, int pitch, int velocity) {
+    public void receive_note_on(int channel, int pitch, int velocity) {
         sendEvent(Wellen.EVENT_NOTE_ON, new float[]{channel, pitch, velocity});
-        sendEventNoteOn(channel, pitch, velocity);
+        fCallbacks.invoke(fMethodNoteOn, channel, pitch, velocity);
     }
 
-    /**
-     *
-     */
+    @Override
+    public void receive_note_off(int channel, int pitch, int velocity) {
+        sendEvent(Wellen.EVENT_NOTE_OFF, new float[]{channel, pitch});
+        if (fMethodNoteOffWithVelocity != null) {
+            fCallbacks.invoke(fMethodNoteOffWithVelocity, channel, pitch, velocity);
+        } else {
+            fCallbacks.invoke(fMethodNoteOff, channel, pitch);
+        }
+    }
+
+    @Override
+    public void receive_control_change(int channel, int number, int value) {
+        sendEvent(Wellen.EVENT_CONTROLCHANGE, new float[]{channel, number, value});
+        fCallbacks.invoke(fMethodControlChange, channel, number, value);
+    }
+
+    @Override
+    public void receive_program_change(int channel, int program) {
+        /* third value is kept for compatibility, program change messages have no value */
+        sendEvent(Wellen.EVENT_PROGRAMCHANGE, new float[]{channel, program, 0});
+        if (fMethodProgramChange != null) {
+            fCallbacks.invoke(fMethodProgramChange, channel, program);
+        } else {
+            fCallbacks.invoke(fMethodProgramChangeDeprecated, channel, program, 0);
+        }
+    }
+
+    @Override
+    public void receive_pitch_bend(int channel, int value) {
+        sendEvent(Wellen.EVENT_PITCHBEND, new float[]{channel, value});
+        fCallbacks.invoke(fMethodPitchBend, channel, value);
+    }
+
+    @Override
+    public void receive_channel_pressure(int channel, int pressure) {
+        sendEvent(MIDI.MIDI_CHANNEL_PRESSURE, new float[]{channel, pressure});
+        fCallbacks.invoke(fMethodChannelPressure, channel, pressure);
+    }
+
+    @Override
+    public void receive_poly_pressure(int channel, int pitch, int pressure) {
+        sendEvent(MIDI.MIDI_POLY_PRESSURE, new float[]{channel, pitch, pressure});
+        fCallbacks.invoke(fMethodPolyPressure, channel, pitch, pressure);
+    }
+
+    @Override
+    public void receive_sysex(byte[] data) {
+        fCallbacks.invoke(fMethodSysex, (Object) data);
+    }
+
     @Override
     public void clock_tick() {
         sendEvent(MIDI.MIDI_CLOCK_TICK, new float[]{});
-        sendEventClockTick();
+        fCallbacks.invoke(fMethodClockTick);
     }
 
-    /**
-     *
-     */
     @Override
     public void clock_start() {
         sendEvent(MIDI.MIDI_CLOCK_START, new float[]{});
-        sendEventClockStart();
+        fCallbacks.invoke(fMethodClockStart);
     }
 
-    /**
-     *
-     */
     @Override
     public void clock_continue() {
         sendEvent(MIDI.MIDI_CLOCK_CONTINUE, new float[]{});
-        sendEventClockContinue();
+        fCallbacks.invoke(fMethodClockContinue);
     }
 
-    /**
-     *
-     */
     @Override
     public void clock_stop() {
         sendEvent(MIDI.MIDI_CLOCK_STOP, new float[]{});
-        sendEventClockStop();
+        fCallbacks.invoke(fMethodClockStop);
     }
 
     /**
-     * @param pOffset16th offset of the song position in 16th notes
+     * @param offset_16th offset of the song position in 16th notes
      */
     @Override
-    public void clock_song_position_pointer(int pOffset16th) {
-        sendEvent(MIDI.MIDI_SONG_POSITION_POINTER, new float[]{pOffset16th});
-        sendEventClockSongPositionPointer(pOffset16th);
+    public void clock_song_position_pointer(int offset_16th) {
+        sendEvent(MIDI.MIDI_SONG_POSITION_POINTER, new float[]{offset_16th});
+        fCallbacks.invoke(fMethodClockSongPositionPointer, offset_16th);
+    }
+
+    /* --- deprecated ( kept so that messages can still be injected with the old method names ) --- */
+
+    /**
+     * @deprecated use {@link #receive_program_change(int, int)} instead
+     */
+    @Deprecated
+    @Override
+    public void receiveProgramChange(int channel, int number, int value) {
+        receive_program_change(channel, number);
+    }
+
+    /**
+     * @deprecated use {@link #receive_control_change(int, int, int)} instead
+     */
+    @Deprecated
+    @Override
+    public void receiveControlChange(int channel, int number, int value) {
+        receive_control_change(channel, number, value);
+    }
+
+    /**
+     * @deprecated use {@link #receive_note_off(int, int, int)} instead
+     */
+    @Deprecated
+    @Override
+    public void receiveNoteOff(int channel, int pitch) {
+        receive_note_off(channel, pitch, 0);
+    }
+
+    /**
+     * @deprecated use {@link #receive_note_on(int, int, int)} instead
+     */
+    @Deprecated
+    @Override
+    public void receiveNoteOn(int channel, int pitch, int velocity) {
+        receive_note_on(channel, pitch, velocity);
+    }
+
+    /* --- internal --- */
+
+    private void connect(MidiIn pMidiIn, boolean pOwnsMidiIn, String pKey) {
+        fMidiIn = pMidiIn;
+        fOwnsMidiIn = pOwnsMidiIn;
+        fDeviceKey = pKey;
+        fMidiIn.add_listener(this);
+        fInstances.add(this);
     }
 
     private void sendEvent(int pEvent, float[] pData) {
-        if (mMethod != null) {
-            try {
-                mMethod.invoke(mParent, pEvent, pData);
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
-
-    private void sendEventClockContinue() {
-        if (mMethodClockContinue != null) {
-            try {
-                mMethodClockContinue.invoke(mParent);
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
-
-    private void sendEventClockSongPositionPointer(int pOffset16th) {
-        if (mMethodClockSongPositionPointer != null) {
-            try {
-                mMethodClockSongPositionPointer.invoke(mParent, pOffset16th);
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
-
-    private void sendEventClockStart() {
-        if (mMethodClockStart != null) {
-            try {
-                mMethodClockStart.invoke(mParent);
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
-
-    private void sendEventClockStop() {
-        if (mMethodClockStop != null) {
-            try {
-                mMethodClockStop.invoke(mParent);
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
-
-    private void sendEventClockTick() {
-        if (mMethodClockTick != null) {
-            try {
-                mMethodClockTick.invoke(mParent);
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
-
-    private void sendEventControlChange(int channel, int number, int value) {
-        if (mMethodControlChange != null) {
-            try {
-                mMethodControlChange.invoke(mParent, channel, number, value);
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
-
-    private void sendEventNoteOff(int channel, int pitch) {
-        if (mMethodNoteOff != null) {
-            try {
-                mMethodNoteOff.invoke(mParent, channel, pitch);
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
-
-    private void sendEventNoteOn(int channel, int pitch, int velocity) {
-        if (mMethodNoteOn != null) {
-            try {
-                mMethodNoteOn.invoke(mParent, channel, pitch, velocity);
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
-
-    private void sendEventProgramChange(int channel, int number, int value) {
-        if (mMethodProgramChange != null) {
-            try {
-                mMethodProgramChange.invoke(mParent, channel, number, value);
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                ex.printStackTrace();
-            }
-        }
+        fCallbacks.invoke(fMethod, pEvent, pData);
     }
 }

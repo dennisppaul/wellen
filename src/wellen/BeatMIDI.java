@@ -19,42 +19,53 @@
 
 package wellen;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
- * similar to {@link wellen.Beat} except that beat events are triggered by an external MIDI CLOCK signal.
+ * similar to {@link wellen.Beat} except that beat events are triggered by an external MIDI clock signal.
+ * <p>
+ * the method <code>beat(int)</code> of the listener is called for every MIDI clock pulse ( 24 pulses per quarter note
+ * ). the first pulse after a MIDI <i>start</i> message is beat <code>0</code>. after a <i>song position pointer</i>
+ * message the next pulse is the beat at that position ( one sixteenth note = 6 pulses ).
+ * <p>
+ * by default <code>beat(int)</code> is called on the MIDI thread. use {@link #dispatch_on_draw_thread(boolean)} to
+ * call it on the processing animation thread instead.
  */
 public class BeatMIDI implements MidiInListener {
+
     /**
      *
      */
     public static boolean VERBOSE = false;
-    private static final int BPM_SAMPLER_SIZE = 12;
+    /**
+     * if <code>true</code> the beat counter behaves like before v0.14: the first beat after a MIDI <i>start</i> message
+     * is <code>1</code> instead of <code>0</code>.
+     *
+     * @deprecated only use this to keep old sketches working that rely on the old ( wrong ) counting.
+     */
+    @Deprecated
+    public static boolean LEGACY_BEAT_COUNT = false;
     private static final String METHOD_NAME = "beat";
-    private float mBPMEstimate = 0;
-    private long mBPMMeasure;
-    private final float[] mBPMSampler = new float[BPM_SAMPLER_SIZE];
-    private int mBPMSamplerCounter = 0;
-    private boolean mIsRunning = false;
-    private final Object mListener;
-    private Method mMethod = null;
-    private boolean mResetBeatCounterAtStop = true;
-    private int mTickPPQNCounter = 0;
-
-    private BeatMIDI(Object pListener, int pBPM) {
-        this(pListener);
-    }
+    private static final double BPM_SMOOTHING = 0.1;
+    private final MidiCallbacks fCallbacks;
+    private final Method fMethod;
+    private volatile float fBPMEstimate = 0;
+    private double fAverageTickIntervalNs = 0;
+    private long fLastTickNs = -1;
+    private volatile boolean fIsRunning = false;
+    private boolean fResetBeatCounterAtStop = true;
+    private volatile int fNextTick = 0;
+    private volatile int fBeatCount = -1;
+    private MidiIn fMidiIn = null;
 
     private BeatMIDI(Object pListener) {
-        mListener = pListener;
-        mTickPPQNCounter = -1;
-        try {
-            mMethod = pListener.getClass().getDeclaredMethod(METHOD_NAME, Integer.TYPE);
-        } catch (NoSuchMethodException | SecurityException ex) {
+        fCallbacks = new MidiCallbacks(pListener, getClass().getSimpleName());
+        fMethod = fCallbacks.find(METHOD_NAME, Integer.TYPE);
+        if (fMethod == null) {
             System.err.println("+++ @" + getClass().getSimpleName() + " / could not find `" + METHOD_NAME + "(int)`");
         }
-        mBPMMeasure = _timer();
+        /* before v0.14 the counter started at -1 and was incremented before delivery */
+        fNextTick = LEGACY_BEAT_COUNT ? -1 : 0;
         start();
     }
 
@@ -65,88 +76,122 @@ public class BeatMIDI implements MidiInListener {
      */
     public static BeatMIDI start(Object pListener, String pMidiInput) {
         final BeatMIDI mBeatMIDI = new BeatMIDI(pListener);
-        MidiIn mMidiIn = new MidiIn(pMidiInput);
-        mMidiIn.addListener(mBeatMIDI);
+        mBeatMIDI.fMidiIn = new MidiIn(pMidiInput);
+        mBeatMIDI.fMidiIn.add_listener(mBeatMIDI);
         return mBeatMIDI;
     }
 
-    private static long _timer() {
-        return System.nanoTime();
+    /**
+     * @param listener             object which implements the method `beat(int beatCounter)`
+     * @param midi_input_device_ID ID of MIDI input device as listed by {@link Wellen#dumpMidiInputDevices()}
+     * @return {@link BeatMIDI}
+     */
+    public static BeatMIDI start(Object listener, int midi_input_device_ID) {
+        final BeatMIDI mBeatMIDI = new BeatMIDI(listener);
+        mBeatMIDI.fMidiIn = new MidiIn(midi_input_device_ID);
+        mBeatMIDI.fMidiIn.add_listener(mBeatMIDI);
+        return mBeatMIDI;
     }
 
-    private static double _timer_divider() {
-        return 1000000000;
+    /**
+     * @param listener object which implements the method `beat(int beatCounter)`
+     * @param midi_in  existing MIDI input ( e.g shared with an {@link EventReceiverMIDI} ). it is not closed by
+     *                 {@link #close()}.
+     * @return {@link BeatMIDI}
+     */
+    public static BeatMIDI start(Object listener, MidiIn midi_in) {
+        final BeatMIDI mBeatMIDI = new BeatMIDI(listener);
+        midi_in.add_listener(mBeatMIDI);
+        return mBeatMIDI;
     }
 
     /**
      * @param pResetBeatCounterAtStop if `true` the beat counter is reset to `0` when the MIDI clock signal stops.
      */
     public void reset_beat_counter_at_stop(boolean pResetBeatCounterAtStop) {
-        mResetBeatCounterAtStop = pResetBeatCounterAtStop;
+        fResetBeatCounterAtStop = pResetBeatCounterAtStop;
+    }
+
+    /**
+     * @param dispatch_on_draw_thread if <code>true</code> <code>beat(int)</code> is queued and called on the processing
+     *                                animation thread right before <code>draw()</code>. this is safer when drawing or
+     *                                changing sketch state in <code>beat(int)</code> but beats are delivered in
+     *                                batches once per frame. requires the listener to be a <code>PApplet</code>.
+     * @return {@link BeatMIDI}
+     */
+    public BeatMIDI dispatch_on_draw_thread(boolean dispatch_on_draw_thread) {
+        fCallbacks.set_dispatch_on_draw_thread(dispatch_on_draw_thread, this);
+        return this;
+    }
+
+    /**
+     * @hidden called by processing before each frame if {@link #dispatch_on_draw_thread(boolean)} is enabled
+     */
+    public void pre() {
+        fCallbacks.drain();
+    }
+
+    /**
+     * stops listening to the MIDI input and releases the MIDI device ( if it was opened by this instance ).
+     */
+    public void close() {
+        stop();
+        fCallbacks.dispose(this);
+        if (fMidiIn != null) {
+            fMidiIn.remove_listener(this);
+            fMidiIn.close();
+            fMidiIn = null;
+        }
     }
 
     /**
      * @return true if beat is running
      */
     public boolean running() {
-        return mIsRunning;
+        return fIsRunning;
     }
 
     /**
-     * @return current beat count in pulses per quarter notes (PPQN)
+     * @return count of the last delivered beat in pulses per quarter notes (PPQN)
      */
     public int beat_count() {
-        return mTickPPQNCounter;
+        return fBeatCount;
     }
 
     /**
-     * returns an estimate of the current BPM deduced from the duration between two ticks ( or pulses )
+     * returns an estimate of the current BPM deduced from the duration between ticks ( or pulses )
      *
-     * @return estimated BPM ( might be imprecise in the first few beats )
+     * @return estimated BPM ( <code>0</code> until two ticks were received )
      */
     public float bpm() {
-        return mBPMEstimate;
+        return fBPMEstimate;
     }
 
     /**
      * @hidden internal use only
      */
     public void invoke() {
-        if (mIsRunning) {
-            try {
-                mMethod.invoke(mListener, mTickPPQNCounter);
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
-                System.err.println("+++ @BeatMIDI / problem calling `" + METHOD_NAME + "`");
-                ex.printStackTrace();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    @Override
-    public void receiveProgramChange(int channel, int number, int value) {
-    }
-
-    @Override
-    public void receiveControlChange(int channel, int number, int value) {
-    }
-
-    @Override
-    public void receiveNoteOff(int channel, int pitch) {
-    }
-
-    @Override
-    public void receiveNoteOn(int channel, int pitch, int velocity) {
+        invokeBeat(fBeatCount);
     }
 
     @Override
     public void clock_tick() {
-        if (mIsRunning) {
-            mTickPPQNCounter++;
-            estimate_bpm();
-            invoke();
+        if (!fIsRunning) {
+            return;
         }
+        estimate_bpm();
+        final int mBeat;
+        synchronized (this) {
+            if (LEGACY_BEAT_COUNT) {
+                fNextTick++;
+                mBeat = fNextTick;
+            } else {
+                mBeat = fNextTick;
+                fNextTick++;
+            }
+            fBeatCount = mBeat;
+        }
+        invokeBeat(mBeat);
     }
 
     @Override
@@ -154,9 +199,10 @@ public class BeatMIDI implements MidiInListener {
         if (VERBOSE) {
             System.out.println("clock_start");
         }
-        mTickPPQNCounter = 0;
+        synchronized (this) {
+            fNextTick = 0;
+        }
         start();
-//        invoke();
     }
 
     @Override
@@ -165,7 +211,6 @@ public class BeatMIDI implements MidiInListener {
             System.out.println("clock_continue");
         }
         start();
-//        clock_tick();
     }
 
     @Override
@@ -173,44 +218,60 @@ public class BeatMIDI implements MidiInListener {
         if (VERBOSE) {
             System.out.println("clock_stop");
         }
-//        if (mIsRunning) {
-//            // @TODO(check if this is desired behavior)
-//            mTickCounter++;
-//        }
         stop();
     }
 
     @Override
-    public void clock_song_position_pointer(int pOffset16th) {
-        final int mPPQN = pOffset16th / 4 * 24;
-        mTickPPQNCounter = mPPQN;
+    public void clock_song_position_pointer(int offset_16th) {
+        synchronized (this) {
+            /* one sixteenth note = 6 clock pulses */
+            fNextTick = offset_16th * MIDI.PULSES_PER_SIXTEENTH;
+            if (LEGACY_BEAT_COUNT) {
+                fNextTick--;
+            }
+        }
         if (VERBOSE) {
-            System.out.println("clock_song_position_pointer: " + mTickPPQNCounter + "(" + pOffset16th + ")");
+            System.out.println("clock_song_position_pointer: " + fNextTick + "(" + offset_16th + ")");
         }
     }
 
     public void stop() {
-        if (mResetBeatCounterAtStop) {
-            mTickPPQNCounter = 0;
+        synchronized (this) {
+            if (fResetBeatCounterAtStop) {
+                fNextTick = 0;
+            }
         }
-        mIsRunning = false;
+        fIsRunning = false;
     }
 
     public void start() {
-        mIsRunning = true;
-        mBPMMeasure = System.currentTimeMillis();
+        synchronized (this) {
+            /* first tick after (re)start only provides a time reference for the BPM estimate */
+            fLastTickNs = -1;
+        }
+        fIsRunning = true;
     }
 
-    private void estimate_bpm() {
-        float mBPMEstimateFragment = 60 / ((float) ((_timer() - mBPMMeasure) / _timer_divider()) * 24); // 24 PPQN *
-        // 4 QN * 60 SEC
-        mBPMSampler[mBPMSamplerCounter % BPM_SAMPLER_SIZE] = mBPMEstimateFragment;
-        mBPMSamplerCounter++;
-        mBPMEstimate = 0;
-        for (float mBPMSample : mBPMSampler) {
-            mBPMEstimate += mBPMSample;
+    private void invokeBeat(int beat) {
+        if (fMethod == null || !fIsRunning) {
+            return;
         }
-        mBPMEstimate /= BPM_SAMPLER_SIZE;
-        mBPMMeasure = _timer();
+        fCallbacks.invoke(fMethod, beat);
+    }
+
+    private synchronized void estimate_bpm() {
+        final long mNow = System.nanoTime();
+        if (fLastTickNs >= 0) {
+            final long mInterval = mNow - fLastTickNs;
+            if (mInterval > 0) {
+                if (fAverageTickIntervalNs <= 0) {
+                    fAverageTickIntervalNs = mInterval;
+                } else {
+                    fAverageTickIntervalNs += BPM_SMOOTHING * (mInterval - fAverageTickIntervalNs);
+                }
+                fBPMEstimate = (float) (60.0e9 / (fAverageTickIntervalNs * MIDI.PPQN));
+            }
+        }
+        fLastTickNs = mNow;
     }
 }

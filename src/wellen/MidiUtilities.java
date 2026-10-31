@@ -19,8 +19,6 @@
 
 package wellen;
 
-import static processing.core.PApplet.pow;
-
 public abstract class MidiUtilities {
 
     private static final float MIDI_NOTE_CONVERSION_BASE_FREQUENCY = 440.0f;
@@ -45,13 +43,13 @@ public abstract class MidiUtilities {
     }
 
     public static float note_to_frequency(int pMidiNote) {
-        return MIDI_NOTE_CONVERSION_BASE_FREQUENCY * pow(2, ((pMidiNote - NOTE_OFFSET) / 12.0f));
+        return MIDI_NOTE_CONVERSION_BASE_FREQUENCY * (float) Math.pow(2, ((pMidiNote - NOTE_OFFSET) / 12.0f));
     }
 
     public static String note_to_string(int pMidiNote) {
-        // pMidiNote = processing.core.PApplet.max(processing.core.PApplet.min(pMidiNote, 127), 21);
-        final int octv = pMidiNote / 12 - 1;
-        final String nt = notes.substring((pMidiNote % 12) * 2, (pMidiNote % 12) * 2 + 2).trim();
+        final int octv = Math.floorDiv(pMidiNote, 12) - 1;
+        final int mNoteInOctave = Math.floorMod(pMidiNote, 12);
+        final String nt = notes.substring(mNoteInOctave * 2, mNoteInOctave * 2 + 2).trim();
         return nt + octv;
     }
 

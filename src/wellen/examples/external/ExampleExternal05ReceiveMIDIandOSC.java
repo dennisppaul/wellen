@@ -39,7 +39,9 @@ public class ExampleExternal05ReceiveMIDIandOSC extends PApplet {
         textFont(createFont("Roboto Mono", 11));
         EventReceiverOSC.start(this);
         Wellen.dumpMidiInputDevices();
-        EventReceiverMIDI.start(this, "Bus 1");
+        /* `dispatch_on_draw_thread(true)` calls `event_receive` on the drawing thread, so it can safely change the
+        text that is drawn in `draw()` */
+        EventReceiverMIDI.start(this, "Bus 1").dispatch_on_draw_thread(true);
     }
 
     public void draw() {
