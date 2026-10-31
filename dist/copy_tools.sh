@@ -1,4 +1,6 @@
-#!/bin/sh
+#!/usr/bin/env bash
+
+set -e
 
 source config.build
 
@@ -12,7 +14,7 @@ FILE_LIST=${TOOLS[@]}
 
 ROOT=$(pwd)
 
-SRC=$ROOT/../$DIR_NAME/$ADDITIONAL_LIB_NAME
+SRC=$ROOT/../$DIR_NAME
 DST=$ROOT/../processing-library/$LIB_NAME/$DIR_NAME/
 
 if [ -d "$DST" ]; then
@@ -23,5 +25,5 @@ mkdir -p "$DST"
 echo "# copying "$DIR_NAME":"
 for i in $FILE_LIST; do
     echo "# '"$i"'"
-    cp $SRC/$i $DST
+    cp "$SRC/$i" "$DST"
 done
