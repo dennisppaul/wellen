@@ -1,5 +1,10 @@
 # Wellen / Release Notes
 
+## v0.15
+
+- fixed: with CoreMIDI4J on macOS, port names of java's built-in MIDI ( e.g `"Bus 1"` ) now find the matching CoreMIDI4J device ( e.g `"CoreMIDI4J - IAC Driver"` ) instead of failing
+- added: MIDI devices can also be found by their description ( e.g `"IAC Driver Bus 1"` )
+
 ## v0.14 (20261031)
 MIDI overhaul. existing sketches compile and run unchanged; old method names are deprecated and still work.
 
