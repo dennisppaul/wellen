@@ -6,6 +6,7 @@
 - added: MIDI devices can also be found by their description ( e.g `"IAC Driver Bus 1"` )
 
 ## v0.14 (20261031)
+
 MIDI overhaul. existing sketches compile and run unchanged; old method names are deprecated and still work.
 
 - fixed: a *note-on* message with velocity 0 is now received as *note-off*
