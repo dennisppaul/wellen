@@ -24,10 +24,13 @@ import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * internal helper that lists, resolves, opens and closes MIDI devices. it is shared by {@link MidiIn} and
@@ -49,6 +52,7 @@ final class MidiDevices {
 
     private static final String COREMIDI4J_PROVIDER = "uk.co.xfactorylibrarians.coremidi4j.CoreMidiDeviceProvider";
     private static final Map<MidiDevice, Integer> fOpenedByWellen = new IdentityHashMap<>();
+    private static final Set<String> fReportedMappings = Collections.synchronizedSet(new HashSet<>());
     private static boolean fCoreMidi4JChecked = false;
     private static Method fCoreMidi4JGetInfo = null;
 
@@ -61,8 +65,12 @@ final class MidiDevices {
      * @return list of available devices in the same order as printed by the <code>dump</code> functions
      */
     static List<MidiDevice.Info> list(boolean input) {
+        return list(all_device_infos(), input);
+    }
+
+    private static List<MidiDevice.Info> list(MidiDevice.Info[] infos, boolean input) {
         final ArrayList<MidiDevice.Info> mList = new ArrayList<>();
-        for (MidiDevice.Info mInfo : all_device_infos()) {
+        for (MidiDevice.Info mInfo : infos) {
             try {
                 final MidiDevice mDevice = MidiSystem.getMidiDevice(mInfo);
                 final int mMax = input ? mDevice.getMaxTransmitters() : mDevice.getMaxReceivers();
@@ -94,29 +102,106 @@ final class MidiDevices {
         return "Real Time Sequencer".equals(mName) || "Gervill".equals(mName);
     }
 
+    /**
+     * resolves a device name. names are matched in this order: exact, ignoring case, prefix, substring and finally
+     * the device description ( e.g <code>"IAC Driver Bus 1"</code> for the port <code>"Bus 1"</code> on macOS ).
+     * <p>
+     * if CoreMIDI4J is used, names of java's built-in macOS devices ( e.g <code>"Bus 1"</code> ) still work: they are
+     * mapped to the matching CoreMIDI4J device ( e.g <code>"CoreMIDI4J - IAC Driver"</code> ) or, if there is no
+     * unique match, the built-in device is used.
+     */
     static MidiDevice.Info resolve(String name, boolean input) {
         if (name == null || name.isEmpty()) {
             return null;
         }
-        final List<MidiDevice.Info> mList = list(input);
-        for (MidiDevice.Info mInfo : mList) {
+        final MidiDevice.Info mInfo = match(list(input), name);
+        if (mInfo != null || core_midi4j_device_infos() == null) {
+            return mInfo;
+        }
+        /* CoreMIDI4J is active but the name is unknown to it: try java's built-in device names */
+        final MidiDevice.Info mBuiltIn = match(list(MidiSystem.getMidiDeviceInfo(), input), name);
+        if (mBuiltIn == null) {
+            return null;
+        }
+        final MidiDevice.Info mMapped = map_to_core_midi4j(mBuiltIn, list(input));
+        final boolean mFirstReport = fReportedMappings.add(name);
+        if (mMapped != null) {
+            if (mFirstReport) {
+                System.out.println("+++ @MIDI / using CoreMIDI4J device `" + mMapped.getName() + "` for `" + name + "`");
+            }
+            return mMapped;
+        }
+        if (mFirstReport) {
+            System.out.println("+++ @MIDI / no unique CoreMIDI4J device for `" + name + "`, using java's built-in " +
+                                       "device ( MIDI clock and SysEx might not work ). use one of these names " +
+                                       "instead: " + String.join(", ", names(input)));
+        }
+        return mBuiltIn;
+    }
+
+    /**
+     * finds the CoreMIDI4J device that belongs to a java built-in device. CoreMIDI4J describes a device by its device
+     * name ( e.g <code>"IAC Driver"</code> ) while java's built-in description is device name + port name ( e.g
+     * <code>"IAC Driver Bus 1"</code> ).
+     *
+     * @return the device with the longest matching description or <code>null</code> if there is no unique match
+     */
+    static MidiDevice.Info map_to_core_midi4j(MidiDevice.Info built_in, List<MidiDevice.Info> candidates) {
+        final String mDescription = built_in.getDescription();
+        if (mDescription == null || mDescription.isEmpty()) {
+            return null;
+        }
+        MidiDevice.Info mBest = null;
+        int mBestLength = -1;
+        boolean mUnique = false;
+        for (MidiDevice.Info mCandidate : candidates) {
+            if (is_java_virtual_device(mCandidate)) {
+                continue;
+            }
+            final String mCandidateDescription = mCandidate.getDescription();
+            if (mCandidateDescription == null || mCandidateDescription.isEmpty()) {
+                continue;
+            }
+            final boolean mMatch = mDescription.equals(mCandidateDescription) ||
+                                   mDescription.startsWith(mCandidateDescription + " ");
+            if (!mMatch) {
+                continue;
+            }
+            if (mCandidateDescription.length() > mBestLength) {
+                mBest = mCandidate;
+                mBestLength = mCandidateDescription.length();
+                mUnique = true;
+            } else if (mCandidateDescription.length() == mBestLength) {
+                mUnique = false;
+            }
+        }
+        return mUnique ? mBest : null;
+    }
+
+    private static MidiDevice.Info match(List<MidiDevice.Info> list, String name) {
+        for (MidiDevice.Info mInfo : list) {
             if (mInfo.getName().equals(name)) {
                 return mInfo;
             }
         }
-        for (MidiDevice.Info mInfo : mList) {
+        for (MidiDevice.Info mInfo : list) {
             if (mInfo.getName().equalsIgnoreCase(name)) {
                 return mInfo;
             }
         }
         final String mLowerName = name.toLowerCase(Locale.ROOT);
-        for (MidiDevice.Info mInfo : mList) {
+        for (MidiDevice.Info mInfo : list) {
             if (mInfo.getName().toLowerCase(Locale.ROOT).startsWith(mLowerName)) {
                 return mInfo;
             }
         }
-        for (MidiDevice.Info mInfo : mList) {
+        for (MidiDevice.Info mInfo : list) {
             if (mInfo.getName().toLowerCase(Locale.ROOT).contains(mLowerName)) {
+                return mInfo;
+            }
+        }
+        for (MidiDevice.Info mInfo : list) {
+            if (name.equalsIgnoreCase(mInfo.getDescription()) && !is_java_virtual_device(mInfo)) {
                 return mInfo;
             }
         }
