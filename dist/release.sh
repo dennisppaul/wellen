@@ -186,8 +186,10 @@ perl -pi -e "s/^version\s*=.*/version = $LIB_VERSION/; s/^prettyVersion\s*=.*/pr
     lib/library.properties
 perl -pi -e "s/(VERSION_MAJOR\s*=\s*)\d+/\${1}$V_MAJOR/; s/(VERSION_MINOR\s*=\s*)\d+/\${1}$V_MINOR/" \
     src/wellen/Wellen.java
-# `## v0.14` or `## v0.14 (unreleased)` → `## v0.14 (20261031)` ( not for test builds )
-[ "$DO_GIT" -eq 1 ] && perl -pi -e "s/^## \Q$VERSION\E(\s.*)?\$/## $VERSION ($RELEASE_DATE)/" RELEASE_NOTES.md
+# `## v0.14` or `## v0.14 (unreleased)` → `## v0.14 (20261031)` ( not for test builds ). keeps the line break
+if [ "$DO_GIT" -eq 1 ]; then
+    perl -pi -e "s/^## \Q$VERSION\E([ \t].*)?\$/## $VERSION ($RELEASE_DATE)/" RELEASE_NOTES.md
+fi
 grep -E "^(version|prettyVersion)" lib/library.properties
 grep -E "VERSION_(MAJOR|MINOR)\s*=" src/wellen/Wellen.java | sed 's/^ *//'
 
